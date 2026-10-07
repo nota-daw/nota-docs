@@ -8,7 +8,7 @@
 //   - every EN page has a RU twin at the same path, and vice versa
 //   - the twins agree on `updated:` (one language was updated without the other)
 //   - every page listed in coverage.yml exists
-//   - every <Shot id="…"> is listed in shots/manifest.yml
+//   - every <Shot id="…"> is listed in shots/manifest.yml, and every listed shot has a file
 //   - every `sources:` path exists in the app repo (../nota, or $NOTA_REPO)
 //   - internal links in dist/ resolve to a built page or asset
 import fs from 'node:fs';
@@ -83,6 +83,16 @@ for (const f of pages) {
     if (!shotIds.has(m[1])) errors.push(`${slugOf(f)}: <Shot id="${m[1]}"> is not in shots/manifest.yml`);
   }
 }
+
+// every manifest id has a file in at least one theme; no stray files outside the manifest
+const shotsDir = path.join(root, 'src/assets/shots');
+const onDisk = new Set(
+  walk(shotsDir)
+    .filter((f) => /\.(webp|png)$/.test(f))
+    .map((f) => path.relative(shotsDir, f).split(path.sep).slice(1).join('/').replace(/\.(webp|png)$/, '')),
+);
+for (const id of shotIds) if (!onDisk.has(id)) warnings.push(`shot ${id} is in the manifest but not taken — run npm run shots -- ${id}`);
+for (const id of onDisk) if (!shotIds.has(id)) warnings.push(`shot file ${id} is not in shots/manifest.yml (stale? delete it)`);
 
 // ── links in the built site ─────────────────────────────────────────────────────────
 const dist = path.join(root, 'dist');

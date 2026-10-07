@@ -1,11 +1,264 @@
-# Every screenshot used by <Shot id="…">. Files land in src/assets/shots/{dark,light}/<id>.webp
+# Every screenshot used by <Shot id="…">. `npm run shots [-- <id-prefix>…]` takes them into
+# src/assets/shots/{dark,light}/<id>.webp (see shots/shoot.mjs).
 #
-#   - id: devices/volt/main
-#     source: design                  # design | app
-#     file: Nota Volt.html            # design: file in ../nota-design
-#     label: 1a Signal                # design: [data-screen-label] to shoot
-#     scene: main-window              # app: harness scene name (shots/app)
-#     themes: [dark, light]           # default: both
+# source: app — the real app, rendered headlessly by shots/app in both themes (default).
+#   scene: device   args: instrument | effect | midi (engine kind id), preset ("group/Name"),
+#                         tab (text of a tab/segment to click, e.g. "Filter", "L"), card (index), kit
+#   scene: main     args: view (arrangement | session | modular), select (demo track: Rhythm, Drums,
+#                         Bass, Keys, Lead, Texture, Reverb), element (x:Name to crop to), width, height
+#   scene: mixer · prefs (args: page = Settings sidebar index, 0 Audio … 8 Shortcuts)
+#   scene: start · about · whatsnew · export · unsaved
+# source: design — a ../nota-design mockup (dark only, shown in both site themes).
+#   file + label ([data-screen-label]) or selector (CSS); inner: true keeps only the content of a
+#   board cell (drops its label and caption).
+# themes: [dark] / [light] to restrict; default is both for app, dark for design.
 #
-# Filled in stage 2 (screenshot pipeline).
-shots: []
+# Prefer app shots: they match the code and come in both themes. Use design only for what the
+# app can't render (the phone UI of Nota Remote) or for card states a scene can't reach yet.
+shots:
+
+  # ── Start here · Basics
+  - { id: start-here/start-window, source: app, scene: start }
+  - { id: start-here/main-window, source: app, scene: main, args: {view: "arrangement"} }
+  - { id: start-here/main-window-devices, source: app, scene: main, args: {view: "arrangement", select: "Keys"} }
+  - { id: start-here/whats-new, source: app, scene: whatsnew }
+  - { id: start-here/about, source: app, scene: about }
+  - { id: basics/unsaved-dialog, source: app, scene: unsaved }
+
+  # ── Views
+  - { id: views/arrangement, source: app, scene: main, args: {view: "arrangement"} }
+  - { id: views/session, source: app, scene: main, args: {view: "session"} }
+  - { id: views/modular, source: app, scene: main, args: {view: "modular", select: "Keys"} }
+  - { id: views/mixer, source: app, scene: mixer }
+  - { id: views/detail-panel, source: app, scene: main, args: {view: "arrangement", select: "Keys", element: "DetailPanel"} }
+  - { id: views/device-window/nota-bass-l, source: design, file: "Nota Device Window.html", label: "Nota Bass L" }
+  - { id: views/device-window/nota-level-s, source: design, file: "Nota Device Window.html", label: "Nota Level S" }
+  - { id: views/device-window/dexed-l, source: design, file: "Nota Device Window.html", label: "Dexed L" }
+
+  # ── Editing
+  - { id: editing/piano-roll/midi-clip, source: design, file: "Nota Clip Editor.html", label: "MIDI clip" }
+  - { id: editing/audio-clips/audio-clip, source: design, file: "Nota Clip Editor.html", label: "Audio clip" }
+
+  # ── Library
+  - { id: library/browser, source: app, scene: main, args: {view: "arrangement", element: "Browser"} }
+  - { id: library/preview-player, source: design, file: "Nota Preview Player.html", label: "1a Preview" }
+
+  # ── Controllers & Remote — phone screens exist only as mockups
+  - { id: control/nota-remote/iphone-pads, source: design, file: "Nota Remote.html", selector: "[id=\"2a\"]", inner: true }
+  - { id: control/nota-remote/iphone-landscape, source: design, file: "Nota Remote.html", selector: "[id=\"2b\"]", inner: true }
+  - { id: control/nota-remote/ipad-pads, source: design, file: "Nota Remote.html", selector: "[id=\"2c\"]", inner: true }
+  - { id: control/nota-remote/ipad-session, source: design, file: "Nota Remote.html", selector: "[id=\"2d\"]", inner: true }
+  - { id: control/nota-remote/keys, source: design, file: "Nota Remote.html", selector: "[id=\"3a\"]", inner: true }
+  - { id: control/nota-remote/xy-tilt, source: design, file: "Nota Remote.html", selector: "[id=\"3b\"]", inner: true }
+  - { id: control/nota-remote/macros, source: design, file: "Nota Remote.html", selector: "[id=\"3c\"]", inner: true }
+  - { id: control/nota-remote/big-transport, source: design, file: "Nota Remote.html", selector: "[id=\"3d\"]", inner: true }
+  - { id: control/nota-remote/weak-network, source: design, file: "Nota Remote.html", selector: "[id=\"4a\"]", inner: true }
+  - { id: control/nota-remote/reconnecting, source: design, file: "Nota Remote.html", selector: "[id=\"4b\"]", inner: true }
+  - { id: control/nota-remote/not-responding, source: design, file: "Nota Remote.html", selector: "[id=\"4c\"]", inner: true }
+  - { id: control/nota-remote/expired, source: design, file: "Nota Remote.html", selector: "[id=\"4d\"]", inner: true }
+  - { id: control/nota-remote/midi-learn, source: design, file: "Nota Remote.html", selector: "[id=\"4e\"]", inner: true }
+  - { id: control/nota-remote/audio-track, source: design, file: "Nota Remote.html", selector: "[id=\"4f\"]", inner: true }
+  - { id: control/nota-remote/connect-phone, source: design, file: "Nota Remote.html", selector: "[id=\"5a\"]", inner: true }
+  - { id: control/nota-remote/settings, source: design, file: "Nota Remote.html", selector: "[id=\"5b\"]", inner: true }
+  - { id: control/nota-remote/midi-map, source: design, file: "Nota Remote.html", selector: "[id=\"5c\"]", inner: true }
+
+  # ── Export
+  - { id: export/export-window, source: app, scene: export }
+
+  # ── Settings
+  - { id: preferences/audio, source: app, scene: prefs, args: {page: 0} }
+  - { id: preferences/midi, source: app, scene: prefs, args: {page: 1} }
+  - { id: preferences/gamepads, source: app, scene: prefs, args: {page: 2} }
+  - { id: preferences/remote, source: app, scene: prefs, args: {page: 3} }
+  - { id: preferences/plugins, source: app, scene: prefs, args: {page: 4} }
+  - { id: preferences/downloads, source: app, scene: prefs, args: {page: 5} }
+  - { id: preferences/library, source: app, scene: prefs, args: {page: 6} }
+  - { id: preferences/appearance, source: app, scene: prefs, args: {page: 7} }
+  - { id: preferences/shortcuts, source: app, scene: prefs, args: {page: 8} }
+
+  # ── Instruments — app card (both themes) + every mockup screen
+  - { id: devices/instruments/synth/card, source: app, scene: device, args: {instrument: 0, tab: "L"} }
+  - { id: devices/instruments/synth/osc, source: design, file: "Nota Synth.html", label: "1a Osc" }
+  - { id: devices/instruments/synth/env, source: design, file: "Nota Synth.html", label: "1b Env" }
+  - { id: devices/instruments/synth/filter, source: design, file: "Nota Synth.html", label: "1c Filter" }
+  - { id: devices/instruments/sampler/card, source: app, scene: device, args: {instrument: 1} }
+  - { id: devices/instruments/sampler/sample, source: design, file: "Nota Sampler.html", label: "1a Sample" }
+  - { id: devices/instruments/sampler/pitch, source: design, file: "Nota Sampler.html", label: "1b Pitch" }
+  - { id: devices/instruments/sampler/env, source: design, file: "Nota Sampler.html", label: "1c Env" }
+  - { id: devices/instruments/sampler/filter, source: design, file: "Nota Sampler.html", label: "1d Filter" }
+  - { id: devices/instruments/physical/card, source: app, scene: device, args: {instrument: 2} }
+  - { id: devices/instruments/physical/exciter, source: design, file: "Nota Physical.html", label: "1a Exciter" }
+  - { id: devices/instruments/physical/resonator, source: design, file: "Nota Physical.html", label: "1b Resonator" }
+  - { id: devices/instruments/aurora/card, source: app, scene: device, args: {instrument: 5} }
+  - { id: devices/instruments/aurora/osc, source: design, file: "Nota Aurora.html", label: "1a Osc" }
+  - { id: devices/instruments/aurora/filter, source: design, file: "Nota Aurora.html", label: "1b Filter" }
+  - { id: devices/instruments/aurora/env, source: design, file: "Nota Aurora.html", label: "1c Env" }
+  - { id: devices/instruments/aurora/lfo, source: design, file: "Nota Aurora.html", label: "1d LFO" }
+  - { id: devices/instruments/aurora/mod, source: design, file: "Nota Aurora.html", label: "1e Mod" }
+  - { id: devices/instruments/aurora/fx, source: design, file: "Nota Aurora.html", label: "1f FX" }
+  - { id: devices/instruments/volt/card, source: app, scene: device, args: {instrument: 6} }
+  - { id: devices/instruments/volt/osc, source: design, file: "Nota Volt.html", label: "1a Osc" }
+  - { id: devices/instruments/volt/filter, source: design, file: "Nota Volt.html", label: "1b Filter" }
+  - { id: devices/instruments/volt/env, source: design, file: "Nota Volt.html", label: "1c Env" }
+  - { id: devices/instruments/volt/lfo, source: design, file: "Nota Volt.html", label: "1d LFO" }
+  - { id: devices/instruments/volt/mod, source: design, file: "Nota Volt.html", label: "1e Mod" }
+  - { id: devices/instruments/volt/macro, source: design, file: "Nota Volt.html", label: "1f Macro" }
+  - { id: devices/instruments/bass/card, source: app, scene: device, args: {instrument: 7} }
+  - { id: devices/instruments/bass/signal, source: design, file: "Nota Bass.html", label: "1a Signal" }
+  - { id: devices/instruments/bass/mod, source: design, file: "Nota Bass.html", label: "1b Mod" }
+  - { id: devices/instruments/pendulum/card, source: app, scene: device, args: {instrument: 8} }
+  - { id: devices/instruments/pendulum/balls, source: design, file: "Nota Pendulum.html", label: "1a Balls" }
+  - { id: devices/instruments/pendulum/voice, source: design, file: "Nota Pendulum.html", label: "1b Voice" }
+  - { id: devices/instruments/operator/card, source: app, scene: device, args: {instrument: 9} }
+  - { id: devices/instruments/operator/operators, source: design, file: "Nota Operator.html", label: "1a Operators" }
+  - { id: devices/instruments/operator/algorithm, source: design, file: "Nota Operator.html", label: "1b Algorithm" }
+  - { id: devices/instruments/operator/filter-amp, source: design, file: "Nota Operator.html", label: "1c Filter Amp" }
+  - { id: devices/instruments/grain/card, source: app, scene: device, args: {instrument: 10} }
+  - { id: devices/instruments/grain/grain, source: design, file: "Nota Grain.html", label: "1a Grain" }
+  - { id: devices/instruments/grain/pitch, source: design, file: "Nota Grain.html", label: "1b Pitch" }
+  - { id: devices/instruments/grain/variation, source: design, file: "Nota Grain.html", label: "1c Variation" }
+  - { id: devices/instruments/grain/filter, source: design, file: "Nota Grain.html", label: "1d Filter" }
+  - { id: devices/instruments/grain/amp, source: design, file: "Nota Grain.html", label: "1e Amp" }
+  - { id: devices/instruments/flux/card, source: app, scene: device, args: {instrument: 11} }
+  - { id: devices/instruments/flux/no-source, source: design, file: "Nota Flux.html", label: "1a No source" }
+  - { id: devices/instruments/flux/react, source: design, file: "Nota Flux.html", label: "1b React" }
+  - { id: devices/instruments/rhythm/card, source: app, scene: device, args: {instrument: 12} }
+  - { id: devices/instruments/rhythm/kick-synth, source: design, file: "Nota Rhythm.html", label: "1a Kick synth" }
+  - { id: devices/instruments/rhythm/clap-sample, source: design, file: "Nota Rhythm.html", label: "1b Clap sample" }
+  - { id: devices/instruments/rhythm/macro, source: design, file: "Nota Rhythm.html", label: "1c Macro" }
+  - { id: devices/instruments/monolith/card, source: app, scene: device, args: {instrument: 13} }
+  - { id: devices/instruments/pentad/card, source: app, scene: device, args: {instrument: 14} }
+  - { id: devices/instruments/pentad/oscillators, source: design, file: "Nota Pentad.html", label: "1a Oscillators" }
+  - { id: devices/instruments/pentad/filter-amp, source: design, file: "Nota Pentad.html", label: "1b Filter Amp" }
+  - { id: devices/instruments/pentad/poly-mod, source: design, file: "Nota Pentad.html", label: "1c Poly Mod" }
+  - { id: devices/instruments/consort/card, source: app, scene: device, args: {instrument: 15} }
+  - { id: devices/instruments/consort/osc-mix, source: design, file: "Nota Consort.html", label: "1a Osc Mix" }
+  - { id: devices/instruments/consort/patch-matrix, source: design, file: "Nota Consort.html", label: "1b Patch matrix" }
+  - { id: devices/instruments/consort/patch-cables, source: design, file: "Nota Consort.html", label: "1c Patch cables" }
+  - { id: devices/instruments/consort/patch-overlay, source: design, file: "Nota Consort.html", label: "1d Patch overlay" }
+  - { id: devices/instruments/consort/filters-env, source: design, file: "Nota Consort.html", label: "1e Filters Env" }
+  - { id: devices/instruments/consort/lfo-delay, source: design, file: "Nota Consort.html", label: "1f LFO Delay" }
+  - { id: devices/instruments/consort/seq, source: design, file: "Nota Consort.html", label: "1f Seq" }
+
+  # ── Audio effects
+  - { id: devices/audio-effects/eq-8/card, source: app, scene: device, args: {effect: 0} }
+  - { id: devices/audio-effects/eq-8/mix, source: design, file: "Nota EQ-8.html", label: "1a Mix" }
+  - { id: devices/audio-effects/eq-8/vocal-m-s, source: design, file: "Nota EQ-8.html", label: "1b Vocal · M/S" }
+  - { id: devices/audio-effects/eq-8/master-48-db, source: design, file: "Nota EQ-8.html", label: "1c Master · 48 dB" }
+  - { id: devices/audio-effects/compressor/card, source: app, scene: device, args: {effect: 1} }
+  - { id: devices/audio-effects/compressor/curve, source: design, file: "Nota Compressor.html", label: "1a Curve" }
+  - { id: devices/audio-effects/compressor/motion, source: design, file: "Nota Compressor.html", label: "1b Motion" }
+  - { id: devices/audio-effects/compressor/sidechain, source: design, file: "Nota Compressor.html", label: "1c Sidechain" }
+  - { id: devices/audio-effects/reverb/card, source: app, scene: device, args: {effect: 2} }
+  - { id: devices/audio-effects/reverb/hall, source: design, file: "Nota Reverb.html", label: "1a Hall" }
+  - { id: devices/audio-effects/reverb/plate, source: design, file: "Nota Reverb.html", label: "1b Plate" }
+  - { id: devices/audio-effects/reverb/freeze, source: design, file: "Nota Reverb.html", label: "1c Freeze" }
+  - { id: devices/audio-effects/delay/card, source: app, scene: device, args: {effect: 3} }
+  - { id: devices/audio-effects/delay/sync, source: design, file: "Nota Delay.html", label: "1a Sync" }
+  - { id: devices/audio-effects/delay/ms, source: design, file: "Nota Delay.html", label: "1b ms" }
+  - { id: devices/audio-effects/delay/freeze, source: design, file: "Nota Delay.html", label: "1c Freeze" }
+  - { id: devices/audio-effects/utility/card, source: app, scene: device, args: {effect: 4} }
+  - { id: devices/audio-effects/utility/field, source: design, file: "Nota Utility.html", label: "1a Field" }
+  - { id: devices/audio-effects/utility/mono, source: design, file: "Nota Utility.html", label: "1b Mono" }
+  - { id: devices/audio-effects/utility/levels, source: design, file: "Nota Utility.html", label: "1c Levels" }
+  - { id: devices/audio-effects/valve/card, source: app, scene: device, args: {effect: 6} }
+  - { id: devices/audio-effects/valve/amp, source: design, file: "Nota Valve.html", label: "1a Amp" }
+  - { id: devices/audio-effects/valve/cab, source: design, file: "Nota Valve.html", label: "1b Cab" }
+  - { id: devices/audio-effects/valve/harmonics, source: design, file: "Nota Valve.html", label: "1c Harmonics" }
+  - { id: devices/audio-effects/auto-filter/card, source: app, scene: device, args: {effect: 7} }
+  - { id: devices/audio-effects/auto-filter/filter, source: design, file: "Nota Auto Filter.html", label: "1a Filter" }
+  - { id: devices/audio-effects/auto-filter/envelope, source: design, file: "Nota Auto Filter.html", label: "1b Envelope" }
+  - { id: devices/audio-effects/auto-filter/lfo, source: design, file: "Nota Auto Filter.html", label: "1c LFO" }
+  - { id: devices/audio-effects/vintage/card, source: app, scene: device, args: {effect: 8} }
+  - { id: devices/audio-effects/vintage/curve, source: design, file: "Nota Vintage.html", label: "1a Curve" }
+  - { id: devices/audio-effects/vintage/wear, source: design, file: "Nota Vintage.html", label: "1b Wear" }
+  - { id: devices/audio-effects/vintage/output, source: design, file: "Nota Vintage.html", label: "1c Output" }
+  - { id: devices/audio-effects/orbit/card, source: app, scene: device, args: {effect: 9} }
+  - { id: devices/audio-effects/orbit/auto-pan, source: design, file: "Nota Orbit.html", label: "1a Auto-pan" }
+  - { id: devices/audio-effects/orbit/tempo-sync, source: design, file: "Nota Orbit.html", label: "1b Tempo sync" }
+  - { id: devices/audio-effects/orbit/tremolo, source: design, file: "Nota Orbit.html", label: "1c Tremolo" }
+  - { id: devices/audio-effects/auto-shift/card, source: app, scene: device, args: {effect: 10} }
+  - { id: devices/audio-effects/auto-shift/trace, source: design, file: "Nota Auto Shift.html", label: "1a Trace" }
+  - { id: devices/audio-effects/auto-shift/scale, source: design, file: "Nota Auto Shift.html", label: "1b Scale" }
+  - { id: devices/audio-effects/auto-shift/midi, source: design, file: "Nota Auto Shift.html", label: "1c MIDI" }
+  - { id: devices/audio-effects/beat-repeat/card, source: app, scene: device, args: {effect: 11} }
+  - { id: devices/audio-effects/beat-repeat/timeline, source: design, file: "Nota Beat Repeat.html", label: "1a Timeline" }
+  - { id: devices/audio-effects/beat-repeat/slices, source: design, file: "Nota Beat Repeat.html", label: "1b Slices" }
+  - { id: devices/audio-effects/beat-repeat/filter, source: design, file: "Nota Beat Repeat.html", label: "1c Filter" }
+  - { id: devices/audio-effects/crush/card, source: app, scene: device, args: {effect: 12} }
+  - { id: devices/audio-effects/crush/quantiser, source: design, file: "Nota Crush.html", label: "1a Quantiser" }
+  - { id: devices/audio-effects/crush/spectrum, source: design, file: "Nota Crush.html", label: "1b Spectrum" }
+  - { id: devices/audio-effects/crush/transfer, source: design, file: "Nota Crush.html", label: "1c Transfer" }
+  - { id: devices/audio-effects/dynamic-eq/card, source: app, scene: device, args: {effect: 13} }
+  - { id: devices/audio-effects/dynamic-eq/vocal-duck, source: design, file: "Nota Dynamic EQ.html", label: "1a Vocal · Duck" }
+  - { id: devices/audio-effects/dynamic-eq/bus-lift, source: design, file: "Nota Dynamic EQ.html", label: "1b Bus · Lift" }
+  - { id: devices/audio-effects/dynamic-eq/static-solo, source: design, file: "Nota Dynamic EQ.html", label: "1c Static · Solo" }
+  - { id: devices/audio-effects/ceiling/card, source: app, scene: device, args: {effect: 14} }
+  - { id: devices/audio-effects/ceiling/level, source: design, file: "Nota Ceiling.html", label: "1a Level" }
+  - { id: devices/audio-effects/ceiling/reduction, source: design, file: "Nota Ceiling.html", label: "1b Reduction" }
+  - { id: devices/audio-effects/ceiling/loudness, source: design, file: "Nota Ceiling.html", label: "1c Loudness" }
+  - { id: devices/audio-effects/strata/card, source: app, scene: device, args: {effect: 15} }
+  - { id: devices/audio-effects/eq-3/card, source: app, scene: device, args: {effect: 16} }
+  - { id: devices/audio-effects/eq-3/init, source: design, file: "Nota EQ-3.html", label: "1a Init" }
+  - { id: devices/audio-effects/eq-3/low-kill, source: design, file: "Nota EQ-3.html", label: "1b Low Kill" }
+  - { id: devices/audio-effects/eq-3/mid-scoop-48-db, source: design, file: "Nota EQ-3.html", label: "1c Mid Scoop · 48 dB" }
+  - { id: devices/audio-effects/forge/card, source: app, scene: device, args: {effect: 17} }
+  - { id: devices/audio-effects/forge/init, source: design, file: "Nota Forge.html", label: "1a Init" }
+  - { id: devices/audio-effects/forge/parallel-drum-bus, source: design, file: "Nota Forge.html", label: "1b Parallel · Drum bus" }
+  - { id: devices/audio-effects/forge/multiband-master, source: design, file: "Nota Forge.html", label: "1c Multiband · Master" }
+  - { id: devices/audio-effects/level/card, source: app, scene: device, args: {effect: 18} }
+  - { id: devices/audio-effects/level/podcast, source: design, file: "Nota Level.html", label: "1a Podcast" }
+  - { id: devices/audio-effects/level/streaming, source: design, file: "Nota Level.html", label: "1b Streaming" }
+  - { id: devices/audio-effects/level/broadcast-manual, source: design, file: "Nota Level.html", label: "1c Broadcast · Manual" }
+  - { id: devices/audio-effects/shutter/card, source: app, scene: device, args: {effect: 19} }
+  - { id: devices/audio-effects/shutter/pattern, source: design, file: "Nota Shutter.html", label: "2a Pattern" }
+  - { id: devices/audio-effects/shutter/signal, source: design, file: "Nota Shutter.html", label: "1a Signal" }
+  - { id: devices/audio-effects/shutter/envelope, source: design, file: "Nota Shutter.html", label: "1b Envelope" }
+  - { id: devices/audio-effects/shutter/sidechain, source: design, file: "Nota Shutter.html", label: "1c Sidechain" }
+  - { id: devices/audio-effects/chamber/card, source: app, scene: device, args: {effect: 20} }
+  - { id: devices/audio-effects/chamber/convolution, source: design, file: "Nota Chamber.html", label: "1a Convolution" }
+  - { id: devices/audio-effects/chamber/algorithm, source: design, file: "Nota Chamber.html", label: "1b Algorithm" }
+  - { id: devices/audio-effects/chamber/eq-mod, source: design, file: "Nota Chamber.html", label: "1c EQ Mod" }
+  - { id: devices/audio-effects/prism/card, source: app, scene: device, args: {effect: 21} }
+  - { id: devices/audio-effects/prism/bands, source: design, file: "Nota Prism.html", label: "1a Bands" }
+  - { id: devices/audio-effects/prism/band-detail, source: design, file: "Nota Prism.html", label: "1b Band detail" }
+  - { id: devices/audio-effects/prism/time, source: design, file: "Nota Prism.html", label: "1c Time" }
+  - { id: devices/audio-effects/lens/card, source: app, scene: device, args: {effect: 22} }
+  - { id: devices/audio-effects/lens/spectrum, source: design, file: "Nota Lens.html", label: "1a Spectrum" }
+  - { id: devices/audio-effects/lens/scope, source: design, file: "Nota Lens.html", label: "1b Scope" }
+  - { id: devices/audio-effects/lens/cursors, source: design, file: "Nota Lens.html", label: "1c Cursors" }
+  - { id: devices/audio-effects/lens/waterfall, source: design, file: "Nota Lens.html", label: "1d Waterfall" }
+  - { id: devices/audio-effects/flanger/card, source: app, scene: device, args: {effect: 23} }
+  - { id: devices/audio-effects/flanger/classic-jet, source: design, file: "Nota Flanger.html", label: "1a Classic jet" }
+  - { id: devices/audio-effects/flanger/negative-sweep, source: design, file: "Nota Flanger.html", label: "1b Negative sweep" }
+  - { id: devices/audio-effects/flanger/metallic, source: design, file: "Nota Flanger.html", label: "1c Metallic" }
+  - { id: devices/audio-effects/phaser/card, source: app, scene: device, args: {effect: 24} }
+  - { id: devices/audio-effects/phaser/classic-4-stage, source: design, file: "Nota Phaser.html", label: "1a Classic 4-stage" }
+  - { id: devices/audio-effects/phaser/deep-12-stage, source: design, file: "Nota Phaser.html", label: "1b Deep 12-stage" }
+  - { id: devices/audio-effects/phaser/negative, source: design, file: "Nota Phaser.html", label: "1c Negative" }
+  - { id: devices/audio-effects/chorus/card, source: app, scene: device, args: {effect: 25} }
+  - { id: devices/audio-effects/chorus/classic-duo, source: design, file: "Nota Chorus.html", label: "1a Classic duo" }
+  - { id: devices/audio-effects/chorus/ensemble, source: design, file: "Nota Chorus.html", label: "1b Ensemble" }
+  - { id: devices/audio-effects/chorus/vibrato, source: design, file: "Nota Chorus.html", label: "1c Vibrato" }
+
+  # ── MIDI effects (on a Nota Synth track)
+  - { id: devices/midi-effects/arp/card, source: app, scene: device, args: {midi: 0, instrument: 0} }
+  - { id: devices/midi-effects/arp/arp-l, source: design, file: "Nota Arp.html", label: "1a Arp L" }
+  - { id: devices/midi-effects/chord/card, source: app, scene: device, args: {midi: 1, instrument: 0} }
+  - { id: devices/midi-effects/chord/chord-l, source: design, file: "Nota Chord.html", label: "1a Chord L" }
+  - { id: devices/midi-effects/scale/card, source: app, scene: device, args: {midi: 2, instrument: 0} }
+  - { id: devices/midi-effects/scale/scale-l, source: design, file: "Nota Scale.html", label: "1a Scale L" }
+  - { id: devices/midi-effects/length/card, source: app, scene: device, args: {midi: 3, instrument: 0} }
+  - { id: devices/midi-effects/length/length-l, source: design, file: "Nota Length.html", label: "1a Length L" }
+  - { id: devices/midi-effects/velocity/card, source: app, scene: device, args: {midi: 4, instrument: 0} }
+  - { id: devices/midi-effects/velocity/velocity-l, source: design, file: "Nota Velocity.html", label: "1a Velocity L" }
+  - { id: devices/midi-effects/random/card, source: app, scene: device, args: {midi: 5, instrument: 0} }
+  - { id: devices/midi-effects/random/random-l, source: design, file: "Nota Random.html", label: "1a Random L" }
+
+  # ── Racks
+  - { id: devices/racks/instrument-rack/card, source: app, scene: device, args: {instrument: 3} }
+  - { id: devices/racks/drum-rack/card, source: app, scene: device, args: {instrument: 4} }
+  - { id: devices/racks/drum-rack/pads, source: design, file: "Nota Drum Rack.html", label: "1a Pads" }
+  - { id: devices/racks/drum-rack/mixer, source: design, file: "Nota Drum Rack.html", label: "1b Mixer" }
+  - { id: devices/racks/drum-rack/macro, source: design, file: "Nota Drum Rack.html", label: "1c Macro" }
+  - { id: devices/racks/audio-effect-rack/card, source: app, scene: device, args: {effect: 5} }

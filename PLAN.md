@@ -82,7 +82,7 @@ nota-docs/
 |---|---|---|
 | 0 ✅ | **Инвентаризация** | `coverage.yml`: все фичи из кода/CHANGELOG/FEATURES → страница; список расхождений макетов с кодом; список устройств с путями к DSP-классам и карточкам. |
 | 1 ✅ | **Каркас** | Starlight + i18n + Ember-тема (dark/light), компоненты `Shot`/`Kbd`, шаблоны страниц, деплой на Pages, пустой сайдбар со всеми разделами. |
-| 2 | **Скриншоты** | `shots/design.mjs` (макеты, обе темы — проверить, есть ли light-вариант у каждого макета), C#-харнесс сцен приложения (главное окно, views, mixer, preferences, браузер), `manifest.yml`, `npm run shots [id…]`. |
+| 2 ✅ | **Скриншоты** | `shots/design.mjs` (макеты, обе темы — проверить, есть ли light-вариант у каждого макета), C#-харнесс сцен приложения (главное окно, views, mixer, preferences, браузер), `manifest.yml`, `npm run shots [id…]`. |
 | 3 | **Start here + Basics** | Установка, тур по окну, урок, проект/транспорт/треки/history. |
 | 4 | **Views + Editing** | Arrangement, Session, Modular, Mixer, клип-редакторы, запись, автоматизация. |
 | 5a | **Instruments** | 13–15 страниц по шаблону. Параметры — из DSP-класса и карточки, не из макета. |
@@ -116,3 +116,10 @@ nota-docs/
   `Shot`/`Kbd`, страницы-заглушки (`status: todo`) для всего сайдбара, `scripts/check.mjs`,
   деплой на Pages. Node: `/opt/homebrew/Cellar/node/26.10.0_1/bin` (brew-node не слинкован).
   Репозиторий `nota-daw/nota-docs` приватный — для Pages его нужно сделать публичным.
+- **2026-10-07 · этап 2.** `npm run shots` (`shots/shoot.mjs`): 224 снимка, ~4,5 мин.
+  Харнесс `shots/app` (C#, Avalonia.Headless, 2×): сцены device / main / mixer / prefs / start /
+  about / whatsnew / export / unsaved; демо-песня «Night Drive»; редактор приватности (имя,
+  компьютер, IP, аудио/MIDI-устройства, пути). Макеты — только тёмные, поэтому карточки устройств
+  снимаются с приложения (обе темы, вкладки кликаются через `tab`), макеты — для Remote, Clip
+  Editor, Device Window и вкладок, до которых сцена пока не дотягивается. Найден баг приложения:
+  микшер не показывает имена треков (`MixerView.NameFor`) — вынесено в отдельную задачу.

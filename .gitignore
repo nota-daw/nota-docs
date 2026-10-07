@@ -3,3 +3,5 @@ dist/
 .astro/
 .DS_Store
 shots/.cache/
+shots/app/bin/
+shots/app/obj/

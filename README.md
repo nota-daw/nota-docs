@@ -9,7 +9,22 @@ npm run dev        # http://localhost:4321
 npm run build      # → dist/
 npm run check      # twins, coverage, screenshot ids, sources, links (after build)
 npm run status     # how many pages are todo / draft / done per section
+npm run shots      # retake screenshots (see below); `-- devices/volt` for one prefix
 ```
+
+## Screenshots
+
+`shots/manifest.yml` lists every image. `npm run shots` takes them:
+
+- **app** shots render the real Nota UI headlessly (`shots/app`, a C# Avalonia.Headless harness
+  that references `../nota/src/managed/Nota.App`) in the dark and the light theme. Main-window
+  shots show a generated demo song, "Night Drive". User and computer names, IP addresses, audio /
+  MIDI device names and local paths are scrubbed from every frame. Needs the .NET 10 SDK and a
+  built engine in `../nota`.
+- **design** shots come from the `../nota-design` mockups via Playwright (dark only).
+
+Images land in `src/assets/shots/{dark,light}/<id>.webp`; `<Shot id>` picks the variant that
+matches the site theme.
 
 ## Layout
 
