@@ -1,6 +1,7 @@
 using System.Reflection;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Headless;
 using Avalonia.Interactivity;
@@ -22,7 +23,7 @@ namespace NotaDocsShots;
 ///
 ///   device    instrument | effect | midi (kind id), preset, tab, card (index in the chain)
 ///   main      view (arrangement | session | modular), select (track name), clip (track name,
-///             + clipIndex) to open in the clip editor, tab (browser tab index), detailHeight, element, width, height
+///             + clipIndex, audio: true for an audio clip) to open in the clip editor, automation, tab (browser tab index), detailHeight, element, width, height
 ///   mixer     width, height
 ///   prefs     page (index in Settings' sidebar, 0 = Audio)
 ///   start · about · whatsnew · export · unsaved
@@ -198,12 +199,23 @@ public sealed class Scenes
         {
             // Open a clip of a demo track in the clip editor, as a double-click on it would.
             var timeline = mw.FindControl<ArrangementView>("Timeline")!;
-            Invoke(timeline, "OnClipDoubleClicked", _demo.Track(clipTrack), shot.Int("clipIndex") ?? 0, true);
+            Invoke(timeline, "OnClipDoubleClicked", _demo.Track(clipTrack), shot.Int("clipIndex") ?? 0, !shot.Bool("audio"));
+        }
+        // Automation lanes on or off, as the transport's automation button sets them.
+        if (mw.FindControl<ToggleButton>("AutomationToggle") is { } autoBtn)
+        {
+            autoBtn.IsChecked = shot.Bool("automation");
+            mw.FindControl<ArrangementView>("Timeline")!.AutomationMode = shot.Bool("automation");
         }
         if (shot.Int("detailHeight") is int dh && mw.FindControl<Grid>("BodyGrid") is { } body)
             body.RowDefinitions[2].Height = new GridLength(dh);
-        if (shot.Int("tab") is int tab)
-            typeof(BrowserView).GetMethod("SelectTab", Private)!.Invoke(mw.FindControl<BrowserView>("Browser")!, new object[] { tab });
+        // The browser tab sticks between shots, so always set it (Instruments by default).
+        typeof(BrowserView).GetMethod("SelectTab", Private)!.Invoke(mw.FindControl<BrowserView>("Browser")!, new object[] { shot.Int("tab") ?? 0 });
+        // Zoom: fit the whole song, or the app's default (28 px a beat from bar 1) — the view
+        // keeps its zoom between shots otherwise.
+        var tl = mw.FindControl<ArrangementView>("Timeline")!;
+        if (shot.Bool("fit")) Invoke(tl, "ZoomToFitProject");
+        else Invoke(tl, "ApplyOverviewView", 28.0, 0.0);
         Pump(20);
         var element = shot.Str("element") is string el ? mw.FindControl<Control>(el) ?? throw new ArgumentException($"no control '{el}'") : null;
         Save(mw, shot.Id, element);

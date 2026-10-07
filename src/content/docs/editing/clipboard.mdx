@@ -1,23 +1,66 @@
 ---
-title: "Copy, paste and drag"
+title: Copy, paste and drag
+description: The clipboard for clips, notes, tracks and devices; moving clips between the Arrangement and Session; dragging audio clips into instruments.
 sidebar:
-  order: 20
-status: todo
+  order: 6
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/ClipTransfer.cs
-  - src/managed/Nota.App/MainWindow.PasteBounced.cs
   - src/managed/Nota.App/MainWindow.Dnd.cs
+  - src/managed/Nota.App/ArrangementView.ClipDrag.cs
+  - src/managed/Nota.App/DeviceChainView.Clipboard.cs
 ---
 
 import { Aside } from '@astrojs/starlight/components';
+import Kbd from '@components/Kbd.astro';
 
-{/* Scope (from coverage.yml)
-  - cut/copy/paste clips
-  - Paste Bounced Audio ⇧⌘V
-  - Arrangement ⇄ Session copy ⇧⌘C
-  - drag audio clip into Sampler/Grain/Drum Rack/Instrument Rack
-*/}
+<Kbd>⌘ C</Kbd>, <Kbd>⌘ X</Kbd>, <Kbd>⌘ V</Kbd> and <Kbd>⌘ D</Kbd> (duplicate) work on whatever
+you clicked last:
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
+| Where | What they copy |
+|---|---|
+| Arrangement lanes | Clips, or an automation range in automation mode |
+| Track headers | Whole tracks — a group with its tracks; pasted tracks land after the selected one |
+| Session grid | A clip or a scene |
+| Clip editor | Notes |
+| Device chain | Devices (right-click a device header ▸ **Copy**) |
+
+Every paste is one undo step.
+
+## Between the Arrangement and Session
+
+The clipboard carries clips both ways: copy clips on the timeline and paste them on a Session
+slot, or copy a slot and paste it on the timeline.
+
+**⌘ ⇧ C** sends the selection straight across — also **Copy to Session** / **Copy to
+Arrangement** in the right-click menus and the Edit menu:
+
+- **Arrangement → Session:** the clips land in the first scene row where they all fit — each
+  track's clips down its column in time order — adding scenes if needed. **Copy to Scene** picks
+  the scene yourself.
+- **Session → Arrangement:** a clip, a group slot or a whole scene lands on the timeline at the
+  playhead, without covering clips that are already there.
+
+Notes, clip envelopes, names, warp, pitch and gain come along.
+
+## Audio clips into instruments
+
+Drag an audio clip from the Arrangement onto the row of a track with a **Sampler**, **Nota
+Grain**, **Drum Rack** or **Instrument Rack** and its audio loads there — a Drum Rack takes it
+on the next free pad. Rest over an instrument track while dragging and its devices open, so a
+particular pad is one more move away.
+
+Pull a clip out of the Arrangement and it becomes a **sample** you can drop anywhere a sample
+goes: a Drum Rack pad, a Grain, a Nota Rhythm voice, a Session slot. The clip itself stays where
+it was; the sample is the part of the clip you hear.
+
+## Dragging from the browser
+
+Anything in the browser can be dragged into the project: instruments and effects onto tracks or
+device chains, samples and loops onto tracks or slots, MIDI files onto instrument tracks,
+presets onto devices. See [The browser](../../library/browser/).
+
+<Aside type="tip">
+Hold <Kbd>⌥</Kbd> while dragging a clip in the Session grid to copy it instead of moving it.
 </Aside>

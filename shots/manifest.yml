@@ -43,6 +43,9 @@ shots:
   # ── Editing
   - { id: editing/piano-roll/midi-clip, source: design, file: "Nota Clip Editor.html", label: "MIDI clip" }
   - { id: editing/audio-clips/audio-clip, source: design, file: "Nota Clip Editor.html", label: "Audio clip" }
+  - { id: editing/audio-clip-editor, source: app, scene: main, args: {view: "arrangement", clip: "Texture", audio: true, element: "DetailPanel", width: 1200, detailHeight: 420} }
+  - { id: editing/automation-lanes, source: app, scene: main, args: {view: "arrangement", automation: true, fit: true, element: "Timeline", height: 760} }
+  - { id: views/arrangement-timeline, source: app, scene: main, args: {view: "arrangement", fit: true, element: "Timeline", height: 760} }
 
   # ── Library
   - { id: library/browser, source: app, scene: main, args: {view: "arrangement", element: "Browser"} }

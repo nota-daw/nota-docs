@@ -1,8 +1,10 @@
 ---
-title: "Микшер"
+title: Микшер
+description: Окно микшера — канал на каждый трек со входами, посылами, панорамой, громкостью, mute, solo и записью, возвраты и мастер.
 sidebar:
-  order: 13
-status: todo
+  order: 4
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/MixerView.cs
   - src/managed/Nota.App/MixerWindow.cs
@@ -10,16 +12,38 @@ sources:
 ---
 
 import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
 
-{/* Scope (from coverage.yml)
-  - Mixer window ⇧⌘M
-  - sends & returns
-  - groups
-  - master
-  - meters
-  - record source
-*/}
+Микшер открывается в отдельном окне — **View ▸ Mixer** или <Kbd>⌘ ⇧ M</Kbd>, — так что его можно
+держать на втором экране рядом с Arrangement или Session.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
+<Shot id="views/mixer" alt="Окно микшера: канал на каждый трек, возврат и мастер" />
+
+## Канал
+
+Сверху вниз у каждого трека:
+
+- **имя** и цвет;
+- **I/O** — откуда трек получает сигнал: аудиовход (**In 1** …) и **Monitor** (**Auto** или
+  **In**) у аудиотреков, **MIDI In** / **MIDI To** у треков инструментов; у групп и возвратов
+  видно, что на них приходит;
+- **Sends** — по ручке посыла на каждый трек возврата;
+- **PAN** и фейдер **громкости** с индикатором. Значение усиления можно тянуть или ввести после
+  двойного щелчка; двойной щелчок по фейдеру сбрасывает его;
+- кнопки **Mute**, **Solo** и готовности к записи.
+
+Треки возвратов идут после обычных треков, канал **Master** замыкает ряд. **Show** внизу
+показывает или прячет разделы **Sends** и **I/O**.
+
+## Посылы и возвраты
+
+Трек возврата — это общая шина эффектов. Добавьте его (правый щелчок по пустому месту под
+треками ▸ **Add return track**), поставьте на него Reverb или Delay и поднимите посыл с нужных
+треков. Все треки идут в один ревербератор, а одним фейдером на возврате регулируется, сколько
+его слышно.
+
+<Aside>
+Такой же микшер есть под сеткой в виде [Session](../session/). Громкость, панорама, mute и solo
+есть и прямо в [заголовке трека](../../basics/tracks/).
 </Aside>

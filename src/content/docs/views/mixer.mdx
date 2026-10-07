@@ -1,8 +1,10 @@
 ---
-title: "Mixer"
+title: Mixer
+description: The Mixer window — a channel strip per track with inputs, sends, pan, volume, mute, solo and arm, returns and the master.
 sidebar:
-  order: 13
-status: todo
+  order: 4
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/MixerView.cs
   - src/managed/Nota.App/MixerWindow.cs
@@ -10,16 +12,37 @@ sources:
 ---
 
 import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
 
-{/* Scope (from coverage.yml)
-  - Mixer window ⇧⌘M
-  - sends & returns
-  - groups
-  - master
-  - meters
-  - record source
-*/}
+The Mixer opens in its own window — **View ▸ Mixer** or <Kbd>⌘ ⇧ M</Kbd> — so you can keep it
+on a second screen next to the Arrangement or Session.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
+<Shot id="views/mixer" alt="The Mixer window: a strip per track, the return and the master" />
+
+## A channel strip
+
+Top to bottom, each track gets:
+
+- its **name** and colour;
+- **I/O** — where the track listens: the audio input (**In 1** …) and **Monitor** (**Auto** or
+  **In**) for audio tracks, **MIDI In** / **MIDI To** for instrument tracks; group and return
+  strips show what feeds them;
+- **Sends** — one knob per return track;
+- **PAN** and the **volume** fader with its meter. Drag the gain readout or double-click it to
+  type a value; double-click the fader to reset it;
+- **Mute**, **Solo** and **arm** buttons.
+
+Return tracks come after the tracks, and the **Master** strip closes the row. **Show** at the
+bottom switches the **Sends** and **I/O** sections on or off.
+
+## Sends and returns
+
+A return track is a shared effect bus. Add one (right-click the empty space below the tracks ▸
+**Add return track**), put a Reverb or Delay on it, then turn up each track's send to it.
+Every track goes to the same reverb, and one fader on the return sets how much of it you hear.
+
+<Aside>
+The Session view has the same mixer under its grid — see [Session](../session/#the-mixer-under-the-grid).
+Track volume, pan, mute and solo are also right in each [track header](../../basics/tracks/).
 </Aside>

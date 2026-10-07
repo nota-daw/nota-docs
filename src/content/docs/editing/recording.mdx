@@ -1,22 +1,76 @@
 ---
-title: "Recording"
+title: Recording
+description: Recording audio and MIDI — arming tracks, inputs, monitoring, count-in, recording over a loop, and recording into Session slots.
 sidebar:
-  order: 17
-status: todo
+  order: 3
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Engine_Recording.cpp
+  - src/managed/Nota.App/ArrangementView.cs
+  - src/managed/Nota.App/SessionView.Toolbar.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import { Aside, Steps } from '@astrojs/starlight/components';
+import Kbd from '@components/Kbd.astro';
 
-{/* Scope (from coverage.yml)
-  - arm & record audio/MIDI
-  - inputs
-  - count-in
-  - Session recording
-  - latency
-*/}
+## Record into the Arrangement
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
+<Steps>
+
+1. **Arm** the track: click the **●** button in its header. An audio track records audio, an
+   instrument track records MIDI.
+
+2. Choose what it records. For an **audio track**, right-click the header ▸ **Record input**:
+   a hardware input, the master, or another track. An **instrument track** records the notes
+   you play on a MIDI keyboard, the computer keyboard, a gamepad or your phone.
+
+3. Put the playhead where the take should start and press **Record** (<Kbd>⌘ R</Kbd>). Press
+   <Kbd>Space</Kbd> or **Stop** to finish.
+
+</Steps>
+
+Arm an instrument track and an audio track together and one take records both — the MIDI and
+the audio. Nota records the first armed track of each kind.
+
+Disarming a track while it records ends its take.
+
+## Count-in
+
+Right-click the metronome for a **count-in** of 1, 2 or 4 bars. Record from stop then counts in
+first; the clicks are never part of the take. See [Transport](../../basics/transport/#metronome-and-count-in).
+
+## Hearing the input
+
+The headphones button next to an audio track's input turns on **monitoring**: you hear the
+input live through the track's effects and fader, whether or not the transport is playing.
+While monitoring is on, the track plays its input instead of its clips. The master can't be
+monitored — it would feed back.
+
+## Recording over a loop
+
+With the loop on, recording fills the loop range: each time round, the new pass replaces the
+previous one, so you can keep playing until you get it, then stop. Turning the loop on in the
+middle of a take starts recording the loop region from there.
+
+## Recording from another track
+
+An audio track's **Record input** can be another track, a group or a return — handy for
+printing a performance through its effects, or a submix, to audio. Nota keeps it sample-aligned.
+
+## Recording into Session
+
+In the [Session view](../../views/session/#recording-into-a-slot), arm a track, select a scene
+and click **Session Rec** — the take goes into that track's slot. Click again to keep it (cut
+to whole bars), or set **FIXED** to 1–8 bars and it stops by itself. An empty slot's
+**Record here** does the same for that slot.
+
+## Recording automation
+
+**Record** also records automation: while it's on, move any knob or fader and that parameter's
+lane writes what you do. See [Automation](../automation/#recording-automation).
+
+<Aside type="tip">
+Latency matters most when recording. Pick a small buffer in
+[Settings ▸ Audio](../../preferences/audio/) while you record and a larger one while you mix.
 </Aside>

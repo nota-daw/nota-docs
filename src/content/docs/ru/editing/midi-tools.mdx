@@ -1,20 +1,37 @@
 ---
-title: "Конвертация аудио в MIDI"
+title: Конвертация аудио в MIDI
+description: Превратите мелодию, гармонию или ударные аудиоклипа в MIDI-трек или нарежьте его на пэды Drum Rack.
 sidebar:
-  order: 21
-status: todo
+  order: 7
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/MainWindow.Convert.cs
-  - src/managed/Nota.App/MidiToolsView.cs
+  - src/managed/Nota.App/ArrangementView.LaneControl.cs
 ---
 
 import { Aside } from '@astrojs/starlight/components';
 
-{/* Scope (from coverage.yml)
-  - Convert Melody / Harmony / Drums to MIDI
-  - MIDI tools panel
-*/}
+Правый щелчок по аудиоклипу в Arrangement ▸ **Convert**:
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
+| Команда | Что получится |
+|---|---|
+| **Convert Melody to New MIDI Track** | Мелодия — одна линия нот — на новом треке с Nota Synth. Лучше всего на чистых одноголосных партиях и вокале. |
+| **Convert Harmony to New MIDI Track** | Аккорды и одновременно звучащие ноты на новом треке с Nota Synth. Лучше всего на тянущихся аккордах и пэдах. |
+| **Convert Drums to New MIDI Track** | Новый Drum Rack с пэдом на каждый услышанный тип удара (бочка, малый, хэты…), озвученным самым сильным ударом, и MIDI-клип, который играет их там, где они были. |
+| **Slice to New MIDI Track** | Клип, нарезанный по ударам (или на 16 равных частей), на пэдах Drum Rack начиная с C1, и MIDI-клип, который проигрывает нарезку по порядку. |
+
+MIDI-клип ложится под исходным клипом, в такт с ним; строка состояния сообщает, сколько нот или
+пэдов получилось. Конвертация идёт в фоне, окно прогресса можно отменить.
+
+## Мелодия и гармония лучше с ИИ-моделью
+
+**Convert Melody** и **Convert Harmony** работают сразу, но заметно лучше — с ИИ-моделью
+**basic-pitch**, которая ещё и слышит аккорды. Меню предложит её — **Get the AI Model for
+Melody & Harmony…**, — дальше она работает на вашем компьютере: ничего никуда не отправляется.
+Удалить модель можно в [Settings ▸ Downloads ▸ AI Models](../../ai/models/).
+
+<Aside type="tip">
+Лучше всего конвертируются чистые сольные партии. Полный микс сначала разделите через
+[Separate Stems](../../ai/separate-stems/), а потом конвертируйте нужный стем.
 </Aside>

@@ -1,8 +1,10 @@
 ---
-title: "Нижняя панель и окна устройств"
+title: Нижняя панель и окна устройств
+description: Панель под видом — Devices, Pattern и Clip, — её отдельное окно для второго экрана и окна устройств для цепочек рэков.
 sidebar:
-  order: 14
-status: todo
+  order: 5
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/MainWindow.Detail.cs
   - src/managed/Nota.App/MainWindow.DetailWindow.cs
@@ -11,13 +13,46 @@ sources:
 ---
 
 import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Device Window.html
-  - bottom panel Devices/Clip
-  - detach to own window (⧉)
-  - Device window
-*/}
+Панель под Arrangement или Session подробно показывает то, с чем вы работаете. Выберите трек —
+она покажет его устройства; дважды щёлкните клип — откроет клип.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
+<Shot id="views/detail-panel" alt="Нижняя панель с треком Keys: Nota Pentad и Nota EQ-8" />
+
+## Devices, Pattern, Clip
+
+Вкладки в левом верхнем углу переключают содержимое — <Kbd>Tab</Kbd> перебирает их по кругу:
+
+- **Devices** — [цепочка устройств](../../devices/) трека: MIDI-эффекты, инструмент и эффекты
+  слева направо. Если не помещаются, прокрутите вбок.
+- **Pattern** — пошаговая сетка MIDI-клипа на треке с Drum Rack.
+- **Clip** — выбранный клип в редакторе [MIDI](../../editing/piano-roll/) или
+  [аудио](../../editing/audio-clips/).
+
+В заголовке — имя и тип трека; у трека инструмента там же задержка цепочки (**PDC**), которую
+Nota компенсирует автоматически.
+
+Справа: **Freeze** и **Live Freeze** ([заморозка трека](../../basics/tracks/)), кнопка ⧉ и ×,
+закрывающий панель. **View ▸ Toggle detail panel** показывает или прячет её.
+
+## Панель в отдельном окне
+
+⧉ выносит панель в отдельное окно — удобно на втором экране. В нём сразу видны **редактор клипа
+сверху и цепочка устройств снизу**, с разделителем между ними. Закройте окно — панель вернётся
+под вид.
+
+## Окна устройств
+
+Устройство внутри рэка — сэмплер на пэде Drum Rack, синтезатор в цепочке Instrument Rack,
+эффект в цепочке Audio Effect Rack или на голосе Nota Rhythm — открывается в своём окне. В его
+заголовке имя устройства и трека, выбор пресета, переключатель размера **S / L** и обход
+(bypass); ниже — само устройство целиком.
+
+<Shot id="views/device-window/nota-bass-l" alt="Окно устройства: Nota Bass, открытый из рэка" width={360} />
+
+<Aside>
+Клавиши транспорта — <Kbd>Space</Kbd>, <Kbd>Return</Kbd>, <Kbd>⌘ R</Kbd> — и отмена работают,
+даже когда в фокусе отдельное окно.
 </Aside>

@@ -1,29 +1,104 @@
 ---
-title: "Piano roll"
+title: Piano roll
+description: Editing MIDI clips — drawing and moving notes, velocity, grid and quantize, scale, clip envelopes and the generator and transform tools.
 sidebar:
-  order: 15
-status: todo
+  order: 1
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/PianoRollView.cs
   - src/managed/Nota.App/ClipEditorView.cs
   - src/managed/Nota.App/ClipEditorKit.cs
-  - src/managed/Nota.App/DrumPatternView.cs
-  - src/managed/Nota.App/MainWindow.Input.cs
+  - src/managed/Nota.App/MidiToolsView.cs
+  - src/managed/Nota.Application/Midi/MidiToolCatalog.cs
+  - src/managed/Nota.Application/Midi/MidiGenerators.cs
+  - src/managed/Nota.Application/Midi/MidiTransforms.cs
 ---
 
 import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Clip Editor.html
-  - MIDI clip editor
-  - draw/select/move notes
-  - velocity
-  - keys (arrows
-  - ⇧ octave
-  - ⌘A/⌘D)
-  - drum pattern view
-  - typing notes from the computer keyboard
-*/}
+Double-click a MIDI clip — in the Arrangement or a Session slot — and it opens in the **Clip**
+tab of the panel at the bottom.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
+<Shot id="start-here/clip-editor" alt="A MIDI clip in the clip editor: clip settings on the left, notes and velocity stems on the right" />
+
+## Notes
+
+| Do this | To |
+|---|---|
+| Double-click empty grid | Add a note |
+| Double-click a note | Delete it |
+| Drag a note | Move it in time and pitch |
+| Drag a note's edge | Change where it starts or ends |
+| Click a note · <Kbd>⇧</Kbd>-click | Select it · add it to the selection |
+| Drag across empty grid | Select the notes in the rectangle |
+| <Kbd>⌘ A</Kbd> | Select all notes |
+| <Kbd>←</Kbd> <Kbd>→</Kbd> | Move the selection by the grid |
+| <Kbd>↑</Kbd> <Kbd>↓</Kbd> · <Kbd>⇧ ↑</Kbd> <Kbd>⇧ ↓</Kbd> | Transpose by a semitone · an octave |
+| <Kbd>⌘ D</Kbd> | Duplicate the selection right after itself (replacing the notes it lands on) |
+| <Kbd>⌘ C</Kbd> <Kbd>⌘ X</Kbd> <Kbd>⌘ V</Kbd> | Copy, cut, paste notes |
+| <Kbd>Delete</Kbd> | Delete the selected notes |
+
+Edits play straight away — drag a note while the loop runs and you hear it move.
+
+## Velocity
+
+The lane under the notes shows each note's velocity as a stem. Drag a stem to set it; with
+several notes selected, they move together. <Kbd>⇧</Kbd> adds a note to the selection.
+
+## The left column
+
+- **Clip** — **Start** and **Length**, and **Loop** with the loop length.
+- **Grid** — what notes snap to (1/16 and so on). **Quantize** pulls the selected notes onto the
+  grid, as far as **Strength** says — 100 % is rigid, less keeps some of the feel.
+- **Transpose** — move the selection by semitones or octaves.
+
+## Scale
+
+Turn **Scale** on in the toolbar and pick a root and a scale: the rows outside it are dimmed,
+so the notes that fit stand out. **Remove out of scale** deletes every note that doesn't fit.
+The setting stays as you move between clips. The [Nota Scale](../../devices/midi-effects/scale/)
+MIDI effect uses the same scales to correct notes live.
+
+## Envelopes
+
+**Envelopes** (next to **Notes**) draws curves across the clip: **Velocity** scales the notes'
+velocity, **Volume** the instrument's output while the clip plays. Click to add a point, drag
+it, right-click it to delete it.
+
+## Tools
+
+**Tools** opens generators and transforms that write notes for you. Pick a tool, set its
+parameters, and **Apply** — **Add** puts the result on top of the clip's notes, **Replace**
+swaps them; **Reroll** tries another **Seed**, **Revert** goes back.
+
+**Generators** — for an empty clip:
+
+| Tool | What it does |
+|---|---|
+| **Rhythm** | Lays down a pattern that leans on the strong beats, as densely as you ask |
+| **Seed** | Learns the clip's intervals and rhythm, then writes a new take in the same voice |
+| **Stacks** | Grows every note into a chord, voiced the way you'd play it |
+| **Euclidean** | Spreads a number of hits as evenly as a number of steps allows |
+| **Melodic Steps** | A step sequencer in scale degrees — pick a contour and a span, get a line |
+| **Shape** | Traces a curve across the clip and drops a note wherever it passes a step |
+
+**Transforms** — for notes you already have:
+
+| Tool | What it does |
+|---|---|
+| **Arpeggiate** | Breaks chords into a running sequence |
+| **Connect** | Fills the gaps between notes with runs that walk to the next pitch |
+| **Ornament** | Decorates notes with grace notes, trills and rolls |
+| **Quantize** | Pulls notes onto the grid, with swing and a strength short of rigid |
+| **Recombine** | Pulls pitch and rhythm apart and puts them back together differently |
+| **Span** | Rewrites note lengths — from staccato through legato to overlapping |
+| **Strum** | Rolls the notes of a chord out in time instead of hitting them together |
+| **Time Warp** | Bends the time axis so a phrase accelerates, drags or breathes |
+| **Velocity Shaper** | Draws a curve through the velocities instead of editing them one by one |
+
+<Aside type="tip">
+A clip on a Drum Rack track also has a **Pattern** tab: a step grid with a row per pad.
 </Aside>

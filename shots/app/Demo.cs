@@ -99,8 +99,17 @@ public sealed class Demo
         _engine.SetTrackPan(lead, 0.15f);
         Clip(lead, 8, 8, Melody(), "Hook");
         Clip(lead, 24, 8, Melody(), "Hook");
-        _engine.AddAudioClip(texture, Sample("pad"), 0);
-        _engine.AddAudioClip(texture, Sample("pad"), 64);
+        foreach (var at in new[] { 0, 64 })
+            _engine.SetClipName(texture, _engine.AddAudioClip(texture, Sample("pad"), at), "Pad");
+
+        // Automation: the hook fades in over its first phrase and dips at the turnaround.
+        int lane = _engine.AddAutomationLane(lead, AutomationTarget.Volume, -1, -1);
+        if (lane >= 0)
+            _engine.SetAutomationPoints(lead, lane, new[]
+            {
+                new AutomationPoint(32, 0.25f), new AutomationPoint(48, 0.85f, 0.4f),
+                new AutomationPoint(60, 0.85f), new AutomationPoint(64, 0.45f), new AutomationPoint(96, 0.8f, -0.3f),
+            });
 
         while (_engine.SceneCount < 3) _engine.AddScene();
         string[] scenes = { "Intro", "Verse", "Drop" };

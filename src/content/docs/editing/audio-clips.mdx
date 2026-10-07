@@ -1,30 +1,89 @@
 ---
-title: "Audio clips and warp"
+title: Audio clips and warp
+description: Editing audio clips — trimming, gain, pitch, reverse, warping to the tempo with markers, volume and pan envelopes, and the clip ADSR.
 sidebar:
-  order: 16
-status: todo
+  order: 2
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/AudioClipEditorView.cs
-  - src/managed/Nota.App/ClipPropsView.cs
   - src/managed/Nota.App/ClipAdsrKit.cs
-  - src/managed/Nota.App/ClipAudioExport.cs
-  - src/managed/Nota.App/WaveformView.cs
+  - src/managed/Nota.App/ClipPropsView.cs
+  - src/managed/Nota.App/MainWindow.AudioImport.cs
   - src/native/nota.engine/src/Warp.h
   - src/native/nota.engine/src/TempoDetect.h
 ---
 
 import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
 
-{/* Scope (from coverage.yml)
-  - audio clip editor
-  - warp & tempo detect
-  - gain/fades (ADSR kit)
-  - clip props
-  - loops fit project key/tempo on drop
-  - one-shots not warped
-  - export clip audio
-*/}
+Audio gets into a project by dragging files from the browser or your file manager, with
+**File ▸ Import audio…**, or by [recording](../recording/). Double-click an audio clip — in the
+Arrangement or a Session slot — to open it in the clip editor.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
+<Shot id="editing/audio-clip-editor" alt="An audio clip in the clip editor: Sample tab with the waveform, clip start and length, gain and pitch" />
+
+## Tempo and key when you drop a file
+
+Nota analyses every file it imports. A **loop** (or a long take with a clear tempo) is warped
+to the project tempo as it lands, and the status line says so — "loop warped 124 → 120 BPM".
+With **Transpose to project key** on (the Files tab's ⋮ menu), it is also moved to the
+[project key](../../basics/transport/#tempo-time-signature-and-key) the shorter way round. A
+**one-shot** — a kick, a hit — is never warped.
+
+Long files decode in the background: the track appears straight away and its waveform fills in.
+
+## Sample
+
+The **Sample** tab shows the waveform with the part of the file the clip plays.
+
+- **Clip** — **Start** and **Length**. Drag the brackets on the waveform to trim; with **Snap**
+  on, they land on the beat grid.
+- **Playback** — **Gain** (drag or double-click to type) and **Pitch** in semitones.
+  **Reverse** plays the clip backwards.
+
+## Warp
+
+**Warp** stretches the audio to the project tempo without changing its pitch, and keeps it in
+time when you change the tempo later. Choose how it stretches:
+
+| Mode | Best for |
+|---|---|
+| **Beats** | Drums and percussive loops — keeps the hits sharp |
+| **Tones** | Monophonic, pitched material — vocals, bass, leads |
+| **Texture** | Pads, ambiences, noisy sounds |
+| **Re-Pitch** | Like tape: speed and pitch change together |
+| **Complex** | Full mixes and dense material |
+| **Complex Pro** | Full mixes, with more care for formants |
+
+**Detect tempo** reads the file's tempo and conforms it to the project. For finer control, use
+**markers**: double-click the waveform to pin a marker, then drag it to line that moment up with
+the grid. **To transients** pins a marker on every hit, so a drum loop locks to the grid.
+
+## Envelope
+
+**Envelope** draws **Volume** and **Pan** curves across the clip. Click to add a point, drag
+to move it, right-click to delete it.
+
+## ADSR
+
+**ADSR** shapes the clip's start and end: **Attack** fades it in, **Decay** and **Sustain** set
+how it settles, **Release** fades it out. You can also shape it right on the timeline: hover an
+audio clip and drag the handles in its top corners (or the dot that appears). Double-click a
+handle to reset that stage.
+
+## On the timeline
+
+Right-click an audio clip for **Reverse**, **Separate Stems…** (split it into drums, bass,
+vocals and the rest — see [Separate Stems](../../ai/separate-stems/)) and **Convert** (turn its
+melody, harmony or drums into MIDI — see [Convert audio to MIDI](../midi-tools/)).
+
+Drag an audio clip onto a track with a Sampler, Nota Grain, Drum Rack or Instrument Rack and its
+audio loads there; drag it out of the Arrangement and it becomes a sample you can drop anywhere —
+see [Copy, paste and drag](../clipboard/#audio-clips-into-instruments).
+
+<Aside type="tip">
+A clip plays only the part between its brackets, but the whole file stays in the project — trim
+generously, you can always open it back up.
 </Aside>

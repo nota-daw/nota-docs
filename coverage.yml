@@ -61,56 +61,56 @@ sections:
       covers: [timeline, clips move/trim/duplicate/split/consolidate, grid & snap, zoom/scroll, overview strip, sections, clip names, lane controls]
       sources: [src/managed/Nota.App/ArrangementView.cs, src/managed/Nota.App/ArrangementView.ClipDrag.cs, src/managed/Nota.App/ArrangementView.Overview.cs, src/managed/Nota.App/ArrangementView.Sections.cs, src/managed/Nota.App/ArrangementView.LaneControl.cs]
       mockup: Nota Arrangement.html
-      status: todo
+      status: done
     - page: views/session
       covers: [clip grid, named coloured clips with previews, inspector, launch modes, follow actions, scenes (own tempo), insert scene ⌘I, Session recording, session mixer, toolbar]
       sources: [src/managed/Nota.App/SessionView.cs, src/managed/Nota.App/SessionView.Grid.cs, src/managed/Nota.App/SessionView.Inspector.cs, src/managed/Nota.App/SessionView.Mixer.cs, src/managed/Nota.App/SessionView.Toolbar.cs, src/native/nota.engine/src/SessionPlayer.h, docs/session-view-requirements.md]
       mockup: Nota Session View.html
-      status: todo
+      status: done
     - page: views/modular
       covers: [Modular view, CV sources/targets, modulation routing, Shutter pattern as CV]
       sources: [src/managed/Nota.App/ModularView.cs, src/native/nota.engine/src/Modulation.h]
-      status: todo
+      status: done
     - page: views/mixer
       covers: [Mixer window ⇧⌘M, sends & returns, groups, master, meters, record source]
       sources: [src/managed/Nota.App/MixerView.cs, src/managed/Nota.App/MixerWindow.cs, src/managed/Nota.App/MainWindow.Mixer.cs]
-      status: todo
+      status: done
     - page: views/detail-panel
       covers: [bottom panel Devices/Clip, detach to own window (⧉), Device window]
       sources: [src/managed/Nota.App/MainWindow.Detail.cs, src/managed/Nota.App/MainWindow.DetailWindow.cs, src/managed/Nota.App/DetailWindow.cs, src/managed/Nota.App/DeviceWindow.cs]
       mockup: Nota Device Window.html
-      status: todo
+      status: done
 
   editing:
     - page: editing/piano-roll
       covers: [MIDI clip editor, draw/select/move notes, velocity, keys (arrows, ⇧ octave, ⌘A/⌘D), drum pattern view, typing notes from the computer keyboard]
       sources: [src/managed/Nota.App/PianoRollView.cs, src/managed/Nota.App/ClipEditorView.cs, src/managed/Nota.App/ClipEditorKit.cs, src/managed/Nota.App/DrumPatternView.cs, src/managed/Nota.App/MainWindow.Input.cs]
       mockup: Nota Clip Editor.html
-      status: todo
+      status: done
     - page: editing/audio-clips
       covers: [audio clip editor, warp & tempo detect, gain/fades (ADSR kit), clip props, loops fit project key/tempo on drop, one-shots not warped, export clip audio]
       sources: [src/managed/Nota.App/AudioClipEditorView.cs, src/managed/Nota.App/ClipPropsView.cs, src/managed/Nota.App/ClipAdsrKit.cs, src/managed/Nota.App/ClipAudioExport.cs, src/managed/Nota.App/WaveformView.cs, src/native/nota.engine/src/Warp.h, src/native/nota.engine/src/TempoDetect.h]
-      status: todo
+      status: done
     - page: editing/recording
       covers: [arm & record audio/MIDI, inputs, count-in, Session recording, latency]
       sources: [src/native/nota.engine/src/Engine_Recording.cpp]
-      status: todo
+      status: done
     - page: editing/automation
       covers: [automation lanes, draw/edit points, Lock Envelopes, MIDI-learned automation]
       sources: [src/managed/Nota.App/ArrangementView.Automation.cs, src/native/nota.engine/src/Automation.h]
-      status: todo
+      status: done
     - page: editing/time-ranges
       covers: [range selection, Duplicate time ⇧⌘D, Insert silence ⇧⌘I, split ⌘E, consolidate ⌘J, loop selection]
       sources: [src/managed/Nota.App/ArrangementView.cs]
-      status: todo
+      status: done
     - page: editing/clipboard
       covers: [cut/copy/paste clips, Paste Bounced Audio ⇧⌘V, Arrangement ⇄ Session copy ⇧⌘C, drag audio clip into Sampler/Grain/Drum Rack/Instrument Rack]
       sources: [src/managed/Nota.App/ClipTransfer.cs, src/managed/Nota.App/MainWindow.PasteBounced.cs, src/managed/Nota.App/MainWindow.Dnd.cs]
-      status: todo
+      status: done
     - page: editing/midi-tools
       covers: [Convert Melody / Harmony / Drums to MIDI, MIDI tools panel]
       sources: [src/managed/Nota.App/MainWindow.Convert.cs, src/managed/Nota.App/MidiToolsView.cs]
-      status: todo
+      status: done
 
   devices:
     overview:

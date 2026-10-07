@@ -1,23 +1,47 @@
 ---
-title: "Time ranges"
+title: Time ranges
+description: Selecting a stretch of time across tracks, and what to do with it — duplicate time, insert silence, split, consolidate, loop.
 sidebar:
-  order: 19
-status: todo
+  order: 5
+since: "0.50.1"
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/ArrangementView.cs
+  - src/managed/Nota.App/ArrangementView.LaneControl.cs
+  - src/managed/Nota.App/ArrangementView.Sections.cs
 ---
 
 import { Aside } from '@astrojs/starlight/components';
+import Kbd from '@components/Kbd.astro';
 
-{/* Scope (from coverage.yml)
-  - range selection
-  - Duplicate time ⇧⌘D
-  - Insert silence ⇧⌘I
-  - split ⌘E
-  - consolidate ⌘J
-  - loop selection
-*/}
+A **time range** is a stretch of the song across one or more tracks — not whole clips, but
+"bars 9 to 17". It's how you rework the structure of a song.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
+## Selecting a range
+
+- <Kbd>⇧</Kbd>-drag in the Arrangement lanes — the drag can start on empty space or on a clip.
+  The edges snap to the grid (<Kbd>⌥</Kbd> to place them freely).
+- Right-click a section ▸ **Select section** to select it as a range across every track.
+
+## Working on the range
+
+| Command | Key | What it does |
+|---|---|---|
+| **Duplicate time** | <Kbd>⌘ ⇧ D</Kbd> | Inserts a copy of the range right after it. Everything later — on every track, automation included — moves right; clips that cross the point are cut. Press again to repeat the copy. |
+| **Insert silence** | <Kbd>⌘ ⇧ I</Kbd> | Opens an empty gap as long as the range at its start, pushing everything from there right. |
+| **Duplicate** | <Kbd>⌘ D</Kbd> | Copies the range's material on the selected tracks right after it. Nothing moves to make room. |
+| **Split** | <Kbd>⌘ E</Kbd> | Cuts the clips at the range edges (without a range: at the playhead). |
+| **Consolidate** | <Kbd>⌘ J</Kbd> | Replaces the material in the range with one clip per track — notes merged, audio rendered with its gain, pitch, warp and envelopes. |
+| **Loop** | <Kbd>⌘ L</Kbd> | Sets the loop to the range and turns it on. |
+| **Delete** | <Kbd>Delete</Kbd> | Deletes the material in the range, cutting clips at its edges. The gap stays. |
+| **Paste Bounced Audio** | <Kbd>⌘ ⇧ V</Kbd> | Renders the latest range of an audio or instrument track through its whole chain (pre-fader) and pastes it as an audio clip onto the selected audio track at the playhead, over what's there. |
+
+**Duplicate time** and **Insert silence** act on the whole song, not only the selected tracks —
+they're the way to add a bar or a chorus without shifting every track by hand. They're also in
+the **Edit** menu and in the right-click menu of the range.
+
+<Aside type="tip">
+To repeat a chorus: right-click its section ▸ **Select section**, then <Kbd>⌘ ⇧ D</Kbd>. Or
+right-click the section ▸ **Duplicate**.
 </Aside>

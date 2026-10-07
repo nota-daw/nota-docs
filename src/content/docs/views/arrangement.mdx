@@ -1,29 +1,107 @@
 ---
-title: "Arrangement"
+title: Arrangement
+description: The song on a timeline — moving and trimming clips, selecting, zooming, the overview strip, sections and clip names.
 sidebar:
-  order: 10
-status: todo
+  order: 1
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/ArrangementView.cs
+  - src/managed/Nota.App/ArrangementView.LaneControl.cs
   - src/managed/Nota.App/ArrangementView.ClipDrag.cs
   - src/managed/Nota.App/ArrangementView.Overview.cs
   - src/managed/Nota.App/ArrangementView.Sections.cs
-  - src/managed/Nota.App/ArrangementView.LaneControl.cs
 ---
 
 import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Arrangement.html
-  - timeline
-  - clips move/trim/duplicate/split/consolidate
-  - grid & snap
-  - zoom/scroll
-  - overview strip
-  - sections
-  - clip names
-  - lane controls
-*/}
+The Arrangement lays the song out left to right: one row per track, time running along the
+ruler. It is where a song gets its final shape.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
+<Shot id="views/arrangement-timeline" alt="The Arrangement with the whole demo song in view: the Rhythm group, Keys, Lead and Texture" />
+
+From top to bottom: the **Overview** strip, the **Sections** lane, the ruler with the
+**Zoom** buttons, the tracks, and — pinned at the bottom — the return tracks and the master.
+
+## Clips
+
+| Do this | To |
+|---|---|
+| Double-click empty space on an instrument track | Create a MIDI clip there |
+| Click a clip | Select it |
+| Drag a clip | Move it — along the track, or to another track of the same kind |
+| Drag a clip's left or right edge | Trim it |
+| Drag with <Kbd>⌥</Kbd> | Ignore the grid for this drag |
+| Double-click a clip | Open it in the [clip editor](../../editing/piano-roll/) |
+| <Kbd>⌘</Kbd>-click | Add or remove a clip from the selection |
+| Drag across empty space | Select every clip the rectangle touches |
+| <Kbd>⌘ A</Kbd> | Select all clips |
+
+Clips snap to the **GRID** set in the transport bar while you drag them; the magnet button
+switches snapping off. Dragging several selected clips moves them together, as one undo step.
+
+Right-click a clip for **Split here**, **Duplicate**, **Delete**, **Deactivate clip**,
+**Reverse** (audio), **Consolidate**, **Copy** / **Cut** / **Paste**, **Rename…**, **Loop
+selection**, **Copy to Session** / **Copy to Scene**, and — on audio — **Separate Stems…** and
+**Convert** ([Convert audio to MIDI](../../editing/midi-tools/)). Most of these work on the
+whole selection at once.
+
+<Aside type="tip">
+<Kbd>0</Kbd> deactivates the selected clips: they stay in place, greyed out, and play
+nothing. <Kbd>0</Kbd> again switches them back on. A quick way to try a part without it.
 </Aside>
+
+## Time ranges
+
+<Kbd>⇧</Kbd>-drag anywhere in the lanes — even starting on a clip — to select a stretch of
+time across tracks instead of whole clips. A range is what [Duplicate time, Insert silence,
+Split and Consolidate](../../editing/time-ranges/) work on, and <Kbd>⌘ L</Kbd> loops it.
+
+## Moving around
+
+| Do this | To |
+|---|---|
+| <Kbd>⌘</Kbd> + scroll | Zoom in and out around the mouse pointer |
+| <Kbd>⇧</Kbd> + scroll, or a sideways swipe | Scroll along the song |
+| Scroll | Scroll through the tracks |
+| **Zoom −** / **+** | Zoom out / in |
+| Click in the ruler | Move the playhead |
+| Drag along the ruler | Draw a loop range |
+
+### The overview strip
+
+The **Overview** above the ruler shows the whole song in miniature, with the part on screen
+as a window over it. Drag the window sideways to scroll, drag it up or down — or drag its
+edges — to zoom, and double-click the strip to fit the whole song on screen. The label next to
+it reads which bars you're looking at ("bar 1–8 / 36"). **View ▸ Toggle overview** hides it.
+
+## Sections
+
+The **Sections** lane names the parts of the song — Intro, Verse, Drop — so the structure is
+readable at a glance.
+
+- Drag along the empty lane to mark a section over those bars.
+- Click a section to jump the playhead to its start; double-click it to rename it.
+- Drag a section to move it, drag its edge to resize it — always in whole bars.
+- Right-click it for **Loop section**, **Select section** (as a time range across every track),
+  **Duplicate**, **Rename…** and **Delete**.
+
+Sections are saved with the project. **View ▸ Toggle sections** hides the lane.
+
+## Clip names and groups
+
+A clip shows its name only where a run of clips begins, so a repeated pattern reads as one
+block; a clip you named by hand always shows its name. **View ▸ Clip names** switches between
+every clip, the first of each run, and none.
+
+Group tracks collapse to a slim titled bar with mute, solo and level, and open to their full
+controls when selected — see [Tracks](../../basics/tracks/#groups).
+
+## Arrangement and Session together
+
+Clips move between the Arrangement and [Session](../session/) with the clipboard or
+<Kbd>⌘ ⇧ C</Kbd> — see [Copy, paste and drag](../../editing/clipboard/). When a track plays
+Session clips, its Arrangement clips wait; **Back to Arrangement** in the Session toolbar hands
+the tracks back.

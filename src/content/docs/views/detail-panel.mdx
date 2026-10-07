@@ -1,8 +1,10 @@
 ---
-title: "Detail panel and device windows"
+title: Detail panel and device windows
+description: The panel under the view — Devices, Pattern and Clip — its own window for a second screen, and device windows for rack chains.
 sidebar:
-  order: 14
-status: todo
+  order: 5
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/MainWindow.Detail.cs
   - src/managed/Nota.App/MainWindow.DetailWindow.cs
@@ -11,13 +13,46 @@ sources:
 ---
 
 import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Device Window.html
-  - bottom panel Devices/Clip
-  - detach to own window (⧉)
-  - Device window
-*/}
+The panel under the Arrangement or Session shows what you're working on in detail. Select a
+track and it shows the track's devices; double-click a clip and it opens the clip.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
+<Shot id="views/detail-panel" alt="The detail panel showing the Keys track: Nota Pentad and Nota EQ-8" />
+
+## Devices, Pattern, Clip
+
+The tabs in its top-left corner switch what it shows — <Kbd>Tab</Kbd> cycles them:
+
+- **Devices** — the track's [device chain](../../devices/): MIDI effects, the instrument and
+  the effects, left to right. Scroll sideways when they don't fit.
+- **Pattern** — the step grid of a MIDI clip on a Drum Rack track.
+- **Clip** — the selected clip in the [MIDI](../../editing/piano-roll/) or
+  [audio](../../editing/audio-clips/) clip editor.
+
+The header names the track and its type; for an instrument track it also shows the delay the
+chain adds (**PDC**), which Nota compensates automatically.
+
+On the right: **Freeze** and **Live Freeze** ([freezing a track](../../basics/tracks/#freezing-a-track)),
+the ⧉ button and × to close the panel. **View ▸ Toggle detail panel** shows or hides it.
+
+## The panel in its own window
+
+⧉ moves the panel into a window of its own — useful on a second screen. That window shows the
+**clip editor on top and the device chain underneath**, both at once, with a splitter between
+them. Close it and the panel docks back under the view.
+
+## Device windows
+
+A device inside a rack — a Drum Rack pad's sampler, an Instrument Rack chain's synth, an
+effect in an Audio Effect Rack chain or on a Nota Rhythm voice — opens in a window of its own.
+Its title bar carries the device and track name, the preset picker, the **S / L** size switch
+and the bypass switch; the full device sits underneath.
+
+<Shot id="views/device-window/nota-bass-l" alt="A device window: Nota Bass opened from a rack" width={360} />
+
+<Aside>
+The transport keys — <Kbd>Space</Kbd>, <Kbd>Return</Kbd>, <Kbd>⌘ R</Kbd> — and undo keep
+working while a detached window has focus.
 </Aside>

@@ -1,22 +1,77 @@
 ---
-title: "Automation"
+title: Automation
+description: Drawing and recording automation lanes for volume, pan and any device parameter; overriding and re-enabling; editing points and ranges.
 sidebar:
-  order: 18
-status: todo
+  order: 4
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/ArrangementView.Automation.cs
   - src/native/nota.engine/src/Automation.h
 ---
 
 import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
 
-{/* Scope (from coverage.yml)
-  - automation lanes
-  - draw/edit points
-  - Lock Envelopes
-  - MIDI-learned automation
-*/}
+Automation makes a value move over time — a filter opening up, a fade, a send swelling into a
+drop. Any knob or fader in Nota can be automated: track volume and pan, every parameter of a
+built-in device, plug-in parameters, MIDI effects.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
+<Shot id="editing/automation-lanes" alt="Automation mode in the Arrangement: the Lead track's volume lane with a curve across the song" />
+
+## Showing the lanes
+
+Click the **automation** button in the transport bar (<Kbd>⌘ ⇧ A</Kbd>). Each track's lane shows
+one parameter, picked with the pill at the start of the lane — click it and choose from the
+list. Parameters that already carry automation are marked with a brass dot and listed first.
+
+While automation mode is on, touching any knob or fader of a track — on a device, a plug-in or
+the mixer — switches that track's lane to it.
+
+## Drawing
+
+| Do this | To |
+|---|---|
+| Double-click the lane | Add a point (also between two points) |
+| Drag a point | Move it |
+| Double-click a point | Delete it |
+| <Kbd>⌥</Kbd>-drag a segment | Bend it into a curve |
+| <Kbd>⇧</Kbd>-drag | Select a range of the lane |
+| <Kbd>⌘ C</Kbd> <Kbd>⌘ X</Kbd> <Kbd>⌘ V</Kbd> · <Kbd>⌘ D</Kbd> | Copy, cut, paste · duplicate the selected range |
+
+A single click moves the playhead, as anywhere else in the Arrangement. Right-click the lane
+for **Copy**, **Cut**, **Paste** and **Delete automation**.
+
+## Recording automation
+
+There are no modes to set. Press **Record** and move a control: its lane records what you do.
+A control you move with the mouse stops writing when you let go; a hardware knob, fader, stick
+or trigger keeps writing its last value until the transport stops.
+
+## Taking over by hand
+
+Automation always plays back. If you move an automated control **while not recording**, your
+hand wins: that lane is overridden and stops pulling the knob back. The button next to the
+automation button lights up while anything is overridden — click it to hand every lane back to
+playback.
+
+## Automation moves with the clips
+
+When you move clips, the automation under them moves along. Moved to **another track**, a clip
+takes only its Volume and Pan automation — device automation stays on the track it was written
+for. **Edit ▸ Lock Envelopes** pins all automation to the timeline instead, so you can rearrange
+clips without dragging it along.
+
+## Other kinds of envelope
+
+- The **master volume** has its own lane on the Master row — click it to add points.
+- A **MIDI clip** has Velocity and Volume envelopes inside the clip — see
+  [Piano roll](../piano-roll/#envelopes).
+- An **audio clip** has Volume and Pan envelopes and an ADSR — see
+  [Audio clips](../audio-clips/#envelope).
+
+<Aside type="tip">
+Lanes follow their device: reorder or remove devices and the automation stays with the
+parameter it belongs to.
 </Aside>
