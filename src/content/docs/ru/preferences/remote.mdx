@@ -1,18 +1,29 @@
 ---
 title: "Remote"
+description: "Settings ▸ Remote — разрешить управление с телефона, порт, что разрешено телефонам и доверенные устройства."
 sidebar:
-  order: 90
-status: todo
+  order: 4
+since: "0.50.1"
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.Remote.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml)
-  - see coverage.yml
-*/}
+<Shot id="preferences/remote" alt="Settings ▸ Remote" />
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+| Настройка | Что делает |
+|---|---|
+| **Allow control from a phone** | Включает Nota Remote (по умолчанию выключено) |
+| **Port** | Сетевой порт для телефонов (по умолчанию 7788) — если включён брандмауэр, разрешите его |
+| **Status** | Где слушает Nota, включая USB-адрес, если телефон на кабеле |
+| **Phones may** | **Play notes only** (пэды и клавиши) или **Play and control the project** (ещё микшер, транспорт, макросы, XY и Session) |
+
+**Trusted devices** — телефоны, которые уже сопрягались. Доверенный телефон переподключается с иконки на
+домашнем экране без кода; **Forget** отключает его, и ему придётся отсканировать новый код. Выключение
+Remote отключает всех.
+
+При включении macOS спросит, можно ли Nota искать устройства в локальной сети (Windows — можно ли
+пользоваться сетью), — разрешите, иначе телефоны не достучатся. См. [Nota Remote](../../control/nota-remote/).

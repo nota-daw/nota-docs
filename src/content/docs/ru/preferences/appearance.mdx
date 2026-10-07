@@ -1,20 +1,20 @@
 ---
 title: "Appearance"
+description: "Settings ▸ Appearance — тема (Ember Graphite, Ember Paper или System), вид волн и управление через MCP."
 sidebar:
-  order: 94
-status: todo
+  order: 8
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml)
-  - theme Graphite/Paper/System
-  - waveforms
-  - AI control
-*/}
+<Shot id="preferences/appearance" alt="Settings ▸ Appearance" />
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+| Настройка | Что делает |
+|---|---|
+| **Theme** | **Ember Graphite** (тёмная, по умолчанию), **Ember Paper** (светлая) или **System** (следует оформлению компьютера и переключается вместе с ним) |
+| **Waveform** | Как рисуются аудиоклипы в Arrangement: **Bars** разносит пики, чтобы читался ритм; **Solid** рисует каждый пиксель |
+| **AI control (MCP)** | Позволить ИИ-ассистенту работать в Nota — переключатель, порт, статус и **Copy config**. См. [Управление через MCP](../../ai/mcp/) |

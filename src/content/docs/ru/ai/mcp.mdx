@@ -1,20 +1,59 @@
 ---
 title: "Управление через MCP"
+description: "Позвольте ИИ-ассистенту, например Claude, работать в открытом проекте через встроенный MCP-сервер Nota — треки, ноты, устройства, Session, сведение, экспорт и многое другое."
 sidebar:
-  order: 85
-status: todo
+  order: 3
+updated: "0.50.1"
+status: done
 sources:
-  - src/managed/Nota.Mcp/Tools/
+  - src/managed/Nota.App/PreferencesWindow.cs
+  - src/managed/Nota.Mcp/Tools/ProjectTools.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import { Steps, Aside } from '@astrojs/starlight/components';
 
-{/* Scope (from coverage.yml)
-  - AI control over MCP (Appearance toggle)
-  - connecting a client
-  - what tools can do
-*/}
+В Nota встроен **MCP-сервер** (Model Context Protocol). Если он включён, ИИ-ассистент — Claude Desktop
+или Claude Code — может читать и править проект, открытый в Nota: добавлять треки, писать ноты,
+настраивать устройства, собирать сцены Session, сводить и экспортировать. Все его изменения сразу видны
+на экране и проходят через отмену, как ваши.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
+## Включение
+
+<Steps>
+
+1. **Settings ▸ Appearance ▸ AI control (MCP)** ▸ **Enable MCP server (let an AI drive Nota)**. По
+   умолчанию выключено.
+
+2. **Copy config** копирует готовую запись сервера; добавьте её (или URL) как MCP-сервер в Claude
+   Desktop или Claude Code.
+
+3. Попросите ассистента поработать над проектом.
+
+</Steps>
+
+<Shot id="preferences/appearance" alt="Settings ▸ Appearance с разделом AI control (MCP)" />
+
+Сервер слушает только ваш компьютер (`127.0.0.1`, по умолчанию порт 3900) — из сети к нему не
+достучаться.
+
+## Что может ИИ
+
+- **Транспорт и проект** — воспроизведение, стоп, темп, размер, луп, метроном, полный снимок проекта и
+  его история версий (список, сохранение с заметкой, переключение, имена и звёздочки).
+- **Треки и микшер** — добавление и удаление треков, громкость, панорама, mute, solo, группы, посылы и
+  возвраты, индикаторы.
+- **Ноты и клипы** — MIDI-клипы и ноты, дорожки и точки автоматизации.
+- **Устройства** — инструменты, эффекты и MIDI-эффекты по виду, их параметры, пресеты (заводские и
+  ваши), рэки с цепочками, зонами и макросами, пэды Drum Rack, паттерны Nota Rhythm.
+- **Плагины** — список, добавление, открытие редактора, чтение и запись параметров и состояния.
+- **Session** — вся сетка клипов: слоты, клипы, сцены, запуск, follow actions, запись.
+- **Сэмплы** — поиск по библиотеке по виду, темпу, тональности и имени, похожие звуки, загрузка
+  сэмплов.
+- **ИИ-функции** — Separate Stems и конвертация клипа в MIDI.
+- **Экспорт** — мастер или стемы в WAV.
+- **MIDI** — список входов и работа с назначениями MIDI Learn.
+
+<Aside>
+Кое-что остаётся за вами: ИИ не может удалять версии и устанавливать модели.
 </Aside>

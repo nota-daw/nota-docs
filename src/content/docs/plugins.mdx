@@ -1,8 +1,10 @@
 ---
 title: "Plug-ins"
+description: "Using VST3 and AU plug-ins in Nota — adding them to tracks and racks, their card and editor window, state, latency and automation."
 sidebar:
-  order: 72
-status: todo
+  order: 1
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/DeviceCards/PluginCard.cs
   - src/managed/Nota.App/DeviceChainView.Plugin.cs
@@ -11,14 +13,50 @@ sources:
 
 import { Aside } from '@astrojs/starlight/components';
 
-{/* Scope (from coverage.yml)
-  - VST3 (all platforms) and AU (macOS)
-  - plug-in card
-  - open plug-in UI
-  - state save/restore
-  - missing plug-ins on load
-*/}
+Nota hosts **VST3** plug-ins on macOS, Windows and Linux, and **AU** (Audio Units) on macOS —
+instruments and effects alike. They sit in a track's chain or inside a rack like Nota's own
+devices.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
+## Adding a plug-in
+
+Scanned plug-ins appear in the browser's **Instruments** and **Audio effects** tabs, under
+**PLUG-INS**, after Nota's built-in devices. The tag at the right edge names the format and vendor,
+which tells the AU and VST3 builds of one plug-in apart. Double-click or drag one in, exactly as with
+a built-in device.
+
+Not there? Check [Scanning plug-ins](scanning/), or install free open-source plug-ins from
+[Settings ▸ Downloads](get-plugins/).
+
+## The plug-in card
+
+The card comes in two sizes:
+
+- **Small** — vendor, format, parameter count and latency, with **Open editor** and **Save preset**.
+- **Full** — every parameter as a knob, with a filter and pages, showing the plug-in's own value text
+  (double-click a knob for its default), and a **sidechain** source when the plug-in has one.
+
+**Open editor** opens the plug-in's own window — on top and focused; it closes when the device is
+removed. While it has focus, the computer keyboard still plays notes and the transport keys still
+work.
+
+## What Nota takes care of
+
+- **State** — every plug-in's settings are saved inside the project.
+- **Latency** — plug-in delay compensation keeps tracks aligned.
+- **Tempo and position** — plug-ins get tempo, position, play state and loop points, so synced
+  delays, LFOs, arpeggiators and loopers follow the song.
+- **Automation and MIDI Learn** — plug-in parameters can be [automated](../editing/automation/) and
+  [mapped to a controller](../control/midi-learn/).
+- **Bypass** — the switch in the card header, as on any device.
+
+## Opening a project with missing plug-ins
+
+If a project uses plug-ins that aren't on this computer, Nota opens it anyway and says what was
+skipped. If the [Nota plug-in registry](get-plugins/) has them, Nota offers to install them and
+reopen the project, so they come back with their saved settings. Plug-ins are found even when they're
+installed in a different folder than on the computer that saved the project.
+
+<Aside>
+Plug-ins are scanned in a separate process, so a plug-in that crashes during a scan can't take Nota
+down with it.
 </Aside>

@@ -1,19 +1,39 @@
 ---
 title: "Sample packs"
+description: "Install free sample packs — drum kits, a TR-808, basses, guitars, pianos, horns and more — from the Nota sample registry, licensed for any music."
 sidebar:
-  order: 78
-status: todo
+  order: 4
+since: "0.43.1"
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.Samples.cs
+  - src/managed/Nota.App/PreferencesWindow.Downloads.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml)
-  - Downloads → Sample Packs
-  - Samples folder
-*/}
+**Settings ▸ Downloads ▸ Sample Packs** installs free sample packs: drum kits, a TR-808, sampled
+basses, guitars, pianos, horns and more. Every pack is licensed for any music, commercial releases
+included.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="preferences/downloads-samples" alt="Settings ▸ Downloads ▸ Sample Packs" />
+
+## Installing
+
+Filter by **All**, **One-shots**, **Instruments** or **Installed** and search by name. Each row says
+what the pack is (one-shots, loops, instrument, mixed), who made it (**Credit**) and its size.
+
+- **Install** — downloads the pack from its author's own page, checks it against the registry's
+  checksum and unpacks only the samples and their docs. Nota checks there is room first.
+- **Update to …** — when a newer version is out.
+- **Show** — opens the pack's folder; **Source** — the pack's page.
+- **Remove** — deletes the pack's folder.
+
+Packs go into a **Downloaded** folder inside your Samples folder, so they show up in the browser's
+**Files** tab — and are analysed first by [Smart samples](../smart-samples/).
+
+## Nota Kits
+
+The one-shots of the 25 factory drum kits are synthesised on first launch (not shipped as audio) and
+appear in the Files tab under **Nota Kits**, ready to drag anywhere a sample goes.

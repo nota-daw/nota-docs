@@ -1,8 +1,10 @@
 ---
 title: "Downloads"
+description: "Settings ▸ Downloads — бесплатные плагины, сэмпл-паки и ИИ-модели в один щелчок."
 sidebar:
-  order: 92
-status: todo
+  order: 6
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.Downloads.cs
   - src/managed/Nota.App/PreferencesWindow.Store.cs
@@ -10,12 +12,19 @@ sources:
   - src/managed/Nota.App/PreferencesWindow.Models.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml)
-  - see coverage.yml
-*/}
+Одна страница для трёх видов загрузок, выбираемых переключателем рядом с заголовком:
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+| Раздел | Что там |
+|---|---|
+| **Plug-ins** | VST3-плагины с открытым кодом из реестра Nota — см. [Загрузка плагинов](../../plugins/get-plugins/) |
+| **Sample Packs** | Бесплатные сэмпл-паки с лицензией для любой музыки — см. [Сэмпл-паки](../../library/sample-packs/) |
+| **AI Models** | htdemucs и basic-pitch — см. [ИИ-модели](../../ai/models/) |
+
+<Shot id="preferences/downloads" alt="Settings ▸ Downloads ▸ Plug-ins" />
+
+Всё скачивается из релизов самих авторов, сверяется с зафиксированной контрольной суммой и только
+потом распаковывается — установщики не запускаются никогда. Фильтры и поиск остаются наверху при
+прокрутке списка. Загрузка продолжается и после закрытия Settings: прогресс переезжает в строку
+состояния главного окна, с × для отмены.

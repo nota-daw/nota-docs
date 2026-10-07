@@ -1,21 +1,47 @@
 ---
 title: "MIDI-контроллеры"
+description: "Как играть на Nota с MIDI-клавиатуры или клавиатуры компьютера, выбрать MIDI-входы и записать сыгранное."
 sidebar:
-  order: 79
-status: todo
+  order: 1
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/MidiInput.h
   - src/managed/Nota.App/MainWindow.Input.cs
+  - src/managed/Nota.App/PreferencesWindow.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
 
-{/* Scope (from coverage.yml)
-  - MIDI inputs
-  - playing instruments
-  - computer-keyboard notes
-*/}
+Подключите MIDI-клавиатуру или контроллер и играйте: по умолчанию Nota слушает все подключённые
+MIDI-входы. Ноты идут на выбранный трек инструмента; подготовьте трек и нажмите Record, чтобы их
+[записать](../../editing/recording/).
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+## Выбор входов
+
+**Settings ▸ MIDI** показывает подключённые MIDI-входы. Выключите вход, чтобы Nota перестала его
+слушать; новые устройства включены по умолчанию. Если подключили контроллер при открытых Settings —
+переоткройте их.
+
+<Shot id="preferences/midi" alt="Settings ▸ MIDI со списком MIDI-входов" />
+
+На кнопке **MIDI** в полосе транспорта мигает точка, когда контроллер что-то присылает, — удобно,
+чтобы проверить подключённый, но «молчащий» контроллер.
+
+## Нет MIDI-клавиатуры? Клавиатура компьютера
+
+| Клавиши | Играют |
+|---|---|
+| <Kbd>A</Kbd> <Kbd>S</Kbd> <Kbd>D</Kbd> <Kbd>F</Kbd> <Kbd>G</Kbd> <Kbd>H</Kbd> <Kbd>J</Kbd> <Kbd>K</Kbd> | Белые клавиши от C4 |
+| <Kbd>W</Kbd> <Kbd>E</Kbd> · <Kbd>T</Kbd> <Kbd>Y</Kbd> <Kbd>U</Kbd> | Чёрные клавиши |
+| <Kbd>Z</Kbd> / <Kbd>X</Kbd> | Октава вниз / вверх |
+| <Kbd>C</Kbd> / <Kbd>V</Kbd> | Velocity меньше / больше |
+
+Это работает даже когда в фокусе окно плагина. Нажатая клавиша подсвечивается в piano roll.
+
+## Ручки и фейдеры
+
+Чтобы ручки, фейдеры и пэды контроллера двигали регуляторы Nota, используйте [MIDI Learn](../midi-learn/).
+Играть и управлять Nota могут и геймпад, и телефон — см. [Геймпады](../gamepads/) и
+[Nota Remote](../nota-remote/).

@@ -1,20 +1,20 @@
 ---
 title: "Appearance"
+description: "Settings ▸ Appearance — the theme (Ember Graphite, Ember Paper or System), how waveforms draw, and AI control over MCP."
 sidebar:
-  order: 94
-status: todo
+  order: 8
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml)
-  - theme Graphite/Paper/System
-  - waveforms
-  - AI control
-*/}
+<Shot id="preferences/appearance" alt="Settings ▸ Appearance" />
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+| Setting | What it does |
+|---|---|
+| **Theme** | **Ember Graphite** (dark, the default), **Ember Paper** (light) or **System** (follows your computer's appearance and switches with it) |
+| **Waveform** | How audio clips draw in the Arrangement: **Bars** spaces the peaks out so the rhythm reads; **Solid** draws every pixel |
+| **AI control (MCP)** | Let an AI assistant work in Nota — the switch, the port, the status and **Copy config**. See [AI control over MCP](../../ai/mcp/) |

@@ -1,21 +1,47 @@
 ---
 title: "Preview player"
+description: "Audition samples, presets, drum kits and devices from the browser before you load them — waveform, spectrum, loop, auto-play and demo tracks for effects."
 sidebar:
-  order: 76
-status: todo
+  order: 2
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/PreviewPlayer.cs
   - src/native/nota.engine/src/Audition.h
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Preview Player.html
-  - audition samples
-  - waveform/spectrum
-  - sync to tempo
-*/}
+The player at the bottom of the browser lets you hear something before it goes into the project.
+It appears once you use a list.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="library/preview-player" alt="The preview player with a waveform, transport and volume" width={300} />
+
+## Samples (Files tab)
+
+The file's real waveform — click it to play from that point, hover for the time — with **Play** /
+**Stop**, the time, **Loop**, **Auto** (play each file as you select it) and a preview volume
+(double-click it to reset to 0 dB). <Kbd>↑</Kbd> <Kbd>↓</Kbd> step through the files; with Auto on,
+each one plays as you land on it.
+
+## Presets, kits and devices
+
+Under the **Instruments**, **Audio effects**, **MIDI effects** and **Presets** tabs the same player
+plays the selected factory preset, saved preset, drum kit or device. These tabs have their own
+**Auto**, off by default — press Play, or turn Auto on to hear each one as you select it. Sounds are
+rendered in a few milliseconds and the next row is prepared ahead, so stepping through a folder is
+instant.
+
+- **Instruments** play a phrase that suits them — a chord for pads, a riff for basses, a line for
+  leads, an arpeggio for plucks and bells.
+- **Drum kits** (Drum Rack and Nota Rhythm) play a groove on their own pads.
+- **MIDI effects** play a phrase that shows what they do.
+- **Audio effects** process a **demo track** — Drums, Keys or Bass, or genre loops (Pop, House,
+  Techno, Hip-Hop, Trap, Drum & Bass, Synthwave, Ambient). A track that suits the effect is picked for
+  you; the track button picks another (scroll over it to step through them), or the sample you last
+  selected in Files.
+
+**WAVE / SPEC** switches the window between the waveform and a live spectrum.
+
+Instrument Racks and plug-in presets aren't previewed — the player says why.

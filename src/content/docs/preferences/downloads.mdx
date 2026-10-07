@@ -1,8 +1,10 @@
 ---
 title: "Downloads"
+description: "Settings ▸ Downloads — free plug-ins, sample packs and AI models, installed with one click."
 sidebar:
-  order: 92
-status: todo
+  order: 6
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.Downloads.cs
   - src/managed/Nota.App/PreferencesWindow.Store.cs
@@ -10,12 +12,19 @@ sources:
   - src/managed/Nota.App/PreferencesWindow.Models.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml)
-  - see coverage.yml
-*/}
+One page for three kinds of download, picked with the switch beside its title:
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+| Side | What's there |
+|---|---|
+| **Plug-ins** | Open-source VST3 plug-ins from the Nota plug-in registry — see [Downloading plug-ins](../../plugins/get-plugins/) |
+| **Sample Packs** | Free sample packs, licensed for any music — see [Sample packs](../../library/sample-packs/) |
+| **AI Models** | htdemucs and basic-pitch — see [AI models](../../ai/models/) |
+
+<Shot id="preferences/downloads" alt="Settings ▸ Downloads ▸ Plug-ins" />
+
+Everything downloads from its authors' own release, is checked against a pinned checksum, and only
+then unpacked — installers are never run. Filters and search stay at the top while the list scrolls.
+A download keeps going after you close Settings: its progress moves to the main window's status line,
+with a × to cancel.

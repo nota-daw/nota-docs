@@ -25,7 +25,7 @@ namespace NotaDocsShots;
 ///   main      view (arrangement | session | modular), select (track name), clip (track name,
 ///             + clipIndex, audio: true for an audio clip) to open in the clip editor, automation, tab (browser tab index), detailHeight, element, width, height
 ///   mixer     width, height
-///   prefs     page (index in Settings' sidebar, 0 = Audio)
+///   prefs     page (index in Settings' sidebar, 0 = Audio), tab (a switch on the page)
 ///   start · about · whatsnew · export · unsaved
 /// </summary>
 public sealed class Scenes
@@ -250,6 +250,14 @@ public sealed class Scenes
         Pump(10);
         Invoke(win, "Select", shot.Int("page") ?? 0);
         Pump(30);
+        // A page's own switch (Downloads: "Sample Packs", "AI Models"); registries load from the
+        // network, so give the list a moment.
+        if (shot.Str("tab") is string sub)
+        {
+            ClickText(win, sub);
+            for (int i = 0; i < 40; i++) Pump(5);
+        }
+        else for (int i = 0; i < 20; i++) Pump(5);
         Save(win, shot.Id);
         win.Close();
     }
@@ -354,6 +362,14 @@ public sealed class Scenes
     {
         var tb = win.GetVisualDescendants().OfType<TextBlock>().FirstOrDefault(x => x.Text == text)
                  ?? throw new ArgumentException($"no '{text}' on screen");
+        // A button (tab segments, Downloads' switch) takes a Click; anything else a pointer press.
+        if (tb.GetVisualAncestors().OfType<Button>().FirstOrDefault() is { } button)
+        {
+            if (Environment.GetEnvironmentVariable("NOTA_SHOTS_DEBUG") != null) Console.WriteLine($"click {text}: {button.GetType().Name}");
+            button.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            Pump();
+            return;
+        }
         var target = (Control?)tb.Parent ?? tb;
         var p = new Point(3, 3);
         target.RaiseEvent(new PointerPressedEventArgs(target, Mouse, target, p, 0,

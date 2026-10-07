@@ -1,25 +1,54 @@
 ---
 title: "Smart samples"
+description: "Nota learns the tempo, key and type of every sample in your library — filter by loop or one-shot, BPM and key, find similar sounds, and fit loops to the project."
 sidebar:
-  order: 77
-status: todo
+  order: 3
+since: "0.43.1"
+updated: "0.50.1"
+status: done
 sources:
-  - src/managed/Nota.App/TagEditorWindow.cs
+  - src/managed/Nota.App/BrowserView.cs
   - src/native/nota.engine/src/SampleAnalysis.h
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml)
-  - auto tags (kind
-  - key
-  - BPM)
-  - filter chips
-  - similar samples
-  - key picker
-  - Edit Tags
-*/}
+The **Files** tab shows your Samples folder (set in [Settings ▸ Library](../../preferences/library/))
+as a folder tree, and Nota knows what's in it.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="library/files-tab" alt="The Files tab with filter chips and folders" width={300} />
+
+## What Nota learns
+
+In the background, Nota works out each file's **tempo**, **key**, and whether it's a **loop** or a
+**one-shot**, plus a timbre fingerprint. A newly installed pack goes first; results are kept, so each
+file is analysed once. The status line shows progress.
+
+- Names come first: `Loop_124_Am`, `Pad C#m 90bpm` or a `One Shots` folder win over the analysis.
+- A loop's exact tempo comes from its length — 16 beats in 7.742 s is 124.0.
+
+Rows show it at the right edge: `124 · Am` for a loop, the note for a tuned hit.
+
+## Filtering
+
+The chips under the search box narrow the list:
+
+- **Loops** · **One-shots**
+- **BPM** — a range, with **project tempo ±5 %** one click away (loops that close warp cleanly)
+- **Key** — with the project key one click away; a key also matches its relative, so A minor finds C
+  major loops too
+
+## Similar sounds
+
+Right-click a sample ▸ **Show similar sounds** lists the closest samples of the same kind, closest
+first. Click the chip to go back to all samples.
+
+## Loops that fit
+
+Drop a loop on the Arrangement and it's **warped to the project tempo** from the tempo Nota already
+knows (⋮ ▸ **Warp loops to project tempo**, on by default) — the status line says so: "loop warped 124
+→ 120 BPM". With ⋮ ▸ **Transpose to project key** on, it also moves to the
+[project key](../../basics/transport/) the shorter way. One-shots are never warped.
+
+MIDI files (`.mid`) show in the Files tab too, and drop like samples — see
+[Projects and saving](../../basics/projects/).

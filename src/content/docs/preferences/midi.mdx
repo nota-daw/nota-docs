@@ -1,18 +1,19 @@
 ---
 title: "MIDI"
+description: "Settings ▸ MIDI — the MIDI inputs Nota listens to."
 sidebar:
-  order: 88
-status: todo
+  order: 2
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml)
-  - see coverage.yml
-*/}
+<Shot id="preferences/midi" alt="Settings ▸ MIDI" />
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+**MIDI inputs** lists every connected controller with a switch. Switch one off to stop Nota listening
+to it; new devices are on by default. If nothing is listed, connect a controller and reopen Settings.
+
+See [MIDI controllers](../../control/midi/) and [MIDI Learn](../../control/midi-learn/).

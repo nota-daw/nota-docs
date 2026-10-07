@@ -1,18 +1,20 @@
 ---
 title: "MIDI"
+description: "Settings ▸ MIDI — MIDI-входы, которые слушает Nota."
 sidebar:
-  order: 88
-status: todo
+  order: 2
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml)
-  - see coverage.yml
-*/}
+<Shot id="preferences/midi" alt="Settings ▸ MIDI" />
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+**MIDI inputs** — все подключённые контроллеры с переключателями. Выключите вход, чтобы Nota перестала
+его слушать; новые устройства включены по умолчанию. Если список пуст, подключите контроллер и
+переоткройте Settings.
+
+См. [MIDI-контроллеры](../../control/midi/) и [MIDI Learn](../../control/midi-learn/).

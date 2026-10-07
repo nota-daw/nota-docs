@@ -88,7 +88,7 @@ nota-docs/
 | 5a ✅ | **Instruments** | 13–15 страниц по шаблону. Параметры — из DSP-класса и карточки, не из макета. |
 | 5b ✅ | **Audio effects** | ~24 страницы. |
 | 5c ✅ | **MIDI effects + Racks** | 9 страниц + обзор цепочки устройств. |
-| 6 | **Остальное** | Plug-ins, Browser & library, Remote, AI, Export, Preferences. |
+| 6 ✅ | **Остальное** | Plug-ins, Browser & library, Remote, AI, Export, Preferences. |
 | 7 | **Reference** | Генератор shortcuts, глоссарий, troubleshooting, поиск (Pagefind) проверен на EN/RU. |
 | 8 | **Интеграция** | Help ▸ Documentation в приложении, ссылка «?» на карточке устройства → страница устройства, ссылка с nota-site, README. |
 | 9 | **Поддержка** | Скилл `nota-docs` в `../nota/.claude/skills` (уже добавлен), шаг в `/release`, CI-проверка в nota-docs. |
@@ -144,3 +144,10 @@ nota-docs/
   догадок. Сверка: Operator — 11 алгоритмов (шапка `OperatorSynth.h` говорит 8 — устарела);
   Auto Filter → Freq / → Reso; Audio Effect Rack — Prl / Ser / Sel; список устройств с
   сайдчейном совпал с `acceptsSidechain()`.
+- **2026-10-07 · этап 6.** 24 страницы × EN/RU: плагины (хостинг, сканирование, загрузка),
+  браузер, предпрослушивание, умные сэмплы, сэмпл-паки, MIDI, MIDI Learn, геймпады, Nota Remote,
+  ИИ-модели, Separate Stems, MCP, экспорт и все 9 страниц Settings. Главная: иконка приложения
+  вместо обрезанной ручки. Харнесс: `prefs` кликает подраздел (`tab`), `ClickText` нажимает
+  Button-предка. Сверка: вкладка Presets — только **ваши** пресеты (заводские — под устройствами),
+  поправлены «Главное окно» и «Devices»; Get Plug-ins в UI теперь Settings ▸ Downloads ▸ Plug-ins;
+  экспорт 44.1/48/96 кГц; VST3-пути — стандартные JUCE (`getDefaultLocationsToSearch`).

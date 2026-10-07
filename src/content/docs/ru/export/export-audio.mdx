@@ -1,23 +1,39 @@
 ---
 title: "Экспорт аудио"
+description: "Рендер песни или лупа в WAV — частота дискретизации, разрядность, нормализация по true peak, дизер, хвост и стемы."
 sidebar:
-  order: 86
-status: todo
+  order: 1
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/ExportWindow.cs
   - src/native/nota.engine/src/Engine_Render.cpp
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
 
-{/* Scope (from coverage.yml)
-  - Export audio ⇧⌘E
-  - master / stems
-  - WAV formats
-  - range
-  - normalize
-*/}
+**File ▸ Export audio…** (<Kbd>⌘ ⇧ E</Kbd>) рендерит проект в WAV-файл.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="export/export-window" alt="Окно Export Audio" width={280} />
+
+| Опция | Что делает |
+|---|---|
+| **Range** | **Loop** (диапазон лупа) или **Full song** |
+| **Format** | WAV |
+| **Sample rate** | 44 100, 48 000 или 96 000 Гц |
+| **Bit depth** | 16-bit, 24-bit или 32-bit float |
+| **Normalize −1 dBTP** | Поднимает самый громкий true peak (межсэмпловый) до −1 dBTP — измеряется точно по рендеру, поэтому никогда не превышает |
+| **Dither** | TPDF-дизер, только для 16 бит |
+| **Add 1-bar release tail** | Даёт ревербераторам и дилеям дозвучать после конца |
+| **Export stems** | По файлу на трек (после фейдера) вместо общего микса |
+
+Окно заранее подсчитывает число файлов и их размер. Рендер офлайн и побитово точный; ход показывает
+окно прогресса.
+
+С **Export stems** и включённой нормализацией все стемы получают одно усиление, взятое от полного
+микса, — так они по-прежнему складываются в микс на −1 dBTP.
+
+Для целевой громкости (−14 LUFS для стриминга и т. п.) обработайте мастер
+[Nota Ceiling](../../devices/audio-effects/ceiling/) или [Nota Level](../../devices/audio-effects/level/)
+перед экспортом.

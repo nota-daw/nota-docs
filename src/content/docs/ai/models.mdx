@@ -1,20 +1,42 @@
 ---
 title: "AI models"
+description: "The two optional AI models — htdemucs for Separate Stems and basic-pitch for Convert to MIDI — installed from Settings and run entirely on your computer."
 sidebar:
-  order: 83
-status: todo
+  order: 1
+since: "0.43.1"
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.Models.cs
+  - src/managed/Nota.Infrastructure/ModelStore/ModelCatalog.cs
 ---
 
+import Shot from '@components/Shot.astro';
 import { Aside } from '@astrojs/starlight/components';
 
-{/* Scope (from coverage.yml)
-  - Settings → Downloads → AI Models
-  - install/remove
-  - background download
-*/}
+Two features in Nota use AI models. They're optional downloads, and they run **on your computer** —
+the audio you give them never leaves it.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
+| Model | Used by | Size | By |
+|---|---|---|---|
+| **htdemucs** | [Separate Stems](../separate-stems/) — splits a mix into drums, bass, vocals and the rest | about 175 MB | Meta AI (Demucs v4), MIT |
+| **basic-pitch** | [Convert to MIDI](../../editing/midi-tools/) — hears every note, chords included | under 1 MB | Spotify, Apache-2.0 |
+
+Both run on **ONNX Runtime**, which comes with the first model you install and goes with the last one
+you remove.
+
+## Installing and removing
+
+<Shot id="preferences/downloads-models" alt="Settings ▸ Downloads ▸ AI Models" />
+
+**Settings ▸ Downloads ▸ AI Models**: **Install** downloads a model from where its authors publish it
+and checks it against the checksum pinned in Nota; **Remove** deletes it (the feature then offers to
+download it again); **Source** opens the model's project page.
+
+You don't have to come here first — **Separate Stems…** and the **Convert** menu offer the download
+the first time you need it. Downloads keep going after you close Settings; their progress moves to
+the main window's status line.
+
+<Aside>
+If ONNX Runtime has no build for your computer, the page says so and the models can't run there.
 </Aside>

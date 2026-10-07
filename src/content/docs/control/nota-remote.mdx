@@ -1,27 +1,85 @@
 ---
 title: "Nota Remote"
+description: "Your phone or tablet as a controller — scan a QR code and play pads, keys, an XY pad with tilt, the mixer, macros and the Session grid over Wi-Fi or USB, with nothing to install."
 sidebar:
-  order: 82
-status: todo
+  order: 4
+since: "0.50.1"
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/MainWindow.Remote.cs
   - src/managed/Nota.App/PreferencesWindow.Remote.cs
+  - src/managed/Nota.Remote/RemoteServer.cs
+  - src/managed/Nota.Remote/RemotePairing.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import { Aside, Steps } from '@astrojs/starlight/components';
 
-{/* Scope (from coverage.yml) · mockup: Nota Remote.html
-  - Connect Phone… QR
-  - Wi-Fi / USB
-  - pads
-  - keys
-  - XY + tilt
-  - mixer
-  - macros
-  - session grid
-  - Settings → Remote
-*/}
+Nota Remote turns a phone or tablet into a controller. Nothing to install: Nota serves the page itself,
+over your local Wi-Fi or a USB cable.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
+## Connecting
+
+<Steps>
+
+1. Click **Remote** in the transport bar (or **View ▸ Connect Phone…**). The first time, allow
+   control from a phone — on macOS, also allow Nota to find devices on the local network.
+
+2. Scan the QR code with the phone's camera. Or open the address shown and type the four-digit code
+   (it changes every two minutes).
+
+3. The phone plays Nota within seconds. Add it to the Home Screen for a full-screen app that
+   reconnects by itself after a locked screen or a dropped link.
+
+</Steps>
+
+<Shot id="control/nota-remote/connect-phone" alt="The Connect Phone panel with the QR code, the address, the code and connected phones" width={360} />
+
+A phone you've paired is **trusted**: it reconnects from its Home Screen icon without a code until you
+forget it in [Settings ▸ Remote](../../preferences/remote/).
+
+**USB** works too — a phone on a cable (USB tethering on Android, Internet Sharing on the Mac) gets an
+instant, radio-free link. Nota notices the cable, puts its address in the QR, and marks the phone
+**USB**.
+
+## The screens
+
+Every screen shares one header: the track picker, a mini transport and the link status. Tap the
+position for the **big transport** (play, stop, record, loop, metronome, undo, tap tempo, jump to
+sections).
+
+| Screen | What it does |
+|---|---|
+| **Pads** | A grid of pads — a Drum Rack's pads by name, banks, full velocity, note repeat |
+| **Keys** | A **Keyboard**, a **Scale** grid in the project key, or **Chords** |
+| **XY** | An XY pad on the track's controls, with **Hold** / **Return** and **Tilt** — the phone's motion drives it |
+| **Mixer** | Faders, mute, solo and arm for every track |
+| **Macros** | The selected device's macros as knobs |
+| **Scenes** | The Session grid — launch clips and scenes |
+
+
+<Shot id="control/nota-remote/iphone-pads" alt="Nota Remote on an iPhone: the Pads screen" width={240} />
+<Shot id="control/nota-remote/xy-tilt" alt="Nota Remote: the XY pad with tilt" width={240} />
+<Shot id="control/nota-remote/ipad-session" alt="Nota Remote on an iPad: the Session grid" />
+
+## A phone is one more controller
+
+Its notes record like the computer keyboard's; faders and macros move Nota's controls (one gesture,
+one undo step); its knobs and XY axes can be mapped through [MIDI Learn](../midi-learn/) like hardware.
+The XY pad and tilt are mapped per track, so each track's XY plays its own sound.
+
+Several phones can play at once, each on its own track — the track list and the mixer show who plays
+what.
+
+## What phones may do
+
+In [Settings ▸ Remote](../../preferences/remote/): **Play notes only** (pads and keys; mixer, transport
+and mappings are read-only) or **Play and control the project** (also mixer, transport, macros, XY and
+Session).
+
+<Aside type="caution">
+If phones can't connect: check they're on the same network (guest Wi-Fi often keeps devices apart —
+use the phone's hotspot or a USB cable instead), that Remote is on, and that your firewall allows Nota
+on the port shown in Settings.
 </Aside>

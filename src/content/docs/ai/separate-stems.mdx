@@ -1,18 +1,35 @@
 ---
 title: "Separate Stems"
+description: "Split any audio clip into drums, bass, vocals and everything else — four tracks in a group, lined up with the original — on your computer."
 sidebar:
-  order: 84
-status: todo
+  order: 2
+since: "0.43.1"
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/MainWindow.Stems.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import { Steps, Aside } from '@astrojs/starlight/components';
 
-{/* Scope (from coverage.yml)
-  - Separate Stems on an audio clip → group of stem tracks
-*/}
+Separate Stems pulls a mix apart into **Drums**, **Bass**, **Other** and **Vocals**. Remix a song,
+practise over it without the bass, sample a drum break, or turn a vocal into MIDI.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
+<Steps>
+
+1. Right-click an audio clip in the Arrangement ▸ **Separate Stems…**. The first time, Nota offers to
+   download the **htdemucs** [model](../models/).
+
+2. Wait for the progress window — a three-minute song takes well under a minute. **Cancel** stops it.
+
+3. A group of four tracks appears right under the clip's track — Drums, Bass, Other, Vocals — each
+   clip lined up with the original, warp, reverse, fades and ADSR included.
+
+</Steps>
+
+The original clip is switched off, not deleted, and the whole operation undoes in one step.
+
+<Aside type="tip">
+Then [convert a stem to MIDI](../../editing/midi-tools/) — a clean vocal or bass stem converts far
+better than the full mix.
 </Aside>

@@ -1,21 +1,42 @@
 ---
 title: "Audio"
+description: "Settings ▸ Audio — устройства вывода и ввода, частота дискретизации, размер буфера и задержка, монопольный режим WASAPI, тестовый тон и проверка CPU."
 sidebar:
-  order: 87
-status: todo
+  order: 1
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
 ---
 
+import Shot from '@components/Shot.astro';
 import { Aside } from '@astrojs/starlight/components';
 
-{/* Scope (from coverage.yml)
-  - device
-  - sample rate
-  - buffer
-  - WASAPI exclusive
-*/}
+Settings открываются через **File ▸ Settings…** или кнопку **Settings** в стартовом окне.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
+<Shot id="preferences/audio" alt="Settings ▸ Audio" />
+
+## Аудиоустройство
+
+| Настройка | Что делает |
+|---|---|
+| **Output** · **Input** | Аудиоустройство, через которое Nota играет и с которого записывает |
+| **Sample rate** | По умолчанию устройства, 44 100, 48 000, 88 200 или 96 000 Гц |
+| **Buffer size** | По умолчанию устройства, 64, 128, 256, 512, 1024 или 2048 сэмплов |
+| **Exclusive mode** (Windows) | Монопольный режим WASAPI — минимальная задержка, но другие приложения замолкают, пока играет Nota |
+
+**Latency** показывает, что значит буфер в миллисекундах. Маленький буфер — меньше задержка между
+игрой и звуком (лучше для записи); большой — больше запас процессору (лучше для сведения больших
+проектов).
+
+## Test
+
+- **Output check** — **Play test tone**: тихий синус 440 Гц через мастер, чтобы проверить, что Nota
+  вообще слышно.
+- **Performance** — **CPU check** 5 секунд измеряет нагрузку аудиопотока. Включите проект на
+  воспроизведение для реальной цифры: покажет среднее, пик и выпадения.
+
+<Aside>
+Нет звука в Bluetooth-наушниках на macOS? Выберите их здесь в Output; см. также
+[Решение проблем](../../reference/troubleshooting/).
 </Aside>

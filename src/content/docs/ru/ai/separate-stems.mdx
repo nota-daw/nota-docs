@@ -1,18 +1,36 @@
 ---
 title: "Разделение на стемы"
+description: "Разделите любой аудиоклип на ударные, бас, вокал и всё остальное — четыре трека в группе, выровненные по оригиналу, — прямо на компьютере."
 sidebar:
-  order: 84
-status: todo
+  order: 2
+since: "0.43.1"
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/MainWindow.Stems.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import { Steps, Aside } from '@astrojs/starlight/components';
 
-{/* Scope (from coverage.yml)
-  - Separate Stems on an audio clip → group of stem tracks
-*/}
+Separate Stems разбирает микс на **Drums**, **Bass**, **Other** и **Vocals**. Сделайте ремикс,
+поиграйте поверх песни без баса, сэмплируйте барабанный брейк или превратите вокал в MIDI.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
+<Steps>
+
+1. Правый щелчок по аудиоклипу в Arrangement ▸ **Separate Stems…**. В первый раз Nota предложит
+   скачать [модель](../models/) **htdemucs**.
+
+2. Дождитесь окна прогресса — трёхминутная песня обрабатывается заметно меньше чем за минуту.
+   **Cancel** останавливает.
+
+3. Под треком клипа появится группа из четырёх треков — Drums, Bass, Other, Vocals, — каждый клип
+   выровнен по оригиналу, с warp, реверсом, фейдами и ADSR.
+
+</Steps>
+
+Исходный клип выключается, а не удаляется, и вся операция отменяется одним шагом.
+
+<Aside type="tip">
+Дальше [конвертируйте стем в MIDI](../../editing/midi-tools/) — чистый вокал или бас конвертируется
+гораздо лучше, чем полный микс.
 </Aside>

@@ -1,18 +1,22 @@
 ---
 title: "Plug-ins"
+description: "Settings ▸ Plug-ins — папки, в которых Nota ищет VST3-плагины, и Rescan."
 sidebar:
-  order: 91
-status: todo
+  order: 5
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
+  - src/managed/Nota.App/PluginScan.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml)
-  - see coverage.yml
-*/}
+<Shot id="preferences/plugins" alt="Settings ▸ Plug-ins" />
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+- **Plugin scan folders** — дополнительные папки для поиска VST3, помимо стандартных системных и папки,
+  куда Nota ставит плагины из реестра. **Add folder…** и **Remove**. AU-плагины берутся из системного
+  реестра.
+- **Rescan plugins** — сканирует всё заново и сообщает, что нашлось.
+
+См. [Сканирование плагинов](../../plugins/scanning/).

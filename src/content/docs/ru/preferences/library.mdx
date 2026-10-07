@@ -1,18 +1,31 @@
 ---
 title: "Library"
+description: "Settings ▸ Library — папки Samples и Projects и переключатель истории версий проектов."
 sidebar:
-  order: 93
-status: todo
+  order: 7
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml)
-  - see coverage.yml
-*/}
+<Shot id="preferences/library" alt="Settings ▸ Library" />
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+## Content folders
+
+- **Samples** — папка, которую показывает вкладка браузера **Files** и анализируют
+  [умные сэмплы](../../library/smart-samples/); в неё ставятся сэмпл-паки. По умолчанию
+  `~/Music/Nota Samples`.
+- **Projects** — папка, которую показывает вкладка браузера **Projects**. По умолчанию
+  `~/Documents/Nota Projects`.
+
+**Choose…** выбирает другую папку.
+
+## Version history
+
+**Keep a version history of each project** — каждое сохранение создаёт версию во вкладке History
+браузера; версии делят общее аудио, поэтому каждая занимает лишь то, что в ней добавилось. По
+умолчанию включено. Выключение **стирает** историю открытого проекта, после предупреждения
+(**Turn off and erase**). См. [История версий](../../basics/version-history/).

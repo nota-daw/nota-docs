@@ -1,20 +1,42 @@
 ---
 title: "ИИ-модели"
+description: "Две необязательные ИИ-модели — htdemucs для Separate Stems и basic-pitch для конвертации в MIDI — ставятся из Settings и работают полностью на вашем компьютере."
 sidebar:
-  order: 83
-status: todo
+  order: 1
+since: "0.43.1"
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.Models.cs
+  - src/managed/Nota.Infrastructure/ModelStore/ModelCatalog.cs
 ---
 
+import Shot from '@components/Shot.astro';
 import { Aside } from '@astrojs/starlight/components';
 
-{/* Scope (from coverage.yml)
-  - Settings → Downloads → AI Models
-  - install/remove
-  - background download
-*/}
+Две функции Nota используют ИИ-модели. Это необязательные загрузки, и работают они **на вашем
+компьютере** — аудио, которое вы им даёте, никуда не уходит.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
+| Модель | Для чего | Размер | Автор |
+|---|---|---|---|
+| **htdemucs** | [Separate Stems](../separate-stems/) — делит микс на ударные, бас, вокал и остальное | около 175 МБ | Meta AI (Demucs v4), MIT |
+| **basic-pitch** | [Конвертация в MIDI](../../editing/midi-tools/) — слышит каждую ноту, включая аккорды | меньше 1 МБ | Spotify, Apache-2.0 |
+
+Обе работают на **ONNX Runtime** — он ставится вместе с первой моделью и удаляется вместе с последней.
+
+## Установка и удаление
+
+<Shot id="preferences/downloads-models" alt="Settings ▸ Downloads ▸ AI Models" />
+
+**Settings ▸ Downloads ▸ AI Models**: **Install** скачивает модель оттуда, где её публикуют авторы, и
+сверяет с контрольной суммой, зашитой в Nota; **Remove** удаляет её (функция потом снова предложит
+загрузку); **Source** открывает страницу проекта модели.
+
+Заходить сюда заранее не обязательно — **Separate Stems…** и меню **Convert** сами предложат загрузку,
+когда она понадобится. Загрузка продолжается и после закрытия Settings; прогресс переезжает в строку
+состояния главного окна.
+
+<Aside>
+Если у ONNX Runtime нет сборки для вашего компьютера, страница так и скажет, и модели здесь работать
+не смогут.
 </Aside>

@@ -1,21 +1,46 @@
 ---
 title: "MIDI controllers"
+description: "Playing Nota from a MIDI keyboard or the computer keyboard, choosing which MIDI inputs Nota listens to, and recording what you play."
 sidebar:
-  order: 79
-status: todo
+  order: 1
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/MidiInput.h
   - src/managed/Nota.App/MainWindow.Input.cs
+  - src/managed/Nota.App/PreferencesWindow.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
 
-{/* Scope (from coverage.yml)
-  - MIDI inputs
-  - playing instruments
-  - computer-keyboard notes
-*/}
+Plug in a MIDI keyboard or controller and play: Nota listens to every connected MIDI input by
+default. Notes go to the selected instrument track; arm the track and press Record to
+[record](../../editing/recording/) them.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+## Choosing inputs
+
+**Settings ▸ MIDI** lists the connected MIDI inputs. Switch one off to stop Nota listening to it; new
+devices are on by default. Plug a controller in while Settings is open and reopen it to see it.
+
+<Shot id="preferences/midi" alt="Settings ▸ MIDI with the list of MIDI inputs" />
+
+The **MIDI** button in the transport bar has a dot that flashes when a controller sends something —
+handy for checking a controller that's connected but silent.
+
+## No MIDI keyboard? Use the computer keyboard
+
+| Keys | Play |
+|---|---|
+| <Kbd>A</Kbd> <Kbd>S</Kbd> <Kbd>D</Kbd> <Kbd>F</Kbd> <Kbd>G</Kbd> <Kbd>H</Kbd> <Kbd>J</Kbd> <Kbd>K</Kbd> | White keys, from C4 |
+| <Kbd>W</Kbd> <Kbd>E</Kbd> · <Kbd>T</Kbd> <Kbd>Y</Kbd> <Kbd>U</Kbd> | Black keys |
+| <Kbd>Z</Kbd> / <Kbd>X</Kbd> | Octave down / up |
+| <Kbd>C</Kbd> / <Kbd>V</Kbd> | Velocity down / up |
+
+It works even while a plug-in's window has focus. The pressed key lights up on the piano roll.
+
+## Knobs and faders
+
+To make a controller's knobs, faders and pads move Nota's controls, use [MIDI Learn](../midi-learn/).
+A gamepad and your phone can play and control Nota too — see [Gamepads](../gamepads/) and
+[Nota Remote](../nota-remote/).

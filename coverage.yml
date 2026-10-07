@@ -180,86 +180,86 @@ sections:
     - page: plugins
       covers: [VST3 (all platforms) and AU (macOS), plug-in card, open plug-in UI, state save/restore, missing plug-ins on load]
       sources: [src/managed/Nota.App/DeviceCards/PluginCard.cs, src/managed/Nota.App/DeviceChainView.Plugin.cs, src/managed/Nota.App/MainWindow.MissingPlugins.cs]
-      status: todo
+      status: done
     - page: plugins/scanning
       covers: [scan paths, Rescan, failed plug-ins]
       sources: [src/managed/Nota.App/PluginScan.cs]
-      status: todo
-    - page: plugins/get-plugins
+      status: done
+    - page: plugins/get-plugins   # titled "Downloading plug-ins" (the UI calls it Settings ▸ Downloads ▸ Plug-ins)
       covers: [Downloads → Plug-ins store, install/cancel, background downloads]
       sources: [src/managed/Nota.App/PreferencesWindow.Store.cs, src/managed/Nota.App/DownloadJobs.cs, src/managed/Nota.App/MainWindow.Downloads.cs]
-      status: todo
+      status: done
 
   library:
     - page: library/browser
       covers: [browser tabs (Instruments, Effects, Samples/Files, Plug-ins, Presets, History…), search, drag into project]
       sources: [src/managed/Nota.App/BrowserView.cs, src/managed/Nota.App/MainWindow.Browser.cs, src/managed/Nota.App/MainWindow.Files.cs]
       mockup: Nota Browser.html
-      status: todo
+      status: done
     - page: library/preview-player
       covers: [audition samples, waveform/spectrum, sync to tempo]
       sources: [src/managed/Nota.App/PreviewPlayer.cs, src/native/nota.engine/src/Audition.h]
       mockup: Nota Preview Player.html
-      status: todo
+      status: done
     - page: library/smart-samples
       covers: [auto tags (kind, key, BPM), filter chips, similar samples, key picker, Edit Tags]
       sources: [src/managed/Nota.App/TagEditorWindow.cs, src/native/nota.engine/src/SampleAnalysis.h]
-      status: todo
+      status: done
     - page: library/sample-packs
       covers: [Downloads → Sample Packs, Samples folder]
       sources: [src/managed/Nota.App/PreferencesWindow.Samples.cs]
-      status: todo
+      status: done
 
   control:
     - page: control/midi
       covers: [MIDI inputs, playing instruments, computer-keyboard notes]
       sources: [src/native/nota.engine/src/MidiInput.h, src/managed/Nota.App/MainWindow.Input.cs]
-      status: todo
+      status: done
     - page: control/midi-learn
       covers: [MIDI Learn overlay, MIDI map, remove mappings]
       sources: [src/managed/Nota.App/MidiLearn.cs, src/managed/Nota.App/MidiLearnOverlay.cs, src/managed/Nota.App/MidiLearnService.cs, src/managed/Nota.App/MidiMapView.cs]
-      status: todo
+      status: done
     - page: control/gamepads
       covers: [gamepad notes and mapped controls (macOS)]
       sources: [src/managed/Nota.App/MainWindow.Gamepad.cs, src/native/nota.engine/src/GamepadInput.h]
-      status: todo
+      status: done
     - page: control/nota-remote
       covers: [Connect Phone… QR, Wi-Fi / USB, pads, keys, XY + tilt, mixer, macros, session grid, Settings → Remote]
       sources: [src/managed/Nota.App/MainWindow.Remote.cs, src/managed/Nota.App/PreferencesWindow.Remote.cs]
       mockup: Nota Remote.html
-      status: todo
+      status: done
 
   ai:
     - page: ai/models
       covers: [Settings → Downloads → AI Models, install/remove, background download]
       sources: [src/managed/Nota.App/PreferencesWindow.Models.cs]
-      status: todo
+      status: done
     - page: ai/separate-stems
       covers: [Separate Stems on an audio clip → group of stem tracks]
       sources: [src/managed/Nota.App/MainWindow.Stems.cs]
-      status: todo
+      status: done
     - page: ai/mcp
       covers: [AI control over MCP (Appearance toggle), connecting a client, what tools can do]
       sources: [src/managed/Nota.Mcp/Tools/]
-      status: todo
+      status: done
 
   export:
     - page: export/export-audio
       covers: [Export audio ⇧⌘E, master / stems, WAV formats, range, normalize]
       sources: [src/managed/Nota.App/ExportWindow.cs, src/native/nota.engine/src/Engine_Render.cpp]
-      status: todo
+      status: done
 
   preferences:
     # One page per Settings page (src/managed/Nota.App/PreferencesWindow.cs → Nav)
-    - {page: preferences/audio,      sources: [src/managed/Nota.App/PreferencesWindow.cs], covers: [device, sample rate, buffer, WASAPI exclusive]}
-    - {page: preferences/midi,       sources: [src/managed/Nota.App/PreferencesWindow.cs]}
-    - {page: preferences/gamepads,   sources: [src/managed/Nota.App/PreferencesWindow.cs]}
-    - {page: preferences/remote,     sources: [src/managed/Nota.App/PreferencesWindow.Remote.cs]}
-    - {page: preferences/plugins,    sources: [src/managed/Nota.App/PreferencesWindow.cs]}
-    - {page: preferences/downloads,  sources: [src/managed/Nota.App/PreferencesWindow.Downloads.cs, src/managed/Nota.App/PreferencesWindow.Store.cs, src/managed/Nota.App/PreferencesWindow.Samples.cs, src/managed/Nota.App/PreferencesWindow.Models.cs]}
-    - {page: preferences/library,    sources: [src/managed/Nota.App/PreferencesWindow.cs]}
-    - {page: preferences/appearance, sources: [src/managed/Nota.App/PreferencesWindow.cs], covers: [theme Graphite/Paper/System, waveforms, AI control]}
-    - {page: preferences/shortcuts,  sources: [src/managed/Nota.App/PreferencesWindow.cs]}
+    - {page: preferences/audio,      sources: [src/managed/Nota.App/PreferencesWindow.cs], covers: [device, sample rate, buffer, WASAPI exclusive], status: done}
+    - {page: preferences/midi,       sources: [src/managed/Nota.App/PreferencesWindow.cs], status: done}
+    - {page: preferences/gamepads,   sources: [src/managed/Nota.App/PreferencesWindow.cs], status: done}
+    - {page: preferences/remote,     sources: [src/managed/Nota.App/PreferencesWindow.Remote.cs], status: done}
+    - {page: preferences/plugins,    sources: [src/managed/Nota.App/PreferencesWindow.cs], status: done}
+    - {page: preferences/downloads,  sources: [src/managed/Nota.App/PreferencesWindow.Downloads.cs, src/managed/Nota.App/PreferencesWindow.Store.cs, src/managed/Nota.App/PreferencesWindow.Samples.cs, src/managed/Nota.App/PreferencesWindow.Models.cs], status: done}
+    - {page: preferences/library,    sources: [src/managed/Nota.App/PreferencesWindow.cs], status: done}
+    - {page: preferences/appearance, sources: [src/managed/Nota.App/PreferencesWindow.cs], covers: [theme Graphite/Paper/System, waveforms, AI control], status: done}
+    - {page: preferences/shortcuts,  sources: [src/managed/Nota.App/PreferencesWindow.cs], status: done}
     # mockup for all: Nota Settings.html
 
   reference:

@@ -1,19 +1,50 @@
 ---
 title: "Геймпады"
+description: "Игровой контроллер как маленькая клавиатура и контроллер — кнопки и бамперы играют ноты, любую кнопку, стик или курок можно назначить. macOS."
 sidebar:
-  order: 81
-status: todo
+  order: 3
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/MainWindow.Gamepad.cs
   - src/native/nota.engine/src/GamepadInput.h
+  - src/managed/Nota.App/PreferencesWindow.cs
 ---
 
+import Shot from '@components/Shot.astro';
 import { Aside } from '@astrojs/starlight/components';
 
-{/* Scope (from coverage.yml)
-  - gamepad notes and mapped controls (macOS)
-*/}
+На macOS игровой контроллер — Xbox, DualShock, DualSense, Switch Pro, 8BitDo — может играть ноты и
+управлять регуляторами Nota.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
+## Включение
+
+**Settings ▸ Gamepads** ▸ **Use a connected gamepad for notes and mapped controls**. Подключённые
+геймпады появляются в списке с последней нажатой кнопкой; подключайте и отключайте свободно.
+
+<Shot id="preferences/gamepads" alt="Settings ▸ Gamepads с раскладкой" />
+
+## Игра
+
+| Регулятор | Играет |
+|---|---|
+| Кнопки на лицевой панели | C4 · D4 · E4 · F4 |
+| Плечевые кнопки | G4 · A4 · B4 · C5 |
+| Крестовина ↑ / ↓ | Октава −1 / +1 |
+| Крестовина ← / → | Velocity − / + |
+
+Ноты идут на подготовленный к записи трек инструмента — нажмите Record, чтобы записать, — или на трек
+прослушивания. Отключение геймпада отпускает удерживаемые ноты.
+
+## Назначение
+
+Через [MIDI Learn](../midi-learn/) **любую кнопку** можно назначить на регулятор — тогда она перестаёт
+играть свою ноту, а остальной геймпад сохраняет раскладку, так что один контроллер и играет, и
+сводит. **Стики и курки** назначаются как непрерывные регуляторы: двигать фильтр, вести фейдер. Стики
+стоят в центре (с мёртвой зоной, чтобы разболтанный стик не уводил параметр), курки — в нуле.
+Назначения привязаны к самому регулятору, а не к слоту геймпада, так что переподключение их не
+ломает.
+
+<Aside>
+Ввод с геймпада в этой версии работает только на macOS.
 </Aside>

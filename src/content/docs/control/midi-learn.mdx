@@ -1,8 +1,10 @@
 ---
 title: "MIDI Learn"
+description: "Map any knob, fader, pad or button — on a MIDI controller, a gamepad or your phone — to almost any control in Nota, and edit the mappings in the MIDI map."
 sidebar:
-  order: 80
-status: todo
+  order: 2
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/MidiLearn.cs
   - src/managed/Nota.App/MidiLearnOverlay.cs
@@ -10,14 +12,45 @@ sources:
   - src/managed/Nota.App/MidiMapView.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import { Steps } from '@astrojs/starlight/components';
 
-{/* Scope (from coverage.yml)
-  - MIDI Learn overlay
-  - MIDI map
-  - remove mappings
-*/}
+MIDI Learn connects a physical control to a control on screen: turn a knob on your controller and a
+filter moves in Nota.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+## Mapping a control
+
+<Steps>
+
+1. Click **MIDI** in the transport bar. Everything you can map lights up.
+
+2. Click the control in Nota you want to move — a knob, fader, switch, macro…
+
+3. Move a knob or fader on your controller (or press a pad, a gamepad button, or move a phone
+   control). The mapping is made; mapped controls stay outlined in teal.
+
+4. Map more, then click **MIDI** again to finish.
+
+</Steps>
+
+## What you can map
+
+Every parameter of the built-in instruments, effects and MIDI effects (switches, envelopes and
+filters included), plug-in parameters, track volume, pan, mute and solo, the master, the transport,
+rack macros, and the mute and solo of rack chains and Drum Rack pads.
+
+Sources can be a **CC**, a **MIDI note**, a **gamepad** button, stick or trigger (macOS), or a control on
+a phone running [Nota Remote](../nota-remote/) — all in one table.
+
+- A **button or note** is momentary: it flips a switch once when pressed, and holds a continuous
+  control at the top of its range until released.
+- A **knob, fader, stick or trigger** drives a continuous control over its whole travel, and flips a
+  switch as it crosses halfway.
+
+## The MIDI map
+
+<Shot id="control/midi-map-tab" alt="The MIDI map tab of the browser" width={300} />
+
+The browser's **MIDI map** tab lists every mapping: the control, its source (`CC 74 · ch1`, `Note 36 ·
+ch10`, `Pad · Left stick ↑↓`, `Phone · XY X`), an editable output **range**, **Invert**, and delete.
+Mappings are saved with the project.

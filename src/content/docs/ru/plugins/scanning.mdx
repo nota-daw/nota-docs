@@ -1,20 +1,35 @@
 ---
 title: "Сканирование плагинов"
+description: "Где Nota ищет плагины VST3 и AU, как добавить свои папки и пересканировать."
 sidebar:
-  order: 73
-status: todo
+  order: 2
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/PluginScan.cs
+  - src/managed/Nota.App/PreferencesWindow.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml)
-  - scan paths
-  - Rescan
-  - failed plug-ins
-*/}
+Nota составляет каталог установленных плагинов, сканируя их в отдельном процессе (чтобы
+капризный плагин не уронил Nota).
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+## Где ищет Nota
+
+- **VST3** — стандартные папки VST3 системы: на macOS `~/Library/Audio/Plug-Ins/VST3` и
+  `/Library/Audio/Plug-Ins/VST3`; в Windows `C:\Program Files\Common Files\VST3`; в Linux `~/.vst3`,
+  `/usr/lib/vst3` и `/usr/local/lib/vst3` — плюс папка, куда Nota ставит плагины из реестра, и любые
+  добавленные вами.
+- **AU** (macOS) — системный реестр Audio Units.
+
+## Добавить папку и пересканировать
+
+<Shot id="preferences/plugins" alt="Settings ▸ Plug-ins: папки сканирования и Rescan" />
+
+1. Откройте **Settings ▸ Plug-ins**.
+2. **Add folder…** добавляет папку для поиска VST3; **Remove** убирает.
+3. **Rescan plugins** сканирует всё заново. Статус покажет, сколько папок просмотрено и сколько
+   плагинов найдено.
+
+Плагины, установленные из [Settings ▸ Downloads](../get-plugins/), сканируются автоматически.

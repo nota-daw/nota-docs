@@ -1,19 +1,39 @@
 ---
 title: "Сэмпл-паки"
+description: "Устанавливайте бесплатные сэмпл-паки — драм-киты, TR-808, басы, гитары, фортепиано, духовые и многое другое — из реестра сэмплов Nota, с лицензией для любой музыки."
 sidebar:
-  order: 78
-status: todo
+  order: 4
+since: "0.43.1"
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.Samples.cs
+  - src/managed/Nota.App/PreferencesWindow.Downloads.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml)
-  - Downloads → Sample Packs
-  - Samples folder
-*/}
+**Settings ▸ Downloads ▸ Sample Packs** устанавливает бесплатные сэмпл-паки: драм-киты, TR-808,
+сэмплированные басы, гитары, фортепиано, духовые и многое другое. Каждый пак можно использовать в
+любой музыке, включая коммерческие релизы.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="preferences/downloads-samples" alt="Settings ▸ Downloads ▸ Sample Packs" />
+
+## Установка
+
+Фильтры **All**, **One-shots**, **Instruments** и **Installed** и поиск по имени. В каждой строке —
+что это за пак (ван-шоты, лупы, инструмент, смешанный), кто его сделал (**Credit**) и его размер.
+
+- **Install** — скачивает пак со страницы автора, сверяет с контрольной суммой реестра и распаковывает
+  только сэмплы и их документацию. Nota заранее проверяет, хватит ли места.
+- **Update to …** — когда вышла новая версия.
+- **Show** — открывает папку пака; **Source** — его страницу.
+- **Remove** — удаляет папку пака.
+
+Паки ставятся в папку **Downloaded** внутри папки сэмплов и появляются во вкладке **Files** браузера —
+и анализируются [умными сэмплами](../smart-samples/) в первую очередь.
+
+## Nota Kits
+
+Ван-шоты 25 заводских драм-китов синтезируются при первом запуске (а не поставляются как аудио) и
+видны во вкладке Files в папке **Nota Kits** — их можно перетаскивать куда угодно.

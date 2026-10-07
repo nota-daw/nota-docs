@@ -1,22 +1,46 @@
 ---
-title: "Get Plug-ins"
+title: "Загрузка плагинов"
+description: "Устанавливайте бесплатные VST3-плагины с открытым кодом из реестра Nota одним щелчком — Surge XT, Dexed, Dragonfly Reverb и многие другие."
 sidebar:
-  order: 74
-status: todo
+  order: 3
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.Store.cs
+  - src/managed/Nota.App/PreferencesWindow.Downloads.cs
   - src/managed/Nota.App/DownloadJobs.cs
-  - src/managed/Nota.App/MainWindow.Downloads.cs
 ---
 
+import Shot from '@components/Shot.astro';
 import { Aside } from '@astrojs/starlight/components';
 
-{/* Scope (from coverage.yml)
-  - Downloads → Plug-ins store
-  - install/cancel
-  - background downloads
-*/}
+**Settings ▸ Downloads ▸ Plug-ins** показывает VST3-плагины с открытым кодом из
+[реестра плагинов Nota](https://github.com/nota-daw/nota-plugins-registry) — синтезаторы вроде Surge XT
+и Dexed, эффекты вроде Dragonfly Reverb и CHOW Tape Model, секвенсоры вроде Stochas и многое другое —
+готовые к установке одним щелчком.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
+<Shot id="preferences/downloads" alt="Settings ▸ Downloads ▸ Plug-ins со списком плагинов" />
+
+## Как найти плагин
+
+Фильтры **All**, **Instruments**, **Effects** и **Installed** (с количеством) и поиск по имени. В
+каждой строке — тип плагина, автор, версия и лицензия, описание в одну строку, размер загрузки и
+значки систем, где он работает (наведите курсор, чтобы увидеть процессоры). Плагины, которые нельзя
+поставить на этот компьютер, идут в конце с объяснением. **Refresh** перезагружает реестр.
+
+## Установка, обновление, удаление
+
+- **Install** — скачивает плагин из релиза его проекта, сверяет с контрольной суммой реестра,
+  распаковывает и сканирует. Установщики никогда не запускаются.
+- **Update to …** — появляется, когда в реестре есть новая версия.
+- **Remove** — удаляет плагин; проекты, где он используется, открываются без него, пока его не
+  поставят снова.
+- **Source** — открывает репозиторий плагина.
+
+Внизу окна держится полоса прогресса с **Cancel**. Загрузка продолжается и после закрытия Settings —
+её прогресс переезжает в строку состояния главного окна.
+
+<Aside>
+На той же странице есть **Sample Packs** и **AI Models** — см. [Сэмпл-паки](../../library/sample-packs/)
+и [ИИ-модели](../../ai/models/).
 </Aside>

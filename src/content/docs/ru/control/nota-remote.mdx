@@ -1,27 +1,84 @@
 ---
 title: "Nota Remote"
+description: "Телефон или планшет как контроллер — отсканируйте QR-код и играйте на пэдах, клавишах, XY-пэде с наклоном, в микшере, макросах и сетке Session по Wi-Fi или USB, ничего не устанавливая."
 sidebar:
-  order: 82
-status: todo
+  order: 4
+since: "0.50.1"
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/MainWindow.Remote.cs
   - src/managed/Nota.App/PreferencesWindow.Remote.cs
+  - src/managed/Nota.Remote/RemoteServer.cs
+  - src/managed/Nota.Remote/RemotePairing.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import { Aside, Steps } from '@astrojs/starlight/components';
 
-{/* Scope (from coverage.yml) · mockup: Nota Remote.html
-  - Connect Phone… QR
-  - Wi-Fi / USB
-  - pads
-  - keys
-  - XY + tilt
-  - mixer
-  - macros
-  - session grid
-  - Settings → Remote
-*/}
+Nota Remote превращает телефон или планшет в контроллер. Ничего ставить не нужно: Nota сама отдаёт
+страницу по локальному Wi-Fi или USB-кабелю.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
+## Подключение
+
+<Steps>
+
+1. Нажмите **Remote** в полосе транспорта (или **View ▸ Connect Phone…**). В первый раз разрешите
+   управление с телефона — а на macOS ещё и поиск устройств в локальной сети.
+
+2. Отсканируйте QR-код камерой телефона. Или откройте показанный адрес и введите четырёхзначный код
+   (он меняется каждые две минуты).
+
+3. Через несколько секунд телефон играет на Nota. Добавьте страницу на домашний экран — получится
+   полноэкранное приложение, которое само переподключается после блокировки экрана или обрыва связи.
+
+</Steps>
+
+<Shot id="control/nota-remote/connect-phone" alt="Панель Connect Phone: QR-код, адрес, код и подключённые телефоны" width={360} />
+
+Сопряжённый телефон становится **доверенным**: он переподключается с иконки на домашнем экране без
+кода, пока вы не удалите его в [Settings ▸ Remote](../../preferences/remote/).
+
+Работает и **USB**: телефон на кабеле (USB-модем на Android, «Общий интернет» на Mac) получает
+мгновенную связь без радио. Nota замечает кабель, ставит его адрес в QR-код и помечает телефон **USB**.
+
+## Экраны
+
+У всех экранов общая шапка: выбор трека, мини-транспорт и состояние связи. Нажмите на позицию — откроется
+**большой транспорт** (воспроизведение, стоп, запись, луп, метроном, отмена, tap tempo, переход по
+секциям).
+
+| Экран | Что делает |
+|---|---|
+| **Pads** | Сетка пэдов — пэды Drum Rack по именам, банки, полная velocity, повтор ноты |
+| **Keys** | **Keyboard**, сетка **Scale** в тональности проекта или **Chords** |
+| **XY** | XY-пэд на регуляторах трека, с **Hold** / **Return** и **Tilt** — движение телефона управляет точкой |
+| **Mixer** | Фейдеры, mute, solo и запись для каждого трека |
+| **Macros** | Макросы выбранного устройства ручками |
+| **Scenes** | Сетка Session — запуск клипов и сцен |
+
+<Shot id="control/nota-remote/iphone-pads" alt="Nota Remote на iPhone: экран Pads" width={240} />
+<Shot id="control/nota-remote/xy-tilt" alt="Nota Remote: XY-пэд с наклоном" width={240} />
+<Shot id="control/nota-remote/ipad-session" alt="Nota Remote на iPad: сетка Session" />
+
+## Телефон — ещё один контроллер
+
+Его ноты записываются, как ноты с клавиатуры компьютера; фейдеры и макросы двигают регуляторы Nota
+(одно движение — один шаг отмены); его ручки и оси XY назначаются через [MIDI Learn](../midi-learn/),
+как железо. XY-пэд и наклон назначаются для каждого трека отдельно, так что XY каждого трека играет свой
+звук.
+
+Играть могут сразу несколько телефонов, каждый на своём треке, — список треков и микшер показывают,
+кто на чём играет.
+
+## Что разрешено телефонам
+
+В [Settings ▸ Remote](../../preferences/remote/): **Play notes only** (пэды и клавиши; микшер,
+транспорт и назначения — только для чтения) или **Play and control the project** (ещё микшер,
+транспорт, макросы, XY и Session).
+
+<Aside type="caution">
+Телефон не подключается? Проверьте, что он в той же сети (гостевой Wi-Fi часто изолирует устройства —
+используйте точку доступа телефона или USB-кабель), что Remote включён и что брандмауэр пропускает
+Nota на порту из Settings.
 </Aside>

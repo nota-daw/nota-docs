@@ -1,18 +1,20 @@
 ---
 title: "Shortcuts"
+description: "Settings ▸ Shortcuts — все сочетания клавиш и жесты мыши по группам, с фильтром."
 sidebar:
-  order: 95
-status: todo
+  order: 9
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml)
-  - see coverage.yml
-*/}
+<Shot id="preferences/shortcuts" alt="Settings ▸ Shortcuts" />
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+Страница Shortcuts перечисляет все клавиши и жесты по группам — File, Transport, Arrangement & editing,
+Tracks, Session, Piano roll, Play notes, Browser · preview, Gamepad и Mouse. Начните вводить в **Filter
+shortcuts**, чтобы найти нужное.
+
+Тот же список целиком — в разделе [Горячие клавиши](../../reference/shortcuts/).

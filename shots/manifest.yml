@@ -49,6 +49,10 @@ shots:
 
   # ── Library
   - { id: library/browser, source: app, scene: main, args: {view: "arrangement", element: "Browser"} }
+  - { id: library/files-tab, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 3, height: 640} }
+  - { id: control/midi-map-tab, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 6, height: 640} }
+  - { id: preferences/downloads-samples, source: app, scene: prefs, args: {page: 5, tab: "Sample Packs"} }
+  - { id: preferences/downloads-models, source: app, scene: prefs, args: {page: 5, tab: "AI Models"} }
   - { id: library/preview-player, source: design, file: "Nota Preview Player.html", label: "1a Preview" }
 
   # ── Controllers & Remote — phone screens exist only as mockups

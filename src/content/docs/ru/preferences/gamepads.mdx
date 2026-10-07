@@ -1,18 +1,23 @@
 ---
 title: "Gamepads"
+description: "Settings ▸ Gamepads — игровой контроллер для нот и назначенных регуляторов (macOS)."
 sidebar:
-  order: 89
-status: todo
+  order: 3
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml)
-  - see coverage.yml
-*/}
+<Shot id="preferences/gamepads" alt="Settings ▸ Gamepads" />
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+- **Use a connected gamepad for notes and mapped controls** — главный переключатель, по умолчанию
+  выключен.
+- **Gamepad input** — подключённые геймпады с последним нажатым регулятором.
+- **Layout** — что играют кнопки: лицевые — C4 D4 E4 F4, плечевые — G4 A4 B4 C5, крестовина вверх /
+  вниз — октава, влево / вправо — velocity.
+
+Ноты идут на подготовленный к записи трек инструмента. Ввод с геймпада в этой версии работает только
+на macOS. См. [Геймпады](../../control/gamepads/).
