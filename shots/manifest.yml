@@ -1,0 +1,11 @@
+# Every screenshot used by <Shot id="…">. Files land in src/assets/shots/{dark,light}/<id>.webp
+#
+#   - id: devices/volt/main
+#     source: design                  # design | app
+#     file: Nota Volt.html            # design: file in ../nota-design
+#     label: 1a Signal                # design: [data-screen-label] to shoot
+#     scene: main-window              # app: harness scene name (shots/app)
+#     themes: [dark, light]           # default: both
+#
+# Filled in stage 2 (screenshot pipeline).
+shots: []

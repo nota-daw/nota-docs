@@ -1,0 +1,45 @@
+---
+title: "Nota <Name>"
+description: "<One sentence: what it is and what it's for.>"
+sidebar:
+  order: <n>
+since: "<first version>"
+updated: "<VERSION this page was checked against>"
+status: draft
+sources:
+  - src/native/nota.engine/src/<Engine>.h
+  - src/managed/Nota.App/DeviceCards/<Dir>/<Card>.cs
+---
+
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
+
+<One or two sentences — what it sounds like, when you reach for it.>
+
+<Shot id="devices/<slug>/main" alt="Nota <Name> device card" />
+
+## Signal flow
+
+<How the sound moves through the card: sections / tabs, left to right.>
+
+## Parameters
+
+### <Panel or tab name>
+
+| Parameter | Range | What it does |
+|---|---|---|
+| **<Label as on screen>** | `<min> … <max>` (default `<d>`) | <Effect, in one line.> |
+
+## Modulation and automation
+
+<What can be automated, CV in/out in Modular, MIDI Learn notes.>
+
+## Presets
+
+<Factory preset groups and what they're good for.>
+
+## Recipes
+
+### <Goal, e.g. "A plucky bass in 30 seconds">
+
+1. <Step>

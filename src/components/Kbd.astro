@@ -1,0 +1,42 @@
+---
+// <Kbd>⌘ ⇧ D</Kbd> or <Kbd keys="⌘ ⇧ D" /> — each space-separated token becomes a key cap,
+// like the app's Shortcuts screen. "/" and "·" stay plain separators.
+interface Props {
+  keys?: string;
+}
+const slot = Astro.slots.has('default') ? await Astro.slots.render('default') : '';
+const text = (Astro.props.keys ?? slot).replace(/<[^>]*>/g, '').trim();
+const tokens = text.split(/\s+/).filter(Boolean);
+const separators = new Set(['/', '·', '+']);
+---
+
+<span class="nota-kbd">
+  {tokens.map((t) => (separators.has(t) ? <span class="sep">{t}</span> : <kbd>{t}</kbd>))}
+</span>
+
+<style>
+  .nota-kbd {
+    display: inline-flex;
+    gap: 0.2em;
+    align-items: baseline;
+    white-space: nowrap;
+  }
+  kbd {
+    font-family: var(--sl-font-mono);
+    font-size: 0.8em;
+    font-weight: 500;
+    line-height: 1;
+    min-width: 1.6em;
+    padding: 0.25em 0.4em;
+    text-align: center;
+    color: var(--sl-color-gray-1);
+    background: var(--nota-raised);
+    border: 1px solid var(--nota-border);
+    border-radius: 4px;
+    box-shadow: var(--nota-key-shadow);
+  }
+  .sep {
+    color: var(--sl-color-gray-4);
+    font-size: 0.85em;
+  }
+</style>

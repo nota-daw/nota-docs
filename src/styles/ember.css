@@ -1,0 +1,99 @@
+/* Ember — the Nota palette (../nota/DESIGN.md), mapped onto Starlight's variables.
+   Dark = Ember Graphite, light = Ember Paper. One brass accent, warm neutrals. */
+
+:root {
+  --sl-font: 'Geist', ui-sans-serif, system-ui, sans-serif;
+  --sl-font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Graphite */
+  --sl-color-accent-low: #241f17;   /* Brass Wash */
+  --sl-color-accent: #d8a03d;       /* Brass */
+  --sl-color-accent-high: #f0c060;  /* Brass Light */
+  --sl-color-white: #f2ede1;        /* Ink 0 */
+  --sl-color-gray-1: #e9e4d8;       /* Ink 1 */
+  --sl-color-gray-2: #c7c0b0;       /* Ink 2 */
+  --sl-color-gray-3: #a39d8f;       /* Ink 3 */
+  --sl-color-gray-4: #6e6a5e;       /* Ink 5 */
+  --sl-color-gray-5: #2c2923;       /* Border */
+  --sl-color-gray-6: #141310;       /* Panel */
+  --sl-color-black: #0b0a09;        /* App */
+
+  --nota-card: #171613;
+  --nota-raised: #1c1a16;
+  --nota-hairline: #221f1a;
+  --nota-border: #2c2923;
+  --nota-border-strong: #3a362d;
+  --nota-brass-dim: #8a6b2e;
+  --nota-brass-edge: #5e4a22;
+  --nota-key-shadow: inset 0 1px 0 #08ffffff;
+}
+
+:root[data-theme='light'] {
+  /* Paper — the page itself sits on Raised so long text reads on near-white. */
+  --sl-color-accent-low: #f2e4c4;
+  --sl-color-accent: #a87415;
+  --sl-color-accent-high: #744d07;
+  --sl-color-white: #1a150e;
+  --sl-color-gray-1: #241f17;
+  --sl-color-gray-2: #3e382c;
+  --sl-color-gray-3: #5e5849;
+  --sl-color-gray-4: #8a8474;
+  --sl-color-gray-5: #d5cebb;
+  --sl-color-gray-6: #eae5d7;
+  --sl-color-gray-7: #efeade;
+  --sl-color-black: #f8f5ec;
+
+  --nota-card: #efeade;
+  --nota-raised: #f8f5ec;
+  --nota-hairline: #d5cfbe;
+  --nota-border: #d5cebb;
+  --nota-border-strong: #bdb5a0;
+  --nota-brass-dim: #9c8034;
+  --nota-brass-edge: #d3b173;
+  --nota-key-shadow: inset 0 -1px 0 #d5cebb;
+}
+
+/* Asides and badges use Starlight's hue scales — remap them onto Ember's semantics so
+   brass stays the one accent: note → brass, tip → teal, caution → caution, danger → alert. */
+:root {
+  --sl-color-blue-low: #1c1a16;   --sl-color-blue: #8a6b2e;   --sl-color-blue-high: #e9be6a;
+  --sl-color-purple-low: #142120; --sl-color-purple: #5b9e9c; --sl-color-purple-high: #7fc0be;
+  --sl-color-green-low: #142016;  --sl-color-green: #58b368;  --sl-color-green-high: #7fb069;
+  --sl-color-orange-low: #221f10; --sl-color-orange: #d9c34c; --sl-color-orange-high: #e6d77f;
+  --sl-color-red-low: #2a1512;    --sl-color-red: #c2554a;    --sl-color-red-high: #e08a72;
+}
+:root[data-theme='light'] {
+  --sl-color-blue-low: #f2e4c4;   --sl-color-blue: #a87415;   --sl-color-blue-high: #744d07;
+  --sl-color-purple-low: #dcebea; --sl-color-purple: #2f7472; --sl-color-purple-high: #1f5452;
+  --sl-color-green-low: #dcefe0;  --sl-color-green: #2c7a3e;  --sl-color-green-high: #1f5a2d;
+  --sl-color-orange-low: #f1ead0; --sl-color-orange: #837010; --sl-color-orange-high: #5e500a;
+  --sl-color-red-low: #f6dcd6;    --sl-color-red: #b13e33;    --sl-color-red-high: #a3391b;
+}
+
+/* Headings: Geist 600, like the app's Title/Heading. */
+.sl-markdown-content :is(h1, h2, h3, h4) { font-weight: 600; letter-spacing: -0.01em; }
+h1#_top { font-weight: 600; letter-spacing: -0.02em; }
+
+/* Section labels in the sidebar read like the app's caps group labels. */
+.sidebar-content .group-label .large {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sl-color-gray-3);
+}
+
+/* Tables: hairline rows, mono values, like the device parameter lists. */
+.sl-markdown-content table { font-size: var(--sl-text-sm); }
+.sl-markdown-content th {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sl-color-gray-3);
+}
+.sl-markdown-content td code { white-space: nowrap; }
+
+/* Radii from DESIGN.md: control 4, panel 6, body 8. */
+.sl-markdown-content :is(pre, .expressive-code .frame) { border-radius: 6px; }
+.sl-markdown-content img { border-radius: 8px; }

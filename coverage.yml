@@ -1,0 +1,284 @@
+# Nota Docs — coverage map (stage 0 inventory, Nota 0.50.1, 2026-10-07).
+#
+# Every user-facing feature of the app → the doc page that explains it.
+# `sources` are paths in ../nota (the app repo); the nota-docs skill looks pages up by
+# them when code changes. `mockup` is the ../nota-design file the screenshots can come
+# from (absent → shoot the real app). `status`: todo | draft | done.
+#
+# Page slug = path under src/content/docs/ (EN) and src/content/docs/ru/ (RU).
+# Truth order: code → CHANGELOG.md → FEATURES.md (stale: 0.42.1) → mockups.
+
+version: 0.50.1
+
+sections:
+
+  start-here:
+    - page: start-here/install
+      covers: [macOS dmg (arm64/x64, ad-hoc signed, first-open), Windows installer (x64/arm64), Linux AppImage, system requirements]
+      sources: [README.md, BUILD.md, .github/workflows/release.yml]
+      status: todo
+    - page: start-here/first-launch
+      covers: [splash, Start window (recent projects, keyboard nav), What's New window, self-update banner, About]
+      sources: [src/managed/Nota.App/WelcomeWindow.cs, src/managed/Nota.App/SplashWindow.cs, src/managed/Nota.App/WhatsNewWindow.cs, src/managed/Nota.App/AboutWindow.cs, src/managed/Nota.App/MainWindow.Welcome.cs]
+      mockup: Nota Start.html
+      status: todo
+    - page: start-here/main-window
+      covers: [transport bar, view switcher (Arrangement · Session · Modular), browser, detail panel, overview, sections, status bar / downloads, menus, ⌘ vs Ctrl]
+      sources: [src/managed/Nota.App/MainWindow.axaml, src/managed/Nota.App/MainWindow.Menu.cs, src/managed/Nota.App/MainWindow.TransportFit.cs]
+      mockup: Nota Main Window.html
+      status: todo
+    - page: start-here/first-track
+      covers: [tutorial — instrument track, draw notes, add effect, loop, export]
+      sources: []
+      status: todo
+
+  basics:
+    - page: basics/projects
+      covers: [New/Open/Save/Save As (.nota), autosave & recovery, quit-without-saving dialog, Import audio, MIDI import]
+      sources: [src/managed/Nota.App/MainWindow.Recovery.cs, src/managed/Nota.App/SaveChangesWindow.cs, src/managed/Nota.App/MainWindow.AudioImport.cs, src/managed/Nota.App/MainWindow.MidiImport.cs, src/managed/Nota.App/MainWindow.MissingPlugins.cs]
+      mockup: Nota Unsaved Dialog.html
+      status: todo
+    - page: basics/version-history
+      covers: [History tab tree, versions described by changes, switch/open as copy/name/note/star/delete, branching, Save Version with Note ⌥⌘S, turn off in Library]
+      sources: [src/managed/Nota.App/HistoryView.cs, src/managed/Nota.App/MainWindow.History.cs]
+      status: todo
+    - page: basics/transport
+      covers: [play/stop/record, stop returns to launch point, position bars↔time, tempo (whole-number drag), time signature, project key, loop ⌘L, metronome ⌘M, count-in, follow, launch quantize]
+      sources: [src/managed/Nota.App/MainWindow.axaml, src/managed/Nota.App/MainWindow.TransportFit.cs, src/native/nota.engine/src/Transport.h]
+      mockup: Nota Transport.html
+      status: todo
+    - page: basics/tracks
+      covers: [audio / instrument / return tracks, groups, names & colours, volume/pan/mute/solo/arm, track context menu, freeze & flatten]
+      sources: [src/managed/Nota.App/ArrangementView.Tracks.cs, src/managed/Nota.App/ArrangementView.Groups.cs, src/managed/Nota.App/TrackNames.cs, src/managed/Nota.App/MainWindow.Freeze.cs, src/managed/Nota.App/MainWindow.LiveFreeze.cs]
+      status: todo
+    - page: basics/undo
+      covers: [undo/redo for every edit, slider value typing]
+      sources: []
+      status: todo
+
+  views:
+    - page: views/arrangement
+      covers: [timeline, clips move/trim/duplicate/split/consolidate, grid & snap, zoom/scroll, overview strip, sections, clip names, lane controls]
+      sources: [src/managed/Nota.App/ArrangementView.cs, src/managed/Nota.App/ArrangementView.ClipDrag.cs, src/managed/Nota.App/ArrangementView.Overview.cs, src/managed/Nota.App/ArrangementView.Sections.cs, src/managed/Nota.App/ArrangementView.LaneControl.cs]
+      mockup: Nota Arrangement.html
+      status: todo
+    - page: views/session
+      covers: [clip grid, named coloured clips with previews, inspector, launch modes, follow actions, scenes (own tempo), insert scene ⌘I, Session recording, session mixer, toolbar]
+      sources: [src/managed/Nota.App/SessionView.cs, src/managed/Nota.App/SessionView.Grid.cs, src/managed/Nota.App/SessionView.Inspector.cs, src/managed/Nota.App/SessionView.Mixer.cs, src/managed/Nota.App/SessionView.Toolbar.cs, src/native/nota.engine/src/SessionPlayer.h, docs/session-view-requirements.md]
+      mockup: Nota Session View.html
+      status: todo
+    - page: views/modular
+      covers: [Modular view, CV sources/targets, modulation routing, Shutter pattern as CV]
+      sources: [src/managed/Nota.App/ModularView.cs, src/native/nota.engine/src/Modulation.h]
+      status: todo
+    - page: views/mixer
+      covers: [Mixer window ⇧⌘M, sends & returns, groups, master, meters, record source]
+      sources: [src/managed/Nota.App/MixerView.cs, src/managed/Nota.App/MixerWindow.cs, src/managed/Nota.App/MainWindow.Mixer.cs]
+      status: todo
+    - page: views/detail-panel
+      covers: [bottom panel Devices/Clip, detach to own window (⧉), Device window]
+      sources: [src/managed/Nota.App/MainWindow.Detail.cs, src/managed/Nota.App/MainWindow.DetailWindow.cs, src/managed/Nota.App/DetailWindow.cs, src/managed/Nota.App/DeviceWindow.cs]
+      mockup: Nota Device Window.html
+      status: todo
+
+  editing:
+    - page: editing/piano-roll
+      covers: [MIDI clip editor, draw/select/move notes, velocity, keys (arrows, ⇧ octave, ⌘A/⌘D), drum pattern view, typing notes from the computer keyboard]
+      sources: [src/managed/Nota.App/PianoRollView.cs, src/managed/Nota.App/ClipEditorView.cs, src/managed/Nota.App/ClipEditorKit.cs, src/managed/Nota.App/DrumPatternView.cs, src/managed/Nota.App/MainWindow.Input.cs]
+      mockup: Nota Clip Editor.html
+      status: todo
+    - page: editing/audio-clips
+      covers: [audio clip editor, warp & tempo detect, gain/fades (ADSR kit), clip props, loops fit project key/tempo on drop, one-shots not warped, export clip audio]
+      sources: [src/managed/Nota.App/AudioClipEditorView.cs, src/managed/Nota.App/ClipPropsView.cs, src/managed/Nota.App/ClipAdsrKit.cs, src/managed/Nota.App/ClipAudioExport.cs, src/managed/Nota.App/WaveformView.cs, src/native/nota.engine/src/Warp.h, src/native/nota.engine/src/TempoDetect.h]
+      status: todo
+    - page: editing/recording
+      covers: [arm & record audio/MIDI, inputs, count-in, Session recording, latency]
+      sources: [src/native/nota.engine/src/Engine_Recording.cpp]
+      status: todo
+    - page: editing/automation
+      covers: [automation lanes, draw/edit points, Lock Envelopes, MIDI-learned automation]
+      sources: [src/managed/Nota.App/ArrangementView.Automation.cs, src/native/nota.engine/src/Automation.h]
+      status: todo
+    - page: editing/time-ranges
+      covers: [range selection, Duplicate time ⇧⌘D, Insert silence ⇧⌘I, split ⌘E, consolidate ⌘J, loop selection]
+      sources: [src/managed/Nota.App/ArrangementView.cs]
+      status: todo
+    - page: editing/clipboard
+      covers: [cut/copy/paste clips, Paste Bounced Audio ⇧⌘V, Arrangement ⇄ Session copy ⇧⌘C, drag audio clip into Sampler/Grain/Drum Rack/Instrument Rack]
+      sources: [src/managed/Nota.App/ClipTransfer.cs, src/managed/Nota.App/MainWindow.PasteBounced.cs, src/managed/Nota.App/MainWindow.Dnd.cs]
+      status: todo
+    - page: editing/midi-tools
+      covers: [Convert Melody / Harmony / Drums to MIDI, MIDI tools panel]
+      sources: [src/managed/Nota.App/MainWindow.Convert.cs, src/managed/Nota.App/MidiToolsView.cs]
+      status: todo
+
+  devices:
+    overview:
+      - page: devices
+        covers: [device chain, add/reorder/bypass/delete, cards, presets (factory/user), copy/paste devices, drag & drop, plug-in vs built-in]
+        sources: [src/managed/Nota.App/DeviceChainView.cs, src/managed/Nota.App/DeviceChainView.Drop.cs, src/managed/Nota.App/DeviceChainView.Clipboard.cs, src/managed/Nota.App/DeviceCardKit.cs]
+        status: todo
+    # Instruments — engine kind() id → page. Card: src/managed/Nota.App/DeviceCards/Instruments/<X>InstrumentCard.cs
+    instruments:
+      - {kind: 0,  name: Nota Synth,     page: devices/instruments/synth,     engine: Synth.h,          card: SynthInstrumentCard.cs,     mockup: Nota Synth.html}
+      - {kind: 1,  name: Nota Sampler,   page: devices/instruments/sampler,   engine: Sampler.h,        card: ../Sampler/SamplerViews.cs, mockup: Nota Sampler.html}
+      - {kind: 2,  name: Nota Physical,  page: devices/instruments/physical,  engine: PhysicalSynth.h,  card: PhysicalInstrumentCard.cs,  mockup: Nota Physical.html}
+      - {kind: 5,  name: Nota Aurora,    page: devices/instruments/aurora,    engine: WavetableSynth.h, card: AuroraInstrumentCard.cs,    mockup: Nota Aurora.html}
+      - {kind: 6,  name: Nota Volt,      page: devices/instruments/volt,      engine: VoltSynth.h,      card: VoltInstrumentCard.cs,      mockup: Nota Volt.html}
+      - {kind: 7,  name: Nota Bass,      page: devices/instruments/bass,      engine: BassSynth.h,      card: BassInstrumentCard.cs,      mockup: Nota Bass.html}
+      - {kind: 8,  name: Nota Pendulum,  page: devices/instruments/pendulum,  engine: PendulumSynth.h,  card: PendulumInstrumentCard.cs,  mockup: Nota Pendulum.html}
+      - {kind: 9,  name: Nota Operator,  page: devices/instruments/operator,  engine: OperatorSynth.h,  card: OperatorInstrumentCard.cs,  mockup: Nota Operator.html}
+      - {kind: 10, name: Nota Grain,     page: devices/instruments/grain,     engine: GrainSynth.h,     card: GrainInstrumentCard.cs,     mockup: Nota Grain.html}
+      - {kind: 11, name: Nota Flux,      page: devices/instruments/flux,      engine: FluxSynth.h,      card: FluxInstrumentCard.cs,      mockup: Nota Flux.html}
+      - {kind: 12, name: Nota Rhythm,    page: devices/instruments/rhythm,    engine: RhythmMachine.h,  card: RhythmInstrumentCard.cs,    mockup: Nota Rhythm.html}
+      - {kind: 13, name: Nota Monolith,  page: devices/instruments/monolith,  engine: Monolith.h,       card: MonolithInstrumentCard.cs}   # no mockup, missing from FEATURES.md
+      - {kind: 14, name: Nota Pentad,    page: devices/instruments/pentad,    engine: Pentad.h,         card: PentadInstrumentCard.cs,    mockup: Nota Pentad.html}
+      - {kind: 15, name: Nota Consort,   page: devices/instruments/consort,   engine: Consort.h,        card: ConsortInstrumentCard.cs,   mockup: Nota Consort.html}
+    # Audio effects — engine builtinKind() id. Card: src/managed/Nota.App/DeviceCards/Bodies/<X>DeviceBody.cs
+    audio-effects:
+      - {kind: 0,  name: Nota EQ-8,         page: devices/audio-effects/eq-8,         engine: Eq.h,         card: EqDeviceBody.cs,         mockup: Nota EQ-8.html}
+      - {kind: 1,  name: Nota Compressor,   page: devices/audio-effects/compressor,   engine: Compressor.h, card: CompressorDeviceBody.cs, mockup: Nota Compressor.html}
+      - {kind: 2,  name: Nota Reverb,       page: devices/audio-effects/reverb,       engine: Reverb.h,     card: ReverbDeviceBody.cs,     mockup: Nota Reverb.html}
+      - {kind: 3,  name: Nota Delay,        page: devices/audio-effects/delay,        engine: Delay.h,      card: DelayDeviceBody.cs,      mockup: Nota Delay.html}
+      - {kind: 4,  name: Nota Utility,      page: devices/audio-effects/utility,      engine: Utility.h,    card: UtilityDeviceBody.cs,    mockup: Nota Utility.html}
+      - {kind: 6,  name: Nota Valve,        page: devices/audio-effects/valve,        engine: Amp.h,        card: ValveDeviceBody.cs,      mockup: Nota Valve.html}
+      - {kind: 7,  name: Nota Auto Filter,  page: devices/audio-effects/auto-filter,  engine: AutoFilter.h, card: AutoFilterDeviceBody.cs, mockup: Nota Auto Filter.html}
+      - {kind: 8,  name: Nota Vintage,      page: devices/audio-effects/vintage,      engine: Vintage.h,    card: VintageDeviceBody.cs,    mockup: Nota Vintage.html}
+      - {kind: 9,  name: Nota Orbit,        page: devices/audio-effects/orbit,        engine: AutoPan.h,    card: AutoPanDeviceBody.cs,    mockup: Nota Orbit.html}
+      - {kind: 10, name: Nota Auto Shift,   page: devices/audio-effects/auto-shift,   engine: AutoShift.h,  card: AutoShiftDeviceBody.cs,  mockup: Nota Auto Shift.html}
+      - {kind: 11, name: Nota Beat Repeat,  page: devices/audio-effects/beat-repeat,  engine: BeatRepeat.h, card: BeatRepeatDeviceBody.cs, mockup: Nota Beat Repeat.html}
+      - {kind: 12, name: Nota Crush,        page: devices/audio-effects/crush,        engine: Crush.h,      card: CrushDeviceBody.cs,      mockup: Nota Crush.html}
+      - {kind: 13, name: Nota Dynamic EQ-8, page: devices/audio-effects/dynamic-eq,   engine: DynamicEq.h,  card: DynamicEqDeviceBody.cs,  mockup: Nota Dynamic EQ.html}
+      - {kind: 14, name: Nota Ceiling,      page: devices/audio-effects/ceiling,      engine: Ceiling.h,    card: CeilingDeviceBody.cs,    mockup: Nota Ceiling.html}
+      - {kind: 15, name: Nota Strata,       page: devices/audio-effects/strata,       engine: Strata.h,     card: StrataDeviceBody.cs}   # no mockup
+      - {kind: 16, name: Nota EQ-3,         page: devices/audio-effects/eq-3,         engine: Eq3.h,        card: Eq3DeviceBody.cs,        mockup: Nota EQ-3.html}
+      - {kind: 17, name: Nota Forge,        page: devices/audio-effects/forge,        engine: Forge.h,      card: ForgeDeviceBody.cs,      mockup: Nota Forge.html}
+      - {kind: 18, name: Nota Level,        page: devices/audio-effects/level,        engine: AutoGain.h,   card: AutoGainDeviceBody.cs,   mockup: Nota Level.html}
+      - {kind: 19, name: Nota Shutter,      page: devices/audio-effects/shutter,      engine: Shutter.h,    card: ShutterDeviceBody.cs,    mockup: Nota Shutter.html}
+      - {kind: 20, name: Nota Chamber,      page: devices/audio-effects/chamber,      engine: Chamber.h,    card: ChamberDeviceBody.cs,    mockup: Nota Chamber.html}
+      - {kind: 21, name: Nota Prism,        page: devices/audio-effects/prism,        engine: Prism.h,      card: PrismDeviceBody.cs,      mockup: Nota Prism.html}
+      - {kind: 22, name: Nota Lens,         page: devices/audio-effects/lens,         engine: Lens.h,       card: LensDeviceBody.cs,       mockup: Nota Lens.html}
+      - {kind: 23, name: Nota Flanger,      page: devices/audio-effects/flanger,      engine: Flanger.h,    card: FlangerDeviceBody.cs,    mockup: Nota Flanger.html}
+      - {kind: 24, name: Nota Phaser,       page: devices/audio-effects/phaser,       engine: Phaser.h,     card: PhaserDeviceBody.cs,     mockup: Nota Phaser.html}
+      - {kind: 25, name: Nota Chorus,       page: devices/audio-effects/chorus,       engine: Chorus.h,     card: ChorusDeviceBody.cs,     mockup: Nota Chorus.html}
+    # MIDI effects. Card: src/managed/Nota.App/DeviceCards/Midi/<X>MidiBody.cs
+    midi-effects:
+      - {kind: 0, name: Nota Arp,      page: devices/midi-effects/arp,      engine: Arpeggiator.h,    card: ArpMidiBody.cs,      mockup: Nota Arp.html}
+      - {kind: 1, name: Nota Chord,    page: devices/midi-effects/chord,    engine: MidiChord.h,      card: ChordMidiBody.cs,    mockup: Nota Chord.html}
+      - {kind: 2, name: Nota Scale,    page: devices/midi-effects/scale,    engine: MidiScale.h,      card: ScaleMidiBody.cs,    mockup: Nota Scale.html}
+      - {kind: 3, name: Nota Length,   page: devices/midi-effects/length,   engine: MidiNoteLength.h, card: LengthMidiBody.cs,   mockup: Nota Length.html}
+      - {kind: 4, name: Nota Velocity, page: devices/midi-effects/velocity, engine: MidiVelocity.h,   card: VelocityMidiBody.cs, mockup: Nota Velocity.html}
+      - {kind: 5, name: Nota Random,   page: devices/midi-effects/random,   engine: MidiRandom.h,     card: RandomMidiBody.cs,   mockup: Nota Random.html}
+    # Racks. Card: src/managed/Nota.App/DeviceCards/Rack/
+    racks:
+      - {kind: "instrument 3", name: Nota Instrument Rack,   page: devices/racks/instrument-rack,   engine: RackInstrument.h, card: RackCardView.cs}        # no mockup
+      - {kind: "instrument 4", name: Nota Drum Rack,         page: devices/racks/drum-rack,         engine: DrumRack.h,       card: RackCardView.Drum.cs,   mockup: Nota Drum Rack.html, covers: [pads, chains, 25 factory kits, sample drops]}
+      - {kind: "effect 5",     name: Nota Audio Effect Rack, page: devices/racks/audio-effect-rack, engine: RackDevice.h,     card: RackCardView.cs}        # no mockup; Parallel/Series/Select
+      - {page: devices/racks/macros, covers: [macro knobs, mapping], card: MacroPanel.cs}
+
+  plugins:
+    - page: plugins
+      covers: [VST3 (all platforms) and AU (macOS), plug-in card, open plug-in UI, state save/restore, missing plug-ins on load]
+      sources: [src/managed/Nota.App/DeviceCards/PluginCard.cs, src/managed/Nota.App/DeviceChainView.Plugin.cs, src/managed/Nota.App/MainWindow.MissingPlugins.cs]
+      status: todo
+    - page: plugins/scanning
+      covers: [scan paths, Rescan, failed plug-ins]
+      sources: [src/managed/Nota.App/PluginScan.cs]
+      status: todo
+    - page: plugins/get-plugins
+      covers: [Downloads → Plug-ins store, install/cancel, background downloads]
+      sources: [src/managed/Nota.App/PreferencesWindow.Store.cs, src/managed/Nota.App/DownloadJobs.cs, src/managed/Nota.App/MainWindow.Downloads.cs]
+      status: todo
+
+  library:
+    - page: library/browser
+      covers: [browser tabs (Instruments, Effects, Samples/Files, Plug-ins, Presets, History…), search, drag into project]
+      sources: [src/managed/Nota.App/BrowserView.cs, src/managed/Nota.App/MainWindow.Browser.cs, src/managed/Nota.App/MainWindow.Files.cs]
+      mockup: Nota Browser.html
+      status: todo
+    - page: library/preview-player
+      covers: [audition samples, waveform/spectrum, sync to tempo]
+      sources: [src/managed/Nota.App/PreviewPlayer.cs, src/native/nota.engine/src/Audition.h]
+      mockup: Nota Preview Player.html
+      status: todo
+    - page: library/smart-samples
+      covers: [auto tags (kind, key, BPM), filter chips, similar samples, key picker, Edit Tags]
+      sources: [src/managed/Nota.App/TagEditorWindow.cs, src/native/nota.engine/src/SampleAnalysis.h]
+      status: todo
+    - page: library/sample-packs
+      covers: [Downloads → Sample Packs, Samples folder]
+      sources: [src/managed/Nota.App/PreferencesWindow.Samples.cs]
+      status: todo
+
+  control:
+    - page: control/midi
+      covers: [MIDI inputs, playing instruments, computer-keyboard notes]
+      sources: [src/native/nota.engine/src/MidiInput.h, src/managed/Nota.App/MainWindow.Input.cs]
+      status: todo
+    - page: control/midi-learn
+      covers: [MIDI Learn overlay, MIDI map, remove mappings]
+      sources: [src/managed/Nota.App/MidiLearn.cs, src/managed/Nota.App/MidiLearnOverlay.cs, src/managed/Nota.App/MidiLearnService.cs, src/managed/Nota.App/MidiMapView.cs]
+      status: todo
+    - page: control/gamepads
+      covers: [gamepad notes and mapped controls (macOS)]
+      sources: [src/managed/Nota.App/MainWindow.Gamepad.cs, src/native/nota.engine/src/GamepadInput.h]
+      status: todo
+    - page: control/nota-remote
+      covers: [Connect Phone… QR, Wi-Fi / USB, pads, keys, XY + tilt, mixer, macros, session grid, Settings → Remote]
+      sources: [src/managed/Nota.App/MainWindow.Remote.cs, src/managed/Nota.App/PreferencesWindow.Remote.cs]
+      mockup: Nota Remote.html
+      status: todo
+
+  ai:
+    - page: ai/models
+      covers: [Settings → Downloads → AI Models, install/remove, background download]
+      sources: [src/managed/Nota.App/PreferencesWindow.Models.cs]
+      status: todo
+    - page: ai/separate-stems
+      covers: [Separate Stems on an audio clip → group of stem tracks]
+      sources: [src/managed/Nota.App/MainWindow.Stems.cs]
+      status: todo
+    - page: ai/mcp
+      covers: [AI control over MCP (Appearance toggle), connecting a client, what tools can do]
+      sources: [src/managed/Nota.Mcp/Tools/]
+      status: todo
+
+  export:
+    - page: export/export-audio
+      covers: [Export audio ⇧⌘E, master / stems, WAV formats, range, normalize]
+      sources: [src/managed/Nota.App/ExportWindow.cs, src/native/nota.engine/src/Engine_Render.cpp]
+      status: todo
+
+  preferences:
+    # One page per Settings page (src/managed/Nota.App/PreferencesWindow.cs → Nav)
+    - {page: preferences/audio,      sources: [src/managed/Nota.App/PreferencesWindow.cs], covers: [device, sample rate, buffer, WASAPI exclusive]}
+    - {page: preferences/midi,       sources: [src/managed/Nota.App/PreferencesWindow.cs]}
+    - {page: preferences/gamepads,   sources: [src/managed/Nota.App/PreferencesWindow.cs]}
+    - {page: preferences/remote,     sources: [src/managed/Nota.App/PreferencesWindow.Remote.cs]}
+    - {page: preferences/plugins,    sources: [src/managed/Nota.App/PreferencesWindow.cs]}
+    - {page: preferences/downloads,  sources: [src/managed/Nota.App/PreferencesWindow.Downloads.cs, src/managed/Nota.App/PreferencesWindow.Store.cs, src/managed/Nota.App/PreferencesWindow.Samples.cs, src/managed/Nota.App/PreferencesWindow.Models.cs]}
+    - {page: preferences/library,    sources: [src/managed/Nota.App/PreferencesWindow.cs]}
+    - {page: preferences/appearance, sources: [src/managed/Nota.App/PreferencesWindow.cs], covers: [theme Graphite/Paper/System, waveforms, AI control]}
+    - {page: preferences/shortcuts,  sources: [src/managed/Nota.App/PreferencesWindow.cs]}
+    # mockup for all: Nota Settings.html
+
+  reference:
+    - page: reference/shortcuts
+      generated: scripts/shortcuts.mjs   # from PreferencesWindow.ShortcutGroups + MainWindow.axaml gestures
+      sources: [src/managed/Nota.App/PreferencesWindow.cs, src/managed/Nota.App/MainWindow.axaml]
+      status: todo
+    - {page: reference/glossary, status: todo}
+    - {page: reference/troubleshooting, covers: [no sound / Bluetooth, macOS first-open, plug-in scan failures, recovery], status: todo}
+    - {page: reference/changelog, covers: [link to GitHub Releases + CHANGELOG.md], status: todo}
+
+# Findings from the inventory (resolve while writing the stages):
+findings:
+  - FEATURES.md stops at 0.42.1 — 0.42.2…0.50.1 (Session rebuild, Remote, Shutter Pattern, history, smart samples, stems, packs, self-update) exist only in CHANGELOG.md.
+  - Nota Monolith (instrument 13) is in code but not in FEATURES.md and has no mockup.
+  - Nota Strata (effect 15), Instrument Rack, Audio Effect Rack, Mixer, Modular, History, Export, Preferences sub-pages have no mockups → app shots.
+  - Internal names differ from UI names — AutoPan = Nota Orbit, AutoGain = Nota Level, Amp = Nota Valve, WavetableSynth = Nota Aurora; MCP device table omits the "Nota " prefix for some kinds.
+  - Domain enum DeviceKind (Eq…Utility, Plugin) is legacy; real ids are the engine builtinKind() ones above.
+  - Mockup ↔ code drift per device is checked when each device page is written (parameter names/ranges come from the engine header + card).
+
+# New user-facing changes that arrived before their page was written (nota-docs skill appends here).
+pending: []

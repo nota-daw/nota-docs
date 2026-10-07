@@ -1,0 +1,30 @@
+---
+title: Документация Nota
+description: Руководство пользователя Nota — бесплатной DAW с открытым кодом для macOS, Windows и Linux.
+template: splash
+hero:
+  tagline: Всё, что умеет Nota, и как этим пользоваться — от первого трека до последней ручки устройства.
+  image:
+    dark: ../../../assets/logo-dark.svg
+    light: ../../../assets/logo-light.svg
+  actions:
+    - text: Установить Nota
+      link: start-here/install/
+      icon: right-arrow
+    - text: Обзор главного окна
+      link: start-here/main-window/
+      variant: minimal
+---
+
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+<CardGrid>
+  <LinkCard title="Начало работы" description="Установка, первое знакомство и первый трек." href="start-here/install/" />
+  <LinkCard title="Виды" description="Arrangement, Session, Modular и микшер." href="views/arrangement/" />
+  <LinkCard title="Редактирование" description="Ноты, аудиоклипы, запись, автоматизация и диапазоны." href="editing/piano-roll/" />
+  <LinkCard title="Устройства" description="Все встроенные инструменты, эффекты, MIDI-эффекты и рэки." href="devices/" />
+  <LinkCard title="Браузер и библиотека" description="Сэмплы, пресеты, умные теги и сэмпл-паки." href="library/browser/" />
+  <LinkCard title="Контроллеры и Remote" description="MIDI, MIDI Learn, геймпады и телефон как контроллер." href="control/midi/" />
+  <LinkCard title="ИИ" description="Разделение на стемы, аудио в MIDI и управление через MCP." href="ai/models/" />
+  <LinkCard title="Горячие клавиши" description="Все клавиши и жесты в одном месте." href="reference/shortcuts/" />
+</CardGrid>
