@@ -1,19 +1,69 @@
 ---
 title: "Nota Compressor"
+description: "Compressor with five characters, soft knee, peak / RMS / auto detection, look-ahead, range, auto release, parallel mix and a filtered sidechain."
 sidebar:
-  order: 38
-status: todo
+  order: 4
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Compressor.h
   - src/managed/Nota.App/DeviceCards/Bodies/CompressorDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Compressor.html
-  - see coverage.yml
-*/}
+Nota Compressor evens out a signal: it turns down what goes over the threshold, then makes the
+result louder again. Glue a drum bus, level a vocal, pump a pad from the kick.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/compressor/card" alt="Nota Compressor, Curve tab with the transfer curve and reduction history" />
+
+**Layout:** the **Level** column on the left (threshold against the live level, make-up), a centre
+panel with three tabs, a right panel (**Dynamics** / **Output**) and a status line.
+
+## Curve
+
+The transfer curve and the history of gain reduction. **Drag the curve** to set threshold and ratio.
+
+## Motion
+
+<Shot id="devices/audio-effects/compressor/motion" alt="Nota Compressor, Motion tab" />
+
+The gain-reduction envelope drawn against the input, so you **see** attack and release work
+rather than guess.
+
+## Sidechain
+
+<Shot id="devices/audio-effects/compressor/sidechain" alt="Nota Compressor, Sidechain tab with the key filters" />
+
+What the detector listens to: **Internal** (the track) or **External key** (another track, picked
+as the device's sidechain source, **Pre** or **Post** its fader). The key's spectrum is drawn under
+its filters — drag the **HP** and **LP** handles; **Q** shapes both. **Listen** lets you hear the key.
+
+## Dynamics and Output
+
+| Control | What it does |
+|---|---|
+| **Thresh** · **Ratio** · **Knee** | Where it starts, how hard, how gradually |
+| **Attack** · **Hold** · **Release** | How fast it clamps, holds, lets go — **Auto** release follows the material |
+| **Detect** | **Peak**, **RMS** or **Auto** |
+| **Lookahead** | Reacts before the peak arrives; the delay is compensated automatically |
+| **Range** | The most it will ever reduce |
+| **Char** | Five voicings: **Clean**, **Glue**, **Punch**, **Opto**, **FET** |
+| **Makeup** · **Auto gain** | Gain after compression, by hand or automatic |
+| **Mix** | Dry / wet — parallel compression in one knob |
+| **Stereo link** | One gain for both channels, or each channel on its own |
+
+## Presets
+
+31 factory presets: drums (**Drum Glue**, **Drum Punch**, **Snare Punch**, **Kick Tighten**, **Room
+Smash**, **Overheads Tame**, **Hat Smooth**), bus and master (**Bus Glue**, **Bus Parallel**, **Mix
+Bus Gentle**, **Master Leveler**, **Brick Limit**, **Peak Catcher**), vocals (**Vocal Opto**, **Vocal
+Leveler**, **Vocal Presence**, **Rap Vocal**, **De-Esser**), instruments (**Bass Even**, **Bass
+Pluck**, **Acoustic Guitar**, **Guitar Sustain**, **Piano Smooth**, **Pad Breathe**) and ducking
+(**Kick Duck**, **EDM Pump**, **Gentle Duck**, **Voice-over Duck**, **Bass Under Kick**).
+
+## Tips
+
+- **Sidechain pump:** External key from the kick, fast attack, release to taste — or start from
+  **EDM Pump**.
+- **Parallel drums:** a heavy ratio with **Mix** around 40 %.

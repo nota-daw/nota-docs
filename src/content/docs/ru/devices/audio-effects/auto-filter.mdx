@@ -1,19 +1,64 @@
 ---
 title: "Nota Auto Filter"
+description: "Подвижный фильтр — LP, BP, HP или Notch с морфингом и драйвом, который двигают огибающая (от трека или сайдчейна) и LFO с синхронизацией, морфингом и стереофазой."
 sidebar:
-  order: 43
-status: todo
+  order: 9
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/AutoFilter.h
   - src/managed/Nota.App/DeviceCards/Bodies/AutoFilterDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Auto Filter.html
-  - see coverage.yml
-*/}
+Nota Auto Filter — фильтр со встроенным движением: **огибающая** открывает его, когда звук
+громче (автовау, энвелоуп-фильтр), **LFO** гоняет его в темп (воблы, гейты, медленное движение).
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/auto-filter/card" alt="Nota Auto Filter, вкладка Filter с откликом" />
+
+**Устройство карточки:** колонка **Shape** слева (фейдеры **Cutoff** и **Reso** с отметкой текущего
+промодулированного значения), центральная панель с тремя вкладками — в каждой окно, где видно
+движение среза, — правая панель и строка состояния.
+
+## Filter
+
+| Регулятор | Что делает |
+|---|---|
+| Тип | **LP**, **BP**, **HP** или **Notch** |
+| **Morph** | Плавно смешивает типы |
+| Крутизна | 12 или 24 дБ |
+| **Freq** · **Reso** | Срез и резонанс — или тяните кривую |
+| **Drive** | Драйв перед фильтром для окраски |
+| Схема | **Clean** или **Analog** (с сатурацией) |
+
+## Envelope
+
+<Shot id="devices/audio-effects/auto-filter/envelope" alt="Nota Auto Filter, вкладка Envelope со срезом во времени" />
+
+Огибающая-следователь: **Amount** (вверх или вниз), **Attack**, **Release** и **Hold** (время или
+бесконечно). Она слушает сам трек или **ключ** — другой трек, выбранный источником сайдчейна
+устройства. Окно рисует срез во времени.
+
+## LFO
+
+<Shot id="devices/audio-effects/auto-filter/lfo" alt="Nota Auto Filter, вкладка LFO" />
+
+**Amount**, **Rate** (**Free** в Гц или в темп), форма — **Sine**, **Tri**, **Saw**, **Sqr**, **S&H** —
+с **Morph**, начальным сдвигом, разницей фаз между каналами и перезапуском. Окно рисует два такта
+LFO.
+
+## Выход
+
+**→ Freq** / **→ Reso** — что двигает модуляция: срез, резонанс или оба. **Mod smooth** сглаживает
+её, **Gain** подрезает уровень, **Dry/Wet** смешивает.
+
+## Пресеты
+
+30 заводских пресетов: статичные фильтры (**Clean Sweep**, **24 dB Low Cut**, **Telephone**, **Warm
+Analog LP**, **Resonant Peak**, **Notch Carve**), огибающая (**Envelope Wah**, **Clav Wah**, **Funk
+Quack**, **Bass Auto-Wah**, **Reverse Wah**, **Drum Snap**, **Swell Opener**, **Resonance Bloom**,
+**Hold & Release**, **Talking Filter**), LFO (**Slow LFO Sweep**, **Pad Motion**, **Wobble 1/8**,
+**Dubstep Wub 1/16**, **Trance Gate**, **S&H Random**, **Glide Random**, **Saw Ramp Bar**, **Stereo
+Swirl**, **Notch Motion**, **Phaser-ish Notch**, **Reso Pulse**) и сайдчейн (**Sidechain Duck**,
+**Kick Pump HP**).

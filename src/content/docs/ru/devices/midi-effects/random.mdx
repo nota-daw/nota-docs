@@ -1,19 +1,51 @@
 ---
 title: "Nota Random"
+description: "Случайно меняет ноты — высоту, velocity, тайминг, пропуски и октавы — с колоколообразным, равномерным или блуждающим распределением, на ноту или на такт, с фиксируемым seed и подгонкой к ладу."
 sidebar:
-  order: 67
-status: todo
+  order: 6
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/MidiRandom.h
   - src/managed/Nota.App/DeviceCards/Midi/RandomMidiBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Random.html
-  - see coverage.yml
-*/}
+Nota Random добавляет управляемую случайность: чуть расслабленный барабанщик, призрачные ноты,
+которые появляются и исчезают, блуждающая мелодия, редеющие хэты. Результат воспроизводим —
+зафиксируйте seed, и вариация будет повторяться.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/midi-effects/random/card" alt="Nota Random: что меняется, такт на выходе и «кости»" />
+
+## Что меняется
+
+| Измерение | Диапазон |
+|---|---|
+| **Note** | ± полутоны |
+| **Velocity** | ±64 |
+| **Timing** | 0–100 мс позже (эффект реального времени может только задержать) |
+| **Skip** | Пропустить ноту |
+| **Octave** | ±2 октавы |
+
+## Dice
+
+| Регулятор | Что делает |
+|---|---|
+| **Chance** | Вероятность, что нота вообще изменится |
+| **Distribution** | **Gauss** (колокол — малые изменения чаще), **Even** (равномерно) или **Walk** (блуждание от ноты к ноте) |
+| **Per note** / **Per bar** | Бросать для каждой ноты или раз на такт |
+| **Seed** · **Reroll** | Зерно броска; Reroll — новое |
+| **Lock** | Зафиксировать показанный такт и повторять его каждый такт |
+| **Stay in scale** | Подгонять изменённые ноты к до мажору |
+
+Окно **Output** показывает такт демонстрационных нот — вход пунктиром, выход закрашен (ярче —
+громче, связка — если сдвинулась высота, × — если пропущена). Каждый такт — новый бросок, пока вы
+не зафиксируете его.
+
+## Пресеты
+
+32 заводских пресета: «очеловечивание» (**Human Touch**, **Loose Drummer**, **Tight Humanize**, **Lazy
+Behind**, **Velocity Shimmer**, **Accent Lottery**), разреживание (**Ghost Notes**, **Sparse Hats**,
+**Thin Out**, **Stutter Drop**), высота (**Pitch Roulette**, **Gentle Wander**, **Melodic Drift**, **Wide
+Leaps**, **Chromatic Smear**, …) и другие.

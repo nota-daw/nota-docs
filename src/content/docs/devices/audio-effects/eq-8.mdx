@@ -1,19 +1,58 @@
 ---
 title: "Nota EQ-8"
+description: "Eight-band parametric EQ — cuts, shelves, bells and notches with selectable slope, mid / side and left / right per band, a live analyzer, scale and auto gain."
 sidebar:
-  order: 37
-status: todo
+  order: 1
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Eq.h
   - src/managed/Nota.App/DeviceCards/Bodies/EqDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota EQ-8.html
-  - see coverage.yml
-*/}
+Nota EQ-8 is a mixing-console equalizer with eight bands. Use it to clean up mud, cut rumble,
+add air, carve space for one sound around another — on the stereo pair, the mid or the side.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/eq-8/card" alt="Nota EQ-8 with the band chips, the response graph and the band panel" />
+
+## The graph
+
+Each band is a numbered node on the response curve — drag it: sideways for frequency, up and
+down for gain. The band chips above the graph switch bands on and off and select one for the
+panel on the right. **Analyzer** in the corner shows the spectrum **Pre** or **Post** EQ, or
+**Off**.
+
+## A band
+
+| Control | What it does |
+|---|---|
+| Type | **Low cut**, **Low shelf**, **Bell**, **Notch**, **High shelf**, **High cut** |
+| **Freq** · **Gain** · **Q** | Where, how much, how wide (on the cuts, **Reso**) |
+| **Slope** | For the cuts: 12, 24 or 48 dB per octave |
+| **Channel** | **St** (both channels), **Mid**, **Side**, **L** or **R** — so a band can brighten only the sides, or tame one channel |
+
+## Global
+
+| Control | What it does |
+|---|---|
+| **Scale** | Multiplies every shelf and bell gain at once, 0–200 % — 50 % halves the whole curve |
+| **Output** | Output trim |
+| **Auto gain** | Compensates the average level change of the shelves and bells, so you judge an edit at the same loudness |
+
+## Presets
+
+34 factory presets: tone (**Bass Boost**, **Air & Presence**, **Smile Curve**, **Loudness Contour**,
+**Master Tilt**), cleanup (**Low Cut**, **Sub Rumble Filter**, **Mud Cut**, **Hum Removal 50 Hz** /
+**60 Hz**, **Mono Low End**), mix (**Clean Mix Bus**, **Pad Tuck**, **Double-Track Split**, **Wide
+Air**, **Focus Center**), vocals (**Vocal Presence**, **De-Box Vocal**, **Sibilance Tamer**,
+**Podcast Voice**), drums (**Kick Punch**, **Snare Crack**, **Overheads Air**, **Hi-Hat Clean**),
+instruments (**Bass Definition**, **Acoustic Guitar**, **Electric Guitar Cab**, **Piano Clarity**)
+and colour (**Telephone**, **Lo-Fi Radio**, **Band Pass**).
+
+## Tips
+
+- **Cut narrow, boost wide:** find a harsh frequency with a narrow, boosted bell, then flip it
+  to a cut.
+- **Mono lows:** a low cut on the **Side** band around 120 Hz keeps the bass centred.

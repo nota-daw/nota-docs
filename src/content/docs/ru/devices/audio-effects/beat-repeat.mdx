@@ -1,19 +1,66 @@
 ---
 title: "Nota Beat Repeat"
+description: "Статтер и глитч в темп — захватывает кусок бита и повторяет его, меняя высоту, затухание и фильтр каждого повтора, случайно или по команде."
 sidebar:
-  order: 47
-status: todo
+  order: 13
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/BeatRepeat.h
   - src/managed/Nota.App/DeviceCards/Bodies/BeatRepeatDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Beat Repeat.html
-  - see coverage.yml
-*/}
+Nota Beat Repeat хватает короткий кусок того, что играет, и повторяет его в такт: раскаты малого,
+сбивки в конце такта, вокальные нарезки, глитч-статтеры.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/beat-repeat/card" alt="Nota Beat Repeat, вкладка Timeline с захватом и повторами за два интервала" />
+
+**Как это работает:** каждый **Interval** (со сдвигом **Offset**) он бросает кубик — **Chance**. Если
+сработал, захватывает кусок длиной **Grid** и повторяет его до конца **Gate**, меняя высоту,
+затухание и фильтр каждого повтора.
+
+## Тайминг
+
+| Регулятор | Что делает |
+|---|---|
+| **Interval** · **Offset** | Как часто может срабатывать и где в такте |
+| **Grid** | Длина куска; **Triplet** делает сетку триольной |
+| **Variation** | Позволяет сетке «плавать» на несколько шагов при каждом срабатывании |
+| **Chance** | Вероятность срабатывания на каждом интервале |
+| **Gate** | Сколько длится повтор |
+| **Repeat** · **Latch** | Принудительный повтор сейчас — пока нажато (или зафиксировано) |
+
+Вкладка **Timeline** показывает захват и повторы за два интервала; **Slices** — звук интервала с
+отметками offset, gate и куска — их можно тянуть.
+
+<Shot id="devices/audio-effects/beat-repeat/slices" alt="Nota Beat Repeat, вкладка Slices" />
+
+## Character
+
+**Pitch** (и **Pitch decay** на каждый повтор — «пике»), **Decay** (каждый повтор тише), **Volume** и
+**Filter**: вкл / выкл, **LP**, **BP** или **HP**, **Freq** и ширина, при желании **сужаясь с
+повторами**.
+
+<Shot id="devices/audio-effects/beat-repeat/filter" alt="Nota Beat Repeat, вкладка Filter" />
+
+## Output
+
+Режим: **Mix** (повторы поверх сухого), **Insert** (повторы заменяют сухой, пока играют) или **Gate**
+(звучат только всплески); и **Mix** (dry / wet).
+
+## Пресеты
+
+31 заводской пресет: статтеры (**Classic Stutter**, **Half-Bar Roll**, **Snare Stutter**, **End-of-Bar
+Fill**, **Build-Up Roll**, **Stutter Mix**, **Glitch Gate**, **Triplet Tumble**), случайные (**Random
+Glitch**, **Micro Buzz**, **Buffer Shuffle**, **Sparse Surprise**), высота (**Pitch Drop**, **Tape
+Drop**, **Octave Up Flutter**, **Fifth Echo**, **Dive Bomb**, **Chipmunk Roll**), с фильтром (**Filtered
+Chops**, **Telephone Repeats**, **Low-Pass Fade**, **High-Pass Riser**, **Radio Stutter**), по
+инструментам (**Hat Roll**, **Kick Stutter**, **Vocal Chop**, **Vocal Echo Tail**) и для выступлений
+(**Hold to Stutter**, **Latch Freeze**, **Gate Only Bursts**).
+
+## Советы
+
+- **Играйте вживую:** назначьте **Repeat** на пэд или клавишу через MIDI Learn.
+- Чтобы следовать за тактом, Beat Repeat нужен запущенный транспорт.

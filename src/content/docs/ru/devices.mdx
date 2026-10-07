@@ -1,22 +1,112 @@
 ---
 title: "Устройства"
+description: "Как устроена цепочка устройств трека — инструменты, аудиоэффекты, MIDI-эффекты и рэки; добавление, перестановка, обход, пресеты, сравнение A/B — и указатель всех встроенных устройств."
 sidebar:
-  order: 22
-status: todo
+  order: 0
+updated: "0.50.1"
+status: done
+sources:
+  - src/managed/Nota.App/DeviceChainView.cs
+  - src/managed/Nota.App/DeviceChainView.Drop.cs
+  - src/managed/Nota.App/DeviceChainView.Clipboard.cs
+  - src/managed/Nota.App/DeviceCardKit.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import { CardGrid, LinkCard, Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
 
-{/* Scope (from coverage.yml)
-  - device chain
-  - add/reorder/bypass/delete
-  - cards
-  - presets (factory/user)
-  - copy/paste devices
-  - drag & drop
-  - plug-in vs built-in
-*/}
+У каждого трека есть **цепочка устройств** — то, что создаёт и обрабатывает его звук, слева
+направо. Выберите трек, чтобы увидеть его цепочку в нижней панели.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
+<Shot id="views/detail-panel" alt="Цепочка устройств трека Keys: Nota Pentad, затем Nota EQ-8" />
+
+**MIDI-эффекты → инструмент → аудиоэффекты.** MIDI-эффекты (арпеджиатор, генератор аккордов)
+меняют ноты до того, как их сыграет инструмент; инструмент превращает ноты в звук; аудиоэффекты
+обрабатывают этот звук. У аудиотрека инструмента нет — только аудиоэффекты.
+
+## Как добавить устройство
+
+- **Двойной щелчок** по инструменту или эффекту в браузере — эффект встаёт на выбранный трек.
+- **Перетащите** его из браузера на трек или в нужное место цепочки.
+- Инструмент, брошенный на трек инструмента, **заменяет** его инструмент.
+
+## Карточка
+
+У каждого устройства карточка с заголовком — имя, выбор пресета (**‹ Init ⌄ ›**), переключатель
+размера **S / L** (если он есть) и выключатель (обход) — над регуляторами. Ручки, слайдеры и графики
+везде работают одинаково: тяните, с <Kbd>⇧</Kbd> — мелкими шагами, двойной щелчок сбрасывает;
+графики — тоже регуляторы (тяните точки, кривые и ручки).
+
+| Действие | Результат |
+|---|---|
+| Тянуть заголовок | Переставить устройство в цепочке |
+| Щелчок по устройству · <Kbd>Delete</Kbd> | Удалить его |
+| Правый щелчок по заголовку | **Move left** / **Move right**, **Copy**, **Paste**, **Delete**, пресеты, **Save preset**, сравнение A / B |
+| Щелчок по выключателю | Обойти устройство |
+
+**Сравнение A / B** хранит две версии настроек устройства: переключайтесь между **A** и **B**, чтобы
+сравнить, **Copy A to B** — чтобы начать вариацию.
+
+## Пресеты
+
+У каждого встроенного устройства есть заводские пресеты — стрелки перебирают их, имя открывает
+список. **Save preset** сохраняет ваш; пользовательские пресеты видны во вкладке **Presets** браузера
+рядом с заводскими. Предпрослушивание в браузере играет пресет эффекта на коротком демо, так что
+его можно послушать до загрузки.
+
+## Сайдчейн
+
+Compressor, Dynamic EQ-8, Ceiling, Level, Shutter, Auto Filter и Prism умеют слушать **другой трек** —
+выберите его источником сайдчейна устройства (до или после фейдера того трека). Так же Nota Flux
+реагирует на другой трек, а Auto Shift может следовать за нотами другого трека.
+
+## Плагины
+
+Плагины VST3 (и AU на macOS) стоят в цепочке как встроенные устройства. Их карточка показывает
+параметры; **Open editor** открывает собственное окно плагина. См. [Плагины](../plugins/).
+
+<Aside>
+Любой регулятор любого устройства можно [автоматизировать](../editing/automation/), назначить на
+контроллер через [MIDI Learn](../control/midi-learn/) или коммутировать CV в [виде Modular](../views/modular/).
 </Aside>
+
+## Инструменты
+
+<CardGrid>
+  <LinkCard title="Nota Synth" description="Субтрактивный синтезатор с одним осциллятором" href="instruments/synth/" />
+  <LinkCard title="Nota Sampler" description="Играет сэмпл по клавиатуре" href="instruments/sampler/" />
+  <LinkCard title="Nota Physical" description="Модальный синтез: молоточковые, колокола, щипковые" href="instruments/physical/" />
+  <LinkCard title="Nota Aurora" description="Вейвтейбл-синтезатор" href="instruments/aurora/" />
+  <LinkCard title="Nota Volt" description="Двухканальный виртуальный аналог" href="instruments/volt/" />
+  <LinkCard title="Nota Bass" description="Басовый синтезатор с упором на моно" href="instruments/bass/" />
+  <LinkCard title="Nota Pendulum" description="Генеративные «маятниковые» арпеджио" href="instruments/pendulum/" />
+  <LinkCard title="Nota Operator" description="FM на четыре оператора" href="instruments/operator/" />
+  <LinkCard title="Nota Grain" description="Гранулярный сэмплер" href="instruments/grain/" />
+  <LinkCard title="Nota Flux" description="Векторный синтезатор, который слушает" href="instruments/flux/" />
+  <LinkCard title="Nota Rhythm" description="Восьмиголосная драм-машина" href="instruments/rhythm/" />
+  <LinkCard title="Nota Monolith" description="Моносинт в духе Model D" href="instruments/monolith/" />
+  <LinkCard title="Nota Pentad" description="Аналоговый полифон в духе Prophet-5" href="instruments/pentad/" />
+  <LinkCard title="Nota Consort" description="Парафонический полумодульный синтезатор" href="instruments/consort/" />
+</CardGrid>
+
+## Аудиоэффекты
+
+<CardGrid>
+  <LinkCard title="EQ-8 · EQ-3 · Dynamic EQ-8" description="Параметрический, DJ-изолятор, динамический EQ" href="audio-effects/eq-8/" />
+  <LinkCard title="Compressor · Prism · Ceiling · Level" description="Динамика, многополосная, лимитер, громкость" href="audio-effects/compressor/" />
+  <LinkCard title="Reverb · Chamber · Delay" description="Пространство и эхо" href="audio-effects/reverb/" />
+  <LinkCard title="Chorus · Flanger · Phaser · Orbit" description="Модуляция, панорама и тремоло" href="audio-effects/chorus/" />
+  <LinkCard title="Valve · Vintage · Forge · Crush" description="Усилитель, старение, сатурация, биткрашер" href="audio-effects/valve/" />
+  <LinkCard title="Auto Filter · Shutter · Beat Repeat" description="Подвижный фильтр, гейт, статтер" href="audio-effects/auto-filter/" />
+  <LinkCard title="Auto Shift · Strata · Utility · Lens" description="Коррекция высоты, лупер, утилиты, анализатор" href="audio-effects/auto-shift/" />
+</CardGrid>
+
+## MIDI-эффекты и рэки
+
+<CardGrid>
+  <LinkCard title="Arp · Chord · Scale" description="Арпеджиатор, аккорды, всё в тональности" href="midi-effects/arp/" />
+  <LinkCard title="Length · Velocity · Random" description="Длина нот, динамика, случайность" href="midi-effects/length/" />
+  <LinkCard title="Instrument Rack · Drum Rack" description="Слои, сплиты и пэды" href="racks/instrument-rack/" />
+  <LinkCard title="Audio Effect Rack · Macros" description="Параллельные эффекты и макросы" href="racks/audio-effect-rack/" />
+</CardGrid>

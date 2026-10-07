@@ -1,19 +1,73 @@
 ---
 title: "Nota Auto Shift"
+description: "Real-time pitch correction — snaps a voice to a key's scale, a custom set of notes, or the notes another track plays. From transparent touch-up to hard tune, with formant control."
 sidebar:
-  order: 46
-status: todo
+  order: 12
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/AutoShift.h
   - src/managed/Nota.App/DeviceCards/Bodies/AutoShiftDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Auto Shift.html
-  - see coverage.yml
-*/}
+Nota Auto Shift corrects pitch as it plays — gently, so a vocal just sits in tune, or hard, for the
+robotic hard-tune sound. It can also follow a **key it learns** from the singing, or the **notes of
+another track**.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/auto-shift/card" alt="Nota Auto Shift, Trace tab with detected and corrected pitch" />
+
+**How it works:** it **detects** the voice's pitch, picks a **target** note, and **shifts** the voice
+there while keeping the formants (the voice's character) where they were. The dry signal is delayed
+by the same amount, and the delay is compensated, so **Mix** never smears.
+
+**Layout:** the **Pitch** column on the left (where the voice is, the correction now), a centre panel
+with three tabs, a right panel (**Shift** / **Detect**) and a status line.
+
+## Trace
+
+The detected pitch and the corrected pitch on the scale's note lanes, over time.
+
+## Scale
+
+<Shot id="devices/audio-effects/auto-shift/scale" alt="Nota Auto Shift, Scale tab with the sung-note histogram" />
+
+**Key** and **Scale** — **Chromatic**, **Major**, **Minor**, **Penta Maj**, **Penta Min** — or a
+**Custom** set: click notes on and off. A histogram of the notes actually sung sits under them.
+**Learn** listens for about 16 bars and picks the key; **Key Source** **Auto** follows the learned
+key. **Follow Scale device** copies the key and scale of a [Nota Scale](../../midi-effects/scale/)
+on the track.
+
+## MIDI
+
+The target comes from the notes another track plays (pick it as the device's sidechain source):
+**Note** mode snaps to the exact note, **Scale** mode uses the notes as a scale; **Latch**, **Oct
+Lock** and a **Bend** range shape it.
+
+## Shift
+
+| Control | What it does |
+|---|---|
+| **Amount** | How far the pitch is pulled to the target |
+| **Speed** | How fast it gets there — slow is natural, instant is hard tune |
+| **Human** | Keeps vibrato around the corrected note |
+| **Range** | Only corrects notes within this distance |
+| **Shift** · **Fine** | Transpose the result |
+| **Formant** · **Formant shift** | Keep the voice's character, or move it on its own (bigger, smaller voice) |
+| **Mix** | Dry / wet |
+
+## Detect
+
+**Det Low** / **Det High** — the note range to look for — and **Det Sens**; **Skip sibilants** leaves
+"s" and "t" sounds alone.
+
+## Presets
+
+34 factory presets: correction (**Hard Tune**, **Robot Voice**, **Natural Vocal**, **Transparent
+Touch**, **Pop Lead**, **R&B Runs**, **Ballad**, **Rap Hook**, **Choir Tighten**), keys (**Auto Key**,
+**Chromatic Fix**, **Minor Key**, **Pentatonic Pop**, **Blues in A**, **Dorian Groove**), voices
+(**Soprano**, **Alto**, **Tenor**, **Bass Voice**, **Lead Instrument**), effects (**Octave Up**, **Octave
+Down**, **Chipmunk**, **Monster**, **Gender Up**, **Gender Down**, **Formant Up**, **Detune Double**,
+**Fifth Harmony**, **Harmony Lock**) and MIDI (**MIDI Hard Tune**, **MIDI Scale Follow**, **MIDI Melody
+Replace**).

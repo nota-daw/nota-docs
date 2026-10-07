@@ -1,22 +1,112 @@
 ---
 title: "Devices"
+description: "How a track's device chain works — instruments, audio effects, MIDI effects and racks; adding, reordering, bypassing, presets, A/B compare — and an index of every built-in device."
 sidebar:
-  order: 22
-status: todo
+  order: 0
+updated: "0.50.1"
+status: done
+sources:
+  - src/managed/Nota.App/DeviceChainView.cs
+  - src/managed/Nota.App/DeviceChainView.Drop.cs
+  - src/managed/Nota.App/DeviceChainView.Clipboard.cs
+  - src/managed/Nota.App/DeviceCardKit.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import { CardGrid, LinkCard, Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
 
-{/* Scope (from coverage.yml)
-  - device chain
-  - add/reorder/bypass/delete
-  - cards
-  - presets (factory/user)
-  - copy/paste devices
-  - drag & drop
-  - plug-in vs built-in
-*/}
+Every track has a **device chain**: the devices that make and shape its sound, left to right. Select
+a track to see its chain in the panel at the bottom.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
+<Shot id="views/detail-panel" alt="The device chain of the Keys track: Nota Pentad, then Nota EQ-8" />
+
+**MIDI effects → instrument → audio effects.** MIDI effects (an arpeggiator, a chord generator)
+change the notes before the instrument plays them; the instrument turns notes into sound; audio
+effects process that sound. An audio track has no instrument — only audio effects.
+
+## Adding devices
+
+- **Double-click** an instrument or effect in the browser — an effect goes onto the selected track.
+- **Drag** it from the browser onto a track, or into the chain where you want it.
+- Dropping an instrument onto an instrument track **replaces** its instrument.
+
+## The card
+
+Each device is a card with a header — name, preset picker (**‹ Init ⌄ ›**), the **S / L** size switch
+where the device has one, and the on / off (bypass) switch — over its controls. Knobs, sliders and
+graphs work the same everywhere: drag, <Kbd>⇧</Kbd> for fine steps, double-click to reset; graphs
+are controls too (drag the nodes, curves and handles).
+
+| Do this | To |
+|---|---|
+| Drag the header | Move the device in the chain |
+| Click a device · <Kbd>Delete</Kbd> | Remove it |
+| Right-click the header | **Move left** / **Move right**, **Copy**, **Paste**, **Delete**, presets, **Save preset**, A / B compare |
+| Click the power switch | Bypass the device |
+
+**A / B compare** keeps two versions of a device's settings: switch between **A** and **B** to compare,
+**Copy A to B** to start a variation.
+
+## Presets
+
+Every built-in device ships with factory presets — the arrows step through them, the name opens the
+list. **Save preset** stores your own; user presets appear in the browser's **Presets** tab alongside
+the factory ones. A preview in the browser plays an effect preset through a short demo, so you can
+audition before you load it.
+
+## Sidechain
+
+Compressor, Dynamic EQ-8, Ceiling, Level, Shutter, Auto Filter and Prism can listen to **another
+track** — pick it as the device's sidechain source (pre or post that track's fader). Nota Flux reacts
+to another track, and Auto Shift can follow another track's notes, the same way.
+
+## Plug-ins
+
+VST3 (and AU on macOS) plug-ins sit in the chain like built-in devices. Their card shows the
+parameters; **Open editor** opens the plug-in's own window. See [Plug-ins](../plugins/).
+
+<Aside>
+Any control on any device can be [automated](../editing/automation/), mapped to a controller with
+[MIDI Learn](../control/midi-learn/), or patched with CV in the [Modular view](../views/modular/).
 </Aside>
+
+## Instruments
+
+<CardGrid>
+  <LinkCard title="Nota Synth" description="One-oscillator subtractive synth" href="instruments/synth/" />
+  <LinkCard title="Nota Sampler" description="Plays a sample across the keys" href="instruments/sampler/" />
+  <LinkCard title="Nota Physical" description="Modal synthesis: mallets, bells, plucks" href="instruments/physical/" />
+  <LinkCard title="Nota Aurora" description="Wavetable synth" href="instruments/aurora/" />
+  <LinkCard title="Nota Volt" description="Two-path virtual analog" href="instruments/volt/" />
+  <LinkCard title="Nota Bass" description="Mono-first bass synth" href="instruments/bass/" />
+  <LinkCard title="Nota Pendulum" description="Generative swinging arpeggios" href="instruments/pendulum/" />
+  <LinkCard title="Nota Operator" description="4-operator FM" href="instruments/operator/" />
+  <LinkCard title="Nota Grain" description="Granular sampler" href="instruments/grain/" />
+  <LinkCard title="Nota Flux" description="Vector synth that listens" href="instruments/flux/" />
+  <LinkCard title="Nota Rhythm" description="Eight-voice drum machine" href="instruments/rhythm/" />
+  <LinkCard title="Nota Monolith" description="Model D-style mono synth" href="instruments/monolith/" />
+  <LinkCard title="Nota Pentad" description="Prophet-5-style analog poly" href="instruments/pentad/" />
+  <LinkCard title="Nota Consort" description="Paraphonic semi-modular" href="instruments/consort/" />
+</CardGrid>
+
+## Audio effects
+
+<CardGrid>
+  <LinkCard title="EQ-8 · EQ-3 · Dynamic EQ-8" description="Parametric, DJ isolator, dynamic EQ" href="audio-effects/eq-8/" />
+  <LinkCard title="Compressor · Prism · Ceiling · Level" description="Dynamics, multiband, limiter, loudness" href="audio-effects/compressor/" />
+  <LinkCard title="Reverb · Chamber · Delay" description="Space and echo" href="audio-effects/reverb/" />
+  <LinkCard title="Chorus · Flanger · Phaser · Orbit" description="Modulation, pan and tremolo" href="audio-effects/chorus/" />
+  <LinkCard title="Valve · Vintage · Forge · Crush" description="Amp, age, saturation, bit crushing" href="audio-effects/valve/" />
+  <LinkCard title="Auto Filter · Shutter · Beat Repeat" description="Moving filter, gate, stutter" href="audio-effects/auto-filter/" />
+  <LinkCard title="Auto Shift · Strata · Utility · Lens" description="Pitch correction, looper, tools, analyzer" href="audio-effects/auto-shift/" />
+</CardGrid>
+
+## MIDI effects and racks
+
+<CardGrid>
+  <LinkCard title="Arp · Chord · Scale" description="Arpeggiator, chords, keep in key" href="midi-effects/arp/" />
+  <LinkCard title="Length · Velocity · Random" description="Note length, dynamics, chance" href="midi-effects/length/" />
+  <LinkCard title="Instrument Rack · Drum Rack" description="Layers, splits and pads" href="racks/instrument-rack/" />
+  <LinkCard title="Audio Effect Rack · Macros" description="Parallel effects and macro knobs" href="racks/audio-effect-rack/" />
+</CardGrid>

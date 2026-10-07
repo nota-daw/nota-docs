@@ -1,19 +1,85 @@
 ---
 title: "Nota Sampler"
+description: "Играет сэмпл по клавиатуре — начало и конец, лупы с кроссфейдом, реверс, огибающая громкости, фильтр с отслеживанием клавиш и огибающей, голоса Poly, Mono или Choke."
 sidebar:
-  order: 24
-status: todo
+  order: 2
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Sampler.h
+  - src/managed/Nota.App/DeviceCards/Instruments/SamplerInstrumentCard.cs
   - src/managed/Nota.App/DeviceCards/Sampler/SamplerViews.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Sampler.html
-  - see coverage.yml
-*/}
+Nota Sampler играет один сэмпл, транспонируя его по сыгранной ноте относительно **корневой**
+клавиши. Подходит для ван-шотов, нарезанных лупов и любой записи, на которой хочется играть как
+на инструменте.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/instruments/sampler/card" alt="Nota Sampler, вкладка Sample с загруженным сэмплом" />
+
+**Как загрузить сэмпл:** бросьте аудиофайл на карточку (или на трек), перетащите его из
+браузера или перетащите аудиоклип из Arrangement на трек. Двойной щелчок по **Nota Sampler** в
+браузере добавляет трек и открывает карточку, готовую принять файл.
+
+**Путь сигнала:** сэмпл (начало / конец / луп) → высота → огибающая громкости → фильтр → выход.
+
+## Sample
+
+Волна показывает играющую часть, луп и его кроссфейд, а также курсор воспроизведения.
+Тяните **Start** и **End** (яркие линии), чтобы задать окно.
+
+| Регулятор | Что делает |
+|---|---|
+| **Loop** | Выключен (ван-шот), вперёд или пинг-понг; луп вперёд может идти и задом наперёд |
+| **Loop start** · **Loop end** · **Crossfade** | Окно лупа и кроссфейд, скрывающий шов |
+| **Reverse** | Играть сэмпл задом наперёд |
+| **Gain** | Уровень сэмпла до огибающей (±24 дБ) |
+| **Snap to zero** · **Trim silence** | Сдвинуть края к переходам через ноль · пропустить тишину в начале и конце |
+
+## Pitch
+
+<Shot id="devices/instruments/sampler/pitch" alt="Nota Sampler, вкладка Pitch с клавиатурой и корневой клавишей" />
+
+Клавиатура C2 … C6: **корневая** клавиша латунная, звучащая сейчас нота — бирюзовая. Щелчок по
+клавише делает её корневой; то же — стрелки рядом с **Root**. **Detect from file name** берёт
+название ноты вроде «C3» или «F#2» из имени файла.
+
+| Регулятор | Что делает |
+|---|---|
+| **Transpose** · **Detune** | Сдвиг всего инструмента на полутоны · центы |
+| **Keytrack** | Насколько клавиша меняет высоту: 100 % — хроматически, 0 % — любая клавиша играет корень |
+| **Glide** | Скольжение от предыдущей ноты; в Mono — легато |
+
+## Env
+
+<Shot id="devices/instruments/sampler/env" alt="Nota Sampler, вкладка Env" />
+
+Огибающая громкости — **Attack**, **Decay**, **Sustain**, **Release** — в виде графика, который
+можно тянуть; самый громкий голос бежит по нему бирюзовой точкой. **Vel → Vol** — насколько
+velocity меняет громкость.
+
+## Filter
+
+<Shot id="devices/instruments/sampler/filter" alt="Nota Sampler, вкладка Filter" />
+
+| Регулятор | Что делает |
+|---|---|
+| **Type** · **Cutoff** · **Reso** | Фильтр и его кривая — тяните её: по горизонтали частота, по вертикали резонанс |
+| **Keytrack** | Насколько частота среза следует за нотой |
+| **Env → Cutoff** | Вкл / выкл и глубина ±: огибающая громкости двигает частоту среза |
+
+## Голоса и выход
+
+**Voices** — **Poly**, **Mono** или **Choke** (новая нота обрывает звучащую: хэты, удары-ван-шоты).
+**Volume**, **Pan** и **Output** задают уровень и панораму; Output — уровень после всего.
+
+## Пресеты
+
+30 заводских пресетов, которые формируют любой загруженный сэмпл: **One-Shot**, **Gated Hold**,
+**Soft Velocity**, **Octave Up**, **Half Speed**, пэды (**Warm Pad**, **Glass Pad**, **Tape
+Sustain**), басы (**Mono Bass**, **Slide Bass**, **Sub Drop**), клавишные и щипковые (**Soft
+Keys**, **Harp Pluck**, **Lo-Fi Keys**, **Music Box**), ударные (**Drum Hit**, **Choke Hat**,
+**Tuned Perc**, **Chop**) и эффекты (**Reverse Swell**, **Telephone**, **Dark Room**,
+**Envelope Sweep**).

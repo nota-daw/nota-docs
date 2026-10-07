@@ -1,19 +1,71 @@
 ---
 title: "Nota Valve"
+description: "Гитарный усилитель — семь характеров от Clean до Heavy плюс басовый, темброблок, пять кабинетов с выбором микрофона, расстояния и позиции, срезы, нойз-гейт и dry / wet."
 sidebar:
-  order: 42
-status: todo
+  order: 8
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Amp.h
   - src/managed/Nota.App/DeviceCards/Bodies/ValveDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Valve.html
-  - see coverage.yml
-*/}
+Nota Valve — усилитель и кабинет: подключайте гитару или бас напрямую или добавляйте грязи
+клавишным, вокалу и барабанам.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/valve/card" alt="Nota Valve, вкладка Amp с откликом темброблока" />
+
+**Путь сигнала:** предфильтр → **Bright** → предусилитель (с передискретизацией) → темброблок →
+**Deep** → кабинет → low / high cut → компенсация → выход → гейт → микс.
+
+**Устройство карточки:** колонка **Stage** слева (фейдеры **Gain** и **Output**), центральная панель
+с тремя вкладками, правая панель (**Cabinet** / **Output**) и строка состояния.
+
+## Amp
+
+| Регулятор | Что делает |
+|---|---|
+| Модель | **Clean**, **Boost**, **Blues**, **Rock**, **Lead**, **Heavy**, **Bass** |
+| **Gain** | Перегруз предусилителя |
+| **Bass** · **Middle** · **Treble** · **Presence** | Темброблок; **Mid freq** двигает середину |
+| **Bright** · **Deep** | Переключатели дополнительного верха и низа |
+| **Even only** | Предусилитель только с чётными гармониками — тепло вместо грязи |
+
+График показывает отклик темброблока относительно ровного.
+
+## Cab
+
+<Shot id="devices/audio-effects/valve/cab" alt="Nota Valve, вкладка Cab с откликом кабинета" />
+
+| Регулятор | Что делает |
+|---|---|
+| Кабинет | **Match** (по модели), **1×12 Open**, **2×12 Combo**, **4×12 Closed**, **1×15 Bass** |
+| Микрофон | **Dyn** (динамический), **Cond** (конденсаторный) или **Ribbon** (ленточный) |
+| **Distance** · **Axis** · позиция | Расстояние до микрофона, по оси или вне её, у **Cap** (центра) или у **Edge** (края) динамика |
+| **Low cut** · **High cut** | Подрезать края кабинета |
+
+График показывает отклик кабинета на фоне микрофона по оси у центра.
+
+## Harmonics
+
+<Shot id="devices/audio-effects/valve/harmonics" alt="Nota Valve, вкладка Harmonics" />
+
+Гармоники, которые предусилитель добавляет прямо сейчас, — видно, как Gain и модель меняют
+характер.
+
+## Output
+
+**Output**, **Mix** (dry / wet), **Auto comp** (держит уровень при изменении Gain), **Gate** (по
+входу — убирает шипение между нотами), **Oversampling** и включение кабинета.
+
+## Пресеты
+
+31 заводской пресет: чистые (**Clean Combo**, **Jazz Box**, **Glassy Clean**, **Funk Snap**, **Country
+Twang**), блюз (**Blues Breakup**, **Edge of Breakup**, **Texas Blues**, **Smooth Blues Lead**, **Even
+Warmth**), рок (**Rock Crunch**, **Classic Stack**, **Arena Rhythm**, **Indie Jangle**, **Garage
+Fuzz**), соло (**Lead Sustain**, **Singing Lead**, **Shred Lead**), тяжёлые (**Heavy Chug**, **Modern
+Metal**, **Doom Sludge**, **Djent Tight**), бас (**Bass Amp**, **Bass Growl**, **Bass DI Clean**,
+**Bass Drive Blend**) и не только гитара (**Lo-Fi Radio Amp**, **Keys Grit**, **Vocal Tube Color**,
+**Drum Crunch**, **Parallel Grind**).

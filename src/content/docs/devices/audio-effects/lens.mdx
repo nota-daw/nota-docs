@@ -1,19 +1,58 @@
 ---
 title: "Nota Lens"
+description: "Analyzer — a spectrum, a triggered oscilloscope and a waterfall in one card, with peak hold, cursors, mid / side and loudness. The audio passes through untouched."
 sidebar:
-  order: 58
-status: todo
+  order: 22
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Lens.h
   - src/managed/Nota.App/DeviceCards/Bodies/LensDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Lens.html
-  - see coverage.yml
-*/}
+Nota Lens shows what a sound is made of. It changes nothing — put it anywhere in a chain, or on the
+master, to look at the spectrum, the waveform or how the sound evolves over time.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/lens/card" alt="Nota Lens, Spectrum view" />
+
+**Layout:** the **Scale** rail on the left, one large graph in the middle with three views, an
+**Analyze** / **Display** panel on the right and a status line.
+
+## Spectrum
+
+An FFT spectrum on a log frequency scale: **FFT** size and window, **Avg**, smoothing, decay, a
+**Tilt** (so a balanced mix looks flat), a floor, and **peak hold**. **Mid/Side** shows the mid or the
+side instead of left / right.
+
+## Scope
+
+<Shot id="devices/audio-effects/lens/scope" alt="Nota Lens, Scope view" />
+
+A triggered oscilloscope that behaves like a bench instrument: the trace is pinned to the trigger
+point and stands still, older passes fade (**Afterglow**). **Free** runs untriggered; a **Single**
+capture holds one sweep. **Cursors** A and B measure time and level between two points. **Export
+WAV** saves the captured window.
+
+## Waterfall
+
+<Shot id="devices/audio-effects/lens/waterfall" alt="Nota Lens, Waterfall view" />
+
+The spectrum over time, scrolling — see resonances ring, reverb tails decay and drum patterns repeat.
+**Contrast** and brightness set how much detail shows.
+
+## Common controls
+
+**Freeze** stops the display; **Source** picks what is analysed; the scale's top and range set the
+vertical view. The status line carries loudness and the measurements.
+
+## Presets
+
+32 factory presets: spectrum (**Mix Overview**, **Fine Resolution**, **Fast Response**, **Low End
+Focus**, **Tonal Balance**, **Peak Finder**, **Flat-Top Calibration**, **Mid / Side Check**, **Noise
+Floor**, **Tuning Check**, **Loudness Watch**, **Linear Sweep**, **Master Bus**), scope (**Scope ·
+Waveform**, **· Transient**, **· Single Shot**, **· Sub Bass**, **· Clip Watch**, **· Side Signal**, **·
+Afterglow**, **· Cursor Measure**, **· High Frequency**, **· Left Channel**, **· Right Channel**, **·
+Falling Edge**) and waterfall (**Waterfall · Arrangement**, **· Detail**, **· Resonance Hunt**, **·
+Reverb Tail**, **· Noise Print**, **· Drum Pattern**, **· Vocal Formants**).

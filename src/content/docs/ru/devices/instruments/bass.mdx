@@ -1,19 +1,65 @@
 ---
 title: "Nota Bass"
+description: "Басовый синтезатор с упором на моно — морфирующий осциллятор, саб, фильтр с драйвом и своей огибающей, LFO для «воблов», glide и легато."
 sidebar:
-  order: 28
-status: todo
+  order: 6
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/BassSynth.h
   - src/managed/Nota.App/DeviceCards/Instruments/BassInstrumentCard.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Bass.html
-  - see coverage.yml
-*/}
+Nota Bass настроен на низ: один осциллятор, который плавно меняет форму от синуса до импульса,
+саб-осциллятор под ним, фильтр с драйвом и моноголос с glide. Сабы, 808, эсид-линии, риз и
+вобл-басы.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/instruments/bass/card" alt="Nota Bass, вкладка Signal" />
+
+**Путь сигнала:** Osc + Sub → предварительный драйв → фильтр (со своей огибающей, key и LFO) →
+огибающая громкости → выходной драйв.
+
+## Signal
+
+| Раздел | Регуляторы |
+|---|---|
+| **Osc** | **Shape** плавно ведёт синус → треугольник → пила → импульс; **PW** на импульсном конце; **Oct**, **Semi**, **Level** |
+| **Sub** | Синус, треугольник или меандр на 1 или 2 октавы ниже, **Level** |
+| **Filter** | **LP**, **HP**, **BP** или **Notch**, 12 или 24 дБ; **Cutoff**, **Reso**, **Drive**, глубины **Env** и **Key** — тяните кривую |
+
+## Mod
+
+<Shot id="devices/instruments/bass/mod" alt="Nota Bass, вкладка Mod с огибающими и LFO" />
+
+Огибающие **громкости** и **фильтра**, нарисованные и редактируемые перетаскиванием; **LFO**
+(скорость, форма, включая S&H) с двумя назначениями — фильтр и **LFO → Pitch**; и глубины
+velocity **Vel → Amp** и **Vel → Fil**.
+
+## Global
+
+| Регулятор | Что делает |
+|---|---|
+| **Mono** / **Poly 16** | В Mono звучит последняя удерживаемая нота — настоящий бас |
+| **Legato** | В Mono нота, сыгранная поверх удерживаемой, скользит в неё без новой атаки |
+| **Glide** | Время скольжения между нотами |
+| **Unison** | Более плотные, расстроенные голоса |
+| **Drive** | Выходная сатурация |
+| **Bend** · **Volume** · **Pan** | Диапазон pitch bend (1–12 полутонов), уровень, панорама |
+
+**Колесо модуляции** открывает LFO на срез фильтра — «вобл» рукой.
+
+## Пресеты
+
+25 заводских пресетов: сабы (**Sub Rumble**, **808 Sub**, **Dub Sub**, **Techno Rumble**, **Soft
+Round**), классический моно (**Pluck Bass**, **Classic Mono**, **Pulse Bass**, **Rubber Bass**,
+**Stab Bass**, **Octave Bass**, **Drift Bass**), эсид (**Acid 303**, **Acid Slide**), тяжёлые
+(**Reese Bass**, **Growl Bass**, **Wobble Bass**, **Hoover Bass**, **Fuzz Bass**, **Vowel Bass**,
+**Wheel Wobble**, **S&H Bass**) и «живые» (**Finger Bass**, **Picked Bass**, **Funk Slap**).
+
+## Советы
+
+- **Слайды в духе 303:** Mono + **Legato** + немного **Glide**; там, где нужен слайд, перекройте
+  ноты в piano roll.
+- **Чистый низ:** пусть Sub держит низ, а **Drive** на Osc даёт верхние гармоники.

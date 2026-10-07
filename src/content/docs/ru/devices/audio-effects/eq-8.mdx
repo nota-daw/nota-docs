@@ -1,19 +1,58 @@
 ---
 title: "Nota EQ-8"
+description: "Восьмиполосный параметрический эквалайзер — срезы, полки, колокола и режекторы с выбором крутизны, mid / side и левый / правый канал на каждую полосу, живой анализатор, масштаб и автокомпенсация."
 sidebar:
-  order: 37
-status: todo
+  order: 1
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Eq.h
   - src/managed/Nota.App/DeviceCards/Bodies/EqDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota EQ-8.html
-  - see coverage.yml
-*/}
+Nota EQ-8 — эквалайзер в духе микшерного пульта с восемью полосами. Убирайте муть, срезайте
+гул, добавляйте воздуха, расчищайте место одному звуку под другой — в стерео, в середине или по
+бокам.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/eq-8/card" alt="Nota EQ-8: фишки полос, график и панель полосы" />
+
+## График
+
+Каждая полоса — пронумерованная точка на кривой: тяните её вбок, чтобы менять частоту, вверх и
+вниз — усиление. Фишки полос над графиком включают и выключают полосы и выбирают одну для панели
+справа. **Analyzer** в углу показывает спектр **Pre** или **Post** эквалайзера, или **Off**.
+
+## Полоса
+
+| Регулятор | Что делает |
+|---|---|
+| Тип | **Low cut**, **Low shelf**, **Bell**, **Notch**, **High shelf**, **High cut** |
+| **Freq** · **Gain** · **Q** | Где, насколько, как широко (на срезах — **Reso**) |
+| **Slope** | Для срезов: 12, 24 или 48 дБ на октаву |
+| **Channel** | **St** (оба канала), **Mid**, **Side**, **L** или **R** — полоса может, например, осветлить только бока или приглушить один канал |
+
+## Global
+
+| Регулятор | Что делает |
+|---|---|
+| **Scale** | Умножает усиление всех полок и колоколов разом, 0–200 % — 50 % вдвое сглаживает кривую |
+| **Output** | Выходной уровень |
+| **Auto gain** | Компенсирует среднее изменение громкости от полок и колоколов, чтобы сравнивать правку на той же громкости |
+
+## Пресеты
+
+34 заводских пресета: тон (**Bass Boost**, **Air & Presence**, **Smile Curve**, **Loudness
+Contour**, **Master Tilt**), чистка (**Low Cut**, **Sub Rumble Filter**, **Mud Cut**, **Hum Removal
+50 Hz** / **60 Hz**, **Mono Low End**), микс (**Clean Mix Bus**, **Pad Tuck**, **Double-Track
+Split**, **Wide Air**, **Focus Center**), вокал (**Vocal Presence**, **De-Box Vocal**, **Sibilance
+Tamer**, **Podcast Voice**), ударные (**Kick Punch**, **Snare Crack**, **Overheads Air**, **Hi-Hat
+Clean**), инструменты (**Bass Definition**, **Acoustic Guitar**, **Electric Guitar Cab**, **Piano
+Clarity**) и окраска (**Telephone**, **Lo-Fi Radio**, **Band Pass**).
+
+## Советы
+
+- **Режьте узко, поднимайте широко:** найдите резкую частоту узким поднятым колоколом, затем
+  переверните его в вырез.
+- **Моно в низах:** срез на полосе **Side** около 120 Гц держит бас по центру.

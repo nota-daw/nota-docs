@@ -1,19 +1,55 @@
 ---
 title: "Nota Dynamic EQ-8"
+description: "Восьмиполосный эквалайзер, у которого каждая полоса реагирует на уровень — приглушается, когда громко, или поднимается, когда тихо, — по своему сигналу или по другому треку."
 sidebar:
-  order: 49
-status: todo
+  order: 3
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/DynamicEq.h
   - src/managed/Nota.App/DeviceCards/Bodies/DynamicEqDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Dynamic EQ.html
-  - see coverage.yml
-*/}
+Nota Dynamic EQ-8 — восьмиполосный эквалайзер, где каждая полоса может вести себя как небольшой
+компрессор или экспандер только для своих частот. Укрощайте сибилянты только когда они есть,
+приглушайте бас только на ударе бочки, добавляйте воздуха только когда вокал затихает.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/dynamic-eq/card" alt="Nota Dynamic EQ-8: график и панель полосы" />
+
+## Полоса
+
+Статическая часть такая же, как у [EQ-8](../eq-8/): тип, **Freq**, **Gain**, **Q**. Динамическая:
+
+| Регулятор | Что делает |
+|---|---|
+| Режим | **Static** — обычная полоса; **Duck** — работает, когда полоса громче порога; **Lift** — когда тише |
+| **Thresh** | Уровень, с которого полоса начинает работать; текущий уровень полосы отмечен на нём |
+| **Range** | Сколько дБ при полном срабатывании — минус режет, плюс поднимает (Duck с подъёмом — это расширение вверх) |
+| **Attack** · **Release** | Как быстро срабатывает и отпускает |
+| **Key** | **Self** (сигнал самой полосы) или **Ext** (другой трек — источник сайдчейна устройства) |
+| **Solo** | Слушать только эту полосу |
+
+Динамическое усиление работает только на полках и колоколах. Полное срабатывание — через 6 дБ
+после порога. Фишки полос над графиком подсвечиваются активностью каждой полосы.
+
+## Global
+
+**Dynamic** выключает всю динамику разом — мгновенное A/B того, что она делает. **Out** — выходной
+уровень.
+
+## Пресеты
+
+33 заводских пресета: вокал (**De-Ess**, **De-Ess Soft**, **De-Harsh Vox**, **Vocal Tame**, **Vocal
+Presence**, **Proximity Control**, **Air Lift Vocal**, **Podcast Voice**), микс и мастер (**Mix Bus
+Air**, **Mud Control**, **Harshness Guard**, **Warm Master**, **Master Glue EQ**, **Loudness
+Contour**), ударные (**Punch Tighten**, **Kick Box Cut**, **Snare Ring Tamer**, **Cymbal Smoother**,
+**Room Mic Duck**), бас (**Bass Control**, **Bass Clarity**, **Sub Tamer**, **Kick Ducks Bass**) и
+другое (**Vocal Pocket**, **Voiceover Space**, **Guitar Resonance**, **Piano Boom Control**, **Pad
+Smoother**, **Upward Air**, **Hiss Dip**).
+
+## Советы
+
+- **Место для вокала:** на пэде — колокол Duck около 2–3 кГц с ключом **Ext** от вокального трека.
+- **Бочка и бас:** на басе — низкая полка Duck с ключом от бочки (**Kick Ducks Bass**).

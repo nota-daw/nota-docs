@@ -1,19 +1,55 @@
 ---
 title: "Nota Forge"
+description: "Multi-stage saturator — three stages with their own algorithm, drive, bias, tone, width and feedback, routed in series, in parallel, mid / side or by band, with an LFO and an envelope."
 sidebar:
-  order: 53
-status: todo
+  order: 17
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Forge.h
   - src/managed/Nota.App/DeviceCards/Bodies/ForgeDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Forge.html
-  - see coverage.yml
-*/}
+Nota Forge is three saturators in one — tape, tube, diode, fuzz, folding — that you can stack,
+blend, split into mid and side, or give each a frequency band.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/forge/card" alt="Nota Forge: routing and the three stages, the transfer curve and harmonics, the stage shape" />
+
+## Routing
+
+| Routing | How the three stages combine |
+|---|---|
+| **Serial** | 1 → 2 → 3 |
+| **Parallel** | All three from the same input, averaged |
+| **M/S** | Stage 1 on the mid, stage 2 on the side, stage 3 on the recombined stereo |
+| **Multi** | Stage 1 on the lows (under 180 Hz), stage 2 the mids, stage 3 the highs (over 2.4 kHz) — a stage that's off lets its band through clean |
+
+## A stage
+
+On the left, each stage has its on dot, its type, its role in the routing, an output trim (drag
+the dB), **Drive** and a teal **Feedback**. Click a stage to edit its **shape** on the right:
+**Bias** (asymmetry — even harmonics), **Tone** (a ±12 dB tilt after it) and **Width** (its stereo
+image, 0–200 %).
+
+## The centre
+
+**Amount** (drive into the chain), **Wet** and **Out** over the transfer curve — the whole device,
+each stage faintly, the LFO-modulated curve dashed — and the harmonics of a −6 dB sine with its THD.
+Drag the node on the curve for Amount.
+
+## Modulation
+
+**LFO → Drive** (free or synced, with **Rate**) makes the drive breathe; **Env → Tone** opens the tone
+as the signal gets louder. **Oversample** reduces aliasing on hard settings.
+
+## Presets
+
+32 factory presets: warmth (**Cabinet Heat**, **Tape Glue**, **Tube Warmth**, **Console Bus**, **Vocal
+Silk**, **Bass Weight**, **Parallel Warmth**, **Warm Master**), drive (**Diode Crunch**, **Amp Stack**,
+**Guitar Edge**, **Snare Crack**, **Fuzz Wall**, **Digital Hard Clip**, **Broken Speaker**, **Feedback
+Scream**), folding (**Fold Bells**, **Wavefolder Synth**), bus and parallel (**Drum Glue**, **NY Drums**,
+**Bass Parallel Grit**), mid / side (**Wide Air**, **Mono Grit Core**, **Side Sizzle**), multiband
+(**Multiband Drive**, **Low-End Only**, **Presence Lift**) and motion (**Breathing Drive**, **Wobble
+Crunch**, **Envelope Bite**, **Slow Tide**).

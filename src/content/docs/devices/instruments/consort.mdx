@@ -1,19 +1,81 @@
 ---
 title: "Nota Consort"
+description: "Paraphonic semi-modular synth — four oscillators, a dual ladder filter, two envelopes, an LFO, a 16-step sequencer and arpeggiator, an analog delay and a twelve-cable patch bay."
 sidebar:
-  order: 36
-status: todo
+  order: 14
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Consort.h
   - src/managed/Nota.App/DeviceCards/Instruments/ConsortInstrumentCard.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Consort.html
-  - see coverage.yml
-*/}
+Nota Consort is a semi-modular synth in the spirit of a four-oscillator paraphonic Moog. It plays
+as a big mono synth, as two or four voices sharing one filter, or as a true polysynth — and a
+**patch bay** lets you re-wire it with cables.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/instruments/consort/card" alt="Nota Consort, Osc · Mix tab" />
+
+**Signal flow:** VCO 1–4 (2 syncs to 1, 4 to 3) + noise + EXT → mixer (with drive) → two ladder
+filters → VCA → analog delay. Env 1 → cutoff, Env 2 → VCA, LFO → pitch, cutoff, PWM.
+
+## Voices
+
+| Mode | How it plays |
+|---|---|
+| **MONO** | All four oscillators on one note |
+| **DUO** | Oscillators 1 + 2 and 3 + 4 each take a note |
+| **PARA** | Every oscillator takes its own note — paraphony: they share one filter, VCA and envelopes |
+| **True poly (16)** | A switch: 16 complete voices, each with four oscillators, two filters and two envelopes |
+
+**Multi trig** retriggers the shared envelopes on every note; **Unison detune** doubles held notes
+on idle oscillators, detuned. All three switches sit on the **Voices** tab of the right panel. **Glide** per oscillator: **LCR** (constant rate), **LCT** (constant time) or
+**EXP**, optionally only when legato.
+
+## Tabs
+
+| Tab | What's there |
+|---|---|
+| **Osc · Mix** | The four oscillators — octave, tuning, wave, pulse width, sync — and the mixer with noise and drive |
+| **Filters · Env** | The **dual ladder**: **HP/LP ser** (series), **LP/LP st** or **HP/LP st** (parallel stereo), cutoff, resonance, spacing, keyboard tracking (0, ½, 1); the filter and amplitude envelopes |
+| **LFO · Delay** | The LFO (six shapes; to all oscillators or 2 + 4) and the **analog delay** — a bucket-brigade model (**BBD**: longer is darker, with compander breathing and hiss), **Ping** or **Stereo**, or a clean **Digital** line |
+| **Seq** | A 16-step sequencer and arpeggiator — see below |
+| **Patch** | The patch bay — see below |
+
+<Shot id="devices/instruments/consort/filters-env" alt="Nota Consort, Filters · Env tab" />
+
+## Sequencer and arpeggiator
+
+<Shot id="devices/instruments/consort/seq" alt="Nota Consort, Seq tab" />
+
+**Off**, **SEQ** or **ARP**. Sixteen steps, each a note, a **ratchet** (×2, ×3, ×4), a tie or a
+rest, ±24 semitones; rates 1/4 to 1/32 with swing; **Fwd**, **Back** or **Rnd** order; latch. In SEQ
+the keyboard transposes the sequence; in ARP it walks the held chord over 1, 2 or 3 octaves, and
+the step types still shape the rhythm. It locks to the grid while the transport runs.
+
+## Patch bay
+
+<Shot id="devices/instruments/consort/patch" alt="Nota Consort, Patch tab with the cable matrix" />
+
+Twelve **cables**, each a source, a destination and a ± depth. Sources include the oscillators,
+the filter, noise, the LFO, both envelopes, keyboard pitch, gate and velocity, aftertouch, the
+mod wheel, the sequencer's pitch, gate and clock, two attenuators and a summing node.
+Destinations include pitch, PWM, cutoff, resonance, the VCA, the delay and the LFO rate — plus
+**normalled** inputs (the envelope gates, filter in, VCA in, EXT in) where a cable breaks the
+default connection. Feedback loops are allowed.
+
+The Patch tab shows the cables as a source × destination matrix and as a jack strip; the
+**PATCH BAY** row under the card lists the active cables and opens a full-card overlay with every
+jack. Drag from jack to jack to patch; <Kbd>⌥</Kbd>-click a jack to pull its cables.
+
+## Presets
+
+28 factory presets: pads and chords (**Stereo Consort**, **Para Strings**, **Spread Voicing**, **Duo
+Sync Pad**, **Poly Pad**, **Glass Chords**, **Poly Keys**), basses (**Ladder Bass**, **Deep Sub**,
+**Feedback Growl**, **FM Growl**), leads (**Duo Fifths**, **Unison Lead**, **Sync Lead**, **Ladder
+Whistle**, **Wheel Wah**), sequences (**Ratchet Run**, **Acid Run**, **Arp Cascade**, **Random Arp**,
+**Latch Sequence**, **Trance Gate**) and patches (**Patched Drift**, **Ring Bells**, **Wind Noise**,
+**Touch Stereo**, **Delay Warp**).

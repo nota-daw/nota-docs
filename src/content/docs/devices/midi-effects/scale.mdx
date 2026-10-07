@@ -1,19 +1,52 @@
 ---
 title: "Nota Scale"
+description: "Snaps notes into a scale — eleven scales or a custom note set, folding wrong notes down, up or to the nearest, with a range, transpose, key following and Learn."
 sidebar:
-  order: 64
-status: todo
+  order: 3
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/MidiScale.h
   - src/managed/Nota.App/DeviceCards/Midi/ScaleMidiBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Scale.html
-  - see coverage.yml
-*/}
+Nota Scale keeps every note in key. Play anything — every key on the keyboard lands on a note of the
+scale. Handy for jamming, for random and generative parts, and for keeping a controller in key.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/midi-effects/scale/card" alt="Nota Scale: root and type, the note map and the fold settings" />
+
+## Root and type
+
+**Root** (the key's tonic) and the **type**: **Major**, **Minor**, **Harm Minor**, **Dorian**, **Phryg**,
+**Lydian**, **Mixolyd**, **Penta**, **Penta Min**, **Chromatic** or **Custom**, each with its note
+count.
+
+## Note map
+
+The twelve notes as cells: scale notes filled, the root edged, the others saying where they fold.
+Click a cell to add or remove that note — the type turns **Custom**. The note sounding now lights up.
+
+## Fold and options
+
+| Control | What it does |
+|---|---|
+| **Fold** | Where an out-of-scale note goes: **Nearest**, **Down** or **Up** |
+| **Transpose** | Shift the result |
+| **Range** | Only notes within the range are snapped; the rest pass through |
+| **Follow key** | The root follows the key of what you play |
+| **Learn** | While on, notes pass through and every note you play is collected into a Custom scale |
+| **Clear** | Empty the custom set |
+
+**Last IN → OUT** shows the latest note and where it went.
+
+[Auto Shift](../../audio-effects/auto-shift/) can copy this device's key and scale for pitch
+correction, and the piano roll's **Scale** overlay uses the same scales.
+
+## Presets
+
+35 factory presets: keys and modes (**C Major**, **A Minor**, **E Minor Down**, **G Major Up**, **A
+Harmonic Minor**, **C Melodic Minor**, **D Dorian**, **E Phrygian**, **F Lydian**, **G Mixolydian**, **B
+Locrian**), pentatonics and blues (**C Penta**, **A Penta Minor**, **Black Keys (F# Penta)**, **A
+Blues**), **White Keys Only**, **E Phrygian Dominant** and more.

@@ -1,19 +1,50 @@
 ---
 title: "Nota Orbit"
+description: "Auto-pan and tremolo on one LFO — the phase between left and right sweeps from tremolo to auto-pan. Sine, triangle, saw, square or S&H; free or synced."
 sidebar:
-  order: 45
-status: todo
+  order: 11
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/AutoPan.h
   - src/managed/Nota.App/DeviceCards/Bodies/AutoPanDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Orbit.html
-  - see coverage.yml
-*/}
+Nota Orbit moves a sound in volume and in space with one LFO. The **Phase** between the left and
+right channels decides what you hear: at **0°** both dip together — tremolo; at **180°** one is loud
+while the other is quiet — auto-pan; in between, a swirl.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/orbit/card" alt="Nota Orbit: the LFO, both channels' gain over two cycles and the motion controls" />
+
+## LFO
+
+| Control | What it does |
+|---|---|
+| Wave | **Sine**, **Triangle**, **Saw**, **Square** or **S&H** (random steps) |
+| **Hz** / **Sync** | Free, 0.01–40 Hz, or synced to a division from 4 bars to 1/32, including dotted and triplets |
+| **Rate** | The speed (shown big, with its period) |
+| **Shape** | Sharpens the smooth waves toward a square; on S&H it's the **Glide** between steps |
+
+Synced, the LFO locks to the song position and restarts on the bar.
+
+## The window
+
+Both channels' gain over two cycles, with a running head and the depth's floor. Drag up and down
+for **Amount**, left and right for **Phase**. Underneath, the stereo position on an L–R line.
+
+## Motion
+
+**Amount** (depth), **Phase** with snaps at **0°**, **90°** and **180°**, **Mix** (dry / wet) and the
+output meters. The status line names the mode it makes — tremolo, auto-pan or an offset in
+between.
+
+## Presets
+
+31 factory presets: panning (**Classic Pan**, **Slow Sweep**, **Hard Square**, **Wide Drift**, **Gentle
+Sway**, **Quarter Circle**, **Ping Pong**, **Eighth Swirl**, **Bar Sweep**, **Two-Bar Drift**, **Quarter
+Pan**, **Dotted Bounce**, **Triplet Roll**, **Saw Rotor**), tremolo (**Tremolo**, **Chop Gate**, **Chop
+Trem**, **Vintage Amp Trem**, **Deep Throb**, **Helicopter**, **Sidechain Pump**, **Stutter 32**) and
+random and motion (**Random Space**, **Random Steps**, **Drifting Cloud**, **Glitch Gate**, **Wander**,
+**Stereo Breath**, **Mix Motion**, **Offset Swirl**).

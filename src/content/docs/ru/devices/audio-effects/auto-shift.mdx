@@ -1,19 +1,73 @@
 ---
 title: "Nota Auto Shift"
+description: "Коррекция высоты в реальном времени — притягивает голос к ладу тональности, своему набору нот или нотам другого трека. От незаметной подстройки до жёсткого «автотюна», с управлением формантами."
 sidebar:
-  order: 46
-status: todo
+  order: 12
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/AutoShift.h
   - src/managed/Nota.App/DeviceCards/Bodies/AutoShiftDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Auto Shift.html
-  - see coverage.yml
-*/}
+Nota Auto Shift правит высоту прямо на ходу — мягко, чтобы вокал просто попадал в ноты, или жёстко,
+ради роботизированного звука. Он может следовать за **тональностью, которую сам вычисляет** по
+пению, или за **нотами другого трека**.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/auto-shift/card" alt="Nota Auto Shift, вкладка Trace с найденной и исправленной высотой" />
+
+**Как это работает:** он **определяет** высоту голоса, выбирает **целевую** ноту и **сдвигает** голос
+туда, оставляя форманты (характер голоса) на месте. Сухой сигнал задерживается на столько же, и эта
+задержка компенсируется, поэтому **Mix** не размазывает звук.
+
+**Устройство карточки:** колонка **Pitch** слева (где сейчас голос, текущая коррекция), центральная
+панель с тремя вкладками, правая панель (**Shift** / **Detect**) и строка состояния.
+
+## Trace
+
+Найденная и исправленная высота на дорожках нот лада, во времени.
+
+## Scale
+
+<Shot id="devices/audio-effects/auto-shift/scale" alt="Nota Auto Shift, вкладка Scale с гистограммой спетых нот" />
+
+**Key** и **Scale** — **Chromatic**, **Major**, **Minor**, **Penta Maj**, **Penta Min** — или свой набор
+**Custom**: щёлкайте ноты, чтобы включать и выключать. Под ними — гистограмма реально спетых нот.
+**Learn** слушает около 16 тактов и определяет тональность; **Key Source** **Auto** следует за
+найденной тональностью. **Follow Scale device** копирует тонику и лад [Nota Scale](../../midi-effects/scale/)
+на треке.
+
+## MIDI
+
+Цель берётся из нот другого трека (выберите его источником сайдчейна устройства): режим **Note**
+притягивает к точной ноте, режим **Scale** использует ноты как лад; **Latch**, **Oct Lock** и диапазон
+**Bend** уточняют поведение.
+
+## Shift
+
+| Регулятор | Что делает |
+|---|---|
+| **Amount** | Насколько сильно высота тянется к цели |
+| **Speed** | Как быстро — медленно звучит естественно, мгновенно — «автотюн» |
+| **Human** | Сохраняет вибрато вокруг исправленной ноты |
+| **Range** | Исправляет только ноты в пределах этого расстояния |
+| **Shift** · **Fine** | Транспонировать результат |
+| **Formant** · **Formant shift** | Сохранить характер голоса или сдвинуть его отдельно (голос «больше» или «меньше») |
+| **Mix** | Dry / wet |
+
+## Detect
+
+**Det Low** / **Det High** — диапазон нот для поиска — и **Det Sens**; **Skip sibilants** не трогает
+звуки «с» и «т».
+
+## Пресеты
+
+34 заводских пресета: коррекция (**Hard Tune**, **Robot Voice**, **Natural Vocal**, **Transparent
+Touch**, **Pop Lead**, **R&B Runs**, **Ballad**, **Rap Hook**, **Choir Tighten**), тональности (**Auto
+Key**, **Chromatic Fix**, **Minor Key**, **Pentatonic Pop**, **Blues in A**, **Dorian Groove**), голоса
+(**Soprano**, **Alto**, **Tenor**, **Bass Voice**, **Lead Instrument**), эффекты (**Octave Up**, **Octave
+Down**, **Chipmunk**, **Monster**, **Gender Up**, **Gender Down**, **Formant Up**, **Detune Double**,
+**Fifth Harmony**, **Harmony Lock**) и MIDI (**MIDI Hard Tune**, **MIDI Scale Follow**, **MIDI Melody
+Replace**).

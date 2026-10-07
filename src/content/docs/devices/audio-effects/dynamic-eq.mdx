@@ -1,19 +1,56 @@
 ---
 title: "Nota Dynamic EQ-8"
+description: "Eight-band EQ where each band can react to level — duck when it gets loud or lift when it gets quiet — keyed by itself or by another track."
 sidebar:
-  order: 49
-status: todo
+  order: 3
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/DynamicEq.h
   - src/managed/Nota.App/DeviceCards/Bodies/DynamicEqDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Dynamic EQ.html
-  - see coverage.yml
-*/}
+Nota Dynamic EQ-8 is an eight-band EQ in which every band can also behave like a small compressor
+or expander for just its frequencies. Tame sibilance only when it happens, dip the bass only when
+the kick hits, lift air only when a vocal goes quiet.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/dynamic-eq/card" alt="Nota Dynamic EQ-8 with the response graph and the band panel" />
+
+## A band
+
+The static half is the same as [EQ-8](../eq-8/): type, **Freq**, **Gain**, **Q**. The dynamic half:
+
+| Control | What it does |
+|---|---|
+| Mode | **Static** — a plain EQ band; **Duck** — acts as the band gets louder than the threshold; **Lift** — acts as it falls below |
+| **Thresh** | The level where it starts to act; the band's current level is marked on it |
+| **Range** | How many dB at full action — negative cuts, positive boosts (a Duck that boosts is upward expansion) |
+| **Attack** · **Release** | How fast it acts and lets go |
+| **Key** | **Self** (the band's own signal) or **Ext** (another track — the device's sidechain source) |
+| **Solo** | Hear only this band |
+
+Only shelves and bells take dynamic gain. Full action is reached 6 dB past the threshold. The band
+chips above the graph light up with each band's activity.
+
+## Global
+
+**Dynamic** switches all dynamics off at once — an instant A/B of what they do. **Out** trims the
+output.
+
+## Presets
+
+33 factory presets: vocals (**De-Ess**, **De-Ess Soft**, **De-Harsh Vox**, **Vocal Tame**, **Vocal
+Presence**, **Proximity Control**, **Air Lift Vocal**, **Podcast Voice**), mix and master (**Mix Bus
+Air**, **Mud Control**, **Harshness Guard**, **Warm Master**, **Master Glue EQ**, **Loudness
+Contour**), drums (**Punch Tighten**, **Kick Box Cut**, **Snare Ring Tamer**, **Cymbal Smoother**,
+**Room Mic Duck**), bass (**Bass Control**, **Bass Clarity**, **Sub Tamer**, **Kick Ducks Bass**) and
+more (**Vocal Pocket**, **Voiceover Space**, **Guitar Resonance**, **Piano Boom Control**, **Pad
+Smoother**, **Upward Air**, **Hiss Dip**).
+
+## Tips
+
+- **Make room for the vocal:** on a pad, a Duck bell around 2–3 kHz keyed **Ext** from the vocal
+  track.
+- **Kick and bass:** on the bass, a Duck low shelf keyed from the kick (**Kick Ducks Bass**).

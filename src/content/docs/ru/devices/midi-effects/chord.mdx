@@ -1,19 +1,43 @@
 ---
 title: "Nota Chord"
+description: "Превращает каждую ноту в аккорд — до шести добавленных голосов со своим интервалом и velocity, бой, разнесённое голосоведение и подгонка к ладу."
 sidebar:
-  order: 63
-status: todo
+  order: 2
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/MidiChord.h
   - src/managed/Nota.App/DeviceCards/Midi/ChordMidiBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Chord.html
-  - see coverage.yml
-*/}
+Nota Chord играет аккорд из каждой нажатой ноты: один палец — полная гармония.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/midi-effects/chord/card" alt="Nota Chord: тип, сдвиги и клавиатура результата" />
+
+## Type и Shifts
+
+**Type** выбирает форму — **Maj7**, **Min7**, **Sus4**, **5th** — или **Custom**. **Shifts** — шесть
+добавленных голосов: у каждого точка вкл / выкл, интервал −12 … +12 полутонов (с названием — M3, P5,
+M7…) и сдвиг velocity, который можно тянуть. Правка любого сдвига переключает тип на Custom. **Keep
+root** играет и саму нажатую ноту.
+
+## Result
+
+Названия нот аккорда и клавиатура на три октавы — ваша нота, добавленные, несыгранный корень
+обведён. Пока идёт воспроизведение, аккорд «пробивается» раз в такт и после каждой правки, так что
+форму слышно.
+
+| Регулятор | Что делает |
+|---|---|
+| **Strum** | Раскладывает ноты аккорда снизу вверх через заданное число мс — гитарный бой |
+| **Spread** | Раскрывает голосоведение: на ⅓ каждый второй голос уходит на октаву вверх, на ⅔ — и остальные |
+| **Fold in scale** | Добавленная нота вне лада (**Fold Key**, мажор или минор) опускается на полутон в лад |
+
+## Пресеты
+
+34 заводских пресета: трезвучия и септаккорды (**Major Triad**, **Minor Triad**, **Sus2**, **Sus4**,
+**Power Chord**, **Augmented**, **Maj7**, **Min7**, **Dominant 7**, **Sixth**, **Minor 6**,
+**Diminished 7**, **Half-Diminished**) и широкие современные голосоведения (**Maj7 Wide**, **Add9
+Open**, **Min9 Open**, **Neo-Soul m11**, **Rootless Maj9**, **Rootless Dom9**, **Quartal**, …).

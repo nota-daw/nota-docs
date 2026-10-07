@@ -1,19 +1,42 @@
 ---
 title: "Nota Velocity"
+description: "Меняет силу нажатия — кривая, компандер или фиксированное значение, в заданный выходной диапазон, со случайным «очеловечиванием» вверх, вниз или в обе стороны."
 sidebar:
-  order: 66
-status: todo
+  order: 5
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/MidiVelocity.h
   - src/managed/Nota.App/DeviceCards/Midi/VelocityMidiBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Velocity.html
-  - see coverage.yml
-*/}
+Nota Velocity меняет, насколько сильно звучат ноты: выравнивает жёсткую клавиатуру, оживляет
+запрограммированные партии, сжимает динамику в диапазон или делает все ноты одинаковыми.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/midi-effects/velocity/card" alt="Nota Velocity: режим, передаточная кривая с последними нотами, выходной диапазон" />
+
+## Mode
+
+| Режим | Что делает |
+|---|---|
+| **Curve** | **Drive** больше 1 поднимает тихие ноты, меньше 1 — опускает |
+| **Compand** | То же относительно середины: больше 1 растягивает к краям, меньше 1 сжимает к середине |
+| **Fixed** | Все ноты получают одно **Value** |
+
+## Transfer и диапазон
+
+График **Transfer** — вход по горизонтали, выход по вертикали — показывает кривую, полосу, в
+пределах которой Random может разбросать ноту, **Out range** пунктиром и последние 12 нот точками.
+**Out range** (**Low** / **High**) сжимает результат в эти пределы; нота никогда не доходит до 0.
+
+**Random** (вкл / выкл и величина до ±64) добавляет живости — **Both** в обе стороны, только **Up**
+или только **Down**. **Last 12 notes** сравнивает velocity на входе и выходе.
+
+## Пресеты
+
+32 заводских пресета: «очеловечивание» (**Humanize**, **Humanize Subtle**, **Humanize Loose**, **Loose
+Soft Hands**, **Tight Groove**, **Chaos**), туше (**Soft Hands**, **Light Touch**, **Feather**, **Heavy
+Hands**, **Hard Hitter**, **Stiff Keyboard Fix**, **Soft Pedal**), формирование (**Push Up**, **Pull
+Down**, **Gentle Compress**, …) и другие.

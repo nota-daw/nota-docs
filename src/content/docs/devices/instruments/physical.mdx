@@ -1,19 +1,73 @@
 ---
 title: "Nota Physical"
+description: "Modal synthesis: a mallet or a noise burst strikes one or two resonators made of wood, metal, glass, string or skin. Marimbas, bells, kalimbas, plucks and struck metal."
 sidebar:
-  order: 25
-status: todo
+  order: 3
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/PhysicalSynth.h
   - src/managed/Nota.App/DeviceCards/Instruments/PhysicalInstrumentCard.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Physical.html
-  - see coverage.yml
-*/}
+Nota Physical builds sounds the way objects make them: something **strikes** (a mallet, a burst
+of noise) and something **rings** (a resonator tuned like a beam, a marimba bar, a string, a
+drum skin, a plate or a pipe). It's the instrument for mallets, bells, plucks and struck
+percussion that respond to how hard you play.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/instruments/physical/card" alt="Nota Physical, Exciter tab" />
+
+**Signal flow:** mallet + noise → resonator 1 and resonator 2 (in series or in parallel) →
+output. Up to 8 voices.
+
+## Exciter
+
+What strikes the resonators.
+
+| Control | What it does |
+|---|---|
+| **Mallet** — level · **Stiff** · **Noise** · **Color** | A strike: harder mallets excite more high partials; noise adds the click of the hit |
+| **Noise** — type · **Freq** · **Reso** · level | A filtered noise burst, for breath, bow or scrape |
+| **Noise Env** — A · D · S · R | How the noise burst evolves; **Env** sweeps its filter |
+
+## Resonator
+
+<Shot id="devices/instruments/physical/resonator" alt="Nota Physical, Resonator tab with the partials of the bank" />
+
+Two banks of tuned resonators; bank 2 can be switched off. The graph shows each bank's partials
+as the engine tunes them — drag ↔ for **Ratio**, ↕ for **Bright**.
+
+| Control | What it does |
+|---|---|
+| **Type** | The material: **Beam**, **Marimba**, **String**, **Membrane**, **Plate**, **Pipe** |
+| **Decay** | How long it rings |
+| **Material** | How fast high partials die compared with low ones — wood to metal |
+| **Bright** | How much of the high partials you hear |
+| **Inharm** | Bends the partials away from a clean harmonic series — bell-like |
+| **Ratio** | Tuning of the partials relative to the note |
+| **Hit** | Where it's struck — the centre or the edge |
+| **Tune** | Tuning of the bank |
+| **Struct** | **1 → 2** (series: bank 1 rings bank 2, like a string on a body) or **1 + 2** (parallel: both struck) |
+| **Mix 1+2** | Balance between bank 1 and bank 2 |
+
+## Output
+
+**Poly** (8 voices) or **Mono** (a new strike chokes the last), **Tune**, **Fine**, **Note
+off** (how the sound reacts when you release a key), **Volume** and **Pan**.
+
+## Presets
+
+32 factory presets: mallets (**Marimba**, **Vibraphone**, **Xylophone**, **Glockenspiel**,
+**Bass Marimba**, **Balafon**), bells (**Glass Bell**, **Tubular**, **Church Bell**, **Music
+Box**, **Crystal Chime**, **Gamelan**, **Singing Bowl**, **Wind Chimes**), percussion (**Wood
+Block**, **Hand Drum**, **Steel Drum**, **Log Drum**, **Cowbell**, **Clave**, **Sub Thump**),
+plucks (**Kalimba**, **Harp Pluck**, **Koto**, **Tine Keys**) and blown or bowed sounds (**Pan
+Flute**, **Blown Bottle**, **Bowed Glass**, **Metal Plate**).
+
+## Tips
+
+- **Velocity matters:** a harder strike brings out more partials, so play it from a keyboard or
+  shape velocities in the piano roll.
+- **From wood to metal:** start from Marimba, raise **Material** and **Inharm** step by step.

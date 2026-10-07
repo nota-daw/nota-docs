@@ -1,19 +1,68 @@
 ---
 title: "Nota Compressor"
+description: "Компрессор с пятью характерами, мягким коленом, детекцией peak / RMS / auto, look-ahead, ограничением диапазона, авто-релизом, параллельным миксом и фильтрованным сайдчейном."
 sidebar:
-  order: 38
-status: todo
+  order: 4
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Compressor.h
   - src/managed/Nota.App/DeviceCards/Bodies/CompressorDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Compressor.html
-  - see coverage.yml
-*/}
+Nota Compressor выравнивает сигнал: приглушает всё, что выше порога, а потом снова делает
+результат громче. Склейте барабанную шину, выровняйте вокал, раскачайте пэд от бочки.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/compressor/card" alt="Nota Compressor, вкладка Curve с передаточной кривой и историей компрессии" />
+
+**Устройство карточки:** колонка **Level** слева (порог против живого уровня, make-up), центральная
+панель с тремя вкладками, правая панель (**Dynamics** / **Output**) и строка состояния.
+
+## Curve
+
+Передаточная кривая и история подавления. **Тяните кривую**, чтобы задать порог и степень сжатия.
+
+## Motion
+
+<Shot id="devices/audio-effects/compressor/motion" alt="Nota Compressor, вкладка Motion" />
+
+Огибающая подавления на фоне входного сигнала — атаку и релиз **видно**, а не угадываешь.
+
+## Sidechain
+
+<Shot id="devices/audio-effects/compressor/sidechain" alt="Nota Compressor, вкладка Sidechain с фильтрами ключа" />
+
+Что слушает детектор: **Internal** (сам трек) или **External key** (другой трек — источник
+сайдчейна устройства, **Pre** или **Post** его фейдера). Спектр ключа нарисован под его фильтрами —
+тяните ручки **HP** и **LP**; **Q** формирует оба. **Listen** позволяет услышать ключ.
+
+## Dynamics и Output
+
+| Регулятор | Что делает |
+|---|---|
+| **Thresh** · **Ratio** · **Knee** | С какого уровня, насколько сильно, насколько плавно |
+| **Attack** · **Hold** · **Release** | Как быстро сжимает, держит, отпускает — **Auto** release подстраивается под материал |
+| **Detect** | **Peak**, **RMS** или **Auto** |
+| **Lookahead** | Реагирует до прихода пика; задержка компенсируется автоматически |
+| **Range** | Максимальное подавление |
+| **Char** | Пять характеров: **Clean**, **Glue**, **Punch**, **Opto**, **FET** |
+| **Makeup** · **Auto gain** | Усиление после компрессии — вручную или автоматически |
+| **Mix** | Сухой / обработанный — параллельная компрессия одной ручкой |
+| **Stereo link** | Одно усиление на оба канала или каждый канал отдельно |
+
+## Пресеты
+
+31 заводской пресет: ударные (**Drum Glue**, **Drum Punch**, **Snare Punch**, **Kick Tighten**,
+**Room Smash**, **Overheads Tame**, **Hat Smooth**), шина и мастер (**Bus Glue**, **Bus Parallel**,
+**Mix Bus Gentle**, **Master Leveler**, **Brick Limit**, **Peak Catcher**), вокал (**Vocal Opto**,
+**Vocal Leveler**, **Vocal Presence**, **Rap Vocal**, **De-Esser**), инструменты (**Bass Even**,
+**Bass Pluck**, **Acoustic Guitar**, **Guitar Sustain**, **Piano Smooth**, **Pad Breathe**) и дакинг
+(**Kick Duck**, **EDM Pump**, **Gentle Duck**, **Voice-over Duck**, **Bass Under Kick**).
+
+## Советы
+
+- **Сайдчейн-пампинг:** External key от бочки, быстрая атака, релиз по вкусу — или начните с
+  **EDM Pump**.
+- **Параллельные барабаны:** большое Ratio и **Mix** около 40 %.

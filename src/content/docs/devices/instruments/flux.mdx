@@ -1,19 +1,70 @@
 ---
 title: "Nota Flux"
+description: "A vector synth that listens: morph between four timbre worlds on an XY pad, and let another track's audio push the filter, pitch, space or the vector itself."
 sidebar:
-  order: 32
-status: todo
+  order: 10
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/FluxSynth.h
   - src/managed/Nota.App/DeviceCards/Instruments/FluxInstrumentCard.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Flux.html
-  - see coverage.yml
-*/}
+Nota Flux has a small surface and a lot inside. An **XY pad** blends four timbre worlds; a
+handful of one-knob macros shape them; and **React** lets the synth *listen* to another track —
+a drum loop can make a pad breathe in rhythm.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/instruments/flux/card" alt="Nota Flux: the vector pad, React and the macros" />
+
+**Signal flow:** vector (blend of four worlds) → oscillator (saw ↔ square ↔ noise, with a detuned
+twin) + sub → drive → low-pass filter → amp envelope → **Space** (a small stereo reverb and width).
+
+## Vector
+
+The pad's four corners are the **worlds**: **Warm** (soft saw), **Glass** (bright square), **Moog**
+(fat and resonant) and **Grain** (gritty, noisy). Drag the brass dot to blend them. Each world
+brings its own resonance, unison and drive, so moving the dot changes all of them at once — you
+never set them directly. A dashed teal ring shows where Motion and React are pulling the dot.
+
+## React
+
+React turns another track's sound into modulation — not a ducker, a source.
+
+| Control | What it does |
+|---|---|
+| Source | The track Flux listens to (**No source** = React off) |
+| **Listen** | How strongly it reacts |
+| **Target** | What it moves: **Filter**, **Pitch**, **Space** or **Vector** (the dot dances in rhythm) |
+
+The scope shows what Flux hears — envelope, transients, spectral tilt — beside the reaction.
+
+## Macros
+
+| Control | What it does |
+|---|---|
+| **Age** | Analog wear: drifting tune and a little hiss |
+| **Motion** | A slow, tempo-synced drift of the vector, with its rate |
+| **Filter** | Brightness |
+| **Env** | Envelope shape — from plucky to slow |
+| **Space** | Reverb and width |
+| **Glide** · **Tune** · **Gain** | Portamento, tuning, level |
+
+The status line reads the patch back in words — the world blend, or what React is doing.
+
+## Presets
+
+25 factory presets: pads (**Warm Drift**, **Velvet Pad**, **Grain Pad**, **Tape Choir**, **Slow
+Tide**), basses (**Moog Bass**, **Sub Pressure**, **Rubber Bass**), leads (**Moog Lead**,
+**Portamento Lead**, **Analog Brass**), keys (**Glass Keys**, **Glass Pluck**, **Crystal Bells**,
+**Night Keys**), reactive patches (**Reactive Vector**, **Filter Chase**, **Pumping Chords**, **Duck
+Space**, **Vector Dance**, **Pitch Wobble**) and textures (**Dust Drone**, **Grain Storm**, **Digital
+Rain**, **Broken Radio**).
+
+## Tips
+
+- **Pump without a compressor:** pick the drum track as the React source, Target **Filter** —
+  the pad opens and closes with the kick.
+- **Automate the dot:** Vector X and Y are parameters — draw them in the automation lane for a
+  slow timbre journey.

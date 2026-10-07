@@ -1,19 +1,66 @@
 ---
 title: "Nota Beat Repeat"
+description: "Tempo-synced stutter and glitch — captures a slice of the beat and repeats it, pitching, fading and filtering each repeat, by chance or on demand."
 sidebar:
-  order: 47
-status: todo
+  order: 13
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/BeatRepeat.h
   - src/managed/Nota.App/DeviceCards/Bodies/BeatRepeatDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Beat Repeat.html
-  - see coverage.yml
-*/}
+Nota Beat Repeat grabs a short slice of what's playing and repeats it, in time — snare rolls, end-of-bar
+fills, vocal chops, glitchy stutters.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/beat-repeat/card" alt="Nota Beat Repeat, Timeline tab with capture and repeats over two intervals" />
+
+**How it works:** every **Interval** (shifted by **Offset**) it rolls the dice — **Chance**. When it
+fires, it captures a **Grid**-long slice and loops it until the **Gate** ends, each repeat pitched,
+faded and filtered.
+
+## Timing
+
+| Control | What it does |
+|---|---|
+| **Interval** · **Offset** | How often it may fire, and where in the bar |
+| **Grid** | Slice length; **Triplet** turns the grid into triplets |
+| **Variation** | Lets the grid float a few steps per trigger |
+| **Chance** | Probability of firing at each interval |
+| **Gate** | How long the repeating lasts |
+| **Repeat** · **Latch** | Force a repeat now, as long as it's held (or latched on) |
+
+The **Timeline** tab shows capture and repeats over two intervals; **Slices** shows the interval's
+sound with the offset, gate and slice on it — drag them.
+
+<Shot id="devices/audio-effects/beat-repeat/slices" alt="Nota Beat Repeat, Slices tab" />
+
+## Character
+
+**Pitch** (and **Pitch decay** per repeat — a dive), **Decay** (each repeat quieter), **Volume**, and
+the **Filter**: on / off, **LP**, **BP** or **HP**, **Freq** and width, optionally **narrowing with
+repeats**.
+
+<Shot id="devices/audio-effects/beat-repeat/filter" alt="Nota Beat Repeat, Filter tab" />
+
+## Output
+
+Mode: **Mix** (repeats over the dry), **Insert** (repeats replace the dry while they play) or **Gate**
+(only the bursts sound); and **Mix** (dry / wet).
+
+## Presets
+
+31 factory presets: stutters (**Classic Stutter**, **Half-Bar Roll**, **Snare Stutter**, **End-of-Bar
+Fill**, **Build-Up Roll**, **Stutter Mix**, **Glitch Gate**, **Triplet Tumble**), random (**Random
+Glitch**, **Micro Buzz**, **Buffer Shuffle**, **Sparse Surprise**), pitch (**Pitch Drop**, **Tape
+Drop**, **Octave Up Flutter**, **Fifth Echo**, **Dive Bomb**, **Chipmunk Roll**), filtered (**Filtered
+Chops**, **Telephone Repeats**, **Low-Pass Fade**, **High-Pass Riser**, **Radio Stutter**), by
+instrument (**Hat Roll**, **Kick Stutter**, **Vocal Chop**, **Vocal Echo Tail**) and performance
+(**Hold to Stutter**, **Latch Freeze**, **Gate Only Bursts**).
+
+## Tips
+
+- **Play it live:** map **Repeat** to a pad or a key with MIDI Learn.
+- Beat Repeat needs the transport running to follow the bar.

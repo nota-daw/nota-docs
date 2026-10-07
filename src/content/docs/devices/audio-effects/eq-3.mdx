@@ -1,19 +1,47 @@
 ---
 title: "Nota EQ-3"
+description: "Three-band DJ isolator — Low, Mid and High faders with kills, two adjustable crossovers and a 24 or 48 dB split. A performance EQ."
 sidebar:
-  order: 52
-status: todo
+  order: 2
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Eq3.h
   - src/managed/Nota.App/DeviceCards/Bodies/Eq3DeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota EQ-3.html
-  - see coverage.yml
-*/}
+Nota EQ-3 is a **performance** EQ, the kind on a DJ mixer: three bands, a fader and a **Kill** each.
+Pull the bass out before a drop and slam it back in, thin a breakdown, swap the low end between
+two tracks.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/eq-3/card" alt="Nota EQ-3 with three band strips and the response window" />
+
+## Controls
+
+| Control | What it does |
+|---|---|
+| **Low** · **Mid** · **High** | A fader per band: −24 … +6 dB in the **Isolator** range, ±15 dB in **Classic** |
+| **Kill** | Removes the band completely — with a short fade, so it never clicks |
+| **Crossover** | The two split points (Low / Mid and Mid / High); drag the handles along the top of the graph |
+| **Slope** | **LR 24** or **LR 48** — how steep the split is |
+| **Range** | **Isolator** (the default) or **Classic** |
+| **Out** | Output level |
+
+At 0 dB on every band the three bands add back up flat — the split is phase-aligned. The window
+shows each band's curve in its colour, the sum in brass and the output spectrum behind.
+
+## Presets
+
+30 factory presets: starts (**Classic Flat**, **Isolator 48**), kills and isolations (**DJ Kill
+Bass**, **Kill Mids**, **Kill Highs**, **Bass Swap**, **Bass Only**, **Mids Only**, **Highs Only**),
+transitions (**Transition Build**, **Breakdown Thin**), curves (**Scoop**, **Smile**, **Bass Boost**,
+**Warm Up**, **Air Lift**, **Presence**), focus (**Sub Tighten**, **Mud Cut**, **Vocal Focus**,
+**Kick Focus**, **Hat Sizzle**, **Club Master**) and colour (**Telephone**, **AM Radio**, **Lo-Fi
+Dull**, **Megaphone**).
+
+## Tips
+
+- **Automate the kills:** draw a Low Kill for the last bar before a drop.
+- **Map the faders** to a controller with MIDI Learn and play it like a DJ mixer.

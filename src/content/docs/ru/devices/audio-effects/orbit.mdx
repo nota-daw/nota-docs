@@ -1,19 +1,50 @@
 ---
 title: "Nota Orbit"
+description: "Автопанорама и тремоло на одном LFO — фаза между левым и правым каналом плавно ведёт от тремоло к автопанораме. Синус, треугольник, пила, меандр или S&H; свободно или в темп."
 sidebar:
-  order: 45
-status: todo
+  order: 11
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/AutoPan.h
   - src/managed/Nota.App/DeviceCards/Bodies/AutoPanDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Orbit.html
-  - see coverage.yml
-*/}
+Nota Orbit двигает звук по громкости и в пространстве одним LFO. **Phase** между левым и правым
+каналом решает, что вы слышите: при **0°** оба проседают вместе — тремоло; при **180°** один громкий,
+пока другой тихий, — автопанорама; между ними — вращение.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/orbit/card" alt="Nota Orbit: LFO, усиление обоих каналов за два цикла и регуляторы движения" />
+
+## LFO
+
+| Регулятор | Что делает |
+|---|---|
+| Форма | **Sine**, **Triangle**, **Saw**, **Square** или **S&H** (случайные ступени) |
+| **Hz** / **Sync** | Свободно, 0.01–40 Гц, или в темп — от 4 тактов до 1/32, с точками и триолями |
+| **Rate** | Скорость (крупно, с периодом) |
+| **Shape** | Заостряет плавные формы к меандру; на S&H это **Glide** между ступенями |
+
+В режиме Sync LFO привязан к позиции песни и перезапускается на такте.
+
+## Окно
+
+Усиление обоих каналов за два цикла, с бегущей головкой и «полом» глубины. Тяните вверх и вниз —
+**Amount**, влево и вправо — **Phase**. Ниже — положение в стерео на линии L–R.
+
+## Motion
+
+**Amount** (глубина), **Phase** с привязкой к **0°**, **90°** и **180°**, **Mix** (dry / wet) и
+выходные индикаторы. Строка состояния называет получившийся режим — тремоло, автопанорама или
+промежуточный сдвиг.
+
+## Пресеты
+
+31 заводской пресет: панорама (**Classic Pan**, **Slow Sweep**, **Hard Square**, **Wide Drift**, **Gentle
+Sway**, **Quarter Circle**, **Ping Pong**, **Eighth Swirl**, **Bar Sweep**, **Two-Bar Drift**, **Quarter
+Pan**, **Dotted Bounce**, **Triplet Roll**, **Saw Rotor**), тремоло (**Tremolo**, **Chop Gate**, **Chop
+Trem**, **Vintage Amp Trem**, **Deep Throb**, **Helicopter**, **Sidechain Pump**, **Stutter 32**) и
+случайность и движение (**Random Space**, **Random Steps**, **Drifting Cloud**, **Glitch Gate**,
+**Wander**, **Stereo Breath**, **Mix Motion**, **Offset Swirl**).

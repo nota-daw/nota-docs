@@ -1,19 +1,77 @@
 ---
 title: "Nota Shutter"
+description: "Нойз-гейт и дакер с гистерезисом, заглядыванием вперёд, формами, фильтрованным сайдчейном и режимом триггера — плюс синхронный с темпом рисуемый паттерн шагов для ритмичного гейта."
 sidebar:
-  order: 55
-status: todo
+  order: 19
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Shutter.h
   - src/managed/Nota.App/DeviceCards/Bodies/ShutterDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Shutter.html
-  - see coverage.yml
-*/}
+Nota Shutter открывает и закрывает сигнал. Как **гейт** он убирает шум и прослушку между ударами;
+перевёрнутый, он **приглушает** один звук под другим; а вкладка **Pattern** превращает его в ритмичный
+гейт в темп, который вы рисуете.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/shutter/card" alt="Nota Shutter, вкладка Signal со входом и обработанным выходом" />
+
+## Гейт
+
+Шторка **открывается**, когда уровень пересекает **Threshold**, и **закрывается**, когда падает ниже
+**Return** — разница между ними не даёт гейту «дребезжать».
+
+| Регулятор | Что делает |
+|---|---|
+| **Threshold** · **Return** | Уровни открытия и закрытия |
+| **Attack** · **Hold** · **Release** | Форма каждого открытия |
+| Форма | **Linear**, **Log** (классическая) или **Snap** (держится открытой, потом резко закрывается) |
+| **Floor** | Насколько опускается закрытый сигнал — −∞ глушит, выше — что-то остаётся |
+| **Lookahead** | Открывается чуть раньше транзиента |
+| **Flip** | Превращает гейт в дакер |
+| **Retrigger** | Каждый удар запускает одну огибающую атака → удержание → затухание (режим триггера) |
+
+## Envelope
+
+<Shot id="devices/audio-effects/shutter/envelope" alt="Nota Shutter, вкладка Envelope с одним открытием" />
+
+Одно открытие, нарисованное по атаке, удержанию, затуханию, форме и полу.
+
+## Sidechain
+
+Детектор слушает этот трек или **External sidechain** (другой трек) через свой полосовой **Detector
+filter**, с **Listen**, чтобы его услышать, и **Peak hold**. Гейт по бочке рубит пэд; дакинг убирает
+бас под бочку.
+
+## Pattern
+
+<Shot id="devices/audio-effects/shutter/pattern" alt="Nota Shutter, вкладка Pattern с 16-шаговым паттерном гейта" />
+
+Синхронный с темпом пошаговый паттерн громкости — **ритмичный гейт**:
+
+- Рисуйте шаги инструментами **Draw**, **Line**, **Erase** и **Flip** на сетке **8**, **16** или **32**
+  шага.
+- Листайте формы паттернов или бросьте кубик для нового с **Complexity**.
+- **Smooth** сглаживает вход в каждый шаг, **Swing** задерживает слабые шаги.
+- **Rate** — от четверти до 4 тактов в **Sync** (или от 4 до 0.25 Гц во **Free**); **Depth** — насколько
+  опускается пустой шаг.
+- MIDI-нота на треке может перезапускать паттерн; **Gated** играет его, только пока открыт пороговый
+  гейт.
+- **Target**: **Volume** (гейтит аудио) или **Map** — аудио не трогается, а паттерн становится
+  CV-источником для [вида Modular](../../../views/modular/).
+
+Каждый шаг и каждую настройку паттерна можно автоматизировать.
+
+## Пресеты
+
+45 заводских пресетов: гейты ударных (**Tight Drums**, **Kick Gate**, **Snare Gate**, **Tom Gate**,
+**Hi-Hat Cleanup**, **Overhead Tamer**, **Room Mic Gate**, **Hard Slice**, **Gated Reverb**, **Drum
+Trigger**), голос (**Vocal Gate**, **Gentle Cleanup**, **Podcast Voice**, **Breath Softener**,
+**Dialogue Room Tone**, **Soft Expander**), инструменты (**Guitar Noise Gate**, **High-Gain Chug**,
+**Bass DI Gate**, **Pad Tail Cut**), дакинг (**Kick Duck**, **Sidechain Pump**, **Bass Under Kick**,
+**Voice-Over Duck**) и 15 паттернов (**Trance 16ths**, **Offbeat Pump**, **Four-Floor Pump**,
+**Stutter Bar**, **Halftime Chop**, **Ramp Up**, **Chop Shop**, **Swung Gate**, **Dotted Eighths**,
+**Slow Pad Gate**, **Free Tremolo**, **32nd Roll**, **Gate Rider**, **MIDI Retrig Chop**, **Map
+Sequencer**) и другие.

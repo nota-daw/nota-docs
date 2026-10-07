@@ -1,19 +1,80 @@
 ---
 title: "Nota Synth"
+description: "The basic subtractive synth — one oscillator with unison, an amp envelope and a multimode filter. Quick to set, light on CPU."
 sidebar:
-  order: 23
-status: todo
+  order: 1
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Synth.h
   - src/managed/Nota.App/DeviceCards/Instruments/SynthInstrumentCard.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Synth.html
-  - see coverage.yml
-*/}
+Nota Synth is the simplest instrument in Nota: one oscillator, an envelope and a filter. It is
+the instrument a new track gets by default, and the quickest way to a bass, a pad or a lead
+that sits in the mix without a fight.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/instruments/synth/card" alt="Nota Synth in its large view, Osc tab" />
+
+**Signal flow:** oscillator (with unison) → amp envelope → filter → pan and gain. Up to 16
+voices.
+
+## Two sizes
+
+The **S / L** switch in the header flips the card. **S** shows just the filter curve and four
+knobs — Cutoff, Reso, Attack, Release — for quick tweaks; **L** has three tabs (**Osc**,
+**Env**, **Filter**) and a rail with the voice and output controls. Both sizes edit the same
+sound; a new Synth opens small.
+
+## Osc
+
+| Control | What it does |
+|---|---|
+| **Wave** | Saw, Square, Triangle or Sine |
+| **Pulse W** | Pulse width of the square wave |
+| **Detune** | Spread of the unison voices against each other |
+| **Octave** | −2 … +2 octaves |
+| **Unison** | 1, 2, 4 or 7 stacked voices per note, detuned for width |
+
+## Env
+
+<Shot id="devices/instruments/synth/env" alt="Nota Synth, Env tab" />
+
+The amp envelope: **Attack**, **Decay**, **Sustain**, **Release** — drag the breakpoints on the
+graph or turn the knobs. **Vel → Vol** sets how much playing harder makes the note louder.
+
+## Filter
+
+<Shot id="devices/instruments/synth/filter" alt="Nota Synth, Filter tab" />
+
+| Control | What it does |
+|---|---|
+| **Type** | Off, LP (low-pass), HP (high-pass) or BP (band-pass) |
+| **Cutoff** · **Reso** | Where the filter cuts and how much it rings there — or drag the curve |
+| **Env → Cutoff** | How far the envelope opens the filter on each note |
+
+## The rail
+
+| Control | What it does |
+|---|---|
+| **Voices** | **Poly 16**, **Mono**, or **Legato** (mono, and a note played over a held one slides without retriggering) |
+| **Glide** | Time to slide from one note to the next |
+| **Spread** | Stereo width of the unison voices |
+| **Volume** · **Pan** | Output level and position |
+
+The strip at the bottom reads the patch back in words — "Saw · unison 4 · detune 12 c".
+
+## Presets
+
+25 factory presets, from **Init Saw** to pads (**Warm Pad**, **Glass Pad**, **String
+Ensemble**, **Choir Pad**), basses (**Rubber Bass**, **Sub Bass**, **Acid Bass**, **Growl
+Bass**), leads (**Super Saw**, **Solo Lead**, **Slide Lead**), keys (**Electric Piano**,
+**Organ Tone**, **Music Box**) and motion (**Drone**, **Air Sweep**, **Filter Sweep**).
+
+## Tips
+
+- **A quick sub bass:** Sine, Mono, a short Attack and Release, Octave −1.
+- **Wide pad from one oscillator:** Saw, Unison 7, Detune up, Spread up, a slow Attack and
+  Release, LP filter around the middle.

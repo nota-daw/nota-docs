@@ -1,19 +1,42 @@
 ---
 title: "Nota Velocity"
+description: "Reshapes note velocity — a curve, a compander or a fixed value, into an output range, with random humanising up, down or both ways."
 sidebar:
-  order: 66
-status: todo
+  order: 5
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/MidiVelocity.h
   - src/managed/Nota.App/DeviceCards/Midi/VelocityMidiBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Velocity.html
-  - see coverage.yml
-*/}
+Nota Velocity changes how hard notes hit: even out a stiff keyboard, add life to programmed parts,
+squash dynamics into a range, or make every note the same.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/midi-effects/velocity/card" alt="Nota Velocity: mode, the transfer curve with the last notes, the output range" />
+
+## Mode
+
+| Mode | What it does |
+|---|---|
+| **Curve** | **Drive** above 1 lifts soft notes, below 1 pushes them down |
+| **Compand** | The same around the middle: above 1 expands to the edges, below 1 squeezes toward the middle |
+| **Fixed** | Every note gets one **Value** |
+
+## Transfer and range
+
+The **Transfer** graph — input across, output up — shows the curve, the band Random can spread over,
+the **Out range** as dashed lines and the last 12 notes as dots. **Out range** (**Low** / **High**)
+squeezes the result into those limits; a note never reaches 0.
+
+**Random** (on / off and amount up to ±64) humanises — **Both** ways, only **Up** or only **Down**.
+**Last 12 notes** compares the input and output velocities.
+
+## Presets
+
+32 factory presets: humanise (**Humanize**, **Humanize Subtle**, **Humanize Loose**, **Loose Soft
+Hands**, **Tight Groove**, **Chaos**), touch (**Soft Hands**, **Light Touch**, **Feather**, **Heavy
+Hands**, **Hard Hitter**, **Stiff Keyboard Fix**, **Soft Pedal**), shaping (**Push Up**, **Pull Down**,
+**Gentle Compress**, …) and more.

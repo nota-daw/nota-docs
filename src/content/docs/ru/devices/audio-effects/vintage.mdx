@@ -1,19 +1,61 @@
 ---
 title: "Nota Vintage"
+description: "Старение и сатурация шести эпох — Vinyl, Cassette, Reel-to-Reel, VHS, Tube и Analog — с драйвом, тембром, wow, flutter, шипением, треском и износом."
 sidebar:
-  order: 44
-status: todo
+  order: 10
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Vintage.h
   - src/managed/Nota.App/DeviceCards/Bodies/VintageDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Vintage.html
-  - see coverage.yml
-*/}
+Nota Vintage делает звук старым, тёплым или потёртым: пыльная пластинка, растянутая кассета,
+саундтрек с VHS, ламповый преамп, консольная шина.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/vintage/card" alt="Nota Vintage, вкладка Curve с передаточной кривой" />
+
+**Путь сигнала:** wow / flutter → сатурация → выходной каскад → тембр, «горб» головки и ограничение
+полосы → шипение и треск → автокомпенсация → микс.
+
+**Устройство карточки:** колонка **State** слева (фейдеры **Drive** и **Wear**), центральная панель с
+тремя вкладками и списком характеров в шапке, правая панель и строка состояния.
+
+## Эпохи
+
+Каждый **характер** задаёт свою сатурацию, наклон тембра, «горб» головки, ограничение полосы и
+базовые шипение, треск и wow: **Vinyl**, **Cassette**, **Reel-to-Reel**, **VHS**, **Tube**, **Analog**.
+**Character off** оставляет ваши настройки без окраски эпохи.
+
+## Curve
+
+Передаточная кривая сатурации — **Drive** гонит её сильнее. **Even harmonics only** даёт тёплую
+ламповую окраску без грязи.
+
+## Wear
+
+<Shot id="devices/audio-effects/vintage/wear" alt="Nota Vintage, вкладка Wear с дрейфом высоты" />
+
+Дрейф высоты за последние четыре секунды. **Wow** (медленный, свободный или в темп) и **Flutter**
+(быстрый), у каждого своя скорость; **Wear** — макрос возраста, поднимающий всё сразу и способный
+следовать за входом; **Stereo drift** даёт каналам разойтись.
+
+## Output
+
+<Shot id="devices/audio-effects/vintage/output" alt="Nota Vintage, вкладка Output с гармониками и уровнем шипения" />
+
+Гармоники на фоне шумового пола. **Noise** (шипение, с фильтром **Hiss HP**) и **Crackle**; тембр —
+**Tone**, модель **Warm**, **Flat** или **Dark**, полки **Low** и **High**; выходной каскад (**Tube** или
+**Analog**), **Oversampling**, **Auto comp**, **Mix** и **Output**.
+
+## Пресеты
+
+30 заводских пресетов: винил (**Dusty Vinyl**, **78 RPM Shellac**, **Clean Crackle**, **Warped
+Record**, **Gated Dust**), лента (**Lo-Fi Beat Tape**, **Warped Cassette**, **Worn Deck**, **Chewed
+Tape**, **Walkman**, **Reel Warmth**, **Tape Saturation**, **Mastering Tape**, **Tape Sway 1/2**,
+**Seasick 2 Bars**), видео (**VHS Fever**, **VHS Dream**, **Broken Tracking**), лампа и аналог (**Tube
+Glow**, **Tube Glue**, **Even Warmth**, **Hot Preamp**, **Parallel Tube**, **Analog Glue**, **Console
+Bus**, **Transformer Color**, **Crunch Drive**, **Neutral Saturator**) и радио (**Telephone Line**,
+**AM Radio**).

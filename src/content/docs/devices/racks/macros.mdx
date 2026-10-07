@@ -1,19 +1,43 @@
 ---
 title: "Macros"
+description: "Eight named knobs on a rack or kit that each drive many parameters at once, each over its own range."
 sidebar:
-  order: 71
-status: todo
+  order: 4
+updated: "0.50.1"
+status: done
 sources:
+  - src/native/nota.engine/src/RackCore.h
   - src/managed/Nota.App/DeviceCards/Rack/MacroPanel.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Kbd from '@components/Kbd.astro';
 
-{/* Scope (from coverage.yml)
-  - macro knobs
-  - mapping
-*/}
+Every rack — [Instrument Rack](../instrument-rack/), [Drum Rack](../drum-rack/) and
+[Audio Effect Rack](../audio-effect-rack/) — and [Nota Rhythm](../../instruments/rhythm/) has **eight
+macros**: named knobs that drive any parameters inside, so one knob can open every snare and clap
+reverb at once, or morph a whole layered patch.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+## Reading a macro
+
+Each macro shows its value in brass, its name, and — in teal — where it goes ("→ Reverb · Snare,
+Clap"). An unassigned macro is an empty, dashed cell.
+
+## Mapping
+
+1. Select a macro.
+2. Press **Map** and pick the target: a pad's own controls (Volume, Pan, Tune, Decay), a parameter of a
+   chain's instrument, or of any of its effects.
+3. Repeat to add more receivers.
+
+The selected macro's **receivers** are listed with their range as a teal band and the current value
+as a brass tick — drag the band's ends to set the range each receiver covers. In the Instrument and
+Audio Effect racks, mappings can follow **Linear**, **Exp**, **Log** or **S** curves.
+
+Right-click a macro to see its receivers and ranges, **Rename** it, or **Clear** it. Factory kits load
+with their own macros (Tune, Decay, Hats, Drive / Tape, Room, Echo, 808 / Sub — as the kit has them).
+
+## Controlling macros
+
+Macros are parameters like any other: automate them, map them to a controller with
+[MIDI Learn](../../../control/midi-learn/), or play them from your phone's **Macros** screen in
+[Nota Remote](../../../control/nota-remote/).

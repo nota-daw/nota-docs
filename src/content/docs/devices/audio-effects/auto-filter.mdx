@@ -1,19 +1,63 @@
 ---
 title: "Nota Auto Filter"
+description: "Filter that moves — LP, BP, HP or Notch with morph and drive, swept by an envelope follower (from the track or a sidechain) and an LFO that can sync, morph and spread in stereo."
 sidebar:
-  order: 43
-status: todo
+  order: 9
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/AutoFilter.h
   - src/managed/Nota.App/DeviceCards/Bodies/AutoFilterDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Auto Filter.html
-  - see coverage.yml
-*/}
+Nota Auto Filter is a filter with built-in motion: an **envelope** opens it as the sound gets
+louder (auto-wah, envelope filter), an **LFO** sweeps it in time (wobble, gates, slow motion).
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/auto-filter/card" alt="Nota Auto Filter, Filter tab with the response" />
+
+**Layout:** the **Shape** column on the left (**Cutoff** and **Reso** faders, with the modulated value
+marked), a centre panel with three tabs — each one window where you see the cutoff move — a right
+panel and a status line.
+
+## Filter
+
+| Control | What it does |
+|---|---|
+| Type | **LP**, **BP**, **HP** or **Notch** |
+| **Morph** | Blends continuously between the types |
+| Slope | 12 or 24 dB |
+| **Freq** · **Reso** | Cutoff and resonance — or drag the response |
+| **Drive** | Pre-filter drive for colour |
+| Circuit | **Clean** or **Analog** (saturating) |
+
+## Envelope
+
+<Shot id="devices/audio-effects/auto-filter/envelope" alt="Nota Auto Filter, Envelope tab with the cutoff over time" />
+
+An envelope follower: **Amount** (up or down), **Attack**, **Release** and **Hold** (a time, or
+infinite). It listens to the track itself or to a **key** — another track picked as the device's
+sidechain source. The window draws the cutoff over time.
+
+## LFO
+
+<Shot id="devices/audio-effects/auto-filter/lfo" alt="Nota Auto Filter, LFO tab" />
+
+**Amount**, **Rate** (**Free** in Hz or synced to the tempo), wave — **Sine**, **Tri**, **Saw**,
+**Sqr**, **S&H** — with **Morph**, start offset, a stereo phase offset between the channels, and
+retrigger. The window draws two bars of it.
+
+## Output
+
+**→ Freq** / **→ Reso** — what the modulation moves: the cutoff, the resonance, or both. **Mod smooth** slews it,
+**Gain** trims, **Dry/Wet** blends.
+
+## Presets
+
+30 factory presets: static filters (**Clean Sweep**, **24 dB Low Cut**, **Telephone**, **Warm Analog
+LP**, **Resonant Peak**, **Notch Carve**), envelope (**Envelope Wah**, **Clav Wah**, **Funk Quack**,
+**Bass Auto-Wah**, **Reverse Wah**, **Drum Snap**, **Swell Opener**, **Resonance Bloom**, **Hold &
+Release**, **Talking Filter**), LFO (**Slow LFO Sweep**, **Pad Motion**, **Wobble 1/8**, **Dubstep Wub
+1/16**, **Trance Gate**, **S&H Random**, **Glide Random**, **Saw Ramp Bar**, **Stereo Swirl**, **Notch
+Motion**, **Phaser-ish Notch**, **Reso Pulse**) and sidechain (**Sidechain Duck**, **Kick Pump HP**).

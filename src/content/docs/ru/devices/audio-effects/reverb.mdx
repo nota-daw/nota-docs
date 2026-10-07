@@ -1,19 +1,65 @@
 ---
 title: "Nota Reverb"
+description: "Алгоритмический ревербератор — Hall, Room, Plate и Chamber, с преддилеем, размером, диффузией, ранними отражениями, тембром, модуляцией хвоста, окраской Vintage и Freeze."
 sidebar:
-  order: 39
-status: todo
+  order: 5
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Reverb.h
   - src/managed/Nota.App/DeviceCards/Bodies/ReverbDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Reverb.html
-  - see coverage.yml
-*/}
+Nota Reverb помещает звук в пространство — от тесной комнаты до собора, от яркой пластины до
+бесконечной замороженной пелены. Это ревербератор «по умолчанию»; свёрточные и гибридные
+пространства — в [Nota Chamber](../chamber/).
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/reverb/card" alt="Nota Reverb, вкладка Space с окном хвоста" />
+
+**Устройство карточки:** колонка **Tail** слева (**Decay**, **HF Damp**), центральная панель с двумя
+вкладками над живым окном хвоста, правая панель (**Levels** / **Output**) и строка состояния. Окно
+хвоста — тоже регулятор: тяните метку преддилея, тяните хвост, чтобы задать затухание.
+
+## Space
+
+| Регулятор | Что делает |
+|---|---|
+| **Mode** | **Hall**, **Room**, **Plate** или **Chamber** |
+| **Pre** | Преддилей — пауза перед началом реверберации |
+| **Size** | Размер пространства |
+| **Diffuse** | Насколько плотными становятся отражения |
+| **Early reflections** | Первые, различимые отражения комнаты |
+| **Decay** | Время реверберации, честный RT60 |
+| **HF Damp** | Как быстро гаснут верха |
+
+## Tone · Mod
+
+<Shot id="devices/audio-effects/reverb/tone-mod" alt="Nota Reverb, вкладка Tone · Mod" />
+
+**Low cut** и **High cut** формируют тембр реверберации, **Width** — её стереоширину. **Mod rate** и
+**Mod depth** добавляют мерцание в духе хоруса — на всю реверберацию или только на хвост (**Mod on
+tail**). **Vintage** даёт ей узкополосную зернистую окраску ранних цифровых ревербераторов.
+
+## Levels и Output
+
+**Dry**, **Mix** (сухой / обработанный), **Width**, **Mono f** (моно в басу ниже частоты), **Wet only**
+(для трека возврата), **Out** и **Latency comp.** — хвост начинается ровно там, где говорит
+преддилей. **Freeze** держит хвост бесконечно (вход заглушается); **Kill tail** очищает то, что
+звенит.
+
+## Пресеты
+
+30 заводских пресетов: комнаты (**Small Room**, **Tight Room**, **Drum Room**, **Vocal Booth**, **Live
+Room**), залы (**Wide Hall**, **Long Hall**, **Concert Hall**, **Cathedral**, **Dark Hall**), пластины
+(**Bright Plate**, **Vocal Plate**, **Snare Plate**, **Gold Plate**, **Vintage Plate**), камеры (**Echo
+Chamber**, **Studio Chamber**, **Stone Chamber**), эмбиент и заморозка (**Shimmer Freeze**, **Stone
+Hold**, **Infinite Pad**, **Ambient Wash**, **Still Water**, **Lo-Fi Cloud**, **Seasick**), короткие
+(**Short Burst**, **Slap Space**) и для возвратов (**Send · Hall**, **Send · Plate**, **Send · Room**).
+
+## Советы
+
+- **На возврате:** поставьте Reverb на трек возврата с включённым **Wet only** и отправляйте на него
+  треки посылами.
+- **Чистый низ:** поднимите **Low cut**, чтобы реверберация не мутила бас.

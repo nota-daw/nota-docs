@@ -1,19 +1,61 @@
 ---
 title: "Nota Strata"
+description: "Multi-layer looper — record a loop, overdub new layers, each with its own waveform, level and mute; quantized to the bar, with feedback, speed, reverse and undo."
 sidebar:
-  order: 51
-status: todo
+  order: 16
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Strata.h
   - src/managed/Nota.App/DeviceCards/Bodies/StrataDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml)
-  - see coverage.yml
-*/}
+Nota Strata is a looper on a track: record a phrase, then keep layering over it. Unlike a
+one-buffer looper, every pass is its own **layer** — with its waveform, level and mute — so you can
+pull a layer out later.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/strata/card" alt="Nota Strata with the live strip and the layer list" />
+
+## The live strip
+
+A big bar.beat counter, a strip that fills as the loop runs, and four actions — each captioned with
+what it will do next:
+
+| Action | What it does |
+|---|---|
+| **Record** | The first pass sets the loop length |
+| **Overdub** | Each later pass records a fresh layer on top |
+| **Play** | Plays the loop |
+| **Stop** | Stops it |
+
+Actions happen on the loop's own bar grid (**Quantize**), so a late press still lands in time.
+
+## Layers
+
+Every pass, listed: its number, name, waveform, state (**PLAY**, **MUTED**, **REC**), level and mute.
+
+## Loop
+
+| Control | What it does |
+|---|---|
+| **Feedback** | How much the layers already laid down fade on each pass |
+| **Input gain** | Level of what's recorded |
+| **Speed** · **Reverse** | Play the loop faster or slower, or backwards |
+| **Quantize** | The grid actions snap to |
+| **Count-in 1 bar** | A bar of count-in before the first Record |
+| **Set tempo from loop** | Makes the project tempo match the first loop |
+| **Undo** · **Export** · **Clear** | Remove the last layer · export the loop as audio · start over |
+
+The recorded layers are saved with the project.
+
+## Presets
+
+**Live Set**, **Count-In Jam**, **Ambient Decay**, **Octave Down**, **Reverse Tape** and **Free Overdub**.
+
+## Tips
+
+- **Looping a live input:** put Strata on an audio track with monitoring on, and record from your
+  interface.
+- **Map the actions** to a foot controller or pads with MIDI Learn.

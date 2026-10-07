@@ -1,19 +1,87 @@
 ---
 title: "Nota Volt"
+description: "Two-path virtual-analog synth — two oscillators and noise routed to two filters, filter and amp envelopes, two LFOs and vibrato, a 7 × 6 mod matrix and eight macros."
 sidebar:
-  order: 27
-status: todo
+  order: 5
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/VoltSynth.h
   - src/managed/Nota.App/DeviceCards/Instruments/VoltInstrumentCard.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Volt.html
-  - see coverage.yml
-*/}
+Nota Volt is a virtual-analog synth modelled on classic two-oscillator analogs, with a twist:
+two full **signal paths**. Each source can go to Filter 1, Filter 2 or both, and each filter has
+its own amp with pan — so one patch can be two layered sounds.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/instruments/volt/card" alt="Nota Volt, Osc tab" />
+
+**Signal flow:**
+
+```
+Osc 1 ┐                          ┌─ Filter 1 → Amp 1 (pan, level) ─┐
+Osc 2 ┼─ route each to F1 / F2 ──┤                                 ├─→ out
+Noise ┘                          └─ Filter 2 → Amp 2 (pan, level) ─┘
+               (Filter 1 can also feed Filter 2: "To F2")
+```
+
+The **wheels** on the left (pitch bend, mod wheel) stay on every tab. The rail on the right shows
+**Global** or **Voice** controls.
+
+## Osc
+
+Osc 1, Osc 2 and Noise as a table: **wave**, **Oct**, **Semi**, **Fine**, start **Phase**,
+**Level** and **Route** (which filter it goes to). Noise has a **Color**.
+
+## Filter
+
+<Shot id="devices/instruments/volt/filter" alt="Nota Volt, Filter tab" />
+
+Two state-variable filters — **LP**, **HP**, **BP** or **Notch**, 12 or 24 dB — each with
+cutoff, resonance, and **Env**, **Key** and **LFO** amounts. Drag the response pad for cutoff and
+resonance. On Filter 1, **To F2** sends part of it into Filter 2 for serial filtering.
+
+## Env
+
+<Shot id="devices/instruments/volt/env" alt="Nota Volt, Env tab with the amp and filter envelopes" />
+
+The **amp** and **filter** envelopes side by side (A · D · S · R), drawn and draggable.
+
+## LFO
+
+**LFO 1**, **LFO 2** and **Vibrato** as a table: shape (sine, triangle, square, S&H), rate, depth,
+tempo sync and **Fade** (a per-note fade-in), each showing where it lands. Vibrato can be handed
+to the mod wheel (**By wheel**).
+
+## Mod
+
+<Shot id="devices/instruments/volt/mod" alt="Nota Volt, Mod tab with the modulation matrix" />
+
+A **7 × 6 matrix**: Amp Env, Flt Env, LFO 1, LFO 2, Velocity, Key and Mod Wheel against Pitch, Osc 2
+Pitch, Cutoff, Reso, Level and Pan. Drag a cell up for +, down for −.
+
+## Macro
+
+Eight macros, each a value, an amount and one of twelve targets — the six matrix destinations,
+the three source levels, Filter 2's cutoff and either LFO's rate.
+
+## Rail
+
+**Global:** voice mode (**Poly 16** / **Mono**), bend range (1–12 semitones), cutoff, resonance,
+glide, gain, pan. **Voice:** both output amps, **Unison** and **Vel → Amp** / **Vel → Filter**.
+
+## Presets
+
+25 factory presets: pads (**Warm Pad**, **String Machine**, **Choir Pad**, **Glass Pad**), basses
+(**Fat Bass**, **Sub Sine**, **Wobble Bass**, **Acid Bass**, **Reese Bass**, **Growl Bass**), leads
+(**Bright Lead**, **Super Saw**, **Solo Lead**, **Hard Lead**), keys (**Soft Pluck**, **Drifting
+Keys**, **Electric Keys**, **Bell Tone**, **Clav Stab**) and two-path or motion patches (**Split
+Filter**, **Dark Drone**, **Sample & Hold**, **Noise Sweep**, **Siren**, **Serial Filters**).
+
+## Tips
+
+- **Two sounds in one:** send Osc 1 to F1 (low-pass, panned left) and Osc 2 to F2 (band-pass,
+  panned right).
+- **Classic S&H bleeps:** LFO 1 on S&H, routed to cutoff, synced to 1/16.

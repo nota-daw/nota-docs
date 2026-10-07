@@ -1,19 +1,91 @@
 ---
 title: "Nota Volt"
+description: "Двухканальный виртуально-аналоговый синтезатор — два осциллятора и шум, направляемые в два фильтра, огибающие фильтра и громкости, два LFO и вибрато, матрица модуляции 7 × 6 и восемь макросов."
 sidebar:
-  order: 27
-status: todo
+  order: 5
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/VoltSynth.h
   - src/managed/Nota.App/DeviceCards/Instruments/VoltInstrumentCard.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Volt.html
-  - see coverage.yml
-*/}
+Nota Volt — виртуально-аналоговый синтезатор по образцу классических двухосцилляторных
+аналогов, но с особенностью: в нём два полных **пути сигнала**. Каждый источник можно отправить
+в Filter 1, Filter 2 или в оба, а у каждого фильтра свой усилитель с панорамой — так один патч
+становится двумя наслоенными звуками.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/instruments/volt/card" alt="Nota Volt, вкладка Osc" />
+
+**Путь сигнала:**
+
+```
+Osc 1 ┐                             ┌─ Filter 1 → Amp 1 (панорама, уровень) ─┐
+Osc 2 ┼─ каждый в F1 / F2 ──────────┤                                        ├─→ выход
+Noise ┘                             └─ Filter 2 → Amp 2 (панорама, уровень) ─┘
+                (Filter 1 может ещё питать Filter 2: «To F2»)
+```
+
+**Колёса** слева (pitch bend, mod wheel) видны на всех вкладках. Колонка справа показывает
+**Global** или **Voice**.
+
+## Osc
+
+Osc 1, Osc 2 и Noise таблицей: **форма волны**, **Oct**, **Semi**, **Fine**, начальная **Phase**,
+**Level** и **Route** (в какой фильтр идёт сигнал). У шума есть **Color**.
+
+## Filter
+
+<Shot id="devices/instruments/volt/filter" alt="Nota Volt, вкладка Filter" />
+
+Два фильтра — **LP**, **HP**, **BP** или **Notch**, 12 или 24 дБ — у каждого частота среза,
+резонанс и глубины **Env**, **Key** и **LFO**. Тяните кривую, чтобы менять частоту и резонанс. У
+Filter 1 есть **To F2** — часть его сигнала идёт в Filter 2 для последовательной фильтрации.
+
+## Env
+
+<Shot id="devices/instruments/volt/env" alt="Nota Volt, вкладка Env с огибающими громкости и фильтра" />
+
+Огибающие **громкости** и **фильтра** рядом (A · D · S · R), нарисованы и редактируются
+перетаскиванием.
+
+## LFO
+
+**LFO 1**, **LFO 2** и **Vibrato** таблицей: форма (синус, треугольник, меандр, S&H), скорость,
+глубина, синхронизация с темпом и **Fade** (плавное появление на каждой ноте); у каждого видно,
+куда он направлен. Вибрато можно отдать колесу модуляции (**By wheel**).
+
+## Mod
+
+<Shot id="devices/instruments/volt/mod" alt="Nota Volt, вкладка Mod с матрицей модуляции" />
+
+**Матрица 7 × 6**: Amp Env, Flt Env, LFO 1, LFO 2, Velocity, Key и Mod Wheel против Pitch, Osc 2
+Pitch, Cutoff, Reso, Level и Pan. Потяните ячейку вверх — плюс, вниз — минус.
+
+## Macro
+
+Восемь макросов: у каждого значение, глубина и одна из двенадцати целей — шесть назначений
+матрицы, уровни трёх источников, срез Filter 2 и скорость любого из LFO.
+
+## Колонка
+
+**Global:** режим голосов (**Poly 16** / **Mono**), диапазон bend (1–12 полутонов), срез,
+резонанс, glide, уровень, панорама. **Voice:** оба выходных усилителя, **Unison** и
+**Vel → Amp** / **Vel → Filter**.
+
+## Пресеты
+
+25 заводских пресетов: пэды (**Warm Pad**, **String Machine**, **Choir Pad**, **Glass Pad**),
+басы (**Fat Bass**, **Sub Sine**, **Wobble Bass**, **Acid Bass**, **Reese Bass**, **Growl
+Bass**), лиды (**Bright Lead**, **Super Saw**, **Solo Lead**, **Hard Lead**), клавишные (**Soft
+Pluck**, **Drifting Keys**, **Electric Keys**, **Bell Tone**, **Clav Stab**) и двухканальные или
+движущиеся патчи (**Split Filter**, **Dark Drone**, **Sample & Hold**, **Noise Sweep**,
+**Siren**, **Serial Filters**).
+
+## Советы
+
+- **Два звука в одном:** Osc 1 в F1 (ФНЧ, панорама влево), Osc 2 в F2 (полосовой, панорама
+  вправо).
+- **Классические S&H-блипы:** LFO 1 в режиме S&H на срез, синхронизация 1/16.

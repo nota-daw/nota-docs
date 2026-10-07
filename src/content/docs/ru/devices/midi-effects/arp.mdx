@@ -1,19 +1,58 @@
 ---
 title: "Nota Arp"
+description: "Пошаговый арпеджиатор — порядок нот, скорость, октавы, длительность, свинг, удержание и перезапуск, плюс шесть 16-шаговых грув-дорожек для velocity, длины, вероятности, рэтчетов, транспозиции и включения шагов."
 sidebar:
-  order: 62
-status: todo
+  order: 1
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Arpeggiator.h
   - src/managed/Nota.App/DeviceCards/Midi/ArpMidiBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Arp.html
-  - see coverage.yml
-*/}
+Nota Arp превращает удерживаемые ноты в бегущий паттерн. Возьмите аккорд — получите
+последовательность: вверх, вниз, в порядке нажатия, случайно, — а грув-дорожки формируют её
+шаг за шагом.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/midi-effects/arp/card" alt="Nota Arp в большом виде, окно Pattern" />
+
+MIDI-эффекты стоят в цепочке трека перед инструментом: добавляются из вкладки **MIDI effects**
+браузера. Переключатель **S / L** в заголовке выбирает компактную или полную карточку.
+
+## Order
+
+**Up**, **Down**, **Up · Down**, **Down · Up**, **Converge**, **Diverge**, **As played**, **Random** или
+**Chord** (весь аккорд на каждом шаге). Порядок проходит весь диапазон выбранных октав — Up · Down
+на две октавы поднимается C3 … B4 и обратно.
+
+## Rate и Play
+
+| Регулятор | Что делает |
+|---|---|
+| **Free** / **Sync** | Скорость в миллисекундах или в долях такта |
+| **Gate** | Длина ноты как доля шага |
+| **Swing** | Задерживает слабые шаги |
+| **Vel Amt** | Насколько переносится сыгранная velocity |
+| **Octaves** | На сколько октав растягивается паттерн |
+| **Retrig** | Перезапуск паттерна: **Off**, на каждой новой **Note** или на **Beat** |
+| **Transpose** | Сдвиг выхода |
+| **Steps** | Длина петли паттерна |
+| **Hold** | Продолжать играть после отпускания клавиш |
+| **Restart** | Начать паттерн заново сейчас |
+
+## Groove
+
+<Shot id="devices/midi-effects/arp/groove" alt="Nota Arp, грув-дорожки" />
+
+Шесть 16-шаговых дорожек — **Velocity**, **Length**, **Chance**, **Ratchet** (повторяет ноту шага),
+**Transpose** и **On** — рисуют вариации каждого шага. Окно анимировано: головка идёт по шагам,
+звучащая ячейка подсвечивается.
+
+## Пресеты
+
+30 заводских пресетов — от простых пробежек (**Up 1/16**, **Down 1/8**, **Octave Up-Down**, **Down-Up
+Cascade**, **Converge**, **Diverge Bloom**, **As Played Hook**, **Four-Octave Rise**) до грувов (**Trance
+Gate**, **House Offbeat Stab**, **Swing Groove**, **Velocity Accents**, **Bar Retrig Riff**, **Triplet
+Roll**, **Free Run 150 ms**) и не только.

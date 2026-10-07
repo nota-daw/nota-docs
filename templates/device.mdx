@@ -1,45 +1,38 @@
 ---
 title: "Nota <Name>"
-description: "<One sentence: what it is and what it's for.>"
+description: "<One sentence: what it is and what it's for — shown in search and link previews.>"
 sidebar:
   order: <n>
-since: "<first version>"
+since: "<first version — only if confirmed in CHANGELOG.md>"
 updated: "<VERSION this page was checked against>"
-status: draft
+status: done
 sources:
   - src/native/nota.engine/src/<Engine>.h
-  - src/managed/Nota.App/DeviceCards/<Dir>/<Card>.cs
+  - src/managed/Nota.App/DeviceCards/<Instruments|Bodies|Midi|Rack>/<Card>.cs
 ---
 
 import Shot from '@components/Shot.astro';
-import Kbd from '@components/Kbd.astro';
 
-<One or two sentences — what it sounds like, when you reach for it.>
+<Two sentences: what it sounds like, when you reach for it.>
 
-<Shot id="devices/<slug>/main" alt="Nota <Name> device card" />
+<Shot id="devices/<group>/<slug>/card" alt="Nota <Name>, <default tab>" />
 
-## Signal flow
+**Signal flow:** <from the engine header's diagram, in words or a small code block>.
 
-<How the sound moves through the card: sections / tabs, left to right.>
+**Layout:** <the card's columns / tabs, from the card file's header comment>.
 
-## Parameters
+## <Tab or section, named exactly as on the card>
 
-### <Panel or tab name>
+<Shot id="devices/<group>/<slug>/<tab-slug>" alt="Nota <Name>, <Tab> tab" />
 
-| Parameter | Range | What it does |
-|---|---|---|
-| **<Label as on screen>** | `<min> … <max>` (default `<d>`) | <Effect, in one line.> |
-
-## Modulation and automation
-
-<What can be automated, CV in/out in Modular, MIDI Learn notes.>
+| Control | What it does |
+|---|---|
+| **<Label as on screen>** | <What it does. Give a range only when the code states it.> |
 
 ## Presets
 
-<Factory preset groups and what they're good for.>
+<N> factory presets (from FactoryPresetCatalog, grouped): <group> (**A**, **B**), …
 
-## Recipes
+## Tips
 
-### <Goal, e.g. "A plucky bass in 30 seconds">
-
-1. <Step>
+- **<Goal>:** <two or three concrete moves>.

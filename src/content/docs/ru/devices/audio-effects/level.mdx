@@ -1,19 +1,58 @@
 ---
 title: "Nota Level"
+description: "Выравниватель громкости — ведёт усиление так, чтобы выход держался на цели в LUFS (или на громкости опорного трека), с мгновенным, кратковременным или интегральным измерением и страховочным true-peak лимитером."
 sidebar:
-  order: 54
-status: todo
+  order: 18
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/AutoGain.h
   - src/managed/Nota.App/DeviceCards/Bodies/AutoGainDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Level.html
-  - see coverage.yml
-*/}
+Nota Level измеряет громкость так, как это делают стриминг и вещание (ITU-R BS.1770), и ведёт
+усиление, чтобы выход держался на **цели** в LUFS. Выравнивайте голос, готовьте подкаст, выставляйте
+уровень перед цепочкой или подгоняйте один трек под другой.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/level/card" alt="Nota Level: коррекция, 8 секунд громкости на фоне цели, измерители" />
+
+## Correction
+
+| Регулятор | Что делает |
+|---|---|
+| **Auto** / **Manual** | Auto ведёт усиление к цели; Manual применяет фейдер, который вы выставили |
+| **Match** | В Manual: разово поставить усиление на расстояние до цели |
+| **Reset** | В Auto: начать измерение заново с этого момента |
+| **Target** | Целевая громкость — щёлкните по значению, чтобы выбрать стандарт (стриминг, вещание…) или **опорный трек** |
+| **Trim** | Дополнительный сдвиг |
+
+Применённое усиление показано крупно, с причиной, если оно удерживается (максимум, true peak).
+Паузы и хвосты не вытягиваются: пока вход слишком тихий для выравнивания, усиление стоит.
+
+## График
+
+**Scale** — **Mom** (мгновенная, 0.4 с), **Short** (3 с) или **Integ** (интегральная, со стробом) —
+над 8 секундами входа, выхода и цели с полосой ±1 LU. Тяните линию цели.
+
+## Отклик и защита
+
+**Fast** / **Slow**, **Window** (сколько истории громкости усредняется), **Max Gain** (максимальное
+изменение). **True-peak safe** — лимитер с заглядыванием вперёд держит выход ниже **Ceiling** в
+dBTP; его задержка компенсируется.
+
+## Подгонка под опорный трек
+
+Выберите опорный трек целью (он станет источником сайдчейна устройства): тогда Level подгоняет
+громкость этого трека под тот, в той же шкале.
+
+## Пресеты
+
+30 заводских пресетов: цели сдачи (**Stream −14 LUFS**, **Podcast −16 LUFS**, **Broadcast −23 LUFS**,
+**Club −9 LUFS**, **EBU R128 −23**, **ATSC A/85 −24**, **Apple Music −16**, **YouTube −14**, **Loud
+Master −11**, **Audiobook −18 (ACX)**, **Cinema Dialogue −27**, **Game Audio −24**, **Radio Loud
+−12**), райдеры (**Voice Rider**, **Dialogue Leveler**, **Interview Balance**, **Live Stream Rider**,
+**Quiet Source Boost**, **Fast Leveler**, **Gentle Rider**, **Tight Rider**), подгонка (**Match
+Reference**, **Match Reference Fast**) и уровни (**Gain Staging −18**, **Mix Bus −20**, **Mastering
+Prep −18**, **Music Bed −28**, **Sample Normalizer −12**, **True-Peak Guard**, **Static Boost +6**).

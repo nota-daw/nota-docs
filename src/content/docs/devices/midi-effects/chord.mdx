@@ -1,19 +1,43 @@
 ---
 title: "Nota Chord"
+description: "Turns each note into a chord — up to six added voices with their own interval and velocity, strum, spread voicing and folding into a scale."
 sidebar:
-  order: 63
-status: todo
+  order: 2
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/MidiChord.h
   - src/managed/Nota.App/DeviceCards/Midi/ChordMidiBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Chord.html
-  - see coverage.yml
-*/}
+Nota Chord plays a chord from every note you play: one finger, full harmony.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/midi-effects/chord/card" alt="Nota Chord: type, shifts and the result keyboard" />
+
+## Type and shifts
+
+**Type** picks a shape — **Maj7**, **Min7**, **Sus4**, **5th** — or **Custom**. The **Shifts** are six
+added voices: each has an on / off dot, an interval of −12 … +12 semitones (named — M3, P5, M7…) and
+a velocity offset you drag. Editing a shift turns the type to Custom. **Keep root** plays the note
+you pressed too.
+
+## Result
+
+The chord's note names and a three-octave keyboard — your note, the added ones, an unplayed root
+outlined. It strums once per bar while the transport runs, and after each edit, so you hear the
+shape.
+
+| Control | What it does |
+|---|---|
+| **Strum** | Spreads the chord's notes low to high, so many ms apart — a guitar strum |
+| **Spread** | Opens the voicing: at ⅓ every other voice goes up an octave, at ⅔ the rest too |
+| **Fold in scale** | An added note outside the scale (**Fold Key**, major or minor) drops a semitone into it |
+
+## Presets
+
+34 factory presets: triads and sevenths (**Major Triad**, **Minor Triad**, **Sus2**, **Sus4**, **Power
+Chord**, **Augmented**, **Maj7**, **Min7**, **Dominant 7**, **Sixth**, **Minor 6**, **Diminished 7**,
+**Half-Diminished**) and wide and modern voicings (**Maj7 Wide**, **Add9 Open**, **Min9 Open**,
+**Neo-Soul m11**, **Rootless Maj9**, **Rootless Dom9**, **Quartal**, …).

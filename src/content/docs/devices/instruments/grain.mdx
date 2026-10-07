@@ -1,19 +1,67 @@
 ---
 title: "Nota Grain"
+description: "Granular sampler — a cloud of short grains reads through a sample: scan it, freeze it or play it from the keys, with spray, jitter, a filter and a dry/wet against the plain sample."
 sidebar:
-  order: 31
-status: todo
+  order: 9
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/GrainSynth.h
   - src/managed/Nota.App/DeviceCards/Instruments/GrainInstrumentCard.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Grain.html
-  - see coverage.yml
-*/}
+Nota Grain chops a sample into tiny overlapping **grains** and plays a cloud of them from a
+**read position** that you move, freeze or sweep. A voice becomes a pad, a word becomes a drone,
+a guitar note becomes a shimmer. It ships with a default sound, so it plays before you load
+your own.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/instruments/grain/card" alt="Nota Grain with a sample, the read position and the grain cloud" />
+
+**Getting a sample in:** drop a file from the browser onto the card, or drag an audio clip from
+the Arrangement onto the track.
+
+**Signal flow:** sample → read position → grain cloud (size, density, spray, pitch, spread) and a
+dry read head → **Dry/Wet** → filter → amp envelope.
+
+The graph shows the sample, the **Spray** band around the dashed read position, each voice's
+read head and every grain playing (teal dots — high for left, low for right). **Drag across the
+sample to move Position.**
+
+## Read (the rail)
+
+| Control | What it does |
+|---|---|
+| **Scan** / **Freeze** / **Key** | The read position moves at **Scan** speed, stays put, or follows the key you play |
+| **Position** | Where in the sample the grains are read |
+| **Scan** speed | How fast the position travels |
+| **Spray** | Random scatter of each grain around the position |
+| **Volume** · **Dry/Wet** | Output level · the plain sample against the cloud |
+
+## Tabs
+
+| Tab | Controls |
+|---|---|
+| **Grain** | Window shape (Hann, Gauss, Tukey, Tri), **Size**, **Density**, stereo **Spread** |
+| **Pitch** | **Root** (the key that plays the sample as recorded — a dropped file can set it from a note in its name), **Coarse**, **Fine** |
+| **Variation** | Per-grain **Pos Rand**, **Pitch Rand** and **Pan Rand** |
+| **Filter** | **LP**, **HP** or **BP**, **Freq**, **Reso** |
+| **Amp** | The envelope of the whole cloud — A · D · S · R |
+
+<Shot id="devices/instruments/grain/variation" alt="Nota Grain, Variation tab" />
+
+## Presets
+
+50 factory presets, many with their own source sound: frozen textures (**Half Frozen**,
+**Frozen Choir**, **Frozen Bell**), pads (**Slow Bloom**, **Glass Pad**, **Shimmer**, **String
+Cloud**, **Warm Ensemble**), voices (**Vowel Drift**, **Vowel Slicer**, **Whisper Cloud**, **Angel
+Octave**), basses (**Sub Grain**, **Grain Bass**, **Growl Cloud**), keys and plucks (**Grain
+Keys**, **Soft Pluck**, **Nylon Halo**, **Harp Scan**, **Kalimba Cloud**, **Marimba Grains**) and
+utility starts (**Sample Plus**, **Plain Sampler**, **Slow Scan**).
+
+## Tips
+
+- **Instant pad:** Freeze on a sustained part of the sample, large Size, high Density, a little
+  Spray and Pitch Rand.
+- **Plain sampler:** Dry/Wet fully dry plays the sample straight — then add the cloud to taste.

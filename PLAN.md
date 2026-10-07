@@ -85,9 +85,9 @@ nota-docs/
 | 2 ✅ | **Скриншоты** | `shots/design.mjs` (макеты, обе темы — проверить, есть ли light-вариант у каждого макета), C#-харнесс сцен приложения (главное окно, views, mixer, preferences, браузер), `manifest.yml`, `npm run shots [id…]`. |
 | 3 ✅ | **Start here + Basics** | Установка, тур по окну, урок, проект/транспорт/треки/history. |
 | 4 ✅ | **Views + Editing** | Arrangement, Session, Modular, Mixer, клип-редакторы, запись, автоматизация. |
-| 5a | **Instruments** | 13–15 страниц по шаблону. Параметры — из DSP-класса и карточки, не из макета. |
-| 5b | **Audio effects** | ~24 страницы. |
-| 5c | **MIDI effects + Racks** | 9 страниц + обзор цепочки устройств. |
+| 5a ✅ | **Instruments** | 13–15 страниц по шаблону. Параметры — из DSP-класса и карточки, не из макета. |
+| 5b ✅ | **Audio effects** | ~24 страницы. |
+| 5c ✅ | **MIDI effects + Racks** | 9 страниц + обзор цепочки устройств. |
 | 6 | **Остальное** | Plug-ins, Browser & library, Remote, AI, Export, Preferences. |
 | 7 | **Reference** | Генератор shortcuts, глоссарий, troubleshooting, поиск (Pagefind) проверен на EN/RU. |
 | 8 | **Интеграция** | Help ▸ Documentation в приложении, ссылка «?» на карточке устройства → страница устройства, ссылка с nota-site, README. |
@@ -136,3 +136,11 @@ nota-docs/
   Melody/Harmony работают и без модели (DSP), basic-pitch их улучшает; запись — по одному
   armed-треку каждого типа; клип на другой трек уносит только Volume/Pan-автоматизацию;
   комментарий в `ModularView.cs` про «inert CV» устарел (CV работает, по CHANGELOG).
+- **2026-10-07 · этап 5.** 50 устройств + обзор «Devices» × EN/RU. Факты — из шапок движка
+  (`*.h`), `paramName`, подписей карточек и `FactoryPresetCatalog` (пресеты перечислены по
+  группам). Скриншоты устройств теперь только из приложения: карточка + вкладки (104 снимка × 2
+  темы, харнесс кликает цепочки `L>Env`); 131 снимок макетов устройств удалён. Диапазоны
+  указаны только там, где они явно в коде (Flanger, Phaser, Chorus, Operator, Synth…), без
+  догадок. Сверка: Operator — 11 алгоритмов (шапка `OperatorSynth.h` говорит 8 — устарела);
+  Auto Filter → Freq / → Reso; Audio Effect Rack — Prl / Ser / Sel; список устройств с
+  сайдчейном совпал с `acceptsSidechain()`.

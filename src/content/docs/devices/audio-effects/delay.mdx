@@ -1,19 +1,61 @@
 ---
 title: "Nota Delay"
+description: "Stereo delay — independent or linked left and right times, synced or free, ping-pong, a filtered and diffused feedback loop, tape wow, Freeze and tap tempo."
 sidebar:
-  order: 40
-status: todo
+  order: 6
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Delay.h
   - src/managed/Nota.App/DeviceCards/Bodies/DelayDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Delay.html
-  - see coverage.yml
-*/}
+Nota Delay repeats the sound: slapback, rhythmic eighths, dub throws, tape echoes, frozen beds.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/delay/card" alt="Nota Delay, Time tab over the live repeat window" />
+
+**Layout:** the **Loop** column on the left (**Feedback**, **Spread**), a centre panel with two tabs
+over a live window of the repeats, a right panel (**Levels** / **Output**) and a status line that
+tells you how many repeats stay audible.
+
+## Time
+
+| Control | What it does |
+|---|---|
+| **Sync** / **ms** | Time as a note division (1/16 … 1/2, including triplets and dotted) or in milliseconds (up to 2 s) |
+| **L time** · **R time** | The two channels' times |
+| **Link** | The right channel follows the left |
+| **Ping** | Ping-pong — each repeat crosses to the other side |
+| **Fade on change** | Changing the time crossfades to the new one instead of gliding (no pitch bend) |
+| **Tap tempo** | Tap four times to set the time by ear (switches to ms) |
+
+## Loop · Wow
+
+<Shot id="devices/audio-effects/delay/loop-wow" alt="Nota Delay, Loop · Wow tab" />
+
+The feedback loop: a **low cut** and **high cut** filter (drag its handles), **Diffuse** (smears the
+repeats into a cloud), **Tape mode** (saturation), and tape **Wow** — **Wow rate** and **Wow depth**.
+**Freeze** holds the loop forever: the input is muted and the repeats stop decaying. **Clear
+loop** empties the buffer.
+
+## Levels and Output
+
+**Dry**, **Mix**, **Width**, **Mono f** (bass mono), **Wet only** (for a return track), **Out**, and
+**Latency comp.** — keeps the echo exactly on time when Diffuse is up.
+
+## Presets
+
+30 factory presets: short (**Slapback**, **Doubler**, **Rockabilly Slap**, **Haas Widener**, **Slap
+Wide**), rhythmic (**Eighth Bounce**, **Dub Eighths**, **Ping Quarter**, **Dotted Eighth**, **Triplet
+Roll**, **Sixteenth Stutter**, **Half-Note Wash**, **Cross Rhythm**, **Polyrhythm 3:4**, **Wide
+Quarters**, **Trance Gate Echo**), tape (**Tape Echo**, **Space Echo**, **Warped Tape**, **Bucket
+Brigade**, **Repitch Riser**), colour and space (**Vocal Throw**, **Telephone Echo**, **Diffuse
+Cloud**, **Ambient Wash**, **Dark Cavern**, **Tape Hold**, **Frozen Bed**) and for returns (**Send ·
+Eighth**, **Send · Quarter**).
+
+## Tips
+
+- **Dub throw:** automate the send to a Delay return on the last word of a phrase.
+- **Wide without echo:** 10–25 ms on one side only (**Haas Widener**).

@@ -1,19 +1,64 @@
 ---
 title: "Nota Operator"
+description: "4-operator FM synth — four operators with their own ratio, level, wave and envelope, 11 algorithms, feedback, and a filter after the FM."
 sidebar:
-  order: 30
-status: todo
+  order: 8
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/OperatorSynth.h
   - src/managed/Nota.App/DeviceCards/Instruments/OperatorInstrumentCard.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Operator.html
-  - see coverage.yml
-*/}
+Nota Operator is an FM synth: four oscillators — **operators** A, B, C, D — bend each other's
+phase to make harmonics a filter can't. Electric pianos, bells, glassy pads, slap and FM basses.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/instruments/operator/card" alt="Nota Operator, Operators tab" />
+
+**Signal flow:** operators A–D, wired by the **algorithm** (modulators bend their targets; A can
+feed back into itself) → carriers → filter → volume.
+
+In the card, **brass** marks a carrier — what reaches the output; **teal** a modulator. The
+**wheels** (pitch bend, mod wheel on the FM depth) stay on every tab.
+
+## Operators
+
+Each operator, as a row: its role in words, **Wave** (Sin, Tri, Saw, Sqr), **Crs** (frequency ratio:
+0.5, 1, 2 … 14 or 16), **Fine** (detune), **Level** with its dB.
+
+## Algorithm
+
+<Shot id="devices/instruments/operator/algorithm" alt="Nota Operator, Algorithm tab with the topologies and the routing diagram" />
+
+Eleven topologies as sketches — chains, stacks, parallel (additive) — and a routing diagram:
+drag one operator onto another to re-route. **Feedback** feeds operator A back into itself for
+grit and noise.
+
+## Filter · Amp
+
+<Shot id="devices/instruments/operator/filter-amp" alt="Nota Operator, Filter · Amp tab with the response and the live spectrum" />
+
+A subtractive filter after the FM: **LP**, **HP** or **BP**, **Freq**, **Reso**, **Key Trk**, and
+the output volume — beside a live harmonic **spectrum**.
+
+## Rail
+
+**Global:** **FM** depth, **Feedback**, **Tone**, **Glide**, bend range, voice mode (**Poly 12** /
+**Mono**), **Volume**, and **Vel → FM** (play harder for a brighter note). **Env:** the selected
+operator's ADSR, drawn and draggable, with **Key → Lvl** and **Vel → Lvl** tracking.
+
+## Presets
+
+25 factory presets: pads (**Glass Pad**, **Air Pad**, **Choir Pad**, **Warm Strings**), basses
+(**FM Bass**, **Slap Bass**, **Sub Sine**, **Growl Bass**), leads (**Bright Lead**, **Reed Lead**,
+**Metal Lead**, **Whistle**), keys (**E-Piano**, **Tine Keys**, **Wurly**, **Clav**,
+**Harpsichord**, **Drawbar Organ**), bells and mallets (**FM Bell**, **Tubular Bell**, **Music
+Box**, **Marimba**, **Kalimba**, **Log Drum**) and **Brass Section**.
+
+## Tips
+
+- **Classic e-piano:** a 1:1 carrier with a modulator at a ratio of 14 and a short decay on the
+  modulator — that's the "tine".
+- **Brighter with velocity:** raise **Vel → FM** so soft notes stay mellow.

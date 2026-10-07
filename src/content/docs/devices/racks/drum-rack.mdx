@@ -1,22 +1,63 @@
 ---
 title: "Nota Drum Rack"
+description: "Pads for drums and one-shots — up to 64 pads in four banks, each with its own sample or instrument and effects, choke groups, a mixer, kit macros and 25 factory kits."
 sidebar:
-  order: 69
-status: todo
+  order: 2
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/DrumRack.h
   - src/managed/Nota.App/DeviceCards/Rack/RackCardView.Drum.cs
+  - src/managed/Nota.App/DeviceCards/Rack/MacroPanel.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Drum Rack.html
-  - pads
-  - chains
-  - 25 factory kits
-  - sample drops
-*/}
+Nota Drum Rack plays a different sound on every pad. Load one-shots or instruments onto the pads,
+give each its own effects, and program it from the piano roll or the **Pattern** step grid.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/racks/drum-rack/card" alt="Nota Drum Rack with the Volta kit: the pad grid and the selected pad" />
+
+## Kits
+
+The **kit picker** in the card header loads any of the **25 factory kits** in place, and names the
+kit the rack holds: *Volta*, *Kompakt*, *Micron*, *Linnwood*, *Atelier*, *Cellar*, *Neon*, *Foundry*,
+*Terra*, *Aether*, *Brass Room*, *Breakline*, *Bunker*, *Pixel*, *Velvet*, *Circuit*, *Yard*, *Byte*,
+*Lagoon*, *Titan*, *Shuffle*, *Mirrorball*, *Pit*, *Hyper* and *Crate* — from warm analog and 80s PCM
+to jungle breaks, amapiano log drums and orchestral percussion.
+
+Each kit has 16 pads on the General MIDI map (notes 36–51), hats choked together, its own swing and
+humanize, effects on the pads (kick saturation, snare and clap reverb, hat delay) and its own macros.
+The sounds are synthesised on first launch, and appear in the browser's **Files** tab under **Nota
+Kits**, ready to drag anywhere.
+
+## Pads
+
+A 4 × 4 grid, pad 1 bottom-left as on hardware, in banks **C1**–**C4** (16 notes each, up to 64 pads).
+
+- **Click** a pad to play and select it. A sounding pad lights in its colour.
+- **Drop** samples on a pad to load them (several fill the pads after it); an empty pad also offers an
+  instrument.
+- **Right-click** a pad to rename it, set its **choke** group, open its chain or remove it.
+- **Fold** hides the empty pads. **Swing** and **Humanize** shape the kit's feel.
+
+The **Pad** panel on the right edits the selected pad: its one-shot with a playhead, **Volume**,
+**Pan**, **Tune**, **Decay**, the **choke** group (pads in one group cut each other — open and closed
+hats), and its instrument's editor.
+
+## Mixer, Chain and Macro
+
+<Shot id="devices/racks/drum-rack/mixer" alt="Nota Drum Rack, Mixer view" />
+
+- **Mixer** — the bank's loaded pads as rows: volume, pan, mute, solo, choke.
+- **Chain** — the selected pad's device chain: its instrument and its own effects.
+- **Macro** — the kit's eight [macros](../macros/), mapped onto pad controls, pad instruments and the
+  pads' effects.
+
+<Shot id="devices/racks/drum-rack/macro" alt="Nota Drum Rack, Macro view" />
+
+## Programming
+
+Double-click the clip and use the **Pattern** tab in the detail panel for a step grid with a row per
+pad — or the piano roll, where each pad is a note. Audio clips dragged from the Arrangement land on
+the next free pad.

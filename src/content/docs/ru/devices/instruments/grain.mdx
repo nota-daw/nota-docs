@@ -1,19 +1,68 @@
 ---
 title: "Nota Grain"
+description: "Гранулярный сэмплер — облако коротких гранул читает сэмпл: сканируйте его, замораживайте или играйте с клавиатуры, с разбросом, случайностью, фильтром и балансом с исходным сэмплом."
 sidebar:
-  order: 31
-status: todo
+  order: 9
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/GrainSynth.h
   - src/managed/Nota.App/DeviceCards/Instruments/GrainInstrumentCard.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Grain.html
-  - see coverage.yml
-*/}
+Nota Grain режет сэмпл на крошечные перекрывающиеся **гранулы** и играет их облаком с **точки
+чтения**, которую вы двигаете, замораживаете или ведёте. Голос становится пэдом, слово —
+дроном, нота гитары — мерцанием. Встроенный звук по умолчанию позволяет играть сразу, ещё до
+загрузки своего.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/instruments/grain/card" alt="Nota Grain с сэмплом, точкой чтения и облаком гранул" />
+
+**Как загрузить сэмпл:** бросьте файл из браузера на карточку или перетащите аудиоклип из
+Arrangement на трек.
+
+**Путь сигнала:** сэмпл → точка чтения → облако гранул (размер, плотность, разброс, высота,
+стереоширина) и «сухая» головка чтения → **Dry/Wet** → фильтр → огибающая громкости.
+
+График показывает сэмпл, полосу **Spray** вокруг пунктирной точки чтения, головку каждого голоса
+и каждую звучащую гранулу (бирюзовые точки: выше — левее, ниже — правее). **Тяните по сэмплу,
+чтобы двигать Position.**
+
+## Read (колонка)
+
+| Регулятор | Что делает |
+|---|---|
+| **Scan** / **Freeze** / **Key** | Точка чтения едет со скоростью **Scan**, стоит на месте или следует за нажатой клавишей |
+| **Position** | Откуда в сэмпле читаются гранулы |
+| Скорость **Scan** | Как быстро движется точка чтения |
+| **Spray** | Случайный разброс каждой гранулы вокруг точки чтения |
+| **Volume** · **Dry/Wet** | Выходной уровень · исходный сэмпл против облака |
+
+## Вкладки
+
+| Вкладка | Регуляторы |
+|---|---|
+| **Grain** | Форма окна (Hann, Gauss, Tukey, Tri), **Size**, **Density**, стерео **Spread** |
+| **Pitch** | **Root** (клавиша, которая играет сэмпл как записан; брошенный файл может задать её по ноте в имени), **Coarse**, **Fine** |
+| **Variation** | Случайность каждой гранулы: **Pos Rand**, **Pitch Rand** и **Pan Rand** |
+| **Filter** | **LP**, **HP** или **BP**, **Freq**, **Reso** |
+| **Amp** | Огибающая всего облака — A · D · S · R |
+
+<Shot id="devices/instruments/grain/variation" alt="Nota Grain, вкладка Variation" />
+
+## Пресеты
+
+50 заводских пресетов, многие со своим исходным звуком: замороженные текстуры (**Half Frozen**,
+**Frozen Choir**, **Frozen Bell**), пэды (**Slow Bloom**, **Glass Pad**, **Shimmer**, **String
+Cloud**, **Warm Ensemble**), голоса (**Vowel Drift**, **Vowel Slicer**, **Whisper Cloud**, **Angel
+Octave**), басы (**Sub Grain**, **Grain Bass**, **Growl Cloud**), клавишные и щипковые (**Grain
+Keys**, **Soft Pluck**, **Nylon Halo**, **Harp Scan**, **Kalimba Cloud**, **Marimba Grains**) и
+стартовые (**Sample Plus**, **Plain Sampler**, **Slow Scan**).
+
+## Советы
+
+- **Мгновенный пэд:** Freeze на тянущейся части сэмпла, большой Size, высокая Density, немного
+  Spray и Pitch Rand.
+- **Просто сэмплер:** Dry/Wet полностью в «сухо» играет сэмпл как есть — дальше добавляйте облако
+  по вкусу.

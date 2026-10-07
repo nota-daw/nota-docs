@@ -1,19 +1,50 @@
 ---
 title: "Nota Phaser"
+description: "Фэйзер — от 2 до 12 фазовращающих ступеней, которые двигает LFO, с двуполярной обратной связью, центральной частотой, глубиной в октавах, синхронизацией и стереосдвигом."
 sidebar:
-  order: 60
-status: todo
+  order: 24
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Phaser.h
   - src/managed/Nota.App/DeviceCards/Bodies/PhaserDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Phaser.html
-  - see coverage.yml
-*/}
+Nota Phaser сдвигает фазу звука цепочкой фазовращателей и смешивает результат с оригиналом:
+появляются вырезы, а LFO их гоняет — вихрь классической фэйзерной педали или вращающегося
+динамика.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/phaser/card" alt="Nota Phaser: LFO, характеристика фазовращателей и ступени" />
+
+## LFO
+
+Синус, треугольник или пила; **Hz** (свободно, 0.02–8 Гц) или **Sync** (от 4 тактов до 1/16, с точками
+и триолями); **Rate**; **Stereo** — LFO правого канала отстаёт от левого на 0–180°.
+
+## Окно
+
+Живая характеристика фазовращателей L и R с отмеченными вырезами — тяните влево-вправо для
+**Center**, вверх-вниз для **Feedback** — и частота среза обоих каналов за два цикла.
+
+## Stages
+
+| Регулятор | Что делает |
+|---|---|
+| **Stages** | 2, 4, 6, 8 или 12 — больше ступеней, больше вырезов (вдвое меньше, чем ступеней) |
+| **Center** | Центр размаха, 50 Гц–5 кГц |
+| **Depth** | Размах, до ±3 октав |
+| **Feedback** | Двуполярная: положительная углубляет и заостряет вырезы; отрицательная сдвигает и расширяет их |
+| **Mix** | 0 — сухой · 50 % — самые глубокие вырезы · 100 % — только обработанный (только сдвиг фазы) |
+
+## Пресеты
+
+35 заводских пресетов: классика (**Script 45**, **Small Stone**, **Vintage Six**, **Eight Stage Sweep**,
+**Two-Stage Shimmer**), мягкие (**Slow Swirl**, **Gentle Motion**, **Wide Stereo**, **Mono Swoosh**,
+**Deep Space**), резонансные (**Whistler**, **Resonant Twelve**, **Jet Phase**, **Laser Sweep**, **Nasal
+Tube**), полые (**Hollow Step**, **Hollow Drift**, **Inverse Twelve**), в темп (**Quarter Pulse**,
+**Two-Bar Sweep**, **Four-Bar Rise**, **Eighth Chop**, **Dotted Wander**, **Triplet Flutter**, **Half-Bar
+Swell**), «вращающиеся» (**Rotary Fast**, **Rotary Slow**) и для инструментов (**Guitar Classic**,
+**Electric Piano**, **Pad Drift**, **Drum Bus Swirl**, **Bass Motion**, **Vocal Air**, **Bubble Trouble**,
+**Static Notch**).

@@ -1,19 +1,45 @@
 ---
 title: "Nota Audio Effect Rack"
+description: "Цепочки эффектов в одном устройстве — параллельно, последовательно или с выбором по уровню входа — с dry / wet, общим уровнем, уровнем и mute / solo для каждой цепочки и восемью макросами."
 sidebar:
-  order: 70
-status: todo
+  order: 3
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/RackDevice.h
+  - src/native/nota.engine/src/RackCore.h
   - src/managed/Nota.App/DeviceCards/Rack/RackCardView.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml)
-  - see coverage.yml
-*/}
+Nota Audio Effect Rack держит внутри одного устройства несколько **цепочек** эффектов. Обработайте
+звук тремя способами сразу и смешайте, соберите многоразовый эффект-«патч» с парой макросов сверху
+или переключайте эффекты по громкости входа.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/racks/audio-effect-rack/card" alt="Nota Audio Effect Rack: макросы, список цепочек и выбранная цепочка" />
+
+## Режимы
+
+| Режим | Что происходит |
+|---|---|
+| **Parallel** (**Prl**) | Каждая цепочка обрабатывает вход, выходы суммируются |
+| **Series** (**Ser**) | Цепочки идут одна за другой |
+| **Select** (**Sel**) | Играет одна цепочка, выбранная по уровню входа |
+
+## Цепочки
+
+**+ Add chain**, затем **+ Device** в ней — в меню встроенные эффекты и подменю **Plug-ins**. У каждой
+цепочки имя, свой **уровень** и индикатор, **mute** и **solo**.
+
+## Выход рэка
+
+**Dry / Wet**, **Gain** и **PDC** (компенсация задержки между цепочками), а также **MACRO MAP**, **Fold**
+(свернуть цепочки) и **Save** (сохранить рэк как пресет). Восемь именованных [макросов](../macros/)
+управляют любыми параметрами в цепочках.
+
+## Советы
+
+- **Параллельная компрессия в коробке:** сухая цепочка плюс цепочка с жёстким Compressor, режим
+  Parallel.
+- **«Нью-йоркская» реверберация:** цепочка только с Reverb в режиме Wet only, подмешанная под сухую.

@@ -1,19 +1,68 @@
 ---
 title: "Nota Utility"
+description: "Инструменты стереополя и уровня — маршрутизация каналов, ширина двумя способами, моно в басу, баланс, инверсия фазы, усиление и выравнивание громкости по LUFS, пику или RMS, страховочный true-peak лимитер."
 sidebar:
-  order: 41
-status: todo
+  order: 7
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Utility.h
   - src/managed/Nota.App/DeviceCards/Bodies/UtilityDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Utility.html
-  - see coverage.yml
-*/}
+Nota Utility делает простую, но необходимую работу: шире или уже, моно в басу, перевернуть фазу,
+подрезать уровень — или удерживать его на заданной громкости.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/utility/card" alt="Nota Utility, вкладка Field со стереополем по частотам" />
+
+**Устройство карточки:** колонка **Level** слева (индикаторы входа и выхода), центральная панель с
+тремя вкладками, правая панель (**Routing** / **Output**) и строка состояния.
+
+## Field
+
+Стереополе по частотам — где сидит каждая полоса, насколько она широкая и коррелированная.
+
+## Mono
+
+<Shot id="devices/audio-effects/utility/mono" alt="Nota Utility, вкладка Mono" />
+
+Ширина по частотам с отмеченной моно-зоной. **Mono below** — моно ниже частоты (**Mono f**), с
+крутизной 6, 12 или 24 дБ/окт — держит низ по центру.
+
+## Levels
+
+<Shot id="devices/audio-effects/utility/levels" alt="Nota Utility, вкладка Levels" />
+
+Вход и выход за последние 8 секунд на фоне цели, в выбранной единице **Meter**: **LUFS-S**, пиковый
+уровень или RMS.
+
+## Routing и Output
+
+| Регулятор | Что делает |
+|---|---|
+| **Channel** | **Stereo**, **Left**, **Right** или **Swap** |
+| **Width** | Стереоширина; два закона — **L/R** (масштабируются бока; шире — громче) или **M/S** (середина и бока обмениваются; 200 % — только бока) |
+| **Balance** | Баланс лево / право |
+| **Invert L** · **Invert R** | Перевернуть полярность канала |
+| **Mute** | Заглушить выход |
+| **Gain** | Выходное усиление |
+| **Gain match** | Разовое выравнивание: ставит Gain так, чтобы выход равнялся входу (или цели) |
+| **Level match** | Непрерывное выравнивание — по уровню входа или к цели **Target** |
+| **Ceiling** | Страховочный true-peak лимитер в конце цепи, с потолком |
+
+## Пресеты
+
+31 заводской пресет: ширина (**Stereo Widener**, **Wide**, **Wide Master**, **Wide Pad**, **Narrow**,
+**Mono**, **Side Only**), низ (**Bass Mono**, **Mono Maker**, **Club Low End**, **Sub Mono 60**,
+**Vinyl Safe**), маршрутизация и фаза (**Swap L/R**, **Left Only**, **Right Only**, **Polarity Flip**,
+**Fix Left Polarity**, **Mute**), уровень (**Trim −6 dB**, **Boost +6 dB**, **Gain Match −9**) и
+громкость (**Level Held**, **Level Match**, **RMS Match**, **Streaming −14 LUFS**, **Podcast −16
+LUFS**, **Broadcast −23 LUFS**, **Peak Target −3 dB**, **True-Peak Safety**).
+
+## Советы
+
+- **Честное A/B:** поставьте Utility после цепочки и нажмите **Gain match** — услышите эффект, а не
+  разницу в громкости.
+- **Для стриминга:** финальный инструмент громкости с «ездой» по уровню — [Nota Level](../level/).

@@ -1,19 +1,66 @@
 ---
 title: "Nota Operator"
+description: "FM-синтезатор на четыре оператора — у каждого своё соотношение частот, уровень, форма волны и огибающая; 11 алгоритмов, обратная связь и фильтр после FM."
 sidebar:
-  order: 30
-status: todo
+  order: 8
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/OperatorSynth.h
   - src/managed/Nota.App/DeviceCards/Instruments/OperatorInstrumentCard.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Operator.html
-  - see coverage.yml
-*/}
+Nota Operator — FM-синтезатор: четыре осциллятора — **операторы** A, B, C, D — изгибают фазу друг
+друга и рождают гармоники, которых не добиться фильтром. Электропиано, колокола, стеклянные
+пэды, слэп и FM-басы.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/instruments/operator/card" alt="Nota Operator, вкладка Operators" />
+
+**Путь сигнала:** операторы A–D, соединённые **алгоритмом** (модуляторы изгибают свои цели; A
+может модулировать сам себя) → несущие → фильтр → громкость.
+
+На карточке **латунь** отмечает несущую — то, что попадает на выход; **бирюза** — модулятор.
+**Колёса** (pitch bend и mod wheel на глубину FM) видны на всех вкладках.
+
+## Operators
+
+Каждый оператор строкой: его роль словами, **Wave** (Sin, Tri, Saw, Sqr), **Crs** (соотношение
+частот: 0.5, 1, 2 … 14 или 16), **Fine** (расстройка), **Level** с его дБ.
+
+## Algorithm
+
+<Shot id="devices/instruments/operator/algorithm" alt="Nota Operator, вкладка Algorithm с топологиями и схемой маршрутизации" />
+
+Одиннадцать топологий эскизами — цепочки, стопки, параллель (аддитивный синтез) — и схема
+маршрутизации: перетащите один оператор на другой, чтобы перекоммутировать. **Feedback**
+возвращает оператор A на себя — для грязи и шума.
+
+## Filter · Amp
+
+<Shot id="devices/instruments/operator/filter-amp" alt="Nota Operator, вкладка Filter · Amp с кривой и живым спектром" />
+
+Субтрактивный фильтр после FM: **LP**, **HP** или **BP**, **Freq**, **Reso**, **Key Trk** и
+выходная громкость — рядом с живым **спектром** гармоник.
+
+## Колонка
+
+**Global:** глубина **FM**, **Feedback**, **Tone**, **Glide**, диапазон bend, режим голосов
+(**Poly 12** / **Mono**), **Volume** и **Vel → FM** (сильнее нажатие — ярче нота). **Env:** ADSR
+выбранного оператора, нарисованная и редактируемая перетаскиванием, с отслеживанием
+**Key → Lvl** и **Vel → Lvl**.
+
+## Пресеты
+
+25 заводских пресетов: пэды (**Glass Pad**, **Air Pad**, **Choir Pad**, **Warm Strings**), басы
+(**FM Bass**, **Slap Bass**, **Sub Sine**, **Growl Bass**), лиды (**Bright Lead**, **Reed Lead**,
+**Metal Lead**, **Whistle**), клавишные (**E-Piano**, **Tine Keys**, **Wurly**, **Clav**,
+**Harpsichord**, **Drawbar Organ**), колокола и молоточковые (**FM Bell**, **Tubular Bell**,
+**Music Box**, **Marimba**, **Kalimba**, **Log Drum**) и **Brass Section**.
+
+## Советы
+
+- **Классическое электропиано:** несущая 1:1 и модулятор с соотношением 14 и коротким decay —
+  это и есть «язычок».
+- **Ярче от velocity:** поднимите **Vel → FM**, чтобы тихие ноты оставались мягкими.

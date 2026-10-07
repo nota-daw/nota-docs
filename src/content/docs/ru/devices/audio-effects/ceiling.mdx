@@ -1,19 +1,64 @@
 ---
 title: "Nota Ceiling"
+description: "Брикволл-лимитер с заглядыванием вперёд, true peak, тремя характерами, ФВЧ в сайдчейне, прослушиванием Delta и полным измерителем громкости EBU R128 относительно цели."
 sidebar:
-  order: 50
-status: todo
+  order: 15
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Ceiling.h
   - src/managed/Nota.App/DeviceCards/Bodies/CeilingDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Ceiling.html
-  - see coverage.yml
-*/}
+Nota Ceiling делает трек или мастер громким, не выходя за потолок: выше **Ceiling** ничего не
+проходит. Он же измеряет громкость так, как это делают стриминговые сервисы, — понятно, готов ли
+мастер к сдаче, без второго плагина.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/ceiling/card" alt="Nota Ceiling, вкладка Level со входом, частью выше потолка и выходом" />
+
+**Путь сигнала:** **Gain** загоняет сигнал в потолок; заглядывание вперёд позволяет убавить
+усиление *до* прихода пика; релиз восстанавливает; финальный клиппер гарантирует, что ни один
+сэмпл не пройдёт выше.
+
+## Лимитирование
+
+| Регулятор | Что делает |
+|---|---|
+| **Gain** | Загоняет в лимитер — громче, значит больше лимитирования |
+| **Ceiling** | Максимальный уровень выхода — тяните его на графике Level |
+| **Release** · авто-релиз | Скорость восстановления; авто замедляется при глубоком подавлении |
+| **Character** | **Clean**, **Punch** или **Glue** (с мягким клиппингом) |
+| **Look** | Время заглядывания вперёд |
+| **Link** | От склеенного центра к независимым каналам |
+| **True Peak** | Учитывает межсэмпловые пики, чтобы ЦАП или кодек не клипповали |
+| **SC HP** | Убирает низ из детектора, чтобы бас не «качал» весь микс |
+| **Delta** | Слушать то, что лимитер отнимает |
+
+Детектор может слушать и другой трек (**Internal** или источник сайдчейна устройства).
+
+## Графики
+
+| Вкладка | Что показывает |
+|---|---|
+| **Level** | Вход, часть выше потолка и выход за 4 секунды, под ними — подавление |
+| **Reduction** | Подавление и транзиенты, дошедшие до клиппера |
+| **Loudness** | Мгновенная, кратковременная и интегральная громкость за 60 секунд вокруг **Target** — тяните цель |
+
+<Shot id="devices/audio-effects/ceiling/loudness" alt="Nota Ceiling, вкладка Loudness с LUFS относительно цели" />
+
+## Измерители
+
+**LUFS-M**, **LUFS-S**, **LUFS-I** (интегральная), диапазон громкости (LRA), true peak и PLR —
+относительно заданной **Target**.
+
+## Пресеты
+
+32 заводских пресета: цели мастеринга (**Master Safe**, **Transparent Safety**, **Loud Master**,
+**Streaming −1**, **Streaming −14**, **Apple Music −16**, **Podcast −16**, **Broadcast R128 −23**,
+**Club Master −8**, **CD Brickwall**, **Gentle Master**, **Vinyl Pre-Master**, **Bass-Heavy Master**,
+**Headroom −6**), шины и ударные (**Drum Punch**, **Drum Bus**, **Glue Bus**, **Mix Bus Glue**, **Kick
+Clipper**, **Snare Crack**, **808 Safety**), инструменты (**Vocal Peak Catcher**, **Guitar Wall**,
+**Synth Lead Tamer**) и окраска (**Soft Clip Warmth**, **Pumping Smash**, **Brickwall Crush**, **Lo-Fi
+Squash**, **Hear the Squash**, **Live Zero Latency**, **Wide Mix Unlinked**).

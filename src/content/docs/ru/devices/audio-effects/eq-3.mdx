@@ -1,19 +1,47 @@
 ---
 title: "Nota EQ-3"
+description: "Трёхполосный DJ-изолятор — фейдеры Low, Mid и High с киллами, два настраиваемых кроссовера и разделение 24 или 48 дБ. Эквалайзер для выступлений."
 sidebar:
-  order: 52
-status: todo
+  order: 2
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Eq3.h
   - src/managed/Nota.App/DeviceCards/Bodies/Eq3DeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota EQ-3.html
-  - see coverage.yml
-*/}
+Nota EQ-3 — эквалайзер **для выступлений**, как на DJ-микшере: три полосы, у каждой фейдер и
+**Kill**. Уберите бас перед дропом и верните его ударом, истончите брейкдаун, поменяйте низ между
+двумя треками.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/eq-3/card" alt="Nota EQ-3: три полосы и окно отклика" />
+
+## Регуляторы
+
+| Регулятор | Что делает |
+|---|---|
+| **Low** · **Mid** · **High** | Фейдер на полосу: −24 … +6 дБ в режиме **Isolator**, ±15 дБ в **Classic** |
+| **Kill** | Полностью убирает полосу — с коротким фейдом, без щелчков |
+| **Crossover** | Две точки раздела (Low / Mid и Mid / High); тяните ручки вдоль верха графика |
+| **Slope** | **LR 24** или **LR 48** — крутизна раздела |
+| **Range** | **Isolator** (по умолчанию) или **Classic** |
+| **Out** | Выходной уровень |
+
+При 0 дБ на всех полосах они складываются обратно ровно — раздел согласован по фазе. Окно
+показывает кривую каждой полосы её цветом, сумму латунью и спектр выхода позади.
+
+## Пресеты
+
+30 заводских пресетов: стартовые (**Classic Flat**, **Isolator 48**), киллы и изоляция (**DJ Kill
+Bass**, **Kill Mids**, **Kill Highs**, **Bass Swap**, **Bass Only**, **Mids Only**, **Highs Only**),
+переходы (**Transition Build**, **Breakdown Thin**), кривые (**Scoop**, **Smile**, **Bass Boost**,
+**Warm Up**, **Air Lift**, **Presence**), фокус (**Sub Tighten**, **Mud Cut**, **Vocal Focus**,
+**Kick Focus**, **Hat Sizzle**, **Club Master**) и окраска (**Telephone**, **AM Radio**, **Lo-Fi
+Dull**, **Megaphone**).
+
+## Советы
+
+- **Автоматизируйте киллы:** нарисуйте Low Kill на последний такт перед дропом.
+- **Назначьте фейдеры** на контроллер через MIDI Learn и играйте, как на DJ-микшере.

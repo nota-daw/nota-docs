@@ -1,19 +1,48 @@
 ---
 title: "Nota Length"
+description: "Sets every note's length — a tempo division, milliseconds or a percentage of how long it was held — shaped by velocity, key and random, with legato and a bar limit."
 sidebar:
-  order: 65
-status: todo
+  order: 4
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/MidiNoteLength.h
   - src/managed/Nota.App/DeviceCards/Midi/LengthMidiBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Length.html
-  - see coverage.yml
-*/}
+Nota Length decides how long notes last, whatever was played: tight staccato, even eighths, long
+drones from short taps — or notes that start when you **release** a key.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/midi-effects/length/card" alt="Nota Length: length mode, the gate window and the modifiers" />
+
+## Length
+
+| Mode | The note lasts |
+|---|---|
+| **Sync** | A tempo division (eight of them) |
+| **ms** | A fixed time |
+| **Gate %** | A share of how long the key was held — it can shorten or stretch |
+
+**Start from** — **Note-on** (normal) or **Note-off**: the note fires when the key is released.
+
+## Modifiers
+
+| Control | What it does |
+|---|---|
+| **Vel → Len** | Bipolar: louder notes longer (+) or shorter (−) |
+| **Key → Len** | Bipolar: lower notes longer (+) or shorter (−) |
+| **Random** | ± spread per note |
+| **Legato** | Stretches each note to the start of the next |
+| **Clip length limit** | A note never crosses the bar line it started in |
+
+The **Gate** window shows a bar of demo notes — input outlined, output filled, Random's range as a
+band.
+
+## Presets
+
+32 factory presets: divisions (**Staccato**, **Eighths**, **Tenuto 1/4**, **Half Notes**, **Whole
+Bar**, **Dotted Eighth**, **Quarter Triplet**, **32nd Blips**), fixed times (**Blip 40ms**, **Fixed
+120ms**, **Fixed 250ms**, **Fixed 500ms**, **One Second**), gates (**Half Gate**, **Tight Quarter
+Gate**, **Almost Legato**, **Stretch 150%**, …) and more.

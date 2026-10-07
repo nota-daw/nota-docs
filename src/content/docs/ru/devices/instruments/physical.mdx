@@ -1,19 +1,74 @@
 ---
 title: "Nota Physical"
+description: "Модальный синтез: молоточек или шумовой импульс возбуждает один или два резонатора из дерева, металла, стекла, струны или мембраны. Маримбы, колокола, калимбы, щипковые и ударный металл."
 sidebar:
-  order: 25
-status: todo
+  order: 3
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/PhysicalSynth.h
   - src/managed/Nota.App/DeviceCards/Instruments/PhysicalInstrumentCard.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Physical.html
-  - see coverage.yml
-*/}
+Nota Physical строит звук так, как его издают предметы: что-то **ударяет** (молоточек, шумовой
+импульс) и что-то **звенит** (резонатор, настроенный как брусок, пластина маримбы, струна,
+мембрана, пластина или труба). Это инструмент для молоточковых, колоколов, щипковых и ударных,
+которые откликаются на силу игры.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/instruments/physical/card" alt="Nota Physical, вкладка Exciter" />
+
+**Путь сигнала:** молоточек + шум → резонатор 1 и резонатор 2 (последовательно или
+параллельно) → выход. До 8 голосов.
+
+## Exciter
+
+То, что ударяет по резонаторам.
+
+| Регулятор | Что делает |
+|---|---|
+| **Mallet** — уровень · **Stiff** · **Noise** · **Color** | Удар: чем жёстче молоточек, тем больше верхних обертонов; Noise добавляет щелчок удара |
+| **Noise** — тип · **Freq** · **Reso** · уровень | Отфильтрованный шумовой импульс — дыхание, смычок, царапание |
+| **Noise Env** — A · D · S · R | Как развивается шумовой импульс; **Env** двигает его фильтр |
+
+## Resonator
+
+<Shot id="devices/instruments/physical/resonator" alt="Nota Physical, вкладка Resonator с обертонами банка" />
+
+Два банка настроенных резонаторов; второй можно выключить. График показывает обертоны каждого
+банка так, как их настраивает движок: тяните по горизонтали — **Ratio**, по вертикали —
+**Bright**.
+
+| Регулятор | Что делает |
+|---|---|
+| **Type** | Материал: **Beam**, **Marimba**, **String**, **Membrane**, **Plate**, **Pipe** |
+| **Decay** | Сколько звенит |
+| **Material** | Насколько быстрее верхние обертоны гаснут по сравнению с нижними — от дерева к металлу |
+| **Bright** | Сколько верхних обертонов слышно |
+| **Inharm** | Уводит обертоны от чистого гармонического ряда — к колоколу |
+| **Ratio** | Настройка обертонов относительно ноты |
+| **Hit** | Куда пришёлся удар — в центр или к краю |
+| **Tune** | Строй банка |
+| **Struct** | **1 → 2** (последовательно: банк 1 раскачивает банк 2, как струна корпус) или **1 + 2** (параллельно: удар по обоим) |
+| **Mix 1+2** | Баланс банков 1 и 2 |
+
+## Output
+
+**Poly** (8 голосов) или **Mono** (новый удар глушит предыдущий), **Tune**, **Fine**, **Note
+off** (как звук реагирует на отпускание клавиши), **Volume** и **Pan**.
+
+## Пресеты
+
+32 заводских пресета: молоточковые (**Marimba**, **Vibraphone**, **Xylophone**,
+**Glockenspiel**, **Bass Marimba**, **Balafon**), колокола (**Glass Bell**, **Tubular**,
+**Church Bell**, **Music Box**, **Crystal Chime**, **Gamelan**, **Singing Bowl**, **Wind
+Chimes**), перкуссия (**Wood Block**, **Hand Drum**, **Steel Drum**, **Log Drum**, **Cowbell**,
+**Clave**, **Sub Thump**), щипковые (**Kalimba**, **Harp Pluck**, **Koto**, **Tine Keys**) и
+духовые или смычковые звуки (**Pan Flute**, **Blown Bottle**, **Bowed Glass**, **Metal Plate**).
+
+## Советы
+
+- **Velocity важна:** чем сильнее удар, тем больше обертонов, так что играйте с клавиатуры или
+  выстраивайте velocity в piano roll.
+- **От дерева к металлу:** начните с Marimba и шаг за шагом поднимайте **Material** и **Inharm**.

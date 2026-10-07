@@ -1,19 +1,61 @@
 ---
 title: "Nota Vintage"
+description: "Age and saturation in six eras — Vinyl, Cassette, Reel-to-Reel, VHS, Tube and Analog — with drive, tone, wow, flutter, hiss, crackle and wear."
 sidebar:
-  order: 44
-status: todo
+  order: 10
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Vintage.h
   - src/managed/Nota.App/DeviceCards/Bodies/VintageDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Vintage.html
-  - see coverage.yml
-*/}
+Nota Vintage makes things sound old, warm or worn: a dusty record, a stretched cassette, a VHS
+soundtrack, a tube preamp, a console bus.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/vintage/card" alt="Nota Vintage, Curve tab with the transfer curve" />
+
+**Signal flow:** wow / flutter → saturation → output stage → tone, head bump and band limit → hiss
+and crackle → auto gain → mix.
+
+**Layout:** the **State** column on the left (**Drive** and **Wear** faders), a centre panel with
+three tabs headed by the character list, a right panel and a status line.
+
+## The eras
+
+Each **character** sets its own saturation, tone tilt, head bump, band limit and baseline hiss,
+crackle and wow: **Vinyl**, **Cassette**, **Reel-to-Reel**, **VHS**, **Tube**, **Analog**. **Character
+off** keeps your settings without the era's voicing.
+
+## Curve
+
+The transfer curve the saturation runs — **Drive** pushes it harder. **Even harmonics only** gives
+a warm, tube-like colour without grit.
+
+## Wear
+
+<Shot id="devices/audio-effects/vintage/wear" alt="Nota Vintage, Wear tab with the pitch drift" />
+
+The pitch drift over the last four seconds. **Wow** (slow, free or synced to the tempo) and
+**Flutter** (fast), each with its rate; **Wear** — an age macro that raises everything at once, and
+can follow the input; **Stereo drift** lets the channels wander apart.
+
+## Output
+
+<Shot id="devices/audio-effects/vintage/output" alt="Nota Vintage, Output tab with the harmonics and the hiss floor" />
+
+The harmonics against the hiss floor. **Noise** (hiss, with a **Hiss HP** filter) and **Crackle**;
+tone — **Tone**, a **Warm**, **Flat** or **Dark** model, **Low** and **High** shelves; the output
+stage (**Tube** or **Analog**), **Oversampling**, **Auto comp**, **Mix** and **Output**.
+
+## Presets
+
+30 factory presets: vinyl (**Dusty Vinyl**, **78 RPM Shellac**, **Clean Crackle**, **Warped Record**,
+**Gated Dust**), tape (**Lo-Fi Beat Tape**, **Warped Cassette**, **Worn Deck**, **Chewed Tape**,
+**Walkman**, **Reel Warmth**, **Tape Saturation**, **Mastering Tape**, **Tape Sway 1/2**, **Seasick 2
+Bars**), video (**VHS Fever**, **VHS Dream**, **Broken Tracking**), tube and analog (**Tube Glow**,
+**Tube Glue**, **Even Warmth**, **Hot Preamp**, **Parallel Tube**, **Analog Glue**, **Console Bus**,
+**Transformer Color**, **Crunch Drive**, **Neutral Saturator**) and radio (**Telephone Line**, **AM
+Radio**).

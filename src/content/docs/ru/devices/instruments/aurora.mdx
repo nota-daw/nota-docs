@@ -1,19 +1,94 @@
 ---
 title: "Nota Aurora"
+description: "Вейвтейбл-синтезатор — два вейвтейбл-осциллятора с warp, саб, unison, два маршрутизируемых фильтра, две огибающие, два LFO, матрица модуляции 8 × 7, восемь макросов и встроенные drive, chorus и reverb."
 sidebar:
-  order: 26
-status: todo
+  order: 4
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/WavetableSynth.h
   - src/managed/Nota.App/DeviceCards/Instruments/AuroraInstrumentCard.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Aurora.html
-  - see coverage.yml
-*/}
+Nota Aurora — вейвтейбл-синтезатор: каждый осциллятор читает **таблицу** волн, и сдвиг
+**позиции** плавно превращает одну форму в другую. Он создан для меняющихся пэдов, цифровых
+басов, плаков и колоколов.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/instruments/aurora/card" alt="Nota Aurora, вкладка Osc со стопкой волн" />
+
+**Путь сигнала:** Osc 1 + Osc 2 + Sub (с unison) → Filter 1 и Filter 2 (параллельно или
+последовательно; каждый источник идёт в F1, F2, в оба или мимо) → огибающая громкости → drive →
+chorus → reverb.
+
+**Колёса** слева (pitch bend, mod wheel) видны на всех вкладках. Колонка справа показывает
+**Global** или **Macros**.
+
+## Osc
+
+| Регулятор | Что делает |
+|---|---|
+| **Table** | Банк волн: **Analog**, **Pulse**, **Formant** или **Chroma** |
+| **Position** | Где в таблице читает осциллятор (16 кадров) |
+| **Warp** · режим warp | Изгибает волну: **Off**, **Sync**, **Bend**, **PWM** или **Fold** |
+| **Level** · **Oct** · **Semi** · **Fine** | Уровень и строй каждого осциллятора; любой можно выключить |
+| **Sub** | Саб-осциллятор: уровень, октава и форма волны |
+| **Unison** | Число голосов, **Detune** и **Spread** |
+
+## Filter
+
+<Shot id="devices/instruments/aurora/filter" alt="Nota Aurora, вкладка Filter" />
+
+Два фильтра, **F1** и **F2**: **LP**, **HP**, **BP** или **Notch**, с крутизной, частотой среза,
+резонансом и глубинами **Env**, **LFO** и **Key** — тяните кривую, чтобы менять частоту и
+резонанс. **Routing** отправляет Osc 1, Osc 2 и Sub каждый в F1, F2, в оба или мимо, а фильтры
+включаются **Parallel** или **Series**.
+
+## Env и LFO
+
+**Env 1** управляет громкостью, **Env 2** свободна для матрицы модуляции; обе нарисованы и
+редактируются перетаскиванием. Два **LFO** — форма (включая S&H), скорость, глубина,
+синхронизация с темпом — показывают, куда направлены, а окно рисует форму выбранного LFO.
+
+## Mod
+
+<Shot id="devices/instruments/aurora/mod" alt="Nota Aurora, вкладка Mod с матрицей модуляции" />
+
+**Матрица 8 × 7**: источники (Env 1, Env 2, LFO 1, LFO 2, Velocity, Key, Mod Wheel, Random) по
+строкам, назначения (Pitch, Osc 2 Pitch, Position, Cutoff, Reso, Level, Pan) по столбцам.
+Потяните ячейку вверх — положительная глубина, вниз — отрицательная. **Clear all** обнуляет
+матрицу.
+
+**Macros** — восемь штук, по три на страницу в колонке, — у каждого значение, глубина и одна из
+двенадцати целей. Назначьте их на контроллер через MIDI Learn — и морфинг будет под рукой.
+
+## FX
+
+<Shot id="devices/instruments/aurora/fx" alt="Nota Aurora, вкладка FX" />
+
+У каждого блока свой выключатель:
+
+- **Drive** — **Tube**, **Tape** или **Fold**, с **Tone**.
+- **Chorus** — 1, 2 или 4 голоса, со скоростью.
+- **Reverb** — **Room**, **Hall** или **Plate**, с **Size**.
+
+## Global
+
+Режим голосов (**Poly 16** или **Mono**), диапазон pitch bend, позиция, срез, unison, уровень,
+панорама и индикатор трека.
+
+## Пресеты
+
+25 заводских пресетов: пэды (**Warm Pad**, **Glacier Pad**, **Glass Choir**, **Formant Pad**,
+**Air Strings**), басы (**Sub Bass**, **Reese Bass**, **Acid Table**, **Wobble Wave**, **Rubber
+Bass**), лиды (**Detuned Lead**, **Super Saw**, **Fold Lead**, **Hollow Lead**), клавишные и плаки
+(**Shimmer Arp**, **Motion Keys**, **Bright Pluck**, **Nylon Keys**, **Tape Keys**), колокола
+(**Glass Bells**, **Digital Bell**, **Chime Sequence**) и движение (**Deep Drone**, **Aurora
+Sweep**, **Split Filter**).
+
+## Советы
+
+- **Оживить звук:** направьте в матрице LFO 1 на **Position** с медленной скоростью — тембр будет
+  плыть по таблице.
+- **Mod wheel как морфинг:** поставьте Mod Wheel одновременно на Position и Cutoff.

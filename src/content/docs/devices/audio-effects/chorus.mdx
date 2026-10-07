@@ -1,19 +1,58 @@
 ---
 title: "Nota Chorus"
+description: "Chorus in three modes — Classic (two voices), Ensemble (three voices, the string-machine sound) and Vibrato — with feedback, width, a high-pass and bucket-brigade warmth."
 sidebar:
-  order: 61
-status: todo
+  order: 25
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Chorus.h
   - src/managed/Nota.App/DeviceCards/Bodies/ChorusDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Chorus.html
-  - see coverage.yml
-*/}
+Nota Chorus thickens and widens a sound with slightly delayed, gently detuned copies of it. Wide
+synths, shimmering guitars, string machines, vocal doubles.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/chorus/card" alt="Nota Chorus: the LFO and mode, the voices over two cycles and the voice controls" />
+
+## Modes
+
+| Mode | Voices | Character |
+|---|---|---|
+| **Classic** | Two — left and right, 8 ms ± 5 ms | The classic stereo chorus; **Offset** (0–180°) sets how far the right voice's LFO runs behind |
+| **Ensemble** | Three, 120° apart — left, centre, right; 12 ms ± 6 ms | The lush string-machine sound |
+| **Vibrato** | The Classic pair on a short line, 3 ms ± 2.5 ms, wet only | Pitch wobble without the dry signal |
+
+## LFO
+
+A sine, **Hz** (free, 0.02–8 Hz) or **Sync** (4 bars to 1/16, with triplets), and **Rate**. **HPF**
+keeps the lows out of the wet signal (off, or 20 Hz–2 kHz), so the bass stays solid.
+
+## The window
+
+Every voice over two cycles — as its delay (**τ**) or its detune in cents (**ct**) — with a running
+head; drag up and down for **Amount**. Underneath, the voices' stereo field.
+
+## Voice
+
+| Control | What it does |
+|---|---|
+| **Amount** | Depth of the modulation |
+| **Feedback** | Bipolar, ±90 % — towards flanging and ringing |
+| **Width** | 0 % mono · 100 % as is · 200 % extra side |
+| **Warmth** | A bucket-brigade colour: darker and gently saturated |
+| **Mix** | Dry / wet (locked to wet in Vibrato) |
+
+The column also shows the detune and delay ranges you're getting.
+
+## Presets
+
+34 factory presets: classic (**Wide Duo**, **Subtle Thicken**, **Lush Chorus**, **Dimension Wide**,
+**Dark BBD**, **Slow Drift**, **Mono Chorus**, **Quadrature**, **Fast Shimmer**), ensemble (**String
+Machine**, **Solina Strings**, **Tri-Chorus**, **Wide Ensemble**, **Choir Pad**, **Organ Ensemble**),
+vibrato and wobble (**Tape Wobble**, **Gentle Vibrato**, **Stereo Vibrato**, **Rotary Throb**, **Warped
+Record**, **Seasick**), effects (**Metallic Chorus**, **Jet Chorus**, **Negative Space**), synced
+(**Quarter Pulse**, **Bar Swell**, **Triplet Shiver**, **Four-Bar Drift**) and for instruments (**Vocal
+Double**, **Bass Chorus**, **Electric Piano**, **Clean Guitar**, **Synth Pad Wide**, **Drum Bus Air**).

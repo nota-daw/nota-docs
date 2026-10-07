@@ -1,19 +1,58 @@
 ---
 title: "Nota Level"
+description: "Loudness leveler — rides the gain so the output sits on a LUFS target (or a reference track's loudness), with momentary, short-term or integrated measurement and a true-peak safety limiter."
 sidebar:
-  order: 54
-status: todo
+  order: 18
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/AutoGain.h
   - src/managed/Nota.App/DeviceCards/Bodies/AutoGainDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Level.html
-  - see coverage.yml
-*/}
+Nota Level measures loudness the way streaming and broadcast do (ITU-R BS.1770) and rides a gain
+so the output sits on a **target** in LUFS. Use it to level a voice, prepare a podcast, stage gain
+before a chain, or match one track to another.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/level/card" alt="Nota Level: the correction, 8 seconds of loudness against the target, the meters" />
+
+## Correction
+
+| Control | What it does |
+|---|---|
+| **Auto** / **Manual** | Auto rides the gain toward the target; Manual applies the fader you set |
+| **Match** | In Manual: set the gain to the distance to the target, once |
+| **Reset** | In Auto: restart the measurement from now |
+| **Target** | The loudness to reach — click the value for standards (streaming, broadcast…) or a **reference track** |
+| **Trim** | An offset on top |
+
+The applied gain shows in large type, with the reason when it's held (max gain, true peak).
+Pauses and release tails don't get pumped up: while the input is too quiet to level, the gain holds.
+
+## The graph
+
+**Scale** — **Mom** (momentary, 0.4 s), **Short** (3 s) or **Integ** (integrated, gated) — over 8
+seconds of input, output and the target with its ±1 LU band. Drag the target line.
+
+## Response and safety
+
+**Fast** / **Slow**, **Window** (how much loudness history it averages), **Max Gain** (the most it
+will ever change). **True-peak safe** — a look-ahead limiter keeps the output under the **Ceiling**
+in dBTP; its delay is compensated.
+
+## Matching a reference
+
+Pick a reference track as the target (it becomes the device's sidechain source): Level then
+matches this track's loudness to that one, on the same scale.
+
+## Presets
+
+30 factory presets: delivery targets (**Stream −14 LUFS**, **Podcast −16 LUFS**, **Broadcast −23
+LUFS**, **Club −9 LUFS**, **EBU R128 −23**, **ATSC A/85 −24**, **Apple Music −16**, **YouTube −14**,
+**Loud Master −11**, **Audiobook −18 (ACX)**, **Cinema Dialogue −27**, **Game Audio −24**, **Radio Loud
+−12**), riders (**Voice Rider**, **Dialogue Leveler**, **Interview Balance**, **Live Stream Rider**,
+**Quiet Source Boost**, **Fast Leveler**, **Gentle Rider**, **Tight Rider**), matching (**Match
+Reference**, **Match Reference Fast**) and staging (**Gain Staging −18**, **Mix Bus −20**, **Mastering
+Prep −18**, **Music Bed −28**, **Sample Normalizer −12**, **True-Peak Guard**, **Static Boost +6**).

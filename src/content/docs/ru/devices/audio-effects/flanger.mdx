@@ -1,19 +1,52 @@
 ---
 title: "Nota Flanger"
+description: "Флэнджер — гребенчатый фильтр на короткой задержке, которую двигает LFO. Положительная обратная связь — классический «реактивный» звук, отрицательная — полая труба; свободно или в темп, со стереосдвигом."
 sidebar:
-  order: 59
-status: todo
+  order: 23
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Flanger.h
   - src/managed/Nota.App/DeviceCards/Bodies/FlangerDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Flanger.html
-  - see coverage.yml
-*/}
+Nota Flanger смешивает звук с его копией, задержанной на доли миллисекунды или несколько
+миллисекунд. Задержка движется, и гребёнка вырезов гуляет вверх-вниз: шум взлетающего самолёта.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/flanger/card" alt="Nota Flanger: LFO, живая гребенчатая характеристика и линия задержки" />
+
+## LFO
+
+| Регулятор | Что делает |
+|---|---|
+| Форма | Синус, треугольник или пила |
+| **Hz** / **Sync** | Свободно, 0.02–8 Гц, или в темп — от 2 тактов до 1/16 (с точками и триолями) |
+| **Rate** | Скорость, с периодом |
+| **Stereo** | LFO правого канала отстаёт от левого на 0–180° — чем больше, тем шире |
+
+## Окно
+
+Живая гребенчатая характеристика L и R — тяните вырез влево-вправо, чтобы менять **Delay**,
+вверх-вниз — **Feedback**, — а под ней задержка обоих каналов за два цикла.
+
+## Delay line
+
+| Регулятор | Что делает |
+|---|---|
+| **Delay** | Базовая задержка, 0.1–8 мс — где стоит гребёнка |
+| **Depth** | Насколько далеко её гоняет LFO |
+| **Feedback** | Двуполярная, с привязкой − / 0 / +. **Положительная** заостряет пики — классический «джет»; **отрицательная** зеркалит гребёнку — полый, трубчатый звук. Около ±95 % звенит металлом |
+| **Mix** | 0 — сухой · 50 % — самые глубокие вырезы · 100 % — только обработанный, чистое вибрато |
+
+Колонка показывает размах и глубину первого выреза; строка состояния называет режим.
+
+## Пресеты
+
+31 заводской пресет: «джеты» (**Jet Plane**, **Slow Jet**, **Takeoff**, **Tape Flange**, **Negative
+Jet**, **Drum Bus Jet**), мягкие (**Gentle Sweep**, **Subtle Motion**, **Wide Stereo**, **Mono Sweep**,
+**Vocal Air**, **Pad Space**), полые (**Hollow Bar**, **Hollow Tube**, **Inside Out**, **Half-Bar
+Hollow**), металлические (**Tin Robot**, **Metal Ring**, **Laser Zap**, **Comb Drone**, **Siren**), в
+темп (**Quarter Swirl**, **Two-Bar Sweep**, **Eighth Pulse**, **Dotted Drift**, **Triplet Shimmer**) и
+другие (**Vibrato**, **Flange Chorus**, **Doubler Wobble**, **Guitar Classic**, **Bass Swirl**).

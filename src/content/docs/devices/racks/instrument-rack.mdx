@@ -1,19 +1,43 @@
 ---
 title: "Nota Instrument Rack"
+description: "Several instruments in one — chains split by key and velocity zones, each with its own devices, gain and mute / solo, under eight macros."
 sidebar:
-  order: 68
-status: todo
+  order: 1
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/RackInstrument.h
+  - src/native/nota.engine/src/RackCore.h
   - src/managed/Nota.App/DeviceCards/Rack/RackCardView.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml)
-  - see coverage.yml
-*/}
+Nota Instrument Rack holds several **chains** — each an instrument with its own effects — on one
+track. Layer a pad under a pluck, split a keyboard into bass and lead, or switch sounds by how hard
+you play.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/racks/instrument-rack/card" alt="Nota Instrument Rack: macros, the chain list and the selected chain's devices" />
+
+**Layout:** eight **macros** on the left, the **chain** list in the middle, the selected chain's
+devices on the right.
+
+## Chains
+
+**+ Add chain** adds one; pick its instrument, then add effects with **+ Device**. Each chain has a
+name, its own **gain** and meter, **mute** and **solo**.
+
+**Zones** decide which chain plays: a **key** zone (a range of notes) and a **velocity** zone (a range
+of how hard). Overlapping zones layer; separate zones split. The zone map shows them across the
+keyboard.
+
+## Devices inside a chain
+
+Each device shows as a card with its knobs. **GUI** opens the device's full editor (for a plug-in, its
+own window; for the Sampler, its tabbed editor) in a [device window](../../../views/detail-panel/#device-windows);
+**Params** lists its parameters. Drag cards to reorder; ✕ removes one.
+
+## Rack output and macros
+
+**Volume** and **Glide** for the whole rack. Eight named [macros](../macros/) turn many parameters in
+the chains at once. **Fold** hides the chains; **Save** stores the whole rack as a preset.

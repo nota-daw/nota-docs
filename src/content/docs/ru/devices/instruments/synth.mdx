@@ -1,19 +1,80 @@
 ---
 title: "Nota Synth"
+description: "Базовый субтрактивный синтезатор — один осциллятор с unison, огибающая громкости и многорежимный фильтр. Быстро настраивается и почти не нагружает процессор."
 sidebar:
-  order: 23
-status: todo
+  order: 1
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Synth.h
   - src/managed/Nota.App/DeviceCards/Instruments/SynthInstrumentCard.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Synth.html
-  - see coverage.yml
-*/}
+Nota Synth — самый простой инструмент Nota: один осциллятор, огибающая и фильтр. Его получает
+новый трек по умолчанию, и это самый быстрый путь к басу, пэду или лиду, который не спорит с
+миксом.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/instruments/synth/card" alt="Nota Synth в большом виде, вкладка Osc" />
+
+**Путь сигнала:** осциллятор (с unison) → огибающая громкости → фильтр → панорама и уровень.
+До 16 голосов.
+
+## Два размера
+
+Переключатель **S / L** в заголовке меняет карточку. **S** показывает только кривую фильтра и
+четыре ручки — Cutoff, Reso, Attack, Release — для быстрой правки; у **L** три вкладки (**Osc**,
+**Env**, **Filter**) и колонка с голосами и выходом. Оба размера правят один и тот же звук;
+новый Synth открывается маленьким.
+
+## Osc
+
+| Регулятор | Что делает |
+|---|---|
+| **Wave** | Saw (пила), Square (меандр), Triangle (треугольник) или Sine (синус) |
+| **Pulse W** | Ширина импульса меандра |
+| **Detune** | Расстройка голосов unison друг относительно друга |
+| **Octave** | −2 … +2 октавы |
+| **Unison** | 1, 2, 4 или 7 голосов на ноту, расстроенных для ширины |
+
+## Env
+
+<Shot id="devices/instruments/synth/env" alt="Nota Synth, вкладка Env" />
+
+Огибающая громкости: **Attack**, **Decay**, **Sustain**, **Release** — тяните точки на графике
+или крутите ручки. **Vel → Vol** — насколько сильное нажатие делает ноту громче.
+
+## Filter
+
+<Shot id="devices/instruments/synth/filter" alt="Nota Synth, вкладка Filter" />
+
+| Регулятор | Что делает |
+|---|---|
+| **Type** | Off, LP (ФНЧ), HP (ФВЧ) или BP (полосовой) |
+| **Cutoff** · **Reso** | Частота среза и резонанс — или тяните саму кривую |
+| **Env → Cutoff** | Насколько огибающая открывает фильтр на каждой ноте |
+
+## Колонка справа
+
+| Регулятор | Что делает |
+|---|---|
+| **Voices** | **Poly 16**, **Mono** или **Legato** (моно, и нота, сыгранная поверх удерживаемой, скользит без перезапуска) |
+| **Glide** | Время скольжения от ноты к ноте |
+| **Spread** | Стереоширина голосов unison |
+| **Volume** · **Pan** | Выходной уровень и панорама |
+
+Строка внизу пересказывает патч словами — «Saw · unison 4 · detune 12 c».
+
+## Пресеты
+
+25 заводских пресетов: от **Init Saw** до пэдов (**Warm Pad**, **Glass Pad**, **String
+Ensemble**, **Choir Pad**), басов (**Rubber Bass**, **Sub Bass**, **Acid Bass**, **Growl Bass**),
+лидов (**Super Saw**, **Solo Lead**, **Slide Lead**), клавишных (**Electric Piano**,
+**Organ Tone**, **Music Box**) и движущихся звуков (**Drone**, **Air Sweep**, **Filter Sweep**).
+
+## Советы
+
+- **Быстрый саб-бас:** Sine, Mono, короткие Attack и Release, Octave −1.
+- **Широкий пэд из одного осциллятора:** Saw, Unison 7, Detune и Spread побольше, медленные
+  Attack и Release, LP-фильтр примерно посередине.

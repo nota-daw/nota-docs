@@ -1,19 +1,59 @@
 ---
 title: "Nota Chorus"
+description: "Хорус в трёх режимах — Classic (два голоса), Ensemble (три голоса, звук стринг-машины) и Vibrato — с обратной связью, шириной, ФВЧ и теплом «ведёрной» линии задержки."
 sidebar:
-  order: 61
-status: todo
+  order: 25
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Chorus.h
   - src/managed/Nota.App/DeviceCards/Bodies/ChorusDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Chorus.html
-  - see coverage.yml
-*/}
+Nota Chorus делает звук плотнее и шире слегка задержанными, мягко расстроенными копиями. Широкие
+синты, мерцающие гитары, стринг-машины, удвоение вокала.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/chorus/card" alt="Nota Chorus: LFO и режим, голоса за два цикла и регуляторы голоса" />
+
+## Режимы
+
+| Режим | Голоса | Характер |
+|---|---|---|
+| **Classic** | Два — левый и правый, 8 мс ± 5 мс | Классический стереохорус; **Offset** (0–180°) задаёт, насколько LFO правого голоса отстаёт |
+| **Ensemble** | Три, через 120° — левый, центр, правый; 12 мс ± 6 мс | Пышный звук стринг-машины |
+| **Vibrato** | Пара Classic на короткой линии, 3 мс ± 2.5 мс, только обработанный | Колебание высоты без сухого сигнала |
+
+## LFO
+
+Синус, **Hz** (свободно, 0.02–8 Гц) или **Sync** (от 4 тактов до 1/16, с триолями) и **Rate**. **HPF**
+не пускает низ в обработанный сигнал (выкл или 20 Гц–2 кГц), чтобы бас оставался плотным.
+
+## Окно
+
+Каждый голос за два цикла — как его задержка (**τ**) или расстройка в центах (**ct**) — с бегущей
+головкой; тяните вверх-вниз, чтобы менять **Amount**. Ниже — стереополе голосов.
+
+## Voice
+
+| Регулятор | Что делает |
+|---|---|
+| **Amount** | Глубина модуляции |
+| **Feedback** | Двуполярная, ±90 % — в сторону флэнджера и звона |
+| **Width** | 0 % — моно · 100 % — как есть · 200 % — больше боков |
+| **Warmth** | Окраска «ведёрной» линии: темнее и с мягкой сатурацией |
+| **Mix** | Dry / wet (в режиме Vibrato зафиксирован на обработанном) |
+
+Колонка показывает и получающиеся диапазоны расстройки и задержки.
+
+## Пресеты
+
+34 заводских пресета: классика (**Wide Duo**, **Subtle Thicken**, **Lush Chorus**, **Dimension Wide**,
+**Dark BBD**, **Slow Drift**, **Mono Chorus**, **Quadrature**, **Fast Shimmer**), ансамбль (**String
+Machine**, **Solina Strings**, **Tri-Chorus**, **Wide Ensemble**, **Choir Pad**, **Organ Ensemble**),
+вибрато и «плавание» (**Tape Wobble**, **Gentle Vibrato**, **Stereo Vibrato**, **Rotary Throb**,
+**Warped Record**, **Seasick**), эффекты (**Metallic Chorus**, **Jet Chorus**, **Negative Space**), в
+темп (**Quarter Pulse**, **Bar Swell**, **Triplet Shiver**, **Four-Bar Drift**) и для инструментов
+(**Vocal Double**, **Bass Chorus**, **Electric Piano**, **Clean Guitar**, **Synth Pad Wide**, **Drum Bus
+Air**).

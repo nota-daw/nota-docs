@@ -1,19 +1,44 @@
 ---
 title: "Макросы"
+description: "Восемь именованных ручек рэка или кита, каждая из которых двигает сразу много параметров, каждый в своём диапазоне."
 sidebar:
-  order: 71
-status: todo
+  order: 4
+updated: "0.50.1"
+status: done
 sources:
+  - src/native/nota.engine/src/RackCore.h
   - src/managed/Nota.App/DeviceCards/Rack/MacroPanel.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Kbd from '@components/Kbd.astro';
 
-{/* Scope (from coverage.yml)
-  - macro knobs
-  - mapping
-*/}
+У каждого рэка — [Instrument Rack](../instrument-rack/), [Drum Rack](../drum-rack/) и
+[Audio Effect Rack](../audio-effect-rack/) — и у [Nota Rhythm](../../instruments/rhythm/) есть **восемь
+макросов**: именованные ручки, которые двигают любые параметры внутри, так что одна ручка может
+открыть все ревербераторы на малом и клэпе разом или «перекрутить» весь слоёный патч.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+## Как читать макрос
+
+Каждый макрос показывает значение латунью, имя и — бирюзой — куда он ведёт («→ Reverb · Snare, Clap»).
+Неназначенный макрос — пустая пунктирная ячейка.
+
+## Назначение
+
+1. Выберите макрос.
+2. Нажмите **Map** и выберите цель: собственный регулятор пэда (Volume, Pan, Tune, Decay), параметр
+   инструмента цепочки или любого из её эффектов.
+3. Повторите, чтобы добавить ещё получателей.
+
+**Получатели** выбранного макроса перечислены с диапазоном в виде бирюзовой полосы и текущим
+значением латунной отметкой — тяните концы полосы, чтобы задать диапазон каждого получателя. В
+Instrument и Audio Effect Rack назначения могут идти по кривой **Linear**, **Exp**, **Log** или **S**.
+
+Правый щелчок по макросу показывает получателей и диапазоны, позволяет **переименовать** (Rename) или
+**очистить** (Clear) его. Заводские киты загружаются со своими макросами (Tune, Decay, Hats,
+Drive / Tape, Room, Echo, 808 / Sub — в зависимости от кита).
+
+## Управление макросами
+
+Макросы — такие же параметры, как остальные: автоматизируйте их, назначайте на контроллер через
+[MIDI Learn](../../../control/midi-learn/) или играйте с экрана **Macros** на телефоне в
+[Nota Remote](../../../control/nota-remote/).

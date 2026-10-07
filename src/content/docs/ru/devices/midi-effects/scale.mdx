@@ -1,19 +1,52 @@
 ---
 title: "Nota Scale"
+description: "Притягивает ноты к ладу — одиннадцать ладов или свой набор нот, «неправильные» ноты уходят вниз, вверх или к ближайшей, с диапазоном, транспозицией, следованием за тональностью и Learn."
 sidebar:
-  order: 64
-status: todo
+  order: 3
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/MidiScale.h
   - src/managed/Nota.App/DeviceCards/Midi/ScaleMidiBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Scale.html
-  - see coverage.yml
-*/}
+Nota Scale держит каждую ноту в тональности. Играйте что угодно — любая клавиша попадёт на ноту
+лада. Удобно для джема, для случайных и генеративных партий и чтобы контроллер всегда был «в тоне».
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/midi-effects/scale/card" alt="Nota Scale: тоника и тип, карта нот и настройки подгонки" />
+
+## Тоника и тип
+
+**Root** (тоника) и **тип**: **Major**, **Minor**, **Harm Minor**, **Dorian**, **Phryg**, **Lydian**,
+**Mixolyd**, **Penta**, **Penta Min**, **Chromatic** или **Custom** — у каждого указано число нот.
+
+## Note map
+
+Двенадцать нот ячейками: ноты лада закрашены, тоника обведена, остальные показывают, куда уходят.
+Щелчок по ячейке добавляет или убирает ноту — тип становится **Custom**. Звучащая сейчас нота
+подсвечивается.
+
+## Fold и опции
+
+| Регулятор | Что делает |
+|---|---|
+| **Fold** | Куда уходит нота вне лада: **Nearest**, **Down** или **Up** |
+| **Transpose** | Сдвиг результата |
+| **Range** | Подгоняются только ноты в диапазоне; остальные проходят как есть |
+| **Follow key** | Тоника следует за тональностью того, что вы играете |
+| **Learn** | Пока включено, ноты проходят без изменений, а каждая сыгранная собирается в лад Custom |
+| **Clear** | Очистить свой набор |
+
+**Last IN → OUT** показывает последнюю ноту и куда она ушла.
+
+[Auto Shift](../../audio-effects/auto-shift/) может скопировать тонику и лад этого устройства для
+коррекции высоты, а подсветка **Scale** в piano roll использует те же лады.
+
+## Пресеты
+
+35 заводских пресетов: тональности и лады (**C Major**, **A Minor**, **E Minor Down**, **G Major Up**,
+**A Harmonic Minor**, **C Melodic Minor**, **D Dorian**, **E Phrygian**, **F Lydian**, **G Mixolydian**,
+**B Locrian**), пентатоники и блюз (**C Penta**, **A Penta Minor**, **Black Keys (F# Penta)**, **A
+Blues**), **White Keys Only**, **E Phrygian Dominant** и другие.

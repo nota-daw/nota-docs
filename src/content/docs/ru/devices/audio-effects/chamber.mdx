@@ -1,19 +1,64 @@
 ---
 title: "Nota Chamber"
+description: "Гибридный ревербератор — свёрточный движок без задержки с шестнадцатью встроенными пространствами или вашим импульсным откликом и алгоритмический движок с Dark Hall, Plate, Quartz и Shimmer, смешанные параллельно или последовательно."
 sidebar:
-  order: 56
-status: todo
+  order: 20
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Chamber.h
   - src/managed/Nota.App/DeviceCards/Bodies/ChamberDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Chamber.html
-  - see coverage.yml
-*/}
+Nota Chamber — два ревербератора в одном: **свёрточный** воспроизводит пространства, звучащие как
+настоящие, а **алгоритмический** даёт пышные, модулированные, мерцающие хвосты. Смешивайте их или
+подавайте один в другой.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/chamber/card" alt="Nota Chamber, вкладка Convolution с импульсным откликом" />
+
+**Устройство карточки:** колонка **Blend** слева (свёртка ⇄ алгоритм и **Dry/Wet**), центральная
+панель с тремя вкладками, правая панель (**Levels** / **Output**) и строка состояния.
+
+## Convolution
+
+Шестнадцать встроенных импульсных откликов — залы (**Concert Hall · Wide**, **Stone Vault**,
+**Cathedral**, **Scoring Stage**), комнаты (**Wood Chamber**, **Live Room**, **Drum Room**, **Tiled
+Bathroom**), пластины (**Vocal Plate**, **Bright Plate**), **Spring Tank**, пространства (**Car Park**,
+**Stairwell**, **Forest Clearing**) и эффекты (**Gated Room**, **Metal Tank**) — или **свой**: бросьте
+WAV, FLAC или MP3 на окно отклика или нажмите **Load…** (моно, стерео или 4-канальное true stereo).
+
+Формируйте его обрезками **Start** и **Decay** (тяните их на окне), нарастанием **Attack**, **Size**
+(растяжение во времени), **Reverse** и **True Stereo**, плюс преддилей (свободно или в темп). Движок
+работает без задержки; если выключить **Zero Latency**, он нагружает процессор меньше.
+
+## Algorithm
+
+<Shot id="devices/audio-effects/chamber/algorithm" alt="Nota Chamber, вкладка Algorithm" />
+
+**Dark Hall**, **Plate**, **Quartz** или **Shimmer**: **Decay** по полосам (низ, середина, верх —
+тяните метки RT60), **Size**, **Diffuse**, **Damping**, модуляция, окраска **Vintage**, а у Shimmer —
+питч-шифтер (в петле хвоста или поверх). **Freeze** держит хвост (вход заглушается, если не включён
+**Freeze In**). Свой преддилей, свободно или в темп.
+
+## EQ · Mod
+
+<Shot id="devices/audio-effects/chamber/eq-mod" alt="Nota Chamber, вкладка EQ · Mod" />
+
+4-полосный эквалайзер, который можно поставить **на входе**, **на хвосте** или **на выходе**, —
+тяните его ручки, — и настройки модуляции.
+
+## Levels и Output
+
+**Routing** — параллельно или **Serial** (свёртка подаётся в алгоритм). **Dry**, **Dry/Wet**, **Width**,
+моно в басу, **Ducking** (вход приглушает реверберацию, пока звучит), **Wet only** (для возврата) и
+выходной уровень.
+
+## Пресеты
+
+22 заводских пресета: залы (**Stone Vault**, **Concert Hall**, **Cathedral Wash**, **Scoring Stage**,
+**Vintage Hall**, **Ducked Vocal Hall**), комнаты (**Wood Chamber**, **Drum Room**, **Live Room**, **Car
+Park**, **Gated Snare**), пластины и пружины (**Vocal Plate**, **Snare Plate**, **Spring Box**, **Metal
+Tank**), эффекты (**Wide Shimmer**, **Octave Down Bloom**, **Endless Pad**, **Reverse Swell**, **Forest
+Echoes**) и для возвратов (**Send · Big Hall**, **Send · Plate**).

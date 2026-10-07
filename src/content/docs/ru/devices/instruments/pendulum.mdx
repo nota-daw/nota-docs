@@ -1,19 +1,71 @@
 ---
 title: "Nota Pendulum"
+description: "Генеративные клавишные: удерживайте аккорд, и качающиеся шары играют его как постоянно меняющееся арпеджио тёплым голосом электропиано."
 sidebar:
-  order: 29
-status: todo
+  order: 7
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/PendulumSynth.h
   - src/managed/Nota.App/DeviceCards/Instruments/PendulumInstrumentCard.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Pendulum.html
-  - see coverage.yml
-*/}
+Nota Pendulum превращает удерживаемый аккорд в движение. Шары качаются по аккорду, как
+маятники; когда шар переходит с одной ноты аккорда на следующую, эта нота звучит. Несколько
+шаров с разной скоростью плетут арпеджио, которое всё время меняется, — из одного аккорда.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/instruments/pendulum/card" alt="Nota Pendulum, вкладка Balls с дорожкой на каждый шар" />
+
+**Путь сигнала:** удерживаемый аккорд → шары (положение → ступень аккорда → нота при каждом
+переходе) → тёплый голос клавишных → выход.
+
+## Balls
+
+В центре по дорожке на каждый шар: по горизонтали высота, видно, от какой стенки шар
+отскочил, к какой летит и сколько осталось. Под дорожками полоса такта показывает выпадающие ноты.
+
+| Регулятор | Что делает |
+|---|---|
+| **Sync** / **Free** | Качание в тактах (с делением) или в секундах (**Time**) |
+| **Rate** | Скорость — двуполярная: отрицательная гонит качание назад |
+| **Motion** | Кривая качания: Linear, Pendulum, Ease или Bounce |
+| **Balls** | Сколько шаров качается |
+| **Sort** | **Up** или **Down** — порядок нот аккорда по полю |
+| **Quant** | Привязать ноты к сетке |
+| **Hold** | Удерживать аккорд после того, как вы отпустили клавиши |
+| **First note** | Перезапускать паттерн на каждом новом аккорде |
+| **Reset** | Вернуть шары в начало |
+
+В колонке справа — каждый шар с делением, скоростью, фазой и нотой, которую он играет.
+
+## Voice
+
+<Shot id="devices/instruments/pendulum/voice" alt="Nota Pendulum, вкладка Voice" />
+
+Чем звучат шары: мягкий аддитивный голос «электропиано» с расстроенным хорус-партнёром.
+
+| Регулятор | Что делает |
+|---|---|
+| Wave · **Tone** · **Bright** · **FM** | Характер голоса |
+| **Length** | Длина ноты |
+| **Attack** · **Decay** · **Release** | Огибающая голоса |
+| **Spread** — скорость · расстройка · панорама · humanize | Шары расходятся по скорости, строю, стереопозиции и тайминг |
+| **Scale** | Привязать сгенерированные ноты к ладу |
+| **Volume** | Выходной уровень |
+
+## Пресеты
+
+28 заводских пресетов: медленные и мечтательные (**Slow Bloom**, **Reverse Drift**, **Hold Pad**,
+**Slow Swing**, **Lullaby**), каскады (**Warm Cascade**, **Down Runs**, **Minor Cascade**,
+**Linear Ladder**), модальные краски (**Dorian Drift**, **Mixolydian Sun**, **Pentatonic Rain**),
+искры (**Fast Sparkle**, **Glass Bounce**, **Music Box**, **Bell Garden**, **FM Glints**, **Free
+Chimes**, **Wide Shimmer**) и машины (**Saw Arp**, **Square Steps**, **Two Clocks**, **Six
+Pendulums**, **Rubber Bounce**, **Eighth Machine**).
+
+## Советы
+
+- Включите **Hold** на аккорде и меняйте **Balls** и **Spread** во время игры — паттерн растёт
+  без участия клавиш.
+- **Sync** и **Quant** зависят от транспорта: запустите воспроизведение.

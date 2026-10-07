@@ -1,19 +1,62 @@
 ---
 title: "Nota Delay"
+description: "Стереодилей — независимые или связанные времена левого и правого канала, в темп или в миллисекундах, пинг-понг, фильтрованная и диффузная петля обратной связи, ленточный wow, Freeze и tap tempo."
 sidebar:
-  order: 40
-status: todo
+  order: 6
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Delay.h
   - src/managed/Nota.App/DeviceCards/Bodies/DelayDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Delay.html
-  - see coverage.yml
-*/}
+Nota Delay повторяет звук: слэпбэк, ритмичные восьмые, даб-выбросы, ленточное эхо, замороженные
+подложки.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/delay/card" alt="Nota Delay, вкладка Time над живым окном повторов" />
+
+**Устройство карточки:** колонка **Loop** слева (**Feedback**, **Spread**), центральная панель с двумя
+вкладками над живым окном повторов, правая панель (**Levels** / **Output**) и строка состояния,
+которая говорит, сколько повторов остаётся слышно.
+
+## Time
+
+| Регулятор | Что делает |
+|---|---|
+| **Sync** / **ms** | Время в долях (1/16 … 1/2, включая триоли и точки) или в миллисекундах (до 2 с) |
+| **L time** · **R time** | Времена двух каналов |
+| **Link** | Правый канал повторяет левый |
+| **Ping** | Пинг-понг — каждый повтор уходит в другой канал |
+| **Fade on change** | Смена времени — кроссфейдом на новое, без скольжения (и без изгиба высоты) |
+| **Tap tempo** | Отстучите четыре раза, чтобы задать время на слух (переключает в ms) |
+
+## Loop · Wow
+
+<Shot id="devices/audio-effects/delay/loop-wow" alt="Nota Delay, вкладка Loop · Wow" />
+
+Петля обратной связи: фильтр **low cut** и **high cut** (тяните его ручки), **Diffuse** (размывает
+повторы в облако), **Tape mode** (сатурация) и ленточный **Wow** — **Wow rate** и **Wow depth**.
+**Freeze** держит петлю бесконечно: вход заглушается, повторы перестают затухать. **Clear loop**
+очищает буфер.
+
+## Levels и Output
+
+**Dry**, **Mix**, **Width**, **Mono f** (моно в басу), **Wet only** (для трека возврата), **Out** и
+**Latency comp.** — держит эхо точно во времени при поднятом Diffuse.
+
+## Пресеты
+
+30 заводских пресетов: короткие (**Slapback**, **Doubler**, **Rockabilly Slap**, **Haas Widener**,
+**Slap Wide**), ритмичные (**Eighth Bounce**, **Dub Eighths**, **Ping Quarter**, **Dotted Eighth**,
+**Triplet Roll**, **Sixteenth Stutter**, **Half-Note Wash**, **Cross Rhythm**, **Polyrhythm 3:4**,
+**Wide Quarters**, **Trance Gate Echo**), ленточные (**Tape Echo**, **Space Echo**, **Warped Tape**,
+**Bucket Brigade**, **Repitch Riser**), окраска и пространство (**Vocal Throw**, **Telephone Echo**,
+**Diffuse Cloud**, **Ambient Wash**, **Dark Cavern**, **Tape Hold**, **Frozen Bed**) и для возвратов
+(**Send · Eighth**, **Send · Quarter**).
+
+## Советы
+
+- **Даб-выброс:** автоматизируйте посыл на возврат с Delay на последнем слове фразы.
+- **Ширина без эха:** 10–25 мс только в одном канале (**Haas Widener**).

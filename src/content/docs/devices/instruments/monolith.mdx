@@ -1,19 +1,67 @@
 ---
 title: "Nota Monolith"
+description: "Mono synth in the Minimoog Model D mould — three oscillators, a mixer with noise and feedback, a self-oscillating ladder filter and two contours."
 sidebar:
-  order: 34
-status: todo
+  order: 12
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Monolith.h
   - src/managed/Nota.App/DeviceCards/Instruments/MonolithInstrumentCard.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml)
-  - see coverage.yml
-*/}
+Nota Monolith is a monophonic synth laid out like the Minimoog Model D — Nota's own DSP, faithful
+to how that instrument plays. Three oscillators, a mixer you can overdrive, a 24 dB ladder filter
+and two contour generators: fat basses, singing leads, brass.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/instruments/monolith/card" alt="Nota Monolith, Controllers · Osc Bank tab" />
+
+**Signal flow:** Osc 1 + Osc 2 + Osc 3 + noise (+ feedback) → mixer → ladder low-pass → VCA. Osc 3
+or noise can modulate the oscillators or the filter through the mod wheel.
+
+The **wheels** (pitch bend, mod wheel) are always on the left.
+
+## Controllers · Osc Bank
+
+| Section | Controls |
+|---|---|
+| **Controllers** | Master **Tune**, **Glide** (on / off and time), **Mod Mix** (Osc 3 ↔ noise as the modulation source), **Osc mod** and **Filter mod** switches |
+| **Osc 1 / 2 / 3** | **Range** (LO, 32' … 2'), **Wave** (triangle, shark-tooth, saw, square, wide and narrow pulse — Osc 3 has reverse saw instead of shark-tooth), **Tune** ±7 semitones on Osc 2 and 3 |
+| **Osc 3 kbd** | Off turns Osc 3 into a free-running LFO |
+
+## Modifiers
+
+<Shot id="devices/instruments/monolith/modifiers" alt="Nota Monolith, Modifiers tab with the filter and both contours" />
+
+| Section | Controls |
+|---|---|
+| **Filter** | **Cutoff**, **Emphasis** (resonance — the ladder self-oscillates), **Contour** amount, keyboard tracking (⅓, ⅔) |
+| **Filter contour** | Attack, Decay, Sustain |
+| **Loudness contour** | Attack, Decay, Sustain |
+| **Decay** | One switch for both contours: release follows decay, as on the original |
+
+## Mixer
+
+Level and on / off for each oscillator, **Noise** (white or pink) and **Ext** — the **Feedback**
+path that overdrives the mixer for growl.
+
+## Output
+
+**Volume**, **Priority** (low, high or last note), **Legato** (single trigger), **Bend** range
+(±2 … ±12), **Unison** voices with detune, **Drift** (gentle analog instability), **Bass
+compensation**, velocity to amp and filter, and an **A-440 tone** for tuning.
+
+## Presets
+
+20 factory presets: basses (**Taurus Bass**, **Fat Bass**, **Reese Bass**, **Funk Square**,
+**Rubber Bass**, **Sub Boom**, **Growl Overload**), leads (**Classic Lead**, **Hollow Lead**,
+**Screaming Lead**, **Portamento**, **Bright Lead**, **Soft Flute**, **Whistle**), and more (**Pulse
+Pad**, **Brass Section**, **Fifths Stack**, **Detune Unison**, **Sci-Fi Mod**, **Random Bleeps**).
+
+## Tips
+
+- **Classic lead:** Osc 2 and 3 a few cents apart from Osc 1, Emphasis halfway, a short filter
+  contour, Glide on.
+- **Growl:** raise the mixer **Feedback** until the ladder starts to bite.

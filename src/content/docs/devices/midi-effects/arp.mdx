@@ -1,19 +1,57 @@
 ---
 title: "Nota Arp"
+description: "Step arpeggiator — note order, rate, octaves, gate, swing, hold and retrigger, plus six 16-step groove lanes for velocity, length, chance, ratchets, transposition and on / off."
 sidebar:
-  order: 62
-status: todo
+  order: 1
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Arpeggiator.h
   - src/managed/Nota.App/DeviceCards/Midi/ArpMidiBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Arp.html
-  - see coverage.yml
-*/}
+Nota Arp turns held notes into a running pattern. Play a chord, get a sequence — up, down, in the
+order you played, random — shaped step by step by its groove lanes.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/midi-effects/arp/card" alt="Nota Arp in its large view, Pattern window" />
+
+MIDI effects sit before the instrument in a track's chain: add one from the browser's **MIDI
+effects** tab. The **S / L** switch in the header picks a compact or a full card.
+
+## Order
+
+**Up**, **Down**, **Up · Down**, **Down · Up**, **Converge**, **Diverge**, **As played**, **Random** or
+**Chord** (the whole chord on each step). The order walks the whole range over the chosen octaves —
+Up · Down over two octaves climbs C3 … B4 and back.
+
+## Rate and Play
+
+| Control | What it does |
+|---|---|
+| **Free** / **Sync** | Rate in milliseconds, or a note division |
+| **Gate** | Note length as a share of the step |
+| **Swing** | Delays the off-steps |
+| **Vel Amt** | How much the played velocity carries through |
+| **Octaves** | How many octaves the pattern spans |
+| **Retrig** | Restart the pattern: **Off**, on each new **Note**, or on the **Beat** |
+| **Transpose** | Shift the output |
+| **Steps** | Loop length of the pattern |
+| **Hold** | Keep playing after you let go |
+| **Restart** | Start the pattern over now |
+
+## Groove
+
+<Shot id="devices/midi-effects/arp/groove" alt="Nota Arp, Groove lanes" />
+
+Six 16-step lanes — **Velocity**, **Length**, **Chance**, **Ratchet** (repeats a step's note),
+**Transpose** and **On** — draw per-step variation into the pattern. The window animates: the head
+walks the steps and the cell that's sounding lights up.
+
+## Presets
+
+30 factory presets, from simple runs (**Up 1/16**, **Down 1/8**, **Octave Up-Down**, **Down-Up
+Cascade**, **Converge**, **Diverge Bloom**, **As Played Hook**, **Four-Octave Rise**) to grooves
+(**Trance Gate**, **House Offbeat Stab**, **Swing Groove**, **Velocity Accents**, **Bar Retrig Riff**,
+**Triplet Roll**, **Free Run 150 ms**) and beyond.

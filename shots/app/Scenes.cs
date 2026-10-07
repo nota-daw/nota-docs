@@ -130,7 +130,14 @@ public sealed class Scenes
         Pump();
         view.RefreshSynthLive();
         Pump();
-        if (shot.Str("tab") is string tab) ClickText(win, tab);
+        // `tab` clicks one control by its text, or a chain of them: "L>Filter".
+        if (shot.Str("tab") is string tab)
+            foreach (var part in tab.Split('>', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries))
+            {
+                ClickText(win, part);
+                view.RefreshSynthLive();
+                Pump();
+            }
         view.RefreshSynthLive();
         Pump();
         var chain = view.GetVisualDescendants().OfType<StackPanel>().First(p => p.Orientation == Orientation.Horizontal && p.Children.Count > 0 && p.Bounds.Height > 200);

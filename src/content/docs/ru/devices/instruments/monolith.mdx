@@ -1,19 +1,68 @@
 ---
 title: "Nota Monolith"
+description: "Моносинтезатор по образцу Minimoog Model D — три осциллятора, микшер с шумом и обратной связью, самовозбуждающийся ladder-фильтр и два контура."
 sidebar:
-  order: 34
-status: todo
+  order: 12
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Monolith.h
   - src/managed/Nota.App/DeviceCards/Instruments/MonolithInstrumentCard.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml)
-  - see coverage.yml
-*/}
+Nota Monolith — монофонический синтезатор с раскладкой Minimoog Model D: собственный DSP Nota,
+верный тому, как играет оригинал. Три осциллятора, микшер, который можно перегрузить,
+24-децибельный ladder-фильтр и два генератора контуров: плотные басы, поющие лиды, медь.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/instruments/monolith/card" alt="Nota Monolith, вкладка Controllers · Osc Bank" />
+
+**Путь сигнала:** Osc 1 + Osc 2 + Osc 3 + шум (+ обратная связь) → микшер → ladder ФНЧ → VCA.
+Osc 3 или шум через колесо модуляции могут модулировать осцилляторы или фильтр.
+
+**Колёса** (pitch bend, mod wheel) всегда слева.
+
+## Controllers · Osc Bank
+
+| Раздел | Регуляторы |
+|---|---|
+| **Controllers** | Общий **Tune**, **Glide** (вкл / выкл и время), **Mod Mix** (Osc 3 ↔ шум как источник модуляции), переключатели **Osc mod** и **Filter mod** |
+| **Osc 1 / 2 / 3** | **Range** (LO, 32' … 2'), **Wave** (треугольник, «акулий зуб», пила, меандр, широкий и узкий импульс — у Osc 3 вместо «акульего зуба» обратная пила), **Tune** ±7 полутонов у Osc 2 и 3 |
+| **Osc 3 kbd** | Если выключить, Osc 3 становится свободным LFO |
+
+## Modifiers
+
+<Shot id="devices/instruments/monolith/modifiers" alt="Nota Monolith, вкладка Modifiers с фильтром и обоими контурами" />
+
+| Раздел | Регуляторы |
+|---|---|
+| **Filter** | **Cutoff**, **Emphasis** (резонанс — ladder самовозбуждается), глубина **Contour**, отслеживание клавиатуры (⅓, ⅔) |
+| **Filter contour** | Attack, Decay, Sustain |
+| **Loudness contour** | Attack, Decay, Sustain |
+| **Decay** | Один переключатель на оба контура: затухание повторяет decay, как в оригинале |
+
+## Mixer
+
+Уровень и вкл / выкл для каждого осциллятора, **Noise** (белый или розовый) и **Ext** — путь
+**Feedback**, который перегружает микшер для рычания.
+
+## Output
+
+**Volume**, **Priority** (нижняя, верхняя или последняя нота), **Legato** (одиночный запуск),
+диапазон **Bend** (±2 … ±12), голоса **Unison** с расстройкой, **Drift** (мягкая аналоговая
+нестабильность), **Bass compensation**, velocity на громкость и фильтр и **A-440 tone** для
+подстройки.
+
+## Пресеты
+
+20 заводских пресетов: басы (**Taurus Bass**, **Fat Bass**, **Reese Bass**, **Funk Square**,
+**Rubber Bass**, **Sub Boom**, **Growl Overload**), лиды (**Classic Lead**, **Hollow Lead**,
+**Screaming Lead**, **Portamento**, **Bright Lead**, **Soft Flute**, **Whistle**) и другое (**Pulse
+Pad**, **Brass Section**, **Fifths Stack**, **Detune Unison**, **Sci-Fi Mod**, **Random Bleeps**).
+
+## Советы
+
+- **Классический лид:** Osc 2 и 3 на несколько центов от Osc 1, Emphasis наполовину, короткий
+  контур фильтра, Glide включён.
+- **Рычание:** поднимайте **Feedback** в микшере, пока ladder не начнёт кусаться.

@@ -1,19 +1,50 @@
 ---
 title: "Nota Phaser"
+description: "Phaser — 2 to 12 all-pass stages swept by an LFO, with bipolar feedback, a centre frequency, depth in octaves, sync and a stereo offset."
 sidebar:
-  order: 60
-status: todo
+  order: 24
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Phaser.h
   - src/managed/Nota.App/DeviceCards/Bodies/PhaserDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Phaser.html
-  - see coverage.yml
-*/}
+Nota Phaser shifts the phase of a sound through a chain of all-pass stages and mixes it back with the
+original: notches appear and an LFO sweeps them — the swirl of a classic phaser pedal or a rotary
+speaker.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/phaser/card" alt="Nota Phaser: the LFO, the all-pass response and the stages" />
+
+## LFO
+
+Sine, triangle or saw; **Hz** (free, 0.02–8 Hz) or **Sync** (4 bars to 1/16, with dotted and
+triplets); **Rate**; **Stereo** — the right channel's LFO runs 0–180° behind the left.
+
+## The window
+
+The live all-pass response of L and R with the notches marked — drag left and right for **Center**,
+up and down for **Feedback** — and the corner frequency of both channels over two cycles.
+
+## Stages
+
+| Control | What it does |
+|---|---|
+| **Stages** | 2, 4, 6, 8 or 12 — more stages, more notches (half as many as stages) |
+| **Center** | Centre of the sweep, 50 Hz–5 kHz |
+| **Depth** | How far it sweeps, up to ±3 octaves |
+| **Feedback** | Bipolar: positive deepens and sharpens the notches; negative moves and widens them |
+| **Mix** | 0 dry · 50 % the deepest notches · 100 % wet only (phase shift alone) |
+
+## Presets
+
+35 factory presets: classics (**Script 45**, **Small Stone**, **Vintage Six**, **Eight Stage Sweep**,
+**Two-Stage Shimmer**), gentle (**Slow Swirl**, **Gentle Motion**, **Wide Stereo**, **Mono Swoosh**,
+**Deep Space**), resonant (**Whistler**, **Resonant Twelve**, **Jet Phase**, **Laser Sweep**, **Nasal
+Tube**), hollow (**Hollow Step**, **Hollow Drift**, **Inverse Twelve**), synced (**Quarter Pulse**,
+**Two-Bar Sweep**, **Four-Bar Rise**, **Eighth Chop**, **Dotted Wander**, **Triplet Flutter**, **Half-Bar
+Swell**), rotary (**Rotary Fast**, **Rotary Slow**), and for instruments (**Guitar Classic**, **Electric
+Piano**, **Pad Drift**, **Drum Bus Swirl**, **Bass Motion**, **Vocal Air**, **Bubble Trouble**, **Static
+Notch**).

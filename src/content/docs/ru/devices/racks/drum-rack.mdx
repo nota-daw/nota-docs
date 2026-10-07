@@ -1,22 +1,63 @@
 ---
 title: "Nota Drum Rack"
+description: "Пэды для ударных и ван-шотов — до 64 пэдов в четырёх банках, у каждого свой сэмпл или инструмент и эффекты, группы заглушения, микшер, макросы кита и 25 заводских китов."
 sidebar:
-  order: 69
-status: todo
+  order: 2
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/DrumRack.h
   - src/managed/Nota.App/DeviceCards/Rack/RackCardView.Drum.cs
+  - src/managed/Nota.App/DeviceCards/Rack/MacroPanel.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Drum Rack.html
-  - pads
-  - chains
-  - 25 factory kits
-  - sample drops
-*/}
+Nota Drum Rack играет на каждом пэде свой звук. Загружайте на пэды ван-шоты или инструменты, давайте
+каждому свои эффекты и программируйте из piano roll или пошаговой сетки **Pattern**.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/racks/drum-rack/card" alt="Nota Drum Rack с китом Volta: сетка пэдов и выбранный пэд" />
+
+## Киты
+
+**Выбор кита** в заголовке карточки загружает любой из **25 заводских китов** на место текущего и
+показывает имя кита в рэке: *Volta*, *Kompakt*, *Micron*, *Linnwood*, *Atelier*, *Cellar*, *Neon*,
+*Foundry*, *Terra*, *Aether*, *Brass Room*, *Breakline*, *Bunker*, *Pixel*, *Velvet*, *Circuit*,
+*Yard*, *Byte*, *Lagoon*, *Titan*, *Shuffle*, *Mirrorball*, *Pit*, *Hyper* и *Crate* — от тёплого
+аналога и PCM 80-х до джангл-брейков, «бревенчатых» барабанов амапиано и оркестровой перкуссии.
+
+В каждом ките 16 пэдов по раскладке General MIDI (ноты 36–51), хэты глушат друг друга, у кита свои
+свинг и humanize, эффекты на пэдах (сатурация бочки, реверберация малого и клэпа, дилей хэтов) и
+свои макросы. Звуки синтезируются при первом запуске и появляются во вкладке **Files** браузера в
+папке **Nota Kits** — их можно перетаскивать куда угодно.
+
+## Пэды
+
+Сетка 4 × 4, пэд 1 — внизу слева, как на железе, в банках **C1**–**C4** (по 16 нот, до 64 пэдов).
+
+- **Щелчок** по пэду играет и выбирает его. Звучащий пэд подсвечивается своим цветом.
+- **Бросьте** сэмплы на пэд, чтобы загрузить (несколько заполнят пэды после него); пустой пэд
+  предлагает и инструмент.
+- **Правый щелчок** — переименовать пэд, задать группу **заглушения**, открыть цепочку или удалить.
+- **Fold** прячет пустые пэды. **Swing** и **Humanize** задают ощущение кита.
+
+Панель **Pad** справа правит выбранный пэд: его ван-шот с курсором, **Volume**, **Pan**, **Tune**,
+**Decay**, группу **заглушения** (пэды одной группы обрывают друг друга — открытый и закрытый хэт) и
+редактор его инструмента.
+
+## Mixer, Chain и Macro
+
+<Shot id="devices/racks/drum-rack/mixer" alt="Nota Drum Rack, вид Mixer" />
+
+- **Mixer** — загруженные пэды банка строками: громкость, панорама, mute, solo, заглушение.
+- **Chain** — цепочка выбранного пэда: его инструмент и собственные эффекты.
+- **Macro** — восемь [макросов](../macros/) кита, назначенных на регуляторы пэдов, их инструменты и
+  эффекты.
+
+<Shot id="devices/racks/drum-rack/macro" alt="Nota Drum Rack, вид Macro" />
+
+## Программирование
+
+Дважды щёлкните клип и откройте вкладку **Pattern** в нижней панели — там пошаговая сетка со строкой
+на каждый пэд. Или используйте piano roll, где каждый пэд — нота. Аудиоклипы, перетащенные из
+Arrangement, ложатся на следующий свободный пэд.

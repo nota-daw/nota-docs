@@ -1,19 +1,64 @@
 ---
 title: "Nota Chamber"
+description: "Hybrid reverb — a zero-latency convolution engine with sixteen built-in spaces or your own impulse response, beside an algorithmic engine with Dark Hall, Plate, Quartz and Shimmer, blended in parallel or series."
 sidebar:
-  order: 56
-status: todo
+  order: 20
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Chamber.h
   - src/managed/Nota.App/DeviceCards/Bodies/ChamberDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Chamber.html
-  - see coverage.yml
-*/}
+Nota Chamber is two reverbs in one: a **convolution** engine that plays back real-sounding spaces,
+and an **algorithmic** engine for lush, modulated, shimmering tails. Blend them, or feed one into the
+other.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/chamber/card" alt="Nota Chamber, Convolution tab with the impulse response" />
+
+**Layout:** the **Blend** column on the left (convolution ⇄ algorithm, and **Dry/Wet**), a centre panel
+with three tabs, a right panel (**Levels** / **Output**) and a status line.
+
+## Convolution
+
+Sixteen built-in impulse responses — halls (**Concert Hall · Wide**, **Stone Vault**, **Cathedral**,
+**Scoring Stage**), rooms (**Wood Chamber**, **Live Room**, **Drum Room**, **Tiled Bathroom**), plates
+(**Vocal Plate**, **Bright Plate**), **Spring Tank**, spaces (**Car Park**, **Stairwell**, **Forest
+Clearing**) and FX (**Gated Room**, **Metal Tank**) — or **your own**: drop a WAV, FLAC or MP3 on the
+IR view, or use **Load…** (mono, stereo or 4-channel true stereo).
+
+Shape it with **Start** and **Decay** trims (drag them on the view), an **Attack** fade-in, **Size**
+(time-stretch), **Reverse** and **True Stereo**, plus a pre-delay (free or synced). The engine has
+zero latency; turning **Zero Latency** off saves CPU.
+
+## Algorithm
+
+<Shot id="devices/audio-effects/chamber/algorithm" alt="Nota Chamber, Algorithm tab" />
+
+**Dark Hall**, **Plate**, **Quartz** or **Shimmer**: **Decay** per band (low, mid, high — drag the
+RT60 markers), **Size**, **Diffuse**, **Damping**, modulation, a **Vintage** colour, and for Shimmer a
+pitch shifter (fed back into the tail, or on top). **Freeze** holds the tail (input muted unless
+**Freeze In** is on). Its own pre-delay, free or synced.
+
+## EQ · Mod
+
+<Shot id="devices/audio-effects/chamber/eq-mod" alt="Nota Chamber, EQ · Mod tab" />
+
+A 4-band EQ you can place **at the input**, **on the tail** or **at the output** — drag its handles —
+and the modulation settings.
+
+## Levels and Output
+
+**Routing** — parallel, or **Serial** (convolution into the algorithm). **Dry**, **Dry/Wet**, **Width**,
+bass mono, **Ducking** (the input pushes the reverb down while it plays), **Wet only** (for a return)
+and output gain.
+
+## Presets
+
+22 factory presets: halls (**Stone Vault**, **Concert Hall**, **Cathedral Wash**, **Scoring Stage**,
+**Vintage Hall**, **Ducked Vocal Hall**), rooms (**Wood Chamber**, **Drum Room**, **Live Room**, **Car
+Park**, **Gated Snare**), plates and springs (**Vocal Plate**, **Snare Plate**, **Spring Box**, **Metal
+Tank**), effects (**Wide Shimmer**, **Octave Down Bloom**, **Endless Pad**, **Reverse Swell**, **Forest
+Echoes**) and for returns (**Send · Big Hall**, **Send · Plate**).

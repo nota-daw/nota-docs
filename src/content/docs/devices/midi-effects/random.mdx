@@ -1,19 +1,50 @@
 ---
 title: "Nota Random"
+description: "Varies notes by chance — pitch, velocity, timing, skips and octaves — with a bell, flat or walking distribution, per note or per bar, a seed you can lock, and scale snapping."
 sidebar:
-  order: 67
-status: todo
+  order: 6
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/MidiRandom.h
   - src/managed/Nota.App/DeviceCards/Midi/RandomMidiBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Random.html
-  - see coverage.yml
-*/}
+Nota Random adds controlled chance: a drummer who's a little loose, ghost notes that come and go, a
+melody that wanders, hats that thin out. It's reproducible — lock the seed and the same variation
+plays every time.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/midi-effects/random/card" alt="Nota Random: what varies, the output bar and the dice" />
+
+## What varies
+
+| Dimension | Range |
+|---|---|
+| **Note** | ± semitones |
+| **Velocity** | ±64 |
+| **Timing** | 0–100 ms late (a real-time effect can only delay) |
+| **Skip** | Drop the note |
+| **Octave** | ±2 octaves |
+
+## Dice
+
+| Control | What it does |
+|---|---|
+| **Chance** | How likely a note is varied at all |
+| **Distribution** | **Gauss** (a bell — small changes more often), **Even** (flat) or **Walk** (drifts from note to note) |
+| **Per note** / **Per bar** | Draw for each note, or once for the bar |
+| **Seed** · **Reroll** | The roll's seed; reroll for a new one |
+| **Lock** | Hold the bar showing and repeat it every bar |
+| **Stay in scale** | Snap varied pitches into C major |
+
+The **Output** window shows one bar of demo notes — input dashed, output filled (brighter =
+louder, a link when the pitch moved, × when skipped). Every bar is a fresh roll until you lock it.
+
+## Presets
+
+32 factory presets: humanising (**Human Touch**, **Loose Drummer**, **Tight Humanize**, **Lazy
+Behind**, **Velocity Shimmer**, **Accent Lottery**), sparseness (**Ghost Notes**, **Sparse Hats**,
+**Thin Out**, **Stutter Drop**), pitch (**Pitch Roulette**, **Gentle Wander**, **Melodic Drift**, **Wide
+Leaps**, **Chromatic Smear**, …) and more.

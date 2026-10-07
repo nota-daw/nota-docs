@@ -1,19 +1,65 @@
 ---
 title: "Nota Prism"
+description: "Трёхполосная динамика — компрессия выше и экспансия или подъём ниже порога в каждой полосе, с кроссоверами, сайдчейном по полосам, заглядыванием вперёд, автокомпенсацией и фазово-согласованным миксом."
 sidebar:
-  order: 57
-status: todo
+  order: 21
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Prism.h
   - src/managed/Nota.App/DeviceCards/Bodies/PrismDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Prism.html
-  - see coverage.yml
-*/}
+Nota Prism делит звук на **Low**, **Mid** и **High** и обрабатывает динамику каждой полосы отдельно:
+укротите низ, не трогая вокал, поднимите тихие детали верха, склейте шину, «сожмите» всё вверх.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/prism/card" alt="Nota Prism, вкладка Bands со спектром и кроссоверами" />
+
+Полосы различаются цветом: **Low** — лиловая, **Mid** — латунная, **High** — бирюзовая.
+
+## Bands
+
+Спектр с двумя **кроссоверами** — тяните их. Выберите 3 полосы, 2 (Low + Mid) или 1 (весь диапазон).
+Кроссоверы согласованы по фазе, поэтому полосы складываются обратно ровно.
+
+## Band detail
+
+<Shot id="devices/audio-effects/prism/band-detail" alt="Nota Prism, вкладка Band detail с передаточной кривой" />
+
+В каждой полосе два обработчика — тяните их точки порога на передаточной кривой:
+
+| Обработчик | Что делает |
+|---|---|
+| **Above** | Сжимает всё выше своего порога — от 1:1 до ∞:1, мягкое колено |
+| **Below** | Ниже второго порога: экспандирует вниз (ratio > 1) или поднимает вверх (ratio < 1), в пределах ± **Floor** дБ |
+
+У каждого свои **Attack** и **Release** (авто-релиз у Above), у полосы — **Gain**. **Solo** — слушать
+одну полосу.
+
+## Time
+
+<Shot id="devices/audio-effects/prism/time" alt="Nota Prism, вкладка Time" />
+
+Вход и уровень детектора каждой полосы во времени — видно, на что реагирует динамика.
+
+## Global и Output
+
+| Регулятор | Что делает |
+|---|---|
+| **Amount** | Масштабирует все степени сжатия — 0 % выключает динамику |
+| **Detect** | Peak или RMS |
+| **Lookahead** | Реагирует до пиков; компенсируется автоматически |
+| **Auto makeup** | Возвращает уровень, потерянный при сжатии |
+| **Mix** | Параллельное смешение с сухим сигналом, фазово-согласованное |
+| **Output** · soft clip | Выходной уровень и мягкий клиппер на −0.3 dBFS |
+
+Сайдчейн с другого трека делится на те же полосы, так что каждая полоса реагирует на свою полосу
+ключа; **Listen** позволяет его услышать.
+
+## Пресеты
+
+12 заводских пресетов: **Bus Glue**, **Upward Squash**, **Noise Floor Cleanup**, **Single-Band
+Leveler**, **Parallel Crush**, **Low-End Tamer**, **Gentle Master**, **Air Lift**, **Vocal Control**,
+**De-Esser**, **Drum Punch** и **Two-Band Bass**.

@@ -1,19 +1,54 @@
 ---
 title: "Nota Crush"
+description: "Биткрашер — понижение разрядности и частоты дискретизации в трёх характерах, с драйвом, «зерном» (дизер, джиттер, шумовой пол), фильтрами до и после, автокомпенсацией и dry / wet."
 sidebar:
-  order: 48
-status: todo
+  order: 14
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Crush.h
   - src/managed/Nota.App/DeviceCards/Bodies/CrushDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Crush.html
-  - see coverage.yml
-*/}
+Nota Crush понижает разрядность и частоту дискретизации: старые сэмплеры, игровые приставки,
+сломанное радио, цифровое разрушение.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/crush/card" alt="Nota Crush, вкладка Quantiser со ступенями квантования" />
+
+**Путь сигнала:** драйв → антиалиасинговый фильтр → выборка-хранение (с джиттером) → дизер →
+форма → квантование → шумовой пол → фильтр после → DC-фильтр → микс → автокомпенсация.
+
+## Графики
+
+| Вкладка | Что показывает (и что можно тянуть) |
+|---|---|
+| **Quantiser** | Ступени выборки и квантования на синусе — вверх / вниз **Bits**, влево / вправо **Rate** |
+| **Spectrum** | Спектр выхода, что добавил крашер, и зеркальные образы выше пониженного Найквиста — тяните линии Найквиста и фильтра |
+| **Transfer** | Передаточная кривая — тяните для **Drive** |
+
+<Shot id="devices/audio-effects/crush/spectrum" alt="Nota Crush, вкладка Spectrum" />
+
+## Регуляторы
+
+| Регулятор | Что делает |
+|---|---|
+| **Mode** | **Digital** (жёсткое усечение), **Analog** (мягкое ограничение) или **Fold** (wavefolding) |
+| **Bits** · **Rate** | Разрядность и пониженная частота дискретизации |
+| **Drive** | Входной драйв |
+| **Anti-alias** | Убирает то, что пониженная частота завернула бы обратно, — вкл для гладкости, выкл для жёсткого алиасинга |
+| **Dither** · **Jitter** · **Noise** | «Зерно»: шум дизера, дрожание такта, шумовой пол |
+| **Filter** | ФНЧ после крашера, чтобы приручить верх |
+| **DC filter** | Убирает постоянную составляющую |
+| **Wet** · **Gain** · автокомпенсация | Dry / wet, выход и возврат громкости к уровню входа |
+
+## Пресеты
+
+33 заводских пресета: лоу-фай (**Broken Radio**, **Lo-Fi Warmth**, **Lo-Fi Tape**, **Dusty Sampler**,
+**SP-1200 Grit**, **MPC Crunch**, **Vinyl Dust**, **Warm 12-Bit**), радио (**Telephone Line**, **AM
+Transmitter**, **Walkie-Talkie**), игры (**8-Bit Arcade**, **4-Bit Handheld**, **NES Pulse**, **16-Bit
+Console**, **Game Boy Wave**, **Speak & Spell**), микс (**Subtle Air**, **Parallel Grit**, **Hi-Hat
+Sizzle**, **Drum Bus Dirt**), разрушение (**Digital Grit**, **1-Bit Buzz**, **Aliasing Storm**, **Broken
+Clock**, **Bitrot**, **Sub Destroyer**, **Broken Toy**) и фолдинг (**Folded Crunch**, **Gentle Fold**,
+**West Coast Fold**, **Metal Fold**).

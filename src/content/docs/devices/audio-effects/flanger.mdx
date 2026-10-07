@@ -1,19 +1,52 @@
 ---
 title: "Nota Flanger"
+description: "Flanger — a comb filter on a short LFO-swept delay. Positive feedback for the classic jet, negative for a hollow tube; free or synced, with a stereo offset."
 sidebar:
-  order: 59
-status: todo
+  order: 23
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Flanger.h
   - src/managed/Nota.App/DeviceCards/Bodies/FlangerDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Flanger.html
-  - see coverage.yml
-*/}
+Nota Flanger mixes a sound with a copy of itself delayed by a fraction of a millisecond to a few
+milliseconds. The delay moves, and a comb of notches sweeps up and down: the jet-plane swoosh.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/flanger/card" alt="Nota Flanger: the LFO, the live comb response and the delay line" />
+
+## LFO
+
+| Control | What it does |
+|---|---|
+| Wave | Sine, triangle or saw |
+| **Hz** / **Sync** | Free, 0.02–8 Hz, or synced from 2 bars to 1/16 (with dotted and triplets) |
+| **Rate** | The speed, with its period |
+| **Stereo** | The right channel's LFO runs 0–180° behind the left — wider as it grows |
+
+## The window
+
+The live comb response of L and R — drag a notch left and right for **Delay**, up and down for
+**Feedback** — and under it the delay of both channels over two cycles.
+
+## Delay line
+
+| Control | What it does |
+|---|---|
+| **Delay** | Base delay, 0.1–8 ms — where the comb sits |
+| **Depth** | How far the LFO sweeps it |
+| **Feedback** | Bipolar, with − / 0 / + snaps. **Positive** sharpens the peaks — the classic jet; **negative** mirrors the comb — hollow and tube-like. Near ±95 % it rings metallically |
+| **Mix** | 0 dry · 50 % the deepest notches · 100 % wet only, a pure vibrato |
+
+The column shows the first notch's sweep and null depth; the status line names the mode.
+
+## Presets
+
+31 factory presets: jets (**Jet Plane**, **Slow Jet**, **Takeoff**, **Tape Flange**, **Negative Jet**,
+**Drum Bus Jet**), gentle (**Gentle Sweep**, **Subtle Motion**, **Wide Stereo**, **Mono Sweep**, **Vocal
+Air**, **Pad Space**), hollow (**Hollow Bar**, **Hollow Tube**, **Inside Out**, **Half-Bar Hollow**),
+metallic (**Tin Robot**, **Metal Ring**, **Laser Zap**, **Comb Drone**, **Siren**), synced (**Quarter
+Swirl**, **Two-Bar Sweep**, **Eighth Pulse**, **Dotted Drift**, **Triplet Shimmer**) and more
+(**Vibrato**, **Flange Chorus**, **Doubler Wobble**, **Guitar Classic**, **Bass Swirl**).

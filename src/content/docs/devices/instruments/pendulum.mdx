@@ -1,19 +1,71 @@
 ---
 title: "Nota Pendulum"
+description: "Generative keys: hold a chord and swinging balls play it as an ever-changing arpeggio, on a warm electric-keys voice."
 sidebar:
-  order: 29
-status: todo
+  order: 7
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/PendulumSynth.h
   - src/managed/Nota.App/DeviceCards/Instruments/PendulumInstrumentCard.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Pendulum.html
-  - see coverage.yml
-*/}
+Nota Pendulum turns a held chord into motion. Balls swing back and forth across the chord like
+pendulums; whenever a ball crosses from one chord note to the next, that note plays. Several
+balls at different speeds weave an arpeggio that keeps changing — from one held chord.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/instruments/pendulum/card" alt="Nota Pendulum, Balls tab with one lane per ball" />
+
+**Signal flow:** held chord → balls (position → chord degree → a note on each crossing) → warm
+keys voice → out.
+
+## Balls
+
+The centre draws one lane per ball: across is pitch, and you see the wall it came from, the wall
+it heads for and the time left. Under the lanes, a bar strip shows the notes as they fall.
+
+| Control | What it does |
+|---|---|
+| **Sync** / **Free** | Swing in bars (with a division) or in seconds (**Time**) |
+| **Rate** | Speed — bipolar: negative runs the swing backwards |
+| **Motion** | The swing curve: Linear, Pendulum, Ease or Bounce |
+| **Balls** | How many balls swing |
+| **Sort** | **Up** or **Down** — the order of the chord across the field |
+| **Quant** | Snap the notes to a grid |
+| **Hold** | Latch the chord after you let go |
+| **First note** | Restart the pattern on each new chord |
+| **Reset** | Put the balls back to the start |
+
+The rail lists each ball with its division, rate, phase and the note it plays.
+
+## Voice
+
+<Shot id="devices/instruments/pendulum/voice" alt="Nota Pendulum, Voice tab" />
+
+What the balls play with: a soft additive "electric keys" voice with a detuned chorus partner.
+
+| Control | What it does |
+|---|---|
+| Wave · **Tone** · **Bright** · **FM** | The character of the keys voice |
+| **Length** | Note length |
+| **Attack** · **Decay** · **Release** | The voice envelope |
+| **Spread** — rate · detune · pan · humanize | Let the balls drift apart in speed, tune, stereo position and timing |
+| **Scale** | Snap the generated notes to a scale |
+| **Volume** | Output level |
+
+## Presets
+
+28 factory presets: slow and dreamy (**Slow Bloom**, **Reverse Drift**, **Hold Pad**, **Slow
+Swing**, **Lullaby**), cascades (**Warm Cascade**, **Down Runs**, **Minor Cascade**, **Linear
+Ladder**), modal colours (**Dorian Drift**, **Mixolydian Sun**, **Pentatonic Rain**), sparkle
+(**Fast Sparkle**, **Glass Bounce**, **Music Box**, **Bell Garden**, **FM Glints**, **Free
+Chimes**, **Wide Shimmer**) and machines (**Saw Arp**, **Square Steps**, **Two Clocks**, **Six
+Pendulums**, **Rubber Bounce**, **Eighth Machine**).
+
+## Tips
+
+- **Hold** a chord, then change **Balls** and **Spread** while it plays — the pattern grows
+  without you touching the keys.
+- Pendulum needs the transport for **Sync** and **Quant**: press play.

@@ -1,19 +1,54 @@
 ---
 title: "Nota Crush"
+description: "Bit crusher — bit depth and sample-rate reduction in three characters, with drive, grit (dither, jitter, noise floor), anti-alias and post filters, auto gain and dry / wet."
 sidebar:
-  order: 48
-status: todo
+  order: 14
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Crush.h
   - src/managed/Nota.App/DeviceCards/Bodies/CrushDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Crush.html
-  - see coverage.yml
-*/}
+Nota Crush lowers the bit depth and the sample rate: old samplers, game consoles, broken radios,
+digital destruction.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/crush/card" alt="Nota Crush, Quantiser tab with the held and quantised steps" />
+
+**Signal flow:** drive → anti-alias filter → sample & hold (with jitter) → dither → shape → quantise
+→ noise floor → post filter → DC filter → mix → auto gain.
+
+## The graphs
+
+| Tab | What it shows (and what you can drag) |
+|---|---|
+| **Quantiser** | The held, quantised steps over a sine — drag up / down for **Bits**, left / right for **Rate** |
+| **Spectrum** | The output spectrum, what the crush added, and the images above the reduced Nyquist — drag the Nyquist and filter lines |
+| **Transfer** | The transfer curve — drag for **Drive** |
+
+<Shot id="devices/audio-effects/crush/spectrum" alt="Nota Crush, Spectrum tab" />
+
+## Controls
+
+| Control | What it does |
+|---|---|
+| **Mode** | **Digital** (hard truncation), **Analog** (soft clip) or **Fold** (wavefolding) |
+| **Bits** · **Rate** | Bit depth and the reduced sample rate |
+| **Drive** | Input drive |
+| **Anti-alias** | Filters what the reduced rate would fold back — on for smooth, off for harsh aliasing |
+| **Dither** · **Jitter** · **Noise** | Grit: dither noise, clock jitter, a noise floor |
+| **Filter** | A post low-pass to tame the top |
+| **DC filter** | Removes any DC offset |
+| **Wet** · **Gain** · auto gain | Dry / wet, output, and riding the output back to the input's loudness |
+
+## Presets
+
+33 factory presets: lo-fi (**Broken Radio**, **Lo-Fi Warmth**, **Lo-Fi Tape**, **Dusty Sampler**,
+**SP-1200 Grit**, **MPC Crunch**, **Vinyl Dust**, **Warm 12-Bit**), radio (**Telephone Line**, **AM
+Transmitter**, **Walkie-Talkie**), games (**8-Bit Arcade**, **4-Bit Handheld**, **NES Pulse**, **16-Bit
+Console**, **Game Boy Wave**, **Speak & Spell**), mix (**Subtle Air**, **Parallel Grit**, **Hi-Hat
+Sizzle**, **Drum Bus Dirt**), destruction (**Digital Grit**, **1-Bit Buzz**, **Aliasing Storm**,
+**Broken Clock**, **Bitrot**, **Sub Destroyer**, **Broken Toy**) and folding (**Folded Crunch**,
+**Gentle Fold**, **West Coast Fold**, **Metal Fold**).

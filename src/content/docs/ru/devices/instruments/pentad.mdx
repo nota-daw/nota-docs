@@ -1,19 +1,67 @@
 ---
 title: "Nota Pentad"
+description: "Пятиголосный аналоговый полифон по образцу Prophet-5 — два осциллятора с синхронизацией, 4-полюсный фильтр, Poly-Mod, Wheel-Mod и винтажный дрейф, 5, 10 или 16 голосов."
 sidebar:
-  order: 35
-status: todo
+  order: 13
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Pentad.h
   - src/managed/Nota.App/DeviceCards/Instruments/PentadInstrumentCard.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Pentad.html
-  - see coverage.yml
-*/}
+Nota Pentad — полифонический аналоговый синтезатор в духе Sequential Prophet-5 (Rev 3). У каждого
+голоса свой дрейф, поэтому аккорды дышат, как у настоящего: медные стабы, синхро-лиды,
+poly-mod-колокола и тёплые струнные.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/instruments/pentad/card" alt="Nota Pentad, вкладка Oscillators" />
+
+**Путь сигнала в голосе:** Osc A (пила + импульс, жёсткая синхронизация к B) + Osc B (пила,
+треугольник, импульс; может работать как низкочастотный LFO) + шум → микшер → 4-полюсный ФНЧ → VCA.
+**Poly-Mod** позволяет огибающей фильтра и Osc B модулировать частоту и ширину импульса Osc A и
+срез; **Wheel-Mod** направляет LFO и шум через колесо модуляции.
+
+## Oscillators
+
+Osc A и Osc B: **Oct**, **Fine**, формы волн, ширина импульса, **Sync** (A к B), **Lo freq** у B
+(превращает его в LFO) и **Kbd** (следует ли B за клавиатурой). Здесь же **Glide** (Off, On, Leg) и
+**Mode** (**Poly**, **Uni**, **Mono**).
+
+## Filter · Amp
+
+<Shot id="devices/instruments/pentad/filter-amp" alt="Nota Pentad, вкладка Filter · Amp" />
+
+4-полюсный фильтр — **Cutoff**, резонанс, **Keytrack** (0, ½, 1) и глубина огибающей — с его
+**Filter env** и **Amp env** (A · D · S · R у каждой). Резонанс самовозбуждается чистым, играбельным
+синусом; с ростом резонанса низ худеет, как в оригинале, — **Bass comp** возвращает его.
+
+## Poly Mod
+
+<Shot id="devices/instruments/pentad/poly-mod" alt="Nota Pentad, вкладка Poly Mod" />
+
+**Poly-Mod** — огибающая фильтра и Osc B на звуковой частоте в частоту Osc A, ширину импульса Osc A
+и фильтр: металлические колокола и рычание в духе FM. **Wheel-Mod** — LFO (с Free / Sync) вперемешку
+с шумом, его глубина плюс колесо модуляции — в частоту и ширину импульса осцилляторов и в срез.
+**Aftertouch** может двигать срез или LFO.
+
+## Mixer и Output
+
+**Mixer:** уровни Osc A, Osc B и **Noise** (белый или розовый). **Output:** общий строй и громкость,
+**Drift** (винтажный разброс по голосам), **Noise floor**, **Oversampling** (×2 или ×4 внутри
+голоса) и настройка голосов — **5**, **10** или **16**, способ распределения и unison-стопки.
+
+## Пресеты
+
+40 заводских пресетов: струнные и пэды (**Glass Strings**, **Analog Strings**, **Warm Pad**, **PWM
+Pad**, **Choir Vox**, **Sweep Pad**, **Solar Drift**), басы (**Pentad Bass**, **Sync Bass**, **Unison
+Bass**, **Pluck Bass**, **Sub Drone**), лиды (**Sync Lead**, **Unison Lead**, **Pulse Lead**,
+**Screamer**, **Fifth Lead**), клавишные (**Poly Keys**, **Riley Organ**, **Clavi**, **Bell Keys**,
+**Harpsi**), медь (**Poly Brass**, **Soft Horns**, **Brass Stab**, **Sync Brass**) и poly-mod-эффекты
+(**Poly-Mod Bells**, **Metallic Clang**, **Env Sync Sweep**, **Laser Zap**).
+
+## Советы
+
+- **Синхро-лид:** включите Sync и ведите высоту Osc A огибающей фильтра через Poly-Mod.
+- **Большие аккорды:** 10 или 16 голосов и чуть больше Drift — каждая нота немного другая.

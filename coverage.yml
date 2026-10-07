@@ -117,64 +117,64 @@ sections:
       - page: devices
         covers: [device chain, add/reorder/bypass/delete, cards, presets (factory/user), copy/paste devices, drag & drop, plug-in vs built-in]
         sources: [src/managed/Nota.App/DeviceChainView.cs, src/managed/Nota.App/DeviceChainView.Drop.cs, src/managed/Nota.App/DeviceChainView.Clipboard.cs, src/managed/Nota.App/DeviceCardKit.cs]
-        status: todo
+        status: done
     # Instruments — engine kind() id → page. Card: src/managed/Nota.App/DeviceCards/Instruments/<X>InstrumentCard.cs
     instruments:
-      - {kind: 0,  name: Nota Synth,     page: devices/instruments/synth,     engine: Synth.h,          card: SynthInstrumentCard.cs,     mockup: Nota Synth.html}
-      - {kind: 1,  name: Nota Sampler,   page: devices/instruments/sampler,   engine: Sampler.h,        card: ../Sampler/SamplerViews.cs, mockup: Nota Sampler.html}
-      - {kind: 2,  name: Nota Physical,  page: devices/instruments/physical,  engine: PhysicalSynth.h,  card: PhysicalInstrumentCard.cs,  mockup: Nota Physical.html}
-      - {kind: 5,  name: Nota Aurora,    page: devices/instruments/aurora,    engine: WavetableSynth.h, card: AuroraInstrumentCard.cs,    mockup: Nota Aurora.html}
-      - {kind: 6,  name: Nota Volt,      page: devices/instruments/volt,      engine: VoltSynth.h,      card: VoltInstrumentCard.cs,      mockup: Nota Volt.html}
-      - {kind: 7,  name: Nota Bass,      page: devices/instruments/bass,      engine: BassSynth.h,      card: BassInstrumentCard.cs,      mockup: Nota Bass.html}
-      - {kind: 8,  name: Nota Pendulum,  page: devices/instruments/pendulum,  engine: PendulumSynth.h,  card: PendulumInstrumentCard.cs,  mockup: Nota Pendulum.html}
-      - {kind: 9,  name: Nota Operator,  page: devices/instruments/operator,  engine: OperatorSynth.h,  card: OperatorInstrumentCard.cs,  mockup: Nota Operator.html}
-      - {kind: 10, name: Nota Grain,     page: devices/instruments/grain,     engine: GrainSynth.h,     card: GrainInstrumentCard.cs,     mockup: Nota Grain.html}
-      - {kind: 11, name: Nota Flux,      page: devices/instruments/flux,      engine: FluxSynth.h,      card: FluxInstrumentCard.cs,      mockup: Nota Flux.html}
-      - {kind: 12, name: Nota Rhythm,    page: devices/instruments/rhythm,    engine: RhythmMachine.h,  card: RhythmInstrumentCard.cs,    mockup: Nota Rhythm.html}
-      - {kind: 13, name: Nota Monolith,  page: devices/instruments/monolith,  engine: Monolith.h,       card: MonolithInstrumentCard.cs}   # no mockup, missing from FEATURES.md
-      - {kind: 14, name: Nota Pentad,    page: devices/instruments/pentad,    engine: Pentad.h,         card: PentadInstrumentCard.cs,    mockup: Nota Pentad.html}
-      - {kind: 15, name: Nota Consort,   page: devices/instruments/consort,   engine: Consort.h,        card: ConsortInstrumentCard.cs,   mockup: Nota Consort.html}
+      - {kind: 0,  name: Nota Synth,     page: devices/instruments/synth,     engine: Synth.h,          card: SynthInstrumentCard.cs,     mockup: Nota Synth.html, status: done}
+      - {kind: 1,  name: Nota Sampler,   page: devices/instruments/sampler,   engine: Sampler.h,        card: ../Sampler/SamplerViews.cs, mockup: Nota Sampler.html, status: done}
+      - {kind: 2,  name: Nota Physical,  page: devices/instruments/physical,  engine: PhysicalSynth.h,  card: PhysicalInstrumentCard.cs,  mockup: Nota Physical.html, status: done}
+      - {kind: 5,  name: Nota Aurora,    page: devices/instruments/aurora,    engine: WavetableSynth.h, card: AuroraInstrumentCard.cs,    mockup: Nota Aurora.html, status: done}
+      - {kind: 6,  name: Nota Volt,      page: devices/instruments/volt,      engine: VoltSynth.h,      card: VoltInstrumentCard.cs,      mockup: Nota Volt.html, status: done}
+      - {kind: 7,  name: Nota Bass,      page: devices/instruments/bass,      engine: BassSynth.h,      card: BassInstrumentCard.cs,      mockup: Nota Bass.html, status: done}
+      - {kind: 8,  name: Nota Pendulum,  page: devices/instruments/pendulum,  engine: PendulumSynth.h,  card: PendulumInstrumentCard.cs,  mockup: Nota Pendulum.html, status: done}
+      - {kind: 9,  name: Nota Operator,  page: devices/instruments/operator,  engine: OperatorSynth.h,  card: OperatorInstrumentCard.cs,  mockup: Nota Operator.html, status: done}
+      - {kind: 10, name: Nota Grain,     page: devices/instruments/grain,     engine: GrainSynth.h,     card: GrainInstrumentCard.cs,     mockup: Nota Grain.html, status: done}
+      - {kind: 11, name: Nota Flux,      page: devices/instruments/flux,      engine: FluxSynth.h,      card: FluxInstrumentCard.cs,      mockup: Nota Flux.html, status: done}
+      - {kind: 12, name: Nota Rhythm,    page: devices/instruments/rhythm,    engine: RhythmMachine.h,  card: RhythmInstrumentCard.cs,    mockup: Nota Rhythm.html, status: done}
+      - {kind: 13, name: Nota Monolith,  page: devices/instruments/monolith,  engine: Monolith.h,       card: MonolithInstrumentCard.cs, status: done}   # no mockup, missing from FEATURES.md
+      - {kind: 14, name: Nota Pentad,    page: devices/instruments/pentad,    engine: Pentad.h,         card: PentadInstrumentCard.cs,    mockup: Nota Pentad.html, status: done}
+      - {kind: 15, name: Nota Consort,   page: devices/instruments/consort,   engine: Consort.h,        card: ConsortInstrumentCard.cs,   mockup: Nota Consort.html, status: done}
     # Audio effects — engine builtinKind() id. Card: src/managed/Nota.App/DeviceCards/Bodies/<X>DeviceBody.cs
     audio-effects:
-      - {kind: 0,  name: Nota EQ-8,         page: devices/audio-effects/eq-8,         engine: Eq.h,         card: EqDeviceBody.cs,         mockup: Nota EQ-8.html}
-      - {kind: 1,  name: Nota Compressor,   page: devices/audio-effects/compressor,   engine: Compressor.h, card: CompressorDeviceBody.cs, mockup: Nota Compressor.html}
-      - {kind: 2,  name: Nota Reverb,       page: devices/audio-effects/reverb,       engine: Reverb.h,     card: ReverbDeviceBody.cs,     mockup: Nota Reverb.html}
-      - {kind: 3,  name: Nota Delay,        page: devices/audio-effects/delay,        engine: Delay.h,      card: DelayDeviceBody.cs,      mockup: Nota Delay.html}
-      - {kind: 4,  name: Nota Utility,      page: devices/audio-effects/utility,      engine: Utility.h,    card: UtilityDeviceBody.cs,    mockup: Nota Utility.html}
-      - {kind: 6,  name: Nota Valve,        page: devices/audio-effects/valve,        engine: Amp.h,        card: ValveDeviceBody.cs,      mockup: Nota Valve.html}
-      - {kind: 7,  name: Nota Auto Filter,  page: devices/audio-effects/auto-filter,  engine: AutoFilter.h, card: AutoFilterDeviceBody.cs, mockup: Nota Auto Filter.html}
-      - {kind: 8,  name: Nota Vintage,      page: devices/audio-effects/vintage,      engine: Vintage.h,    card: VintageDeviceBody.cs,    mockup: Nota Vintage.html}
-      - {kind: 9,  name: Nota Orbit,        page: devices/audio-effects/orbit,        engine: AutoPan.h,    card: AutoPanDeviceBody.cs,    mockup: Nota Orbit.html}
-      - {kind: 10, name: Nota Auto Shift,   page: devices/audio-effects/auto-shift,   engine: AutoShift.h,  card: AutoShiftDeviceBody.cs,  mockup: Nota Auto Shift.html}
-      - {kind: 11, name: Nota Beat Repeat,  page: devices/audio-effects/beat-repeat,  engine: BeatRepeat.h, card: BeatRepeatDeviceBody.cs, mockup: Nota Beat Repeat.html}
-      - {kind: 12, name: Nota Crush,        page: devices/audio-effects/crush,        engine: Crush.h,      card: CrushDeviceBody.cs,      mockup: Nota Crush.html}
-      - {kind: 13, name: Nota Dynamic EQ-8, page: devices/audio-effects/dynamic-eq,   engine: DynamicEq.h,  card: DynamicEqDeviceBody.cs,  mockup: Nota Dynamic EQ.html}
-      - {kind: 14, name: Nota Ceiling,      page: devices/audio-effects/ceiling,      engine: Ceiling.h,    card: CeilingDeviceBody.cs,    mockup: Nota Ceiling.html}
-      - {kind: 15, name: Nota Strata,       page: devices/audio-effects/strata,       engine: Strata.h,     card: StrataDeviceBody.cs}   # no mockup
-      - {kind: 16, name: Nota EQ-3,         page: devices/audio-effects/eq-3,         engine: Eq3.h,        card: Eq3DeviceBody.cs,        mockup: Nota EQ-3.html}
-      - {kind: 17, name: Nota Forge,        page: devices/audio-effects/forge,        engine: Forge.h,      card: ForgeDeviceBody.cs,      mockup: Nota Forge.html}
-      - {kind: 18, name: Nota Level,        page: devices/audio-effects/level,        engine: AutoGain.h,   card: AutoGainDeviceBody.cs,   mockup: Nota Level.html}
-      - {kind: 19, name: Nota Shutter,      page: devices/audio-effects/shutter,      engine: Shutter.h,    card: ShutterDeviceBody.cs,    mockup: Nota Shutter.html}
-      - {kind: 20, name: Nota Chamber,      page: devices/audio-effects/chamber,      engine: Chamber.h,    card: ChamberDeviceBody.cs,    mockup: Nota Chamber.html}
-      - {kind: 21, name: Nota Prism,        page: devices/audio-effects/prism,        engine: Prism.h,      card: PrismDeviceBody.cs,      mockup: Nota Prism.html}
-      - {kind: 22, name: Nota Lens,         page: devices/audio-effects/lens,         engine: Lens.h,       card: LensDeviceBody.cs,       mockup: Nota Lens.html}
-      - {kind: 23, name: Nota Flanger,      page: devices/audio-effects/flanger,      engine: Flanger.h,    card: FlangerDeviceBody.cs,    mockup: Nota Flanger.html}
-      - {kind: 24, name: Nota Phaser,       page: devices/audio-effects/phaser,       engine: Phaser.h,     card: PhaserDeviceBody.cs,     mockup: Nota Phaser.html}
-      - {kind: 25, name: Nota Chorus,       page: devices/audio-effects/chorus,       engine: Chorus.h,     card: ChorusDeviceBody.cs,     mockup: Nota Chorus.html}
+      - {kind: 0,  name: Nota EQ-8,         page: devices/audio-effects/eq-8,         engine: Eq.h,         card: EqDeviceBody.cs,         mockup: Nota EQ-8.html, status: done}
+      - {kind: 1,  name: Nota Compressor,   page: devices/audio-effects/compressor,   engine: Compressor.h, card: CompressorDeviceBody.cs, mockup: Nota Compressor.html, status: done}
+      - {kind: 2,  name: Nota Reverb,       page: devices/audio-effects/reverb,       engine: Reverb.h,     card: ReverbDeviceBody.cs,     mockup: Nota Reverb.html, status: done}
+      - {kind: 3,  name: Nota Delay,        page: devices/audio-effects/delay,        engine: Delay.h,      card: DelayDeviceBody.cs,      mockup: Nota Delay.html, status: done}
+      - {kind: 4,  name: Nota Utility,      page: devices/audio-effects/utility,      engine: Utility.h,    card: UtilityDeviceBody.cs,    mockup: Nota Utility.html, status: done}
+      - {kind: 6,  name: Nota Valve,        page: devices/audio-effects/valve,        engine: Amp.h,        card: ValveDeviceBody.cs,      mockup: Nota Valve.html, status: done}
+      - {kind: 7,  name: Nota Auto Filter,  page: devices/audio-effects/auto-filter,  engine: AutoFilter.h, card: AutoFilterDeviceBody.cs, mockup: Nota Auto Filter.html, status: done}
+      - {kind: 8,  name: Nota Vintage,      page: devices/audio-effects/vintage,      engine: Vintage.h,    card: VintageDeviceBody.cs,    mockup: Nota Vintage.html, status: done}
+      - {kind: 9,  name: Nota Orbit,        page: devices/audio-effects/orbit,        engine: AutoPan.h,    card: AutoPanDeviceBody.cs,    mockup: Nota Orbit.html, status: done}
+      - {kind: 10, name: Nota Auto Shift,   page: devices/audio-effects/auto-shift,   engine: AutoShift.h,  card: AutoShiftDeviceBody.cs,  mockup: Nota Auto Shift.html, status: done}
+      - {kind: 11, name: Nota Beat Repeat,  page: devices/audio-effects/beat-repeat,  engine: BeatRepeat.h, card: BeatRepeatDeviceBody.cs, mockup: Nota Beat Repeat.html, status: done}
+      - {kind: 12, name: Nota Crush,        page: devices/audio-effects/crush,        engine: Crush.h,      card: CrushDeviceBody.cs,      mockup: Nota Crush.html, status: done}
+      - {kind: 13, name: Nota Dynamic EQ-8, page: devices/audio-effects/dynamic-eq,   engine: DynamicEq.h,  card: DynamicEqDeviceBody.cs,  mockup: Nota Dynamic EQ.html, status: done}
+      - {kind: 14, name: Nota Ceiling,      page: devices/audio-effects/ceiling,      engine: Ceiling.h,    card: CeilingDeviceBody.cs,    mockup: Nota Ceiling.html, status: done}
+      - {kind: 15, name: Nota Strata,       page: devices/audio-effects/strata,       engine: Strata.h,     card: StrataDeviceBody.cs, status: done}   # no mockup
+      - {kind: 16, name: Nota EQ-3,         page: devices/audio-effects/eq-3,         engine: Eq3.h,        card: Eq3DeviceBody.cs,        mockup: Nota EQ-3.html, status: done}
+      - {kind: 17, name: Nota Forge,        page: devices/audio-effects/forge,        engine: Forge.h,      card: ForgeDeviceBody.cs,      mockup: Nota Forge.html, status: done}
+      - {kind: 18, name: Nota Level,        page: devices/audio-effects/level,        engine: AutoGain.h,   card: AutoGainDeviceBody.cs,   mockup: Nota Level.html, status: done}
+      - {kind: 19, name: Nota Shutter,      page: devices/audio-effects/shutter,      engine: Shutter.h,    card: ShutterDeviceBody.cs,    mockup: Nota Shutter.html, status: done}
+      - {kind: 20, name: Nota Chamber,      page: devices/audio-effects/chamber,      engine: Chamber.h,    card: ChamberDeviceBody.cs,    mockup: Nota Chamber.html, status: done}
+      - {kind: 21, name: Nota Prism,        page: devices/audio-effects/prism,        engine: Prism.h,      card: PrismDeviceBody.cs,      mockup: Nota Prism.html, status: done}
+      - {kind: 22, name: Nota Lens,         page: devices/audio-effects/lens,         engine: Lens.h,       card: LensDeviceBody.cs,       mockup: Nota Lens.html, status: done}
+      - {kind: 23, name: Nota Flanger,      page: devices/audio-effects/flanger,      engine: Flanger.h,    card: FlangerDeviceBody.cs,    mockup: Nota Flanger.html, status: done}
+      - {kind: 24, name: Nota Phaser,       page: devices/audio-effects/phaser,       engine: Phaser.h,     card: PhaserDeviceBody.cs,     mockup: Nota Phaser.html, status: done}
+      - {kind: 25, name: Nota Chorus,       page: devices/audio-effects/chorus,       engine: Chorus.h,     card: ChorusDeviceBody.cs,     mockup: Nota Chorus.html, status: done}
     # MIDI effects. Card: src/managed/Nota.App/DeviceCards/Midi/<X>MidiBody.cs
     midi-effects:
-      - {kind: 0, name: Nota Arp,      page: devices/midi-effects/arp,      engine: Arpeggiator.h,    card: ArpMidiBody.cs,      mockup: Nota Arp.html}
-      - {kind: 1, name: Nota Chord,    page: devices/midi-effects/chord,    engine: MidiChord.h,      card: ChordMidiBody.cs,    mockup: Nota Chord.html}
-      - {kind: 2, name: Nota Scale,    page: devices/midi-effects/scale,    engine: MidiScale.h,      card: ScaleMidiBody.cs,    mockup: Nota Scale.html}
-      - {kind: 3, name: Nota Length,   page: devices/midi-effects/length,   engine: MidiNoteLength.h, card: LengthMidiBody.cs,   mockup: Nota Length.html}
-      - {kind: 4, name: Nota Velocity, page: devices/midi-effects/velocity, engine: MidiVelocity.h,   card: VelocityMidiBody.cs, mockup: Nota Velocity.html}
-      - {kind: 5, name: Nota Random,   page: devices/midi-effects/random,   engine: MidiRandom.h,     card: RandomMidiBody.cs,   mockup: Nota Random.html}
+      - {kind: 0, name: Nota Arp,      page: devices/midi-effects/arp,      engine: Arpeggiator.h,    card: ArpMidiBody.cs,      mockup: Nota Arp.html, status: done}
+      - {kind: 1, name: Nota Chord,    page: devices/midi-effects/chord,    engine: MidiChord.h,      card: ChordMidiBody.cs,    mockup: Nota Chord.html, status: done}
+      - {kind: 2, name: Nota Scale,    page: devices/midi-effects/scale,    engine: MidiScale.h,      card: ScaleMidiBody.cs,    mockup: Nota Scale.html, status: done}
+      - {kind: 3, name: Nota Length,   page: devices/midi-effects/length,   engine: MidiNoteLength.h, card: LengthMidiBody.cs,   mockup: Nota Length.html, status: done}
+      - {kind: 4, name: Nota Velocity, page: devices/midi-effects/velocity, engine: MidiVelocity.h,   card: VelocityMidiBody.cs, mockup: Nota Velocity.html, status: done}
+      - {kind: 5, name: Nota Random,   page: devices/midi-effects/random,   engine: MidiRandom.h,     card: RandomMidiBody.cs,   mockup: Nota Random.html, status: done}
     # Racks. Card: src/managed/Nota.App/DeviceCards/Rack/
     racks:
-      - {kind: "instrument 3", name: Nota Instrument Rack,   page: devices/racks/instrument-rack,   engine: RackInstrument.h, card: RackCardView.cs}        # no mockup
-      - {kind: "instrument 4", name: Nota Drum Rack,         page: devices/racks/drum-rack,         engine: DrumRack.h,       card: RackCardView.Drum.cs,   mockup: Nota Drum Rack.html, covers: [pads, chains, 25 factory kits, sample drops]}
-      - {kind: "effect 5",     name: Nota Audio Effect Rack, page: devices/racks/audio-effect-rack, engine: RackDevice.h,     card: RackCardView.cs}        # no mockup; Parallel/Series/Select
-      - {page: devices/racks/macros, covers: [macro knobs, mapping], card: MacroPanel.cs}
+      - {kind: "instrument 3", name: Nota Instrument Rack,   page: devices/racks/instrument-rack,   engine: RackInstrument.h, card: RackCardView.cs, status: done}        # no mockup
+      - {kind: "instrument 4", name: Nota Drum Rack,         page: devices/racks/drum-rack,         engine: DrumRack.h,       card: RackCardView.Drum.cs,   mockup: Nota Drum Rack.html, covers: [pads, chains, 25 factory kits, sample drops], status: done}
+      - {kind: "effect 5",     name: Nota Audio Effect Rack, page: devices/racks/audio-effect-rack, engine: RackDevice.h,     card: RackCardView.cs, status: done}        # no mockup; Parallel/Series/Select
+      - {page: devices/racks/macros, covers: [macro knobs, mapping], card: MacroPanel.cs, status: done}
 
   plugins:
     - page: plugins

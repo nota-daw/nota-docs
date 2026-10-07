@@ -1,19 +1,58 @@
 ---
 title: "Nota Lens"
+description: "Анализатор — спектр, осциллограф с синхронизацией и водопад в одной карточке, с удержанием пиков, курсорами, mid / side и громкостью. Звук проходит без изменений."
 sidebar:
-  order: 58
-status: todo
+  order: 22
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Lens.h
   - src/managed/Nota.App/DeviceCards/Bodies/LensDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Lens.html
-  - see coverage.yml
-*/}
+Nota Lens показывает, из чего состоит звук. Он ничего не меняет — ставьте его в любое место цепочки
+или на мастер, чтобы смотреть спектр, форму волны или то, как звук меняется во времени.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/lens/card" alt="Nota Lens, вид Spectrum" />
+
+**Устройство карточки:** шкала **Scale** слева, один большой график посередине с тремя видами,
+панель **Analyze** / **Display** справа и строка состояния.
+
+## Spectrum
+
+БПФ-спектр на логарифмической шкале частот: размер и окно **FFT**, **Avg**, сглаживание, спад,
+**Tilt** (чтобы сбалансированный микс выглядел ровным), нижняя граница и **удержание пиков**.
+**Mid/Side** показывает середину или бока вместо левого / правого.
+
+## Scope
+
+<Shot id="devices/audio-effects/lens/scope" alt="Nota Lens, вид Scope" />
+
+Осциллограф с синхронизацией, как настольный прибор: развёртка привязана к точке запуска и стоит на
+месте, старые проходы угасают (**Afterglow**). **Free** — без синхронизации; **Single** держит один
+проход. **Cursors** A и B измеряют время и уровень между двумя точками. **Export WAV** сохраняет
+захваченное окно.
+
+## Waterfall
+
+<Shot id="devices/audio-effects/lens/waterfall" alt="Nota Lens, вид Waterfall" />
+
+Спектр во времени, прокручивающийся водопадом: видно, как звенят резонансы, затухают хвосты
+реверберации и повторяются барабанные паттерны. **Contrast** и яркость задают детальность.
+
+## Общие регуляторы
+
+**Freeze** останавливает изображение; **Source** выбирает, что анализировать; верх и диапазон шкалы
+задают вертикальный масштаб. Строка состояния показывает громкость и измерения.
+
+## Пресеты
+
+32 заводских пресета: спектр (**Mix Overview**, **Fine Resolution**, **Fast Response**, **Low End
+Focus**, **Tonal Balance**, **Peak Finder**, **Flat-Top Calibration**, **Mid / Side Check**, **Noise
+Floor**, **Tuning Check**, **Loudness Watch**, **Linear Sweep**, **Master Bus**), осциллограф (**Scope ·
+Waveform**, **· Transient**, **· Single Shot**, **· Sub Bass**, **· Clip Watch**, **· Side Signal**, **·
+Afterglow**, **· Cursor Measure**, **· High Frequency**, **· Left Channel**, **· Right Channel**, **·
+Falling Edge**) и водопад (**Waterfall · Arrangement**, **· Detail**, **· Resonance Hunt**, **· Reverb
+Tail**, **· Noise Print**, **· Drum Pattern**, **· Vocal Formants**).

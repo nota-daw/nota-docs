@@ -1,19 +1,70 @@
 ---
 title: "Nota Valve"
+description: "Guitar amp — seven amp voicings from Clean to Heavy plus a Bass amp, a tone stack, five cabinets with mic, distance and position, cuts, a noise gate and dry / wet."
 sidebar:
-  order: 42
-status: todo
+  order: 8
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Amp.h
   - src/managed/Nota.App/DeviceCards/Bodies/ValveDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Valve.html
-  - see coverage.yml
-*/}
+Nota Valve is an amp and cabinet: plug a guitar or bass straight in, or use it for grit on keys,
+vocals and drums.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/valve/card" alt="Nota Valve, Amp tab with the tone stack response" />
+
+**Signal flow:** pre-filter → **Bright** → preamp (oversampled) → tone stack → **Deep** → cabinet →
+low / high cut → make-up → output → gate → mix.
+
+**Layout:** the **Stage** column on the left (**Gain** and **Output** faders), a centre panel with
+three tabs, a right panel (**Cabinet** / **Output**) and a status line.
+
+## Amp
+
+| Control | What it does |
+|---|---|
+| Model | **Clean**, **Boost**, **Blues**, **Rock**, **Lead**, **Heavy**, **Bass** |
+| **Gain** | Preamp drive |
+| **Bass** · **Middle** · **Treble** · **Presence** | The tone stack; **Mid freq** sweeps the middle |
+| **Bright** · **Deep** | Switches for extra top and extra low end |
+| **Even only** | An even-harmonics-only preamp — warm instead of gritty |
+
+The graph shows the tone stack's response against flat.
+
+## Cab
+
+<Shot id="devices/audio-effects/valve/cab" alt="Nota Valve, Cab tab with the cabinet response" />
+
+| Control | What it does |
+|---|---|
+| Cabinet | **Match** (follows the model), **1×12 Open**, **2×12 Combo**, **4×12 Closed**, **1×15 Bass** |
+| Mic | **Dyn** (dynamic), **Cond** (condenser) or **Ribbon** |
+| **Distance** · **Axis** · position | How far the mic is, on or off axis, at the **Cap** or the **Edge** of the speaker |
+| **Low cut** · **High cut** | Trim the cabinet's extremes |
+
+The graph shows this cabinet's response against the mic on axis at the cap.
+
+## Harmonics
+
+<Shot id="devices/audio-effects/valve/harmonics" alt="Nota Valve, Harmonics tab" />
+
+The harmonics the preamp adds right now — see how Gain and the model change the character.
+
+## Output
+
+**Output**, **Mix** (dry / wet), **Auto comp** (keeps the level steady as Gain changes), the **Gate**
+(keyed on the input, to stop hiss between notes), **Oversampling**, and the cabinet on / off.
+
+## Presets
+
+31 factory presets: clean (**Clean Combo**, **Jazz Box**, **Glassy Clean**, **Funk Snap**, **Country
+Twang**), blues (**Blues Breakup**, **Edge of Breakup**, **Texas Blues**, **Smooth Blues Lead**,
+**Even Warmth**), rock (**Rock Crunch**, **Classic Stack**, **Arena Rhythm**, **Indie Jangle**,
+**Garage Fuzz**), lead (**Lead Sustain**, **Singing Lead**, **Shred Lead**), heavy (**Heavy Chug**,
+**Modern Metal**, **Doom Sludge**, **Djent Tight**), bass (**Bass Amp**, **Bass Growl**, **Bass DI
+Clean**, **Bass Drive Blend**) and beyond guitar (**Lo-Fi Radio Amp**, **Keys Grit**, **Vocal Tube
+Color**, **Drum Crunch**, **Parallel Grind**).

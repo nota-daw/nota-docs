@@ -1,19 +1,55 @@
 ---
 title: "Nota Forge"
+description: "Многоступенчатый сатуратор — три ступени со своим алгоритмом, драйвом, асимметрией, тембром, шириной и обратной связью, соединённые последовательно, параллельно, mid / side или по полосам, с LFO и огибающей."
 sidebar:
-  order: 53
-status: todo
+  order: 17
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Forge.h
   - src/managed/Nota.App/DeviceCards/Bodies/ForgeDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Forge.html
-  - see coverage.yml
-*/}
+Nota Forge — три сатуратора в одном: лента, лампа, диод, фузз, фолдинг. Их можно ставить друг за
+другом, смешивать, разводить на середину и бока или давать каждому свою полосу частот.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/forge/card" alt="Nota Forge: маршрутизация и три ступени, передаточная кривая и гармоники, форма ступени" />
+
+## Маршрутизация
+
+| Режим | Как соединены три ступени |
+|---|---|
+| **Serial** | 1 → 2 → 3 |
+| **Parallel** | Все три от одного входа, усреднённо |
+| **M/S** | Ступень 1 на середину, ступень 2 на бока, ступень 3 на собранное стерео |
+| **Multi** | Ступень 1 на низ (ниже 180 Гц), ступень 2 на середину, ступень 3 на верх (выше 2.4 кГц) — выключенная ступень пропускает свою полосу чистой |
+
+## Ступень
+
+Слева у каждой ступени — точка включения, тип, роль в маршрутизации, выходной уровень (тяните
+дБ), **Drive** и бирюзовый **Feedback**. Щёлкните ступень, чтобы править её **форму** справа: **Bias**
+(асимметрия — чётные гармоники), **Tone** (наклон ±12 дБ после неё) и **Width** (её стереообраз,
+0–200 %).
+
+## Центр
+
+**Amount** (драйв в цепочку), **Wet** и **Out** над передаточной кривой — всего устройства, каждой
+ступени бледно, промодулированной LFO пунктиром — и гармоники синуса −6 дБ с его THD. Тяните точку
+на кривой, чтобы менять Amount.
+
+## Модуляция
+
+**LFO → Drive** (свободно или в темп, с **Rate**) заставляет драйв дышать; **Env → Tone** открывает
+тембр, когда сигнал громче. **Oversample** уменьшает алиасинг на жёстких настройках.
+
+## Пресеты
+
+32 заводских пресета: тепло (**Cabinet Heat**, **Tape Glue**, **Tube Warmth**, **Console Bus**, **Vocal
+Silk**, **Bass Weight**, **Parallel Warmth**, **Warm Master**), драйв (**Diode Crunch**, **Amp Stack**,
+**Guitar Edge**, **Snare Crack**, **Fuzz Wall**, **Digital Hard Clip**, **Broken Speaker**, **Feedback
+Scream**), фолдинг (**Fold Bells**, **Wavefolder Synth**), шина и параллель (**Drum Glue**, **NY
+Drums**, **Bass Parallel Grit**), mid / side (**Wide Air**, **Mono Grit Core**, **Side Sizzle**),
+многополосные (**Multiband Drive**, **Low-End Only**, **Presence Lift**) и движение (**Breathing
+Drive**, **Wobble Crunch**, **Envelope Bite**, **Slow Tide**).

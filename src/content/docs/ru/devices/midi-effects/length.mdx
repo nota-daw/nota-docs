@@ -1,19 +1,49 @@
 ---
 title: "Nota Length"
+description: "Задаёт длину каждой ноты — доля такта, миллисекунды или процент от того, сколько её держали, — с поправками по velocity, высоте и случайности, легато и ограничением тактом."
 sidebar:
-  order: 65
-status: todo
+  order: 4
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/MidiNoteLength.h
   - src/managed/Nota.App/DeviceCards/Midi/LengthMidiBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Length.html
-  - see coverage.yml
-*/}
+Nota Length решает, сколько длятся ноты, как бы их ни сыграли: короткое стаккато, ровные
+восьмые, длинные дроны из коротких касаний — или ноты, которые начинаются, когда клавишу
+**отпускают**.
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/midi-effects/length/card" alt="Nota Length: режим длины, окно Gate и модификаторы" />
+
+## Length
+
+| Режим | Нота длится |
+|---|---|
+| **Sync** | Долю такта (восемь вариантов) |
+| **ms** | Фиксированное время |
+| **Gate %** | Долю того, сколько держали клавишу, — может и укоротить, и растянуть |
+
+**Start from** — **Note-on** (как обычно) или **Note-off**: нота звучит, когда клавишу отпускают.
+
+## Modifiers
+
+| Регулятор | Что делает |
+|---|---|
+| **Vel → Len** | Двуполярный: громкие ноты длиннее (+) или короче (−) |
+| **Key → Len** | Двуполярный: низкие ноты длиннее (+) или короче (−) |
+| **Random** | Разброс ± для каждой ноты |
+| **Legato** | Растягивает каждую ноту до начала следующей |
+| **Clip length limit** | Нота не переходит за тактовую черту, в которой началась |
+
+Окно **Gate** показывает такт демонстрационных нот — вход обведён, выход закрашен, разброс Random
+полосой.
+
+## Пресеты
+
+32 заводских пресета: доли (**Staccato**, **Eighths**, **Tenuto 1/4**, **Half Notes**, **Whole Bar**,
+**Dotted Eighth**, **Quarter Triplet**, **32nd Blips**), фиксированное время (**Blip 40ms**, **Fixed
+120ms**, **Fixed 250ms**, **Fixed 500ms**, **One Second**), гейты (**Half Gate**, **Tight Quarter Gate**,
+**Almost Legato**, **Stretch 150%**, …) и другие.

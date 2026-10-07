@@ -1,19 +1,63 @@
 ---
 title: "Nota Ceiling"
+description: "Look-ahead brick-wall limiter with true peak, three characters, a sidechain high-pass, Delta listening and a full EBU R128 loudness meter against a target."
 sidebar:
-  order: 50
-status: todo
+  order: 15
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/Ceiling.h
   - src/managed/Nota.App/DeviceCards/Bodies/CeilingDeviceBody.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Ceiling.html
-  - see coverage.yml
-*/}
+Nota Ceiling makes a track or a master loud without ever going over: nothing passes the
+**Ceiling**. It also measures loudness the way streaming services do, so you can tell whether a
+master is ready to deliver without another plug-in.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/audio-effects/ceiling/card" alt="Nota Ceiling, Level tab with input, the part over the ceiling and output" />
+
+**Signal flow:** **Gain** drives the signal into the ceiling; a look-ahead lets the gain duck
+*before* each peak arrives; release recovers; a final safety clip guarantees no sample passes.
+
+## Limiting
+
+| Control | What it does |
+|---|---|
+| **Gain** | Drives into the limiter — louder means more limiting |
+| **Ceiling** | The maximum output level — drag it on the Level graph |
+| **Release** · auto release | How fast it recovers; auto slows as the reduction deepens |
+| **Character** | **Clean**, **Punch** or **Glue** (with a soft clip) |
+| **Look** | Look-ahead time |
+| **Link** | From a glued centre to independent channels |
+| **True Peak** | Measures inter-sample peaks too, so a DAC or a codec never clips |
+| **SC HP** | Keeps the lows out of the detector, so the bass stops pumping the mix |
+| **Delta** | Hear what the limiter takes away |
+
+The detector can also listen to another track (**Internal** or the device's sidechain source).
+
+## The graphs
+
+| Tab | What it shows |
+|---|---|
+| **Level** | Input, the part over the ceiling and the output over 4 seconds, with the reduction under it |
+| **Reduction** | The reduction and the transients that reached the clip |
+| **Loudness** | Momentary, short-term and integrated loudness over 60 seconds around the **Target** — drag it |
+
+<Shot id="devices/audio-effects/ceiling/loudness" alt="Nota Ceiling, Loudness tab with LUFS against the target" />
+
+## Meters
+
+**LUFS-M**, **LUFS-S**, **LUFS-I** (integrated), loudness range (LRA), true peak and PLR, against the
+**Target** you set.
+
+## Presets
+
+32 factory presets: mastering targets (**Master Safe**, **Transparent Safety**, **Loud Master**,
+**Streaming −1**, **Streaming −14**, **Apple Music −16**, **Podcast −16**, **Broadcast R128 −23**,
+**Club Master −8**, **CD Brickwall**, **Gentle Master**, **Vinyl Pre-Master**, **Bass-Heavy Master**,
+**Headroom −6**), bus and drums (**Drum Punch**, **Drum Bus**, **Glue Bus**, **Mix Bus Glue**, **Kick
+Clipper**, **Snare Crack**, **808 Safety**), instruments (**Vocal Peak Catcher**, **Guitar Wall**,
+**Synth Lead Tamer**) and colour (**Soft Clip Warmth**, **Pumping Smash**, **Brickwall Crush**, **Lo-Fi
+Squash**, **Hear the Squash**, **Live Zero Latency**, **Wide Mix Unlinked**).

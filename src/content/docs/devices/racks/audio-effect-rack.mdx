@@ -1,19 +1,44 @@
 ---
 title: "Nota Audio Effect Rack"
+description: "Effect chains in one device — run them in parallel, in series, or pick one by input level — with dry / wet, gain, per-chain level and mute / solo, and eight macros."
 sidebar:
-  order: 70
-status: todo
+  order: 3
+updated: "0.50.1"
+status: done
 sources:
   - src/native/nota.engine/src/RackDevice.h
+  - src/native/nota.engine/src/RackCore.h
   - src/managed/Nota.App/DeviceCards/Rack/RackCardView.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
-{/* Scope (from coverage.yml)
-  - see coverage.yml
-*/}
+Nota Audio Effect Rack holds several **chains** of effects inside one device. Process a sound three
+ways at once and blend them, build a reusable effect "patch" with a few macros on top, or switch
+effects by how loud the input is.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+<Shot id="devices/racks/audio-effect-rack/card" alt="Nota Audio Effect Rack: macros, the chain list and the selected chain" />
+
+## Modes
+
+| Mode | What happens |
+|---|---|
+| **Parallel** (**Prl**) | Every chain processes the input; their outputs are summed |
+| **Series** (**Ser**) | The chains run one after another |
+| **Select** (**Sel**) | One chain plays, chosen by the input level |
+
+## Chains
+
+**+ Add chain**, then **+ Device** in it — the menu lists the built-in effects and a **Plug-ins**
+submenu. Each chain has a name, its own **gain** and meter, **mute** and **solo**.
+
+## Rack output
+
+**Dry / Wet**, **Gain** and **PDC** (latency compensation between chains), with **MACRO MAP**,
+**Fold** (hide the chains) and **Save** (store the rack as a preset). Eight named
+[macros](../macros/) control any parameters in the chains.
+
+## Tips
+
+- **Parallel compression in a box:** a dry chain plus a chain with a heavy Compressor, Parallel mode.
+- **New York reverb:** a chain with only a Reverb set to Wet only, blended under the dry chain.
