@@ -97,3 +97,12 @@ h1#_top { font-weight: 600; letter-spacing: -0.02em; }
 /* Radii from DESIGN.md: control 4, panel 6, body 8. */
 .sl-markdown-content :is(pre, .expressive-code .frame) { border-radius: 6px; }
 .sl-markdown-content img { border-radius: 8px; }
+
+/* Home hero: the app icon at a modest size, not stretched across half the page. */
+.hero > img {
+  width: min(13rem, 40vw);
+  height: auto;
+  justify-self: center;
+  filter: drop-shadow(0 18px 40px rgb(0 0 0 / 0.35));
+}
+:root[data-theme='light'] .hero > img { filter: drop-shadow(0 14px 30px rgb(60 45 20 / 0.18)); }
