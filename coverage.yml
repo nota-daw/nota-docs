@@ -266,10 +266,10 @@ sections:
     - page: reference/shortcuts
       generated: scripts/shortcuts.mjs   # from PreferencesWindow.ShortcutGroups + MainWindow.axaml gestures
       sources: [src/managed/Nota.App/PreferencesWindow.cs, src/managed/Nota.App/MainWindow.axaml]
-      status: todo
-    - {page: reference/glossary, status: todo}
-    - {page: reference/troubleshooting, covers: [no sound / Bluetooth, macOS first-open, plug-in scan failures, recovery], status: todo}
-    - {page: reference/changelog, covers: [link to GitHub Releases + CHANGELOG.md], status: todo}
+      status: done
+    - {page: reference/glossary, status: done}
+    - {page: reference/troubleshooting, covers: [no sound / Bluetooth, macOS first-open, plug-in scan failures, recovery], status: done}
+    - {page: reference/changelog, covers: [link to GitHub Releases + CHANGELOG.md], status: done}
 
 # Findings from the inventory (resolve while writing the stages):
 findings:

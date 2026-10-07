@@ -10,7 +10,8 @@
     "check": "node scripts/check.mjs",
     "astro": "astro",
     "status": "node scripts/check.mjs --status",
-    "shots": "node shots/shoot.mjs"
+    "shots": "node shots/shoot.mjs",
+    "shortcuts": "node scripts/shortcuts.mjs"
   },
   "dependencies": {
     "@astrojs/starlight": "^0.42.5",

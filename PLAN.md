@@ -89,7 +89,7 @@ nota-docs/
 | 5b ✅ | **Audio effects** | ~24 страницы. |
 | 5c ✅ | **MIDI effects + Racks** | 9 страниц + обзор цепочки устройств. |
 | 6 ✅ | **Остальное** | Plug-ins, Browser & library, Remote, AI, Export, Preferences. |
-| 7 | **Reference** | Генератор shortcuts, глоссарий, troubleshooting, поиск (Pagefind) проверен на EN/RU. |
+| 7 ✅ | **Reference** | Генератор shortcuts, глоссарий, troubleshooting, поиск (Pagefind) проверен на EN/RU. |
 | 8 | **Интеграция** | Help ▸ Documentation в приложении, ссылка «?» на карточке устройства → страница устройства, ссылка с nota-site, README. |
 | 9 | **Поддержка** | Скилл `nota-docs` в `../nota/.claude/skills` (уже добавлен), шаг в `/release`, CI-проверка в nota-docs. |
 
@@ -151,3 +151,7 @@ nota-docs/
   Button-предка. Сверка: вкладка Presets — только **ваши** пресеты (заводские — под устройствами),
   поправлены «Главное окно» и «Devices»; Get Plug-ins в UI теперь Settings ▸ Downloads ▸ Plug-ins;
   экспорт 44.1/48/96 кГц; VST3-пути — стандартные JUCE (`getDefaultLocationsToSearch`).
+- **2026-10-07 · этап 7.** Справочник × EN/RU: `npm run shortcuts` (`scripts/shortcuts.mjs`)
+  генерирует «Горячие клавиши» из `PreferencesWindow.ShortcutGroups` (10 групп, 92 строки; в RU
+  переведены заголовки, описания — как в приложении, по-английски), глоссарий, решение проблем,
+  история изменений. Все 100 страниц — `done`.

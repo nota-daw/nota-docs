@@ -1,16 +1,24 @@
 ---
 title: "История изменений"
+description: "Где читать, что изменилось в каждой версии Nota."
 sidebar:
-  order: 99
-status: todo
+  order: 4
+updated: "0.50.1"
+status: done
+sources:
+  - CHANGELOG.md
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import { LinkCard } from '@astrojs/starlight/components';
 
-{/* Scope (from coverage.yml)
-  - link to GitHub Releases + CHANGELOG.md
-*/}
+Новая версия Nota выходит примерно раз в неделю. У каждой список изменений есть в трёх местах:
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+- **В приложении** — после обновления окно **What's New** показывает всё, что изменилось с вашей
+  версии; открыть его можно в любой момент через **Help ▸ What's New**.
+- **На GitHub** — каждый релиз со своими заметками и загрузками.
+- **В исходниках** — полная история в `CHANGELOG.md`.
+
+<LinkCard title="Releases" description="Все версии с заметками и загрузками" href="https://github.com/nota-daw/nota/releases" />
+<LinkCard title="CHANGELOG.md" description="Полная история, новые сверху" href="https://github.com/nota-daw/nota/blob/main/CHANGELOG.md" />
+
+Это руководство описывает Nota **0.50.1**. На каждой странице указано, с какой версией она сверена.

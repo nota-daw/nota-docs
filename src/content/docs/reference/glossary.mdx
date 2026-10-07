@@ -1,16 +1,101 @@
 ---
 title: "Glossary"
+description: "The words this manual uses — from arm and automation to warp and zone."
 sidebar:
-  order: 97
-status: todo
+  order: 2
+updated: "0.50.1"
+status: done
+sources: []
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+**Arm** — make a track ready to record (the **●** in its header).
 
-{/* Scope (from coverage.yml)
-  - see coverage.yml
-*/}
+**Arrangement** — the view that lays the song out on a timeline. See [Arrangement](../../views/arrangement/).
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+**Automation** — a value changing over time, drawn or recorded in a lane. See [Automation](../../editing/automation/).
+
+**Audio track** — a track that holds audio clips and has no instrument.
+
+**AU / VST3** — the plug-in formats Nota hosts: VST3 everywhere, AU on macOS. See [Plug-ins](../../plugins/).
+
+**Chain** — the devices on a track, or one strand inside a rack, processed left to right.
+
+**Choke group** — pads that cut each other off, like an open and a closed hi-hat.
+
+**Clip** — a block of notes (MIDI clip) or audio (audio clip) on a track or in a Session slot.
+
+**Consolidate** — join the material in a range into one clip per track.
+
+**Count-in** — bars of clicks before playback or recording starts.
+
+**CV** — a control signal in the Modular view that moves a parameter. See [Modular](../../views/modular/).
+
+**Detail panel** — the panel under the view that shows devices, a step pattern or a clip.
+
+**Device** — an instrument, audio effect or MIDI effect. See [Devices](../../devices/).
+
+**Follow action** — what a Session clip or scene does after it has played for a while.
+
+**Freeze / Flatten** — render a track to audio to save CPU; flatten makes that permanent.
+
+**Group** — a track that holds other tracks and acts as their submix.
+
+**Kit** — a set of drum sounds loaded on a Drum Rack or Nota Rhythm.
+
+**Launch quantize** — the grid Session clips and scenes start on (Quant).
+
+**Legato** — playing a new note before releasing the last; synths can slide instead of retriggering.
+
+**Loop / one-shot** — a sample that repeats in time, versus a single hit.
+
+**LUFS** — perceived loudness, as streaming services measure it.
+
+**Macro** — a knob on a rack or kit that drives many parameters at once. See [Macros](../../devices/racks/macros/).
+
+**Master** — the sum of all tracks, going to your speakers.
+
+**MCP** — the protocol an AI assistant uses to work in Nota. See [AI control over MCP](../../ai/mcp/).
+
+**MIDI Learn** — mapping a hardware or phone control to a control in Nota. See [MIDI Learn](../../control/midi-learn/).
+
+**Modulator** — an LFO, envelope or similar source that moves parameters over time.
+
+**Monitor** — hear a track's input live through its effects.
+
+**PDC** — plug-in delay compensation: Nota delays the other tracks so everything stays in time.
+
+**Preset** — saved settings for a device. Factory presets ship with Nota; you can save your own.
+
+**Project key** — the key set in the transport bar; loops can be transposed to it.
+
+**Quantize** — snap notes to the grid.
+
+**Rack** — a device that holds several chains: Instrument Rack, Drum Rack, Audio Effect Rack.
+
+**Return track** — a shared effect bus that tracks feed through their **sends**.
+
+**Scene** — a row in the Session view, launched as one.
+
+**Section** — a named stretch of the song in the Arrangement's Sections lane.
+
+**Session** — the clip-launching view. See [Session](../../views/session/).
+
+**Sidechain** — feeding one track's signal to a device on another track to control it.
+
+**Slot** — one cell of the Session grid.
+
+**Stem** — one part of a mix on its own (drums, bass, vocals…), from export or Separate Stems.
+
+**Time range** — a stretch of time across tracks, selected with ⇧-drag.
+
+**True peak** — the highest level between samples, which a converter can actually reach.
+
+**Unison** — several detuned copies of each voice, for width.
+
+**Velocity** — how hard a note is played.
+
+**Version** — a saved state of the project in its history. See [Version history](../../basics/version-history/).
+
+**Warp** — stretching audio to the project tempo without changing its pitch.
+
+**Zone** — the key or velocity range a rack chain answers to.

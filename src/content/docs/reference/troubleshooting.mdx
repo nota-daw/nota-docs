@@ -1,19 +1,81 @@
 ---
 title: "Troubleshooting"
+description: "Fixes for the common problems — Nota won't open, no sound, crackles, a controller or plug-in not showing up, a phone that can't connect."
 sidebar:
-  order: 98
-status: todo
+  order: 3
+updated: "0.50.1"
+status: done
+sources:
+  - README.md
 ---
 
 import { Aside } from '@astrojs/starlight/components';
 
-{/* Scope (from coverage.yml)
-  - no sound / Bluetooth
-  - macOS first-open
-  - plug-in scan failures
-  - recovery
-*/}
+## Nota won't open
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
+- **macOS says "Nota" Not Opened or "is damaged"** — Nota isn't signed with a paid certificate yet.
+  Follow [Install Nota ▸ macOS](../../start-here/install/): **Privacy & Security ▸ Open Anyway**, or
+  `xattr -dr com.apple.quarantine /Applications/Nota.app` in Terminal.
+- **Windows SmartScreen** — **More info ▸ Run anyway**.
+- **Linux** — make the AppImage executable (`chmod +x`).
+
+## No sound
+
+1. **Settings ▸ Audio ▸ Play test tone.** No tone? Check **Output** — the right device, and your
+   system volume.
+2. Tone but no music? Check the track isn't muted, another track isn't soloed, and the master volume
+   (**MST**) is up.
+3. An instrument track plays only when there are notes — or when you play it.
+
+**Bluetooth headphones (AirPods and others) on macOS** — since 0.50.1 Nota leaves the headphones'
+sample rate alone, so they no longer go silent. On an older version, update.
+
+## Crackles, dropouts, high CPU
+
+- Raise the **Buffer size** in [Settings ▸ Audio](../../preferences/audio/).
+- Run **CPU check** while the project plays to see the load and any dropouts.
+- [Freeze](../../basics/tracks/#freezing-a-track) heavy tracks.
+- Turn off oversampling in devices that have it, and use fewer unison voices.
+
+## A MIDI controller does nothing
+
+- **Settings ▸ MIDI** — is it listed, and switched on? Plugged in while Settings was open? Reopen it.
+- Watch the dot on the **MIDI** button — it flashes when anything arrives.
+- Notes go to the selected instrument track; to record, arm it.
+
+## A plug-in is missing
+
+- **Settings ▸ Plug-ins ▸ Rescan plugins.**
+- Not in a standard folder? **Add folder…** there (VST3). AU plug-ins come from the system registry.
+- A project opened without some plug-ins — if the Nota registry has them, Nota offers to install them
+  and reopen the project.
+
+## The phone can't connect
+
+- Same network? Guest Wi-Fi often keeps devices apart — use the phone's hotspot or a USB cable.
+- **Settings ▸ Remote** — is it on? Allow Nota on the local network (macOS) or private networks
+  (Windows), and in your firewall on the port shown.
+- A forgotten phone has to scan a new code.
+
+## The gamepad does nothing
+
+Gamepad input is macOS-only for now. Turn it on in **Settings ▸ Gamepads**.
+
+## The update didn't install
+
+A copy run straight from the disk image can't replace itself — the banner links to the release page
+instead. Install Nota into Applications first.
+
+## Nota closed unexpectedly
+
+On the next launch, choose **Recover** to get back the work since your last save. See
+[First launch](../../start-here/first-launch/).
+
+## AI features can't run
+
+**Settings ▸ Downloads ▸ AI Models** says so when ONNX Runtime has no build for your computer.
+
+<Aside>
+Still stuck? Ask in [Discord](https://discord.gg/apf4Q2JKWk) or
+[open an issue](https://github.com/nota-daw/nota/issues/new/choose) — every report gets read.
 </Aside>
