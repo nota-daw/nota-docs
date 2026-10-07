@@ -16,45 +16,45 @@ sections:
     - page: start-here/install
       covers: [macOS dmg (arm64/x64, ad-hoc signed, first-open), Windows installer (x64/arm64), Linux AppImage, system requirements]
       sources: [README.md, BUILD.md, .github/workflows/release.yml]
-      status: todo
+      status: done
     - page: start-here/first-launch
       covers: [splash, Start window (recent projects, keyboard nav), What's New window, self-update banner, About]
       sources: [src/managed/Nota.App/WelcomeWindow.cs, src/managed/Nota.App/SplashWindow.cs, src/managed/Nota.App/WhatsNewWindow.cs, src/managed/Nota.App/AboutWindow.cs, src/managed/Nota.App/MainWindow.Welcome.cs]
       mockup: Nota Start.html
-      status: todo
+      status: done
     - page: start-here/main-window
       covers: [transport bar, view switcher (Arrangement · Session · Modular), browser, detail panel, overview, sections, status bar / downloads, menus, ⌘ vs Ctrl]
       sources: [src/managed/Nota.App/MainWindow.axaml, src/managed/Nota.App/MainWindow.Menu.cs, src/managed/Nota.App/MainWindow.TransportFit.cs]
       mockup: Nota Main Window.html
-      status: todo
+      status: done
     - page: start-here/first-track
       covers: [tutorial — instrument track, draw notes, add effect, loop, export]
       sources: []
-      status: todo
+      status: done
 
   basics:
     - page: basics/projects
       covers: [New/Open/Save/Save As (.nota), autosave & recovery, quit-without-saving dialog, Import audio, MIDI import]
       sources: [src/managed/Nota.App/MainWindow.Recovery.cs, src/managed/Nota.App/SaveChangesWindow.cs, src/managed/Nota.App/MainWindow.AudioImport.cs, src/managed/Nota.App/MainWindow.MidiImport.cs, src/managed/Nota.App/MainWindow.MissingPlugins.cs]
       mockup: Nota Unsaved Dialog.html
-      status: todo
+      status: done
     - page: basics/version-history
       covers: [History tab tree, versions described by changes, switch/open as copy/name/note/star/delete, branching, Save Version with Note ⌥⌘S, turn off in Library]
       sources: [src/managed/Nota.App/HistoryView.cs, src/managed/Nota.App/MainWindow.History.cs]
-      status: todo
+      status: done
     - page: basics/transport
       covers: [play/stop/record, stop returns to launch point, position bars↔time, tempo (whole-number drag), time signature, project key, loop ⌘L, metronome ⌘M, count-in, follow, launch quantize]
       sources: [src/managed/Nota.App/MainWindow.axaml, src/managed/Nota.App/MainWindow.TransportFit.cs, src/native/nota.engine/src/Transport.h]
       mockup: Nota Transport.html
-      status: todo
+      status: done
     - page: basics/tracks
       covers: [audio / instrument / return tracks, groups, names & colours, volume/pan/mute/solo/arm, track context menu, freeze & flatten]
       sources: [src/managed/Nota.App/ArrangementView.Tracks.cs, src/managed/Nota.App/ArrangementView.Groups.cs, src/managed/Nota.App/TrackNames.cs, src/managed/Nota.App/MainWindow.Freeze.cs, src/managed/Nota.App/MainWindow.LiveFreeze.cs]
-      status: todo
+      status: done
     - page: basics/undo
       covers: [undo/redo for every edit, slider value typing]
       sources: []
-      status: todo
+      status: done
 
   views:
     - page: views/arrangement

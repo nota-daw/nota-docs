@@ -1,27 +1,68 @@
 ---
-title: "Первый запуск"
+title: Первый запуск
+description: Стартовое окно, недавние проекты, обновления, What's New и восстановление несохранённой работы.
 sidebar:
   order: 2
-status: todo
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/WelcomeWindow.cs
-  - src/managed/Nota.App/SplashWindow.cs
+  - src/managed/Nota.App/MainWindow.Welcome.cs
   - src/managed/Nota.App/WhatsNewWindow.cs
   - src/managed/Nota.App/AboutWindow.cs
-  - src/managed/Nota.App/MainWindow.Welcome.cs
+  - src/managed/Nota.App/MainWindow.Recovery.cs
 ---
 
 import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Start.html
-  - splash
-  - Start window (recent projects
-  - keyboard nav)
-  - What's New window
-  - self-update banner
-  - About
-*/}
+## Стартовое окно
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
+При запуске Nota первым открывается стартовое окно — самый быстрый способ вернуться к
+тому, над чем вы работали.
+
+<Shot id="start-here/start-window" alt="Стартовое окно Nota: New project, Open project и список недавних проектов" />
+
+- **New project** — пустой проект в главном окне.
+- **Open project…** — открыть проект `.nota` из любого места на диске.
+- **Recent projects** — проекты, которые вы недавно открывали или сохраняли, новые сверху, с
+  датой. Щелчок выделяет проект, двойной щелчок (или <Kbd>Return</Kbd> на выделенном)
+  открывает. По списку можно ходить стрелками.
+- **Show on startup** — выключите, если хотите сразу попадать в пустой проект. В главном окне
+  то же самое делают **File ▸ New** (<Kbd>⌘ N</Kbd>) и **File ▸ Open…** (<Kbd>⌘ O</Kbd>).
+- **Settings** и **What's New** внизу открывают соответствующие окна.
+
+## Когда вышла новая версия
+
+Если доступна новая Nota, в стартовом окне появляется баннер: **Update** скачивает её с
+индикатором прогресса и сверяет с контрольной суммой релиза, **Release notes** открывает
+страницу релиза, **Dismiss** скрывает баннер. Когда обновление скачано, нажмите
+**Restart now** — или **Later**, и оно установится при следующем выходе.
+
+## What's New
+
+После обновления окно **What's New** один раз показывает всё, что изменилось с вашей
+прошлой версии. Его можно открыть в любой момент через **Help ▸ What's New** — или прочитать
+[историю изменений](../../reference/changelog/).
+
+<Shot id="start-here/whats-new" alt="Окно What's New с главными изменениями Nota 0.50.1" width={460} />
+
+**Help ▸ About Nota** показывает версии приложения и движка и лицензию.
+
+## Если Nota закрылась некорректно
+
+Пока вы работаете, Nota в фоне держит копию открытого проекта для восстановления (примерно
+раз в 30 секунд и только если что-то изменилось). Если Nota или компьютер неожиданно
+выключились, при следующем запуске появится вопрос:
+
+> Nota didn't shut down cleanly. Recover unsaved work from …?
+
+**Recover** возвращает проект в том виде, в каком он был; **Discard** удаляет копию.
+Это страховка, а не сохранение — сохраняйте проект как обычно (<Kbd>⌘ S</Kbd>), см.
+[Проекты и сохранение](../../basics/projects/).
+
+<Aside title="⌘ или Ctrl?">
+В этом руководстве сочетания клавиш записаны как в macOS. В Windows и Linux читайте
+<Kbd>⌘</Kbd> как <Kbd>Ctrl</Kbd>, а <Kbd>⌥</Kbd> — как <Kbd>Alt</Kbd>.
 </Aside>

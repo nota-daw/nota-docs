@@ -1,25 +1,122 @@
 ---
-title: "Install Nota"
+title: Install Nota
+description: Download Nota for macOS, Windows or Linux and open it for the first time.
 sidebar:
   order: 1
-status: todo
+since: "0.1.0"
+updated: "0.50.1"
+status: done
 sources:
   - README.md
-  - BUILD.md
   - .github/workflows/release.yml
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import { Aside, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
 
-{/* Scope (from coverage.yml)
-  - macOS dmg (arm64/x64
-  - ad-hoc signed
-  - first-open)
-  - Windows installer (x64/arm64)
-  - Linux AppImage
-  - system requirements
-*/}
+Nota is free and open source. Every release is built from the code on GitHub and published
+on the [releases page](https://github.com/nota-daw/nota/releases/latest).
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
+## Pick your download
+
+| System | File |
+|---|---|
+| **macOS 13 or later**, Apple Silicon (M1 and later) | `Nota-<version>-arm64.dmg` |
+| **macOS 13 or later**, Intel | `Nota-<version>-x86_64.dmg` |
+| **Windows 10 / 11**, most PCs | `Nota-Setup-<version>-x64.exe` |
+| **Windows 11** on ARM | `Nota-Setup-<version>-arm64.exe` |
+| **Linux**, most PCs | `Nota-<version>-x86_64.AppImage` |
+| **Linux** on ARM | `Nota-<version>-aarch64.AppImage` |
+
+Not sure which Mac you have? Open the Apple menu ▸ **About This Mac**: "Apple M…" means Apple
+Silicon, "Intel" means Intel.
+
+## Install and open
+
+Nota isn't signed with a paid Apple or Microsoft certificate yet, so the first time you open
+it your system asks you to confirm. This happens once.
+
+<Tabs syncKey="os">
+<TabItem label="macOS">
+
+<Steps>
+
+1. Open the downloaded `.dmg` and drag **Nota** into **Applications**.
+
+2. Open Nota from Applications. macOS stops it with *"Nota" Not Opened* (older versions:
+   *"Nota" can't be opened because Apple cannot check it*). Click **Done** — not *Move to Trash*.
+
+3. Open **System Settings ▸ Privacy & Security** and scroll down to **Security**. Next to
+   *"Nota" was blocked to protect your Mac*, click **Open Anyway**, confirm with your password
+   or Touch ID, then click **Open Anyway** once more.
+
+</Steps>
+
+From now on Nota opens like any other app.
+
+<Aside type="caution" title="Still won't open, or macOS says Nota “is damaged”?">
+That is the same check with scarier wording — the download isn't broken. Open **Terminal**
+(Applications ▸ Utilities) and run:
+
+```bash
+xattr -dr com.apple.quarantine /Applications/Nota.app
+```
+
+This removes the "downloaded from the internet" mark from Nota only. On macOS 13–14 you can
+also right-click Nota in Applications ▸ **Open** ▸ **Open**.
 </Aside>
+
+</TabItem>
+<TabItem label="Windows">
+
+<Steps>
+
+1. Run `Nota-Setup-<version>-x64.exe` (or `-arm64.exe`).
+
+2. If SmartScreen shows *Windows protected your PC*, click **More info ▸ Run anyway**.
+
+3. Follow the installer. Nota appears in the Start menu.
+
+</Steps>
+
+On Windows, Nota can use **WASAPI exclusive mode** for the lowest latency — see
+[Settings ▸ Audio](../../preferences/audio/).
+
+</TabItem>
+<TabItem label="Linux">
+
+<Steps>
+
+1. Make the AppImage executable — in a terminal:
+
+   ```bash
+   chmod +x Nota-*.AppImage
+   ```
+
+   or tick **Allow executing file as program** in the file's Properties ▸ Permissions.
+
+2. Double-click it, or run `./Nota-<version>-x86_64.AppImage`.
+
+</Steps>
+
+Nota plays through PulseAudio / ALSA and reads MIDI through ALSA.
+
+</TabItem>
+</Tabs>
+
+## Updates
+
+Nota checks for new versions itself. When one is out, the [start window](../first-launch/)
+shows a banner — click **Update**, and Nota downloads it, checks it against the release's
+checksum, and installs it when you click **Restart now** (or the next time you quit). After
+an update, **What's New** shows what changed.
+
+<Aside>
+A copy that can't replace itself — for example one run straight from the disk image — links
+to the release page instead of updating in place.
+</Aside>
+
+## What's next
+
+- [First launch](../first-launch/) — the start window, What's New and recovering work.
+- [The main window](../main-window/) — a tour of everything on screen.
+- [Your first track](../first-track/) — from an empty project to an exported WAV.

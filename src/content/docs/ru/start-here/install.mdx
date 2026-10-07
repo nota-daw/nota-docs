@@ -1,25 +1,125 @@
 ---
-title: "Установка Nota"
+title: Установка Nota
+description: Как скачать Nota для macOS, Windows или Linux и открыть её в первый раз.
 sidebar:
   order: 1
-status: todo
+updated: "0.50.1"
+status: done
 sources:
   - README.md
-  - BUILD.md
   - .github/workflows/release.yml
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import { Aside, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
 
-{/* Scope (from coverage.yml)
-  - macOS dmg (arm64/x64
-  - ad-hoc signed
-  - first-open)
-  - Windows installer (x64/arm64)
-  - Linux AppImage
-  - system requirements
-*/}
+Nota бесплатна и с открытым кодом. Каждый релиз собирается из кода на GitHub и выкладывается
+на [странице релизов](https://github.com/nota-daw/nota/releases/latest).
 
-<Aside type="note" title="Страница в работе">
-Эта страница ещё пишется. Пока загляните в [историю изменений](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) или спросите в [Discord](https://discord.gg/apf4Q2JKWk).
+## Какой файл скачать
+
+| Система | Файл |
+|---|---|
+| **macOS 13 и новее**, Apple Silicon (M1 и новее) | `Nota-<version>-arm64.dmg` |
+| **macOS 13 и новее**, Intel | `Nota-<version>-x86_64.dmg` |
+| **Windows 10 / 11**, большинство ПК | `Nota-Setup-<version>-x64.exe` |
+| **Windows 11** на ARM | `Nota-Setup-<version>-arm64.exe` |
+| **Linux**, большинство ПК | `Nota-<version>-x86_64.AppImage` |
+| **Linux** на ARM | `Nota-<version>-aarch64.AppImage` |
+
+Не знаете, какой у вас Mac? Меню Apple ▸ **Об этом Mac**: «Apple M…» — это Apple Silicon,
+«Intel» — Intel.
+
+## Установка и первый запуск
+
+У Nota пока нет платного сертификата Apple или Microsoft, поэтому при первом запуске система
+попросит подтверждение. Это нужно сделать один раз.
+
+<Tabs syncKey="os">
+<TabItem label="macOS">
+
+<Steps>
+
+1. Откройте скачанный `.dmg` и перетащите **Nota** в **Программы**.
+
+2. Запустите Nota из Программ. macOS остановит её сообщением *«Nota» не открыта* (в старых
+   версиях — *Не удаётся открыть «Nota», так как Apple не может проверить её*). Нажмите
+   **Готово** — не *Переместить в Корзину*.
+
+3. Откройте **Системные настройки ▸ Конфиденциальность и безопасность** и прокрутите до
+   раздела **Безопасность**. Рядом с надписью о том, что «Nota» заблокирована, нажмите
+   **Всё равно открыть**, подтвердите паролем или Touch ID и нажмите **Всё равно открыть**
+   ещё раз.
+
+</Steps>
+
+Дальше Nota открывается как любое другое приложение.
+
+<Aside type="caution" title="Всё равно не открывается или macOS пишет, что Nota «повреждена»?">
+Это та же проверка, просто сформулированная страшнее, — файл не повреждён. Откройте
+**Терминал** (Программы ▸ Утилиты) и выполните:
+
+```bash
+xattr -dr com.apple.quarantine /Applications/Nota.app
+```
+
+Команда снимает отметку «скачано из интернета» только с Nota. В macOS 13–14 можно также
+щёлкнуть Nota в Программах правой кнопкой ▸ **Открыть** ▸ **Открыть**.
 </Aside>
+
+</TabItem>
+<TabItem label="Windows">
+
+<Steps>
+
+1. Запустите `Nota-Setup-<version>-x64.exe` (или `-arm64.exe`).
+
+2. Если SmartScreen пишет *Система Windows защитила ваш компьютер*, нажмите
+   **Подробнее ▸ Выполнить в любом случае**.
+
+3. Пройдите шаги установщика. Nota появится в меню «Пуск».
+
+</Steps>
+
+В Windows Nota умеет работать в **монопольном режиме WASAPI** (exclusive mode) с
+минимальной задержкой — см. [Settings ▸ Audio](../../preferences/audio/).
+
+</TabItem>
+<TabItem label="Linux">
+
+<Steps>
+
+1. Сделайте AppImage исполняемым — в терминале:
+
+   ```bash
+   chmod +x Nota-*.AppImage
+   ```
+
+   или поставьте галочку «Разрешить выполнение файла как программы» в свойствах файла
+   (вкладка «Права»).
+
+2. Запустите его двойным щелчком или командой `./Nota-<version>-x86_64.AppImage`.
+
+</Steps>
+
+Звук идёт через PulseAudio / ALSA, MIDI — через ALSA.
+
+</TabItem>
+</Tabs>
+
+## Обновления
+
+Nota сама проверяет новые версии. Когда выходит новая, в [стартовом окне](../first-launch/)
+появляется баннер: нажмите **Update**, и Nota скачает обновление, сверит его с контрольной
+суммой релиза и установит, когда вы нажмёте **Restart now** (или при следующем выходе).
+После обновления окно **What's New** покажет, что изменилось.
+
+<Aside>
+Копия, которая не может заменить сама себя (например, запущенная прямо из образа диска),
+вместо обновления откроет страницу релиза.
+</Aside>
+
+## Что дальше
+
+- [Первый запуск](../first-launch/) — стартовое окно, What's New и восстановление работы.
+- [Главное окно](../main-window/) — обзор всего, что на экране.
+- [Первый трек](../first-track/) — от пустого проекта до готового WAV.

@@ -24,6 +24,11 @@ shots:
   - { id: start-here/whats-new, source: app, scene: whatsnew }
   - { id: start-here/about, source: app, scene: about }
   - { id: basics/unsaved-dialog, source: app, scene: unsaved }
+  - { id: basics/transport-bar, source: app, scene: main, args: {view: "arrangement", element: "TransportBar"} }
+  - { id: basics/history-tab, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 7, height: 640} }
+  - { id: start-here/clip-editor, source: app, scene: main, args: {view: "arrangement", clip: "Lead", element: "DetailPanel", width: 1200, detailHeight: 420} }
+  - { id: start-here/browser-instruments, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 0, height: 640} }
+  - { id: start-here/browser-effects, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 1, height: 640} }
 
   # ── Views
   - { id: views/arrangement, source: app, scene: main, args: {view: "arrangement"} }

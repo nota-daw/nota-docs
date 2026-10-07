@@ -1,17 +1,46 @@
 ---
-title: "Undo and value entry"
+title: Undo and value entry
+description: Undo and redo, and the ways to set a value exactly — dragging, fine steps, typing and resetting.
 sidebar:
-  order: 9
-status: todo
+  order: 5
+updated: "0.50.1"
+status: done
+sources:
+  - src/managed/Nota.App/PreferencesWindow.cs
+  - src/managed/Nota.App/DeviceCardKit.cs
+  - src/managed/Nota.App/DeviceCards/DeviceParamControls.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import Kbd from '@components/Kbd.astro';
 
-{/* Scope (from coverage.yml)
-  - undo/redo for every edit
-  - slider value typing
-*/}
+## Undo and redo
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
-</Aside>
+**Edit ▸ Undo** (<Kbd>⌘ Z</Kbd>) and **Edit ▸ Redo** (<Kbd>⌘ ⇧ Z</Kbd>) cover every edit:
+notes and clips, tracks, devices and their settings, automation, Session clips and scenes. A
+gesture is one step — dragging several clips, or turning a knob from one value to another,
+undoes in one go.
+
+To go back further than undo reaches — to yesterday's mix, say — use
+[version history](../version-history/).
+
+## Setting values
+
+Knobs, sliders and numbers across Nota work the same way:
+
+| Do this | To |
+|---|---|
+| Drag up / down | Change the value |
+| Drag with <Kbd>⌘</Kbd> or <Kbd>⇧</Kbd> held | Change it in fine steps |
+| Double-click a knob | Reset it to its default |
+| Double-click a slider's value | Type an exact value |
+
+When you type, units work: `-6`, `1.5k`, `250 ms`, `-3 dB`, `L 30`, `1/16`. <Kbd>Return</Kbd>
+sets the value, <Kbd>Esc</Kbd> cancels. This works in device cards, the clip editor and rack
+macros.
+
+Track faders and pan bars reset to their default on a double-click too.
+
+## Automation and MIDI
+
+Any value you can turn can also be [automated](../../editing/automation/) or mapped to a
+hardware control with [MIDI Learn](../../control/midi-learn/).

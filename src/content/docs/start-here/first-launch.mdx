@@ -1,27 +1,70 @@
 ---
-title: "First launch"
+title: First launch
+description: The start window, recent projects, updates, What's New and recovering unsaved work.
 sidebar:
   order: 2
-status: todo
+since: "0.20.0"
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/WelcomeWindow.cs
-  - src/managed/Nota.App/SplashWindow.cs
+  - src/managed/Nota.App/MainWindow.Welcome.cs
   - src/managed/Nota.App/WhatsNewWindow.cs
   - src/managed/Nota.App/AboutWindow.cs
-  - src/managed/Nota.App/MainWindow.Welcome.cs
+  - src/managed/Nota.App/MainWindow.Recovery.cs
 ---
 
 import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Start.html
-  - splash
-  - Start window (recent projects
-  - keyboard nav)
-  - What's New window
-  - self-update banner
-  - About
-*/}
+## The start window
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
+When Nota opens, the start window comes first. It is the quickest way back into what you
+were working on.
+
+<Shot id="start-here/start-window" alt="The Nota start window with New project, Open project and a list of recent projects" />
+
+- **New project** — an empty project in the main window.
+- **Open project…** — pick a `.nota` project anywhere on disk.
+- **Recent projects** — the projects you opened or saved lately, newest first, with when you
+  last touched them. Click one to select it, double-click it (or select it and press
+  <Kbd>Return</Kbd>) to open it. The arrow keys move through the list.
+- **Show on startup** — turn the start window off if you'd rather go straight to an empty
+  project. **File ▸ New** (<Kbd>⌘ N</Kbd>) and **File ▸ Open…** (<Kbd>⌘ O</Kbd>) work the
+  same from the main window.
+- **Settings** and **What's New** at the bottom open those windows.
+
+## When a new version is out
+
+The start window also shows a banner when a new Nota is available: **Update** downloads it
+with a progress bar and checks it against the release's checksum, **Release notes** opens the
+release page, **Dismiss** hides the banner. Once it's downloaded, choose **Restart now** — or
+**Later**, and it installs the next time you quit.
+
+## What's New
+
+After an update, a **What's New** window lists everything that changed since the version you
+had, once. You can bring it back any time from **Help ▸ What's New** — or read the
+[changelog](../../reference/changelog/).
+
+<Shot id="start-here/whats-new" alt="The What's New window listing the highlights of Nota 0.50.1" width={460} />
+
+**Help ▸ About Nota** shows the app and engine versions and the licence.
+
+## If Nota didn't close properly
+
+While you work, Nota keeps a recovery copy of the open project in the background (about every
+30 seconds, and only when something changed). If Nota or your computer stops unexpectedly,
+the next launch asks:
+
+> Nota didn't shut down cleanly. Recover unsaved work from …?
+
+**Recover** brings the project back as it was; **Discard** throws the recovery copy away.
+The recovery copy is a safety net, not a save — save your project as usual
+(<Kbd>⌘ S</Kbd>), see [Projects and saving](../../basics/projects/).
+
+<Aside title="⌘ or Ctrl?">
+This manual writes shortcuts the macOS way. On Windows and Linux, read <Kbd>⌘</Kbd> as
+<Kbd>Ctrl</Kbd> and <Kbd>⌥</Kbd> as <Kbd>Alt</Kbd>.
 </Aside>

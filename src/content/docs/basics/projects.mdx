@@ -1,26 +1,80 @@
 ---
-title: "Projects and saving"
+title: Projects and saving
+description: What a .nota project is, saving and opening, the projects folder, recovery after a crash and quitting with unsaved changes.
 sidebar:
-  order: 5
-status: todo
+  order: 1
+updated: "0.50.1"
+status: done
 sources:
+  - src/managed/Nota.App/MainWindow.Files.cs
   - src/managed/Nota.App/MainWindow.Recovery.cs
   - src/managed/Nota.App/SaveChangesWindow.cs
-  - src/managed/Nota.App/MainWindow.AudioImport.cs
   - src/managed/Nota.App/MainWindow.MidiImport.cs
   - src/managed/Nota.App/MainWindow.MissingPlugins.cs
+  - src/managed/Nota.Infrastructure/Persistence/BundleContent.cs
 ---
 
 import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Unsaved Dialog.html
-  - New/Open/Save/Save As (.nota)
-  - autosave & recovery
-  - quit-without-saving dialog
-  - Import audio
-  - MIDI import
-*/}
+## A project is one folder
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
+A Nota project is a folder whose name ends in `.nota`. Everything the project needs goes
+inside it: the arrangement and session, every device's settings, plug-in states, and
+**copies of all the audio it uses**. Move it, zip and send it, or back it up as one item and
+nothing goes missing. Leave its contents as they are — Nota manages them.
+
+Identical audio is stored once, and a save only writes what changed, so saving stays quick
+even in projects full of samples.
+
+## New, open, save
+
+| Command | Key | |
+|---|---|---|
+| **File ▸ New** | <Kbd>⌘ N</Kbd> | An empty project. |
+| **File ▸ Open…** | <Kbd>⌘ O</Kbd> | Open a `.nota` project. |
+| **File ▸ Save** | <Kbd>⌘ S</Kbd> | Save; the first time, choose a name and a place. Every save also records a [version](../version-history/). |
+| **File ▸ Save As…** | <Kbd>⌘ ⇧ S</Kbd> | Save under a new name. The version history comes along. |
+| **File ▸ Save Version with Note…** | <Kbd>⌥ ⌘ S</Kbd> | Save and say what changed. |
+
+You can also open a project from the [start window](../../start-here/first-launch/)'s recent
+list or from the browser's **Projects** tab, which lists the projects folder — **Documents ▸
+Nota Projects** unless you choose another one in [Settings ▸ Library](../../preferences/library/).
+
+## Bringing material in
+
+- **File ▸ Import audio…** puts audio files on a new track.
+- Drag audio or `.mid` files from Finder / Explorer or the browser's **Files** tab onto the
+  Arrangement. A MIDI file lands on the instrument track you drop it on, one clip per part;
+  extra parts get new tracks below. Dropped on a Session slot, the whole file becomes one clip.
+
+The audio is copied into the project when you save, so the original files can move or
+disappear later.
+
+## Missing plug-ins
+
+If a project uses plug-ins that aren't installed on this computer, Nota opens it anyway and
+says what was skipped. When the [Nota plug-in registry](../../plugins/get-plugins/) has them,
+Nota offers to install them and reopen the project, so the devices come back with their saved
+settings.
+
+## Quitting with unsaved changes
+
+Closing a project with changes asks first — and tells you how long they've been unsaved:
+
+<Shot id="basics/unsaved-dialog" alt="The unsaved changes dialog: Don't Save, Cancel, Save" width={420} />
+
+**Save** (or <Kbd>Return</Kbd>) saves right there and then closes; **Don't Save** discards
+the changes; **Cancel** (or <Kbd>Esc</Kbd>) goes back to the project.
+
+## Recovery after a crash
+
+While you work, Nota keeps a recovery copy of the open project in the background. If Nota
+stops unexpectedly, the next launch offers to **Recover** that work or **Discard** it — see
+[First launch](../../start-here/first-launch/#if-nota-didnt-close-properly).
+
+<Aside type="caution">
+The recovery copy is a safety net, not a substitute for saving. Save often — every save is
+also a version you can return to.
 </Aside>

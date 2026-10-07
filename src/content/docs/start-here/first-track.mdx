@@ -1,20 +1,132 @@
 ---
-title: "Your first track"
+title: Your first track
+description: From an empty project to an exported WAV in ten minutes — an instrument, a few notes, an effect, a loop.
 sidebar:
   order: 4
-status: todo
+updated: "0.50.1"
+status: done
+sources:
+  - src/managed/Nota.App/MainWindow.Browser.cs
+  - src/managed/Nota.App/PianoRollView.cs
+  - src/managed/Nota.App/ExportWindow.cs
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import { Aside, Steps } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
 
-{/* Scope (from coverage.yml)
-  - tutorial — instrument track
-  - draw notes
-  - add effect
-  - loop
-  - export
-*/}
+This walk-through takes you from an empty project to a short loop exported as a WAV file.
+It uses only what comes with Nota — no plug-ins, no samples.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
+## 1. Start a project
+
+On the start window click **New project** (or press <Kbd>⌘ N</Kbd> in the main window). You
+get an empty Arrangement at 120 BPM in 4/4.
+
+## 2. Add an instrument
+
+<Steps>
+
+1. In the browser, open the **Instruments** tab (the keyboard icon at the top of the rail).
+
+2. Double-click **Nota Volt**. Nota adds an instrument track with Volt on it and an empty
+   one-bar MIDI clip at the start of the song.
+
+</Steps>
+
+<Shot id="start-here/browser-instruments" alt="The Instruments tab of the browser" width={300} />
+
+Want to hear what an instrument sounds like first? Select it and press the play button in the
+preview strip at the bottom of the browser.
+
+## 3. Write a few notes
+
+<Steps>
+
+1. Double-click the clip on the timeline. It opens in the **Clip** tab of the panel at the
+   bottom.
+
+2. Double-click an empty spot of the grid to add a note there; double-click a note to delete
+   it. Drag a note to move it, drag its edge to make it longer or shorter.
+
+3. The lane under the notes is velocity — drag a stem up or down to play that note louder
+   or softer.
+
+</Steps>
+
+<Shot id="start-here/clip-editor" alt="A MIDI clip open in the clip editor, with notes and their velocity stems" />
+
+The **Grid** on the left sets what notes snap to; **Quantize** pulls the selected notes onto
+it. With notes selected, the arrow keys move them by the grid (<Kbd>←</Kbd> <Kbd>→</Kbd>) or a
+semitone (<Kbd>↑</Kbd> <Kbd>↓</Kbd>), and <Kbd>⇧ ↑</Kbd> / <Kbd>⇧ ↓</Kbd> move them an octave.
+
+<Aside type="tip">
+No MIDI keyboard? Play notes on your computer keyboard: <Kbd>A</Kbd> to <Kbd>K</Kbd> are the
+white keys from C4, <Kbd>W</Kbd> <Kbd>E</Kbd> <Kbd>T</Kbd> <Kbd>Y</Kbd> <Kbd>U</Kbd> the black
+ones, <Kbd>Z</Kbd> / <Kbd>X</Kbd> shift the octave.
 </Aside>
+
+## 4. Listen in a loop
+
+<Steps>
+
+1. Click the clip on the timeline to select it and press <Kbd>⌘ L</Kbd> — the loop is set to
+   the clip and switched on.
+
+2. Press <Kbd>Space</Kbd> to play, and again to stop. Keep editing notes while it plays —
+   you hear each change straight away.
+
+</Steps>
+
+To make the part longer, select the clip and press <Kbd>⌘ D</Kbd> to put a copy right after
+it, or drag the clip's right edge.
+
+## 5. Add an effect
+
+<Steps>
+
+1. Keep the Volt track selected and open the **Audio effects** tab of the browser.
+
+2. Double-click **Nota Delay**. It appears in the track's device chain, after Volt.
+
+3. Turn its knobs while the loop plays. Drag a knob up or down; hold <Kbd>⇧</Kbd> for fine
+   steps; double-click it to go back to the default.
+
+</Steps>
+
+<Shot id="start-here/browser-effects" alt="The Audio effects tab of the browser" width={300} />
+
+Every device has factory presets — click the preset name in the device's header to browse
+them.
+
+## 6. Save
+
+Press <Kbd>⌘ S</Kbd>, give the project a name and choose where to put it. Projects saved in
+**Documents ▸ Nota Projects** also show up in the browser's **Projects** tab. A project is a
+single `.nota` folder that holds everything it uses, samples included, so you can move or
+back it up as one item. Each save also keeps a [version](../../basics/version-history/) you
+can go back to.
+
+## 7. Export a WAV
+
+<Steps>
+
+1. Choose **File ▸ Export audio…** (<Kbd>⌘ ⇧ E</Kbd>).
+
+2. Under **Range**, keep **Loop** to export just the loop, or pick **Full song**.
+
+3. Leave **WAV**, **48 000** and **24-bit**, or change them, and click **Export WAV**.
+
+</Steps>
+
+<Shot id="export/export-window" alt="The Export Audio window" width={280} />
+
+**Add 1-bar release tail** keeps the delay ringing out after the last note. **Export stems**
+writes one file per track instead of the mix. More in [Export audio](../../export/export-audio/).
+
+## Where to go next
+
+- [The main window](../main-window/) — what everything on screen does.
+- [Arrangement](../../views/arrangement/) and [Session](../../views/session/) — the two ways
+  to build a song.
+- [Devices](../../devices/) — every instrument and effect in Nota.

@@ -1,28 +1,98 @@
 ---
-title: "The main window"
+title: The main window
+description: A tour of the Nota main window — transport, browser, views, the detail panel and the menus.
 sidebar:
   order: 3
-status: todo
+since: "0.1.0"
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/MainWindow.axaml
   - src/managed/Nota.App/MainWindow.Menu.cs
-  - src/managed/Nota.App/MainWindow.TransportFit.cs
+  - src/managed/Nota.App/BrowserView.cs
+  - src/managed/Nota.App/MainWindow.Detail.cs
 ---
 
 import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
 
-{/* Scope (from coverage.yml) · mockup: Nota Main Window.html
-  - transport bar
-  - view switcher (Arrangement · Session · Modular)
-  - browser
-  - detail panel
-  - overview
-  - sections
-  - status bar / downloads
-  - menus
-  - ⌘ vs Ctrl
-*/}
+Everything in Nota happens in one window. It has four areas: the **transport bar** along the
+top, the **browser** on the left, the **view** in the middle, and the **detail panel**
+underneath, which opens when you select a track or a clip.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
+<Shot id="start-here/main-window-devices" alt="The Nota main window: transport bar on top, browser on the left, the Arrangement in the middle and the devices of the Keys track below" />
+
+## Transport bar
+
+<Shot id="basics/transport-bar" alt="The transport bar" />
+
+From left to right:
+
+- **Arrangement · Session · Modular** — switch the view in the middle.
+- **Stop, Play, Record** and the **position** — click the position to switch between bars
+  and minutes:seconds.
+- **LOOP** — the loop range set on the ruler.
+- **BPM**, **SIG** (time signature), **KEY** (project key) and **GRID** (the snap grid).
+- **Metronome**, **follow playhead**, **snap to grid** and **automation lanes**.
+- **MIDI** — map a hardware controller to any control ([MIDI Learn](../../control/midi-learn/)).
+- **Remote** — play and control Nota from your phone ([Nota Remote](../../control/nota-remote/)).
+- **MST** — the master volume and meter.
+
+Every control is explained in [Transport](../../basics/transport/).
+
+## Browser
+
+The browser holds everything you can bring into a project. The icons down its left edge are
+its tabs:
+
+| Tab | What's in it |
+|---|---|
+| **Instruments** | Nota's instruments and your plug-in instruments, with their presets |
+| **Audio effects** | Built-in effects and plug-in effects |
+| **MIDI effects** | Arpeggiator, chords, scales and other note processors |
+| **Files** | Your sample library and any folder you add, with smart tags |
+| **Presets** | Factory and your own presets for every device |
+| **Projects** | The projects in your projects folder |
+| **MIDI map** | Every control you've mapped to a controller or phone |
+| **History** | The [versions](../../basics/version-history/) of the open project |
+
+Double-click an instrument to add a track with it; double-click an effect to add it to the
+selected track; or drag either where you want it. The button at the bottom of the rail
+collapses the browser. More in [The browser](../../library/browser/).
+
+## The view
+
+The middle of the window shows one of three views:
+
+- **[Arrangement](../../views/arrangement/)** — the song on a timeline, left to right.
+- **[Session](../../views/session/)** — a grid of clips you launch live, scene by scene.
+- **[Modular](../../views/modular/)** — a track's devices as a graph you can patch.
+
+The **Mixer** opens in a window of its own: **View ▸ Mixer** (<Kbd>⌘ ⇧ M</Kbd>).
+
+## Detail panel
+
+Select a track and its devices appear in the panel at the bottom; double-click a clip and it
+opens there for editing. The tabs at its top left switch between **Devices**, **Pattern**
+(the step pattern of a Drum Rack clip) and **Clip** — <Kbd>Tab</Kbd> cycles them. On the
+right, **Freeze** and **Live Freeze** render a track to audio to save CPU, the ⧉ button moves
+the panel into a [window of its own](../../views/detail-panel/), and × closes it.
+
+## Menus and the status line
+
+- **File** — new, open, save, versions, import and export.
+- **Edit** — undo, clipboard, splitting, consolidating, duplicating time.
+- **View** — the mixer, Connect Phone…, and toggles for the browser, the detail panel, the
+  overview, the sections lane, following the playhead and clip names.
+- **Transport** — play, record, loop and metronome.
+- **Help** — What's New and About.
+
+The line along the bottom of the window reports what just happened ("Saved Night Drive",
+"Added Nota Volt") and shows the audio sample rate.
+
+<Aside title="⌘ or Ctrl?">
+Shortcuts are written the macOS way. On Windows and Linux, <Kbd>⌘</Kbd> is <Kbd>Ctrl</Kbd>
+and <Kbd>⌥</Kbd> is <Kbd>Alt</Kbd>. All of them are listed in
+[Keyboard shortcuts](../../reference/shortcuts/).
 </Aside>

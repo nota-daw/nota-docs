@@ -21,7 +21,8 @@ namespace NotaDocsShots;
 /// the whole frame or a cropped control. Args come from the manifest entry's `args`.
 ///
 ///   device    instrument | effect | midi (kind id), preset, tab, card (index in the chain)
-///   main      view (arrangement | session | modular), select (track name), element, width, height
+///   main      view (arrangement | session | modular), select (track name), clip (track name,
+///             + clipIndex) to open in the clip editor, tab (browser tab index), detailHeight, element, width, height
 ///   mixer     width, height
 ///   prefs     page (index in Settings' sidebar, 0 = Audio)
 ///   start · about · whatsnew · export · unsaved
@@ -151,12 +152,22 @@ public sealed class Scenes
             _main = mw;
             mw.Show();
             Pump(20);
-            _demo.Build();
-            ((MainWindowViewModel)mw.DataContext!).Transport.Bpm = 124m;
             // Name the project, as if it had been saved; headless also draws the NativeMenu inside
             // the window (on macOS it lives in the system menu bar), so hide that strip.
-            typeof(MainWindow).GetField("_projectPath", Private)!.SetValue(mw, Path.Combine(_demo.Folder, "Night Drive.nota"));
-            Invoke(mw, "UpdateWindowTitle");
+            var bundle = Path.Combine(_demo.Folder, "Night Drive.nota");
+            if (Directory.Exists(bundle)) Directory.Delete(bundle, recursive: true);
+            typeof(MainWindow).GetField("_projectPath", Private)!.SetValue(mw, bundle);
+            var vm = (MainWindowViewModel)mw.DataContext!;
+            _demo.Build(
+                save: note =>
+                {
+                    mw.FindControl<ArrangementView>("Timeline")!.Refresh();
+                    Pump(5);
+                    var task = (Task<bool>)typeof(MainWindow).GetMethod("DoSaveAsync", Private)!.Invoke(mw, new object?[] { false, note })!;
+                    while (!task.IsCompleted) Pump(2);
+                    if (!task.Result) throw new InvalidOperationException("demo save failed: " + vm.StatusText);
+                },
+                tempo: bpm => { vm.Transport.Bpm = (decimal)bpm; Pump(2); });
             foreach (var bar in mw.GetVisualDescendants().OfType<NativeMenuBar>()) bar.IsVisible = false;
             mw.FindControl<ArrangementView>("Timeline")!.Refresh();
             Pump(20);
@@ -183,6 +194,16 @@ public sealed class Scenes
             else Invoke(mw, "ShowDevices", id, true);
         }
         else Invoke(mw, "OnCloseDetail", null, new RoutedEventArgs());
+        if (shot.Str("clip") is string clipTrack)
+        {
+            // Open a clip of a demo track in the clip editor, as a double-click on it would.
+            var timeline = mw.FindControl<ArrangementView>("Timeline")!;
+            Invoke(timeline, "OnClipDoubleClicked", _demo.Track(clipTrack), shot.Int("clipIndex") ?? 0, true);
+        }
+        if (shot.Int("detailHeight") is int dh && mw.FindControl<Grid>("BodyGrid") is { } body)
+            body.RowDefinitions[2].Height = new GridLength(dh);
+        if (shot.Int("tab") is int tab)
+            typeof(BrowserView).GetMethod("SelectTab", Private)!.Invoke(mw.FindControl<BrowserView>("Browser")!, new object[] { tab });
         Pump(20);
         var element = shot.Str("element") is string el ? mw.FindControl<Control>(el) ?? throw new ArgumentException($"no control '{el}'") : null;
         Save(mw, shot.Id, element);

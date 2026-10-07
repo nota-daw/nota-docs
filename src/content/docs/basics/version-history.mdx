@@ -1,24 +1,70 @@
 ---
-title: "Version history"
+title: Version history
+description: Every save keeps a version of the project. Go back to any of them, open one as a copy, name, star and clean them up.
 sidebar:
-  order: 6
-status: todo
+  order: 2
+since: "0.43.1"
+updated: "0.50.1"
+status: done
 sources:
   - src/managed/Nota.App/HistoryView.cs
   - src/managed/Nota.App/MainWindow.History.cs
 ---
 
 import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
 
-{/* Scope (from coverage.yml)
-  - History tab tree
-  - versions described by changes
-  - switch/open as copy/name/note/star/delete
-  - branching
-  - Save Version with Note ⌥⌘S
-  - turn off in Library
-*/}
+Every time you save, Nota keeps a version of the project inside it. Nothing is overwritten:
+you can go back to how the song was an hour or a week ago, or try something bold knowing the
+old version is one click away.
 
-<Aside type="note" title="Being written">
-This page is still being written. Meanwhile, see the [changelog](https://github.com/nota-daw/nota/blob/main/CHANGELOG.md) or ask in [Discord](https://discord.gg/apf4Q2JKWk).
+## The History tab
+
+Open the **History** tab in the browser (the clock icon at the bottom of the rail). Versions
+are listed newest first, joined by a line; the brass dot marks the version the project is at.
+
+<Shot id="basics/history-tab" alt="The History tab with four versions: Hook and texture, Tempo 120 → 124, Added Keys, First beat" width={300} />
+
+Each version describes itself by what changed — "Added Keys", "Tempo 120.00 → 124.00" — so
+the list reads without notes. A version with a note or a name shows that instead. The
+counter at the top says how many versions there are and how much space they take.
+
+## Saving versions
+
+- **File ▸ Save** (<Kbd>⌘ S</Kbd>) — records a version.
+- **File ▸ Save Version with Note…** (<Kbd>⌥ ⌘ S</Kbd>) — asks *What changed in this
+  version?* and keeps your answer with it.
+
+Versions share their audio, so each one only costs what it adds. **Save As** takes the whole
+history to the new project.
+
+## Going back
+
+Click a version to see its details, then:
+
+- **Switch** — the project goes back to that version. If you have unsaved changes, Nota
+  offers to save them as a new version first, so nothing is lost.
+- **Open copy** — opens that version as a separate new project and leaves this one as it is.
+
+Saving after switching to an older version starts a **branch**: the newer versions stay, and
+the tree shows where the paths split.
+
+## Naming, notes and stars
+
+Right-click a version for **Name…**, **Add note…**, **Star** and **Delete version…**. Star
+the versions that matter — a mix you sent, the take everyone liked.
+
+You can't delete the version the project is at; switch to another one first.
+
+## Cleaning up
+
+The menu at the top of the tab deletes all **unnamed** versions at once, keeping the ones you
+named. To stop recording versions altogether, turn off **Keep a version history of each
+project** in [Settings ▸ Library](../../preferences/library/) — Nota warns first, because that
+erases the existing history.
+
+<Aside>
+A project saved by a newer Nota shows its newer versions, but you need to update to open
+them.
 </Aside>

@@ -56,47 +56,52 @@ public sealed class Demo
         }
     }
 
-    public void Build()
+    /// <summary>Build the song in four steps, calling <paramref name="save"/> after each so the
+    /// project gets a real version history (History tab). <paramref name="tempo"/> sets the BPM
+    /// through the transport view model, which is what a save records.</summary>
+    public void Build(Action<string?> save, Action<double> tempo)
     {
-        _engine.SetBpm(Bpm);
         _engine.SetTimeSignature(4, 4);
-        _engine.SetLoop(true, 32, 64);
+        tempo(120);
 
+        // 1 · a beat and a bass line.
         int drums = Instrument("Drums", 12, 0);
         int bass = Instrument("Bass", 7, 2);
+        for (int bar = 4; bar < 32; bar += 4) Clip(drums, bar, 4, DrumBar(full: bar >= 16), "Beat");
+        for (int bar = 8; bar < 32; bar += 4) Clip(bass, bar, 4, BassLine(), "Bass");
+        _engine.AddBuiltinDevice(bass, 1);      // Compressor
+        save("First beat");
+
+        // 2 · chords.
         int keys = Instrument("Keys", 14, 3);
+        for (int bar = 0; bar < 32; bar += 4) Clip(keys, bar, 4, ChordProgression(), "Chords");
+        _engine.AddBuiltinDevice(keys, 0);      // EQ-8
+        _engine.AddBuiltinDevice(keys, 20);     // Chamber
+        save(null);
+
+        // 3 · faster.
+        tempo(Bpm);
+        save(null);
+
+        // 4 · hook, texture, a reverb return, a group and the Session scenes.
         int lead = Instrument("Lead", 6, 6);
         int texture = _engine.AddAudioTrack();
         Name(texture, "Texture", 4);
         int verb = _engine.AddReturnTrack();
         Name(verb, "Reverb", 8);
         _engine.AddBuiltinDevice(verb, 2);
-
         int group = _engine.CreateGroup(new[] { drums, bass });
         if (group > 0) Name(group, "Rhythm", 0);
-
-        _engine.AddBuiltinDevice(bass, 1);      // Compressor
-        _engine.AddBuiltinDevice(keys, 0);      // EQ-8
-        _engine.AddBuiltinDevice(keys, 20);     // Chamber
         _engine.AddBuiltinDevice(lead, 3);      // Delay
         _engine.SetTrackSend(keys, 0, 0.35f);
         _engine.SetTrackSend(lead, 0, 0.25f);
         _engine.SetTrackVolume(texture, 0.6f);
         _engine.SetTrackPan(lead, 0.15f);
-
-        // Arrangement: intro 1–8, verse 9–16, build 17–24, drop 25–32 (4 beats a bar).
-        for (int bar = 0; bar < 32; bar += 4)
-        {
-            if (bar >= 4) Clip(drums, bar, 4, DrumBar(full: bar >= 16), "Beat");
-            if (bar >= 8) Clip(bass, bar, 4, BassLine(), "Bass");
-            Clip(keys, bar, 4, ChordProgression(), "Chords");
-        }
         Clip(lead, 8, 8, Melody(), "Hook");
         Clip(lead, 24, 8, Melody(), "Hook");
         _engine.AddAudioClip(texture, Sample("pad"), 0);
         _engine.AddAudioClip(texture, Sample("pad"), 64);
 
-        // Session: three named scenes.
         while (_engine.SceneCount < 3) _engine.AddScene();
         string[] scenes = { "Intro", "Verse", "Drop" };
         for (int s = 0; s < 3; s++)
@@ -106,6 +111,7 @@ public sealed class Demo
             if (s >= 1) { Slot(drums, s, DrumBar(full: s == 2), s == 2 ? "Full beat" : "Beat"); Slot(bass, s, BassLine(), "Bass"); }
             if (s == 2) Slot(lead, s, Melody().Where(n => n.StartBeat < 16).ToArray(), "Hook");
         }
+        save("Hook and texture");
 
         if (Environment.GetEnvironmentVariable("NOTA_SHOTS_DEBUG") != null)
             for (int i = 0; _engine.TryGetTrackInfo(i, out var ti); i++)
