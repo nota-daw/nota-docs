@@ -1,0 +1,121 @@
+---
+title: "Nota Keys"
+description: "A modelled electric piano: tine, suitcase, reed and clav models, a pickup curve you can drag, a sustain pedal, and a preamp, tremolo, phaser, chorus and cabinet."
+sidebar:
+  order: 15
+updated: "0.50.1"
+since: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/Keys.h
+  - src/managed/Nota.App/DeviceCards/Instruments/KeysInstrumentCard.cs
+  - src/managed/Nota.App/Controls/KeysViews.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Keys is an electric piano built from its physics: a **hammer** strikes a **tine** (with its
+tone bar), a **reed** or a **string**, and the vibration passes a **pickup** that colours it — the
+harder you play, the more it growls. Four models in one instrument: **Tine** and **Suitcase**
+(the classic tine piano, stage and suitcase), **Reed** (the reed piano) and **Clav** (a struck,
+damped string with two pickups).
+
+<Shot id="devices/instruments/keys/card" alt="Nota Keys, Sound tab: hammer, resonator, the pickup curve, damper and the Play rail" />
+
+**Signal flow:** hammer → tine / reed / string → pickup → preamp → tremolo → phaser → chorus →
+cabinet → output. Up to 64 voices.
+
+The card has two sizes — **L** with the **Sound** and **FX** tabs, and **S** with the model, the
+pickup and four knobs. Switch them with **S / L** in the header.
+
+## Sound
+
+The model chips (**Tine**, **Suitcase**, **Reed**, **Clav**) sit in the tab strip. Picking a model
+also sets the pickup and the cabinet it is usually heard with.
+
+| Section | Control | What it does |
+|---|---|---|
+| **Hammer** | **Hard** | Hammer hardness: soft is dark and round, hard is bright and percussive |
+| | **Vel→H** | How much harder the hammer gets when you play harder |
+| | **Noise** | The thump of the hammer, off or −60 to −12 dB |
+| **Resonator** | **Decay** | How long a note rings, 25 % to 400 % of the model's natural time |
+| | **Body** | The weight of the fundamental and the tone bar |
+| | **Bright** | The bell-like upper partials |
+| | **Key→Br** | Brighter up the keyboard (or darker, below the centre) |
+| **Pickup** | the graph | Drag the point: ↔ **Symmetry**, ↕ **Distance** (see below) |
+| **Damper** | **Damper** | How fast a released key stops: low rings on, high stops in ~25 ms |
+| | **Rel N** | The thump of the damper felt on release |
+| | **CC64 / Pedal** | The sustain pedal — click it, automate it, or press your keyboard's pedal |
+
+### The pickup curve
+
+The graph is the transfer curve the sound actually goes through, not a picture of it. The teal
+band is how far a full-velocity note swings. **Distance** (up/down) moves the pickup closer —
+the curve bends more and loud notes saturate; **Symmetry** (left/right) offsets the tine
+against the pickup, adding even harmonics: that's the **bark**, read out above the graph, and
+the H1–H8 bars show what the curve does to a sine. Quiet notes stay in the straight middle of
+the curve and sound clean; hard ones reach its knees.
+
+<Shot id="devices/instruments/keys/clav" alt="Nota Keys with the Clav model: the string and its two pickups" />
+
+With **Clav** the graph shows the string and its two pickups instead: **Upper** is thin and
+bright, **Lower** fuller, **Both** sums them.
+
+### Play
+
+The rail on the right: **Tune** (±50 cents), **Age** (each key drifts a little in pitch, decay
+and level — the same every time), **Stretch** (an octave stretch like a tuned piano) and
+**Voices** (8, 16, 32 or 64). The grid shows the voices: bright for keys held down, dim for notes
+ringing out or held by the pedal. Re-striking a ringing key hits the same tine again.
+
+## FX
+
+<Shot id="devices/instruments/keys/fx" alt="Nota Keys, FX tab: preamp, tremolo, phaser, chorus, cabinet and output" />
+
+Each effect has its power dot; the chain in words sits on the right of the tab strip.
+
+| Effect | Controls |
+|---|---|
+| **Preamp** | **Drive** into a soft clipper, **Bass** and **Treble** shelves (±12 dB) |
+| **Tremolo** | **Mono** (level) or **Stereo** (auto-pan, the suitcase sound); **Rate** — free (0.5–15 Hz) or **Tempo** (1/1 to 1/32); **Depth** |
+| **Phaser** | **Rate** (0.05–5 Hz) and **Depth** |
+| **Chorus** | **Mix** |
+| **Cabinet** | **Off**, **Suitcase** (2×12″ wood), **Combo** (the reed piano's speaker) or **DI** (line) |
+| **Output** | **Volume** and **Pan** |
+
+A tempo-synced tremolo locks to the bar while the transport runs, so a freeze or a bounce
+sounds exactly like playback.
+
+## S size
+
+<Shot id="devices/instruments/keys/mini" alt="Nota Keys, S size: model, pickup and four knobs" />
+
+The model, the pickup graph, and **Hard**, **Pickup** (distance), **Drive** and **Trem** (depth).
+The preset picker is the same as in L.
+
+## Playing it
+
+- **Velocity is the instrument.** The bark, the brightness and the hammer all follow how hard
+  you play — record from a keyboard or shape velocities in the piano roll.
+- **Sustain pedal:** your keyboard's pedal (CC64) holds notes; the **Pedal** button and its
+  automation lane do the same in a clip. Lifting it drops the dampers on everything it held.
+- **MPE:** bend retunes a note, pressure drives the tine harder into the pickup, slide shifts
+  the pickup's symmetry — see [MIDI controllers](../../../control/midi/).
+
+## Presets
+
+40 factory presets in six folders: **Basics** (**Mk I Stage**, **Suitcase Init**, **200A
+Classic**, **D6 Funk**), **Tine** (from **Ballad Tine** and **Mellow Mk II** to **Bark Lead**,
+**Phase Ninety** and **Tine Bells**), **Suitcase** (**Suitcase Stereo**, **Slow Pan**, **Fast
+Pan**, **Synced Eighths**, **Dream Case**…), **Reed** (**Reed Bark**, **School Reed**, **Reed
+Tremolo**, **Overdriven Reed**…), **Clav** (**D6 Bright**, **Clav Lower**, **Funk Drive**,
+**Muted Clav**…) and **Character** (**Lo-Fi Keys**, **Detuned Tape**, **Toy Box**, **Ambient
+Tine**).
+
+## Tips
+
+- **Growl on demand:** lower **Distance** and push **Symmetry** off-centre, then play harder —
+  soft notes stay sweet, loud ones bark.
+- **The suitcase sound:** **Suitcase** model, **Stereo** tremolo around 4–5 Hz, **Suitcase**
+  cabinet.
+- **Funky clav:** **Clav**, **Upper** pickup, **Damper** high, a touch of **Phaser**.

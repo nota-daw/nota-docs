@@ -6,6 +6,7 @@ sidebar:
 updated: "0.50.1"
 status: done
 sources:
+  - src/native/nota.engine/src/MidiClip.h
   - src/managed/Nota.App/PianoRollView.cs
   - src/managed/Nota.App/ClipEditorView.cs
   - src/managed/Nota.App/ClipEditorKit.cs
@@ -42,6 +43,14 @@ import Kbd from '@components/Kbd.astro';
 | <Kbd>Delete</Kbd> | Удалить выделенные ноты |
 
 Правки слышны сразу: двигайте ноту, пока играет луп, — и слышите, как она перемещается.
+
+## Записанный MPE
+
+Нота, записанная с [MPE-контроллера](../../control/midi/#колесо-pitch-bend-aftertouch-и-mpe) или клавиш
+**Expressive** в Nota Remote, несёт свою выразительность: линия поверх ноты показывает высоту, которую
+вы играли (ряд — полутон), а тень от её низа — pressure. Перемещайте, копируйте, дублируйте,
+транспонируйте или квантизуйте ноту — выразительность едет вместе с ней. Здесь она только видна, но
+не редактируется.
 
 ## Velocity
 

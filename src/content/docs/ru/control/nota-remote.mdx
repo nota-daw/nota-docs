@@ -7,6 +7,7 @@ since: "0.50.1"
 updated: "0.50.1"
 status: done
 sources:
+  - src/web/remote/src/screens/Keys.svelte
   - src/managed/Nota.App/MainWindow.Remote.cs
   - src/managed/Nota.App/PreferencesWindow.Remote.cs
   - src/managed/Nota.Remote/RemoteServer.cs
@@ -51,7 +52,7 @@ Nota Remote превращает телефон или планшет в кон�
 | Экран | Что делает |
 |---|---|
 | **Pads** | Сетка пэдов — пэды Drum Rack по именам, банки, полная velocity, повтор ноты |
-| **Keys** | **Keyboard**, сетка **Scale** в тональности проекта или **Chords** |
+| **Keys** | **Keyboard**, сетка **Scale** в тональности проекта или **Chords**; **Expressive** для MPE-синтов |
 | **XY** | XY-пэд на регуляторах трека, с **Hold** / **Return** и **Tilt** — движение телефона управляет точкой |
 | **Mixer** | Фейдеры, mute, solo и запись для каждого трека |
 | **Macros** | Макросы выбранного устройства ручками |
@@ -60,6 +61,12 @@ Nota Remote превращает телефон или планшет в кон�
 <Shot id="control/nota-remote/iphone-pads" alt="Nota Remote на iPhone: экран Pads" width={240} />
 <Shot id="control/nota-remote/xy-tilt" alt="Nota Remote: XY-пэд с наклоном" width={240} />
 <Shot id="control/nota-remote/ipad-session" alt="Nota Remote на iPad: сетка Session" />
+
+На треке, синт которого играет [MPE](../midi/#колесо-pitch-bend-aftertouch-и-mpe), в **Keys** для
+Keyboard и Scale появляется переключатель **Expressive**. С ним палец держит взятую ноту, а не
+переезжает на соседнюю клавишу: ведите вбок — нота бендится (ширина клавиши — её шаг по высоте: белая
+клавиша на клавиатуре, ступень лада в сетке), вверх и вниз по клавише — меняется тембр. Телефон или
+планшет, чувствующий силу нажатия, передаёт и pressure.
 
 ## Телефон — ещё один контроллер
 

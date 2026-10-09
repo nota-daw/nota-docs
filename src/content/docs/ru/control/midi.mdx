@@ -6,9 +6,12 @@ sidebar:
 updated: "0.50.1"
 status: done
 sources:
+  - src/native/nota.engine/src/MidiClip.h
   - src/native/nota.engine/src/MidiInput.h
   - src/managed/Nota.App/MainWindow.Input.cs
   - src/managed/Nota.App/PreferencesWindow.cs
+  - src/native/nota.engine/src/MpeInput.h
+  - src/native/nota.engine/src/NoteExpression.h
 ---
 
 import Shot from '@components/Shot.astro';
@@ -28,6 +31,37 @@ MIDI-входы. Ноты идут на выбранный трек инстру
 
 На кнопке **MIDI** в полосе транспорта мигает точка, когда контроллер что-то присылает, — удобно,
 чтобы проверить подключённый, но «молчащий» контроллер.
+
+## Колесо pitch bend, aftertouch и MPE
+
+**Колесо pitch bend**, **aftertouch** и **CC74** клавиатуры доходят до синтезаторов Nota и плагинов:
+колесо бендит весь инструмент на диапазон самого синта (2 полутона или **Bend Range** патча, если он
+есть).
+
+**MPE-контроллер** (Seaboard, LinnStrument, Osmose, Sensel и подобные) отдаёт каждой ноте свой канал,
+и каждый палец бендит, давит и ведёт свою ноту отдельно. Nota понимает это сразу: каналы 2–16 несут
+по одной ноте, канал 1 остаётся обычной клавиатурой. Повнотную выразительность играют:
+
+| Синт | Bend | Pressure | Slide (CC74) |
+|---|---|---|---|
+| [Nota Synth](../../devices/instruments/synth/), [Volt](../../devices/instruments/volt/) | Высота ноты | Громче, фильтр открывается | Срез фильтра |
+| [Aurora](../../devices/instruments/aurora/) | Высота ноты | Громче, фильтр открывается | Позиция в wavetable |
+| [Operator](../../devices/instruments/operator/) | Высота ноты | Громче, больше FM | Глубина FM |
+| [Pentad](../../devices/instruments/pentad/) | Высота ноты | Полифонический aftertouch: громче, фильтр открывается на **Aftertouch Cutoff** | Срез фильтра |
+| [Physical](../../devices/instruments/physical/) | Перестраивает звучащее тело | Ведёт по нему смычком — зажатая нота тянется | Как долго оно звучит |
+| [Keys](../../devices/instruments/keys/) | Перестраивает язычок | Сильнее гонит язычок в звукосниматель — больше рычания | Сдвигает симметрию звукоснимателя |
+
+Instrument Rack передаёт выразительность своим цепочкам. Плагин получает колесо, channel pressure,
+полифонический aftertouch и педаль сустейна, но не повнотный bend. Выключить MPE или поменять диапазон повнотного bend
+можно в [Settings ▸ MIDI](../../preferences/midi/); контроллер, который сам сообщает свой диапазон,
+важнее этой настройки. При [записи](../../editing/recording/) каждая нота сохраняет свой bend, pressure
+и slide: дубль играет так, как вы сыграли, выразительность едет вместе с нотой при перемещении,
+копировании и квантизации, а [piano roll](../../editing/piano-roll/#записанный-mpe) её рисует. Колесо
+pitch bend, channel pressure и педаль сустейна не записываются.
+
+**Педаль сустейна** клавиатуры (CC64) держит ноты [Nota Keys](../../devices/instruments/keys/) и
+доходит до плагинов; она играется вживую и в клипы не пишется — для записи
+автоматизируйте **Pedal** у Keys.
 
 ## Нет MIDI-клавиатуры? Клавиатура компьютера
 

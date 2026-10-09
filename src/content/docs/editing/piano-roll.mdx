@@ -6,6 +6,7 @@ sidebar:
 updated: "0.50.1"
 status: done
 sources:
+  - src/native/nota.engine/src/MidiClip.h
   - src/managed/Nota.App/PianoRollView.cs
   - src/managed/Nota.App/ClipEditorView.cs
   - src/managed/Nota.App/ClipEditorKit.cs
@@ -42,6 +43,13 @@ tab of the panel at the bottom.
 | <Kbd>Delete</Kbd> | Delete the selected notes |
 
 Edits play straight away — drag a note while the loop runs and you hear it move.
+
+## Recorded MPE
+
+A note recorded from an [MPE controller](../../control/midi/#pitch-wheel-aftertouch-and-mpe) or Nota
+Remote's **Expressive** keys carries its expression: a line over the note traces the pitch it played
+(a row per semitone) and a shade rising from its floor shows the pressure. Move, copy, duplicate,
+transpose or quantize the note and its expression goes along. Expression is shown, not edited, here.
 
 ## Velocity
 

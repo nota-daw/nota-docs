@@ -6,6 +6,8 @@
 #                         tab (text of a tab/segment to click, e.g. "Filter", "L"), card (index), kit
 #   scene: main     args: view (arrangement | session | modular), select (demo track: Rhythm, Drums,
 #                         Bass, Keys, Lead, Texture, Reverb), element (x:Name to crop to), width, height
+#   scene: palette  args: select (demo track), card (audio effect index to select), origin: "devices",
+#                         query, down (rows), mods (alt | cmd | shift), crop (true: just the palette)
 #   scene: mixer · prefs (args: page = Settings sidebar index, 0 Audio … 8 Shortcuts)
 #   scene: start · about · whatsnew · export · unsaved
 # source: design — a ../nota-design mockup (dark only, shown in both site themes).
@@ -25,6 +27,8 @@ shots:
   - { id: start-here/about, source: app, scene: about }
   - { id: basics/unsaved-dialog, source: app, scene: unsaved }
   - { id: basics/transport-bar, source: app, scene: main, args: {view: "arrangement", element: "TransportBar"} }
+  - { id: basics/command-palette, source: app, scene: palette, args: {select: "Bass", card: 0, origin: "devices", query: "тёплый пэд", crop: true} }
+  - { id: basics/command-palette-replace, source: app, scene: palette, args: {select: "Bass", card: 0, origin: "devices", query: "reverb for vocals", mods: "alt", crop: true} }
   - { id: basics/history-tab, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 7, height: 640} }
   - { id: start-here/clip-editor, source: app, scene: main, args: {view: "arrangement", clip: "Lead", element: "DetailPanel", width: 1200, detailHeight: 420} }
   - { id: start-here/browser-instruments, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 0, height: 640} }
@@ -103,6 +107,7 @@ shots:
   - { id: devices/instruments/monolith/card, source: app, scene: device, args: {instrument: 13} }
   - { id: devices/instruments/pentad/card, source: app, scene: device, args: {instrument: 14} }
   - { id: devices/instruments/consort/card, source: app, scene: device, args: {instrument: 15} }
+  - { id: devices/instruments/keys/card, source: app, scene: device, args: {instrument: 16} }
 
   # ── Audio effects
   - { id: devices/audio-effects/eq-8/card, source: app, scene: device, args: {effect: 0} }
@@ -171,6 +176,9 @@ shots:
   - { id: devices/instruments/consort/filters-env, source: app, scene: device, args: {instrument: 15, tab: "Filters \u00b7 Env"} }
   - { id: devices/instruments/consort/seq, source: app, scene: device, args: {instrument: 15, tab: "Seq"} }
   - { id: devices/instruments/consort/patch, source: app, scene: device, args: {instrument: 15, tab: "Patch"} }
+  - { id: devices/instruments/keys/clav, source: app, scene: device, args: {instrument: 16, tab: "Clav"} }
+  - { id: devices/instruments/keys/fx, source: app, scene: device, args: {instrument: 16, tab: "FX"} }
+  - { id: devices/instruments/keys/mini, source: app, scene: device, args: {instrument: 16, tab: "S"} }
   - { id: devices/audio-effects/compressor/motion, source: app, scene: device, args: {effect: 1, tab: "Motion"} }
   - { id: devices/audio-effects/compressor/sidechain, source: app, scene: device, args: {effect: 1, tab: "Sidechain"} }
   - { id: devices/audio-effects/reverb/tone-mod, source: app, scene: device, args: {effect: 2, tab: "Tone \u00b7 Mod"} }

@@ -7,6 +7,7 @@ since: "0.50.1"
 updated: "0.50.1"
 status: done
 sources:
+  - src/web/remote/src/screens/Keys.svelte
   - src/managed/Nota.App/MainWindow.Remote.cs
   - src/managed/Nota.App/PreferencesWindow.Remote.cs
   - src/managed/Nota.Remote/RemoteServer.cs
@@ -52,7 +53,7 @@ sections).
 | Screen | What it does |
 |---|---|
 | **Pads** | A grid of pads — a Drum Rack's pads by name, banks, full velocity, note repeat |
-| **Keys** | A **Keyboard**, a **Scale** grid in the project key, or **Chords** |
+| **Keys** | A **Keyboard**, a **Scale** grid in the project key, or **Chords**; **Expressive** for MPE synths |
 | **XY** | An XY pad on the track's controls, with **Hold** / **Return** and **Tilt** — the phone's motion drives it |
 | **Mixer** | Faders, mute, solo and arm for every track |
 | **Macros** | The selected device's macros as knobs |
@@ -62,6 +63,12 @@ sections).
 <Shot id="control/nota-remote/iphone-pads" alt="Nota Remote on an iPhone: the Pads screen" width={240} />
 <Shot id="control/nota-remote/xy-tilt" alt="Nota Remote: the XY pad with tilt" width={240} />
 <Shot id="control/nota-remote/ipad-session" alt="Nota Remote on an iPad: the Session grid" />
+
+On a track whose synth plays [MPE](../midi/#pitch-wheel-aftertouch-and-mpe), **Keys** shows an
+**Expressive** switch in Keyboard and Scale. With it on, a finger keeps the note it struck instead of
+gliding to the next key: slide sideways to bend it (a key's width is its pitch step — a white key on
+the keyboard, a scale step on the grid), and up or down the key to change its timbre. A phone or tablet
+that senses touch force also sends pressure.
 
 ## A phone is one more controller
 

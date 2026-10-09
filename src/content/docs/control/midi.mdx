@@ -6,9 +6,12 @@ sidebar:
 updated: "0.50.1"
 status: done
 sources:
+  - src/native/nota.engine/src/MidiClip.h
   - src/native/nota.engine/src/MidiInput.h
   - src/managed/Nota.App/MainWindow.Input.cs
   - src/managed/Nota.App/PreferencesWindow.cs
+  - src/native/nota.engine/src/MpeInput.h
+  - src/native/nota.engine/src/NoteExpression.h
 ---
 
 import Shot from '@components/Shot.astro';
@@ -27,6 +30,38 @@ devices are on by default. Plug a controller in while Settings is open and reope
 
 The **MIDI** button in the transport bar has a dot that flashes when a controller sends something —
 handy for checking a controller that's connected but silent.
+
+## Pitch wheel, aftertouch and MPE
+
+A keyboard's **pitch wheel**, **aftertouch** and **CC74** reach Nota's synths and plug-ins: the wheel
+bends the whole instrument by the synth's own bend range (2 semitones, or the patch's **Bend Range**
+where it has one).
+
+An **MPE controller** (Seaboard, LinnStrument, Osmose, Sensel and the like) gives every note its own
+channel, so each finger bends, presses and slides its note on its own. Nota understands it out of the
+box: channels 2–16 carry one note each, channel 1 stays an ordinary keyboard. These synths play per-note
+expression:
+
+| Synth | Bend | Pressure | Slide (CC74) |
+|---|---|---|---|
+| [Nota Synth](../../devices/instruments/synth/), [Volt](../../devices/instruments/volt/) | The note's pitch | Louder, filter opens | Filter cutoff |
+| [Aurora](../../devices/instruments/aurora/) | The note's pitch | Louder, filter opens | Wavetable position |
+| [Operator](../../devices/instruments/operator/) | The note's pitch | Louder, more FM | FM depth |
+| [Pentad](../../devices/instruments/pentad/) | The note's pitch | Poly aftertouch: louder, filter opens by **Aftertouch Cutoff** | Filter cutoff |
+| [Physical](../../devices/instruments/physical/) | Retunes the ringing body | Bows it — a held note sustains | How long it rings |
+| [Keys](../../devices/instruments/keys/) | Retunes the tine | Drives the tine harder into the pickup — more bark | Shifts the pickup's symmetry |
+
+An Instrument Rack passes expression to its chains. A plug-in gets the wheel, channel pressure,
+polyphonic aftertouch and the sustain pedal, but not per-note bend. Switch MPE off, or change the per-note bend range, in
+[Settings ▸ MIDI](../../preferences/midi/); a controller that announces its own range overrides it.
+When you [record](../../editing/recording/), each note keeps its bend, pressure and slide: the take
+plays back as you played it, the expression travels with the note when you move, copy or quantize it,
+and the [piano roll](../../editing/piano-roll/#recorded-mpe) draws it. The pitch wheel, channel pressure
+and sustain pedal aren't recorded.
+
+A keyboard's **sustain pedal** (CC64) holds the notes of [Nota Keys](../../devices/instruments/keys/)
+and reaches plug-ins; it is played live and isn't recorded into clips — automate
+Keys' **Pedal** instead.
 
 ## No MIDI keyboard? Use the computer keyboard
 

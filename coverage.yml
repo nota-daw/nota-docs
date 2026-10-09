@@ -55,6 +55,10 @@ sections:
       covers: [undo/redo for every edit, slider value typing]
       sources: []
       status: done
+    - page: basics/command-palette
+      covers: [⌘⇧P from every window, target by origin (Devices/Modular/Arrangement/Session/Mixer/Piano roll), ⌘/⌥/⇧ Return, fuzzy + typo + wrong layout, semantic search EN/RU with reasons, "prefix filters > @ + # ~", Recent/Suggested, undo toast]
+      sources: [src/managed/Nota.App/CommandPaletteView.cs, src/managed/Nota.App/MainWindow.Palette.cs, src/managed/Nota.App/MainWindow.Commands.cs, src/managed/Nota.Application/Palette/CommandCatalog.cs, src/managed/Nota.Application/Palette/PaletteTargets.cs, src/managed/Nota.Application/Palette/SemanticVocabulary.cs, src/managed/Nota.Presentation/DeviceInsertService.cs]
+      status: done
 
   views:
     - page: views/arrangement
@@ -134,6 +138,7 @@ sections:
       - {kind: 13, name: Nota Monolith,  page: devices/instruments/monolith,  engine: Monolith.h,       card: MonolithInstrumentCard.cs, status: done}   # no mockup, missing from FEATURES.md
       - {kind: 14, name: Nota Pentad,    page: devices/instruments/pentad,    engine: Pentad.h,         card: PentadInstrumentCard.cs,    mockup: Nota Pentad.html, status: done}
       - {kind: 15, name: Nota Consort,   page: devices/instruments/consort,   engine: Consort.h,        card: ConsortInstrumentCard.cs,   mockup: Nota Consort.html, status: done}
+      - {kind: 16, name: Nota Keys,      page: devices/instruments/keys,      engine: Keys.h,           card: KeysInstrumentCard.cs,      mockup: Nota Keys.html, status: done}
     # Audio effects — engine builtinKind() id. Card: src/managed/Nota.App/DeviceCards/Bodies/<X>DeviceBody.cs
     audio-effects:
       - {kind: 0,  name: Nota EQ-8,         page: devices/audio-effects/eq-8,         engine: Eq.h,         card: EqDeviceBody.cs,         mockup: Nota EQ-8.html, status: done}

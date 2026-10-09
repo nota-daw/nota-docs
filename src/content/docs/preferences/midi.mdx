@@ -1,6 +1,6 @@
 ---
 title: "MIDI"
-description: "Settings ▸ MIDI — the MIDI inputs Nota listens to."
+description: "Settings ▸ MIDI — the MIDI inputs Nota listens to, and MPE."
 sidebar:
   order: 2
 updated: "0.50.1"
@@ -15,5 +15,10 @@ import Shot from '@components/Shot.astro';
 
 **MIDI inputs** lists every connected controller with a switch. Switch one off to stop Nota listening
 to it; new devices are on by default. If nothing is listed, connect a controller and reopen Settings.
+
+**MPE** — **Expression** switches per-note expression from MPE controllers (on by default: a keyboard
+on channel 1 plays as without it). **Bend range** is how far a note bends at full travel on channels
+2–16: ±12, ±24, ±48 (the default) or ±96 semitones. A controller that announces its own range
+overrides it. See [Pitch wheel, aftertouch and MPE](../../control/midi/#pitch-wheel-aftertouch-and-mpe).
 
 See [MIDI controllers](../../control/midi/) and [MIDI Learn](../../control/midi-learn/).

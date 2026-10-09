@@ -24,6 +24,9 @@ namespace NotaDocsShots;
 ///   device    instrument | effect | midi (kind id), preset, tab, card (index in the chain)
 ///   main      view (arrangement | session | modular), select (track name), clip (track name,
 ///             + clipIndex, audio: true for an audio clip) to open in the clip editor, automation, tab (browser tab index), detailHeight, element, width, height
+///   palette   the command palette (⌘⇧P) over the main window: view, select (track), card (index of
+///             an audio effect to select in Devices), query, down (rows to move), mods (alt | cmd | shift),
+///             origin (devices: the Devices panel had the focus), crop (true: just the palette card)
 ///   mixer     width, height
 ///   prefs     page (index in Settings' sidebar, 0 = Audio), tab (a switch on the page)
 ///   start · about · whatsnew · export · unsaved
@@ -63,6 +66,7 @@ public sealed class Scenes
         {
             case "device": Device(shot); break;
             case "main": Main(shot); break;
+            case "palette": Palette(shot); break;
             case "mixer": Mixer(shot); break;
             case "prefs": Prefs(shot); break;
             case "start": Start(shot); break;
@@ -226,6 +230,53 @@ public sealed class Scenes
         Pump(20);
         var element = shot.Str("element") is string el ? mw.FindControl<Control>(el) ?? throw new ArgumentException($"no control '{el}'") : null;
         Save(mw, shot.Id, element);
+    }
+
+    private void Palette(Shot shot)
+    {
+        var mw = MainWindow(shot);
+        var view = shot.Str("view") ?? "arrangement";
+        Invoke(mw, view switch { "session" => "OnShowSession", "modular" => "OnShowModular", _ => "OnShowArrangement" }, null, new RoutedEventArgs());
+        var tl = mw.FindControl<ArrangementView>("Timeline")!;
+        Invoke(tl, "ApplyOverviewView", 28.0, 0.0);
+        if (shot.Str("select") is string name)
+        {
+            int id = _demo.Track(name);
+            Invoke(mw, "OnTrackSelected", id);
+            if (view != "modular") Invoke(mw, "ShowDevices", id, true);
+            var chain = (DeviceChainView)typeof(MainWindow).GetField("_deviceChain", Private)!.GetValue(mw)!;
+            if (shot.Int("card") is int card)
+            {
+                var kindType = typeof(DeviceChainView).GetNestedType("ChainKind", BindingFlags.NonPublic)!;
+                Invoke(chain, "SelectDevice", Enum.Parse(kindType, "Effect"), card);
+            }
+            typeof(MainWindow).GetField("_detailWasLastFocused", Private)!.SetValue(mw, shot.Str("origin") == "devices");
+        }
+        else Invoke(mw, "OnCloseDetail", null, new RoutedEventArgs());
+        Pump(10);
+        Invoke(mw, "TogglePalette", new object?[] { null });
+        Pump(10);
+        var palette = (Control)typeof(MainWindow).GetField("_palette", Private)!.GetValue(mw)!;
+        var box = palette.GetVisualDescendants().OfType<TextBox>().First();
+        box.Text = shot.Str("query") ?? "";
+        Pump(10);
+        for (int i = 0; i < (shot.Int("down") ?? 0); i++)
+        {
+            box.RaiseEvent(new KeyEventArgs { RoutedEvent = InputElement.KeyDownEvent, Key = Key.Down, Source = box });
+            Pump(2);
+        }
+        if (shot.Str("mods") is string mods)
+        {
+            var m = mods switch { "alt" => KeyModifiers.Alt, "shift" => KeyModifiers.Shift, _ => KeyModifiers.Meta };
+            var key = mods switch { "alt" => Key.LeftAlt, "shift" => Key.LeftShift, _ => Key.LWin };
+            palette.RaiseEvent(new KeyEventArgs { RoutedEvent = InputElement.KeyDownEvent, Key = key, KeyModifiers = m, Source = box });
+        }
+        Pump(20);
+        Control? crop = null;
+        if (shot.Bool("crop")) crop = palette.GetVisualDescendants().OfType<Border>().First(b => b.Width == 640);
+        Save(mw, shot.Id, crop);
+        Invoke(mw, "TogglePalette", new object?[] { null });
+        Pump(5);
     }
 
     private void Mixer(Shot shot)
