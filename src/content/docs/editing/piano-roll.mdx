@@ -8,6 +8,7 @@ status: done
 sources:
   - src/native/nota.engine/src/MidiClip.h
   - src/managed/Nota.App/PianoRollView.cs
+  - src/managed/Nota.App/PianoRollView.Expression.cs
   - src/managed/Nota.App/ClipEditorView.cs
   - src/managed/Nota.App/ClipEditorKit.cs
   - src/managed/Nota.App/MidiToolsView.cs
@@ -49,7 +50,26 @@ Edits play straight away — drag a note while the loop runs and you hear it mov
 A note recorded from an [MPE controller](../../control/midi/#pitch-wheel-aftertouch-and-mpe) or Nota
 Remote's **Expressive** keys carries its expression: a line over the note traces the pitch it played
 (a row per semitone) and a shade rising from its floor shows the pressure. Move, copy, duplicate,
-transpose or quantize the note and its expression goes along. Expression is shown, not edited, here.
+transpose or quantize the note and its expression goes along.
+
+### Editing it
+
+The lane under the notes switches with the labels on its left: **VEL** (velocity), **BEND**, **PRES**
+(pressure) and **SLIDE**. In an MPE lane every note's curve is drawn over the note's own span; the
+selected notes' curves are the ones you edit, with their points marked.
+
+| Do this | To |
+|---|---|
+| Drag across a note | Draw its curve over the stretch you drag (the highest note there gets selected if none is) |
+| <Kbd>⌥</Kbd>-drag | Draw a straight line instead |
+| Drag a point | Move it in time and value |
+| Double-click | Add a point · on a point, delete it |
+| Right-click | **Clear** this lane's curve or **Clear All Expression** on the selected notes |
+
+**BEND** is in semitones and scales itself to what is there (±2, 12, 24, 48 or 96); **PRES** and
+**SLIDE** run 0–100 %, slide resting in the middle. Every gesture is one undo step and plays back
+straight away. Drawn expression works on any note — no MPE controller needed — and plays on the synths
+that take [MPE](../../control/midi/#pitch-wheel-aftertouch-and-mpe).
 
 ## Velocity
 
