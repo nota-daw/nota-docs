@@ -108,7 +108,7 @@ shots:
   - { id: devices/instruments/pentad/card, source: app, scene: device, args: {instrument: 14} }
   - { id: devices/instruments/consort/card, source: app, scene: device, args: {instrument: 15} }
   - { id: devices/instruments/keys/card, source: app, scene: device, args: {instrument: 16} }
-  - { id: devices/instruments/mosaic/card, source: app, scene: device, args: {instrument: 17, preset: "Keys/Felt Piano"} }
+  - { id: devices/instruments/mosaic/card, source: app, scene: device, args: {instrument: 17, preset: "mosaic/Felt Piano"} }
 
   # ── Audio effects
   - { id: devices/audio-effects/eq-8/card, source: app, scene: device, args: {effect: 0} }
@@ -180,7 +180,7 @@ shots:
   - { id: devices/instruments/keys/clav, source: app, scene: device, args: {instrument: 16, tab: "Clav"} }
   - { id: devices/instruments/keys/fx, source: app, scene: device, args: {instrument: 16, tab: "FX"} }
   - { id: devices/instruments/keys/mini, source: app, scene: device, args: {instrument: 16, tab: "S"} }
-  - { id: devices/instruments/mosaic/groups, source: app, scene: device, args: {instrument: 17, preset: "Keys/Felt Piano", tab: "Groups"} }
+  - { id: devices/instruments/mosaic/groups, source: app, scene: device, args: {instrument: 17, preset: "mosaic/Felt Piano", tab: "Groups"} }
   - { id: devices/audio-effects/compressor/motion, source: app, scene: device, args: {effect: 1, tab: "Motion"} }
   - { id: devices/audio-effects/compressor/sidechain, source: app, scene: device, args: {effect: 1, tab: "Sidechain"} }
   - { id: devices/audio-effects/reverb/tone-mod, source: app, scene: device, args: {effect: 2, tab: "Tone \u00b7 Mod"} }

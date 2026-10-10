@@ -3,8 +3,8 @@ title: "Nota Mosaic"
 description: "A multisample instrument: zones by key and velocity, layers with round-robin, release samples, the sustain pedal and MPE — from installed sample packs, a folder of your own samples or 11 factory instruments."
 sidebar:
   order: 16
-updated: "0.51.0"
-since: "0.51.0"
+updated: "0.51.1"
+since: "0.51.1"
 status: done
 sources:
   - src/native/nota.engine/src/Mosaic.h
@@ -51,7 +51,7 @@ file names (`trombone_gb4.wav`, `_f_`, `_rr2`, `_rel`). On the left are the inst
 each with how sure it is; on the right, the chosen one's zone map with what needs a look — gaps
 where neighbours were stretched, duplicates, notes it had to guess by listening. Whether C4 or C3
 is middle C differs between libraries, so Mosaic checks the octave by ear and explains its
-verdict. **Create N presets** saves one preset per checked instrument under **Packs → <folder>**.
+verdict. **Create N presets** saves one preset per checked instrument under **Packs**, in a folder named after yours.
 
 ## Zones
 
@@ -66,7 +66,7 @@ zones. The row below edits the selected zone: root, layer and round-robin, keys,
 | Tab | What it holds |
 |---|---|
 | **Sample** | The selected zone's sample: start, end and loop (drag them), loop mode, **Crossfade**, **Gain**, **Snap to zero**, **Trim silence** |
-| **Groups** | The layers: zones, gain, tune, round-robin with **RR mode** (**Sequential**, **Random**, **Random no repeat**), exclusive groups; **Release Triggers** with their level and the **Length → level** curve |
+| **Groups** | The layers: zones, gain, tune, round-robin with **RR mode** (**Sequential**, **Random**, **No repeat**), exclusive groups; **Release Triggers** with their level and the **Length → level** curve |
 | **Pitch** | **Transpose**, **Detune**, **Keytrack**, the zone's root and fine tune, the MPE **Bend** range |
 | **Env** | The amp envelope — drag it or use **Attack**, **Decay**, **Sustain**, **Release**; **Vel curve**; MPE **Pressure** |
 | **Filter** | The filter response (drag it): type, **Cutoff**, **Reso**, **Keytrack**, **Env → Cutoff**; MPE **Slide** |
@@ -75,8 +75,8 @@ zones. The row below edits the selected zone: root, layer and round-robin, keys,
 
 ## Voices
 
-The rail on the right: **Poly** with 16, 32, 64 or 128 voices, **Mono** (legato, with **Glide**)
-or **Choke**; **Volume**, **Pan**, the **Pedal**, **Vel → Vol** and the meter. Click **Poly** for
+The rail on the right: **Poly** with 16, 32, 64 or 128 voices, **Mono** (legato, with glide)
+or **Choke**; **Volume**, **Pan**, **Glide**, the **Pedal**, **Output**, **Vel → Vol** and the meter. Click **Poly** for
 its popover: what the voices are doing, the stealing order (released voices first, then the
 quietest, then the oldest), **Per key** — how many strikes of one key may ring — and **Old voice
 fade**.

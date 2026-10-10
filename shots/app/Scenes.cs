@@ -120,6 +120,19 @@ public sealed class Scenes
                 ? _presets.ApplyInPlace(_engine, preset, track, deviceIndex)
                 : _presets.Apply(_engine, preset, track);
             if (!string.IsNullOrEmpty(result) && result.StartsWith("Unknown")) throw new ArgumentException($"{result} ({preset})");
+            // A Nota Mosaic preset carries its multisample; load it the way PresetService does and
+            // wait for the samples, so the zone map has something to draw.
+            if (_presets.Document(preset) is { MosaicSource.Length: > 0 } mdoc
+                && Nota.Infrastructure.Mosaic.MosaicSourceLibrary.Program(mdoc.MosaicSource) is { } prog)
+            {
+                prog.Name = mdoc.DisplayName.Length > 0 ? mdoc.DisplayName : prog.Name;
+                _engine.MosaicSetProgram(track, prog.Serialize());
+                for (int w = 0; w < 400; w++)
+                {
+                    if (_engine.TryGetMosaicStatus(track, out var st) && st.FilesTotal > 0 && st.FilesDone >= st.FilesTotal) break;
+                    Thread.Sleep(50);
+                }
+            }
         }
         // A little audio through the device so meters, spectra and envelopes have something to draw.
         _engine.Play();
@@ -128,6 +141,13 @@ public sealed class Scenes
         _engine.StopTransport();
 
         var view = new DeviceChainView(_engine, _presets, null, Kits);
+        // An instrument preset names itself in the card's picker, as when the app applies it.
+        if (shot.Str("preset") is string ip && deviceIndex < 0 && _presets.Document(ip) is { } idoc)
+        {
+            var remember = typeof(DeviceChainView).GetMethod("RememberPreset", BindingFlags.Instance | BindingFlags.NonPublic)!;
+            var instrumentChain = Enum.Parse(remember.GetParameters()[1].ParameterType, "Instrument");
+            remember.Invoke(view, new object[] { track, instrumentChain, -1, idoc.DisplayName, ip });
+        }
         var win = Host(view, 1100, 360);
         win.Show();
         view.Show(track);
