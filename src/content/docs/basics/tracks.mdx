@@ -3,7 +3,7 @@ title: Tracks
 description: Instrument, audio, return and group tracks — adding, selecting, colouring, grouping, routing and freezing them.
 sidebar:
   order: 4
-updated: "0.51.2"
+updated: "0.53.1"
 status: done
 sources:
   - src/managed/Nota.Infrastructure/Persistence/ProjectTemplate.cs
@@ -59,6 +59,10 @@ Each header carries the track's name and type, and:
 
 Drag a header by its name to move the track. The selected track's devices open in the panel
 at the bottom.
+
+A short track keeps only its name and **M** / **S** / **●** on one line; a tall one gives the
+input, the fader and the pan a row each. Drag a track's bottom edge to change its height —
+see [Track sizes](../../views/arrangement/#track-sizes).
 
 ## Selecting several tracks
 
