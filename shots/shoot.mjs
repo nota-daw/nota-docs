@@ -8,6 +8,8 @@
 //
 // design shots: ../nota-design mockups, served locally and shot with Playwright at 2×
 //               ([data-screen-label] or a CSS selector). Mockups are dark-only.
+// remote shots: the Nota Remote phone page on the app repo's stand-in Nota, at phone size, in
+//               Studio Dark (dark) and Studio Light (light).
 // app shots:    the real app, rendered headlessly by shots/app (C#, Avalonia.Headless) in
 //               both themes, with the machine's user/device names scrubbed.
 // Output: src/assets/shots/<theme>/<id>.webp
@@ -15,7 +17,7 @@ import fs from 'node:fs';
 import http from 'node:http';
 import path from 'node:path';
 import os from 'node:os';
-import { spawnSync } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import YAML from 'yaml';
 import sharp from 'sharp';
@@ -117,6 +119,66 @@ if (design.length) {
   }
   await browser.close();
   server.close();
+}
+
+// ── remote ──────────────────────────────────────────────────────────────────────────
+// The phone page of Nota Remote, served by the app repo's stand-in Nota
+// (src/web/remote/mock/nota-mock.mjs) and shot at phone size. Each site theme wears the
+// matching Nota theme (Studio Dark / Studio Light) unless args.theme names one per theme.
+const remote = wanted.filter((s) => s.source === 'remote' && themesOf(s).length);
+if (remote.length) {
+  const mockScript = path.join(appRepo, 'src/web/remote/mock/nota-mock.mjs');
+  let mock, base = process.env.NOTA_REMOTE_MOCK;
+  if (!base) {
+    if (!fs.existsSync(mockScript)) throw new Error(`stand-in Nota not found at ${mockScript} (set NOTA_REPO)`);
+    const port = 7799;
+    mock = spawn(process.execPath, [mockScript], { env: { ...process.env, PORT: String(port) }, stdio: ['ignore', 'pipe', 'inherit'] });
+    process.on('exit', () => mock.kill());
+    await new Promise((resolve, reject) => {
+      mock.stdout.on('data', (d) => String(d).includes('Stand-in Nota') && resolve());
+      mock.on('exit', (code) => reject(new Error(`stand-in Nota exited (${code})`)));
+    });
+    base = `http://127.0.0.1:${port}`;
+  }
+  const { chromium } = await import('playwright');
+  const browser = await chromium.launch();
+  for (const s of remote) {
+    const a = s.args ?? {};
+    for (const theme of themesOf(s)) {
+      const ctx = await browser.newContext({
+        viewport: { width: a.width ?? 390, height: a.height ?? 844 },
+        deviceScaleFactor: 2,
+        isMobile: true,
+        hasTouch: true,
+        colorScheme: a.phone ?? theme,
+      });
+      const page = await ctx.newPage();
+      try {
+        const worn = a.theme?.[theme] ?? `studio-${theme}`;
+        const q = new URLSearchParams({ theme: worn, ...(a.pick ? { pick: a.pick } : {}) });
+        await page.goto(`${base}/?${q}#p=1234`);
+        await page.getByRole('navigation', { name: 'Screens' }).waitFor();
+        if (a.track) {
+          await page.getByLabel('Choose the track to play').click();
+          await page.getByRole('dialog', { name: 'Play on track' }).getByRole('button', { name: new RegExp(`^${a.track}\\b`) }).click();
+        }
+        if (a.screen) await page.getByRole('navigation', { name: 'Screens' }).getByRole('button', { name: a.screen, exact: true }).click();
+        if (a.menu) await page.getByRole('button', { name: 'Menu', exact: true }).click();
+        if (a.transport) await page.getByRole('button', { name: 'Big transport' }).click();
+        await page.waitForTimeout(800);
+        const png = path.join(cache, 'remote', theme, s.id + '.png');
+        fs.mkdirSync(path.dirname(png), { recursive: true });
+        await page.screenshot({ path: png });
+        await toWebp(png, theme, s.id);
+        console.log(`ok     ${s.id}  (remote · ${theme})`);
+      } catch (e) {
+        failures.push(`${s.id} (${theme})`);
+        console.log(`FAILED ${s.id} (${theme}): ${e.message.split('\n')[0]}`);
+      }
+      await ctx.close();
+    }
+  }
+  await browser.close();
 }
 
 // ── app ─────────────────────────────────────────────────────────────────────────────

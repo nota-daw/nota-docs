@@ -53,11 +53,24 @@ public sealed class Scenes
         settings.Current.SamplesFolder = Path.Combine(data, "Nota Samples");
         settings.Current.ProjectsFolder = Path.Combine(data, "Nota Projects");
         settings.Current.Theme = theme;
-        typeof(App).Assembly.GetType("Nota.App.NotaThemeService")!.GetMethod("Set")!.Invoke(null, new object[] { theme });
+        SetTheme(theme);
         _redactor = new Redactor(data);
         RenameDevices();
         _demo = new Demo(_engine, Path.Combine(data, "demo"));
         _demo.WriteSamples(settings.Current.SamplesFolder);
+    }
+
+    // Wear the theme for this pass. Before the Studio colour themes NotaThemeService.Set took
+    // an AppTheme; since then it takes an AppearanceChoice — one single theme, here Studio Dark
+    // or Studio Light. Reflection keeps the harness building against either.
+    private static void SetTheme(AppTheme theme)
+    {
+        var set = typeof(App).Assembly.GetType("Nota.App.NotaThemeService")!.GetMethod("Set")!;
+        var param = set.GetParameters()[0].ParameterType;
+        object arg = param == typeof(AppTheme)
+            ? theme
+            : Activator.CreateInstance(param, false, theme == AppTheme.Light ? "studio-light" : "studio-dark", "studio-dark", "studio-light")!;
+        set.Invoke(null, new[] { arg });
     }
 
     public void Run(Shot shot)

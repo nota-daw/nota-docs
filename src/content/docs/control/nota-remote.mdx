@@ -4,10 +4,12 @@ description: "Your phone or tablet as a controller — scan a QR code and play p
 sidebar:
   order: 4
 since: "0.50.1"
-updated: "0.50.1"
+updated: "0.53.1"
 status: done
 sources:
   - src/web/remote/src/screens/Keys.svelte
+  - src/web/remote/src/components/Sheets.svelte
+  - src/web/remote/src/lib/theme.svelte.ts
   - src/managed/Nota.App/MainWindow.Remote.cs
   - src/managed/Nota.App/PreferencesWindow.Remote.cs
   - src/managed/Nota.Remote/RemoteServer.cs
@@ -15,6 +17,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import ShotRow from '@components/ShotRow.astro';
 import { Aside, Steps } from '@astrojs/starlight/components';
 
 Nota Remote turns a phone or tablet into a controller. Nothing to install: Nota serves the page itself,
@@ -59,16 +62,44 @@ sections).
 | **Macros** | The selected device's macros as knobs |
 | **Scenes** | The Session grid — launch clips and scenes |
 
+The screens read like Nota's own: orange marks what is playing, held or switched on; **M** lights
+amber, **S** blue and **Arm** red, as in the Mixer.
 
-<Shot id="control/nota-remote/iphone-pads" alt="Nota Remote on an iPhone: the Pads screen" width={240} />
-<Shot id="control/nota-remote/xy-tilt" alt="Nota Remote: the XY pad with tilt" width={240} />
-<Shot id="control/nota-remote/ipad-session" alt="Nota Remote on an iPad: the Session grid" />
+<ShotRow>
+  <Shot id="control/nota-remote/pads" alt="Nota Remote on a phone: the Pads screen of a Drum Rack" width={240} />
+  <Shot id="control/nota-remote/xy" alt="Nota Remote: the XY pad on Cutoff and Resonance, with Hold, Return and Tilt" width={240} />
+  <Shot id="control/nota-remote/scenes" alt="Nota Remote: the Session grid with playing and queued clips" width={240} />
+</ShotRow>
 
 On a track whose synth plays [MPE](../midi/#pitch-wheel-aftertouch-and-mpe), **Keys** shows an
 **Expressive** switch in Keyboard and Scale. With it on, a finger keeps the note it struck instead of
 gliding to the next key: slide sideways to bend it (a key's width is its pitch step — a white key on
 the keyboard, a scale step on the grid), and up or down the key to change its timbre. A phone or tablet
 that senses touch force also sends pressure.
+
+## Colours
+
+The phone wears Nota's colour theme and changes with it. Pick another theme in
+[Settings ▸ Appearance](../../preferences/appearance/), or let **Follow system** switch Nota between
+dark and light, and the phone follows within a moment — no reload, and a held note keeps sounding.
+
+You choose how in the phone's **⋯** menu, under **Theme**:
+
+| Choice | What the phone wears |
+|---|---|
+| **Follow Nota** | The theme Nota wears right now (the default) |
+| **Follow phone** | Your **In dark mode** theme while the phone is in dark mode, your **In light mode** theme while it is light — the two picks in Settings ▸ Appearance |
+
+The line under the switch says what the phone is wearing and why — for example *Studio Dark · as Nota
+wears it*.
+
+<ShotRow>
+  <Shot id="control/nota-remote/theme-menu" alt="The phone's ⋯ menu: Theme with Follow Nota and Follow phone, and the theme it wears" width={240} />
+  <Shot id="control/nota-remote/ember" alt="Nota Remote wearing an Ember theme" width={240} />
+</ShotRow>
+
+A phone that has connected before opens in its last theme at once, before Nota answers; a new phone
+starts in Studio Dark until Nota sends its colours.
 
 ## A phone is one more controller
 

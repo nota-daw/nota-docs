@@ -1,12 +1,13 @@
 ---
 title: "Appearance"
-description: "Settings ▸ Appearance — тема (Ember Graphite, Ember Paper или System), вид волн и управление через MCP."
+description: "Settings ▸ Appearance — цветовая тема (Dark, Light или Follow system, темы Studio и Ember), вид волн и управление через MCP."
 sidebar:
   order: 8
-updated: "0.50.1"
+updated: "0.53.1"
 status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
+  - src/managed/Nota.Application/Appearance.cs
 ---
 
 import Shot from '@components/Shot.astro';
@@ -15,6 +16,25 @@ import Shot from '@components/Shot.astro';
 
 | Настройка | Что делает |
 |---|---|
-| **Theme** | **Ember Graphite** (тёмная, по умолчанию), **Ember Paper** (светлая) или **System** (следует оформлению компьютера и переключается вместе с ним) |
+| **Colour theme** | **Dark**, **Light** или **Follow system**, а затем тема из карточек ниже — см. [Цветовые темы](#цветовые-темы) |
 | **Waveform** | Как рисуются аудиоклипы в Arrangement: **Bars** разносит пики, чтобы читался ритм; **Solid** рисует каждый пиксель |
 | **AI control (MCP)** | Позволить ИИ-ассистенту работать в Nota — переключатель, порт, статус и **Copy config**. См. [Управление через MCP](../../ai/mcp/) |
+
+## Цветовые темы
+
+Сначала выберите режим, потом тему. Каждая карточка — маленькое окно Nota в цветах своей темы;
+выбранная обведена рамкой акцентного цвета.
+
+| Режим | Что носит Nota |
+|---|---|
+| **Dark** | Карточку, выбранную в ряду **Dark**: **Studio Dark** (по умолчанию) или **Ember Graphite** |
+| **Light** | Карточку, выбранную в ряду **Light**: **Studio Light** или **Ember Paper** |
+| **Follow system** | Вашу тему **In dark mode**, пока компьютер в тёмном режиме, и тему **In light mode**, пока в светлом, — и переключается сразу вслед за ним |
+
+В режиме **Follow system** ряды называются **In dark mode** и **In light mode**, и у каждого свой
+выбор. Nota помнит выбор в каждом ряду, так что после перехода с **Dark** на **Light** и обратно
+вернётся та же тема. Щелчок по карточке другого ряда в режиме **Dark** или **Light** заодно
+переключает режим.
+
+Любой выбор сразу применяется ко всем открытым окнам — и к [Nota Remote](../../control/nota-remote/),
+если он следует за Nota, — и сохраняется. Темы меняют только цвета — раскладка и размеры остаются прежними.

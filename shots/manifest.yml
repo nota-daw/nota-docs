@@ -10,13 +10,17 @@
 #                         query, down (rows), mods (alt | cmd | shift), crop (true: just the palette)
 #   scene: mixer · prefs (args: page = Settings sidebar index, 0 Audio … 8 Shortcuts)
 #   scene: start · about · whatsnew · export · unsaved
+# source: remote — the Nota Remote phone page on the app repo's stand-in Nota (src/web/remote/mock),
+#   390 × 844 at 2×, Studio Dark / Studio Light. args: track (name), screen (tab: Pads, Keys, XY,
+#   Mixer, Macros, Scenes), menu (⋯ open), transport (big transport open), theme {dark, light}
+#   (Nota theme ids to wear instead), pick ("<dark>,<light>"), phone (the phone's scheme).
 # source: design — a ../nota-design mockup (dark only, shown in both site themes).
 #   file + label ([data-screen-label]) or selector (CSS); inner: true keeps only the content of a
 #   board cell (drops its label and caption).
 # themes: [dark] / [light] to restrict; default is both for app, dark for design.
 #
 # Prefer app shots: they match the code and come in both themes. Use design only for what the
-# app can't render (the phone UI of Nota Remote) or for card states a scene can't reach yet.
+# app can't render or for card states a scene can't reach yet.
 shots:
 
   # ── Start here · Basics
@@ -59,21 +63,17 @@ shots:
   - { id: preferences/downloads-models, source: app, scene: prefs, args: {page: 5, tab: "AI Models"} }
   - { id: library/preview-player, source: design, file: "Nota Preview Player.html", label: "1a Preview" }
 
-  # ── Controllers & Remote — phone screens exist only as mockups
-  - { id: control/nota-remote/iphone-pads, source: design, file: "Nota Remote.html", selector: "[id=\"2a\"]", inner: true }
-  - { id: control/nota-remote/iphone-landscape, source: design, file: "Nota Remote.html", selector: "[id=\"2b\"]", inner: true }
-  - { id: control/nota-remote/ipad-pads, source: design, file: "Nota Remote.html", selector: "[id=\"2c\"]", inner: true }
-  - { id: control/nota-remote/ipad-session, source: design, file: "Nota Remote.html", selector: "[id=\"2d\"]", inner: true }
-  - { id: control/nota-remote/keys, source: design, file: "Nota Remote.html", selector: "[id=\"3a\"]", inner: true }
-  - { id: control/nota-remote/xy-tilt, source: design, file: "Nota Remote.html", selector: "[id=\"3b\"]", inner: true }
-  - { id: control/nota-remote/macros, source: design, file: "Nota Remote.html", selector: "[id=\"3c\"]", inner: true }
-  - { id: control/nota-remote/big-transport, source: design, file: "Nota Remote.html", selector: "[id=\"3d\"]", inner: true }
-  - { id: control/nota-remote/weak-network, source: design, file: "Nota Remote.html", selector: "[id=\"4a\"]", inner: true }
-  - { id: control/nota-remote/reconnecting, source: design, file: "Nota Remote.html", selector: "[id=\"4b\"]", inner: true }
-  - { id: control/nota-remote/not-responding, source: design, file: "Nota Remote.html", selector: "[id=\"4c\"]", inner: true }
-  - { id: control/nota-remote/expired, source: design, file: "Nota Remote.html", selector: "[id=\"4d\"]", inner: true }
-  - { id: control/nota-remote/midi-learn, source: design, file: "Nota Remote.html", selector: "[id=\"4e\"]", inner: true }
-  - { id: control/nota-remote/audio-track, source: design, file: "Nota Remote.html", selector: "[id=\"4f\"]", inner: true }
+  # ── Controllers & Remote — the phone page on the stand-in Nota (source: remote, 390 × 844)
+  - { id: control/nota-remote/pads, source: remote, args: {screen: "Pads"} }
+  - { id: control/nota-remote/keys, source: remote, args: {track: "Keys", screen: "Keys"} }
+  - { id: control/nota-remote/xy, source: remote, args: {track: "Bass", screen: "XY"} }
+  - { id: control/nota-remote/mixer, source: remote, args: {screen: "Mixer"} }
+  - { id: control/nota-remote/macros, source: remote, args: {track: "Bass", screen: "Macros"} }
+  - { id: control/nota-remote/scenes, source: remote, args: {screen: "Scenes"} }
+  - { id: control/nota-remote/big-transport, source: remote, args: {transport: true} }
+  - { id: control/nota-remote/theme-menu, source: remote, args: {menu: true} }
+  - { id: control/nota-remote/ember, source: remote, args: {theme: {dark: "ember-graphite", light: "ember-paper"}} }
+  # Desktop-side panels — still mockups
   - { id: control/nota-remote/connect-phone, source: design, file: "Nota Remote.html", selector: "[id=\"5a\"]", inner: true }
   - { id: control/nota-remote/settings, source: design, file: "Nota Remote.html", selector: "[id=\"5b\"]", inner: true }
   - { id: control/nota-remote/midi-map, source: design, file: "Nota Remote.html", selector: "[id=\"5c\"]", inner: true }

@@ -1,0 +1,20 @@
+---
+// <ShotRow><Shot … /><Shot … /></ShotRow>
+// Lays narrow shots (phone screens) side by side in equal columns; each shrinks to fit and
+// they wrap onto the next line when a column would get narrower than 150 px.
+---
+
+<div class="nota-shot-row"><slot /></div>
+
+<style>
+  .nota-shot-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    align-items: start;
+    margin-block: 1.5rem;
+  }
+  .nota-shot-row > :global(.nota-shot) {
+    margin: 0;
+  }
+</style>

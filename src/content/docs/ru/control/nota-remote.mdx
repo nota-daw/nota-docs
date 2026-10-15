@@ -4,10 +4,12 @@ description: "Телефон или планшет как контроллер �
 sidebar:
   order: 4
 since: "0.50.1"
-updated: "0.50.1"
+updated: "0.53.1"
 status: done
 sources:
   - src/web/remote/src/screens/Keys.svelte
+  - src/web/remote/src/components/Sheets.svelte
+  - src/web/remote/src/lib/theme.svelte.ts
   - src/managed/Nota.App/MainWindow.Remote.cs
   - src/managed/Nota.App/PreferencesWindow.Remote.cs
   - src/managed/Nota.Remote/RemoteServer.cs
@@ -15,6 +17,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import ShotRow from '@components/ShotRow.astro';
 import { Aside, Steps } from '@astrojs/starlight/components';
 
 Nota Remote превращает телефон или планшет в контроллер. Ничего ставить не нужно: Nota сама отдаёт
@@ -58,15 +61,45 @@ Nota Remote превращает телефон или планшет в кон�
 | **Macros** | Макросы выбранного устройства ручками |
 | **Scenes** | Сетка Session — запуск клипов и сцен |
 
-<Shot id="control/nota-remote/iphone-pads" alt="Nota Remote на iPhone: экран Pads" width={240} />
-<Shot id="control/nota-remote/xy-tilt" alt="Nota Remote: XY-пэд с наклоном" width={240} />
-<Shot id="control/nota-remote/ipad-session" alt="Nota Remote на iPad: сетка Session" />
+Экраны устроены так же, как сама Nota: оранжевым отмечено то, что играет, удерживается или включено;
+**M** горит янтарным, **S** — синим, **Arm** — красным, как в микшере.
+
+<ShotRow>
+  <Shot id="control/nota-remote/pads" alt="Nota Remote на телефоне: экран Pads для Drum Rack" width={240} />
+  <Shot id="control/nota-remote/xy" alt="Nota Remote: XY-пэд на Cutoff и Resonance, с Hold, Return и Tilt" width={240} />
+  <Shot id="control/nota-remote/scenes" alt="Nota Remote: сетка Session с играющими и ожидающими клипами" width={240} />
+</ShotRow>
 
 На треке, синт которого играет [MPE](../midi/#колесо-pitch-bend-aftertouch-и-mpe), в **Keys** для
 Keyboard и Scale появляется переключатель **Expressive**. С ним палец держит взятую ноту, а не
 переезжает на соседнюю клавишу: ведите вбок — нота бендится (ширина клавиши — её шаг по высоте: белая
 клавиша на клавиатуре, ступень лада в сетке), вверх и вниз по клавише — меняется тембр. Телефон или
 планшет, чувствующий силу нажатия, передаёт и pressure.
+
+## Цвета
+
+Телефон носит ту же цветовую тему, что и Nota, и меняет её вместе с ней. Выберите другую тему в
+[Settings ▸ Appearance](../../preferences/appearance/) или дайте **Follow system** переключить Nota
+между тёмной и светлой — телефон подхватит смену через мгновение, без перезагрузки, и удерживаемая нота
+продолжит звучать.
+
+Как именно — выбирается в меню **⋯** на телефоне, в разделе **Theme**:
+
+| Вариант | Что носит телефон |
+|---|---|
+| **Follow Nota** | Тему, которую сейчас носит Nota (по умолчанию) |
+| **Follow phone** | Вашу тему **In dark mode**, пока телефон в тёмном режиме, и тему **In light mode**, пока в светлом, — те две, что выбраны в Settings ▸ Appearance |
+
+Строка под переключателем говорит, какую тему носит телефон и почему, — например,
+*Studio Dark · as Nota wears it*.
+
+<ShotRow>
+  <Shot id="control/nota-remote/theme-menu" alt="Меню ⋯ на телефоне: Theme с Follow Nota и Follow phone и тема, которую он носит" width={240} />
+  <Shot id="control/nota-remote/ember" alt="Nota Remote в теме Ember" width={240} />
+</ShotRow>
+
+Телефон, который уже подключался, сразу открывается в последней теме, ещё до ответа Nota; новый телефон
+начинает в Studio Dark, пока Nota не пришлёт свои цвета.
 
 ## Телефон — ещё один контроллер
 

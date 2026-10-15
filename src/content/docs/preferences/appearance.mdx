@@ -1,12 +1,13 @@
 ---
 title: "Appearance"
-description: "Settings ▸ Appearance — the theme (Ember Graphite, Ember Paper or System), how waveforms draw, and AI control over MCP."
+description: "Settings ▸ Appearance — the colour theme (Dark, Light or Follow system, with Studio and Ember themes), how waveforms draw, and AI control over MCP."
 sidebar:
   order: 8
-updated: "0.50.1"
+updated: "0.53.1"
 status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
+  - src/managed/Nota.Application/Appearance.cs
 ---
 
 import Shot from '@components/Shot.astro';
@@ -15,6 +16,26 @@ import Shot from '@components/Shot.astro';
 
 | Setting | What it does |
 |---|---|
-| **Theme** | **Ember Graphite** (dark, the default), **Ember Paper** (light) or **System** (follows your computer's appearance and switches with it) |
+| **Colour theme** | **Dark**, **Light** or **Follow system**, then a theme from the cards below — see [Colour themes](#colour-themes) |
 | **Waveform** | How audio clips draw in the Arrangement: **Bars** spaces the peaks out so the rhythm reads; **Solid** draws every pixel |
 | **AI control (MCP)** | Let an AI assistant work in Nota — the switch, the port, the status and **Copy config**. See [AI control over MCP](../../ai/mcp/) |
+
+## Colour themes
+
+Pick a mode first, then a theme. Each card is a small Nota window drawn in that theme's
+colours; the chosen one is framed in the accent colour.
+
+| Mode | What Nota wears |
+|---|---|
+| **Dark** | The card you pick in the **Dark** row: **Studio Dark** (the default) or **Ember Graphite** |
+| **Light** | The card you pick in the **Light** row: **Studio Light** or **Ember Paper** |
+| **Follow system** | Your **In dark mode** theme while the computer is in dark mode and your **In light mode** theme while it is light, switching as soon as the computer does |
+
+Under **Follow system** the two rows are labelled **In dark mode** and **In light mode**, and
+each keeps its own pick. Nota remembers a pick per row, so going from **Dark** to **Light** and
+back returns to the same theme. Clicking a card in the other row while in **Dark** or **Light**
+switches the mode with it.
+
+Every pick applies at once to every open window — and to
+[Nota Remote](../../control/nota-remote/) while it follows Nota — and is saved. Themes change colours only — layout
+and sizes stay the same.
