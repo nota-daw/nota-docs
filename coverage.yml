@@ -62,8 +62,8 @@ sections:
 
   views:
     - page: views/arrangement
-      covers: [timeline, clips move/trim/duplicate/split/consolidate, grid & snap, zoom/scroll, overview strip, sections, clip names, lane controls]
-      sources: [src/managed/Nota.App/ArrangementView.cs, src/managed/Nota.App/ArrangementView.ClipDrag.cs, src/managed/Nota.App/ArrangementView.Overview.cs, src/managed/Nota.App/ArrangementView.Sections.cs, src/managed/Nota.App/ArrangementView.LaneControl.cs]
+      covers: [timeline, clips move/trim/duplicate/split/consolidate, grid & snap, zoom/scroll, overview strip, sections, clip names, lane controls, track heights & header width]
+      sources: [src/managed/Nota.App/ArrangementView.cs, src/managed/Nota.App/ArrangementView.ClipDrag.cs, src/managed/Nota.App/ArrangementView.Overview.cs, src/managed/Nota.App/ArrangementView.Sections.cs, src/managed/Nota.App/ArrangementView.LaneControl.cs, src/managed/Nota.App/ArrangementView.Sizing.cs]
       mockup: Nota Arrangement.html
       status: done
     - page: views/session
