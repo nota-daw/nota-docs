@@ -21,14 +21,18 @@ namespace NotaDocsShots;
 /// Every scene the manifest can ask for. A scene builds a window, renders it at 2× and saves
 /// the whole frame or a cropped control. Args come from the manifest entry's `args`.
 ///
-///   device    instrument | effect | midi (kind id), preset, tab, card (index in the chain)
+///   device    instrument | effect | midi (kind id), preset, tab, card (index in the chain),
+///             chainInstrument (an Instrument Rack's chain 1 instrument), trackName, window (click this text — a
+///             chain's GUI — and shoot the device window it opens)
 ///   main      view (arrangement | session | modular), select (track name), clip (track name,
-///             + clipIndex, audio: true for an audio clip) to open in the clip editor, automation, tab (browser tab index), detailHeight, element, width, height
+///             + clipIndex, audio: true for an audio clip) to open in the clip editor, automation, tab (browser tab index),
+///             expand (a folder in that tab) + pick (a row to select, which the preview player takes), detailHeight, element, width, height
 ///   palette   the command palette (⌘⇧P) over the main window: view, select (track), card (index of
 ///             an audio effect to select in Devices), query, down (rows to move), mods (alt | cmd | shift),
 ///             origin (devices: the Devices panel had the focus), crop (true: just the palette card)
 ///   mixer     width, height
 ///   prefs     page (index in Settings' sidebar, 0 = Audio), tab (a switch on the page)
+///   connect   the Connect phone popup, with Nota Remote switched on
 ///   start · about · whatsnew · export · unsaved
 /// </summary>
 public sealed class Scenes
@@ -86,6 +90,7 @@ public sealed class Scenes
             case "about": Simple(shot, new AboutWindow()); break;
             case "whatsnew": WhatsNew(shot); break;
             case "export": Simple(shot, new ExportWindow(128, 32, 124)); break;
+            case "connect": Connect(shot); break;
             case "unsaved":
                 Simple(shot, new SaveChangesWindow("Unsaved changes", "Save changes to “Night Drive” before closing?",
                     "Night Drive", "Unsaved for 12 minutes"));
@@ -117,6 +122,9 @@ public sealed class Scenes
         else if (shot.Int("instrument") == 3)
         {
             track = _engine.AddInstrumentRackTrack();
+            if (shot.Int("chainInstrument") is int ck && !_engine.RackSetChainInstrument(track, 0, ck))
+                throw new InvalidOperationException($"chain instrument {ck} did not load");
+            if (shot.Str("trackName") is string tn) _engine.SetTrackName(track, tn);
         }
         else
         {
@@ -177,6 +185,19 @@ public sealed class Scenes
             }
         view.RefreshSynthLive();
         Pump();
+        if (shot.Str("window") is string open)
+        {
+            // Pop a device out (a rack chain's GUI button) and shoot its device window.
+            ClickText(win, open);
+            Pump(20);
+            var dw = win.OwnedWindows.LastOrDefault() ?? throw new InvalidOperationException($"'{open}' opened no window");
+            Scale2(dw);
+            Pump(20);
+            Save(dw, shot.Id);
+            dw.Close();
+            win.Close();
+            return;
+        }
         var chain = view.GetVisualDescendants().OfType<StackPanel>().First(p => p.Orientation == Orientation.Horizontal && p.Children.Count > 0 && p.Bounds.Height > 200);
         var card = chain.Children[shot.Int("card") ?? 0];
         Save(win, shot.Id, card);
@@ -257,7 +278,23 @@ public sealed class Scenes
         if (shot.Int("detailHeight") is int dh && mw.FindControl<Grid>("BodyGrid") is { } body)
             body.RowDefinitions[2].Height = new GridLength(dh);
         // The browser tab sticks between shots, so always set it (Instruments by default).
-        typeof(BrowserView).GetMethod("SelectTab", Private)!.Invoke(mw.FindControl<BrowserView>("Browser")!, new object[] { shot.Int("tab") ?? 0 });
+        var browser = mw.FindControl<BrowserView>("Browser")!;
+        typeof(BrowserView).GetMethod("SelectTab", Private)!.Invoke(browser, new object[] { shot.Int("tab") ?? 0 });
+        if (shot.Str("pick") is string pick)
+        {
+            // Open a folder (`expand`) and select a row in it, as a click would: the preview
+            // player below the list takes the row.
+            var list = ((ListBox[])typeof(BrowserView).GetField("_pages", Private)!.GetValue(browser)!)[shot.Int("tab") ?? 0];
+            BrowserItem? Row(string name) => (list.ItemsSource as System.Collections.IEnumerable)?.OfType<BrowserItem>().FirstOrDefault(r => r.Name == name);
+            if (shot.Str("expand") is string folder)
+            {
+                var vm = (BrowserViewModel)typeof(BrowserView).GetField("_vm", Private)!.GetValue(browser)!;
+                vm.ToggleExpand(Row(folder) ?? throw new ArgumentException($"no folder '{folder}'"));
+                Pump(10);
+            }
+            list.SelectedItem = Row(pick) ?? throw new ArgumentException($"no row '{pick}'");
+            Pump(30);
+        }
         // Zoom: fit the whole song, or the app's default (28 px a beat from bar 1) — the view
         // keeps its zoom between shots otherwise.
         var tl = mw.FindControl<ArrangementView>("Timeline")!;
@@ -376,6 +413,32 @@ public sealed class Scenes
         Pump(20);
         Save(win, shot.Id);
         win.Close();
+    }
+
+    /// <summary>The Connect phone popup (top bar's Remote button) with the server running, so
+    /// it shows the QR, the address and the code. The address is scrubbed like any other.</summary>
+    private void Connect(Shot shot)
+    {
+        var settings = (ISettingsService)App.Services!.GetService(typeof(ISettingsService))!;
+        var remoteType = typeof(App).Assembly.GetType("Nota.App.Remote.RemoteService")
+            ?? typeof(App).Assembly.GetTypes().First(t => t.Name == "RemoteService");
+        var remote = App.Services!.GetService(remoteType)!;
+        settings.Current.RemoteEnabled = true;
+        var apply = (Task)remoteType.GetMethod("ApplyAsync")!.Invoke(remote, null)!;
+        // ApplyAsync resumes on the UI thread, so pump it rather than block on it.
+        for (int i = 0; i < 200 && !apply.IsCompleted; i++) Pump(1);
+        var viewType = typeof(App).Assembly.GetTypes().First(t => t.Name == "ConnectPhoneView");
+        var view = (Control)Activator.CreateInstance(viewType, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null,
+            new object[] { remote, settings, _engine }, null)!;
+        var holder = new Border { Padding = new Thickness(0), Child = view, HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Top };
+        var win = Host(holder, 400, shot.Int("height") ?? 640);
+        win.Show();
+        Pump(20);
+        Save(win, shot.Id, view);
+        win.Close();
+        settings.Current.RemoteEnabled = false;
+        var stop = (Task)remoteType.GetMethod("ApplyAsync")!.Invoke(remote, null)!;
+        for (int i = 0; i < 200 && !stop.IsCompleted; i++) Pump(1);
     }
 
     /// <summary>Real audio / MIDI / gamepad devices on this machine show under stock names.</summary>

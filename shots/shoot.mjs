@@ -5,6 +5,7 @@
 //   npm run shots -- devices/volt        ids equal to or under a prefix (several allowed)
 //   npm run shots -- --source app        only app (or design) shots
 //   npm run shots -- --theme light       only one theme
+//   CHROMIUM_PATH=/path/to/chromium      use that browser instead of Playwright's own
 //
 // design shots: ../nota-design mockups, served locally and shot with Playwright at 2×
 //               ([data-screen-label] or a CSS selector). Mockups are dark-only.
@@ -76,7 +77,7 @@ if (design.length) {
   await new Promise((r) => server.listen(0, '127.0.0.1', r));
   const base = `http://127.0.0.1:${server.address().port}/`;
   const { chromium } = await import('playwright');
-  const browser = await chromium.launch();
+  const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
   // Mockups use the designer's own name in places ("<Name>'s iPhone"); show a neutral one.
   const fullName = spawnSync('id', ['-F'], { encoding: 'utf8' }).stdout?.trim() ?? '';
   const names = [...new Set([...fullName.split(/\s+/), os.userInfo().username])].filter((n) => n.length > 2);
@@ -141,7 +142,7 @@ if (remote.length) {
     base = `http://127.0.0.1:${port}`;
   }
   const { chromium } = await import('playwright');
-  const browser = await chromium.launch();
+  const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
   for (const s of remote) {
     const a = s.args ?? {};
     for (const theme of themesOf(s)) {
@@ -209,9 +210,13 @@ if (app.length) {
         console.log(line);
       }
     }
-    if (run.status !== 0 && okIds.size === 0) console.log(run.stderr || run.stdout);
+    if (run.status !== 0) console.log((run.stderr || run.stdout).split('\n').slice(-15).join('\n'));
     for (const s of shots) {
-      if (!okIds.has(s.id)) continue;
+      if (!okIds.has(s.id)) {
+        // The harness stopped before this shot (a crash ends the run silently otherwise).
+        if (!failures.some((f) => f.startsWith(`${s.id} (`))) failures.push(`${s.id} (${theme}): not rendered`);
+        continue;
+      }
       await toWebp(path.join(out, s.id + '.png'), theme, s.id);
       console.log(`ok     ${s.id}  (app · ${theme})`);
     }

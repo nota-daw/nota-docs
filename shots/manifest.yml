@@ -44,7 +44,7 @@ shots:
   - { id: views/modular, source: app, scene: main, args: {view: "modular", select: "Keys"} }
   - { id: views/mixer, source: app, scene: mixer }
   - { id: views/detail-panel, source: app, scene: main, args: {view: "arrangement", select: "Keys", element: "DetailPanel"} }
-  - { id: views/device-window/nota-bass-l, source: design, file: "Nota Device Window.html", label: "Nota Bass L" }
+  - { id: views/device-window/nota-bass-l, source: app, scene: device, args: {instrument: 3, chainInstrument: 7, trackName: "Bass", window: "GUI"} }
   - { id: views/device-window/nota-level-s, source: design, file: "Nota Device Window.html", label: "Nota Level S" }
   - { id: views/device-window/dexed-l, source: design, file: "Nota Device Window.html", label: "Dexed L" }
 
@@ -59,9 +59,9 @@ shots:
   - { id: library/browser, source: app, scene: main, args: {view: "arrangement", element: "Browser"} }
   - { id: library/files-tab, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 3, height: 640} }
   - { id: control/midi-map-tab, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 6, height: 640} }
-  - { id: preferences/downloads-samples, source: app, scene: prefs, args: {page: 5, tab: "Sample Packs"} }
-  - { id: preferences/downloads-models, source: app, scene: prefs, args: {page: 5, tab: "AI Models"} }
-  - { id: library/preview-player, source: design, file: "Nota Preview Player.html", label: "1a Preview" }
+  - { id: preferences/downloads-samples, source: app, scene: prefs, args: {page: 5, tab: "Sample packs"} }
+  - { id: preferences/downloads-models, source: app, scene: prefs, args: {page: 5, tab: "AI models"} }
+  - { id: library/preview-player, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 3, expand: "Drums", pick: "Kick 808.wav", height: 640} }
 
   # ── Controllers & Remote — the phone page on the stand-in Nota (source: remote, 390 × 844)
   - { id: control/nota-remote/pads, source: remote, args: {screen: "Pads"} }
@@ -73,8 +73,8 @@ shots:
   - { id: control/nota-remote/big-transport, source: remote, args: {transport: true} }
   - { id: control/nota-remote/theme-menu, source: remote, args: {menu: true} }
   - { id: control/nota-remote/ember, source: remote, args: {theme: {dark: "ember-graphite", light: "ember-paper"}} }
-  # Desktop-side panels — still mockups
-  - { id: control/nota-remote/connect-phone, source: design, file: "Nota Remote.html", selector: "[id=\"5a\"]", inner: true }
+  - { id: control/nota-remote/connect-phone, source: app, scene: connect }
+  # Desktop-side panels — still mockups (not used on any page)
   - { id: control/nota-remote/settings, source: design, file: "Nota Remote.html", selector: "[id=\"5b\"]", inner: true }
   - { id: control/nota-remote/midi-map, source: design, file: "Nota Remote.html", selector: "[id=\"5c\"]", inner: true }
 
@@ -170,7 +170,7 @@ shots:
   - { id: devices/instruments/grain/variation, source: app, scene: device, args: {instrument: 10, tab: "Variation"} }
   - { id: devices/instruments/grain/filter, source: app, scene: device, args: {instrument: 10, tab: "Filter"} }
   - { id: devices/instruments/rhythm/fx, source: app, scene: device, args: {instrument: 12, tab: "FX"} }
-  - { id: devices/instruments/rhythm/macro, source: app, scene: device, args: {instrument: 12, tab: "MACRO"} }
+  - { id: devices/instruments/rhythm/macro, source: app, scene: device, args: {instrument: 12, tab: "Macro"} }
   - { id: devices/instruments/monolith/modifiers, source: app, scene: device, args: {instrument: 13, tab: "Modifiers"} }
   - { id: devices/instruments/pentad/filter-amp, source: app, scene: device, args: {instrument: 14, tab: "Filter \u00b7 Amp"} }
   - { id: devices/instruments/pentad/poly-mod, source: app, scene: device, args: {instrument: 14, tab: "Poly Mod"} }

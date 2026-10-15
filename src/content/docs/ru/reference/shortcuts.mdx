@@ -3,7 +3,7 @@ title: "Горячие клавиши"
 description: "Все сочетания клавиш и жесты мыши в Nota, по группам, как на странице Settings ▸ Shortcuts."
 sidebar:
   order: 1
-updated: "0.51.2"
+updated: "0.53.1"
 status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
@@ -123,9 +123,12 @@ import Kbd from '@components/Kbd.astro';
 | <Kbd keys="← →" /> | Move notes by the grid |
 | <Kbd keys="↑ ↓" /> | Transpose by a semitone |
 | <Kbd keys="⇧ ↑" /> · <Kbd keys="⇧ ↓" /> | Transpose by an octave |
+| <Kbd keys="⇧ ←" /> · <Kbd keys="⇧ →" /> | Shorten / lengthen the notes by the grid |
+| <Kbd keys="⌥ ↑" /> · <Kbd keys="⌥ ↓" /> | Velocity +10 / −10 · ⌥⇧ by 1 |
 | <Kbd keys="⌘ A" /> | Select all notes |
 | <Kbd keys="⌘ D" /> | Duplicate the selection · replaces the notes it lands on |
-| <Kbd keys="⌘ C" /> · <Kbd keys="⌘ X" /> · <Kbd keys="⌘ V" /> | Copy / cut / paste notes |
+| <Kbd keys="⌘ C" /> · <Kbd keys="⌘ X" /> · <Kbd keys="⌘ V" /> | Copy / cut / paste notes · paste lands on the originals |
+| <Kbd keys="Esc" /> | Deselect · moved or pasted notes replace the notes under them |
 | <Kbd keys="Delete" /> | Delete the selected notes |
 | Drag note edge | Change the note's start or end |
 | Drag velocity stem | Set velocity · selected notes move together · ⇧ adds a note |

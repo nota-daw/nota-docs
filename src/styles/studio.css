@@ -1,0 +1,167 @@
+/* Studio — the Nota look (../nota/DESIGN.md), mapped onto Starlight's variables. Values come
+   from the app's Theme/Themes/studio-dark.json and studio-light.json, named by token below.
+   Neutral greys on dark 1 px seams, one orange accent for what is live or chosen. */
+
+:root {
+  --sl-font: 'Geist', ui-sans-serif, system-ui, sans-serif;
+  --sl-font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+:root,
+:root[data-theme='dark'] {
+  /* Studio Dark */
+  --sl-color-accent-low: #4d3f2e;   /* AccentSubtle */
+  --sl-color-accent: #ff9f1c;       /* Accent */
+  --sl-color-accent-high: #ffb547;  /* AccentBright */
+  --sl-color-white: #f4f5f6;        /* TextHeading */
+  --sl-color-gray-1: #e8e9eb;       /* TextPrimary */
+  --sl-color-gray-2: #d4d6da;       /* TextStrong — body text */
+  --sl-color-gray-3: #a4a9b0;       /* TextMuted */
+  --sl-color-gray-4: #82868c;       /* TextDisabled */
+  --sl-color-gray-5: #393c41;       /* SurfaceHover */
+  --sl-color-gray-6: #2b2d31;       /* Panel — header and sidebar */
+  --sl-color-black: #1e1f22;        /* BgApp — the page */
+
+  --sl-color-text-invert: #17181a;  /* TextOnAccent */
+  --sl-color-bg-inline-code: #34363b;
+  --sl-color-hairline: #141517;     /* Seam — between panels */
+  --sl-color-hairline-shade: #141517;
+  --sl-color-hairline-light: #45484e; /* Rule — within a panel */
+  --sl-color-backdrop-overlay: rgb(23 24 26 / 0.7);
+
+  --nota-well: #17181a;             /* BgSunken */
+  --nota-raised: #34363b;           /* SurfaceRaised */
+  --nota-hover: #393c41;            /* SurfaceHover */
+  --nota-seam: #141517;             /* Seam */
+  --nota-rule: #45484e;             /* Rule */
+  --nota-bevel: inset 0 1px 0 rgb(255 255 255 / 0.07); /* ShadowBevel */
+  --nota-on-accent: #17181a;        /* TextOnAccent */
+
+  /* Asides and badges use Starlight's hue scales — remap them onto Studio's semantics so
+     orange stays the one accent: note → accent, tip → teal, caution → warning, danger → danger. */
+  --sl-color-blue: #ff9f1c;   --sl-color-blue-high: #ffb547;
+  --sl-color-purple: #5fb3a8; --sl-color-purple-high: #86c9c0;
+  --sl-color-green: #6cc673;  --sl-color-green-high: #9bd8a0;
+  --sl-color-orange: #f2b53c; --sl-color-orange-high: #f6cb76;
+  --sl-color-red: #f06a6e;    --sl-color-red-high: #f7a5a7;
+  --nota-aside-ground: #2b2d31;
+}
+
+:root[data-theme='light'] {
+  /* Studio Light. The page sits on SurfaceRaised rather than BgApp so long text reads on
+     near-white; the header and sidebar keep the Panel tone. */
+  --sl-color-accent-low: #e6d6c4;   /* AccentSubtle */
+  --sl-color-accent: #ef8a0c;       /* Accent */
+  --sl-color-accent-high: #8a4a00;  /* AccentPale — the accent as text */
+  --sl-color-white: #0e0f11;        /* TextHeading */
+  --sl-color-gray-1: #16171a;       /* TextPrimary */
+  --sl-color-gray-2: #282a2e;       /* TextStrong — body text */
+  --sl-color-gray-3: #4f535a;       /* TextMuted */
+  --sl-color-gray-4: #65696f;       /* TextTertiary */
+  --sl-color-gray-5: #b3b6bb;       /* Rule */
+  --sl-color-gray-6: #e4e5e7;       /* Panel */
+  --sl-color-gray-7: #e4e5e7;       /* Panel — header */
+  --sl-color-black: #eeeff1;        /* SurfaceRaised — the page */
+
+  /* Studio Light's Accent is below 4.5:1 as text, so links use AccentPale. */
+  --sl-color-text-accent: #8a4a00;
+  --sl-color-text-invert: #17181a;  /* TextOnAccent */
+  --sl-color-bg-sidebar: #e4e5e7;
+  --sl-color-bg-inline-code: #dcdee0; /* SurfaceInset */
+  --sl-color-hairline: #b3b6bb;
+  --sl-color-hairline-shade: #9da0a6; /* Seam */
+  --sl-color-hairline-light: #b3b6bb;
+  --sl-color-backdrop-overlay: rgb(30 32 36 / 0.35);
+
+  --nota-well: #d6d8db;
+  --nota-raised: #f7f8f9;
+  --nota-hover: #f7f8f9;
+  --nota-seam: #9da0a6;
+  --nota-rule: #b3b6bb;
+  --nota-bevel: inset 0 1px 0 rgb(255 255 255 / 0.7);
+  --nota-on-accent: #17181a;
+
+  --sl-color-blue: #ef8a0c;   --sl-color-blue-high: #8a4a00;
+  --sl-color-purple: #3a8a7f; --sl-color-purple-high: #2e7067;
+  --sl-color-green: #22692b;  --sl-color-green-high: #1a5121;
+  --sl-color-orange: #7a4f00; --sl-color-orange-high: #5c3b00;
+  --sl-color-red: #b3262c;    --sl-color-red-high: #7f161b;
+  --nota-aside-ground: #f7f8f9;
+}
+
+/* Aside and badge grounds: a light wash of each hue over a panel. */
+:root {
+  --sl-color-blue-low: color-mix(in srgb, var(--sl-color-blue) 14%, var(--nota-aside-ground));
+  --sl-color-purple-low: color-mix(in srgb, var(--sl-color-purple) 14%, var(--nota-aside-ground));
+  --sl-color-green-low: color-mix(in srgb, var(--sl-color-green) 14%, var(--nota-aside-ground));
+  --sl-color-orange-low: color-mix(in srgb, var(--sl-color-orange) 14%, var(--nota-aside-ground));
+  --sl-color-red-low: color-mix(in srgb, var(--sl-color-red) 14%, var(--nota-aside-ground));
+}
+
+::selection { background: color-mix(in srgb, var(--sl-color-accent) 35%, transparent); }
+
+/* Headings: Geist 600, like the app's Title/Heading. */
+.sl-markdown-content :is(h1, h2, h3, h4) { font-weight: 600; letter-spacing: -0.01em; }
+h1#_top { font-weight: 600; letter-spacing: -0.02em; }
+
+/* The current page is chosen, so it wears the solid accent with derived ink, like a
+   toggled-on key; everything else in the sidebar stays grey. */
+.sidebar-content a[aria-current='page'],
+.sidebar-content a[aria-current='page']:hover,
+.sidebar-content a[aria-current='page']:focus {
+  color: var(--nota-on-accent);
+  background-color: var(--sl-color-accent);
+}
+.sidebar-content a { border-radius: 2px; }
+
+/* Group labels read like the app's GroupLabel: 600, muted, sentence case, no tracking. */
+.sidebar-content .group-label .large {
+  font-size: var(--sl-text-sm);
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--sl-color-gray-3);
+}
+
+/* Tables: rule-separated rows, mono values, like the device parameter lists. */
+.sl-markdown-content table { font-size: var(--sl-text-sm); }
+.sl-markdown-content th {
+  font-size: var(--sl-text-xs);
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--sl-color-gray-3);
+}
+.sl-markdown-content td code { white-space: nowrap; }
+
+/* Radii from DESIGN.md: control 3, modal 4. Studio has no pills. */
+.sl-markdown-content :is(pre, .expressive-code .frame) { border-radius: 3px; }
+.sl-markdown-content img { border-radius: 4px; }
+.sl-markdown-content code:not(pre code) { border-radius: 2px; }
+.starlight-aside { border-radius: 3px; }
+.sl-badge { border-radius: 2px; }
+site-search button[data-open-modal] { border-radius: 3px; }
+
+/* Buttons and link cards: a raised key with a seam edge; the primary action is the accent. */
+.sl-link-button { border-radius: 3px; }
+.sl-link-button.primary {
+  color: var(--nota-on-accent);
+  background: var(--sl-color-accent);
+  border-color: var(--sl-color-accent);
+}
+.sl-link-button.primary:hover { background: var(--sl-color-accent-high); border-color: var(--sl-color-accent-high); }
+:root[data-theme='light'] .sl-link-button.primary:hover { background: #c46a00; border-color: #c46a00; } /* AccentHover */
+.sl-link-card { border-radius: 3px; }
+.sl-link-card:hover { border-color: var(--sl-color-accent); }
+
+/* The header is chrome, not content: the title and social links stay in ink, not the accent. */
+.site-title { color: var(--sl-color-white); }
+.social-icons a { color: var(--sl-color-gray-3); }
+.social-icons a:hover { color: var(--sl-color-white); }
+
+/* Home hero: the app icon at a modest size, not stretched across half the page. */
+.hero > img {
+  width: min(13rem, 40vw);
+  height: auto;
+  justify-self: center;
+  filter: drop-shadow(0 18px 40px rgb(0 0 0 / 0.35));
+}
+:root[data-theme='light'] .hero > img { filter: drop-shadow(0 14px 30px rgb(30 32 36 / 0.18)); }

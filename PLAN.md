@@ -14,12 +14,12 @@
 
 ```
 nota-docs/
-  astro.config.mjs            Starlight: locales { root: en, ru }, sidebar, тема Ember
+  astro.config.mjs            Starlight: locales { root: en, ru }, sidebar, тема Studio
   src/content/docs/           EN-страницы (.mdx)
   src/content/docs/ru/        RU-двойники с теми же путями
   src/components/Shot.astro   <Shot id="devices/volt/signal" /> — dark/light по теме сайта
   src/components/Kbd.astro    клавиши ⌘ ⇧ ⌥ в стиле приложения (импорт: @components/…)
-  src/styles/ember.css        токены из ../nota DESIGN.md / NotaPalette
+  src/styles/studio.css       токены Studio Dark/Light из ../nota Theme/Themes/studio-*.json
   src/styles/fonts.css        Geist / Geist Mono из ../nota/assets/fonts (с кириллицей)
   templates/                  device.mdx, page.mdx — заготовки новых страниц
   src/assets/shots/{dark,light}/<id>.webp

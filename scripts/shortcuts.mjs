@@ -74,7 +74,7 @@ const page = (lang) => {
     : `Страница собрана из списка на **Settings ▸ Shortcuts**, поэтому они всегда совпадают. Описания\nдействий — на английском, как в приложении. Сочетания записаны как в macOS: в Windows и Linux\n<Kbd keys="⌘" /> — это **Ctrl**, а <Kbd keys="⌥" /> — **Alt**.`;
   const body = groups
     .map((g) => {
-      const head = en ? sentence(g.title) : ru[g.title] ?? sentence(g.title);
+      const head = en ? sentence(g.title) : ru[g.title.toUpperCase()] ?? sentence(g.title);
       const th = en ? '| Keys | Action |' : '| Клавиши | Действие |';
       return `## ${head}\n\n${th}\n|---|---|\n` + g.rows.map(([k, a]) => `| ${renderKey(k)} | ${esc(a)} |`).join('\n');
     })

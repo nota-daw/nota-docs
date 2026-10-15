@@ -34,10 +34,10 @@ const width = (img?: ImageMetadata) => Astro.props.width ?? (img ? Math.round(im
     ) : (
       <>
         {dark && (
-          <Image src={dark} alt={alt} width={width(dark)} class:list={['shot', light ? 'only-dark' : '']} />
+          <Image src={dark} alt={alt} width={width(dark)} format="avif" class:list={['shot', light ? 'only-dark' : '']} />
         )}
         {light && (
-          <Image src={light} alt={alt} width={width(light)} class:list={['shot', dark ? 'only-light' : '']} />
+          <Image src={light} alt={alt} width={width(light)} format="avif" class:list={['shot', dark ? 'only-light' : '']} />
         )}
       </>
     )
@@ -52,8 +52,8 @@ const width = (img?: ImageMetadata) => Astro.props.width ?? (img ? Math.round(im
   .shot {
     max-width: 100%;
     height: auto;
-    border-radius: 8px;
-    border: 1px solid var(--nota-hairline);
+    border-radius: 4px;
+    border: 1px solid var(--sl-color-hairline-shade);
   }
   :root[data-theme='light'] .only-dark,
   :root:not([data-theme='light']) .only-light {
@@ -68,8 +68,8 @@ const width = (img?: ImageMetadata) => Astro.props.width ?? (img ? Math.round(im
     display: grid;
     place-items: center;
     min-height: 8rem;
-    border: 1px dashed var(--nota-border-strong);
-    border-radius: 8px;
+    border: 1px dashed var(--nota-rule);
+    border-radius: 4px;
     color: var(--sl-color-gray-4);
     font-size: var(--sl-text-sm);
   }

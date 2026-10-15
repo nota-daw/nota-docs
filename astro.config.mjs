@@ -39,8 +39,10 @@ export default defineConfig({
       ],
       editLink: { baseUrl: 'https://github.com/nota-daw/nota-docs/edit/main/' },
       lastUpdated: true,
-      customCss: ['./src/styles/fonts.css', './src/styles/ember.css'],
-      components: {},
+      customCss: ['./src/styles/fonts.css', './src/styles/studio.css'],
+      components: { ThemeSelect: './src/components/ThemeToggle.astro' },
+      // Browser chrome in the header's tone; ThemeToggle switches it with the site theme.
+      head: [{ tag: 'meta', attrs: { name: 'theme-color', content: '#2b2d31' } }],
       sidebar: [
         group('Start here', 'Начало работы', 'start-here'),
         group('Basics', 'Основы', 'basics'),
