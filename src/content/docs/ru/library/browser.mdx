@@ -3,7 +3,7 @@ title: "Браузер"
 description: "Вкладки браузера — инструменты, эффекты, файлы, пресеты, проекты, MIDI map и история — поиск, избранное и теги, перетаскивание в проект."
 sidebar:
   order: 1
-updated: "0.52.1"
+updated: "0.55.1"
 status: done
 sources:
   - src/managed/Nota.App/BrowserView.cs
@@ -11,6 +11,7 @@ sources:
   - src/managed/Nota.App/MainWindow.Files.cs
   - src/managed/Nota.App/MainWindow.Dnd.cs
   - src/managed/Nota.App/TagEditorWindow.cs
+  - src/managed/Nota.Application/Palette/DeviceCategories.cs
 ---
 
 import Shot from '@components/Shot.astro';
@@ -40,8 +41,15 @@ import Kbd from '@components/Kbd.astro';
 найденного, а имя папки («Mastering») показывает эту папку у всех устройств. Строка внизу считает,
 что показано, — `16 built-in · 0 plug-ins`.
 
-Кнопка ⋮ рядом с поиском — настройки вида (метки типов, группировка по источнику, избранное сверху)
-и редактор тегов.
+Над списком на вкладках **Instruments**, **Audio effects** и **MIDI effects** — ряд категорий:
+**Synths**, **Drums**, **Samplers**…; **EQ & filter**, **Dynamics**, **Reverb & delay**,
+**Modulation**…; **Generate** и **Shape**. Щёлкните категорию — останутся только такие устройства,
+щёлкните ещё раз — вернётся весь список. Каждая вкладка помнит свой выбор, а категории работают
+вместе с поиском, избранным и тегами. Плагины попадают в те же категории по тому, что сами о себе
+сообщают; всё нераспознанное — в **Other**.
+
+Кнопка ⋮ рядом с поиском — настройки вида (метки типов, категории, группировка по источнику,
+избранное сверху) и редактор тегов.
 
 ## Избранное и теги
 

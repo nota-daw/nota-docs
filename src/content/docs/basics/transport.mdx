@@ -3,7 +3,7 @@ title: Transport
 description: Play, stop and record; tempo, time signature and project key; loop, metronome, count-in, grid and follow.
 sidebar:
   order: 3
-updated: "0.51.2"
+updated: "0.55.1"
 status: done
 sources:
   - src/managed/Nota.App/MainWindow.axaml
@@ -59,6 +59,11 @@ and back.
 if clips or a time range are selected, it first sets the loop to them. Drag along the ruler to
 draw a loop range by hand.
 
+Notes you hold across the loop end keep sounding, and release tails ring on into the next pass.
+
+The **Overdub** / **Replace** cell next to it (<Kbd>⌘ ⇧ R</Kbd>) sets how MIDI recorded in the
+loop combines from pass to pass — see [Recording over a loop](../../editing/recording/#recording-over-a-loop).
+
 ## Metronome and count-in
 
 The metronome button (<Kbd>⌘ M</Kbd>) clicks on every beat while you play or record.
@@ -111,6 +116,9 @@ Grid**.
 - **MIDI** — [MIDI Learn](../../control/midi-learn/): click it, click a control in Nota, then
   move a knob on your controller.
 - **Remote** — shows the QR code that connects a phone ([Nota Remote](../../control/nota-remote/)).
+- **DSP** — how much of each audio buffer the engine needs. Near 100% you'll hear dropouts; raise
+  the buffer size or [freeze](../tracks/) a heavy track. Hover it to see the CPU used by the
+  whole Nota process, in the same scale as your system monitor.
 - **Master** — master volume, with the master meter underneath.
 
 <Aside type="tip">

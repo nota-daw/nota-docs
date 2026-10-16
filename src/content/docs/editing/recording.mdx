@@ -3,12 +3,14 @@ title: Recording
 description: Recording audio and MIDI — arming tracks, inputs, monitoring, count-in, recording over a loop, and recording into Session slots.
 sidebar:
   order: 3
-updated: "0.50.1"
+updated: "0.55.1"
 status: done
 sources:
   - src/native/nota.engine/src/Engine_Recording.cpp
   - src/managed/Nota.App/ArrangementView.cs
   - src/managed/Nota.App/SessionView.Toolbar.cs
+  - src/native/nota.engine/src/Engine_Render.cpp
+  - src/managed/Nota.App/RecordPreview.cs
 ---
 
 import { Aside, Steps } from '@astrojs/starlight/components';
@@ -35,10 +37,21 @@ the audio. Nota records the first armed track of each kind.
 
 Disarming a track while it records ends its take.
 
+While a MIDI take records, each note appears the moment you press the key and grows with the
+playhead for as long as you hold it; a new note flashes in the accent colour as it lands. The
+same live notes show in the [piano roll](../piano-roll/) when it has the take open, and in a
+Session slot being recorded.
+
 ## Count-in
 
 Right-click the metronome for a **count-in** of 1, 2 or 4 bars. Record from stop then counts in
 first; the clicks are never part of the take. See [Transport](../../basics/transport/#metronome-and-count-in).
+
+Notes you play during the count-in are recorded — a pickup into the first bar lands exactly
+where you played it, and the take's clip starts earlier to hold it. The same goes for a key
+you are already holding when recording starts. A take that starts at 1.1 can't begin earlier,
+so its clip starts at 1.1 and the part of the note before it is kept out of sight: move the
+clip right and drag its left edge out to hear it.
 
 ## Hearing the input
 
@@ -49,9 +62,24 @@ monitored — it would feed back.
 
 ## Recording over a loop
 
-With the loop on, recording fills the loop range: each time round, the new pass replaces the
-previous one, so you can keep playing until you get it, then stop. Turning the loop on in the
-middle of a take starts recording the loop region from there.
+With the loop on, **audio** recording fills the loop range: each time round, the new pass
+replaces the previous one, so you can keep playing until you get it, then stop. Turning the
+loop on in the middle of a take starts recording the loop region from there.
+
+For **MIDI**, the cell next to **Loop** in the transport chooses what a new pass does
+(<Kbd>⌘ ⇧ R</Kbd> or **Transport → Loop record: overdub / replace** switch it too):
+
+- **Overdub** — every pass adds to the take. Build a beat in layers: kick on the first pass,
+  snare on the next, hats after that.
+- **Replace** — the first note you play on a new pass clears what the earlier passes of this
+  take recorded, so only your latest pass remains. A pass you don't play on leaves the take as
+  it is, and notes that were in the clip before you hit record always stay.
+
+A switch takes effect from the next pass, and Nota remembers your choice. Session slots keep
+their own overdub recording.
+
+A key you hold across the loop end keeps sounding, and in the take it becomes two notes: one up
+to the loop end and one from the loop start.
 
 ## Recording from another track
 
