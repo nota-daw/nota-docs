@@ -37,7 +37,11 @@ Double-click a fader to reset it to 0 dB.
 ## Adding tracks
 
 - **Double-click an instrument** in the browser — a new instrument track with that
-  instrument and an empty one-bar clip.
+  instrument and an empty one-bar clip. If an instrument track is selected, the instrument
+  **replaces** that track's instead (its clips and effects stay, and Undo brings the old one
+  back), so you can try several instruments on one part in a row. Hold **⌥** (Alt on Windows
+  and Linux) while double-clicking to always get a new track. Racks are never replaced this
+  way.
 - **Drag** an instrument, a sample or a loop from the browser onto the empty space below the
   tracks. Dropped onto an existing instrument track instead, an instrument **replaces** that
   track's instrument; a sample dropped on an audio track lands on it.
