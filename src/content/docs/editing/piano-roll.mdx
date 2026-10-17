@@ -3,7 +3,7 @@ title: Piano roll
 description: Editing MIDI clips — drawing and moving notes, velocity, grid and quantize, scale, clip envelopes and the generator and transform tools.
 sidebar:
   order: 1
-updated: "0.51.2"
+updated: "0.55.1"
 status: done
 sources:
   - src/native/nota.engine/src/MidiClip.h
@@ -76,6 +76,26 @@ that take [MPE](../../control/midi/#pitch-wheel-aftertouch-and-mpe).
 
 The lane under the notes shows each note's velocity as a stem. Drag a stem to set it; with
 several notes selected, they move together. <Kbd>⇧</Kbd> adds a note to the selection.
+
+## Zoom
+
+| Do this | To |
+|---|---|
+| <Kbd>⌘</Kbd> + wheel | Zoom in time, toward the pointer |
+| <Kbd>⇧</Kbd> + wheel | Scroll in time |
+| <Kbd>⌘ ⌥</Kbd> + wheel | Make the rows taller or shorter |
+| Drag up or down on the keys | Taller (down) or shorter (up) rows |
+| <Kbd>⌥</Kbd> + pinch on a trackpad | Taller or shorter rows |
+| <Kbd>⇧ F</Kbd> or **Fit** in the header | Fit to notes |
+
+Rows run from 6 to 36 pixels high. Zoom in to hit a note precisely, or out to see the whole
+keyboard: at the smallest, all 88 keys fit on screen. The pitch under the pointer stays where
+it is while you zoom. **Fit to notes** — also in the command palette — sizes and scrolls the
+rows so every note in the clip is in view. On Windows and Linux use <Kbd>Ctrl</Kbd> for
+<Kbd>⌘</Kbd> and <Kbd>Alt</Kbd> for <Kbd>⌥</Kbd>.
+
+Each clip remembers its own zoom and scroll; a clip you haven't opened yet starts at the
+standard row height, centred on its notes.
 
 ## The left column
 
