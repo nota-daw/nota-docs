@@ -56,12 +56,15 @@ polyphonic aftertouch and the sustain pedal, but not per-note bend. Switch MPE o
 [Settings ▸ MIDI](../../preferences/midi/); a controller that announces its own range overrides it.
 When you [record](../../editing/recording/), each note keeps its bend, pressure and slide: the take
 plays back as you played it, the expression travels with the note when you move, copy or quantize it,
-and the [piano roll](../../editing/piano-roll/#recorded-mpe) draws it. The pitch wheel, channel pressure
-and sustain pedal aren't recorded.
+and the [piano roll](../../editing/piano-roll/#recorded-mpe) draws it. The pitch wheel, channel pressure,
+the sustain pedal and other controllers are recorded into the clip with the notes.
 
-A keyboard's **sustain pedal** (CC64) holds the notes of [Nota Keys](../../devices/instruments/keys/)
-and reaches plug-ins; it is played live and isn't recorded into clips — automate
-Keys' **Pedal** instead.
+A keyboard's **sustain pedal** (CC64) works on every melodic built-in instrument: while it is down,
+the keys you let go keep sounding, and they are released when the pedal comes up. Striking a
+held key again restarts it. [Nota Keys](../../devices/instruments/keys/) and
+[Nota Mosaic](../../devices/instruments/mosaic/) model the pedal themselves, plug-ins receive it,
+and drums ([Drum Rack](../../devices/racks/drum-rack/), [Rhythm](../../devices/instruments/rhythm/)) ignore it. A pedal recorded
+or drawn in a clip does the same on playback.
 
 ## No MIDI keyboard? Use the computer keyboard
 
