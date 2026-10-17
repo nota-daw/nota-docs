@@ -9,6 +9,7 @@ sources:
   - src/managed/Nota.App/DeviceChainView.cs
   - src/managed/Nota.App/DeviceChainView.Drop.cs
   - src/managed/Nota.App/DeviceChainView.Clipboard.cs
+  - src/managed/Nota.App/DeviceChainView.Fold.cs
   - src/managed/Nota.App/DeviceCardKit.cs
 ---
 
@@ -41,9 +42,21 @@ are controls too (drag the nodes, curves and handles).
 | Do this | To |
 |---|---|
 | Drag the header | Move the device in the chain |
+| Double-click the header | Fold the card into a narrow strip (see below) |
 | Click a device · <Kbd>Delete</Kbd> | Remove it |
-| Right-click the header | **Move left** / **Move right**, **Copy**, **Paste**, **Delete**, presets, **Save preset**, A / B compare, and **Documentation** — this device's page in the manual |
+| Right-click the header | **Move left** / **Move right**, **Copy**, **Paste**, **Delete**, presets, **Save preset**, A / B compare, **Documentation** — this device's page in the manual — and **Fold** |
 | Click the power switch | Bypass the device |
+
+### Folding a device
+
+When a chain is longer than the panel, fold the devices you aren't working on: **double-click** a
+card's header (not its preset picker or switch), or choose **Fold** in its right-click menu. The card
+becomes a narrow strip with its name and its on / off switch, and the rest of the chain moves into
+view. A folded device still plays, bypasses from its switch, drags to a new place and opens its
+menu. **Double-click** the strip (or **Unfold** in its menu) to open the card again. The fold is
+saved with the project.
+
+<Shot id="devices/folded" alt="A device chain with Nota EQ-8 folded into a narrow strip between the instrument and the next effect" />
 
 **A / B compare** keeps two versions of a device's settings: switch between **A** and **B** to compare,
 **Copy A to B** to start a variation.
