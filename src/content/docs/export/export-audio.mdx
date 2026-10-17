@@ -1,6 +1,6 @@
 ---
 title: "Export audio"
-description: "Render the song or the loop to WAV, FLAC or MP3 — sample rate, bit depth or bitrate, true-peak normalising, dither, a release tail, and stems."
+description: "Render the song, the loop or a range you choose to WAV, FLAC or MP3 — sample rate, bit depth or bitrate, true-peak normalising, dither, a release tail, and stems."
 sidebar:
   order: 1
 updated: "0.51.2"
@@ -22,7 +22,7 @@ MP3.
 
 | Option | What it does |
 |---|---|
-| **Range** | **Loop** (the loop range) or **Full song** |
+| **Range** | **Loop** (the loop range), **Full song**, or **Custom**: type a start and an end as bar.beat (`5.1`, or `5.2.3` down to the sixteenth). The end must come after the start; until it does, Export stays off |
 | **Format** | **WAV** (uncompressed), **FLAC** (lossless, roughly half the WAV size) or **MP3** (small and shareable) |
 | **Sample rate** | 44 100, 48 000 or 96 000 Hz — 96 000 is not offered for MP3 (the format tops out at 48 000) |
 | **Bit depth** | WAV: 16-bit, 24-bit or 32-bit float · FLAC: 16-bit or 24-bit |
