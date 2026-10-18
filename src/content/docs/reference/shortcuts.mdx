@@ -40,10 +40,10 @@ Shortcuts are written the macOS way: on Windows and Linux read <Kbd keys="⌘" /
 | <Kbd keys="⌘ ⇧ P" /> | Open / close the command palette — from any window, even while typing |
 | <Kbd keys="↑ ↓" /> · PgUp PgDn | Move through the results |
 | <Kbd keys="Return" /> | Apply where the palette was opened (the target shows in the field) |
-| ⌘Return | An instrument or instrument preset on a new track · a track: open it in Devices |
-| ⌥Return | Replace the selected device instead of inserting after it |
-| ⇧Return | Apply and keep the palette open for the next device |
-| <Kbd keys="Tab" /> · ⇧Tab | Filter: all · actions · tracks · devices · presets |
+| <Kbd keys="⌘ Return" /> | An instrument or instrument preset on a new track · a track: open it in Devices |
+| <Kbd keys="⌥ Return" /> | Replace the selected device instead of inserting after it |
+| <Kbd keys="⇧ Return" /> | Apply and keep the palette open for the next device |
+| <Kbd keys="Tab" /> · <Kbd keys="⇧ Tab" /> | Filter: all · actions · tracks · devices · presets |
 | <Kbd keys="> @ + # ~" /> | Type first to filter: actions, tracks, devices, presets, Modular nodes |
 | <Kbd keys="Esc" /> | Close and go back where you were |
 
@@ -51,12 +51,16 @@ Shortcuts are written the macOS way: on Windows and Linux read <Kbd keys="⌘" /
 
 | Keys | Action |
 |---|---|
-| <Kbd keys="Space" /> | Play / Stop |
+| <Kbd keys="Space" /> | Play / Stop · Stop goes back to where playback started |
+| <Kbd keys="⇧ Space" /> | Play / pause · the playhead stays put and Play carries on from there |
 | <Kbd keys="Return" /> | Stop (again → back to the start) · in the Session grid it launches the selection |
 | <Kbd keys="⌘ R" /> | Record |
 | <Kbd keys="⌘ M" /> | Metronome |
 | <Kbd keys="⌘ L" /> | Loop on / off · loop the selected clips or time range |
 | Double-click loop brace | Loop on / off in the ruler · the region stays, greyed out while off |
+| Drag loop edge · drag loop brace | Resize that end of the loop region · move the whole region · ⌥ off the grid |
+| Right-click ruler | Loop on / off · loop the selection · clear the loop region |
+| <Kbd keys="P" /> | Show playhead · scroll the Arrangement to it without moving it · picks up a paused Follow |
 | <Kbd keys="⌘ ⇧ R" /> | Loop recording: Overdub (every pass adds) / Replace (keep the latest pass) |
 
 ## Arrangement & editing
@@ -139,6 +143,7 @@ Shortcuts are written the macOS way: on Windows and Linux read <Kbd keys="⌘" /
 | Drag in the Bend / Pres / Slide lane | Draw the selected note's MPE curve · ⌥ draws a straight line · drag a point to move it |
 | Double-click in an MPE lane | Add a point · on a point, delete it · right-click to clear the curve |
 | ⌘⌥ + wheel | Zoom rows (vertical zoom) |
+| Click a key | Play it on the track's instrument · ⇧-drag glides through the keys · ⌘-click selects every note of that pitch |
 | Drag on the keys | Zoom rows · down taller, up shorter |
 | ⌥ + pinch | Zoom rows (trackpad) |
 | <Kbd keys="⇧ F" /> | Fit to notes |

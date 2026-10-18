@@ -28,7 +28,7 @@ if (!groups.length) throw new Error('no shortcut groups parsed');
 // Same rule as PreferencesWindow.IsKeyToken: a key has no lower-case letters, or is a named key.
 const named = new Set(['Space', 'Return', 'Delete', 'Tab', 'Esc']);
 const seps = new Set(['/', '·', '+']);
-const isKey = (t) => named.has(t) || seps.has(t) || !/[a-z]/.test(t);
+const isKey = (t) => named.has(t.replace(/^[⌘⇧⌥⌃]+/, '')) || seps.has(t) || !/[a-z]/.test(t);
 const splitMods = (t) => {
   const out = [];
   let rest = t;

@@ -9,6 +9,7 @@ sources:
   - src/managed/Nota.App/MainWindow.axaml
   - src/managed/Nota.App/MainWindow.axaml.cs
   - src/managed/Nota.App/MainWindow.Input.cs
+  - src/managed/Nota.App/ArrangementView.Controls.cs
   - src/managed/Nota.App/SnapChip.cs
   - src/managed/Nota.Application/Editing/SnapGrid.cs
   - src/managed/Nota.Presentation/ViewModels/TransportViewModel.cs
@@ -28,11 +29,13 @@ the settings that apply to the whole project.
 | Control | Key | What it does |
 |---|---|---|
 | **Play** | <Kbd>Space</Kbd> | Start playback; <Kbd>Space</Kbd> again stops. |
+| **Pause** | <Kbd>⇧ Space</Kbd> | Stop and leave the playhead where it is; the next Play carries on from there. |
 | **Stop** | <Kbd>Return</Kbd> | Stop, Session clips included. Press it again to jump back to the start of the song. |
 | **Record** | <Kbd>⌘ R</Kbd> | Record onto the armed tracks — see [Recording](../../editing/recording/). |
 
 When you stop, the playhead returns to where playback started, so you can listen to the same
-passage again and again. Click in the ruler to move the playhead somewhere else.
+passage again and again. To stop where you are instead, pause with <Kbd>⇧ Space</Kbd> (also
+**Transport ▸ Play / pause**). Click in the ruler to move the playhead somewhere else.
 
 The **position** readout shows bars.beats.sixteenths. Click it to switch to minutes:seconds
 and back.
@@ -60,6 +63,15 @@ if clips or a time range are selected, it first sets the loop to them. Drag alon
 draw a loop range by hand. Double-click the loop range on the ruler to turn looping off without
 losing the range: it stays on the ruler in grey, and another double-click turns it back on.
 
+To change the range, drag one of its ends on the ruler: the cursor turns into a sideways arrow
+and the edge brightens where you can grab it, and the other end stays put. Drag the range
+itself to move it without changing its length. Both snap to the grid; hold <Kbd>⌥</Kbd> to
+place them freely. While you drag, the ruler shows the start, the end and the length.
+
+**Right-click** the ruler to turn looping on or off, loop the selection, or **Clear loop
+region**. Clearing forgets the range (turning the loop off keeps it); clips, notes and
+automation are not touched.
+
 Notes you hold across the loop end keep sounding, and release tails ring on into the next pass.
 
 The **Overdub** / **Replace** cell next to it (<Kbd>⌘ ⇧ R</Kbd>) sets how MIDI recorded in the
@@ -82,7 +94,12 @@ count-in. Nota remembers the setting.
 - **Snap** (the magnet) — clips snap to the grid while you drag them (<Kbd>⌘ 4</Kbd>). Hold
   <Kbd>⌥</Kbd> while dragging to place a clip freely just this once.
 - **Follow** — the Arrangement scrolls to keep the playhead in view. Also in **View ▸ Follow
-  playhead**.
+  playhead**. Scroll away while it plays and Follow pauses so you can look around: the button
+  turns into an outline, and <Kbd>P</Kbd>, a click on the button or the next Play picks it up
+  again. It never scrolls under a clip you are dragging.
+- **Show playhead** — <Kbd>P</Kbd> (or **View ▸ Show playhead**) scrolls the Arrangement to the
+  playhead without moving it. When the playhead is off screen, an arrow at that end of the
+  ruler points to it; click the arrow to do the same.
 - **Automation** — shows the automation lanes of the tracks (<Kbd>⌘ ⇧ A</Kbd>). The button
   next to it hands controls you've moved by hand back to their automation — see
   [Automation](../../editing/automation/).
