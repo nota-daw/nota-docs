@@ -10,6 +10,7 @@ sources:
   - src/managed/Nota.App/PianoRollView.cs
   - src/managed/Nota.App/PianoRollView.Expression.cs
   - src/managed/Nota.App/ClipEditorView.cs
+  - src/managed/Nota.App/MainWindow.Detail.cs
   - src/managed/Nota.App/ClipEditorKit.cs
   - src/managed/Nota.App/MidiToolsView.cs
   - src/managed/Nota.Application/Midi/MidiToolCatalog.cs
@@ -48,6 +49,22 @@ tab of the panel at the bottom.
 Edits play straight away — drag a note while the loop runs and you hear it move. The playhead
 shows in the piano roll whether the transport is playing or stopped, so you can see where
 playback starts.
+
+## Hearing notes
+
+With the **speaker** switch in the clip editor's header on (it is by default), a note plays on
+the track's instrument while you place it, click it or drag it, and plays again at each new
+pitch as you drag — so you can find a pitch by ear without starting playback. Turn the switch
+off to edit in silence; Nota remembers it. Nothing plays this way while a take is recording.
+
+The keys on the left are a keyboard too, whatever the switch says:
+
+| Do this | To |
+|---|---|
+| Click a key | Play it until you let go |
+| <Kbd>⇧</Kbd>-drag along the keys | Glide through them, playing each one |
+| <Kbd>⌘</Kbd>-click a key · <Kbd>⌘ ⇧</Kbd>-click | Select every note of that pitch · add them to the selection |
+| Drag up or down on the keys | Zoom the rows (the key stops sounding) |
 
 ## Recorded MPE
 
