@@ -164,6 +164,7 @@ shots:
   - { id: devices/instruments/volt/filter, source: app, scene: device, args: {instrument: 6, tab: "Filter"} }
   - { id: devices/instruments/volt/env, source: app, scene: device, args: {instrument: 6, tab: "Env"} }
   - { id: devices/instruments/volt/mod, source: app, scene: device, args: {instrument: 6, tab: "Mod"} }
+  - { id: devices/instruments/volt/voice, source: app, scene: device, args: {instrument: 6, preset: "volt/Super Saw 7", tab: "Voice"} }
   - { id: devices/instruments/bass/mod, source: app, scene: device, args: {instrument: 7, tab: "Mod"} }
   - { id: devices/instruments/pendulum/voice, source: app, scene: device, args: {instrument: 8, tab: "Voice"} }
   - { id: devices/instruments/operator/algorithm, source: app, scene: device, args: {instrument: 9, tab: "Algorithm"} }

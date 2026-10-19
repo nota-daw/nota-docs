@@ -3,18 +3,25 @@ title: "Nota Synth"
 description: "Базовый субтрактивный синтезатор — один осциллятор с unison, огибающая громкости и многорежимный фильтр. Быстро настраивается и почти не нагружает процессор."
 sidebar:
   order: 1
-updated: "0.50.1"
+updated: "0.55.1"
 status: done
 sources:
   - src/native/nota.engine/src/Synth.h
   - src/managed/Nota.App/DeviceCards/Instruments/SynthInstrumentCard.cs
 ---
 
+import { Aside } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
 
-Nota Synth — самый простой инструмент Nota: один осциллятор, огибающая и фильтр. Его получает
-новый трек по умолчанию, и это самый быстрый путь к басу, пэду или лиду, который не спорит с
-миксом.
+<Aside title="Теперь это Nota Volt">
+Nota Synth больше не предлагается в браузере и для новых треков: [Nota Volt](../volt/) умеет
+всё то же (ширина импульса, унисон на 1 / 2 / 4 / 7 голосов со стереоразносом, Poly / Mono /
+Legato), и все его пресеты перенесены туда. Проект, где уже есть Nota Synth, по-прежнему
+открывается, играет и показывает эту карточку.
+</Aside>
+
+Nota Synth был самым простым инструментом Nota: один осциллятор, огибающая и фильтр; его
+получал новый трек по умолчанию.
 
 <Shot id="devices/instruments/synth/card" alt="Nota Synth в большом виде, вкладка Osc" />
 
