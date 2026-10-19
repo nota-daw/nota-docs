@@ -29,7 +29,7 @@ shots:
   - { id: start-here/main-window-devices, source: app, scene: main, args: {view: "arrangement", select: "Keys"} }
   - { id: start-here/whats-new, source: app, scene: whatsnew }
   - { id: start-here/about, source: app, scene: about }
-  - { id: start-here/update-notice, source: app, scene: main, args: {view: "arrangement", update: "available", element: "StatusBar"} }
+  - { id: start-here/update-notice, source: app, scene: main, args: {view: "arrangement", update: "available", element: "UpdateHost"} }
   - { id: basics/unsaved-dialog, source: app, scene: unsaved }
   - { id: basics/transport-bar, source: app, scene: main, args: {view: "arrangement", element: "TransportBar"} }
   - { id: basics/command-palette, source: app, scene: palette, args: {select: "Bass", card: 0, origin: "devices", query: "тёплый пэд", crop: true} }

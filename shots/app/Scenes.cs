@@ -34,7 +34,7 @@ namespace NotaDocsShots;
 ///   mixer     width, height
 ///             update (available | downloading | ready: a newer release in the status bar, element: StatusBar)
 ///   prefs     page (index in Settings' sidebar, 0 = Audio), tab (a switch on the page),
-///             check (Updates: run a check against the local feed first)
+///             check (Updates: run a check against the local feed first), update (as main)
 ///   connect   the Connect phone popup, with Nota Remote switched on
 ///   start · about · whatsnew · export · unsaved
 /// </summary>
@@ -402,6 +402,7 @@ public sealed class Scenes
         win.Show();
         Pump(10);
         if (shot.Bool("check")) CheckUpdates(settings);
+        else if (shot.Str("update") is string stage) FakeUpdate(stage);
         Invoke(win, "Select", shot.Int("page") ?? 0);
         Pump(30);
         // A page's own switch (Downloads: "Sample Packs", "AI Models"); registries load from the
