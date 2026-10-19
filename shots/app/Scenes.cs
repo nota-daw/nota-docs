@@ -414,9 +414,9 @@ public sealed class Scenes
 
     private void WhatsNew(Shot shot)
     {
-        var repo = Environment.GetEnvironmentVariable("NOTA_REPO") ?? throw new ArgumentException("NOTA_REPO not set");
-        var entries = ChangelogParser.Parse(File.ReadAllText(Path.Combine(repo, "CHANGELOG.md")))
-            .Where(e => e.Sections.Count > 0 && !e.Version.Contains("Unreleased", StringComparison.OrdinalIgnoreCase)).Take(shot.Int("entries") ?? 1).ToList();
+        // What the app shows: a release's curated notes where it has them, else its changelog section.
+        var entries = AppInfo.Changelog()
+            .Where(e => e.Sections.Count > 0 && SemVer.TryParse(e.Version, out _)).Take(shot.Int("entries") ?? 1).ToList();
         Simple(shot, new WhatsNewWindow(entries));
     }
 
