@@ -3,7 +3,7 @@ title: Установка Nota
 description: Как скачать Nota для macOS, Windows или Linux и открыть её в первый раз.
 sidebar:
   order: 1
-updated: "0.55.1"
+updated: "0.56.1"
 status: done
 sources:
   - README.md
@@ -100,6 +100,9 @@ xattr -dr com.apple.quarantine /Applications/Nota.app
 2. Запустите его двойным щелчком или командой `./Nota-<version>-x86_64.AppImage`.
 
 </Steps>
+
+AppImage работает на любом дистрибутиве с glibc 2.28 и новее — RHEL, Alma и Rocky 8 и 9,
+Debian 10+, Ubuntu 18.10+ и всё моложе.
 
 Настройки Nota хранит в `~/.config/nota` (или `$XDG_CONFIG_HOME/nota`).
 

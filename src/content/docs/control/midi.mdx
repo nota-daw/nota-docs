@@ -3,7 +3,7 @@ title: "MIDI controllers"
 description: "Playing Nota from a MIDI keyboard or the computer keyboard, choosing which MIDI inputs Nota listens to, and recording what you play."
 sidebar:
   order: 1
-updated: "0.50.1"
+updated: "0.56.1"
 status: done
 sources:
   - src/native/nota.engine/src/MidiClip.h
@@ -51,8 +51,9 @@ expression:
 | [Physical](../../devices/instruments/physical/) | Retunes the ringing body | Bows it — a held note sustains | How long it rings |
 | [Keys](../../devices/instruments/keys/) | Retunes the tine | Drives the tine harder into the pickup — more bark | Shifts the pickup's symmetry |
 
-An Instrument Rack passes expression to its chains. A plug-in gets the wheel, channel pressure,
-polyphonic aftertouch and the sustain pedal, but not per-note bend. Switch MPE off, or change the per-note bend range, in
+An Instrument Rack passes expression to its chains. A plug-in gets every controller — the wheel,
+channel pressure, polyphonic aftertouch, the sustain pedal and any other CC, so a piano plug-in can
+half-pedal — but not per-note bend. Switch MPE off, or change the per-note bend range, in
 [Settings ▸ MIDI](../../preferences/midi/); a controller that announces its own range overrides it.
 When you [record](../../editing/recording/), each note keeps its bend, pressure and slide: the take
 plays back as you played it, the expression travels with the note when you move, copy or quantize it,
