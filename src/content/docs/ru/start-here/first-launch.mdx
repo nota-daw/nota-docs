@@ -3,7 +3,7 @@ title: Первый запуск
 description: Стартовое окно, недавние проекты, обновления, What's new и восстановление несохранённой работы.
 sidebar:
   order: 2
-updated: "0.51.2"
+updated: "0.56.1"
 status: done
 sources:
   - src/managed/Nota.App/WelcomeWindow.cs
@@ -11,6 +11,7 @@ sources:
   - src/managed/Nota.App/WhatsNewWindow.cs
   - src/managed/Nota.App/AboutWindow.cs
   - src/managed/Nota.App/MainWindow.Recovery.cs
+  - src/managed/Nota.App/MainWindow.Updates.cs
 ---
 
 import { Aside } from '@astrojs/starlight/components';
@@ -44,7 +45,9 @@ import Kbd from '@components/Kbd.astro';
 Если доступна новая Nota, в стартовом окне появляется баннер: **Update** скачивает её с
 индикатором прогресса и сверяет с контрольной суммой релиза, **Release notes** открывает
 страницу релиза, **Dismiss** скрывает баннер. Когда обновление скачано, нажмите
-**Restart now** — или **Later**, и оно установится при следующем выходе.
+**Restart now** — или **Later**, и оно установится при следующем выходе. То же обновление видно
+и в строке состояния главного окна, так что вы не пропустите его, даже если стартовое окно
+отключено (см. [Обновления](../install/#обновления)).
 
 ## What's new
 
