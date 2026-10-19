@@ -138,7 +138,9 @@ public sealed class Scenes
         }
         if (shot.Str("preset") is string preset)
         {
-            var result = deviceIndex >= 0 && shot.Int("midi") is null
+            // An effect preset loads onto its device, an instrument preset onto the track's
+            // instrument (index -1); a MIDI-effect preset adds its device.
+            var result = shot.Int("midi") is null
                 ? _presets.ApplyInPlace(_engine, preset, track, deviceIndex)
                 : _presets.Apply(_engine, preset, track);
             if (!string.IsNullOrEmpty(result) && result.StartsWith("Unknown")) throw new ArgumentException($"{result} ({preset})");

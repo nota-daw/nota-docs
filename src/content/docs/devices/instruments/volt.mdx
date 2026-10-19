@@ -3,7 +3,7 @@ title: "Nota Volt"
 description: "Two-path virtual-analog synth — two oscillators and noise routed to two filters, filter and amp envelopes, two LFOs and vibrato, a 7 × 6 mod matrix and eight macros."
 sidebar:
   order: 5
-updated: "0.50.1"
+updated: "0.55.1"
 status: done
 sources:
   - src/native/nota.engine/src/VoltSynth.h
@@ -32,8 +32,14 @@ The **wheels** on the left (pitch bend, mod wheel) stay on every tab. The rail o
 
 ## Osc
 
-Osc 1, Osc 2 and Noise as a table: **wave**, **Oct**, **Semi**, **Fine**, start **Phase**,
-**Level** and **Route** (which filter it goes to). Noise has a **Color**.
+Osc 1, Osc 2 and Noise as a table: **wave**, **Oct**, **Semi**, **Fine**, **Shape**, **PW**,
+start **Phase**, **Level** and **Route** (which filter it goes to). Noise has a **Color**.
+
+- **Shape** morphs the chosen wave toward the next one in the order sine → triangle → saw →
+  square. At 0 (off) you hear the wave as picked; halfway from saw you hear half saw, half
+  square. On the square it does nothing, as there is no wave after it.
+- **PW** (pulse width) narrows or widens the square from 5 % to 95 %. At 50 % it is a plain
+  square; a narrow pulse sounds thinner and more nasal.
 
 ## Filter
 
@@ -42,6 +48,13 @@ Osc 1, Osc 2 and Noise as a table: **wave**, **Oct**, **Semi**, **Fine**, start 
 Two state-variable filters — **LP**, **HP**, **BP** or **Notch**, 12 or 24 dB — each with
 cutoff, resonance, and **Env**, **Key** and **LFO** amounts. Drag the response pad for cutoff and
 resonance. On Filter 1, **To F2** sends part of it into Filter 2 for serial filtering.
+
+Two knobs act on both filters, so they stay put when you switch between 1 and 2:
+
+- **Drive** saturates the signal on its way into the filters, from clean up to 12 times the
+  gain. It adds grit and makes the resonance growl, as on an acid bass.
+- **Wheel** (Wheel → LFO) lets the mod wheel open each filter's LFO onto its cutoff, up to ±2
+  octaves on top of the filter's own LFO amount. Raise the wheel to bring in a wobble.
 
 ## Env
 
@@ -69,19 +82,47 @@ the three source levels, Filter 2's cutoff and either LFO's rate.
 
 ## Rail
 
-**Global:** voice mode (**Poly 16** / **Mono**), bend range (1–12 semitones), cutoff, resonance,
-glide, gain, pan. **Voice:** both output amps, **Unison** and **Vel → Amp** / **Vel → Filter**.
+**Global:** voice mode, bend range (1–12 semitones), cutoff, resonance, glide, **Gain**,
+**Drive** and **Pan**.
+
+- **Poly** plays up to 16 notes. **Mono** plays one: each new note starts its envelopes again,
+  and when you let go of the top key the note falls back to a key you are still holding.
+  **Legato** is Mono where a note played over a held one slides in without a new attack.
+- **Drive** saturates the output, from clean up to 8 times the gain, and keeps the level in
+  check as it pushes.
+
+**Voice:** both output amps (level and pan), the unison section, and **Vel Amp** / **Vel Fil**
+(how much velocity changes the level and the cutoff).
+
+- **Unison** picks the voices per oscillator. **1** adds one detuned partner to each
+  oscillator, and **Detune** sets how far (up to 25 cents). **2**, **4** and **7** stack that
+  many copies of each oscillator, spread across ±50 cents by **Detune**, and **Spread** pans
+  them across the stereo field: the supersaw sound. With 2 to 7 voices and some Spread, each
+  side of the stereo field gets its own filter.
+
+<Shot id="devices/instruments/volt/voice" alt="Nota Volt, Voice rail with the Super Saw 7 preset: Unison 7, Detune and Spread" />
 
 ## Presets
 
-25 factory presets: pads (**Warm Pad**, **String Machine**, **Choir Pad**, **Glass Pad**), basses
+74 factory presets. Volt's own 25: pads (**Warm Pad**, **String Machine**, **Choir Pad**, **Glass Pad**), basses
 (**Fat Bass**, **Sub Sine**, **Wobble Bass**, **Acid Bass**, **Reese Bass**, **Growl Bass**), leads
 (**Bright Lead**, **Super Saw**, **Solo Lead**, **Hard Lead**), keys (**Soft Pluck**, **Drifting
 Keys**, **Electric Keys**, **Bell Tone**, **Clav Stab**) and two-path or motion patches (**Split
 Filter**, **Dark Drone**, **Sample & Hold**, **Noise Sweep**, **Siren**, **Serial Filters**).
+
+The other 49 are the former [Nota Synth](../synth/) and [Nota Bass](../bass/) libraries, rebuilt
+on Volt so they sound the same. Synth's are filed with Volt's own (Pads, Bass, Leads, Keys &
+Plucks, Bells & Mallets, Textures & FX). Bass's keep their own folders: **Sub Bass**, **Analog
+Bass**, **Acid**, **Growl & Wobble** and **Electric Bass**. Where Volt already had a preset of
+the same name, the ported one was renamed: for example Synth's Super Saw is **Super Saw 7** and
+Bass's Reese Bass is **Deep Reese**.
 
 ## Tips
 
 - **Two sounds in one:** send Osc 1 to F1 (low-pass, panned left) and Osc 2 to F2 (band-pass,
   panned right).
 - **Classic S&H bleeps:** LFO 1 on S&H, routed to cutoff, synced to 1/16.
+- **Supersaw:** saw on both oscillators, **Unison 7**, Detune around 30 %, Spread up.
+- **Sub under a bass:** Osc 2 on sine, Oct −1, routed to the same filter.
+- **303 line:** saw or square into a 24 dB low-pass, high resonance, filter envelope up, some
+  Drive, **Legato** with a little glide.

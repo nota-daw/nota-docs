@@ -3,7 +3,7 @@ title: "Devices"
 description: "How a track's device chain works — instruments, audio effects, MIDI effects and racks; adding, reordering, bypassing, presets, A/B compare — and an index of every built-in device."
 sidebar:
   order: 0
-updated: "0.50.1"
+updated: "0.55.1"
 status: done
 sources:
   - src/managed/Nota.App/DeviceChainView.cs
@@ -98,12 +98,10 @@ Any control on any device can be [automated](../editing/automation/), mapped to 
 ## Instruments
 
 <CardGrid>
-  <LinkCard title="Nota Synth" description="One-oscillator subtractive synth" href="instruments/synth/" />
   <LinkCard title="Nota Sampler" description="Plays a sample across the keys" href="instruments/sampler/" />
   <LinkCard title="Nota Physical" description="Modal synthesis: mallets, bells, plucks" href="instruments/physical/" />
   <LinkCard title="Nota Aurora" description="Wavetable synth" href="instruments/aurora/" />
-  <LinkCard title="Nota Volt" description="Two-path virtual analog" href="instruments/volt/" />
-  <LinkCard title="Nota Bass" description="Mono-first bass synth" href="instruments/bass/" />
+  <LinkCard title="Nota Volt" description="Two-path virtual analog, the default instrument" href="instruments/volt/" />
   <LinkCard title="Nota Pendulum" description="Generative swinging arpeggios" href="instruments/pendulum/" />
   <LinkCard title="Nota Operator" description="4-operator FM" href="instruments/operator/" />
   <LinkCard title="Nota Grain" description="Granular sampler" href="instruments/grain/" />
@@ -115,6 +113,9 @@ Any control on any device can be [automated](../editing/automation/), mapped to 
   <LinkCard title="Nota Keys" description="Modelled electric piano — tine, suitcase, reed, clav" href="instruments/keys/" />
   <LinkCard title="Nota Mosaic" description="Multisample instrument — zones, layers, round-robin" href="instruments/mosaic/" />
 </CardGrid>
+
+[Nota Synth](instruments/synth/) and [Nota Bass](instruments/bass/) are no longer offered for new
+tracks: Nota Volt covers both and carries their presets. Projects that use them still open and play.
 
 ## Audio effects
 
