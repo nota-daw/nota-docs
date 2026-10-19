@@ -3,14 +3,23 @@ title: "Nota Bass"
 description: "Mono-first bass synth — a morphing oscillator, a sub, a drive-able filter with its own envelope, an LFO for wobble, glide and legato."
 sidebar:
   order: 6
-updated: "0.50.1"
+updated: "0.55.1"
 status: done
 sources:
   - src/native/nota.engine/src/BassSynth.h
   - src/managed/Nota.App/DeviceCards/Instruments/BassInstrumentCard.cs
 ---
 
+import { Aside } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
+
+<Aside title="Nota Volt has taken over">
+Nota Bass is no longer offered in the browser or for new tracks: [Nota Volt](../volt/) does
+everything it did (the shape morph, pulse width, the sub as Osc 2 an octave down, filter and
+output drive, the held-note stack, Legato and the wheel-driven wobble) and carries all of its
+presets, in its own folders. A project that already uses Nota Bass still opens, plays and
+shows this card.
+</Aside>
 
 Nota Bass is tuned for low end: one oscillator that morphs from sine to pulse, a sub oscillator
 underneath, a filter with drive, and a mono voice with glide. Subs, 808s, acid lines, reese and

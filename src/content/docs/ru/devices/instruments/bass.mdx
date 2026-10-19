@@ -3,14 +3,23 @@ title: "Nota Bass"
 description: "Басовый синтезатор с упором на моно — морфирующий осциллятор, саб, фильтр с драйвом и своей огибающей, LFO для «воблов», glide и легато."
 sidebar:
   order: 6
-updated: "0.50.1"
+updated: "0.55.1"
 status: done
 sources:
   - src/native/nota.engine/src/BassSynth.h
   - src/managed/Nota.App/DeviceCards/Instruments/BassInstrumentCard.cs
 ---
 
+import { Aside } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
+
+<Aside title="Теперь это Nota Volt">
+Nota Bass больше не предлагается в браузере и для новых треков: [Nota Volt](../volt/) умеет
+всё то же (плавная смена формы, ширина импульса, саб как Osc 2 на октаву ниже, драйв фильтра и
+выхода, стек удерживаемых нот, Legato и «вобл» от колеса), и все его пресеты перенесены туда, в
+свои папки. Проект, где уже есть Nota Bass, по-прежнему открывается, играет и показывает эту
+карточку.
+</Aside>
 
 Nota Bass настроен на низ: один осциллятор, который плавно меняет форму от синуса до импульса,
 саб-осциллятор под ним, фильтр с драйвом и моноголос с glide. Сабы, 808, эсид-линии, риз и
