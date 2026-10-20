@@ -137,6 +137,7 @@ shots:
   - { id: devices/audio-effects/flanger/card, source: app, scene: device, args: {effect: 23} }
   - { id: devices/audio-effects/phaser/card, source: app, scene: device, args: {effect: 24} }
   - { id: devices/audio-effects/chorus/card, source: app, scene: device, args: {effect: 25} }
+  - { id: devices/audio-effects/vocoder/card, source: app, scene: device, args: {effect: 26, clip: voice} }
 
   # ── MIDI effects (on a Nota Synth track)
   - { id: devices/midi-effects/arp/card, source: app, scene: device, args: {midi: 0, instrument: 0} }

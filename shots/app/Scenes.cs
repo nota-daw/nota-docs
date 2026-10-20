@@ -22,6 +22,8 @@ namespace NotaDocsShots;
 /// the whole frame or a cropped control. Args come from the manifest entry's `args`.
 ///
 ///   device    instrument | effect | midi (kind id), preset, tab, card (index in the chain),
+///             clip (a demo sample on an effect's track), sidechain + sidechainName (a demo sample on
+///             a second track routed as the effect's key),
 ///             chainInstrument (an Instrument Rack's chain 1 instrument), trackName, window (click this text — a
 ///             chain's GUI — and shoot the device window it opens)
 ///   main      view (arrangement | session | modular), select (track name), clip (track name,
@@ -110,7 +112,16 @@ public sealed class Scenes
         if (shot.Int("effect") is int fx)
         {
             track = _engine.AddAudioTrack();
+            if (shot.Str("clip") is string clip) _engine.AddAudioClip(track, _demo.Sample(clip), 0);
             deviceIndex = _engine.AddBuiltinDevice(track, fx);
+            // A keyed effect (a vocoder's modulator, a compressor's key): another track with a sample.
+            if (shot.Str("sidechain") is string key)
+            {
+                int src = _engine.AddAudioTrack();
+                _engine.AddAudioClip(src, _demo.Sample(key), 0);
+                _engine.SetTrackName(src, shot.Str("sidechainName") ?? "Lead vox");
+                _engine.SetDeviceSidechainSource(track, deviceIndex, src);
+            }
         }
         else if (shot.Int("instrument") == 4)
         {
