@@ -264,7 +264,7 @@ sections:
     - {page: preferences/plugins,    sources: [src/managed/Nota.App/PreferencesWindow.cs], status: done}
     - {page: preferences/downloads,  sources: [src/managed/Nota.App/PreferencesWindow.Downloads.cs, src/managed/Nota.App/PreferencesWindow.Store.cs, src/managed/Nota.App/PreferencesWindow.Samples.cs, src/managed/Nota.App/PreferencesWindow.Models.cs], status: done}
     - {page: preferences/library,    sources: [src/managed/Nota.App/PreferencesWindow.cs], status: done}
-    - {page: preferences/appearance, sources: [src/managed/Nota.App/PreferencesWindow.cs, src/managed/Nota.Application/Appearance.cs], covers: [colour theme Dark/Light/Follow system with Studio and Ember themes, waveforms, AI control], status: done}
+    - {page: preferences/appearance, sources: [src/managed/Nota.App/PreferencesWindow.cs, src/managed/Nota.Application/Appearance.cs, src/managed/Nota.Application/InterfaceScale.cs, src/managed/Nota.App/Theme/NotaUiScale.cs], covers: [colour theme Dark/Light/Follow system with Studio and Ember themes, waveforms, interface scale 75–200 %, AI control], status: done}
     - {page: preferences/shortcuts,  sources: [src/managed/Nota.App/PreferencesWindow.cs], status: done}
     # mockup for all: Nota Settings.html
 
