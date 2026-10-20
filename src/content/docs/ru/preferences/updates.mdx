@@ -1,0 +1,36 @@
+---
+title: "Updates"
+description: "Settings ▸ Updates — автоматическая проверка новых версий, Check now и обновление на месте."
+sidebar:
+  order: 10
+since: "0.56.1"
+updated: "0.56.1"
+status: done
+sources:
+  - src/managed/Nota.App/PreferencesWindow.Updates.cs
+  - src/managed/Nota.App/AppUpdates.cs
+  - src/managed/Nota.App/MainWindow.Updates.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+<Shot id="preferences/updates" alt="Settings ▸ Updates" />
+
+## Automatic updates
+
+**Check for updates automatically** — при каждом запуске и раз в сутки, пока Nota открыта, она
+спрашивает GitHub, не вышла ли новая версия. По умолчанию включено. Ничего не скачивается, пока
+вы не нажмёте **Update**; если выключить, Nota проверяет только по вашей команде.
+
+## This version
+
+Здесь видно, какая версия у вас и что нашла последняя проверка: что ваша версия последняя, что
+вышла новая или что до GitHub не удалось достучаться. **Check now** проверяет ещё раз.
+
+Если вышла новая версия, **Update** скачивает её прямо отсюда (прогресс виден на странице и в
+строке состояния, **Cancel** останавливает загрузку). Она установится, когда вы закроете Nota,
+или сразу — по **Restart to update** в строке состояния. Копия, которая не может заменить себя
+сама (сборка для разработки или запущенная прямо с образа диска), так и пишет, а кнопка
+называется **Download** и открывает страницу релиза.
+
+Где ещё Nota сообщает о новой версии — в разделе [Обновления](../../start-here/install/#обновления).

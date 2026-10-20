@@ -29,6 +29,7 @@ shots:
   - { id: start-here/main-window-devices, source: app, scene: main, args: {view: "arrangement", select: "Keys"} }
   - { id: start-here/whats-new, source: app, scene: whatsnew }
   - { id: start-here/about, source: app, scene: about }
+  - { id: start-here/update-notice, source: app, scene: main, args: {view: "arrangement", update: "available", element: "UpdateHost"} }
   - { id: basics/unsaved-dialog, source: app, scene: unsaved }
   - { id: basics/transport-bar, source: app, scene: main, args: {view: "arrangement", element: "TransportBar"} }
   - { id: basics/command-palette, source: app, scene: palette, args: {select: "Bass", card: 0, origin: "devices", query: "тёплый пэд", crop: true} }
@@ -92,6 +93,7 @@ shots:
   - { id: preferences/library, source: app, scene: prefs, args: {page: 6} }
   - { id: preferences/appearance, source: app, scene: prefs, args: {page: 7} }
   - { id: preferences/shortcuts, source: app, scene: prefs, args: {page: 8} }
+  - { id: preferences/updates, source: app, scene: prefs, args: {page: 9, check: true} }
 
   # ── Instruments — app card (both themes) + every mockup screen
   - { id: devices/instruments/synth/card, source: app, scene: device, args: {instrument: 0, tab: "L"} }

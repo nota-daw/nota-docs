@@ -4,7 +4,7 @@ description: The start window, recent projects, updates, What's new and recoveri
 sidebar:
   order: 2
 since: "0.20.0"
-updated: "0.51.2"
+updated: "0.56.1"
 status: done
 sources:
   - src/managed/Nota.App/WelcomeWindow.cs
@@ -12,6 +12,7 @@ sources:
   - src/managed/Nota.App/WhatsNewWindow.cs
   - src/managed/Nota.App/AboutWindow.cs
   - src/managed/Nota.App/MainWindow.Recovery.cs
+  - src/managed/Nota.App/MainWindow.Updates.cs
 ---
 
 import { Aside } from '@astrojs/starlight/components';
@@ -47,7 +48,9 @@ window behind it.
 The start window also shows a banner when a new Nota is available: **Update** downloads it
 with a progress bar and checks it against the release's checksum, **Release notes** opens the
 release page, **Dismiss** hides the banner. Once it's downloaded, choose **Restart now** — or
-**Later**, and it installs the next time you quit.
+**Later**, and it installs the next time you quit. The same update shows in the main window's
+status bar too, so you don't miss it when the start window is off (see
+[Updates](../install/#updates)).
 
 ## What's new
 
