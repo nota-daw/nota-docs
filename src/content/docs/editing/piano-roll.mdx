@@ -3,7 +3,7 @@ title: Piano roll
 description: Editing MIDI clips — drawing and moving notes, velocity, grid and quantize, scale, clip envelopes and the generator and transform tools.
 sidebar:
   order: 1
-updated: "0.55.1"
+updated: "0.56.1"
 status: done
 sources:
   - src/native/nota.engine/src/MidiClip.h
@@ -13,6 +13,8 @@ sources:
   - src/managed/Nota.App/MainWindow.Detail.cs
   - src/managed/Nota.App/ClipEditorKit.cs
   - src/managed/Nota.App/MidiToolsView.cs
+  - src/managed/Nota.App/PianoRollView.ClipStrip.cs
+  - src/managed/Nota.Application/Editing/ClipSet.cs
   - src/managed/Nota.Application/Midi/MidiToolCatalog.cs
   - src/managed/Nota.Application/Midi/MidiGenerators.cs
   - src/managed/Nota.Application/Midi/MidiTransforms.cs
@@ -96,6 +98,32 @@ that take [MPE](../../control/midi/#pitch-wheel-aftertouch-and-mpe).
 
 The lane under the notes shows each note's velocity as a stem. Drag a stem to set it; with
 several notes selected, they move together. <Kbd>⇧</Kbd> adds a note to the selection.
+
+## Several clips at once
+
+To edit notes across clips — a bass line split over several clips, or a melody you write
+against the chords of another track — select two or more MIDI clips in the Arrangement (on
+one track or several) and double-click one of them. Right-click → **Edit selected clips
+together**, or the same command in the command palette, does it too.
+
+<Shot id="editing/multi-clip-editor" alt="Two bass clips and two chord clips open together, the clip strip under the ruler showing the active bass clip" />
+
+The notes of every open clip sit on the Arrangement's bars, each in its track's colour. The
+clip you double-clicked is the **active** clip: its notes are brightest, the header and the
+left column show it, **Envelopes** edits it, and new notes go into it. The other clips' notes
+are quieter but just as editable.
+
+- Select, move, transpose, quantize, delete or run a **Tool** across clips — each note stays
+  in its own clip, and one undo reverts the whole edit.
+- Drag a note past the seam into the next open clip of its track and it moves into that
+  clip. A gap between clips, or a clip that isn't open, stops it at the edge.
+- The **clip strip** under the ruler shows the open clips. Click one to make it active (a
+  click on a note of another clip does the same); click its lock to keep it as a dimmed
+  **reference** that you can see and hear but not change. The active clip can't be locked.
+- While the **Clip** tab is open it follows the Arrangement: select more clips and they
+  appear together, select one and it shows on its own.
+- <Kbd>⌘ D</Kbd> copies that run past a clip's end carry on into the next open clip;
+  copies with no clip to land in are left out.
 
 ## Zoom
 

@@ -87,8 +87,8 @@ sections:
 
   editing:
     - page: editing/piano-roll
-      covers: [MIDI clip editor, draw/select/move notes, velocity, keys (arrows, ⇧ octave, ⌘A/⌘D), drum pattern view, typing notes from the computer keyboard]
-      sources: [src/managed/Nota.App/PianoRollView.cs, src/managed/Nota.App/ClipEditorView.cs, src/managed/Nota.App/ClipEditorKit.cs, src/managed/Nota.App/DrumPatternView.cs, src/managed/Nota.App/MainWindow.Input.cs]
+      covers: [MIDI clip editor, draw/select/move notes, velocity, keys (arrows, ⇧ octave, ⌘A/⌘D), drum pattern view, typing notes from the computer keyboard, several clips at once (clip strip, reference clips)]
+      sources: [src/managed/Nota.App/PianoRollView.cs, src/managed/Nota.App/PianoRollView.ClipStrip.cs, src/managed/Nota.Application/Editing/ClipSet.cs, src/managed/Nota.App/ClipEditorView.cs, src/managed/Nota.App/ClipEditorKit.cs, src/managed/Nota.App/DrumPatternView.cs, src/managed/Nota.App/MainWindow.Input.cs]
       mockup: Nota Clip Editor.html
       status: done
     - page: editing/audio-clips
