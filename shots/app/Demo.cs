@@ -26,7 +26,7 @@ public sealed class Demo
 
     public int Track(string name) => _tracks.TryGetValue(name, out var id) ? id : throw new ArgumentException($"no demo track '{name}'");
 
-    /// <summary>Path of a generated sample ("pad", "kick", "hat", "chords").</summary>
+    /// <summary>Path of a generated sample ("pad", "kick", "hat", "chords", "voice").</summary>
     public string Sample(string name)
     {
         var path = Path.Combine(_dir, name + ".wav");
@@ -35,6 +35,7 @@ public sealed class Demo
             "kick" => Kick(),
             "hat" => Hat(),
             "chords" => Chords(new[] { 53, 57, 60 }, 4),
+            "voice" => Voice(4),
             _ => Chords(new[] { 57, 60, 64, 69 }, 8),
         });
         return path;
@@ -192,6 +193,30 @@ public sealed class Demo
     }
 
     // ── audio ───────────────────────────────────────────────────────────────────────────
+
+    // A speech-like line for a vocoder's modulator: a 150 Hz buzz through two moving formants,
+    // in syllables, with a hiss now and then.
+    private static float[] Voice(double seconds)
+    {
+        int n = (int)(Rate * seconds);
+        var s = new float[n];
+        var rnd = new Random(11);
+        double prev = 0;
+        for (int i = 0; i < n; i++)
+        {
+            double t = i / (double)Rate;
+            double f1 = 500 + 250 * Math.Sin(2 * Math.PI * 1.7 * t), f2 = 1500 + 700 * Math.Sin(2 * Math.PI * 1.1 * t + 1), v = 0;
+            for (int k = 1; k * 150.0 < 5000; k++)
+            {
+                double f = 150.0 * k;
+                v += (Math.Exp(-Math.Pow(Math.Log(f / f1), 2) * 4) + 0.8 * Math.Exp(-Math.Pow(Math.Log(f / f2), 2) * 5)) * Math.Sin(2 * Math.PI * f * t) / Math.Sqrt(k);
+            }
+            v *= 0.4 + 0.6 * Math.Abs(Math.Sin(2 * Math.PI * 1.5 * t));
+            if (t % 1.5 > 1.1 && t % 1.5 < 1.25) { double r = rnd.NextDouble() * 2 - 1; v += (r - prev) * 1.5; prev = r; }
+            s[i] = (float)v;
+        }
+        return Normalize(s, 0.5f);
+    }
 
     private static float[] Chords(int[] midi, int beats)
     {

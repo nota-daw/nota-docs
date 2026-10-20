@@ -167,6 +167,7 @@ sections:
       - {kind: 23, name: Nota Flanger,      page: devices/audio-effects/flanger,      engine: Flanger.h,    card: FlangerDeviceBody.cs,    mockup: Nota Flanger.html, status: done}
       - {kind: 24, name: Nota Phaser,       page: devices/audio-effects/phaser,       engine: Phaser.h,     card: PhaserDeviceBody.cs,     mockup: Nota Phaser.html, status: done}
       - {kind: 25, name: Nota Chorus,       page: devices/audio-effects/chorus,       engine: Chorus.h,     card: ChorusDeviceBody.cs,     mockup: Nota Chorus.html, status: done}
+      - {kind: 26, name: Nota Vocoder,      page: devices/audio-effects/vocoder,      engine: Vocoder.h,    card: VocoderDeviceBody.cs,    status: done}   # no mockup file (see nota specs/028-vocoder-effect)
     # MIDI effects. Card: src/managed/Nota.App/DeviceCards/Midi/<X>MidiBody.cs
     midi-effects:
       - {kind: 0, name: Nota Arp,      page: devices/midi-effects/arp,      engine: Arpeggiator.h,    card: ArpMidiBody.cs,      mockup: Nota Arp.html, status: done}
