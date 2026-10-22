@@ -11,6 +11,7 @@ sources:
   - src/managed/Nota.App/ArrangementView.ClipDrag.cs
   - src/managed/Nota.App/ArrangementView.Overview.cs
   - src/managed/Nota.App/ArrangementView.Sections.cs
+  - src/managed/Nota.App/ArrangementView.Sizing.cs
 ---
 
 import { Aside } from '@astrojs/starlight/components';
@@ -92,6 +93,28 @@ readable at a glance.
 
 Each of these edits is one undo step. Sections are saved with the project. **View ▸ Toggle
 sections** hides the lane.
+
+## Track sizes
+
+Make tracks short to see a big song at once, or tall to work on one part.
+
+| Do this | To |
+|---|---|
+| Drag a track's bottom edge (in its header or its lane) | Make it taller or shorter, from 30 to 256 px; it snaps lightly to the three sizes below |
+| The same with several tracks selected | Resize them all together |
+| <Kbd>⌥</Kbd> + drag a bottom edge | Resize every track at once |
+| Double-click a bottom edge | Go back to the standard height |
+| Right-click a track ▸ **Track height** | Pick **Compact**, **Standard** or **Large** for the selection, or for all tracks |
+| Drag the seam between the track headers and the lanes | Widen or narrow the headers (160–480 px); double-click it to reset |
+
+The header shows what fits. A **compact** track keeps its name and mute, solo and record-arm
+on one line; volume, pan and the input stay in the [Mixer](../mixer/) and the track's menu. A
+**standard** track has the usual three rows. A **large** track gives the input (or MIDI
+source), the volume fader and the pan a row each. Clips, waveforms and automation grow with
+the row.
+
+Track heights and the header width are saved with the project. They don't go into the undo
+history.
 
 ## Clip names and groups
 
