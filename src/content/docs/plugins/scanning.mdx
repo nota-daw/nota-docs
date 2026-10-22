@@ -3,17 +3,20 @@ title: "Scanning plug-ins"
 description: "Where Nota looks for VST3 and AU plug-ins, adding your own folders and rescanning."
 sidebar:
   order: 2
-updated: "0.50.1"
+updated: "0.56.1"
 status: done
 sources:
   - src/managed/Nota.App/PluginScan.cs
   - src/managed/Nota.App/PreferencesWindow.cs
+  - src/managed/Nota.App/PreferencesWindow.Store.cs
+  - src/native/nota.engine/pluginhost/scanner/abi_pluginscanner.cpp
 ---
 
 import Shot from '@components/Shot.astro';
 
-Nota builds a catalogue of your installed plug-ins by scanning them in a separate process (so a
-misbehaving plug-in can't crash Nota).
+Nota builds a catalogue of your installed plug-ins by loading each new one in a separate process, so a
+misbehaving plug-in can't crash Nota. Plug-ins already in the catalogue aren't loaded again, so only the
+first scan of a big collection takes a while.
 
 ## Where Nota looks
 
@@ -29,7 +32,34 @@ misbehaving plug-in can't crash Nota).
 
 1. Open **Settings ▸ Plug-ins**.
 2. **Add folder…** adds a folder to search for VST3 plug-ins; **Remove** takes one away.
-3. **Rescan plugins** scans everything again. The status says how many folders it searched and how
-   many plug-ins it found.
+3. **Rescan plugins** looks through every folder and loads the plug-ins it hasn't seen yet. While it
+   runs, the status line counts them, e.g. **Scanning plugins · 312 of 1,000 · …**. When it's done,
+   it says how many plug-ins Nota knows and how many couldn't be loaded.
 
-Plug-ins installed from [Settings ▸ Downloads](../get-plugins/) are scanned automatically.
+Plug-ins installed from [Settings ▸ Downloads](../get-plugins/) are scanned automatically — only the
+folder they go into, so installing one doesn't rescan your whole collection.
+
+## How a scan goes
+
+- Nota loads four plug-ins at a time.
+- A plug-in that hangs is stopped after 30 seconds and tried once more on its own, with two minutes
+  to load, so a heavy plug-in that was just slow still gets in.
+- What the scan finds is saved as it goes. If you quit Nota halfway, the next scan carries on where it
+  stopped.
+- A plug-in that crashes, hangs or turns out to contain nothing is remembered and skipped by later
+  scans, so it doesn't cost time again. It's tried again when its file changes (you update it) or when
+  you press **Rescan plugins**.
+
+## The scan log
+
+Each scan writes `plugin-scan.log` in the `logs` folder of Nota's data folder:
+
+| System | Folder |
+|---|---|
+| macOS | `~/Library/Application Support/Nota/logs` |
+| Windows | `%APPDATA%\Nota\logs` |
+| Linux | `~/.config/nota/logs` |
+
+It has one line per plug-in loaded: whether it worked, how many plug-ins were inside and how long it
+took. A plug-in that doesn't show up, or a scan that takes much longer than expected, is usually
+easy to find there — attach the file when you [report a problem](https://github.com/nota-daw/nota/issues/new/choose).

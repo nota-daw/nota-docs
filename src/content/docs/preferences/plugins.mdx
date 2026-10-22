@@ -3,7 +3,7 @@ title: "Plug-ins"
 description: "Settings ▸ Plug-ins — folders Nota scans for VST3 plug-ins, and Rescan."
 sidebar:
   order: 5
-updated: "0.50.1"
+updated: "0.56.1"
 status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
@@ -17,6 +17,8 @@ import Shot from '@components/Shot.astro';
 - **Plugin scan folders** — extra folders to search for VST3 plug-ins, besides the system's standard
   ones and the folder Nota installs registry plug-ins into. **Add folder…** and **Remove**. AU plug-ins
   come from the system registry.
-- **Rescan plugins** — scans everything again and reports what it found.
+- **Rescan plugins** — loads every plug-in that isn't in the catalogue yet, counting them as it goes
+  (**Scanning plugins · 312 of 1,000 · …**), then reports how many plug-ins Nota knows and how many
+  couldn't be loaded. It also retries the plug-ins that failed before, which ordinary scans skip.
 
 See [Scanning plug-ins](../../plugins/scanning/).
