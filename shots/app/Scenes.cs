@@ -27,7 +27,8 @@ namespace NotaDocsShots;
 ///             chainInstrument (an Instrument Rack's chain 1 instrument), trackName, window (click this text — a
 ///             chain's GUI — and shoot the device window it opens)
 ///   main      view (arrangement | session | modular), select (track name), clip (track name,
-///             + clipIndex, audio: true for an audio clip) to open in the clip editor, automation, tab (browser tab index),
+///             + clipIndex, audio: true for an audio clip) to open in the clip editor, with ("Track:clipIndex,…" —
+///             more MIDI clips selected with it, so they open together), automation, tab (browser tab index),
 ///             expand (a folder in that tab) + pick (a row to select, which the preview player takes), detailHeight, element, width, height,
 ///             fold (the selected track's audio effects to fold into strips, by chain index, e.g. "0,2"; "i" = the instrument)
 ///   palette   the command palette (⌘⇧P) over the main window: view, select (track), card (index of
@@ -293,6 +294,17 @@ public sealed class Scenes
         {
             // Open a clip of a demo track in the clip editor, as a double-click on it would.
             var timeline = mw.FindControl<ArrangementView>("Timeline")!;
+            if (shot.Str("with") is string with)
+            {
+                // Several MIDI clips selected: the double-click opens them all (multi-clip editor).
+                var together = new List<(int, int)> { (_demo.Track(clipTrack), shot.Int("clipIndex") ?? 0) };
+                foreach (var part in with.Split(','))
+                {
+                    var tc = part.Split(':');
+                    together.Add((_demo.Track(tc[0].Trim()), tc.Length > 1 ? int.Parse(tc[1]) : 0));
+                }
+                Invoke(timeline, "SetSelection", together.ToArray().AsEnumerable());
+            }
             Invoke(timeline, "OnClipDoubleClicked", _demo.Track(clipTrack), shot.Int("clipIndex") ?? 0, !shot.Bool("audio"));
         }
         // Automation lanes on or off, as the transport's automation button sets them.
