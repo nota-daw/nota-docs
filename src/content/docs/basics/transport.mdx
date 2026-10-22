@@ -3,7 +3,7 @@ title: Transport
 description: Play, stop and record; tempo, time signature and project key; loop, metronome, count-in, grid and follow.
 sidebar:
   order: 3
-updated: "0.55.1"
+updated: "0.56.1"
 status: done
 sources:
   - src/managed/Nota.App/MainWindow.axaml
@@ -38,7 +38,8 @@ passage again and again. To stop where you are instead, pause with <Kbd>⇧ Spac
 **Transport ▸ Play / pause**). Click in the ruler to move the playhead somewhere else.
 
 The **position** readout shows bars.beats.sixteenths. Click it to switch to minutes:seconds
-and back.
+and back. The rulers follow it: the Arrangement's and both clip editors' read in time while the
+readout does.
 
 ## Tempo, time signature and key
 
@@ -126,7 +127,9 @@ The two settings are separate and Nota remembers them.
 | <Kbd>⌘ 5</Kbd> | Switch between Auto and the last fixed step |
 
 The keys act on the editor you used last — the Arrangement, or the clip editor (piano roll
-or audio) once you've clicked into it — and the status bar says which. They are also in **Edit ▸
+or audio) once you've clicked into it — and the status bar says which. While the audio clip
+editor shows **ADSR** or an unwarped clip, nothing there follows a grid, so the keys act on the
+Arrangement. They are also in **Edit ▸
 Grid**.
 
 ## The right side
