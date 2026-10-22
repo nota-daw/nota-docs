@@ -3,7 +3,7 @@ title: Tracks
 description: Instrument, audio, return and group tracks — adding, selecting, colouring, grouping, routing and freezing them.
 sidebar:
   order: 4
-updated: "0.51.2"
+updated: "0.56.1"
 status: done
 sources:
   - src/managed/Nota.Infrastructure/Persistence/ProjectTemplate.cs
@@ -13,6 +13,10 @@ sources:
   - src/managed/Nota.App/TrackNames.cs
   - src/managed/Nota.App/MainWindow.Freeze.cs
   - src/managed/Nota.App/MainWindow.LiveFreeze.cs
+  - src/managed/Nota.App/MainWindow.Recent.cs
+  - src/managed/Nota.App/ArrangementView.Sizing.cs
+  - src/managed/Nota.App/MenuKit.cs
+  - src/managed/Nota.App/MenuKit.Rows.cs
 ---
 
 import { Aside } from '@astrojs/starlight/components';
@@ -46,8 +50,13 @@ Double-click a fader to reset it to 0 dB.
   tracks. Dropped onto an existing instrument track instead, an instrument **replaces** that
   track's instrument; a sample dropped on an audio track lands on it.
 - **Right-click** the empty space below the tracks — **Add instrument track**, **Add audio
-  track**, **Add return track**. A track's own menu has the same under **Add track**: the new
-  track goes right after it (or inside it, if it's a group).
+  track**, **Add return track**. A track's own menu has the same under **Add track**
+  (**Instrument**, **Audio**, **Return**): the new track goes right after it (or inside it,
+  if it's a group).
+- **Add track ▸ Recent** lists the five instruments you added most recently — built-in or
+  plug-in, from the browser, a menu or an AI assistant. Click one to get a new track with that
+  instrument right after the track you clicked. The list is yours, not the project's; a
+  plug-in you uninstall drops out of it until you install it again.
 
 ## The track header
 
@@ -69,14 +78,23 @@ at the bottom.
 <Kbd>⇧</Kbd>-click headers to build a selection (or click a header and press <Kbd>⌘ A</Kbd>).
 Then <Kbd>⌘ C</Kbd> <Kbd>⌘ X</Kbd> <Kbd>⌘ V</Kbd> copy, cut and paste them, <Kbd>⌘ D</Kbd>
 duplicates them and <Kbd>Delete</Kbd> removes them — each as one undo step. Right-click the
-selection to group, colour or freeze all of them at once.
+selection to colour, size, freeze or group all of them at once.
 
-## Names and colours
+## The track menu: name, colour, height
 
-Right-click a header ▸ **Rename…** to name a track; until you do, an instrument track is
-called after its instrument and an audio track "Audio" and its number. **Color** offers nine colour families — Drums, Perc, Bass, Keys, Texture, FX,
-Brass, Vox, Return — each in three shades. A track you haven't coloured takes its group's
-colour, one shade per sibling, so a group reads as one family.
+Right-click a header to open the track menu. Its top line names the track and shows its type
+and position (**Audio · 3**); on a selection it reads **3 tracks**.
+
+- **Colour** — click a swatch right in the menu: nine colour families, each in a base, a light
+  and a dark shade, plus **Auto**. The current colour is outlined. A track you haven't coloured
+  takes its group's colour, one shade per sibling, so a group reads as one family.
+- **Height** — **Compact**, **Standard** or **Large**. <Kbd>⌥</Kbd>-click (Alt on Windows and
+  Linux) sizes every track at once. You can also drag a track's bottom edge.
+- **Rename…** names the track; until you do, an instrument track is called after its
+  instrument and an audio track "Audio" and its number.
+
+Commands that show a current choice — **Record input**, **MIDI from** — print it on the
+right, so you can read it without opening the submenu. **Delete** is always last, in red.
 
 ## Groups
 
@@ -106,7 +124,8 @@ A heavy instrument or effect chain can be rendered to audio to free the CPU:
   it still plays exactly the same. Right-click **Freeze** for **Flatten**, which turns the
   track into a plain audio track for good.
 - **Live freeze** bounces to a linked audio track below and puts the source to sleep. **Edit**
-  wakes the source; **Done** re-freezes it.
+  wakes the source; **Done** re-freezes it. In the track menu **Live freeze** is a switch: it
+  is on while the track is live-frozen, and switching it off unfreezes (wakes the source).
 
 <Aside>
 Undo covers adding, deleting, grouping and moving tracks. See

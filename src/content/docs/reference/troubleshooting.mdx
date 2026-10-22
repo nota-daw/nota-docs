@@ -3,10 +3,11 @@ title: "Troubleshooting"
 description: "Fixes for the common problems — Nota won't open, no sound, crackles, a controller or plug-in not showing up, a phone that can't connect."
 sidebar:
   order: 3
-updated: "0.50.1"
+updated: "0.56.1"
 status: done
 sources:
   - README.md
+  - src/native/nota.engine/pluginhost/scanner/abi_pluginscanner.cpp
 ---
 
 import { Aside } from '@astrojs/starlight/components';
@@ -49,6 +50,16 @@ sample rate alone, so they no longer go silent. On an older version, update.
 - Not in a standard folder? **Add folder…** there (VST3). AU plug-ins come from the system registry.
 - A project opened without some plug-ins — if the Nota registry has them, Nota offers to install them
   and reopen the project.
+- Still missing after a rescan? Look it up in `plugin-scan.log` — see
+  [The scan log](../../plugins/scanning/#the-scan-log). A plug-in that crashed or hung there is skipped
+  until it changes or you press **Rescan plugins** again.
+
+## The plug-in scan takes long
+
+The first scan loads every plug-in once, four at a time — a large collection can take several
+minutes. The status line counts them (**Scanning plugins · 312 of 1,000**), and what's found is kept
+even if you quit halfway. Later scans only load new plug-ins. If the count stops moving for long,
+`plugin-scan.log` names the plug-ins being loaded — see [The scan log](../../plugins/scanning/#the-scan-log).
 
 ## The phone can't connect
 

@@ -3,7 +3,7 @@ title: "Plug-ins"
 description: "Settings ▸ Plug-ins — папки, в которых Nota ищет VST3-плагины, и Rescan."
 sidebar:
   order: 5
-updated: "0.50.1"
+updated: "0.56.1"
 status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
@@ -17,6 +17,9 @@ import Shot from '@components/Shot.astro';
 - **Plugin scan folders** — дополнительные папки для поиска VST3, помимо стандартных системных и папки,
   куда Nota ставит плагины из реестра. **Add folder…** и **Remove**. AU-плагины берутся из системного
   реестра.
-- **Rescan plugins** — сканирует всё заново и сообщает, что нашлось.
+- **Rescan plugins** — загружает все плагины, которых ещё нет в каталоге, и считает их по ходу
+  (**Scanning plugins · 312 of 1,000 · …**), а в конце сообщает, сколько плагинов знает Nota и сколько
+  не удалось загрузить. Заодно пробует снова плагины, которые раньше не загрузились, — обычные сканы
+  их пропускают.
 
 См. [Сканирование плагинов](../../plugins/scanning/).
