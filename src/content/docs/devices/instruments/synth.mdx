@@ -3,18 +3,25 @@ title: "Nota Synth"
 description: "The basic subtractive synth — one oscillator with unison, an amp envelope and a multimode filter. Quick to set, light on CPU."
 sidebar:
   order: 1
-updated: "0.50.1"
+updated: "0.55.1"
 status: done
 sources:
   - src/native/nota.engine/src/Synth.h
   - src/managed/Nota.App/DeviceCards/Instruments/SynthInstrumentCard.cs
 ---
 
+import { Aside } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
 
-Nota Synth is the simplest instrument in Nota: one oscillator, an envelope and a filter. It is
-the instrument a new track gets by default, and the quickest way to a bass, a pad or a lead
-that sits in the mix without a fight.
+<Aside title="Nota Volt has taken over">
+Nota Synth is no longer offered in the browser or for new tracks: [Nota Volt](../volt/) does
+everything it did (pulse width, the 1 / 2 / 4 / 7-voice unison with spread, Poly / Mono /
+Legato) and carries all of its presets. A project that already uses Nota Synth still opens,
+plays and shows this card.
+</Aside>
+
+Nota Synth was the simplest instrument in Nota: one oscillator, an envelope and a filter, and
+the instrument a new track got by default.
 
 <Shot id="devices/instruments/synth/card" alt="Nota Synth in its large view, Osc tab" />
 

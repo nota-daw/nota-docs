@@ -30,7 +30,8 @@ jam, and build a song live.
 - **Click** a slot to select it; click its **▶** triangle to launch it.
 - Launch a whole row with the **▶** next to its scene name on the left.
 - The **■** button at the bottom of a column stops that track; **Stop all** (or **Stop all
-  clips** under the grid) stops everything.
+  clips** under the grid) stops everything. The transport's **Stop** (<Kbd>Return</Kbd>) stops
+  the clips too, right away.
 - <Kbd>Return</Kbd> launches whatever is selected.
 
 Clips and scenes start in time with the music: on the next bar, or whatever **Quant** in the
@@ -95,6 +96,12 @@ The **Follow** switch in the toolbar turns all follow actions on or off at once.
 Arm a track, select a scene, and click **Session rec**: Nota records into that track's slot in
 the selected scene. Click **Session rec** again to keep the take — open-ended takes are cut to
 whole bars. Or set **Fixed** to 1, 2, 4 or 8 bars, and the take stops by itself.
+
+With the transport stopped and a [count-in](../../basics/transport/#metronome-and-count-in)
+set, the slot shows **Rec in…** while the clicks play and the take starts when they end. A
+note you start during the count-in and still hold then is recorded from the take's start.
+Stop during the count-in cancels the take and leaves the slot empty. With the transport
+already running there is no count-in: the take starts on the launch quantization.
 
 ## The mixer under the grid
 

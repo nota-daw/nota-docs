@@ -3,7 +3,7 @@ title: "AI control over MCP"
 description: "Let an AI assistant such as Claude work in your open project through Nota's built-in MCP server — tracks, notes, devices, Session, mixing, export and more."
 sidebar:
   order: 3
-updated: "0.51.2"
+updated: "0.56.1"
 status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
@@ -41,17 +41,20 @@ network can reach it.
 ## What an AI can do
 
 - **Transport and project** — play, stop, tempo, signature, loop, metronome, a full snapshot of the
-  project, and its version history (list, save with a note, switch, name and star).
+  project, the arrangement's sections, and its version history (list, save with a note, switch, name
+  and star).
 - **Tracks and mixer** — add and remove tracks, volume, pan, mute, solo, groups, sends and returns,
   meters.
-- **Notes and clips** — MIDI clips and notes, automation lanes and points.
+- **Notes and clips** — MIDI clips, notes and their controller curves (sustain pedal, wheels, any
+  CC), automation lanes and points.
 - **Devices** — instruments, effects and MIDI effects by kind, their parameters, presets (factory and
   your own), racks and their chains, zones and macros, Drum Rack pads, Nota Rhythm patterns.
 - **Plug-ins** — list, add, open the editor, read and write parameters and state.
 - **Session** — the whole clip launcher: slots, clips, scenes, launching, follow actions, recording.
 - **Samples** — search the library by kind, tempo, key and name, find similar sounds, load samples.
 - **AI features** — Separate Stems and Convert to MIDI on a clip.
-- **Export** — the master or stems to WAV, FLAC or MP3 (`format`, `bitrateKbps` for MP3).
+- **Export** — the master or stems to WAV, FLAC or MP3 (`format`, `bitrateKbps` for MP3,
+  `startBeat` to start the render later in the song).
 - **MIDI** — list inputs and work with MIDI Learn mappings.
 
 <Aside>

@@ -3,12 +3,13 @@ title: Undo and value entry
 description: Undo and redo, and the ways to set a value exactly — dragging, fine steps, typing and resetting.
 sidebar:
   order: 5
-updated: "0.50.1"
+updated: "0.55.1"
 status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
   - src/managed/Nota.App/DeviceCardKit.cs
   - src/managed/Nota.App/DeviceCards/DeviceParamControls.cs
+  - src/native/nota.engine/src/Engine_Automation.cpp
 ---
 
 import Kbd from '@components/Kbd.astro';
@@ -16,9 +17,13 @@ import Kbd from '@components/Kbd.astro';
 ## Undo and redo
 
 **Edit ▸ Undo** (<Kbd>⌘ Z</Kbd>) and **Edit ▸ Redo** (<Kbd>⌘ ⇧ Z</Kbd>) cover every edit:
-notes and clips, tracks, devices and their settings, automation, Session clips and scenes. A
-gesture is one step — dragging several clips, or turning a knob from one value to another,
-undoes in one go.
+notes and clips, tracks, devices and their settings, automation, Session clips and scenes,
+arrangement sections. A gesture is one step — dragging several clips, or turning a knob from
+one value to another, undoes in one go. So is switching a device between **A** and **B**,
+typing a value, one movement of a MIDI controller knob (it ends when the knob rests for a
+second), one touch on Nota Remote, and each change an AI assistant makes.
+
+Mute, solo, sends and the devices inside a rack are not in the history.
 
 To go back further than undo reaches — to yesterday's mix, say — use
 [version history](../version-history/).

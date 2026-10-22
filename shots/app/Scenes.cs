@@ -26,7 +26,8 @@ namespace NotaDocsShots;
 ///             chain's GUI — and shoot the device window it opens)
 ///   main      view (arrangement | session | modular), select (track name), clip (track name,
 ///             + clipIndex, audio: true for an audio clip) to open in the clip editor, automation, tab (browser tab index),
-///             expand (a folder in that tab) + pick (a row to select, which the preview player takes), detailHeight, element, width, height
+///             expand (a folder in that tab) + pick (a row to select, which the preview player takes), detailHeight, element, width, height,
+///             fold (the selected track's audio effects to fold into strips, by chain index, e.g. "0,2"; "i" = the instrument)
 ///   palette   the command palette (⌘⇧P) over the main window: view, select (track), card (index of
 ///             an audio effect to select in Devices), query, down (rows to move), mods (alt | cmd | shift),
 ///             origin (devices: the Devices panel had the focus), crop (true: just the palette card)
@@ -137,7 +138,9 @@ public sealed class Scenes
         }
         if (shot.Str("preset") is string preset)
         {
-            var result = deviceIndex >= 0 && shot.Int("midi") is null
+            // An effect preset loads onto its device, an instrument preset onto the track's
+            // instrument (index -1); a MIDI-effect preset adds its device.
+            var result = shot.Int("midi") is null
                 ? _presets.ApplyInPlace(_engine, preset, track, deviceIndex)
                 : _presets.Apply(_engine, preset, track);
             if (!string.IsNullOrEmpty(result) && result.StartsWith("Unknown")) throw new ArgumentException($"{result} ({preset})");
@@ -261,6 +264,7 @@ public sealed class Scenes
             Invoke(mw, "OnTrackSelected", id);
             if (view == "modular") Invoke(mw, "OnCloseDetail", null, new RoutedEventArgs());
             else Invoke(mw, "ShowDevices", id, true);
+            if (shot.Str("fold") is string fold) Fold(mw, id, fold, true);
         }
         else Invoke(mw, "OnCloseDetail", null, new RoutedEventArgs());
         if (shot.Str("clip") is string clipTrack)
@@ -303,6 +307,18 @@ public sealed class Scenes
         Pump(20);
         var element = shot.Str("element") is string el ? mw.FindControl<Control>(el) ?? throw new ArgumentException($"no control '{el}'") : null;
         Save(mw, shot.Id, element);
+        // The demo song is shared by every shot: open the folded cards again.
+        if (shot.Str("select") is string sel && shot.Str("fold") is string unfold) Fold(mw, _demo.Track(sel), unfold, false);
+    }
+
+    // Fold (or unfold) devices on a track and redraw its chain. Through reflection, so the
+    // harness still builds against an app from before device folding (specs/021).
+    private void Fold(MainWindow mw, int trackId, string which, bool folded)
+    {
+        var set = typeof(IAudioEngine).GetMethod("SetDeviceFolded") ?? throw new ArgumentException("this app can't fold devices");
+        foreach (var part in which.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries))
+            set.Invoke(_engine, new object[] { trackId, part == "i" ? -1 : int.Parse(part), folded });
+        if (folded) Invoke(mw, "ShowDevices", trackId, true);
     }
 
     private void Palette(Shot shot)
@@ -400,9 +416,9 @@ public sealed class Scenes
 
     private void WhatsNew(Shot shot)
     {
-        var repo = Environment.GetEnvironmentVariable("NOTA_REPO") ?? throw new ArgumentException("NOTA_REPO not set");
-        var entries = ChangelogParser.Parse(File.ReadAllText(Path.Combine(repo, "CHANGELOG.md")))
-            .Where(e => e.Sections.Count > 0 && !e.Version.Contains("Unreleased", StringComparison.OrdinalIgnoreCase)).Take(shot.Int("entries") ?? 1).ToList();
+        // What the app shows: a release's curated notes where it has them, else its changelog section.
+        var entries = AppInfo.Changelog()
+            .Where(e => e.Sections.Count > 0 && SemVer.TryParse(e.Version, out _)).Take(shot.Int("entries") ?? 1).ToList();
         Simple(shot, new WhatsNewWindow(entries));
     }
 

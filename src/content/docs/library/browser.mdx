@@ -3,7 +3,7 @@ title: "The browser"
 description: "The browser's tabs — instruments, effects, files, presets, projects, MIDI map and history — searching, favourites and tags, and dragging things into the project."
 sidebar:
   order: 1
-updated: "0.52.1"
+updated: "0.55.1"
 status: done
 sources:
   - src/managed/Nota.App/BrowserView.cs
@@ -11,6 +11,7 @@ sources:
   - src/managed/Nota.App/MainWindow.Files.cs
   - src/managed/Nota.App/MainWindow.Dnd.cs
   - src/managed/Nota.App/TagEditorWindow.cs
+  - src/managed/Nota.Application/Palette/DeviceCategories.cs
 ---
 
 import Shot from '@components/Shot.astro';
@@ -41,8 +42,15 @@ The search box filters the tab and counts the matches; search opens the preset f
 hits, and a folder name ("Mastering") lists that folder across every device. The status line at the
 bottom counts what's shown — `16 built-in · 0 plug-ins`.
 
-The ⋮ button beside the search box holds view options — type tags, grouping by source, favourites
-first — and the tag editor.
+**Category chips** sit above the list on the **Instruments**, **Audio effects** and **MIDI
+effects** tabs — **Synths**, **Drums**, **Samplers**…; **EQ & filter**, **Dynamics**, **Reverb &
+delay**, **Modulation**…; **Generate** and **Shape**. Click one to see only that kind of device,
+click it again to see everything. Each tab keeps its own pick, and the chips combine with search,
+favourites and tags. Your plug-ins join the same categories by the category they report; anything
+Nota doesn't recognise goes under **Other**.
+
+The ⋮ button beside the search box holds view options — type tags, category chips, grouping by
+source, favourites first — and the tag editor.
 
 ## Favourites and tags
 
@@ -54,7 +62,8 @@ colour in the tag editor, and filter with the chips under the search box.
 
 | Do this | To |
 |---|---|
-| Double-click an instrument | A new track with it (and an empty one-bar clip) |
+| Double-click an instrument | Swap it onto the selected instrument track (its clips and effects stay); with no instrument track selected, a new track with it and an empty one-bar clip |
+| ⌥ + double-click an instrument | Always a new track with it |
 | Double-click an effect | Add it to the selected track |
 | Double-click a MIDI file | Put it on a new track |
 | Drag onto a track or empty space | Add the instrument, effect, sample or loop there |

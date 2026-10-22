@@ -3,13 +3,14 @@ title: Piano roll
 description: Editing MIDI clips — drawing and moving notes, velocity, grid and quantize, scale, clip envelopes and the generator and transform tools.
 sidebar:
   order: 1
-updated: "0.51.2"
+updated: "0.55.1"
 status: done
 sources:
   - src/native/nota.engine/src/MidiClip.h
   - src/managed/Nota.App/PianoRollView.cs
   - src/managed/Nota.App/PianoRollView.Expression.cs
   - src/managed/Nota.App/ClipEditorView.cs
+  - src/managed/Nota.App/MainWindow.Detail.cs
   - src/managed/Nota.App/ClipEditorKit.cs
   - src/managed/Nota.App/MidiToolsView.cs
   - src/managed/Nota.Application/Midi/MidiToolCatalog.cs
@@ -30,7 +31,7 @@ tab of the panel at the bottom.
 
 | Do this | To |
 |---|---|
-| Double-click empty grid | Add a note |
+| Double-click empty grid | Add a note, with the length and velocity of the note you last clicked, moved, resized or changed the velocity of |
 | Double-click a note | Delete it |
 | Drag a note | Move it in time and pitch |
 | Drag with <Kbd>⌥</Kbd> | Ignore the grid for this drag |
@@ -43,8 +44,27 @@ tab of the panel at the bottom.
 | <Kbd>⌘ D</Kbd> | Duplicate the selection right after itself (replacing the notes it lands on) |
 | <Kbd>⌘ C</Kbd> <Kbd>⌘ X</Kbd> <Kbd>⌘ V</Kbd> | Copy, cut, paste notes |
 | <Kbd>Delete</Kbd> | Delete the selected notes |
+| Click the ruler · drag along it | Move the playhead there · scrub, snapped to the grid |
 
-Edits play straight away — drag a note while the loop runs and you hear it move.
+Edits play straight away — drag a note while the loop runs and you hear it move. The playhead
+shows in the piano roll whether the transport is playing or stopped, so you can see where
+playback starts.
+
+## Hearing notes
+
+With the **speaker** switch in the clip editor's header on (it is by default), a note plays on
+the track's instrument while you place it, click it or drag it, and plays again at each new
+pitch as you drag — so you can find a pitch by ear without starting playback. Turn the switch
+off to edit in silence; Nota remembers it. Nothing plays this way while a take is recording.
+
+The keys on the left are a keyboard too, whatever the switch says:
+
+| Do this | To |
+|---|---|
+| Click a key | Play it until you let go |
+| <Kbd>⇧</Kbd>-drag along the keys | Glide through them, playing each one |
+| <Kbd>⌘</Kbd>-click a key · <Kbd>⌘ ⇧</Kbd>-click | Select every note of that pitch · add them to the selection |
+| Drag up or down on the keys | Zoom the rows (the key stops sounding) |
 
 ## Recorded MPE
 
@@ -76,6 +96,26 @@ that take [MPE](../../control/midi/#pitch-wheel-aftertouch-and-mpe).
 
 The lane under the notes shows each note's velocity as a stem. Drag a stem to set it; with
 several notes selected, they move together. <Kbd>⇧</Kbd> adds a note to the selection.
+
+## Zoom
+
+| Do this | To |
+|---|---|
+| <Kbd>⌘</Kbd> + wheel | Zoom in time, toward the pointer |
+| <Kbd>⇧</Kbd> + wheel | Scroll in time |
+| <Kbd>⌘ ⌥</Kbd> + wheel | Make the rows taller or shorter |
+| Drag up or down on the keys | Taller (down) or shorter (up) rows |
+| <Kbd>⌥</Kbd> + pinch on a trackpad | Taller or shorter rows |
+| <Kbd>⇧ F</Kbd> or **Fit** in the header | Fit to notes |
+
+Rows run from 6 to 36 pixels high. Zoom in to hit a note precisely, or out to see the whole
+keyboard: at the smallest, all 88 keys fit on screen. The pitch under the pointer stays where
+it is while you zoom. **Fit to notes** — also in the command palette — sizes and scrolls the
+rows so every note in the clip is in view. On Windows and Linux use <Kbd>Ctrl</Kbd> for
+<Kbd>⌘</Kbd> and <Kbd>Alt</Kbd> for <Kbd>⌥</Kbd>.
+
+Each clip remembers its own zoom and scroll; a clip you haven't opened yet starts at the
+standard row height, centred on its notes.
 
 ## The left column
 

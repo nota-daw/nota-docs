@@ -3,7 +3,7 @@ title: Arrangement
 description: The song on a timeline — moving and trimming clips, selecting, zooming, the overview strip, sections and clip names.
 sidebar:
   order: 1
-updated: "0.53.1"
+updated: "0.55.1"
 status: done
 sources:
   - src/managed/Nota.App/ArrangementView.cs
@@ -71,6 +71,7 @@ Split and Consolidate](../../editing/time-ranges/) work on, and <Kbd>⌘ L</Kbd>
 | **Zoom −** / **+** | Zoom out / in |
 | Click in the ruler | Move the playhead |
 | Drag along the ruler | Draw a loop range |
+| Double-click the loop range | Turn looping off or on; the range stays |
 
 ### The overview strip
 
@@ -90,7 +91,8 @@ readable at a glance.
 - Right-click it for **Loop section**, **Select section** (as a time range across every track),
   **Duplicate**, **Rename…** and **Delete**.
 
-Sections are saved with the project. **View ▸ Toggle sections** hides the lane.
+Each of these edits is one undo step. Sections are saved with the project. **View ▸ Toggle
+sections** hides the lane.
 
 ## Track sizes
 
