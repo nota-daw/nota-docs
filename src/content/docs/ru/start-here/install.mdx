@@ -8,9 +8,11 @@ status: done
 sources:
   - README.md
   - .github/workflows/release.yml
+  - src/managed/Nota.App/MainWindow.Updates.cs
 ---
 
 import { Aside, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
 
 Nota бесплатна и с открытым кодом. Каждый релиз собирается из кода на GitHub и выкладывается
 на [странице релизов](https://github.com/nota-daw/nota/releases/latest).
@@ -113,10 +115,18 @@ Debian 10+, Ubuntu 18.10+ и всё моложе.
 
 ## Обновления
 
-Nota сама проверяет новые версии. Когда выходит новая, в [стартовом окне](../first-launch/)
-появляется баннер: нажмите **Update**, и Nota скачает обновление, сверит его с контрольной
-суммой релиза и установит, когда вы нажмёте **Restart now** (или при следующем выходе).
-После обновления окно **What's new** покажет, что изменилось.
+Nota сама проверяет новые версии — при каждом запуске и раз в сутки, пока открыта. Когда выходит
+новая, в [стартовом окне](../first-launch/) появляется баннер, а в строке состояния рядом с
+номером версии — **Nota X is available**. Нажмите **Update** (в строке состояния — сначала на
+само сообщение), и Nota скачает обновление, сверит его с контрольной суммой релиза и установит,
+когда вы нажмёте **Restart now** / **Restart to update** (или при следующем выходе). После
+обновления окно **What's new** покажет, что изменилось.
+
+<Shot id="start-here/update-notice" alt="Строка состояния: доступна новая версия Nota, рядом с номером версии" />
+
+**Help ▸ Check for updates…** (на macOS ещё и в меню **Nota**) проверяет сразу и сообщает, если
+у вас последняя версия. Чтобы отключить автоматические проверки, выключите **Check for updates
+automatically** в [Settings ▸ Updates](../../preferences/updates/).
 
 <Aside>
 Копия, которая не может заменить сама себя (например, запущенная прямо из образа диска),

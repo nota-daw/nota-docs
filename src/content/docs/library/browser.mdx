@@ -3,7 +3,7 @@ title: "The browser"
 description: "The browser's tabs — instruments, effects, files, presets, projects, MIDI map and history — searching, favourites and tags, and dragging things into the project."
 sidebar:
   order: 1
-updated: "0.55.1"
+updated: "0.56.1"
 status: done
 sources:
   - src/managed/Nota.App/BrowserView.cs
@@ -12,6 +12,8 @@ sources:
   - src/managed/Nota.App/MainWindow.Dnd.cs
   - src/managed/Nota.App/TagEditorWindow.cs
   - src/managed/Nota.Application/Palette/DeviceCategories.cs
+  - src/managed/Nota.App/MenuKit.cs
+  - src/managed/Nota.Presentation/ViewModels/BrowserViewModel.cs
 ---
 
 import Shot from '@components/Shot.astro';
@@ -31,8 +33,8 @@ browser**).
 | **Audio effects** | Built-in and plug-in effects, with their presets — Vocals, Drums, Mix & Bus, Mastering… |
 | **MIDI effects** | Arpeggiator, chord, scale, length, velocity, random, with their presets |
 | **Files** | Your sample library as a folder tree — see [Smart samples](../smart-samples/) |
-| **Presets** | The presets you saved yourself (right-click a device header ▸ **Save preset**) |
-| **Projects** | The projects in your projects folder — open, reveal or delete |
+| **Presets** | The presets you saved yourself (right-click a device header ▸ **Save preset**). Right-click one to reveal it or **Delete…** it (to the Trash); right-click a folder row to open the presets folder |
+| **Projects** | The projects in your projects folder — open, reveal (**Reveal in Finder** on macOS, **Show in Explorer** on Windows, **Show in file manager** on Linux) or delete |
 | **MIDI map** | Every control mapped to a controller, gamepad or phone — see [MIDI Learn](../../control/midi-learn/) |
 | **History** | The open project's [versions](../../basics/version-history/) |
 
@@ -53,6 +55,9 @@ The ⋮ button beside the search box holds view options — type tags, category 
 source, favourites first — and the tag editor.
 
 ## Favourites and tags
+
+With grouping by source on, the **Built-in** and **Plug-ins** headers fold: click one to collapse
+its section, click again to open it.
 
 Star (★) a device or preset to make it a favourite — favourites sort to the top of their section.
 **Tags** let you group things your own way: assign them from the right-click menu, edit their title and

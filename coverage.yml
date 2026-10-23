@@ -87,8 +87,8 @@ sections:
 
   editing:
     - page: editing/piano-roll
-      covers: [MIDI clip editor, draw/select/move notes, velocity, keys (arrows, ⇧ octave, ⌘A/⌘D), drum pattern view, typing notes from the computer keyboard]
-      sources: [src/managed/Nota.App/PianoRollView.cs, src/managed/Nota.App/ClipEditorView.cs, src/managed/Nota.App/ClipEditorKit.cs, src/managed/Nota.App/DrumPatternView.cs, src/managed/Nota.App/MainWindow.Input.cs]
+      covers: [MIDI clip editor, draw/select/move notes, velocity, keys (arrows, ⇧ octave, ⌘A/⌘D), drum pattern view, typing notes from the computer keyboard, several clips at once (clip strip, reference clips)]
+      sources: [src/managed/Nota.App/PianoRollView.cs, src/managed/Nota.App/PianoRollView.ClipStrip.cs, src/managed/Nota.Application/Editing/ClipSet.cs, src/managed/Nota.App/ClipEditorView.cs, src/managed/Nota.App/ClipEditorKit.cs, src/managed/Nota.App/DrumPatternView.cs, src/managed/Nota.App/MainWindow.Input.cs]
       mockup: Nota Clip Editor.html
       status: done
     - page: editing/audio-clips
@@ -167,6 +167,7 @@ sections:
       - {kind: 23, name: Nota Flanger,      page: devices/audio-effects/flanger,      engine: Flanger.h,    card: FlangerDeviceBody.cs,    mockup: Nota Flanger.html, status: done}
       - {kind: 24, name: Nota Phaser,       page: devices/audio-effects/phaser,       engine: Phaser.h,     card: PhaserDeviceBody.cs,     mockup: Nota Phaser.html, status: done}
       - {kind: 25, name: Nota Chorus,       page: devices/audio-effects/chorus,       engine: Chorus.h,     card: ChorusDeviceBody.cs,     mockup: Nota Chorus.html, status: done}
+      - {kind: 26, name: Nota Vocoder,      page: devices/audio-effects/vocoder,      engine: Vocoder.h,    card: VocoderDeviceBody.cs,    status: done}   # no mockup file (see nota specs/028-vocoder-effect)
     # MIDI effects. Card: src/managed/Nota.App/DeviceCards/Midi/<X>MidiBody.cs
     midi-effects:
       - {kind: 0, name: Nota Arp,      page: devices/midi-effects/arp,      engine: Arpeggiator.h,    card: ArpMidiBody.cs,      mockup: Nota Arp.html, status: done}
@@ -264,8 +265,9 @@ sections:
     - {page: preferences/plugins,    sources: [src/managed/Nota.App/PreferencesWindow.cs], status: done}
     - {page: preferences/downloads,  sources: [src/managed/Nota.App/PreferencesWindow.Downloads.cs, src/managed/Nota.App/PreferencesWindow.Store.cs, src/managed/Nota.App/PreferencesWindow.Samples.cs, src/managed/Nota.App/PreferencesWindow.Models.cs], status: done}
     - {page: preferences/library,    sources: [src/managed/Nota.App/PreferencesWindow.cs], status: done}
-    - {page: preferences/appearance, sources: [src/managed/Nota.App/PreferencesWindow.cs, src/managed/Nota.Application/Appearance.cs], covers: [colour theme Dark/Light/Follow system with Studio and Ember themes, waveforms, AI control], status: done}
+    - {page: preferences/appearance, sources: [src/managed/Nota.App/PreferencesWindow.cs, src/managed/Nota.Application/Appearance.cs, src/managed/Nota.Application/InterfaceScale.cs, src/managed/Nota.App/Theme/NotaUiScale.cs], covers: [colour theme Dark/Light/Follow system with Studio and Ember themes, waveforms, interface scale 75–200 %, AI control], status: done}
     - {page: preferences/shortcuts,  sources: [src/managed/Nota.App/PreferencesWindow.cs], status: done}
+    - {page: preferences/updates,    sources: [src/managed/Nota.App/PreferencesWindow.Updates.cs, src/managed/Nota.App/AppUpdates.cs, src/managed/Nota.App/MainWindow.Updates.cs], covers: [automatic update checks, Check now, Check for updates menu, status bar notice], status: done}
     # mockup for all: Nota Settings.html
 
   reference:

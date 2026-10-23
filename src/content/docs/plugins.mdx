@@ -3,7 +3,7 @@ title: "Plug-ins"
 description: "Using VST3 and AU plug-ins in Nota — adding them to tracks and racks, their card and editor window, state, latency and automation."
 sidebar:
   order: 1
-updated: "0.50.1"
+updated: "0.56.1"
 status: done
 sources:
   - src/managed/Nota.App/DeviceCards/PluginCard.cs
@@ -22,7 +22,9 @@ devices.
 Scanned plug-ins appear in the browser's **Instruments** and **Audio effects** tabs, under
 **Plug-ins**, after Nota's built-in devices. The tag at the right edge names the format and vendor,
 which tells the AU and VST3 builds of one plug-in apart. Double-click or drag one in, exactly as with
-a built-in device.
+a built-in device. The plug-in's window opens as soon as it lands; turn that off in
+**Preferences ▸ Plug-ins ▸ Open plug-in window on insert**. Loading a project, undo and paste never
+open it.
 
 Not there? Check [Scanning plug-ins](scanning/), or install free open-source plug-ins from
 [Settings ▸ Downloads](get-plugins/).
@@ -35,8 +37,9 @@ The card comes in two sizes:
 - **Full** — every parameter as a knob, with a filter and pages, showing the plug-in's own value text
   (double-click a knob for its default), and a **sidechain** source when the plug-in has one.
 
-**Open editor** opens the plug-in's own window — on top and focused; it closes when the device is
-removed. While it has focus, the computer keyboard still plays notes and the transport keys still
+**Open editor** opens the plug-in's own window — on top and focused. While the window is open the
+button reads **Close editor** and closes it; the window also closes when the device is removed. If
+the window can't be opened, the status line says so. While it has focus, the computer keyboard still plays notes and the transport keys still
 work.
 
 ## What Nota takes care of

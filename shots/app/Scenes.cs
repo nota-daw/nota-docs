@@ -22,17 +22,22 @@ namespace NotaDocsShots;
 /// the whole frame or a cropped control. Args come from the manifest entry's `args`.
 ///
 ///   device    instrument | effect | midi (kind id), preset, tab, card (index in the chain),
+///             clip (a demo sample on an effect's track), sidechain + sidechainName (a demo sample on
+///             a second track routed as the effect's key),
 ///             chainInstrument (an Instrument Rack's chain 1 instrument), trackName, window (click this text — a
 ///             chain's GUI — and shoot the device window it opens)
 ///   main      view (arrangement | session | modular), select (track name), clip (track name,
-///             + clipIndex, audio: true for an audio clip) to open in the clip editor, automation, tab (browser tab index),
+///             + clipIndex, audio: true for an audio clip) to open in the clip editor, with ("Track:clipIndex,…" —
+///             more MIDI clips selected with it, so they open together), automation, tab (browser tab index),
 ///             expand (a folder in that tab) + pick (a row to select, which the preview player takes), detailHeight, element, width, height,
 ///             fold (the selected track's audio effects to fold into strips, by chain index, e.g. "0,2"; "i" = the instrument)
 ///   palette   the command palette (⌘⇧P) over the main window: view, select (track), card (index of
 ///             an audio effect to select in Devices), query, down (rows to move), mods (alt | cmd | shift),
 ///             origin (devices: the Devices panel had the focus), crop (true: just the palette card)
 ///   mixer     width, height
-///   prefs     page (index in Settings' sidebar, 0 = Audio), tab (a switch on the page)
+///             update (available | downloading | ready: a newer release in the status bar, element: StatusBar)
+///   prefs     page (index in Settings' sidebar, 0 = Audio), tab (a switch on the page),
+///             check (Updates: run a check against the local feed first), update (as main)
 ///   connect   the Connect phone popup, with Nota Remote switched on
 ///   start · about · whatsnew · export · unsaved
 /// </summary>
@@ -63,7 +68,16 @@ public sealed class Scenes
         RenameDevices();
         _demo = new Demo(_engine, Path.Combine(data, "demo"));
         _demo.WriteSamples(settings.Current.SamplesFolder);
+
+        // Self-update (#58): the shots never ask GitHub. Automatic checks are off, and a check a
+        // scene runs reads a local release feed that says this very version is the latest.
+        if (typeof(Settings).GetProperty("CheckForUpdates") is { } auto) auto.SetValue(settings.Current, false);
+        _feed = Path.Combine(data, "release.json");
+        File.WriteAllText(_feed, $"{{\"tag_name\": \"v{AppInfo.Version}\", \"html_url\": \"https://github.com/nota-daw/nota/releases\", \"assets\": []}}");
+        Environment.SetEnvironmentVariable("NOTA_UPDATE_API", _feed);
     }
+
+    private readonly string _feed;
 
     // Wear the theme for this pass. Before the Studio colour themes NotaThemeService.Set took
     // an AppTheme; since then it takes an AppearanceChoice — one single theme, here Studio Dark
@@ -110,7 +124,16 @@ public sealed class Scenes
         if (shot.Int("effect") is int fx)
         {
             track = _engine.AddAudioTrack();
+            if (shot.Str("clip") is string clip) _engine.AddAudioClip(track, _demo.Sample(clip), 0);
             deviceIndex = _engine.AddBuiltinDevice(track, fx);
+            // A keyed effect (a vocoder's modulator, a compressor's key): another track with a sample.
+            if (shot.Str("sidechain") is string key)
+            {
+                int src = _engine.AddAudioTrack();
+                _engine.AddAudioClip(src, _demo.Sample(key), 0);
+                _engine.SetTrackName(src, shot.Str("sidechainName") ?? "Lead vox");
+                _engine.SetDeviceSidechainSource(track, deviceIndex, src);
+            }
         }
         else if (shot.Int("instrument") == 4)
         {
@@ -271,6 +294,17 @@ public sealed class Scenes
         {
             // Open a clip of a demo track in the clip editor, as a double-click on it would.
             var timeline = mw.FindControl<ArrangementView>("Timeline")!;
+            if (shot.Str("with") is string with)
+            {
+                // Several MIDI clips selected: the double-click opens them all (multi-clip editor).
+                var together = new List<(int, int)> { (_demo.Track(clipTrack), shot.Int("clipIndex") ?? 0) };
+                foreach (var part in with.Split(','))
+                {
+                    var tc = part.Split(':');
+                    together.Add((_demo.Track(tc[0].Trim()), tc.Length > 1 ? int.Parse(tc[1]) : 0));
+                }
+                Invoke(timeline, "SetSelection", together.ToArray().AsEnumerable());
+            }
             Invoke(timeline, "OnClipDoubleClicked", _demo.Track(clipTrack), shot.Int("clipIndex") ?? 0, !shot.Bool("audio"));
         }
         // Automation lanes on or off, as the transport's automation button sets them.
@@ -305,6 +339,8 @@ public sealed class Scenes
         if (shot.Bool("fit")) Invoke(tl, "ZoomToFitProject");
         else Invoke(tl, "ApplyOverviewView", 28.0, 0.0);
         Pump(20);
+        if (shot.Str("update") is string stage) FakeUpdate(stage);
+        else HideUpdate();
         var element = shot.Str("element") is string el ? mw.FindControl<Control>(el) ?? throw new ArgumentException($"no control '{el}'") : null;
         Save(mw, shot.Id, element);
         // The demo song is shared by every shot: open the folded cards again.
@@ -388,6 +424,8 @@ public sealed class Scenes
         Scale2(win);
         win.Show();
         Pump(10);
+        if (shot.Bool("check")) CheckUpdates(settings);
+        else if (shot.Str("update") is string stage) FakeUpdate(stage);
         Invoke(win, "Select", shot.Int("page") ?? 0);
         Pump(30);
         // A page's own switch (Downloads: "Sample Packs", "AI Models"); registries load from the
@@ -400,6 +438,63 @@ public sealed class Scenes
         else for (int i = 0; i < 20; i++) Pump(5);
         Save(win, shot.Id);
         win.Close();
+    }
+
+    // ---- self-update (#58), through reflection so the harness builds against older apps ------
+
+    private static Type? Updates => typeof(App).Assembly.GetType("Nota.App.AppUpdates");
+    private static object? UpdatesShared => Updates?.GetProperty("Shared")!.GetValue(null);
+
+    // Settings → Updates as after a check: automatic checks on, "the latest version".
+    private static void CheckUpdates(ISettingsService settings)
+    {
+        if (UpdatesShared is not { } u) return;
+        typeof(Settings).GetProperty("CheckForUpdates")!.SetValue(settings.Current, true);
+        MakeInstallable();
+        var task = (Task)Updates!.GetMethod("CheckAsync")!.Invoke(u, null)!;
+        for (int i = 0; i < 200 && !task.IsCompleted; i++) Pump(1);
+    }
+
+    // This process is no packaged app: point the updater at a writable stand-in install, so
+    // the UI shows what a real install shows (Update, not Download).
+    private static void MakeInstallable()
+    {
+        var updater = App.Services!.GetService(typeof(IAppUpdater))!;
+        var target = Path.Combine(Environment.GetEnvironmentVariable("NOTA_DATA_DIR")!, "install", "Nota.AppImage");
+        Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+        File.WriteAllText(target, "");
+        updater.GetType().GetField("_target", Private)!.SetValue(updater, target);
+    }
+
+    // A newer release in the status bar: "available", "downloading" (two-thirds in) or "ready".
+    private static void FakeUpdate(string stage)
+    {
+        if (UpdatesShared is not { } u) return;
+        MakeInstallable();
+        var v = AppInfo.Version.Split('.');
+        var next = $"{v[0]}.{int.Parse(v[1]) + 1}.1";
+        var release = new AppRelease(next, $"https://github.com/nota-daw/nota/releases/tag/v{next}",
+            new AppReleaseAsset($"Nota-{next}-x86_64.AppImage", "https://example.invalid/nota", 182_000_000, null));
+        var stages = Updates!.GetNestedType("Stage")!;
+        Updates.GetProperty("Release")!.SetValue(u, release);
+        Updates.GetProperty("State")!.SetValue(u, Enum.Parse(stages, stage, ignoreCase: true));
+        Updates.GetProperty("Dismissed")!.SetValue(u, false);
+        Updates.GetProperty("Progress")!.SetValue(u, new StoreProgress(0.66, $"Downloading Nota {next}…"));
+        RaiseUpdatesChanged(u);
+    }
+
+    private static void HideUpdate()
+    {
+        if (UpdatesShared is not { } u || Updates!.GetProperty("Release")!.GetValue(u) is null) return;
+        Updates.GetProperty("Release")!.SetValue(u, null);
+        Updates.GetProperty("State")!.SetValue(u, Enum.ToObject(Updates.GetNestedType("Stage")!, 0));
+        RaiseUpdatesChanged(u);
+    }
+
+    private static void RaiseUpdatesChanged(object u)
+    {
+        (Updates!.GetField("Changed", Private)!.GetValue(u) as Action)?.Invoke();
+        Pump(5);
     }
 
     private void Start(Shot shot)

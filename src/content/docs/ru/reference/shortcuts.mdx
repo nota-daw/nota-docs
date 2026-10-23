@@ -3,7 +3,7 @@ title: "Горячие клавиши"
 description: "Все сочетания клавиш и жесты мыши в Nota, по группам, как на странице Settings ▸ Shortcuts."
 sidebar:
   order: 1
-updated: "0.55.1"
+updated: "0.56.1"
 status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
@@ -62,6 +62,7 @@ import Kbd from '@components/Kbd.astro';
 | Right-click ruler | Loop on / off · loop the selection · clear the loop region |
 | <Kbd keys="P" /> | Show playhead · scroll the Arrangement to it without moving it · picks up a paused Follow |
 | <Kbd keys="⌘ ⇧ R" /> | Loop recording: Overdub (every pass adds) / Replace (keep the latest pass) |
+| Click the position read-out | Switch it between bars and time · every ruler follows |
 
 ## Arrangement и редактирование
 
@@ -94,6 +95,7 @@ import Kbd from '@components/Kbd.astro';
 | <Kbd keys="⌘ 4" /> | Snap to grid on / off |
 | <Kbd keys="⌘ 5" /> | Switch between the adaptive (Auto) and a fixed grid |
 | ⌥ while dragging | Move freely, ignoring the grid |
+| Audio clip editor on ADSR or an unwarped clip | ⌘1–⌘5 act on the Arrangement · that view follows no grid |
 
 ## Треки (после щелчка по заголовкам треков)
 
@@ -138,15 +140,28 @@ import Kbd from '@components/Kbd.astro';
 | <Kbd keys="Delete" /> | Delete the selected notes |
 | Double-click empty grid | Add a note with the length and velocity of the last note touched · on a note, delete it |
 | Drag note edge | Change the note's start or end |
-| Click · drag the ruler | Move the playhead there · drag to scrub, snapped to the grid |
+| Click · drag the ruler | Move the playhead there · drag to scrub, snapped to the grid · ⌥ off the grid |
+| Drag the playhead line | Scrub the playhead · on the ruler or over empty grid |
 | Drag velocity stem | Set velocity · selected notes move together · ⇧ adds a note |
 | Drag in the Bend / Pres / Slide lane | Draw the selected note's MPE curve · ⌥ draws a straight line · drag a point to move it |
 | Double-click in an MPE lane | Add a point · on a point, delete it · right-click to clear the curve |
+| Click a clip in the clip strip | Make it the active clip (several clips open) · its lock keeps it as a read-only reference |
 | ⌘⌥ + wheel | Zoom rows (vertical zoom) |
 | Click a key | Play it on the track's instrument · ⇧-drag glides through the keys · ⌘-click selects every note of that pitch |
 | Drag on the keys | Zoom rows · down taller, up shorter |
 | ⌥ + pinch | Zoom rows (trackpad) |
 | <Kbd keys="⇧ F" /> | Fit to notes |
+
+## Audio clip editor
+
+| Клавиши | Действие |
+|---|---|
+| Click · drag the ruler | Move the playhead there · drag to scrub · snapped to the grid on a warped clip, ⌥ off it |
+| Drag the playhead line | Scrub the playhead |
+| Double-click the wave | Add a warp marker · on a marker, delete it |
+| Drag a warp marker | Align the audio to the grid · the wave stretches as you drag |
+| <Kbd keys="Esc" /> | While dragging a warp marker or a segment tempo: put it back |
+| Drag · double-click Tempo | Set the tempo the clip was recorded at · ÷2 / ×2 halve or double it |
 
 ## Игра нотами (клавиатура компьютера)
 
@@ -166,7 +181,7 @@ import Kbd from '@components/Kbd.astro';
 | Click waveform | Play from that point |
 | Click WAVE / SPEC | Switch the well between the waveform and a live spectrum |
 | Scroll on the track button | Step through the demo tracks an effect preset is heard through |
-| Double-click volume | Reset the preview volume to 0 dB |
+| ⌥-click volume | Type the preview volume · double-click resets it to 0 dB |
 
 ## Геймпад (macOS)
 
@@ -183,16 +198,17 @@ import Kbd from '@components/Kbd.astro';
 
 | Клавиши | Действие |
 |---|---|
-| Double-click clip | Open in the clip editor |
+| Double-click clip | Open in the clip editor · on one of several selected MIDI clips, open them all together |
 | Double-click a browser instrument | Swap it onto the selected instrument track · clips and effects stay · no track selected starts one |
 | ⌥ + double-click a browser instrument | Always start a new track with it |
 | Right-click the metronome | Count-in before Play / Record: off · 1 · 2 · 4 bars |
 | Drag an audio clip's ADSR handle | Shape attack · decay + sustain · release (top corners and the dot on hover) · double-click resets the stage |
 | ⇧-click track header | Add the track to the selection · again to remove it |
-| Right-click track headers | A multi-selection gets its own menu: group, colour, track height, freeze, copy, duplicate, delete |
+| Right-click track headers | A multi-selection gets its own menu: colour, height, freeze, group, copy, duplicate, delete |
 | Drag a track's bottom edge | Resize the track (header or lane) · snaps to compact / standard / large · a multi-selection resizes together |
 | Drag a track's bottom edge + ⌥ | Resize every track at once |
 | Double-click a track's bottom edge | Back to the standard height |
+| ⌥-click a height key in the track menu | Set every track to Compact · Standard · Large |
 | Drag the track-list edge | Widen or narrow the track headers · double-click resets |
 | Drag sections lane | Mark a new section over the dragged bars |
 | Click section | Jump the playhead to its start |
@@ -209,8 +225,10 @@ import Kbd from '@components/Kbd.astro';
 | Drag clip + ⌥ | Position freely, ignoring the grid for this drag (the magnet in the transport latches the same thing) |
 | Drag knob | Change a device value · hold ⌘ or ⇧ for fine steps |
 | Drag slider | Left / right (or up / down) changes the value · hold ⌘ or ⇧ for fine steps |
-| Double-click knob | Reset the value to its default |
-| Double-click a slider's value | Type a value (units like k, ms, dB, L / R work) · Return sets it, Esc cancels |
+| ⌥-click a knob, fader or slider | Type a value (units like k, ms, dB, L / R work) · double-click its value does the same |
+| Return · Esc · Tab / ⇧Tab (typing a value) | Set it · cancel · set it and type the next / previous value on the card |
+| Double-click a knob, fader or slider | Reset the value to its default |
+| Right-click a knob, fader or slider | Type value… · Reset to default |
 | Drag jack → jack | Patch a cable in Nota Consort · ⌥-click a jack to pull its cables |
 | Click · ⇧ · ⌥ a Rhythm step | Step on / off · accent · quiet step — drag across to paint, up / down (or scroll) for its velocity |
 | Click a Rhythm voice | Select and play it · drop a file on it to load a sample |

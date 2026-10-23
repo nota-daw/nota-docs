@@ -3,7 +3,7 @@ title: Audio clips and warp
 description: Editing audio clips — trimming, gain, pitch, reverse, warping to the tempo with markers, volume and pan envelopes, and the clip ADSR.
 sidebar:
   order: 2
-updated: "0.52.1"
+updated: "0.56.1"
 status: done
 sources:
   - src/managed/Nota.App/AudioClipEditorView.cs
@@ -44,9 +44,14 @@ The chip in the header is the clip editors' [snap grid](../../basics/transport/#
 shared with the piano roll: it shows the step (**Auto · 1/16**) and opens the grid menu. The
 trim brackets, the warp markers and the envelope points land on the lines in the waveform —
 in **Auto** they get finer as you zoom in. Hold <Kbd>⌥</Kbd> while dragging to place one
-freely.
+freely. An unwarped clip has no beat grid, so in **Sample** nothing snaps until you turn on
+**Warp** — the hint under the waveform says so.
 
-The **Sample** tab shows the waveform with the part of the file the clip plays.
+The **Sample** tab shows the waveform with the part of the file the clip plays. Its ruler reads
+where each moment plays in the Arrangement — in bars, or in time while the transport's position
+readout shows time. Click or drag the ruler, or drag the playhead line, to move the playhead
+there (on the grid on a warped clip; hold <Kbd>⌥</Kbd> to place it freely). The playhead shows
+while stopped too.
 
 - **Clip** — **Start** and **Length**. Drag the brackets on the waveform to trim; on a warped
   clip they land on the grid.
@@ -67,9 +72,16 @@ time when you change the tempo later. Choose how it stretches:
 | **Complex** | Full mixes and dense material |
 | **Complex Pro** | Full mixes, with more care for formants |
 
+**Tempo**, under the Warp switch, is the tempo the audio was recorded at. Drag it or
+double-click to type one: Nota stretches the clip from that tempo to the project's, and your
+markers keep their timing. A tempo detected at half or double speed is one click away — **÷2**
+or **×2**. On an unwarped clip, setting a tempo turns **Warp** on.
+
 **Detect tempo** reads the file's tempo and conforms it to the project. For finer control, use
 **markers**: double-click the waveform to pin a marker, then drag it to line that moment up with
-the grid. **To transients** pins a marker on every hit, so a drum loop locks to the grid.
+the grid — the waveform stretches as you drag, and the clip is re-warped when you let go.
+<Kbd>Esc</Kbd> during the drag puts the marker back. **To transients** pins a marker on every
+hit, so a drum loop locks to the grid.
 
 ## Envelope
 

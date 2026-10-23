@@ -3,7 +3,7 @@ title: "Устройства"
 description: "Как устроена цепочка устройств трека — инструменты, аудиоэффекты, MIDI-эффекты и рэки; добавление, перестановка, обход, пресеты, сравнение A/B — и указатель всех встроенных устройств."
 sidebar:
   order: 0
-updated: "0.55.1"
+updated: "0.56.1"
 status: done
 sources:
   - src/managed/Nota.App/DeviceChainView.cs
@@ -29,7 +29,10 @@ import Kbd from '@components/Kbd.astro';
 ## Как добавить устройство
 
 - **Двойной щелчок** по инструменту или эффекту в браузере — эффект встаёт на выбранный трек.
+  Если трека для него нет, аудиоэффект создаёт себе новый аудиотрек.
 - **Перетащите** его из браузера на трек или в нужное место цепочки.
+- Щёлкните **+** в конце цепочки: браузер откроется на **Audio effects** с курсором в поиске —
+  наберите название эффекта и дважды щёлкните по нему.
 - Инструмент, брошенный на трек инструмента, **заменяет** его инструмент.
 
 ## Карточка
@@ -124,6 +127,7 @@ Compressor, Dynamic EQ-8, Ceiling, Level, Shutter, Auto Filter и Prism умею
   <LinkCard title="Compressor · Prism · Ceiling · Level" description="Динамика, многополосная, лимитер, громкость" href="audio-effects/compressor/" />
   <LinkCard title="Reverb · Chamber · Delay" description="Пространство и эхо" href="audio-effects/reverb/" />
   <LinkCard title="Chorus · Flanger · Phaser · Orbit" description="Модуляция, панорама и тремоло" href="audio-effects/chorus/" />
+  <LinkCard title="Vocoder" description="Робоголос или пэд, который произносит слова" href="audio-effects/vocoder/" />
   <LinkCard title="Valve · Vintage · Forge · Crush" description="Усилитель, старение, сатурация, биткрашер" href="audio-effects/valve/" />
   <LinkCard title="Auto Filter · Shutter · Beat Repeat" description="Подвижный фильтр, гейт, статтер" href="audio-effects/auto-filter/" />
   <LinkCard title="Auto Shift · Strata · Utility · Lens" description="Коррекция высоты, лупер, утилиты, анализатор" href="audio-effects/auto-shift/" />

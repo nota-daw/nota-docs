@@ -1,13 +1,15 @@
 ---
 title: "Appearance"
-description: "Settings ▸ Appearance — the colour theme (Dark, Light or Follow system, with Studio and Ember themes), how waveforms draw, and AI control over MCP."
+description: "Settings ▸ Appearance — the colour theme (Dark, Light or Follow system, with Studio and Ember themes), how waveforms draw, the interface scale, and AI control over MCP."
 sidebar:
   order: 8
-updated: "0.53.1"
+updated: "0.56.1"
 status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
   - src/managed/Nota.Application/Appearance.cs
+  - src/managed/Nota.Application/InterfaceScale.cs
+  - src/managed/Nota.App/Theme/NotaUiScale.cs
 ---
 
 import Shot from '@components/Shot.astro';
@@ -18,6 +20,7 @@ import Shot from '@components/Shot.astro';
 |---|---|
 | **Colour theme** | **Dark**, **Light** or **Follow system**, then a theme from the cards below — see [Colour themes](#colour-themes) |
 | **Waveform** | How audio clips draw in the Arrangement, and samples in the browser's preview: **Bars** spaces the peaks out so the rhythm reads; **Solid** draws every pixel |
+| **Interface scale** | **75 %**, **100 %**, **125 %**, **150 %** or **200 %** — the size of the whole interface. See [Interface scale](#interface-scale) |
 | **AI control (MCP)** | Let an AI assistant work in Nota — the switch, the port, the status and **Copy config**. See [AI control over MCP](../../ai/mcp/) |
 
 ## Colour themes
@@ -39,3 +42,20 @@ switches the mode with it.
 Every pick applies at once to every open window — and to
 [Nota Remote](../../control/nota-remote/) while it follows Nota — and is saved. Themes change colours only — layout
 and sizes stay the same.
+
+## Interface scale
+
+Makes everything in Nota larger or smaller: text, buttons, knobs, track headers, device
+cards, menus, tooltips and dialogs. Pick **125 %** or more when the text is hard to read —
+on a laptop screen, say — or **75 %** to fit more tracks and devices on a small screen.
+**100 %** is the default.
+
+The scale applies at once to every open window and is saved for the next launch. Open
+windows keep their size on screen, so their contents get more or less room (dialogs you
+can't resize grow and shrink with the scale); windows you
+open afterwards start at a matching size. At a large scale on a small screen some panels
+are tighter than usual.
+
+The scale is on top of the operating system's own display scaling, and the timeline, piano
+roll and audio editor still zoom their content as before. Plug-in windows are drawn by the
+plug-in and keep their own size.

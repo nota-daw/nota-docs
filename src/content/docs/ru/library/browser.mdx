@@ -3,7 +3,7 @@ title: "Браузер"
 description: "Вкладки браузера — инструменты, эффекты, файлы, пресеты, проекты, MIDI map и история — поиск, избранное и теги, перетаскивание в проект."
 sidebar:
   order: 1
-updated: "0.55.1"
+updated: "0.56.1"
 status: done
 sources:
   - src/managed/Nota.App/BrowserView.cs
@@ -12,6 +12,8 @@ sources:
   - src/managed/Nota.App/MainWindow.Dnd.cs
   - src/managed/Nota.App/TagEditorWindow.cs
   - src/managed/Nota.Application/Palette/DeviceCategories.cs
+  - src/managed/Nota.App/MenuKit.cs
+  - src/managed/Nota.Presentation/ViewModels/BrowserViewModel.cs
 ---
 
 import Shot from '@components/Shot.astro';
@@ -30,8 +32,8 @@ import Kbd from '@components/Kbd.astro';
 | **Audio effects** | Встроенные эффекты и плагины, с пресетами — Vocals, Drums, Mix & Bus, Mastering… |
 | **MIDI effects** | Арпеджиатор, аккорды, лад, длина, velocity, случайность — с пресетами |
 | **Files** | Ваша библиотека сэмплов деревом папок — см. [Умные сэмплы](../smart-samples/) |
-| **Presets** | Пресеты, которые вы сохранили сами (правый щелчок по заголовку устройства ▸ **Save preset**) |
-| **Projects** | Проекты из папки проектов — открыть, показать в Finder или удалить |
+| **Presets** | Пресеты, которые вы сохранили сами (правый щелчок по заголовку устройства ▸ **Save preset**). Правый щелчок по пресету — показать его в файловом менеджере или **Delete…** (в Корзину); по строке папки — открыть папку пресетов |
+| **Projects** | Проекты из папки проектов — открыть, показать в файловом менеджере (**Reveal in Finder** на macOS, **Show in Explorer** на Windows, **Show in file manager** в Linux) или удалить |
 | **MIDI map** | Все регуляторы, назначенные на контроллер, геймпад или телефон, — см. [MIDI Learn](../../control/midi-learn/) |
 | **History** | [Версии](../../basics/version-history/) открытого проекта |
 
@@ -52,6 +54,9 @@ import Kbd from '@components/Kbd.astro';
 избранное сверху) и редактор тегов.
 
 ## Избранное и теги
+
+Когда включена группировка по источнику, заголовки **Built-in** и **Plug-ins** сворачиваются:
+щелчок прячет раздел, повторный щелчок раскрывает его.
 
 Звёздочка (★) делает устройство или пресет избранным — избранное поднимается наверх своего раздела.
 **Теги** позволяют группировать по-своему: назначайте их из контекстного меню, правьте название и

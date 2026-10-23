@@ -3,7 +3,7 @@ title: "Devices"
 description: "How a track's device chain works — instruments, audio effects, MIDI effects and racks; adding, reordering, bypassing, presets, A/B compare — and an index of every built-in device."
 sidebar:
   order: 0
-updated: "0.55.1"
+updated: "0.56.1"
 status: done
 sources:
   - src/managed/Nota.App/DeviceChainView.cs
@@ -29,7 +29,10 @@ effects process that sound. An audio track has no instrument — only audio effe
 ## Adding devices
 
 - **Double-click** an instrument or effect in the browser — an effect goes onto the selected track.
+  With no track to take it, an audio effect starts its own audio track.
 - **Drag** it from the browser onto a track, or into the chain where you want it.
+- Click the **+** at the end of the chain: the browser opens on **Audio effects** with the cursor in
+  its search: type the effect's name, then double-click it.
 - Dropping an instrument onto an instrument track **replaces** its instrument.
 
 ## The card
@@ -124,6 +127,7 @@ tracks: Nota Volt covers both and carries their presets. Projects that use them 
   <LinkCard title="Compressor · Prism · Ceiling · Level" description="Dynamics, multiband, limiter, loudness" href="audio-effects/compressor/" />
   <LinkCard title="Reverb · Chamber · Delay" description="Space and echo" href="audio-effects/reverb/" />
   <LinkCard title="Chorus · Flanger · Phaser · Orbit" description="Modulation, pan and tremolo" href="audio-effects/chorus/" />
+  <LinkCard title="Vocoder" description="A robot voice, or a pad that speaks the words" href="audio-effects/vocoder/" />
   <LinkCard title="Valve · Vintage · Forge · Crush" description="Amp, age, saturation, bit crushing" href="audio-effects/valve/" />
   <LinkCard title="Auto Filter · Shutter · Beat Repeat" description="Moving filter, gate, stutter" href="audio-effects/auto-filter/" />
   <LinkCard title="Auto Shift · Strata · Utility · Lens" description="Pitch correction, looper, tools, analyzer" href="audio-effects/auto-shift/" />

@@ -3,7 +3,7 @@ title: Convert audio to MIDI
 description: Turn the melody, harmony or drums of an audio clip into a MIDI track, or slice it onto Drum Rack pads.
 sidebar:
   order: 7
-updated: "0.50.1"
+updated: "0.56.1"
 status: done
 sources:
   - src/managed/Nota.App/MainWindow.Convert.cs
@@ -16,19 +16,20 @@ Right-click an audio clip in the Arrangement ▸ **Convert**:
 
 | Command | What you get |
 |---|---|
-| **Convert melody to new MIDI track** | The tune — a single line of notes — on a new Nota Volt track. Best on clean single-note lines and vocals. |
-| **Convert Harmony to New MIDI Track** | The chords and notes played together, on a new Nota Volt track. Best on sustained chords and pads. |
-| **Convert Drums to New MIDI Track** | A new Drum Rack with a pad for each kind of hit it hears (kick, snare, hats…), each voiced by its strongest hit, and a MIDI clip that plays them where they were. |
+| **Melody to new MIDI track** | The tune — a single line of notes — on a new Nota Volt track. Best on clean single-note lines and vocals. Needs the AI model (below). |
+| **Harmony to new MIDI track** | The chords and notes played together, on a new Nota Volt track. Best on sustained chords and pads. Needs the AI model (below). |
+| **Drums to new MIDI track** | A new Drum Rack with a pad for each kind of hit it hears (kick, snare, hats…), each voiced by its strongest hit, and a MIDI clip that plays them where they were. |
 | **Slice to new MIDI track** | The clip cut at its hits (or into 16 even slices) onto Drum Rack pads from C1 up, with a MIDI clip that plays the slices back in order. |
 
 The MIDI clip sits under the original clip, in time with it; the status line says how many
 notes or pads it made. Conversion runs in the background with a progress window you can cancel.
 
-## Better melody and harmony with the AI model
+## Melody and harmony need the AI model
 
-**Convert Melody** and **Convert Harmony** work out of the box, and get noticeably better with
-the **basic-pitch** AI model, which also hears chords. The menu offers it — **Get the AI Model for
-Melody & Harmony…** — and it then runs on your computer: nothing is uploaded. You can remove it
+**Melody** and **Harmony** run on the **basic-pitch** AI model, which hears every note, chords
+included. Until it is installed, the **Convert** menu shows **Get the AI model for melody and
+harmony…** in their place; once it is in, the two commands appear (no restart). The model runs on
+your computer: nothing is uploaded. **Drums** and **Slice** don't need it. You can remove it
 later in [Settings ▸ Downloads ▸ AI models](../../ai/models/).
 
 <Aside type="tip">

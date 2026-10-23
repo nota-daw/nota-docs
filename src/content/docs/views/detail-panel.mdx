@@ -3,7 +3,7 @@ title: Detail panel and device windows
 description: The panel under the view — Devices, Pattern and Clip — its own window for a second screen, and device windows for rack chains.
 sidebar:
   order: 5
-updated: "0.50.1"
+updated: "0.56.1"
 status: done
 sources:
   - src/managed/Nota.App/MainWindow.Detail.cs
@@ -27,9 +27,13 @@ The tabs in its top-left corner switch what it shows — <Kbd>Tab</Kbd> cycles t
 
 - **Devices** — the track's [device chain](../../devices/): MIDI effects, the instrument and
   the effects, left to right. Scroll sideways when they don't fit.
-- **Pattern** — the step grid of a MIDI clip on a Drum Rack track.
+- **Pattern** — the step grid of a MIDI clip on a Drum Rack track. The tab is there only on a
+  Drum Rack track.
 - **Clip** — the selected clip in the [MIDI](../../editing/piano-roll/) or
   [audio](../../editing/audio-clips/) clip editor.
+
+Drag the panel's top edge to make **Pattern** and **Clip** taller or shorter; each keeps the
+height you gave it. **Devices** has a fixed height that fits the cards, so it can't be resized.
 
 The header names the track and its type; for an instrument track it also shows the delay the
 chain adds (**PDC**), which Nota compensates automatically.
