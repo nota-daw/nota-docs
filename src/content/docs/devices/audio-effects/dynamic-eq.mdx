@@ -22,8 +22,10 @@ the kick hits, lift air only when a vocal goes quiet.
 
 Laid out like [EQ-8](../eq-8/#layout): the slim row of eight band chips over the response graph —
 click a chip to pick the band, double-click it to switch the band on or off — and on the right a panel
-with the picked band's type, **Freq**, **Gain** and **Q** beside its dynamics, with the **Dynamic**
-switch and **Out** at the bottom.
+in two columns. The left one is the picked band: its type, **Freq**, **Gain** and **Q**, then its
+**Key** and **Solo**. The right one is its dynamics: the mode beside the filter shapes, then
+**Thresh**, **Range**, **Attack** and **Release** as knobs beside Freq, Gain and Q, and the
+**Dynamic** switch and **Output** at the bottom.
 
 As on EQ-8, the arrow at the top right of the panel folds it to a thin strip that keeps the
 picked band's **Freq**, **Gain** and **Q**; click it again to bring the panel back. The fold
@@ -31,26 +33,26 @@ changes no setting and isn't saved with the project.
 
 ## A band
 
-The static half is the same as [EQ-8](../eq-8/): type, **Freq**, **Gain**, **Q**. The dynamic half,
-in the panel's right column:
+The static half is the same as [EQ-8](../eq-8/): type, **Freq**, **Gain**, **Q**. The dynamic half
+is the panel's right column, plus **Key** and **Solo** under the band's knobs:
 
 | Control | What it does |
 |---|---|
 | Mode | **Static** — a plain EQ band; **Duck** — acts as the band gets louder than the threshold; **Lift** — acts as it falls below |
-| **Thresh** | The level where it starts to act; the band's current level is marked on it |
-| **Range** | How many dB at full action — negative cuts, positive boosts (a Duck that boosts is upward expansion) |
+| **Thresh** | The level where it starts to act; the band's current level is a small tick on its ring |
+| **Range** | How many dB at full action — turn left of centre to cut, right to boost (a Duck that boosts is upward expansion) |
 | **Attack** · **Release** | How fast it acts and lets go |
 | **Key** | **Self** (the band's own signal) or **Ext** (another track — the device's sidechain source) |
 | **Solo** | Hear only this band |
 
 Only shelves and bells take dynamic gain. Full action is reached 6 dB past the threshold. Each
 band's chip over the graph shows its activity as a bar along the bottom. While a band
-is **Static**, its dynamics rows are greyed out.
+is **Static**, its dynamics knobs are greyed out.
 
 ## Global
 
-**Dynamic** switches all dynamics off at once — an instant A/B of what they do. **Out** trims the
-output.
+**Dynamic** switches all dynamics off at once — an instant A/B of what they do. **Output** trims the
+output (±18 dB).
 
 ## Presets
 
