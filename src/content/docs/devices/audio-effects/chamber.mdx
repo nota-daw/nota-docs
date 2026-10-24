@@ -3,7 +3,7 @@ title: "Nota Chamber"
 description: "Hybrid reverb — a zero-latency convolution engine with sixteen built-in spaces or your own impulse response, beside an algorithmic engine with Dark Hall, Plate, Quartz and Shimmer, blended in parallel or series."
 sidebar:
   order: 20
-updated: "0.50.1"
+updated: "0.57.1"
 status: done
 sources:
   - src/native/nota.engine/src/Chamber.h
@@ -19,7 +19,7 @@ other.
 <Shot id="devices/audio-effects/chamber/card" alt="Nota Chamber, Convolution tab with the impulse response" />
 
 **Layout:** the **Blend** column on the left (convolution ⇄ algorithm, and **Dry/Wet**), a centre panel
-with three tabs, a right panel (**Levels** / **Output**) and a status line.
+with three tabs and a right panel (**Levels** / **Output**).
 
 ## Convolution
 
@@ -39,15 +39,20 @@ zero latency; turning **Zero Latency** off saves CPU.
 
 **Dark Hall**, **Plate**, **Quartz** or **Shimmer**: **Decay** per band (low, mid, high — drag the
 RT60 markers), **Size**, **Diffuse**, **Damping**, modulation, a **Vintage** colour, and for Shimmer a
-pitch shifter (fed back into the tail, or on top). **Freeze** holds the tail (input muted unless
+pitch shifter (set on the **EQ · Mod** tab). **Freeze** holds the tail (input muted unless
 **Freeze In** is on). Its own pre-delay, free or synced.
 
 ## EQ · Mod
 
 <Shot id="devices/audio-effects/chamber/eq-mod" alt="Nota Chamber, EQ · Mod tab" />
 
-A 4-band EQ you can place **at the input**, **on the tail** or **at the output** — drag its handles —
-and the modulation settings.
+**Tail EQ** is a 4-band EQ — low cut, low shelf, high shelf and high cut: drag its two handles or
+turn its knobs. The segments beside its title place it **Input**, **Tail** (the wet signal only)
+or **Output** (dry and wet).
+
+Beside it, **Modulation** (**Rate**, **Depth**) and **Shimmer**, which works in the Shimmer mode
+only: **Amount**, the interval (**−12**, **+7** or **+12** semitones) and **Feed back** — on, the
+shifted sound is fed back into the tail, so each pass shifts again; off, it sits on top.
 
 ## Levels and Output
 

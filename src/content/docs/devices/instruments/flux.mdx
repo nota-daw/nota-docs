@@ -3,7 +3,7 @@ title: "Nota Flux"
 description: "A vector synth that listens: morph between four timbre worlds on an XY pad, and let another track's audio push the filter, pitch, space or the vector itself."
 sidebar:
   order: 10
-updated: "0.50.1"
+updated: "0.57.1"
 status: done
 sources:
   - src/native/nota.engine/src/FluxSynth.h
@@ -26,7 +26,7 @@ twin) + sub → drive → low-pass filter → amp envelope → **Space** (a smal
 The pad's four corners are the **worlds**: **Warm** (soft saw), **Glass** (bright square), **Moog**
 (fat and resonant) and **Grain** (gritty, noisy). Drag the dot to blend them. Each world
 brings its own resonance, unison and drive, so moving the dot changes all of them at once — you
-never set them directly. A dashed teal ring shows where Motion and React are pulling the dot.
+never set them directly. A dashed grey ring shows where Motion and React are pulling the dot.
 
 ## React
 
@@ -38,7 +38,8 @@ React turns another track's sound into modulation — not a ducker, a source.
 | **Listen** | How strongly it reacts |
 | **Target** | What it moves: **Filter**, **Pitch**, **Space** or **Vector** (the dot dances in rhythm) |
 
-The scope shows what Flux hears — envelope, transients, spectral tilt — beside the reaction.
+The scope shows what Flux hears — envelope, transients, spectral tilt — beside the reaction. With
+no source, the scope goes flat and **Listen**, **Target** and the source menu are greyed out.
 
 ## Macros
 
@@ -50,8 +51,6 @@ The scope shows what Flux hears — envelope, transients, spectral tilt — besi
 | **Env** | Envelope shape — from plucky to slow |
 | **Space** | Reverb and width |
 | **Glide** · **Tune** · **Gain** | Portamento, tuning, level |
-
-The status line reads the patch back in words — the world blend, or what React is doing.
 
 ## Presets
 

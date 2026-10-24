@@ -3,7 +3,7 @@ title: Undo and value entry
 description: Undo and redo, and the ways to set a value exactly — dragging, fine steps, typing and resetting.
 sidebar:
   order: 5
-updated: "0.55.1"
+updated: "0.57.1"
 status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
@@ -30,14 +30,14 @@ To go back further than undo reaches — to yesterday's mix, say — use
 
 ## Setting values
 
-Knobs, sliders and numbers across Nota work the same way:
+Knobs, value bars and numbers across Nota work the same way:
 
 | Do this | To |
 |---|---|
 | Drag up / down | Change the value |
 | Drag with <Kbd>⌘</Kbd> or <Kbd>⇧</Kbd> held | Change it in fine steps |
 | Double-click a knob | Reset it to its default |
-| Double-click a slider's value | Type an exact value |
+| <Kbd>⌥</Kbd>-click a control, or double-click the number beside it | Type an exact value |
 
 When you type, units work: `-6`, `1.5k`, `250 ms`, `-3 dB`, `L 30`, `1/16`. <Kbd>Return</Kbd>
 sets the value, <Kbd>Esc</Kbd> cancels. This works in device cards, the clip editor and rack
