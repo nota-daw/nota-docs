@@ -15,34 +15,36 @@ import Shot from '@components/Shot.astro';
 Nota EQ-8 is a mixing-console equalizer with eight bands. Use it to clean up mud, cut rumble,
 add air, carve space for one sound around another — on the stereo pair, the mid or the side.
 
-<Shot id="devices/audio-effects/eq-8/card" alt="Nota EQ-8: the picked band's Freq, Gain and Q on the left, the response graph with the row of bands under it, the band and global settings on the right" />
+<Shot id="devices/audio-effects/eq-8/card" alt="Nota EQ-8: the row of band tabs over the response graph on the left, the picked band's settings and the global settings on the right" />
 
 ## Layout
 
-The graph leads: the picked band's **Freq**, **Gain** and **Q** stack on the left, the response
-graph runs across the middle with a row of the eight bands under it, and the column on the right
-holds the picked band's **Slope** and **Channel** and the **Global** controls.
+The graph leads: a row of tabs for the eight bands sits on top of the response graph, and the
+panel on the right edits the picked band — its type, **Freq**, **Gain** and **Q**, **Slope** and
+**Channel** — beside the **Global** controls.
 
-The arrow at the top of the right column folds it to a thin strip, so the card narrows and the
-rest of the chain gets more room. Folded, the graph, the band row and the left column keep
-working; click the arrow again to bring the column back. The fold changes no setting and isn't
-saved with the project.
+The arrow at the top right of the panel folds it to a thin strip, so the card narrows and the
+rest of the chain gets more room. Folded, the graph and the band tabs keep working (right-click a
+node for its type, slope and channel); click the arrow again to bring the panel back. The fold
+changes no setting and isn't saved with the project.
 
-## The graph and the band row
+## The graph and the band tabs
 
 Each band is a numbered node on the response curve — drag it: sideways for frequency, up and
 down for gain. Its frequency shows on the node and in the tooltip.
 
-In the row under the graph each band has a cell: its **number** switches the band on and off
-(lit when it's on), the **shape** at the right of the cell opens the six filter types, and a
-click on the cell picks the band for the controls on either side. A setting that doesn't apply
-to the band's type — **Slope** on a shelf — is greyed out with nothing picked.
+Over the graph each band has a tab with its **number**, its filter **shape** and its frequency.
+The number switches the band on and off (lit when it's on); a click anywhere else on the tab
+picks the band for the panel on the right, where the outlined tab's settings show. A setting that
+doesn't apply to the band's type — **Slope** on a shelf — is greyed out with nothing picked.
 
 ## A band
 
+The panel's left column opens with the band's number, its type and an **On** switch.
+
 | Control | What it does |
 |---|---|
-| Type | **Low cut**, **Low shelf**, **Bell**, **Notch**, **High shelf**, **High cut** — the shape in the band's cell |
+| Type | **Low cut**, **Low shelf**, **Bell**, **Notch**, **High shelf**, **High cut** — the six shapes under the band's name; hover one for its name |
 | **Freq** · **Gain** · **Q** | Where, how much, how wide (on the cuts, **Reso**) |
 | **Slope** | For the cuts: 12, 24 or 48 dB per octave |
 | **Channel** | **St** (both channels), **M** (mid), **S** (side), **L** or **R** — so a band can brighten only the sides, or tame one channel |
