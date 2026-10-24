@@ -15,27 +15,27 @@ import Shot from '@components/Shot.astro';
 Nota EQ-8 is a mixing-console equalizer with eight bands. Use it to clean up mud, cut rumble,
 add air, carve space for one sound around another — on the stereo pair, the mid or the side.
 
-<Shot id="devices/audio-effects/eq-8/card" alt="Nota EQ-8: the row of band tabs over the response graph on the left, the picked band's settings and the global settings on the right" />
+<Shot id="devices/audio-effects/eq-8/card" alt="Nota EQ-8: the row of band chips over the response graph on the left, the picked band's settings and the global settings on the right" />
 
 ## Layout
 
-The graph leads: a row of tabs for the eight bands sits on top of the response graph, and the
+The graph leads: a slim row of chips for the eight bands sits on top of the response graph, and the
 panel on the right edits the picked band — its type, **Freq**, **Gain** and **Q**, **Slope** and
 **Channel** — beside the **Global** controls.
 
 The arrow at the top right of the panel folds it to a thin strip, so the card narrows and the
-rest of the chain gets more room. Folded, the graph and the band tabs keep working (right-click a
+rest of the chain gets more room. Folded, the graph and the band chips keep working (right-click a
 node for its type, slope and channel); click the arrow again to bring the panel back. The fold
 changes no setting and isn't saved with the project.
 
-## The graph and the band tabs
+## The graph and the band chips
 
 Each band is a numbered node on the response curve — drag it: sideways for frequency, up and
 down for gain. Its frequency shows on the node and in the tooltip.
 
-Over the graph each band has a tab with its **number**, its filter **shape** and its frequency.
-The number switches the band on and off (lit when it's on); a click anywhere else on the tab
-picks the band for the panel on the right, where the outlined tab's settings show. A setting that
+Over the graph each band has a chip with its **number**, its filter **shape** and its frequency.
+Click a chip to pick the band for the panel on the right (the outlined chip's settings show
+there); double-click it to switch the band on or off — a band that's off is greyed out. A setting that
 doesn't apply to the band's type — **Slope** on a shelf — is greyed out with nothing picked.
 
 ## A band
