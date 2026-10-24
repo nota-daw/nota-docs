@@ -3,15 +3,17 @@ title: "Nota Audio Effect Rack"
 description: "Effect chains in one device — run them in parallel, in series, or pick one by input level — with dry / wet, gain, per-chain level and mute / solo, and eight macros."
 sidebar:
   order: 3
-updated: "0.50.1"
+updated: "0.57.1"
 status: done
 sources:
+  - src/managed/Nota.App/DeviceChainView.Clipboard.cs
   - src/native/nota.engine/src/RackDevice.h
   - src/native/nota.engine/src/RackCore.h
   - src/managed/Nota.App/DeviceCards/Rack/RackCardView.cs
 ---
 
 import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
 
 Nota Audio Effect Rack holds several **chains** of effects inside one device. Process a sound three
 ways at once and blend them, build a reusable effect "patch" with a few macros on top, or switch
@@ -31,6 +33,11 @@ effects by how loud the input is.
 
 **+ Add chain**, then **+ Device** in it — the menu lists the built-in effects and a **Plug-ins**
 submenu. Each chain has a name, its own **gain** and meter, **mute** and **solo**.
+
+To start a rack from an effect already on the track, click it and press <Kbd>⌘ G</Kbd> (or
+**Group into rack** in its right-click menu): it moves into a new rack's first chain, settings and
+all. <Kbd>⌘ ⇧ G</Kbd> (**Ungroup rack**) puts a one-chain rack's devices back in the track's chain.
+An effect with a sidechain key, automation or a CV link stays where it is.
 
 ## Rack output
 

@@ -3,14 +3,16 @@ title: "Nota Auto Filter"
 description: "Подвижный фильтр — LP, BP, HP или Notch с морфингом и драйвом, который двигают огибающая (от трека или сайдчейна) и LFO с синхронизацией, морфингом и стереофазой."
 sidebar:
   order: 9
-updated: "0.50.1"
+updated: "0.57.1"
 status: done
 sources:
+  - src/managed/Nota.App/Controls/AutoFilterCurve.cs
   - src/native/nota.engine/src/AutoFilter.h
   - src/managed/Nota.App/DeviceCards/Bodies/AutoFilterDeviceBody.cs
 ---
 
 import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
 
 Nota Auto Filter — фильтр со встроенным движением: **огибающая** открывает его, когда звук
 громче (автовау, энвелоуп-фильтр), **LFO** гоняет его в темп (воблы, гейты, медленное движение).
@@ -28,7 +30,7 @@ Nota Auto Filter — фильтр со встроенным движением: 
 | Тип | **LP**, **BP**, **HP** или **Notch** |
 | **Morph** | Плавно смешивает типы |
 | Крутизна | 12 или 24 дБ |
-| **Freq** · **Reso** | Срез и резонанс — или тяните кривую |
+| **Freq** · **Reso** | Срез и резонанс — или тяните кривую: вбок — срез, вверх / вниз — резонанс, от того места, где схватили |
 | **Drive** | Драйв перед фильтром для окраски |
 | Схема | **Clean** или **Analog** (с сатурацией) |
 

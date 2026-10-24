@@ -3,7 +3,7 @@ title: "Nota Instrument Rack"
 description: "Several instruments in one — chains split by key and velocity zones, each with its own devices, gain and mute / solo, under eight macros."
 sidebar:
   order: 1
-updated: "0.50.1"
+updated: "0.57.1"
 status: done
 sources:
   - src/native/nota.engine/src/RackInstrument.h
@@ -12,6 +12,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
 
 Nota Instrument Rack holds several **chains** — each an instrument with its own effects — on one
 track. Layer a pad under a pluck, split a keyboard into bass and lead, or switch sounds by how hard
@@ -29,7 +30,10 @@ name, its own **gain** and meter, **mute** and **solo**.
 
 **Zones** decide which chain plays: a **key** zone (a range of notes) and a **velocity** zone (a range
 of how hard). Overlapping zones layer; separate zones split. The zone map shows them across the
-keyboard.
+keyboard; drag a zone's edge to move it.
+
+Every change to the chains undoes with <Kbd>⌘ Z</Kbd>: adding or removing a chain, its instrument,
+its devices, its name and its zones.
 
 ## Devices inside a chain
 

@@ -3,7 +3,7 @@ title: Modular
 description: A track's devices as a signal graph, and CV modulation — patch LFOs, envelopes, MIDI and macros into any parameter.
 sidebar:
   order: 3
-updated: "0.50.1"
+updated: "0.57.1"
 status: done
 sources:
   - src/managed/Nota.App/ModularView.cs
@@ -31,9 +31,15 @@ Move around the canvas with <Kbd>Space</Kbd> + drag, zoom with <Kbd>⌘</Kbd> + 
 ## Nodes
 
 Each device is a node. On the canvas you can expand it, **bypass** it (<Kbd>B</Kbd>),
-duplicate, delete and reorder it — the same chain you see in the detail panel. A node shows
-only the knobs that have a CV patch attached; the ↕ button (or a double-click) expands the
-full list. Knobs on a node are the real controls — turning them changes the sound.
+duplicate it with all its settings (<Kbd>⌘ D</Kbd>), delete it (the bin, or <Kbd>Delete</Kbd>)
+and reorder it — the same chain you see in the detail panel. A node shows only the knobs that
+have a CV patch attached; the chevron (or a double-click) shows them all. **Show fewer** under an
+opened node, the chevron again or <Kbd>Esc</Kbd> closes it. Knobs on a node are the real
+controls — turning them changes the sound.
+
+The track's own nodes — its input (or instrument) and its output — carry a lock: they are where
+the chain starts and ends, so they can't be deleted. To change an instrument, drop another one on
+the track.
 
 Cables are coloured by what they carry: audio, MIDI and CV each have their own colour.
 
@@ -66,7 +72,9 @@ the left and pick a parameter — or right-click a knob ▸ **Modulate from anot
 ## CV Scope
 
 Add a **Scope** to watch any modulator's signal as a moving line — handy for checking an LFO's
-rate or how an envelope follower reacts.
+rate or how an envelope follower reacts. Drag the modulator's **CV out** onto the Scope node to
+patch it in. The Scope shows CV, not audio: to watch a device's sound, put
+[Nota Lens](../../devices/audio-effects/lens/) after it in the chain.
 
 <Aside>
 CV ports appear only where modulation actually works, so anything you can patch, you can hear.

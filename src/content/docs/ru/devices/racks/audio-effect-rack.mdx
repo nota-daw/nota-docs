@@ -3,15 +3,17 @@ title: "Nota Audio Effect Rack"
 description: "Цепочки эффектов в одном устройстве — параллельно, последовательно или с выбором по уровню входа — с dry / wet, общим уровнем, уровнем и mute / solo для каждой цепочки и восемью макросами."
 sidebar:
   order: 3
-updated: "0.50.1"
+updated: "0.57.1"
 status: done
 sources:
+  - src/managed/Nota.App/DeviceChainView.Clipboard.cs
   - src/native/nota.engine/src/RackDevice.h
   - src/native/nota.engine/src/RackCore.h
   - src/managed/Nota.App/DeviceCards/Rack/RackCardView.cs
 ---
 
 import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
 
 Nota Audio Effect Rack держит внутри одного устройства несколько **цепочек** эффектов. Обработайте
 звук тремя способами сразу и смешайте, соберите многоразовый эффект-«патч» с парой макросов сверху
@@ -31,6 +33,11 @@ Nota Audio Effect Rack держит внутри одного устройств
 
 **+ Add chain**, затем **+ Device** в ней — в меню встроенные эффекты и подменю **Plug-ins**. У каждой
 цепочки имя, свой **уровень** и индикатор, **mute** и **solo**.
+
+Чтобы собрать рэк из эффекта, который уже стоит на треке, щёлкните его и нажмите <Kbd>⌘ G</Kbd> (или
+**Group into rack** в меню по правому щелчку): он переедет в первую цепочку нового рэка со всеми
+настройками. <Kbd>⌘ ⇧ G</Kbd> (**Ungroup rack**) возвращает устройства рэка с одной цепочкой в цепочку
+трека. Эффект с сайдчейн-ключом, автоматизацией или CV-связью остаётся на месте.
 
 ## Выход рэка
 

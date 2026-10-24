@@ -3,14 +3,16 @@ title: "Nota Auto Filter"
 description: "Filter that moves — LP, BP, HP or Notch with morph and drive, swept by an envelope follower (from the track or a sidechain) and an LFO that can sync, morph and spread in stereo."
 sidebar:
   order: 9
-updated: "0.50.1"
+updated: "0.57.1"
 status: done
 sources:
+  - src/managed/Nota.App/Controls/AutoFilterCurve.cs
   - src/native/nota.engine/src/AutoFilter.h
   - src/managed/Nota.App/DeviceCards/Bodies/AutoFilterDeviceBody.cs
 ---
 
 import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
 
 Nota Auto Filter is a filter with built-in motion: an **envelope** opens it as the sound gets
 louder (auto-wah, envelope filter), an **LFO** sweeps it in time (wobble, gates, slow motion).
@@ -28,7 +30,7 @@ panel and a status line.
 | Type | **LP**, **BP**, **HP** or **Notch** |
 | **Morph** | Blends continuously between the types |
 | Slope | 12 or 24 dB |
-| **Freq** · **Reso** | Cutoff and resonance — or drag the response |
+| **Freq** · **Reso** | Cutoff and resonance — or drag the response: sideways for the cutoff, up / down for the resonance, from where you grab it |
 | **Drive** | Pre-filter drive for colour |
 | Circuit | **Clean** or **Analog** (saturating) |
 
