@@ -3,7 +3,7 @@ title: "Nota Dynamic EQ-8"
 description: "Eight-band EQ where each band can react to level — duck when it gets loud or lift when it gets quiet — keyed by itself or by another track."
 sidebar:
   order: 3
-updated: "0.50.1"
+updated: "0.57.1"
 status: done
 sources:
   - src/native/nota.engine/src/DynamicEq.h
@@ -16,11 +16,20 @@ Nota Dynamic EQ-8 is an eight-band EQ in which every band can also behave like a
 or expander for just its frequencies. Tame sibilance only when it happens, dip the bass only when
 the kick hits, lift air only when a vocal goes quiet.
 
-<Shot id="devices/audio-effects/dynamic-eq/card" alt="Nota Dynamic EQ-8 with the response graph and the band panel" />
+<Shot id="devices/audio-effects/dynamic-eq/card" alt="Nota Dynamic EQ-8: the picked band's Freq, Gain and Q on the left, the response graph with the row of bands under it, the band's dynamics on the right" />
+
+## Layout
+
+Laid out like [EQ-8](../eq-8/#layout): the picked band's **Freq**, **Gain** and **Q** on the left,
+the response graph in the middle with the row of eight bands under it — click a band's number to
+switch it on or off, its shape to change its type, the cell to pick it — and on the right the
+picked band's dynamics, with the **Dynamic** switch and **Out** at the bottom of that column. This
+column doesn't fold.
 
 ## A band
 
-The static half is the same as [EQ-8](../eq-8/): type, **Freq**, **Gain**, **Q**. The dynamic half:
+The static half is the same as [EQ-8](../eq-8/): type, **Freq**, **Gain**, **Q**. The dynamic half,
+in the right column:
 
 | Control | What it does |
 |---|---|
@@ -31,8 +40,9 @@ The static half is the same as [EQ-8](../eq-8/): type, **Freq**, **Gain**, **Q**
 | **Key** | **Self** (the band's own signal) or **Ext** (another track — the device's sidechain source) |
 | **Solo** | Hear only this band |
 
-Only shelves and bells take dynamic gain. Full action is reached 6 dB past the threshold. The band
-chips above the graph light up with each band's activity.
+Only shelves and bells take dynamic gain. Full action is reached 6 dB past the threshold. Each
+band's cell in the row under the graph shows its activity as a bar along the bottom. While a band
+is **Static**, its dynamics rows are greyed out.
 
 ## Global
 

@@ -3,7 +3,7 @@ title: "Nota Pentad"
 description: "Пятиголосный аналоговый полифон по образцу Prophet-5 — два осциллятора с синхронизацией, 4-полюсный фильтр, Poly-Mod, Wheel-Mod и винтажный дрейф, 5, 10 или 16 голосов."
 sidebar:
   order: 13
-updated: "0.50.1"
+updated: "0.57.1"
 status: done
 sources:
   - src/native/nota.engine/src/Pentad.h
@@ -48,9 +48,14 @@ Osc A и Osc B: **Oct**, **Fine**, формы волн, ширина импул�
 
 ## Mixer и Output
 
-**Mixer:** уровни Osc A, Osc B и **Noise** (белый или розовый). **Output:** общий строй и громкость,
-**Drift** (винтажный разброс по голосам), **Noise floor**, **Oversampling** (×2 или ×4 внутри
-голоса) и настройка голосов — **5**, **10** или **16**, способ распределения и unison-стопки.
+**Mixer:** уровни Osc A, Osc B и **Noise** (белый или розовый). **Output:** **Volume** с
+индикаторами, **Spread** для unison, диапазон **Bend**, **Vel → filter** и звучащие голоса. **Drift**
+(винтажный разброс по голосам) стоит в строке заголовка вкладки Oscillators.
+
+Меню **Voice** справа от вкладок Mixer / Output открывает настройку голосов: **5**, **10** или
+**16** голосов, способ распределения, режим глайда, переключатель release, **Oversampling** (×2
+или ×4 внутри голоса), **Bass comp**, **Noise floor**, винтажное зерно (**Re-roll**), общий строй и
+aftertouch.
 
 ## Пресеты
 

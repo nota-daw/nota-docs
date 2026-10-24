@@ -3,7 +3,7 @@ title: "Nota Lens"
 description: "Analyzer — a spectrum, a triggered oscilloscope and a waterfall in one card, with peak hold, cursors, mid / side and loudness. The audio passes through untouched."
 sidebar:
   order: 22
-updated: "0.50.1"
+updated: "0.57.1"
 status: done
 sources:
   - src/native/nota.engine/src/Lens.h
@@ -17,8 +17,8 @@ master, to look at the spectrum, the waveform or how the sound evolves over time
 
 <Shot id="devices/audio-effects/lens/card" alt="Nota Lens, Spectrum view" />
 
-**Layout:** the **Scale** rail on the left, one large graph in the middle with three views, an
-**Analyze** / **Display** panel on the right and a status line.
+**Layout:** the **Scale** rail on the left, one large graph in the middle with three views, and an
+**Analyze** / **Display** panel on the right.
 
 ## Spectrum
 
@@ -45,7 +45,8 @@ The spectrum over time, scrolling — see resonances ring, reverb tails decay an
 ## Common controls
 
 **Freeze** stops the display; **Source** picks what is analysed; the scale's top and range set the
-vertical view. The status line carries loudness and the measurements.
+vertical view. Under the graph, beside the view's knobs, are its measurements: the peak, crest factor
+and LUFS on Spectrum, the period, frequency, Vpp and RMS on Scope.
 
 ## Presets
 

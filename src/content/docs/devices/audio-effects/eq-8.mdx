@@ -3,7 +3,7 @@ title: "Nota EQ-8"
 description: "Eight-band parametric EQ — cuts, shelves, bells and notches with selectable slope, mid / side and left / right per band, a live analyzer, scale and auto gain."
 sidebar:
   order: 1
-updated: "0.50.1"
+updated: "0.57.1"
 status: done
 sources:
   - src/native/nota.engine/src/Eq.h
@@ -15,28 +15,43 @@ import Shot from '@components/Shot.astro';
 Nota EQ-8 is a mixing-console equalizer with eight bands. Use it to clean up mud, cut rumble,
 add air, carve space for one sound around another — on the stereo pair, the mid or the side.
 
-<Shot id="devices/audio-effects/eq-8/card" alt="Nota EQ-8 with the band chips, the response graph and the band panel" />
+<Shot id="devices/audio-effects/eq-8/card" alt="Nota EQ-8: the picked band's Freq, Gain and Q on the left, the response graph with the row of bands under it, the band and global settings on the right" />
 
-## The graph
+## Layout
+
+The graph leads: the picked band's **Freq**, **Gain** and **Q** stack on the left, the response
+graph runs across the middle with a row of the eight bands under it, and the column on the right
+holds the picked band's **Slope** and **Channel** and the **Global** controls.
+
+The arrow at the top of the right column folds it to a thin strip, so the card narrows and the
+rest of the chain gets more room. Folded, the graph, the band row and the left column keep
+working; click the arrow again to bring the column back. The fold changes no setting and isn't
+saved with the project.
+
+## The graph and the band row
 
 Each band is a numbered node on the response curve — drag it: sideways for frequency, up and
-down for gain. The band chips above the graph switch bands on and off and select one for the
-panel on the right. **Analyzer** in the corner shows the spectrum **Pre** or **Post** EQ, or
-**Off**.
+down for gain. Its frequency shows on the node and in the tooltip.
+
+In the row under the graph each band has a cell: its **number** switches the band on and off
+(lit when it's on), the **shape** at the right of the cell opens the six filter types, and a
+click on the cell picks the band for the controls on either side. A setting that doesn't apply
+to the band's type — **Slope** on a shelf — is greyed out with nothing picked.
 
 ## A band
 
 | Control | What it does |
 |---|---|
-| Type | **Low cut**, **Low shelf**, **Bell**, **Notch**, **High shelf**, **High cut** |
+| Type | **Low cut**, **Low shelf**, **Bell**, **Notch**, **High shelf**, **High cut** — the shape in the band's cell |
 | **Freq** · **Gain** · **Q** | Where, how much, how wide (on the cuts, **Reso**) |
 | **Slope** | For the cuts: 12, 24 or 48 dB per octave |
-| **Channel** | **St** (both channels), **Mid**, **Side**, **L** or **R** — so a band can brighten only the sides, or tame one channel |
+| **Channel** | **St** (both channels), **M** (mid), **S** (side), **L** or **R** — so a band can brighten only the sides, or tame one channel |
 
 ## Global
 
 | Control | What it does |
 |---|---|
+| **Analyzer** | Shows the spectrum **Pre** or **Post** EQ behind the curve, or **Off** |
 | **Scale** | Multiplies every shelf and bell gain at once, 0–200 % — 50 % halves the whole curve |
 | **Output** | Output trim |
 | **Auto gain** | Compensates the average level change of the shelves and bells, so you judge an edit at the same loudness |
@@ -55,4 +70,4 @@ and colour (**Telephone**, **Lo-Fi Radio**, **Band Pass**).
 
 - **Cut narrow, boost wide:** find a harsh frequency with a narrow, boosted bell, then flip it
   to a cut.
-- **Mono lows:** a low cut on the **Side** band around 120 Hz keeps the bass centred.
+- **Mono lows:** a low cut on a band set to **S** (side) around 120 Hz keeps the bass centred.

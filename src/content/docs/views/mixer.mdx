@@ -3,7 +3,7 @@ title: Mixer
 description: The Mixer window — a channel strip per track with inputs, sends, pan, volume, mute, solo and arm, returns and the master.
 sidebar:
   order: 4
-updated: "0.51.2"
+updated: "0.57.1"
 status: done
 sources:
   - src/managed/Nota.App/MixerView.cs
@@ -28,7 +28,7 @@ Top to bottom, each track gets:
 - **I/O** — where the track listens: the audio input (**In 1** …) and **Monitor** (**Auto** or
   **In**) for audio tracks, **MIDI In** / **MIDI To** for instrument tracks; group and return
   strips show what feeds them;
-- **Sends** — one knob per return track;
+- **Sends** — one bar per return track, with the amount written inside it;
 - **Pan** and the **volume** fader with its meter. Drag the gain readout or double-click it to
   type a value; double-click the fader to reset it;
 - **Mute**, **Solo** and **arm** buttons.
@@ -36,7 +36,8 @@ Top to bottom, each track gets:
 Return tracks come after the tracks, and the **Master** strip closes the row. Its fader is the
 same master volume as the **Master** control in the transport bar and the Master row of the
 Arrangement — move one and the others follow; it is saved with the project. **Show** at the
-bottom switches the **Sends** and **I/O** sections on or off.
+bottom switches the **Sends** and **I/O** sections on or off; a section that is shown has its
+chip lit.
 
 ## Sends and returns
 
