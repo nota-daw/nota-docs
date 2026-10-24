@@ -3,7 +3,7 @@ title: "Nota Drum Rack"
 description: "Pads for drums and one-shots — up to 64 pads in four banks, each with its own sample or instrument and effects, choke groups, a mixer, kit macros and 25 factory kits."
 sidebar:
   order: 2
-updated: "0.50.1"
+updated: "0.57.1"
 status: done
 sources:
   - src/native/nota.engine/src/DrumRack.h
@@ -12,6 +12,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
 
 Nota Drum Rack plays a different sound on every pad. Load one-shots or instruments onto the pads,
 give each its own effects, and program it from the piano roll or the **Pattern** step grid.
@@ -41,6 +42,8 @@ A 4 × 4 grid, pad 1 bottom-left as on hardware, in banks **C1**–**C4** (16 no
   pan, sends, choke and effects stay.
 - **Right-click** a pad to rename it, set its **choke** group, open its chain or remove it.
 - **Fold** hides the empty pads. **Swing** and **Humanize** shape the kit's feel.
+- <Kbd>⌘ Z</Kbd> undoes a drop (several samples dropped together are one step), a rename, a note
+  change and the pad's chain edits.
 
 The **Pad** panel on the right edits the selected pad: its one-shot with a playhead, **Volume**,
 **Pan**, **Tune**, **Decay**, the **choke** group (pads in one group cut each other — open and closed
