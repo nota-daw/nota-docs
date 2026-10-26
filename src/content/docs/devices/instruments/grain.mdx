@@ -3,7 +3,7 @@ title: "Nota Grain"
 description: "Granular sampler — a cloud of short grains reads through a sample: scan it, freeze it or play it from the keys, with spray, jitter, a filter and a dry/wet against the plain sample."
 sidebar:
   order: 9
-updated: "0.57.1"
+updated: "0.50.1"
 status: done
 sources:
   - src/native/nota.engine/src/GrainSynth.h
@@ -25,15 +25,15 @@ the Arrangement onto the track.
 **Signal flow:** sample → read position → grain cloud (size, density, spray, pitch, spread) and a
 dry read head → **Dry/Wet** → filter → amp envelope.
 
-The graph shows the sample, the **Spray** band around the read position (a dashed orange line),
-each voice's read head and every grain playing (grey dots — high for left, low for right). **Drag across the
+The graph shows the sample, the **Spray** band around the dashed read position, each voice's
+read head and every grain playing (teal dots — high for left, low for right). **Drag across the
 sample to move Position.**
 
 ## Read (the rail)
 
 | Control | What it does |
 |---|---|
-| **Scan** / **Freeze** / **Key** | The read position moves at **Scan** speed, stays put, or follows the key you play; in **Freeze** the speed row is greyed out |
+| **Scan** / **Freeze** / **Key** | The read position moves at **Scan** speed, stays put, or follows the key you play |
 | **Position** | Where in the sample the grains are read |
 | **Scan** speed | How fast the position travels |
 | **Spray** | Random scatter of each grain around the position |

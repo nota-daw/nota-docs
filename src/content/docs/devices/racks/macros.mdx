@@ -3,7 +3,7 @@ title: "Macros"
 description: "Eight named knobs on a rack or kit that each drive many parameters at once, each over its own range."
 sidebar:
   order: 4
-updated: "0.57.1"
+updated: "0.50.1"
 status: done
 sources:
   - src/native/nota.engine/src/RackCore.h
@@ -19,8 +19,8 @@ reverb at once, or morph a whole layered patch.
 
 ## Reading a macro
 
-Each macro shows its value, its name, and — in grey — where it goes ("→ Reverb · Snare,
-Clap"). An unassigned macro is a darker, pressed-in slot with its knob greyed out.
+Each macro shows its value, its name, and — in teal — where it goes ("→ Reverb · Snare,
+Clap"). An unassigned macro is an empty, dashed cell.
 
 ## Mapping
 
@@ -29,8 +29,8 @@ Clap"). An unassigned macro is a darker, pressed-in slot with its knob greyed ou
    chain's instrument, or of any of its effects.
 3. Repeat to add more receivers.
 
-The selected macro's **receivers** are listed with their range as a soft orange band between two orange
-ends and the current value as a grey tick — drag the band's ends to set the range each receiver covers. In the Instrument and
+The selected macro's **receivers** are listed with their range as a teal band and the current value
+as a tick — drag the band's ends to set the range each receiver covers. In the Instrument and
 Audio Effect racks, mappings can follow **Linear**, **Exp**, **Log** or **S** curves.
 
 Right-click a macro to see its receivers and ranges, **Rename** it, or **Clear** it. Factory kits load

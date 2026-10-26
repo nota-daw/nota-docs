@@ -3,7 +3,7 @@ title: "Nota Dynamic EQ-8"
 description: "Eight-band EQ where each band can react to level — duck when it gets loud or lift when it gets quiet — keyed by itself or by another track."
 sidebar:
   order: 3
-updated: "0.57.1"
+updated: "0.50.1"
 status: done
 sources:
   - src/native/nota.engine/src/DynamicEq.h
@@ -16,43 +16,28 @@ Nota Dynamic EQ-8 is an eight-band EQ in which every band can also behave like a
 or expander for just its frequencies. Tame sibilance only when it happens, dip the bass only when
 the kick hits, lift air only when a vocal goes quiet.
 
-<Shot id="devices/audio-effects/dynamic-eq/card" alt="Nota Dynamic EQ-8: the row of band chips over the response graph on the left, the picked band's settings and its dynamics on the right" />
-
-## Layout
-
-Laid out like [EQ-8](../eq-8/#layout): the slim row of eight band chips over the response graph —
-click a chip to pick the band, double-click it to switch the band on or off — and on the right a panel
-in two columns. The left one is the picked band: its type, **Freq**, **Gain** and **Q**, then its
-**Key** and **Solo**. The right one is its dynamics: the mode beside the filter shapes, then
-**Thresh**, **Range**, **Attack** and **Release** as knobs beside Freq, Gain and Q, and the
-**Dynamic** switch and **Output** at the bottom.
-
-As on EQ-8, the arrow at the top right of the panel folds it to a thin strip that keeps the
-picked band's **Freq**, **Gain** and **Q**; click it again to bring the panel back. The fold
-changes no setting and isn't saved with the project.
+<Shot id="devices/audio-effects/dynamic-eq/card" alt="Nota Dynamic EQ-8 with the response graph and the band panel" />
 
 ## A band
 
-The static half is the same as [EQ-8](../eq-8/): type, **Freq**, **Gain**, **Q**. The dynamic half
-is the panel's right column, plus **Key** and **Solo** under the band's knobs:
+The static half is the same as [EQ-8](../eq-8/): type, **Freq**, **Gain**, **Q**. The dynamic half:
 
 | Control | What it does |
 |---|---|
 | Mode | **Static** — a plain EQ band; **Duck** — acts as the band gets louder than the threshold; **Lift** — acts as it falls below |
-| **Thresh** | The level where it starts to act; the band's current level is a small tick on its ring |
-| **Range** | How many dB at full action — turn left of centre to cut, right to boost (a Duck that boosts is upward expansion) |
+| **Thresh** | The level where it starts to act; the band's current level is marked on it |
+| **Range** | How many dB at full action — negative cuts, positive boosts (a Duck that boosts is upward expansion) |
 | **Attack** · **Release** | How fast it acts and lets go |
 | **Key** | **Self** (the band's own signal) or **Ext** (another track — the device's sidechain source) |
 | **Solo** | Hear only this band |
 
-Only shelves and bells take dynamic gain. Full action is reached 6 dB past the threshold. Each
-band's chip over the graph shows its activity as a bar along the bottom. While a band
-is **Static**, its dynamics knobs are greyed out.
+Only shelves and bells take dynamic gain. Full action is reached 6 dB past the threshold. The band
+chips above the graph light up with each band's activity.
 
 ## Global
 
-**Dynamic** switches all dynamics off at once — an instant A/B of what they do. **Output** trims the
-output (±18 dB).
+**Dynamic** switches all dynamics off at once — an instant A/B of what they do. **Out** trims the
+output.
 
 ## Presets
 

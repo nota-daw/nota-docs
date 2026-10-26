@@ -3,7 +3,7 @@ title: "Nota Consort"
 description: "Paraphonic semi-modular synth — four oscillators, a dual ladder filter, two envelopes, an LFO, a 16-step sequencer and arpeggiator, an analog delay and a twelve-cable patch bay."
 sidebar:
   order: 14
-updated: "0.57.1"
+updated: "0.50.1"
 status: done
 sources:
   - src/native/nota.engine/src/Consort.h
@@ -67,10 +67,9 @@ Destinations include pitch, PWM, cutoff, resonance, the VCA, the delay and the L
 **normalled** inputs (the envelope gates, filter in, VCA in, EXT in) where a cable breaks the
 default connection. Feedback loops are allowed.
 
-The Patch tab shows the cables as a source × destination matrix and as a jack strip. In the card's
-header, **Patch bay** shows the cable count (**3 cables** — hover it for the list), and **Open**
-opens a full-card overlay with every jack; **Close** shuts it. On the Patch tab the button reads
-**Collapse** and takes you back to the tab you came from. Drag from jack to jack to patch; <Kbd>⌥</Kbd>-click a jack to pull its cables.
+The Patch tab shows the cables as a source × destination matrix and as a jack strip; the
+**Patch bay** row under the card lists the active cables and opens a full-card overlay with every
+jack. Drag from jack to jack to patch; <Kbd>⌥</Kbd>-click a jack to pull its cables.
 
 ## Presets
 
