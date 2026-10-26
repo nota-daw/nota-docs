@@ -151,9 +151,18 @@ shots:
   - { id: devices/midi-effects/random/card, source: app, scene: device, args: {midi: 5, instrument: 0} }
 
   # ── Racks
-  - { id: devices/racks/instrument-rack/card, source: app, scene: device, args: {instrument: 3} }
+  - { id: devices/racks/instrument-rack/card, source: app, scene: device, args: {instrument: 3, rack: "demo"} }
+  - { id: devices/racks/instrument-rack/zones, source: app, scene: device, args: {instrument: 3, rack: "demo", tab: "Zones"} }
+  - { id: devices/racks/instrument-rack/macros, source: app, scene: device, args: {instrument: 3, rack: "demo", tab: "Macros"} }
+  - { id: devices/racks/instrument-rack/mapping, source: app, scene: device, args: {instrument: 3, rack: "demo", tab: "Map"} }
+  - { id: devices/racks/instrument-rack/rack-out, source: app, scene: device, args: {instrument: 3, rack: "demo", tab: "Rack out"} }
   - { id: devices/racks/drum-rack/card, source: app, scene: device, args: {instrument: 4} }
-  - { id: devices/racks/audio-effect-rack/card, source: app, scene: device, args: {effect: 5} }
+  - { id: devices/racks/audio-effect-rack/card, source: app, scene: device, args: {effect: 5, rack: "demo", clip: "chords"} }
+  - { id: devices/racks/audio-effect-rack/select, source: app, scene: device, args: {effect: 5, rack: "demo", clip: "chords", tab: "Select"} }
+  - { id: devices/racks/audio-effect-rack/rack-out, source: app, scene: device, args: {effect: 5, rack: "demo", clip: "chords", tab: "Rack out"} }
+  - { id: devices/racks/midi-effect-rack/card, source: app, scene: device, args: {midi: 6, rack: "demo"} }
+  - { id: devices/racks/midi-effect-rack/zones, source: app, scene: device, args: {midi: 6, rack: "demo", tab: "Zones"} }
+  - { id: devices/racks/midi-effect-rack/output, source: app, scene: device, args: {midi: 6, rack: "demo", tab: "Output"} }
 
   # ── Device tabs (app) — one entry per tab a device page shows; edit by hand
   - { id: devices/instruments/synth/env, source: app, scene: device, args: {instrument: 0, tab: "L>Env"} }
