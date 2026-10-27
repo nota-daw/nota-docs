@@ -2,27 +2,53 @@
 title: "Macros"
 description: "Eight named knobs on a rack or kit that each drive many parameters at once, each over its own range."
 sidebar:
-  order: 4
-updated: "0.50.1"
+  order: 5
+updated: "0.57.1"
 status: done
 sources:
-  - src/native/nota.engine/src/RackCore.h
+  - src/native/nota.engine/src/devices/racks/RackCore.h
   - src/managed/Nota.App/DeviceCards/Rack/MacroPanel.cs
+  - src/managed/Nota.App/DeviceCards/Rack/RackCard.Macros.cs
+  - src/managed/Nota.App/DeviceCards/Rack/RackCard.MacroTab.cs
 ---
 
 import Kbd from '@components/Kbd.astro';
+import Shot from '@components/Shot.astro';
 
-Every rack — [Instrument Rack](../instrument-rack/), [Drum Rack](../drum-rack/) and
-[Audio Effect Rack](../audio-effect-rack/) — and [Nota Rhythm](../../instruments/rhythm/) has **eight
+Every rack — [Instrument Rack](../instrument-rack/), [Drum Rack](../drum-rack/),
+[Audio Effect Rack](../audio-effect-rack/) and [MIDI Effect Rack](../midi-effect-rack/) — and [Nota Rhythm](../../instruments/rhythm/) has **eight
 macros**: named knobs that drive any parameters inside, so one knob can open every snare and clap
 reverb at once, or morph a whole layered patch.
 
-## Reading a macro
+## On the Instrument, Audio Effect and MIDI Effect racks
+
+Each macro is a small knob with its name, its value (— when it drives nothing) and, in teal, how many
+targets it has. Drag it up or down; double-click resets it to 0.
+
+<Shot id="devices/racks/instrument-rack/mapping" alt="Mapping Macro 1 in place: every parameter on the chain is outlined in teal" />
+
+**Map in place:** pick a macro and press **Map**. The card switches to **Chains**, and every parameter
+on the chosen chain's devices gets a teal outline — click one to map it to the macro, click again to
+unmap it. A parameter belongs to one macro: mapping it again moves it. Choose another chain to map
+its parameters too; press **Map** again or <Kbd>Esc</Kbd> to finish. A mapped parameter shows its
+macro's tag (**M1** …) and follows the macro; click it to open the macro.
+
+<Shot id="devices/racks/instrument-rack/macros" alt="The Macros tab: Bright, its curve (Mixed) and two targets with their ranges" />
+
+**The Macros tab** shows the chosen macro: double-click its name to rename it, pick its **Curve**
+(**Lin**, **Exp**, **Log**, **S**) and drag each target's range — the teal band runs from min to max,
+and min above max turns the response upside down. When a project gave the targets different curves,
+the curve reads **Mixed** until you pick one for all. **×** removes a target.
+
+In the Audio Effect and MIDI Effect racks the **selector** can be a target too: right-click the
+selector on the Select / Zones tab, or choose **Map to the selector** in a macro's right-click menu.
+
+## On the Drum Rack and Nota Rhythm
 
 Each macro shows its value, its name, and — in teal — where it goes ("→ Reverb · Snare,
 Clap"). An unassigned macro is an empty, dashed cell.
 
-## Mapping
+### Mapping
 
 1. Select a macro.
 2. Press **Map** and pick the target: a pad's own controls (Volume, Pan, Tune, Decay), a parameter of a
@@ -30,8 +56,7 @@ Clap"). An unassigned macro is an empty, dashed cell.
 3. Repeat to add more receivers.
 
 The selected macro's **receivers** are listed with their range as a teal band and the current value
-as a tick — drag the band's ends to set the range each receiver covers. In the Instrument and
-Audio Effect racks, mappings can follow **Linear**, **Exp**, **Log** or **S** curves.
+as a tick — drag the band's ends to set the range each receiver covers.
 
 Right-click a macro to see its receivers and ranges, **Rename** it, or **Clear** it. Factory kits load
 with their own macros (Tune, Decay, Hats, Drive / Tape, Room, Echo, 808 / Sub — as the kit has them).

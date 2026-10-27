@@ -3,7 +3,7 @@ title: "Горячие клавиши"
 description: "Все сочетания клавиш и жесты мыши в Nota, по группам, как на странице Settings ▸ Shortcuts."
 sidebar:
   order: 1
-updated: "0.56.1"
+updated: "0.57.1"
 status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
@@ -26,6 +26,7 @@ import Kbd from '@components/Kbd.astro';
 | <Kbd keys="⌥ ⌘ S" /> | Save a version with a note |
 | <Kbd keys="⌘ ⇧ E" /> | Export audio |
 | <Kbd keys="⌘ ," /> | Settings |
+| <Kbd keys="⌘ Q" /> | Quit Nota · asks about unsaved changes first |
 
 ## Window
 
@@ -74,8 +75,8 @@ import Kbd from '@components/Kbd.astro';
 | <Kbd keys="⌘ ⇧ M" /> | Toggle the Mixer view |
 | <Kbd keys="Tab" /> | Cycle Devices / Pattern / Clip in the detail panel |
 | <Kbd keys="Esc" /> | Cancel the current gesture / clear the selection · close the patch-bay overlay |
-| <Kbd keys="⌘ G" /> · <Kbd keys="⌘ ⇧ G" /> | Group / ungroup selected tracks |
-| <Kbd keys="⌘ C" /> · <Kbd keys="⌘ X" /> · <Kbd keys="⌘ V" /> | Copy / cut / paste clip (or automation range) · a clip copied in Session pastes here |
+| <Kbd keys="⌘ G" /> · <Kbd keys="⌘ ⇧ G" /> | Group / ungroup selected tracks · on a selected device: wrap it in a rack / take it out |
+| <Kbd keys="⌘ C" /> · <Kbd keys="⌘ X" /> · <Kbd keys="⌘ V" /> | Copy / cut / paste clips, a time range or an automation range · pastes onto the track clicked last |
 | <Kbd keys="⌘ ⇧ C" /> | Copy the selected clips to Session · the first scene row where they fit |
 | <Kbd keys="⌘ ⇧ V" /> | Paste the last range as audio rendered through its devices |
 | <Kbd keys="⌘ D" /> | Duplicate the selected clip(s) / range |
@@ -84,6 +85,10 @@ import Kbd from '@components/Kbd.astro';
 | <Kbd keys="⌘ E" /> | Split at the playhead · at the range edges |
 | <Kbd keys="⌘ J" /> | Consolidate the selection into one clip per track |
 | <Kbd keys="0" /> | Deactivate / activate the selected clip(s) |
+| <Kbd keys="←" /> · <Kbd keys="→" /> | Nudge the selected clips by the grid step · stops at the song start |
+| <Kbd keys="⌥ ←" /> · <Kbd keys="⌥ →" /> | Nudge the selected clips by a 64th note |
+| <Kbd keys="⌥ ↑" /> · <Kbd keys="⌥ ↓" /> | Move the selected clips to the next track that takes them, at the same beats |
+| Drag below the last track | Move the clips to a new track like their own · one per source track |
 | <Kbd keys="Delete" /> | Delete the selected clip / range |
 
 ## Сетка (Arrangement или редактор клипа — тот, где вы работали последним)
@@ -102,9 +107,42 @@ import Kbd from '@components/Kbd.astro';
 | Клавиши | Действие |
 |---|---|
 | <Kbd keys="⌘ A" /> | Select all tracks |
+| ⇧-click · ⌘-click | Select a range of tracks / add or remove one track |
 | <Kbd keys="⌘ C" /> · <Kbd keys="⌘ X" /> · <Kbd keys="⌘ V" /> | Copy / cut / paste the selected tracks · paste lands after the last one |
 | <Kbd keys="⌘ D" /> | Duplicate the selected tracks |
 | <Kbd keys="Delete" /> | Delete the selected tracks · a group goes with its tracks |
+
+## Устройства (после щелчка по устройству)
+
+| Клавиши | Действие |
+|---|---|
+| <Kbd keys="⌘ C" /> · <Kbd keys="⌘ X" /> · <Kbd keys="⌘ V" /> | Copy / cut / paste the device with all its settings · paste lands after the selected device, on any track or rack chain |
+| <Kbd keys="⌘ D" /> | Duplicate the selected device |
+| <Kbd keys="⌘ G" /> | Wrap the selected audio effect in an Audio Effect Rack |
+| <Kbd keys="⌘ ⇧ G" /> | Take the devices out of a selected one-chain rack |
+| <Kbd keys="Delete" /> | Delete the selected device |
+
+## Racks
+
+| Клавиши | Действие |
+|---|---|
+| <Kbd keys="Esc" /> | End macro mapping (Map on the rack card) |
+| Drag a zone edge | Set a chain's key, velocity or select range · edges never cross |
+| Hover the zones | See which chains a note would play |
+| Double-click a chain or macro name | Rename it |
+| Right-click a macro | Map it to a parameter or the selector · clear its mappings |
+| Drag a device's header | Move it within its chain · onto another chain's row to move it there |
+| Click a device | Select it for ⌘C ⌘X ⌘V ⌘D and Delete |
+
+## Modular (после щелчка по холсту)
+
+| Клавиши | Действие |
+|---|---|
+| <Kbd keys="F" /> | Fit every node on screen |
+| <Kbd keys="B" /> | Bypass the selected device |
+| <Kbd keys="⌘ D" /> | Duplicate the selected device with all its settings |
+| <Kbd keys="Delete" /> | Delete the selected device, modulator or cable · the track's input, instrument and output are fixed |
+| <Kbd keys="Esc" /> | Show fewer parameters on every opened node |
 
 ## Session (после щелчка по сетке)
 
@@ -223,6 +261,7 @@ import Kbd from '@components/Kbd.astro';
 | Drag an audio clip onto an instrument track | Load its audio into the Sampler, Grain, Drum Rack (next free pad) or Instrument Rack · rest there to open its devices |
 | Drag an audio clip out of the Arrangement | Take it as a sample: drop on a pad, a Grain, a Rhythm voice, a Session slot — the clip stays put |
 | Drag clip + ⌥ | Position freely, ignoring the grid for this drag (the magnet in the transport latches the same thing) |
+| Wheel over the device chain | Scroll it sideways · over an EQ band's handle the wheel sets its Q, over a value box it steps the value |
 | Drag knob | Change a device value · hold ⌘ or ⇧ for fine steps |
 | Drag slider | Left / right (or up / down) changes the value · hold ⌘ or ⇧ for fine steps |
 | ⌥-click a knob, fader or slider | Type a value (units like k, ms, dB, L / R work) · double-click its value does the same |

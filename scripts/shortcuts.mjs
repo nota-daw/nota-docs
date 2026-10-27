@@ -52,6 +52,8 @@ const ru = {
   FILE: 'Файл', TRANSPORT: 'Транспорт', 'ARRANGEMENT & EDITING': 'Arrangement и редактирование',
   'GRID (ARRANGEMENT OR CLIP EDITOR — WHICHEVER YOU USED LAST)': 'Сетка (Arrangement или редактор клипа — тот, где вы работали последним)',
   'TRACKS (AFTER A CLICK IN THE TRACK HEADERS)': 'Треки (после щелчка по заголовкам треков)',
+  'DEVICES (AFTER A CLICK ON A DEVICE)': 'Устройства (после щелчка по устройству)',
+  'MODULAR (AFTER A CLICK ON THE CANVAS)': 'Modular (после щелчка по холсту)',
   'SESSION (AFTER A CLICK IN THE GRID)': 'Session (после щелчка по сетке)', 'PIANO ROLL': 'Piano roll',
   'PLAY NOTES (COMPUTER KEYBOARD)': 'Игра нотами (клавиатура компьютера)', 'BROWSER · PREVIEW': 'Браузер · предпрослушивание',
   'GAMEPAD (MACOS)': 'Геймпад (macOS)', MOUSE: 'Мышь',

@@ -178,10 +178,11 @@ sections:
       - {kind: 5, name: Nota Random,   page: devices/midi-effects/random,   engine: MidiRandom.h,     card: RandomMidiBody.cs,   mockup: Nota Random.html, status: done}
     # Racks. Card: src/managed/Nota.App/DeviceCards/Rack/
     racks:
-      - {kind: "instrument 3", name: Nota Instrument Rack,   page: devices/racks/instrument-rack,   engine: RackInstrument.h, card: RackCardView.cs, status: done}        # no mockup
+      - {kind: "instrument 3", name: Nota Instrument Rack,   page: devices/racks/instrument-rack,   engine: RackInstrument.h, card: RackCard.cs, mockup: Nota Racks.html, covers: [chains, chain MIDI effects (#329), zones + probe, mono/glide], status: done}
       - {kind: "instrument 4", name: Nota Drum Rack,         page: devices/racks/drum-rack,         engine: DrumRack.h,       card: RackCardView.Drum.cs,   mockup: Nota Drum Rack.html, covers: [pads, chains, 25 factory kits, sample drops], status: done}
-      - {kind: "effect 5",     name: Nota Audio Effect Rack, page: devices/racks/audio-effect-rack, engine: RackDevice.h,     card: RackCardView.cs, status: done}        # no mockup; Parallel/Series/Select
-      - {page: devices/racks/macros, covers: [macro knobs, mapping], card: MacroPanel.cs, status: done}
+      - {kind: "effect 5",     name: Nota Audio Effect Rack, page: devices/racks/audio-effect-rack, engine: RackDevice.h,     card: RackCard.cs, mockup: Nota Racks.html, covers: [Parallel/Serial/Select, selector, follow input], status: done}
+      - {kind: "midi 6",       name: Nota MIDI Effect Rack,  page: devices/racks/midi-effect-rack,  engine: MidiRack.h,       card: RackCard.cs, mockup: Nota Racks.html, covers: [chains of MIDI effects, zones, select, merge, pass-through], status: done}
+      - {page: devices/racks/macros, covers: [macro knobs, mapping in place, Macros tab, curves / Mixed, selector target, Drum Rack macro panel], card: "RackCard.Macros.cs, MacroPanel.cs", status: done}
 
   plugins:
     - page: plugins

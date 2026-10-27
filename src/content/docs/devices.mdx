@@ -3,7 +3,7 @@ title: "Devices"
 description: "How a track's device chain works — instruments, audio effects, MIDI effects and racks; adding, reordering, bypassing, presets, A/B compare — and an index of every built-in device."
 sidebar:
   order: 0
-updated: "0.56.1"
+updated: "0.57.1"
 status: done
 sources:
   - src/managed/Nota.App/DeviceChainView.cs
@@ -43,6 +43,10 @@ graphs work the same everywhere: drag, <Kbd>⇧</Kbd> for fine steps, double-cli
 are controls too (drag the nodes, curves and handles). A knob turns with an up / down drag; a
 horizontal slider follows a left / right drag, and up / down works on it too.
 
+The mouse wheel scrolls a long chain sideways wherever the pointer is. A few controls take the wheel
+themselves only while you point at them: an EQ band's handle (its Q) and the small value boxes that
+step through a list (a model, a scale, a root note).
+
 The preset list starts with **Init**: choose it to put every parameter back to its default, as on a
 freshly added device. The card size and a loaded sample stay. **‹ ›** step through Init too, so
 after the last preset comes Init, then the first one again.
@@ -52,7 +56,10 @@ after the last preset comes Init, then the first one again.
 | Drag the header | Move the device in the chain |
 | Double-click the header | Fold the card into a narrow strip (see below) |
 | Click a device · <Kbd>Delete</Kbd> | Remove it |
-| Right-click the header | **Move left** / **Move right**, **Copy**, **Paste**, **Delete**, presets, **Save preset**, A / B compare, **Documentation** — this device's page in the manual — and **Fold** |
+| Click a device · <Kbd>⌘ C</Kbd> · <Kbd>⌘ X</Kbd> · <Kbd>⌘ V</Kbd> | Copy / cut / paste it with every setting · the paste lands after the selected device, on this or another track, or in a rack's chain |
+| Click a device · <Kbd>⌘ D</Kbd> | Duplicate it right after itself |
+| Click an audio effect · <Kbd>⌘ G</Kbd> | Put it in an [Audio Effect Rack](racks/audio-effect-rack/) in its place · <Kbd>⌘ ⇧ G</Kbd> on a one-chain rack takes its devices out again |
+| Right-click the header | **Move left** / **Move right**, **Copy**, **Paste**, **Duplicate**, **Delete**, presets, **Save preset**, A / B compare, **Documentation** — this device's page in the manual — and **Fold** |
 | Click the power switch | Bypass the device |
 
 On an **instrument** card the switch turns the instrument off: it goes quiet without muting the
@@ -140,4 +147,5 @@ tracks: Nota Volt covers both and carries their presets. Projects that use them 
   <LinkCard title="Length · Velocity · Random" description="Note length, dynamics, chance" href="midi-effects/length/" />
   <LinkCard title="Instrument Rack · Drum Rack" description="Layers, splits and pads" href="racks/instrument-rack/" />
   <LinkCard title="Audio Effect Rack · Macros" description="Parallel effects and macro knobs" href="racks/audio-effect-rack/" />
+  <LinkCard title="MIDI Effect Rack" description="Split notes across chains of MIDI effects" href="racks/midi-effect-rack/" />
 </CardGrid>

@@ -1,44 +1,66 @@
 ---
 title: "Nota Audio Effect Rack"
-description: "Effect chains in one device — run them in parallel, in series, or pick one by input level — with dry / wet, gain, per-chain level and mute / solo, and eight macros."
+description: "Effect chains in one device — run them in parallel, in series, or pick them with a selector — with dry / wet, gain, per-chain level and mute / solo, and eight macros."
 sidebar:
   order: 3
-updated: "0.50.1"
+updated: "0.57.1"
 status: done
 sources:
-  - src/native/nota.engine/src/RackDevice.h
-  - src/native/nota.engine/src/RackCore.h
-  - src/managed/Nota.App/DeviceCards/Rack/RackCardView.cs
+  - src/native/nota.engine/src/devices/racks/RackDevice.h
+  - src/native/nota.engine/src/devices/racks/RackCore.h
+  - src/managed/Nota.App/DeviceCards/Rack/RackCard.cs
+  - src/managed/Nota.App/DeviceCards/Rack/RackCard.Zones.cs
+  - src/managed/Nota.App/DeviceCards/Rack/RackCard.RightPanel.cs
+  - src/managed/Nota.App/DeviceChainView.Clipboard.cs
 ---
 
 import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
 
-Nota Audio Effect Rack holds several **chains** of effects inside one device. Process a sound three
-ways at once and blend them, build a reusable effect "patch" with a few macros on top, or switch
-effects by how loud the input is.
+Nota Audio Effect Rack holds several **chains** of effects inside one device. Process a sound
+several ways at once and blend them, build a reusable effect "patch" with a few macros on top, or
+switch between effect chains with one control.
 
-<Shot id="devices/racks/audio-effect-rack/card" alt="Nota Audio Effect Rack: macros, the chain list and the selected chain" />
+<Shot id="devices/racks/audio-effect-rack/card" alt="Nota Audio Effect Rack: macros, the chain list, the chosen chain's effects and Rack out" />
 
-## Modes
-
-| Mode | What happens |
-|---|---|
-| **Parallel** (**Prl**) | Every chain processes the input; their outputs are summed |
-| **Series** (**Ser**) | The chains run one after another |
-| **Select** (**Sel**) | One chain plays, chosen by the input level |
+It uses the same card as the [Instrument Rack](../instrument-rack/): [macros](../macros/), the
+**Chains**, **Select** and **Macros** tabs, the **Chain** and **Rack out** panel. A chain's effects
+move, copy and paste as they do there — and between the rack and the track's device chain.
 
 ## Chains
 
-**+ Add chain**, then **+ Device** in it — the menu lists the built-in effects and a **Plug-ins**
-submenu. Each chain has a name, its own **gain** and meter, **mute** and **solo**.
+**+ Chain** adds one (or drop an effect on the chain list); the dashed target at the end of a chain
+adds an effect — the menu lists the built-in effects and a **Plug-ins** submenu. Each chain has a
+name, its own **Volume**, **Pan**, level, **mute** and **solo**. Right-click a chain to duplicate or
+delete it.
 
-## Rack output
+## Chains run
 
-**Dry / wet**, **Gain** and **PDC** (latency compensation between chains), with **Macro map**,
-**Fold** (hide the chains) and **Save** (store the rack as a preset). Eight named
-[macros](../macros/) control any parameters in the chains.
+<Shot id="devices/racks/audio-effect-rack/rack-out" alt="Rack out: Chains run, Dry/wet, Gain and the switches" />
+
+| Choice | What happens |
+|---|---|
+| **Parallel** | Every chain processes the input; their outputs are summed |
+| **Serial** | Chain 1 feeds chain 2, top to bottom |
+| **Select** | Only the chains whose select range holds the selector play |
+
+Rack out also holds **Dry/wet**, **Gain** (±12 dB), **Follow input level** and **Latency
+compensation** (lines up chains with different latency).
+
+## Select
+
+<Shot id="devices/racks/audio-effect-rack/select" alt="The Select tab: the selector and each chain's select range" />
+
+Each chain has a **select range** from 0 to 127; drag its edges. Drag the **Selector** to choose
+which chains play, map it to a macro (right-click the selector, or **Map to the selector** in a
+macro's menu) and automate the macro, or switch on **Follow input level** so the input's loudness
+moves it. The ranges only count in Select mode.
 
 ## Tips
 
-- **Parallel compression in a box:** a dry chain plus a chain with a heavy Compressor, Parallel mode.
-- **New York reverb:** a chain with only a Reverb set to Wet only, blended under the dry chain.
+- **Parallel compression in a box:** a dry chain plus a chain with a heavy Compressor, Parallel.
+- **One knob, three effects:** three chains with neighbouring select ranges, the selector on a macro.
+- **Wrap and unwrap:** click an effect on the track and press <Kbd>⌘ G</Kbd> (or **Group into
+  rack** in its right-click menu) to move it into a new rack's first chain, settings and all;
+  <Kbd>⌘ ⇧ G</Kbd> (**Ungroup rack**) puts a one-chain rack's devices back. An effect with a
+  sidechain key, automation or a CV link stays where it is.

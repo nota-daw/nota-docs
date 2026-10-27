@@ -1,0 +1,63 @@
+---
+title: "Nota MIDI Effect Rack"
+description: "Цепочки MIDI-эффектов в одном устройстве — разделите ноты по клавишам, velocity или селектору, обработайте каждую часть своим Arp, Chord или Scale и сведите их перед инструментом."
+sidebar:
+  order: 4
+updated: "0.57.1"
+status: done
+sources:
+  - src/native/nota.engine/src/devices/racks/MidiRack.h
+  - src/native/nota.engine/src/devices/racks/RackCore.h
+  - src/managed/Nota.App/DeviceCards/Rack/RackCard.cs
+  - src/managed/Nota.App/DeviceCards/Rack/RackCard.Zones.cs
+  - src/managed/Nota.App/DeviceCards/Rack/RackCard.RightPanel.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota MIDI Effect Rack стоит вместе с другими MIDI-эффектами, перед инструментом трека. Каждая его
+**цепочка** берёт часть того, что вы играете, и пропускает через свои MIDI-эффекты — арпеджио выше
+C3, аккорды ниже, акценты только на сильных нажатиях, — а ноты всех цепочек сходятся в один
+инструмент.
+
+<Shot id="devices/racks/midi-effect-rack/card" alt="Nota MIDI Effect Rack: три цепочки — Arp lead, Chords, Accents — и Arp и Scale цепочки Arp lead" />
+
+Карточка та же, что у [Instrument Rack](../instrument-rack/): [макросы](../macros/), вкладки
+**Chains**, **Zones** и **Macros**, панель **Chain** и **Output**. В Browser он лежит в **MIDI effects ·
+Racks**. MIDI-эффекты цепочки перемещаются, копируются и вставляются так же, как в Instrument Rack, —
+между цепочками, рэками и собственными MIDI-эффектами трека.
+
+## Цепочки
+
+Цепочка — ряд встроенных MIDI-эффектов (Arp, Chord, Scale, Length, Velocity, Random), которые
+работают слева направо. Бросайте их из Browser на цепочку или на пунктирное место; MIDI-эффект,
+брошенный на список цепочек, начинает новую цепочку. В рэке до 16 цепочек.
+
+В панели **Chain** ползунок **Volume** масштабирует velocity нот цепочки (100 % — без изменений, 0 % —
+цепочка молчит), а **Transpose** сдвигает их вверх или вниз до 48 полутонов.
+
+## Зоны
+
+<Shot id="devices/racks/midi-effect-rack/zones" alt="Вкладка Zones: зоны клавиш и velocity, селектор и диапазоны выбора" />
+
+Цепочка берёт ноты внутри своих зон **клавиш** и **velocity**; края тянутся мышью, а наведение
+показывает, в какие цепочки попадёт нота. В режиме Select вместо этого решают **Selector** и тонкая
+полоса **диапазона выбора** под зоной клавиш каждой цепочки — отдайте селектор макросу, чтобы
+переключать партии с контроллера.
+
+## Output
+
+<Shot id="devices/racks/midi-effect-rack/output" alt="Output: Chains run, Merge duplicate notes и Pass through outside zones" />
+
+| Настройка | Что делает |
+|---|---|
+| **Parallel** | Нота уходит во все цепочки, в чью зону попадает |
+| **Select** | Ноты получают только цепочки, чей диапазон выбора содержит селектор |
+| **Merge duplicate notes** | Если две цепочки шлют одну и ту же высоту, звучит одна нота |
+| **Pass through outside zones** | Ноты, которые не взяла ни одна цепочка, доходят до инструмента без изменений |
+
+## Советы
+
+- **Сплит с арпеджио:** цепочка с Arp от C3 и выше, цепочка с Chord ниже, обе в один синтезатор.
+- **Акценты:** цепочка с velocity 110–127 и Random — «гуляют» только сильные удары.
+- **Партии на макросе:** режим Select, цепочки с соседними диапазонами выбора, селектор на макросе.
