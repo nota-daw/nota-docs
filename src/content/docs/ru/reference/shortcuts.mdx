@@ -75,7 +75,7 @@ import Kbd from '@components/Kbd.astro';
 | <Kbd keys="⌘ ⇧ M" /> | Toggle the Mixer view |
 | <Kbd keys="Tab" /> | Cycle Devices / Pattern / Clip in the detail panel |
 | <Kbd keys="Esc" /> | Cancel the current gesture / clear the selection · close the patch-bay overlay |
-| <Kbd keys="⌘ G" /> · <Kbd keys="⌘ ⇧ G" /> | Group / ungroup selected tracks · on a selected device: wrap it in a rack / take it out |
+| <Kbd keys="⌘ G" /> · <Kbd keys="⌘ ⇧ G" /> | Group / ungroup selected tracks · on selected devices: group them into a rack / take a rack apart |
 | <Kbd keys="⌘ C" /> · <Kbd keys="⌘ X" /> · <Kbd keys="⌘ V" /> | Copy / cut / paste clips, a time range or an automation range · pastes onto the track clicked last |
 | <Kbd keys="⌘ ⇧ C" /> | Copy the selected clips to Session · the first scene row where they fit |
 | <Kbd keys="⌘ ⇧ V" /> | Paste the last range as audio rendered through its devices |
@@ -116,11 +116,16 @@ import Kbd from '@components/Kbd.astro';
 
 | Клавиши | Действие |
 |---|---|
-| <Kbd keys="⌘ C" /> · <Kbd keys="⌘ X" /> · <Kbd keys="⌘ V" /> | Copy / cut / paste the device with all its settings · paste lands after the selected device, on any track or rack chain |
-| <Kbd keys="⌘ D" /> | Duplicate the selected device |
-| <Kbd keys="⌘ G" /> | Wrap the selected audio effect in an Audio Effect Rack |
+| ⇧-click · ⌘-click | Select a range of devices (MIDI effects, instrument, audio effects) / add or remove one |
+| <Kbd keys="Esc" /> | Clear the device selection · so does a click on the chain's empty space |
+| <Kbd keys="⌘ C" /> · <Kbd keys="⌘ X" /> · <Kbd keys="⌘ V" /> | Copy / cut / paste the selected devices with all their settings · each lands in its section after the selected device · a copied instrument replaces the instrument it is pasted on |
+| <Kbd keys="⌘ D" /> | Duplicate the selected devices · each run right after itself |
+| <Kbd keys="⌘ G" /> | Group the selected devices into a rack · audio effects: Audio Effect Rack · MIDI effects: MIDI Effect Rack · with the instrument: Instrument Rack |
 | <Kbd keys="⌘ ⇧ G" /> | Take the devices out of a selected one-chain rack |
-| <Kbd keys="Delete" /> | Delete the selected device |
+| <Kbd keys="Delete" /> | Delete the selected devices · with the instrument, its track |
+| Drag a selected device's header | Move the selected devices of that section together |
+| Drag a device onto a track | Move it there (out of the panel, onto a track row or Session column) · the instrument replaces that track's and its own track goes |
+| ⌥-drag a device onto a track | Copy it there |
 
 ## Racks
 

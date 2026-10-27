@@ -14,6 +14,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
 
 Nota MIDI Effect Rack sits with the other MIDI effects, before the track's instrument. Its **chains**
 each take part of what you play and run it through their own MIDI effects — an arpeggio above C3,
@@ -57,6 +58,8 @@ macro to switch parts from a controller.
 
 ## Tips
 
+- **From the track's MIDI effects:** select them (<Kbd>⇧</Kbd>-click for a run) and press
+  <Kbd>⌘ G</Kbd> to fold them into a new MIDI Effect Rack; <Kbd>⌘ ⇧ G</Kbd> takes them out again.
 - **Split arp:** an Arp chain from C3 up, a Chord chain below, both into one synth.
 - **Accents:** a chain with velocity 110–127 and a Random, so only hard hits wander.
 - **Parts on a macro:** Select mode, chains with neighbouring select ranges, the selector on a macro.

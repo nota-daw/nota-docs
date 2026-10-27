@@ -10,6 +10,8 @@ sources:
   - src/managed/Nota.App/DeviceChainView.Drop.cs
   - src/managed/Nota.App/DeviceChainView.Clipboard.cs
   - src/managed/Nota.App/DeviceChainView.Fold.cs
+  - src/managed/Nota.App/DeviceChainView.Move.cs
+  - src/managed/Nota.Presentation/DeviceSelection.cs
   - src/managed/Nota.App/DeviceCardKit.cs
 ---
 
@@ -56,9 +58,10 @@ after the last preset comes Init, then the first one again.
 | Drag the header | Move the device in the chain |
 | Double-click the header | Fold the card into a narrow strip (see below) |
 | Click a device · <Kbd>Delete</Kbd> | Remove it |
+| <Kbd>⇧</Kbd>-click · <Kbd>⌘</Kbd>-click another device | Select a range of devices / add or remove one (see [Several devices at once](#several-devices-at-once)) |
 | Click a device · <Kbd>⌘ C</Kbd> · <Kbd>⌘ X</Kbd> · <Kbd>⌘ V</Kbd> | Copy / cut / paste it with every setting · the paste lands after the selected device, on this or another track, or in a rack's chain |
 | Click a device · <Kbd>⌘ D</Kbd> | Duplicate it right after itself |
-| Click an audio effect · <Kbd>⌘ G</Kbd> | Put it in an [Audio Effect Rack](racks/audio-effect-rack/) in its place · <Kbd>⌘ ⇧ G</Kbd> on a one-chain rack takes its devices out again |
+| Select devices · <Kbd>⌘ G</Kbd> | Group them into a rack in their place (see [Grouping into a rack](#grouping-into-a-rack)) · <Kbd>⌘ ⇧ G</Kbd> on a one-chain rack takes its devices out again |
 | Right-click the header | **Move left** / **Move right**, **Copy**, **Paste**, **Duplicate**, **Delete**, presets, **Save preset**, A / B compare, **Documentation** — this device's page in the manual — and **Fold** |
 | Click the power switch | Bypass the device |
 
@@ -67,6 +70,52 @@ track or deleting anything — handy for comparing layers or hearing the track w
 out in a few milliseconds and then uses no CPU; the MIDI effects before it and the audio effects
 after it keep their settings (a reverb's tail rings out). Switched back on, it plays from the next
 note. The switch is saved with the project.
+
+### Several devices at once
+
+<Kbd>⇧</Kbd>-click a second device to select every device between the two — across the MIDI
+effects, the instrument and the audio effects, in chain order. <Kbd>⌘</Kbd>-click (Ctrl on
+Windows and Linux) adds a device to the selection or takes it out. <Kbd>Esc</Kbd> or a click on
+the chain's empty space clears it; so does switching tracks.
+
+Everything you do then acts on the whole selection, as one undo step:
+
+- **Copy**, **Cut**, **Paste** — the copies paste together, in order, each into its own section
+  (MIDI effects among the MIDI effects, audio effects among the audio effects), after the last
+  selected device there. A copied instrument replaces the instrument of the track you paste on;
+  a track that can't take a device (an audio track and a MIDI effect) skips it and the status
+  line says how many.
+- **Duplicate** copies each run of selected effects right after itself.
+- **Delete** removes them all. With the instrument selected too, its track goes — and Nota asks
+  first every time, so a <Kbd>⇧</Kbd>-click that swept over the instrument can't take the track
+  by accident.
+- Drag the header of a selected device to move the selected devices of that section together.
+- **Move to track ▸** in the menu moves them all to another track.
+
+A right-click on a selected device opens a menu for the whole selection; its header shows how
+many devices it holds.
+
+### Grouping into a rack
+
+Select devices next to each other and press <Kbd>⌘ G</Kbd> (or **Group into rack** in the
+right-click menu). They move into a new rack in their place, as its first chain, with every
+setting, and the track sounds the same. The rack follows from what you selected:
+
+| Selected | Becomes |
+|---|---|
+| Audio effects | An [Audio Effect Rack](racks/audio-effect-rack/) |
+| MIDI effects | A [MIDI Effect Rack](racks/midi-effect-rack/) |
+| The instrument, with the MIDI effects right before it and / or the audio effects right after it | An [Instrument Rack](racks/instrument-rack/) as the track's instrument — MIDI effects, instrument and audio effects in its first chain |
+
+Automation, modulation links, an Arp's CC lane and sidechain keys on the devices go into the
+rack with them and keep working; in the Arrangement such a lane reads like
+**Audio Effect Rack / Reverb · Mix**. Now the group can be duplicated, saved as one preset, or
+given more chains and macros.
+
+<Kbd>⌘ ⇧ G</Kbd> (**Ungroup rack**) on a rack with one chain puts its devices back where the rack
+was, links included; the rack's own macros and chain settings go. Grouping isn't offered when
+the selection has a gap, mixes MIDI and audio effects without the instrument between them, or
+holds a rack (racks don't go inside racks) — the status line says why.
 
 ### Folding a device
 
