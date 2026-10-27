@@ -12,6 +12,7 @@ sources:
   - src/managed/Nota.App/DeviceCards/Rack/RackCard.Chains.cs
   - src/managed/Nota.App/DeviceCards/Rack/RackCard.Zones.cs
   - src/managed/Nota.App/DeviceCards/Rack/RackCard.RightPanel.cs
+  - src/managed/Nota.App/DeviceCards/Rack/RackCard.Clipboard.cs
 ---
 
 import Shot from '@components/Shot.astro';
@@ -35,9 +36,18 @@ to **Duplicate** or **Delete** it.
 
 To the right are the chosen chain's devices, left to right as the signal flows: its **MIDI** effects,
 its instrument, its audio effects. Each compact card shows the device's key parameters; drag a
-slider to change one, **Open** shows the device's full editor, drag the grip to move it within its
-section. The dashed targets add a device (click for the list, or drop one from the Browser).
-MIDI effects run in the first 16 chains.
+slider to change one, **Open** shows the device's full editor. The dashed targets add a device
+(click for the list, or drop a device or a preset from the Browser). MIDI effects run in the first
+16 chains.
+
+Drag a device by its header to move it within its section — a bar shows where it lands — or drop
+it on another chain's row in the list to move it there; its macro mappings go with it. Click a
+device to select it, then use <Kbd>⌘ C</Kbd> / <Kbd>⌘ X</Kbd> / <Kbd>⌘ V</Kbd> / <Kbd>⌘ D</Kbd> /
+<Kbd>Delete</Kbd> or its right-click menu (**Move left**, **Move right**, **Copy**, **Cut**,
+**Paste**, **Duplicate**, **Delete**). The clipboard is the [device chain](../../)'s too: copy an
+effect on the track and paste it into a chain, or the other way round. A pasted device brings
+its settings but no macro mappings; an effect keyed from another track loses its sidechain in a
+rack. A chain's row menu and the dashed targets offer **Paste** at the end of the chain.
 
 **+ Chain** (or an instrument dropped on the list) adds a layer. An instrument dropped on a chain
 replaces its instrument.
