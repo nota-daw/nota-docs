@@ -3,12 +3,13 @@ title: "Nota Instrument Rack"
 description: "Several instruments in one — chains split by key and velocity zones, each with its own devices, gain and mute / solo, under eight macros."
 sidebar:
   order: 1
-updated: "0.50.1"
+updated: "0.57.1"
 status: done
 sources:
   - src/native/nota.engine/src/RackInstrument.h
   - src/native/nota.engine/src/RackCore.h
   - src/managed/Nota.App/DeviceCards/Rack/RackCardView.cs
+  - src/managed/Nota.Application/Engine/RackEngineProxies.cs
 ---
 
 import Shot from '@components/Shot.astro';
@@ -36,6 +37,23 @@ keyboard.
 Each device shows as a card with its knobs. **GUI** opens the device's full editor (for a plug-in, its
 own window; for the Sampler, its tabbed editor) in a [device window](../../../views/detail-panel/#device-windows);
 **Params** lists its parameters. Drag cards to reorder; ✕ removes one.
+
+## Nota Mosaic and a Drum Rack as a chain
+
+A chain can also hold **Nota Mosaic** or a **Nota Drum Rack** — drop it from the Browser on the rack
+(a new chain) or on a chain (it replaces the chain's instrument), or pick it in the chain's instrument
+menu.
+
+- **Mosaic**: **GUI** opens the full [Mosaic](../../instruments/mosaic/) editor for that chain —
+  presets, zones, loading progress. The program is saved with the rack.
+- **Drum Rack**: **GUI** opens the [Drum Rack](../drum-rack/) card in a window — pads, the pad editor,
+  macros, and the factory kits in the window's preset picker. Give the chain a key zone (say C1–B1)
+  and the kit plays there while the other chains play the rest of the keyboard. To turn the Drum
+  Rack's macros from outside, map a rack macro to them: they are the chain instrument's parameters.
+
+Racks nest **one level**: a Drum Rack goes in an Instrument Rack chain only, not on a Drum Rack pad or
+inside another rack, and an Instrument Rack never goes in a chain. A Drum Rack in a chain has no
+**Swing** / **Humanize** — those shift the whole track's notes, so they belong to a Drum Rack track.
 
 ## Rack output and macros
 

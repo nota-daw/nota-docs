@@ -3,7 +3,7 @@ title: "Nota Drum Rack"
 description: "Pads for drums and one-shots — up to 64 pads in four banks, each with its own sample or instrument and effects, choke groups, a mixer, kit macros and 25 factory kits."
 sidebar:
   order: 2
-updated: "0.50.1"
+updated: "0.57.1"
 status: done
 sources:
   - src/native/nota.engine/src/DrumRack.h
@@ -38,7 +38,8 @@ A 4 × 4 grid, pad 1 bottom-left as on hardware, in banks **C1**–**C4** (16 no
 - **Click** a pad to play and select it. A sounding pad lights in its colour.
 - **Drop** samples on a pad to load them (several fill the pads after it); an empty pad also offers an
   instrument. A sample dropped on a pad that already plays one swaps only the sound: the pad's level,
-  pan, sends, choke and effects stay.
+  pan, sends, choke and effects stay. A pad plays Nota Sampler, a built-in synth or
+  [Nota Mosaic](../../instruments/mosaic/).
 - **Right-click** a pad to rename it, set its **choke** group, open its chain or remove it.
 - **Fold** hides the empty pads. **Swing** and **Humanize** shape the kit's feel.
 
@@ -58,6 +59,9 @@ hats), and its instrument's editor.
 <Shot id="devices/racks/drum-rack/macro" alt="Nota Drum Rack, Macro view" />
 
 ## Programming
+
+A Drum Rack can also sit in a chain of an [Instrument Rack](../instrument-rack/#nota-mosaic-and-a-drum-rack-as-a-chain),
+where its card opens in a window.
 
 Double-click the clip and use the **Pattern** tab in the detail panel for a step grid with a row per
 pad — or the piano roll, where each pad is a note. Audio clips dragged from the Arrangement land on

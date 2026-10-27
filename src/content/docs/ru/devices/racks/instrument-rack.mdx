@@ -3,12 +3,13 @@ title: "Nota Instrument Rack"
 description: "Несколько инструментов в одном — цепочки, разделённые по зонам клавиш и velocity, у каждой свои устройства, уровень и mute / solo, под восемью макросами."
 sidebar:
   order: 1
-updated: "0.50.1"
+updated: "0.57.1"
 status: done
 sources:
   - src/native/nota.engine/src/RackInstrument.h
   - src/native/nota.engine/src/RackCore.h
   - src/managed/Nota.App/DeviceCards/Rack/RackCardView.cs
+  - src/managed/Nota.Application/Engine/RackEngineProxies.cs
 ---
 
 import Shot from '@components/Shot.astro';
@@ -36,6 +37,22 @@ Nota Instrument Rack держит на одном треке несколько 
 Каждое устройство — карточка с ручками. **GUI** открывает полный редактор устройства (для плагина —
 его окно, для Sampler — редактор с вкладками) в [окне устройства](../../../views/detail-panel/);
 **Params** показывает список параметров. Карточки можно переставлять перетаскиванием; ✕ удаляет.
+
+## Nota Mosaic и Drum Rack в цепочке
+
+Цепочка может держать и **Nota Mosaic** или **Nota Drum Rack** — бросьте его из Browser на рэк (новая
+цепочка) или на цепочку (он заменит её инструмент), либо выберите в меню инструмента цепочки.
+
+- **Mosaic**: **GUI** открывает полный редактор [Mosaic](../../instruments/mosaic/) этой цепочки —
+  пресеты, зоны, ход загрузки. Программа сохраняется вместе с рэком.
+- **Drum Rack**: **GUI** открывает карточку [Drum Rack](../drum-rack/) в окне — пэды, редактор пэда,
+  макросы, а заводские киты лежат в списке пресетов окна. Задайте цепочке зону клавиш (например,
+  C1–B1) — кит будет играть там, а остальные цепочки займут остаток клавиатуры. Чтобы крутить макросы
+  Drum Rack снаружи, назначьте на них макрос рэка: это параметры инструмента цепочки.
+
+Рэки вкладываются **на один уровень**: Drum Rack ставится только в цепочку Instrument Rack — не на пэд
+Drum Rack и не в другой рэк, а сам Instrument Rack в цепочку не встаёт. У Drum Rack внутри цепочки нет
+**Swing** / **Humanize**: они сдвигают ноты всей дорожки, поэтому живут только у Drum Rack на дорожке.
 
 ## Выход рэка и макросы
 
