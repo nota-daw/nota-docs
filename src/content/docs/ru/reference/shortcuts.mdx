@@ -3,7 +3,7 @@ title: "Горячие клавиши"
 description: "Все сочетания клавиш и жесты мыши в Nota, по группам, как на странице Settings ▸ Shortcuts."
 sidebar:
   order: 1
-updated: "0.57.1"
+updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
@@ -148,7 +148,7 @@ import Kbd from '@components/Kbd.astro';
 | Клавиши | Действие |
 |---|---|
 | <Kbd keys="← →" /> | Move notes by the grid |
-| <Kbd keys="↑ ↓" /> | Transpose by a semitone |
+| <Kbd keys="↑ ↓" /> | Transpose by a semitone · folded, by a row |
 | <Kbd keys="⇧ ↑" /> · <Kbd keys="⇧ ↓" /> | Transpose by an octave |
 | <Kbd keys="⇧ ←" /> · <Kbd keys="⇧ →" /> | Shorten / lengthen the notes by the grid |
 | <Kbd keys="⌥ ↑" /> · <Kbd keys="⌥ ↓" /> | Velocity +10 / −10 · ⌥⇧ by 1 |
@@ -170,6 +170,7 @@ import Kbd from '@components/Kbd.astro';
 | Drag on the keys | Zoom rows · down taller, up shorter |
 | ⌥ + pinch | Zoom rows (trackpad) |
 | <Kbd keys="⇧ F" /> | Fit to notes |
+| <Kbd keys="⌥ ⇧ F" /> | Fold: only the scale's notes, or a Drum Rack's pads |
 
 ## Audio clip editor
 
