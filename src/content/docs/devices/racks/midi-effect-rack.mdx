@@ -1,0 +1,61 @@
+---
+title: "Nota MIDI Effect Rack"
+description: "Chains of MIDI effects in one device — split notes by key, velocity or a selector, shape each part with its own Arp, Chord or Scale, and merge them before the instrument."
+sidebar:
+  order: 4
+updated: "0.57.1"
+status: done
+sources:
+  - src/native/nota.engine/src/devices/racks/MidiRack.h
+  - src/native/nota.engine/src/devices/racks/RackCore.h
+  - src/managed/Nota.App/DeviceCards/Rack/RackCard.cs
+  - src/managed/Nota.App/DeviceCards/Rack/RackCard.Zones.cs
+  - src/managed/Nota.App/DeviceCards/Rack/RackCard.RightPanel.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota MIDI Effect Rack sits with the other MIDI effects, before the track's instrument. Its **chains**
+each take part of what you play and run it through their own MIDI effects — an arpeggio above C3,
+chords below, accents only on hard hits — and their notes merge into one instrument.
+
+<Shot id="devices/racks/midi-effect-rack/card" alt="Nota MIDI Effect Rack: three chains — Arp lead, Chords, Accents — with the Arp lead chain's Arp and Scale" />
+
+It uses the same card as the [Instrument Rack](../instrument-rack/): [macros](../macros/), the
+**Chains**, **Zones** and **Macros** tabs, the **Chain** and **Output** panel. Find it in the Browser
+under **MIDI effects · Racks**.
+
+## Chains
+
+A chain is a row of built-in MIDI effects (Arp, Chord, Scale, Length, Velocity, Random) that run left
+to right. Drop them from the Browser on the chain or on the dashed target; a MIDI effect dropped on
+the chain list starts a new chain. A rack holds up to 16 chains.
+
+In the **Chain** panel, **Volume** scales the velocity of the chain's notes (100 % leaves it alone,
+0 % silences the chain) and **Transpose** moves them up or down by up to 48 semitones.
+
+## Zones
+
+<Shot id="devices/racks/midi-effect-rack/zones" alt="The Zones tab: key and velocity zones, the selector and the select ranges" />
+
+Each chain takes the notes inside its **key** and **velocity** zones; drag the edges to set them and
+hover to see which chains a note would reach. In Select mode the **Selector** and each chain's thin
+**select range** under its key zone decide instead which chains get notes — map the selector to a
+macro to switch parts from a controller.
+
+## Output
+
+<Shot id="devices/racks/midi-effect-rack/output" alt="Output: Chains run, Merge duplicate notes and Pass through outside zones" />
+
+| Setting | What it does |
+|---|---|
+| **Parallel** | A note goes to every chain whose zone it hits |
+| **Select** | Only the chains whose select range holds the selector get notes |
+| **Merge duplicate notes** | Two chains sending the same pitch play it once |
+| **Pass through outside zones** | Notes no chain takes reach the instrument unchanged |
+
+## Tips
+
+- **Split arp:** an Arp chain from C3 up, a Chord chain below, both into one synth.
+- **Accents:** a chain with velocity 110–127 and a Random, so only hard hits wander.
+- **Parts on a macro:** Select mode, chains with neighbouring select ranges, the selector on a macro.

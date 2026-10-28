@@ -159,6 +159,9 @@ public sealed class Scenes
             if (kind == 10) _engine.SetTrackGrainSample(track, _demo.Sample("pad"), 60);
             if (shot.Int("midi") is int midi) deviceIndex = _engine.AddMidiEffect(track, midi);
         }
+        // `rack: demo` fills a rack with chains, zones, devices and macros (frames 1a–1f of the
+        // "Nota Racks" design), so its card shows what the rack does.
+        if (shot.Str("rack") == "demo") FurnishRack(track, deviceIndex, shot.Int("instrument") == 3 ? 3 : shot.Int("effect") ?? shot.Int("midi") ?? -1);
         if (shot.Str("preset") is string preset)
         {
             // An effect preset loads onto its device, an instrument preset onto the track's
@@ -228,6 +231,61 @@ public sealed class Scenes
         var card = chain.Children[shot.Int("card") ?? 0];
         Save(win, shot.Id, card);
         win.Close();
+    }
+
+    private void FurnishRack(int t, int di, int kind)
+    {
+        var e = _engine;
+        switch (kind)
+        {
+            case 3: // Instrument Rack: three layers with zones, an Arp in front of the Volt
+            {
+                while (e.RackChainCount(t) > 0) e.RackRemoveChain(t, 0);
+                int a = e.RackAddChain(t, 6), b = e.RackAddChain(t, 14), c = e.RackAddChain(t, 16);
+                e.RackSetChainZone(t, a, 0, 70, 0, 127);
+                e.RackSetChainZone(t, b, 58, 127, 0, 127);
+                e.RackSetChainZone(t, c, 36, 84, 96, 127);
+                e.RackAddChainDevice(t, a, 25);
+                e.RackAddChainDevice(t, c, 2);
+                e.RackChainMidiAdd(t, a, 0); // an Arp in front of the Volt (#329)
+                e.RackSetMacroName(t, 0, "Bright"); e.RackMacroSet(t, 0, 0.6f);
+                e.RackSetMacroName(t, 1, "Space"); e.RackMacroSet(t, 1, 0.35f);
+                e.RackSetMacroName(t, 2, "Attack"); e.RackMacroSet(t, 2, 0.1f);
+                e.RackAddMacroMapping(t, 0, a, -1, 16, 0.3f, 0.9f);
+                int m1 = e.RackAddMacroMapping(t, 0, b, -1, 40, 0.2f, 0.8f);
+                e.RackSetMappingCurve(t, m1, 2);
+                e.RackAddMacroMapping(t, 1, c, 0, 0, 0.2f, 0.8f);
+                e.RackAddMacroMapping(t, 2, a, -1, 36, 0f, 0.7f);
+                e.RackSetGlide(t, 0.3f);
+                break;
+            }
+            case 5: // Audio Effect Rack in Select mode
+            {
+                while (e.RackDevChainCount(t, di) > 0) e.RackDevRemoveChain(t, di, 0);
+                int x = e.RackDevAddChain(t, di, -1), y = e.RackDevAddChain(t, di, -1);
+                e.RackDevAddChainDevice(t, di, x, 6); e.RackDevAddChainDevice(t, di, x, 1);
+                e.RackDevAddChainDevice(t, di, y, 2); e.RackDevAddChainDevice(t, di, y, 16);
+                e.RackDevSetChainZone(t, di, x, 0, 63); e.RackDevSetChainZone(t, di, y, 48, 127);
+                e.RackDevSetMode(t, di, 2); e.RackDevSetChainSelect(t, di, 0.24f);
+                e.RackDevSetMacroName(t, di, 0, "Drive"); e.RackDevMacroSet(t, di, 0, 0.45f);
+                e.RackDevAddMacroMapping(t, di, 0, x, 0, 1, 0f, 10f);
+                break;
+            }
+            case 6: // MIDI Effect Rack: an arp above C3, chords below, accents on hard hits
+            {
+                e.MidiRackAddChain(t, di); e.MidiRackAddChain(t, di);
+                e.MidiRackSetChainName(t, di, 0, "Arp lead"); e.MidiRackSetChainName(t, di, 1, "Chords"); e.MidiRackSetChainName(t, di, 2, "Accents");
+                e.MidiRackSetChainZone(t, di, 0, 60, 127, 0, 127); e.MidiRackSetChainZone(t, di, 1, 0, 59, 0, 127); e.MidiRackSetChainZone(t, di, 2, 36, 96, 110, 127);
+                e.MidiRackChainDeviceAdd(t, di, 0, 0); e.MidiRackChainDeviceAdd(t, di, 0, 2);
+                e.MidiRackChainDeviceAdd(t, di, 1, 1); e.MidiRackChainDeviceAdd(t, di, 1, 4);
+                e.MidiRackChainDeviceAdd(t, di, 2, 5);
+                e.MidiRackSetChainTranspose(t, di, 2, 12);
+                e.MidiRackSetChainSelect(t, di, 0, 0, 63); e.MidiRackSetChainSelect(t, di, 1, 64, 127);
+                e.MidiRackSetMacroName(t, di, 0, "Rate"); e.MidiRackMacroSet(t, di, 0, 0.5f); e.MidiRackAddMacroMapping(t, di, 0, 0, 0, 0, 0f, 3f);
+                e.MidiRackSetMacroName(t, di, 1, "Strum"); e.MidiRackMacroSet(t, di, 1, 0.2f); e.MidiRackAddMacroMapping(t, di, 1, 1, 0, 6, 0f, 200f);
+                break;
+            }
+        }
     }
 
     private static IDrumKits Kits => (IDrumKits)App.Services!.GetService(typeof(IDrumKits))!;
