@@ -3,11 +3,12 @@ title: Modular
 description: A track's devices as a signal graph, and CV modulation — patch LFOs, envelopes, MIDI and macros into any parameter.
 sidebar:
   order: 3
-updated: "0.57.1"
+updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.App/ModularView.cs
-  - src/native/nota.engine/src/Modulation.h
+  - src/native/nota.engine/src/engine/Modulation.h
+  - src/native/nota.engine/src/engine/Engine_Modulation.cpp
 ---
 
 import { Aside } from '@astrojs/starlight/components';
@@ -50,7 +51,7 @@ Cables are coloured by what they carry: audio, MIDI and CV each have their own c
 | Modulator | Puts out |
 |---|---|
 | **LFO** | A repeating wave — sine, triangle, saw, square or random — free or synced to the tempo, with a phase |
-| **Envelope Follower** | The loudness of the track's audio |
+| **Envelope Follower** | The loudness of the track's audio — a peak controller |
 | **MIDI → CV** | Note pitch, velocity or gate from the notes the track plays |
 | **ADSR** | An attack–decay–sustain–release envelope, opened by each note |
 | **Macro** | A knob you turn by hand (or map to a controller) |
@@ -68,6 +69,26 @@ to remove it. Several modulations on one knob each get their own input and cable
 
 To modulate something on **another track**, drag the CV output onto that track in the list on
 the left and pick a parameter — or right-click a knob ▸ **Modulate from another track**.
+
+## Move a knob with another track's loudness
+
+The **Envelope Follower** is Nota's peak controller: it turns how loud a track is into CV that can
+drive any knob, on that track or another. The classic use is ducking — the bass dips each time the
+kick hits:
+
+1. Select the kick track and open **Modular**. **+ Add ▸ Envelope Follower**.
+2. Set its **Attack** short (a few ms) so it catches the hit, and its **Release** to how long the
+   dip should last (100–300 ms is a good start). **Depth** scales the whole signal.
+3. On the bass track, right-click the knob to move — the Gain of
+   [Nota Utility](../../devices/audio-effects/utility/), say, or a filter's cutoff ▸
+   **Modulate from another track** ▸ the kick's follower (it's listed as **Env 1 · Kick**, say). (Or drag the follower's
+   **CV out** onto the bass track in the list on the left.)
+4. Click the cable and drag **depth** below zero: the knob now drops when the kick plays. A
+   positive depth pushes it up instead.
+
+**Global** shows the cable running between the two tracks. The follower reads the track's level
+after its fader, so a muted track, or one with its fader all the way down, gives it nothing to
+follow.
 
 ## CV Scope
 
