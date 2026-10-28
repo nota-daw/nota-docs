@@ -3,11 +3,12 @@ title: Автоматизация
 description: Рисование и запись дорожек автоматизации громкости, панорамы и любого параметра устройства; перехват рукой и возврат; правка точек и диапазонов.
 sidebar:
   order: 4
-updated: "0.50.1"
+updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.App/ArrangementView.Automation.cs
-  - src/native/nota.engine/src/Automation.h
+  - src/managed/Nota.App/ArrangementView.AutoEditor.cs
+  - src/native/nota.engine/src/engine/Automation.h
 ---
 
 import { Aside } from '@astrojs/starlight/components';
@@ -28,6 +29,10 @@ import Kbd from '@components/Kbd.astro';
 
 Пока режим автоматизации включён, прикосновение к любой ручке или фейдеру трека — на устройстве,
 плагине или в микшере — переключает дорожку этого трека на неё.
+
+У return-треков тоже есть дорожки — в их строках, закреплённых под треками: громкость, панорама и
+параметры устройств на return. Редактируются они так же, как дорожка трека. Строка мастера под
+ними несёт громкость мастера.
 
 ## Рисование
 
