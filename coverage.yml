@@ -186,8 +186,8 @@ sections:
 
   plugins:
     - page: plugins
-      covers: [VST3 (all platforms) and AU (macOS), plug-in card, open plug-in UI, state save/restore, missing plug-ins on load]
-      sources: [src/managed/Nota.App/DeviceCards/PluginCard.cs, src/managed/Nota.App/DeviceChainView.Plugin.cs, src/managed/Nota.App/MainWindow.MissingPlugins.cs]
+      covers: [VST3 (all platforms) and AU (macOS), plug-in card, plug-in card window picture, open plug-in UI, state save/restore, missing plug-ins on load]
+      sources: [src/managed/Nota.App/DeviceCards/PluginCard.cs, src/managed/Nota.App/DeviceChainView.Plugin.cs, src/managed/Nota.App/Controls/PluginPreviewBackdrop.cs, src/managed/Nota.App/MainWindow.MissingPlugins.cs]
       status: done
     - page: plugins/scanning
       covers: [scan paths, Rescan, failed plug-ins]
