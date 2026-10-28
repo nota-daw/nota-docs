@@ -3,11 +3,12 @@ title: Modular
 description: A track's devices as a signal graph, and CV modulation — patch LFOs, envelopes, MIDI and macros into any parameter.
 sidebar:
   order: 3
-updated: "0.57.1"
+updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.App/ModularView.cs
-  - src/native/nota.engine/src/Modulation.h
+  - src/managed/Nota.App/ModularView.Scope.cs
+  - src/native/nota.engine/src/engine/Modulation.h
 ---
 
 import { Aside } from '@astrojs/starlight/components';
@@ -75,6 +76,25 @@ Add a **Scope** to watch any modulator's signal as a moving line — handy for c
 rate or how an envelope follower reacts. Drag the modulator's **CV out** onto the Scope node to
 patch it in. The Scope shows CV, not audio: to watch a device's sound, put
 [Nota Lens](../../devices/audio-effects/lens/) after it in the chain.
+
+**Size.** Drag the bar under the trace to make it taller or shorter (76 to 320 px), or click the
+window button in the Scope's header to open it in its own window, which you can resize. The node
+and the window show the same trace and share their settings.
+
+**Controls** under the trace:
+
+- **Window** — how much time the trace spans, from 50 ms to 8 s. Click the **ms** label above
+  the knob to switch to **Sync**: the window is then in beats (1/16 to 8 bars) at the current
+  tempo, so an LFO synced to 1/4 shows four cycles in a 1-bar window.
+- **Zoom** — the vertical scale, 1× to 8×, for shallow signals. What leaves the scale is
+  clipped at the edge.
+- **Free / Rise** — **Free** rolls, newest value at the right. **Rise** starts the trace where
+  the input rises through the centre line, so a repeating shape holds still; a small mark at
+  the left edge shows it has caught an edge. With nothing to catch, it rolls as in Free.
+- **Freeze** — holds the trace so you can look at it; the signal keeps running. It always
+  starts off when you open a project.
+
+The window, Sync, zoom, trigger and height are saved with the project.
 
 <Aside>
 CV ports appear only where modulation actually works, so anything you can patch, you can hear.
