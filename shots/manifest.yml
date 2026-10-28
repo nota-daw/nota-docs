@@ -129,7 +129,7 @@ shots:
   - { id: devices/audio-effects/crush/card, source: app, scene: device, args: {effect: 12} }
   - { id: devices/audio-effects/dynamic-eq/card, source: app, scene: device, args: {effect: 13} }
   - { id: devices/audio-effects/ceiling/card, source: app, scene: device, args: {effect: 14} }
-  - { id: devices/audio-effects/strata/card, source: app, scene: device, args: {effect: 15} }
+  - { id: devices/audio-effects/strata/card, source: app, scene: device, args: {effect: 15, clip: pad, strata: take, strataMute: '1'} }
   - { id: devices/audio-effects/eq-3/card, source: app, scene: device, args: {effect: 16} }
   - { id: devices/audio-effects/forge/card, source: app, scene: device, args: {effect: 17} }
   - { id: devices/audio-effects/level/card, source: app, scene: device, args: {effect: 18} }
