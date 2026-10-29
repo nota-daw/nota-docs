@@ -1,14 +1,16 @@
 ---
 title: Piano roll
-description: Editing MIDI clips — drawing and moving notes, velocity, grid and quantize, scale, clip envelopes and the generator and transform tools.
+description: Editing MIDI clips — drawing and moving notes, velocity, grid and quantize, scale and Fold, clip envelopes and the generator and transform tools.
 sidebar:
   order: 1
-updated: "0.57.1"
+updated: "0.58.1"
 status: done
 sources:
   - src/native/nota.engine/src/MidiClip.h
   - src/managed/Nota.App/PianoRollView.cs
   - src/managed/Nota.App/PianoRollView.Expression.cs
+  - src/managed/Nota.App/PianoRollView.Fold.cs
+  - src/managed/Nota.Presentation/PianoRowMap.cs
   - src/managed/Nota.App/ClipEditorView.cs
   - src/managed/Nota.App/MainWindow.Detail.cs
   - src/managed/Nota.App/ClipEditorKit.cs
@@ -176,6 +178,24 @@ Turn **Scale** on in the toolbar and pick a root and a scale: the rows outside i
 so the notes that fit stand out. **Remove out of scale** deletes every note that doesn't fit.
 The setting stays as you move between clips. The [Nota Scale](../../devices/midi-effects/scale/)
 MIDI effect uses the same scales to correct notes live.
+
+## Fold
+
+**Fold**, next to **Scale** in the toolbar (<Kbd keys="⌥ ⇧ F" />), hides the rows you don't need:
+
+- **With Scale on**, only the scale's notes keep a row — seven per octave in a major or minor
+  scale. Every note of the clip keeps its row too, so folding never hides a note; one outside
+  the scale stays where it is, dimmed.
+- **On a Drum Rack track** the rows are the rack's pads, each named after its pad (**Kick**,
+  **Snare**…). Two pads on the same note share a row (**Kick / Kick 2**). A note with no pad
+  keeps an unnamed, dimmed row.
+- **With Scale off** on any other track, only the pitches the clip uses keep a row.
+
+Folded, moves go by rows: <Kbd keys="↑ ↓" /> and dragging a note step to the next visible row,
+so a chord moved up a row keeps its shape in the scale (A–C–E becomes B–D–F). <Kbd keys="⇧ ↑" />
+and <Kbd keys="⇧ ↓" /> still move by an octave. Fold is saved with each track, so a drum track
+can stay folded while a keys track shows the whole keyboard. It is a view, not an edit: it adds
+no step to undo.
 
 ## Envelopes
 

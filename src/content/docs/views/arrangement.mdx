@@ -32,6 +32,9 @@ From top to bottom: the **Overview** strip, the **Sections** lane, the ruler wit
 | Double-click empty space on an instrument track | Create a MIDI clip there |
 | Click a clip | Select it |
 | Drag a clip | Move it — along the track, or to another track of the same kind |
+| Drag clips into the empty space below the last track | Move them to a new track — one per source track, with the same instrument, devices and mix |
+| <Kbd>←</Kbd> <Kbd>→</Kbd> | Nudge the selected clips by the grid step (<Kbd>⌥</Kbd>: by a 64th note) |
+| <Kbd>⌥ ↑</Kbd> <Kbd>⌥ ↓</Kbd> | Move the selected clips to the next track up or down that takes them, at the same beats |
 | Drag a clip's left or right edge | Trim it |
 | Drag with <Kbd>⌥</Kbd> | Ignore the grid for this drag |
 | Double-click a clip | Open it in the [clip editor](../../editing/piano-roll/) |
@@ -42,6 +45,13 @@ From top to bottom: the **Overview** strip, the **Sections** lane, the ruler wit
 Clips snap to the [snap grid](../../basics/transport/#the-snap-grid) while you drag them —
 in **Auto** it follows the zoom, so they land on the lines you see — and the edges of
 neighbouring clips pull them in. The magnet button (<Kbd>⌘ 4</Kbd>) switches snapping off. Dragging several selected clips moves them together, as one undo step.
+
+While you drag clips below the last track, a **New track** ring shows where they will land.
+On release each track the clips came from gets a new track like it, placed above the returns,
+and the clips move there; one undo takes back both. The arrow keys move the whole selection
+as a block too: a nudge left stops at the song start, and <Kbd>⌥ ↑</Kbd> / <Kbd>⌥ ↓</Kbd> skip
+tracks that can't hold the clips (audio clips go on audio tracks, MIDI clips on instrument
+tracks). Each key press is one undo step.
 
 Right-click a clip for **Split here**, **Duplicate**, **Delete**, **Deactivate clip**,
 **Reverse** (audio), **Consolidate**, **Copy** / **Cut** / **Paste**, **Rename…**, **Loop

@@ -4,7 +4,7 @@ description: "A channel vocoder: the track it sits on is the voice, shaping an i
 sidebar:
   order: 26
 since: "0.56.1"
-updated: "0.56.1"
+updated: "0.57.1"
 status: done
 sources:
   - src/native/nota.engine/src/Vocoder.h
@@ -40,6 +40,9 @@ The modulator is always **this track** — usually a vocal.
 
 With **Saw** and **Noise** the result follows the voice's level. With **Track** it sits at that
 track's level whatever the voice's; the voice's pauses still close the bands.
+
+In an Instrument or Audio Effect Rack chain the Vocoder has no sidechain: use **Saw** or **Noise**
+there (with **Track** it passes the chain's sound through unchanged).
 
 | Control | What it does |
 |---|---|

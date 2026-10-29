@@ -3,7 +3,7 @@ title: Recording
 description: Recording audio and MIDI — arming tracks, inputs, monitoring, count-in, recording over a loop, and recording into Session slots.
 sidebar:
   order: 3
-updated: "0.55.1"
+updated: "0.58.1"
 status: done
 sources:
   - src/native/nota.engine/src/Engine_Recording.cpp
@@ -24,7 +24,7 @@ import Kbd from '@components/Kbd.astro';
    instrument track records MIDI.
 
 2. Choose what it records. For an **audio track**, right-click the header ▸ **Record input**:
-   a hardware input, the master, or another track. An **instrument track** records the notes
+   the hardware input, the master, or another track. An **instrument track** records the notes
    you play on a MIDI keyboard, the computer keyboard, a gamepad or your phone.
 
 3. Put the playhead where the take should start and press **Record** (<Kbd>⌘ R</Kbd>). Press
@@ -32,10 +32,23 @@ import Kbd from '@components/Kbd.astro';
 
 </Steps>
 
-Arm an instrument track and an audio track together and one take records both — the MIDI and
+A click on **●** arms that track and disarms the others, so it's quick to pick the instrument you
+play. <Kbd>⌘</Kbd>-click (<Kbd>Ctrl</Kbd>-click on Windows and Linux) arms a track and keeps the
+others armed — while recording, a click never disarms another track. Selecting an instrument
+track, or adding one, arms it the same way, so the keyboard plays the track you're on; that
+leaves the arms alone when several tracks or an audio track are armed. Arm an instrument track
+and an audio track together and one take records both — the MIDI and
 the audio. Nota records the first armed track of each kind.
 
 Disarming a track while it records ends its take.
+
+A click on **●** arms that track alone and disarms the others, so picking the instrument the
+keyboard plays is one click. <Kbd>⌘</Kbd>-click (<Kbd>Ctrl</Kbd>-click on Windows and Linux)
+arms several tracks. While recording, a click never disarms another track.
+
+To have the selection pick the track, turn on **Transport ▸ Auto-arm selected track**: then
+selecting an instrument track arms it, unless several tracks or an audio track are armed. It
+is off by default.
 
 While a MIDI take records, each note appears the moment you press the key and grows with the
 playhead for as long as you hold it; a new note flashes in the accent colour as it lands. The
@@ -52,6 +65,20 @@ where you played it, and the take's clip starts earlier to hold it. The same goe
 you are already holding when recording starts. A take that starts at 1.1 can't begin earlier,
 so its clip starts at 1.1 and the part of the note before it is kept out of sight: move the
 clip right and drag its left edge out to hear it.
+
+## Mono or stereo input
+
+The hardware input is listed three times — in **Record input**, the header's input box and the
+Session mixer's **I/O** row:
+
+- **Ext 1** — input 1 alone, a mono source such as a mic. It's recorded and heard in the middle,
+  on both sides.
+- **Ext 2** — input 2 alone, the same way.
+- **Ext 1/2** — both inputs as a stereo pair: a stereo synth, a stereo mic pair, a mixer's output.
+
+A new audio track takes **Ext 1**, since most mics are mono. With a mic plugged into input 1 of a
+two-input interface, **Ext 1/2** would record it on the left only. Projects made before 0.58 keep
+the stereo pair.
 
 ## Hearing the input
 
@@ -91,7 +118,8 @@ printing a performance through its effects, or a submix, to audio. Nota keeps it
 In the [Session view](../../views/session/#recording-into-a-slot), arm a track, select a scene
 and click **Session rec** — the take goes into that track's slot. Click again to keep it (cut
 to whole bars), or set **Fixed** to 1–8 bars and it stops by itself. An empty slot's
-**Record here** does the same for that slot. From stop, with a count-in set, the slot blinks
+**Record here** does the same for that slot. A track plays one slot at a time, so a take
+stops the clip that track was playing. From stop, with a count-in set, the slot blinks
 **Rec in…** through the count-in and the take starts as it ends; a note you hold into the take
 starts with it. Stop during the count-in leaves the slot empty.
 

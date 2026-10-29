@@ -3,11 +3,12 @@ title: "Nota EQ-8"
 description: "Eight-band parametric EQ — cuts, shelves, bells and notches with selectable slope, mid / side and left / right per band, a live analyzer, scale and auto gain."
 sidebar:
   order: 1
-updated: "0.50.1"
+updated: "0.58.1"
 status: done
 sources:
-  - src/native/nota.engine/src/Eq.h
+  - src/native/nota.engine/src/devices/effects/Eq.h
   - src/managed/Nota.App/DeviceCards/Bodies/EqDeviceBody.cs
+  - src/native/nota.engine/src/dsp/primitives/SpectrumAnalyzer.h
 ---
 
 import Shot from '@components/Shot.astro';
@@ -21,8 +22,28 @@ add air, carve space for one sound around another — on the stereo pair, the mi
 
 Each band is a numbered node on the response curve — drag it: sideways for frequency, up and
 down for gain. The band chips above the graph switch bands on and off and select one for the
-panel on the right. **Analyzer** in the corner shows the spectrum **Pre** or **Post** EQ, or
-**Off**.
+panel on the right.
+
+## The analyzer
+
+Behind the curve, the spectrum shows where the energy of the sound sits. **Analyzer** in the
+corner picks what it shows:
+
+- **Post** (the default): the sound after the EQ as a filled shape, with the sound going in as a
+  dim line over it, so the EQ's effect reads as the gap between the two.
+- **Pre**: the sound going in, filled.
+- **Off**: nothing, and no analysis runs.
+
+Each point reads a sixth of an octave, so a steady tone shows at its own level and pink noise
+reads flat. The shape rises at once on a hit and falls back over about a third of a second.
+
+- **60 / 90 / 120** sets the range: the graph's bottom edge is that many dB below 0 dBFS (90 by
+  default). The EQ curve's own ±dB scale stays the same.
+- **Peak** adds a thin line at each frequency's highest level of the last moments. It holds for
+  1.5 seconds, then falls.
+
+Range and Peak are saved with the device and in its presets. They change only the display,
+never the sound.
 
 ## A band
 
@@ -32,6 +53,25 @@ panel on the right. **Analyzer** in the corner shows the spectrum **Pre** or **P
 | **Freq** · **Gain** · **Q** | Where, how much, how wide (on the cuts, **Reso**) |
 | **Slope** | For the cuts: 12, 24 or 48 dB per octave |
 | **Channel** | **St** (both channels), **Mid**, **Side**, **L** or **R** — so a band can brighten only the sides, or tame one channel |
+
+## Band labels and notes
+
+Give a band a name so its purpose shows at a glance: select it and type into **Label** at the top
+of the band panel (up to 24 characters). The name appears next to the band's node in the graph,
+follows the node as you drag it, and replaces the band type on its chip.
+
+For the longer story, click the label in the graph, or **Note** next to the Label field. A box
+opens with the label and a note of up to 2000 characters, line breaks included. Click outside,
+press **Esc** or **⌘ Enter** (**Ctrl+Enter** on Windows and Linux) to close it; the text is kept.
+A band with a note shows a small dot on its label, and hovering the label shows the note.
+
+- Labels that would overlap are moved apart, with a thin line back to their node.
+- **Labels** in the analyzer bar hides all labels and note dots in the graph (the chips and the
+  band panel still show them). It is saved with the device.
+- Labels and notes are saved with the project and in your own presets, and come along when you
+  duplicate the device or the track. Each edit is one undo step. A factory preset or **Init**
+  clears them, and double-clicking empty space for a new bell starts that band without a label.
+- They never change the sound, and can't be automated.
 
 ## Global
 

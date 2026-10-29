@@ -1,47 +1,73 @@
 ---
 title: "Nota Instrument Rack"
-description: "Several instruments in one — chains split by key and velocity zones, each with its own devices, gain and mute / solo, under eight macros."
+description: "Several instruments in one — chains split by key and velocity zones, each with its own MIDI effects, instrument and effects, under eight macros; mono and glide for the whole rack."
 sidebar:
   order: 1
 updated: "0.57.1"
 status: done
 sources:
-  - src/native/nota.engine/src/RackInstrument.h
-  - src/native/nota.engine/src/RackCore.h
-  - src/managed/Nota.App/DeviceCards/Rack/RackCardView.cs
+  - src/native/nota.engine/src/devices/racks/RackInstrument.h
+  - src/native/nota.engine/src/devices/racks/RackCore.h
+  - src/managed/Nota.App/DeviceCards/Rack/RackCard.cs
+  - src/managed/Nota.App/DeviceCards/Rack/RackCard.Chains.cs
+  - src/managed/Nota.App/DeviceCards/Rack/RackCard.Zones.cs
+  - src/managed/Nota.App/DeviceCards/Rack/RackCard.RightPanel.cs
 ---
 
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
 
-Nota Instrument Rack holds several **chains** — each an instrument with its own effects — on one
-track. Layer a pad under a pluck, split a keyboard into bass and lead, or switch sounds by how hard
-you play.
+Nota Instrument Rack holds several **chains** on one track — each its own MIDI effects, instrument
+and effects. Layer a pad under a pluck, split the keyboard into bass and lead, switch sounds by how
+hard you play, or keep an instrument together with its Arp.
 
-<Shot id="devices/racks/instrument-rack/card" alt="Nota Instrument Rack: macros, the chain list and the selected chain's devices" />
+<Shot id="devices/racks/instrument-rack/card" alt="Nota Instrument Rack: macros, the chain list, the chosen chain's devices and the Chain panel" />
 
-**Layout:** eight **macros** on the left, the **chain** list in the middle, the selected chain's
-devices on the right.
+**Layout:** eight [macros](../macros/) on the left; the **Chains**, **Zones** and **Macros** tabs in the
+middle; the **Chain** and **Rack out** panel on the right; a status line along the bottom. The
+Audio Effect and MIDI Effect racks use the same card.
 
 ## Chains
 
-**+ Add chain** adds one; pick its instrument, then add effects with **+ Device**. Each chain has a
-name, its own **gain** and meter, **mute** and **solo**.
+The list shows every chain: its colour, name, **M** (mute) and **S** (solo), its key and velocity
+zone, and its level. Click a chain to choose it; double-click its name to rename it. Right-click it
+to **Duplicate** or **Delete** it.
 
-**Zones** decide which chain plays: a **key** zone (a range of notes) and a **velocity** zone (a range
-of how hard). Overlapping zones layer; separate zones split. The zone map shows them across the
-keyboard; drag a zone's edge to move it.
+To the right are the chosen chain's devices, left to right as the signal flows: its **MIDI** effects,
+its instrument, its audio effects. Each compact card shows the device's key parameters; drag a
+slider to change one, **Open** shows the device's full editor, drag the grip to move it within its
+section. The dashed targets add a device (click for the list, or drop one from the Browser).
+MIDI effects run in the first 16 chains.
 
-Every change to the chains undoes with <Kbd>⌘ Z</Kbd>: adding or removing a chain, its instrument,
-its devices, its name and its zones.
+**+ Chain** (or an instrument dropped on the list) adds a layer. An instrument dropped on a chain
+replaces its instrument.
 
-## Devices inside a chain
+Every change to the chains undoes with <Kbd>⌘ Z</Kbd>: adding, duplicating or removing a chain, its
+devices, its name, its zones, and the macros' mappings.
 
-Each device shows as a card with its knobs. **GUI** opens the device's full editor (for a plug-in, its
-own window; for the Sampler, its tabbed editor) in a [device window](../../../views/detail-panel/#device-windows);
-**Params** lists its parameters. Drag cards to reorder; ✕ removes one.
+## Zones
 
-## Rack output and macros
+<Shot id="devices/racks/instrument-rack/zones" alt="The Zones tab: key and velocity zones per chain, with the probe on E4" />
 
-**Volume** and **Glide** for the whole rack. Eight named [macros](../macros/) turn many parameters in
-the chains at once. **Fold** hides the chains; **Save** stores the whole rack as a preset.
+Each chain plays only the notes inside its **key** zone and its **velocity** zone. Drag a zone's edges
+to set them; overlapping zones layer, separate zones split. Hover the zones to test a note: a line
+marks the key, the chains that would play it light up, and the footer names them.
+
+## Chain panel and Rack out
+
+**Chain** shows the chosen chain's **Volume** and **Pan**, its zones (click to open the Zones tab),
+**Duplicate** and **Delete**.
+
+<Shot id="devices/racks/instrument-rack/rack-out" alt="Rack out: Volume, Glide and Mono (last note)" />
+
+**Rack out** holds the rack's **Volume**, **Glide** and **Mono (last note)**. With mono on the rack
+plays one note at a time and the last key wins; releasing it returns to the key still held. Glide
+slides each new note from the previous pitch on instruments that take per-note pitch bend. Chains
+that hold MIDI effects get the notes as played — their effects decide what sounds.
+
+## Tips
+
+- **Bass and lead on one keyboard:** two chains, keys up to B2 and from C3.
+- **Velocity layers:** the same zone twice, velocity 0–100 and 101–127.
+- **An instrument and its Arp in one preset:** drop Nota Arp into the chain's MIDI section, save the
+  rack as a preset.

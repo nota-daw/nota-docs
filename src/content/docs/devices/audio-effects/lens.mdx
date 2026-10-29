@@ -3,7 +3,7 @@ title: "Nota Lens"
 description: "Analyzer — a spectrum, a triggered oscilloscope and a waterfall in one card, with peak hold, cursors, mid / side and loudness. The audio passes through untouched."
 sidebar:
   order: 22
-updated: "0.50.1"
+updated: "0.58.1"
 status: done
 sources:
   - src/native/nota.engine/src/Lens.h
@@ -34,6 +34,48 @@ A triggered oscilloscope that behaves like a bench instrument: the trace is pinn
 point and stands still, older passes fade (**Afterglow**). **Free** runs untriggered; a **Single**
 capture holds one sweep. **Cursors** A and B measure time and level between two points. **Export
 WAV** saves the captured window.
+
+### Tempo sync
+
+Turn on **Sync** above the scope to line it up with the song instead of a trigger. Pick a **Span**:
+¼ beat, ½ beat, 1 beat, 2 beats, 1 bar, 2 bars or 4 bars (a bar follows the time signature). While
+the song plays, the scope shows that stretch of the beat grid: a 1 bar span starts on a bar line and
+ends on the next one. Beat lines are drawn across it, bar lines stronger, and the labels underneath
+give the bar and beat at each edge.
+
+A sweep line follows the playhead. Left of it is the pass being drawn now; right of it, the previous
+pass fades out, so you always see a full span. This makes it easy to see whether a note's attack sits
+on the beat or just after it, bar after bar.
+
+- Long spans are drawn from a peak history, so a click or a transient keeps its full height even at 4
+  bars.
+- A seek or a loop wrap starts the pass again at the new position, instead of
+  drawing old audio under the new beat lines.
+- Stopped, the scope rolls freely on a track that still sounds (an instrument you play, or a
+  monitored input), with **free** in the corner. A stopped audio track is silent, so its scope keeps
+  the last pass.
+- With Sync on, the time base and trigger knobs rest. **Freeze** holds both passes as they are.
+
+### Key overlay
+
+Lens takes a sidechain key, like the Compressor. In **Key** on the Analyze panel, pick another
+track: its audio (after its effects) is drawn in teal over this track's trace, in the synced scope
+and in the triggered one, where it follows the same trigger and time base. The switch next to it
+hides the key's trace.
+
+- **Key Gain** (−24 to +24 dB) scales only the key's trace, to compare a quiet key with a loud
+  signal. It changes nothing you hear.
+- **Layout** puts both traces on one axis (**Overlay**) or the key in the lower half (**Stacked**).
+- **Source** and **Mid/Side** pick the channel for both traces.
+
+A typical use: put Lens on the bass, key it from the kick, set Sync to 1 bar, and see whether the
+bass ducks where the kick hits.
+
+### Bigger window
+
+The button at the right of the view tabs opens Lens in its own window, which you can resize or move
+to another display. It shows the same views and controls as the card, and both follow each other.
+The window closes when you delete the device or open another project.
 
 ## Waterfall
 
