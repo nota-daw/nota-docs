@@ -3,7 +3,7 @@ title: Tracks
 description: Instrument, audio, return and group tracks — adding, selecting, colouring, grouping, routing and freezing them.
 sidebar:
   order: 4
-updated: "0.56.1"
+updated: "0.57.1"
 status: done
 sources:
   - src/managed/Nota.Infrastructure/Persistence/ProjectTemplate.cs
@@ -62,15 +62,29 @@ Double-click a fader to reset it to 0 dB.
 
 <Shot id="start-here/main-window" alt="The Arrangement with the Rhythm group, Drums, Bass, Keys, Lead and Texture tracks" />
 
-Each header carries the track's name and type, and:
+Each header has two rows, with the track's meter down its right edge. The first row carries
+the track's name and type, and:
 
 - **M** mute and **S** solo,
 - **●** arm — the track records when you press Record, and an armed instrument track plays
   the notes from your keyboard. A click arms that track alone, and so does selecting an instrument track;
-  <Kbd>⌘</Kbd>-click arms more than one,
+  <Kbd>⌘</Kbd>-click arms more than one.
+
+The second row holds:
+
+- the **volume** bar, with its value in dB written inside it,
+- the **pan** knob, with its value beside it — drag up or down to turn it,
 - the input — for an audio track the hardware input; for an instrument track **MIDI from**
-  another instrument track (layering — see below),
-- a **volume** fader and a **pan** bar, with the track's meter. Double-click either to reset it.
+  another instrument track (layering — see below).
+
+Double-click the volume or the pan to reset it. A **Compact** row shows only the first row;
+volume, pan and the input are then in the Mixer and the track menu.
+
+A **Large** row also shows the track's **sends**: one bar per return track, two to a row, as
+many as the height has room for. Each bar is labelled with the return's letter and colour
+(hover it for the return's name) and shows the amount inside it, "–" when nothing is sent.
+Drag a bar to set the send, double-click it to reset it to nothing, or <Kbd>⌥</Kbd>-click
+to type a value. Return tracks have no sends, so their headers show none.
 
 Drag a header by its name to move the track. The selected track's devices open in the panel
 at the bottom.
@@ -91,7 +105,8 @@ and position (**Audio · 3**); on a selection it reads **3 tracks**.
 
 - **Colour** — click a swatch right in the menu: nine colour families, each in a base, a light
   and a dark shade, plus **Auto**. The current colour is outlined. A track you haven't coloured
-  takes its group's colour, one shade per sibling, so a group reads as one family.
+  takes its group's colour, one shade per sibling, so a group reads as one family; outside a
+  group, new tracks take the colours in an order that keeps neighbours apart.
 - **Height** — **Compact**, **Standard** or **Large**. <Kbd>⌥</Kbd>-click (Alt on Windows and
   Linux) sizes every track at once. You can also drag a track's bottom edge.
 - **Rename…** names the track; until you do, an instrument track is called after its
@@ -111,8 +126,9 @@ tracks away.
 ## Routing
 
 - **Sends** — every track can send part of its signal to each return track: turn up its send
-  in the [Mixer](../../views/mixer/) or the Session view. A new project comes with two
-  returns ready to send to: **Reverb** and **Delay**, both set to **Wet Only**.
+  in the [Mixer](../../views/mixer/), the Session view, or the **Sends** card at the end of the
+  track's device chain (one knob per return, under its colour, letter and name). A new project
+  comes with two returns ready to send to: **Reverb** and **Delay**, both set to **Wet Only**.
 - **MIDI from** — an instrument track can play the MIDI of another instrument track through
   its own instrument, to layer two sounds. It gets the notes **after** the source's MIDI
   effects, so an arpeggiator on the source drives both. Recording on the receiving track
