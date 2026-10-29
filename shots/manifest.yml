@@ -171,6 +171,7 @@ shots:
   - { id: devices/instruments/sampler/env, source: app, scene: device, args: {instrument: 1, tab: "Env"} }
   - { id: devices/instruments/sampler/filter, source: app, scene: device, args: {instrument: 1, tab: "Filter"} }
   - { id: devices/instruments/physical/resonator, source: app, scene: device, args: {instrument: 2, tab: "Resonator"} }
+  - { id: devices/instruments/aurora/import, source: app, scene: device, args: {instrument: 5, preset: "aurora/Glacier Pad", wt1: voice} }
   - { id: devices/instruments/aurora/filter, source: app, scene: device, args: {instrument: 5, tab: "Filter"} }
   - { id: devices/instruments/aurora/mod, source: app, scene: device, args: {instrument: 5, tab: "Mod"} }
   - { id: devices/instruments/aurora/fx, source: app, scene: device, args: {instrument: 5, tab: "FX"} }

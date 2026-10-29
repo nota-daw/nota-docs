@@ -21,7 +21,7 @@ namespace NotaDocsShots;
 /// Every scene the manifest can ask for. A scene builds a window, renders it at 2× and saves
 /// the whole frame or a cropped control. Args come from the manifest entry's `args`.
 ///
-///   device    instrument | effect | midi (kind id), preset, tab, card (index in the chain),
+///   device    instrument | effect | midi (kind id), preset, tab, card (index in the chain), wt1 / wt2 (a demo sample as Aurora's wavetable),
 ///             clip (a demo sample on an effect's track), sidechain + sidechainName (a demo sample on
 ///             a second track routed as the effect's key),
 ///             chainInstrument (an Instrument Rack's chain 1 instrument), trackName, window (click this text — a
@@ -184,6 +184,18 @@ public sealed class Scenes
                 }
             }
         }
+        // `wt1` / `wt2`: a demo sample imported as Aurora Osc 1 / Osc 2's wavetable (nota
+        // specs/053). Called by reflection so the harness still builds against an app without it.
+        foreach (var (key, osc) in new[] { ("wt1", 0), ("wt2", 1) })
+            if (shot.Str(key) is string wt)
+            {
+                var et = _engine.GetType();
+                var build = et.GetMethod("AuroraTableBuild") ?? throw new InvalidOperationException("this Nota has no wavetable import");
+                var a = new object?[] { _demo.Sample(wt), null };
+                if ((int)build.Invoke(_engine, a)! != 0) throw new InvalidOperationException($"wavetable '{wt}' did not build");
+                et.GetMethod("AuroraSetTable")!.Invoke(_engine, new object[] { track, osc, a[1]!, false });
+                et.GetMethod("AuroraTableFree")!.Invoke(_engine, new[] { a[1]! });
+            }
         // A little audio through the device so meters, spectra and envelopes have something to draw.
         _engine.Play();
         var buf = new float[1024 * 2];

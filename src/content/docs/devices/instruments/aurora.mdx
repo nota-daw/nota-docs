@@ -3,7 +3,7 @@ title: "Nota Aurora"
 description: "Wavetable synth — two wavetable oscillators with warp, a sub, unison, two routable filters, two envelopes, two LFOs, an 8 × 7 mod matrix, eight macros and built-in drive, chorus and reverb."
 sidebar:
   order: 4
-updated: "0.50.1"
+updated: "0.58.1"
 status: done
 sources:
   - src/native/nota.engine/src/WavetableSynth.h
@@ -26,14 +26,45 @@ The **wheels** on the left (pitch bend, mod wheel) are on every tab. The rail on
 
 ## Osc
 
+Osc 1 and Osc 2 sit side by side, each with its own on switch, table and warp drop-downs, a
+window showing its table, and its knobs. The window draws the table's frames with the one being
+played lit, and follows the position each note is at as LFOs and envelopes move it; its caption
+names the table, the frame and what modulates the position. An oscillator that is off greys
+out in place and can still be edited. Sub and unison sit in one row underneath.
+
 | Control | What it does |
 |---|---|
-| **Table** | The wavetable bank: **Analog**, **Pulse**, **Formant** or **Chroma** |
-| **Position** | Where in the table the oscillator reads (16 frames) |
+| **Table** | The wavetable: **Analog**, **Pulse**, **Formant** or **Chroma**, or one you imported |
+| **Position** | Where in the table the oscillator reads (16 frames for the built-in tables) |
 | **Warp** · warp mode | Bends the wave: **Off**, **Sync**, **Bend**, **PWM** or **Fold** |
 | **Level** · **Oct** · **Semi** · **Fine** | Level and tuning of each oscillator; each can be switched off |
 | **Sub** | A sub oscillator: level, octave and wave |
 | **Unison** | Voices, **Detune** and **Spread** of the unison stack |
+
+### Your own wavetables
+
+<Shot id="devices/instruments/aurora/import" alt="Nota Aurora, a recording imported as Osc 1's table" />
+
+Drop a WAV, FLAC or MP3 file on either oscillator, from the browser or the desktop, or pick
+**Import…** in its table drop-down. Aurora turns the file into a table:
+
+- a wavetable file (one with a frame size, or a length that is a multiple of 2048 samples) keeps
+  its frames, up to 256;
+- a file of up to 4096 samples is taken as a single cycle, played at the note's pitch;
+- anything longer, such as a recording, is cut into 16 frames spread evenly through it, so
+  Position sweeps through the recording.
+
+Only the first 60 seconds are read. Stereo is mixed to mono and the table is normalised. A long
+file loads in the background; a silent or unreadable one is refused, with the reason under the
+oscillator. Imported tables are band-limited like the built-in ones, so a bright table played
+high stays clean.
+
+- The table drop-down switches between your table and the built-in ones, and removes the import.
+- Import and remove are one undo step each. Notes that are sounding stop when you import.
+- The table is saved inside the project, so it opens with the project even after the source file
+  is gone, and user presets carry it too. If a stored table can't be read, the project still
+  opens, the oscillator shows **Missing:** and the table's name, and plays its built-in table.
+- An Aurora inside a rack keeps its tables but can't import one yet.
 
 ## Filter
 
@@ -89,4 +120,6 @@ Sweep**, **Split Filter**).
 
 - **Make it move:** route LFO 1 to **Position** in the matrix with a slow rate — the timbre
   drifts through the table.
+- **Sweep a recording:** import a spoken phrase or a field recording and put an LFO on
+  Position: the oscillator scans through it at the note's pitch.
 - **Mod wheel as a morph:** put the Mod Wheel on Position and Cutoff together.
