@@ -6,6 +6,7 @@ sidebar:
 updated: "0.57.1"
 status: done
 sources:
+  - src/managed/Nota.App/DeviceCards/SidechainSourcePicker.cs
   - src/managed/Nota.App/DeviceChainView.cs
   - src/managed/Nota.App/DeviceChainView.Drop.cs
   - src/managed/Nota.App/DeviceChainView.Clipboard.cs
@@ -100,6 +101,14 @@ import Kbd from '@components/Kbd.astro';
 Compressor, Dynamic EQ-8, Ceiling, Level, Shutter, Auto Filter и Prism умеют слушать **другой трек** —
 выберите его источником сайдчейна устройства (до или после фейдера того трека). Так же Nota Flux
 реагирует на другой трек, а Auto Shift может следовать за нотами другого трека.
+
+Ключ может слушать и **одну часть** инструмента другого трека: пэд [Drum Rack](racks/drum-rack/),
+цепочку [Instrument Rack](racks/instrument-rack/) или голос [Nota Rhythm](instruments/rhythm/). В
+списке источников они стоят под своим треком — выберите **Kick** под **Drums**, и бас будет
+приседать только от бочки. Для части **Pre** — это звук до её собственных эффектов (сам удар), а
+**Post** — после эффектов, громкости и панорамы. Заглушённый пэд продолжает питать ключ: можно
+держать «призрачную бочку», которая управляет дакингом, но не звучит. Одновременно можно слушать до
+16 разных источников; когда все заняты, остальные в списке становятся неактивными.
 
 ## Плагины
 

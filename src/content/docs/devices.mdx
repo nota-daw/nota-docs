@@ -6,6 +6,7 @@ sidebar:
 updated: "0.57.1"
 status: done
 sources:
+  - src/managed/Nota.App/DeviceCards/SidechainSourcePicker.cs
   - src/managed/Nota.App/DeviceChainView.cs
   - src/managed/Nota.App/DeviceChainView.Drop.cs
   - src/managed/Nota.App/DeviceChainView.Clipboard.cs
@@ -100,6 +101,14 @@ preset's name, so a variation is quick to keep.
 Compressor, Dynamic EQ-8, Ceiling, Level, Shutter, Auto Filter and Prism can listen to **another
 track** — pick it as the device's sidechain source (pre or post that track's fader). Nota Flux reacts
 to another track, and Auto Shift can follow another track's notes, the same way.
+
+A key can also listen to **one part** of another track's instrument: a pad of a
+[Drum Rack](racks/drum-rack/), a chain of an [Instrument Rack](racks/instrument-rack/) or a voice of
+[Nota Rhythm](instruments/rhythm/). The source picker lists them under their track — pick **Kick**
+under **Drums** to duck the bass from the kick alone. For a part, **Pre** is the part before its own
+effects (the raw hit) and **Post** is after its effects, level and pan. A muted pad still feeds its
+key, so you can keep a "ghost kick" that drives the ducking without being heard. Up to 16 different
+sources can be keyed at once; when they are all taken, the picker greys out the rest.
 
 ## Plug-ins
 
