@@ -11,6 +11,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
 
 Nota Volt — виртуально-аналоговый синтезатор по образцу классических двухосцилляторных
 аналогов, но с особенностью: в нём два полных **пути сигнала**. Каждый источник можно отправить
@@ -75,7 +76,8 @@ Filter 1 есть **To F2** — часть его сигнала идёт в Fil
 <Shot id="devices/instruments/volt/mod" alt="Nota Volt, вкладка Mod с матрицей модуляции" />
 
 **Матрица 7 × 6**: Amp Env, Flt Env, LFO 1, LFO 2, Velocity, Key и Mod Wheel против Pitch, Osc 2
-Pitch, Cutoff, Reso, Level и Pan. Потяните ячейку вверх — плюс, вниз — минус.
+Pitch, Cutoff, Reso, Level и Pan. Потяните ячейку вверх — плюс, вниз — минус; щелчок с <Kbd>⌥</Kbd>
+открывает ввод глубины (−100…+100 %), двойной щелчок очищает ячейку.
 
 ## Macro
 

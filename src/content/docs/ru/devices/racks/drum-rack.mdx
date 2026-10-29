@@ -6,6 +6,7 @@ sidebar:
 updated: "0.58.1"
 status: done
 sources:
+  - src/managed/Nota.App/DeviceCards/SidechainSourcePicker.cs
   - src/native/nota.engine/src/DrumRack.h
   - src/managed/Nota.App/DeviceCards/Rack/RackCardView.Drum.cs
   - src/managed/Nota.App/DeviceCards/Rack/MacroPanel.cs
@@ -70,3 +71,11 @@ Nota Drum Rack играет на каждом пэде свой звук. Заг
 [Fold](../../../editing/piano-roll/#fold), и piano roll покажет только пэды, по подписанной строке на
 каждый. Аудиоклипы, перетащенные из
 Arrangement, ложатся на следующий свободный пэд.
+
+## Сайдчейн от пэда
+
+Устройство на другом треке может слушать один пэд: в его списке источников сайдчейна выберите пэд
+под этим треком. **Pre** берёт сам удар пэда, до его эффектов и decay; **Post** — после эффектов,
+decay, громкости и панорамы. Ключ остаётся на этом пэде, когда вы добавляете, удаляете или
+переименовываете пэды, а заглушённый пэд всё равно им управляет — «призрачная бочка», которая
+прижимает бас, но не звучит.

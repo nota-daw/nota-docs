@@ -11,6 +11,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
 
 Nota Volt is a virtual-analog synth modelled on classic two-oscillator analogs, with a twist:
 two full **signal paths**. Each source can go to Filter 1, Filter 2 or both, and each filter has
@@ -73,7 +74,8 @@ to the mod wheel (**By wheel**).
 <Shot id="devices/instruments/volt/mod" alt="Nota Volt, Mod tab with the modulation matrix" />
 
 A **7 × 6 matrix**: Amp Env, Flt Env, LFO 1, LFO 2, Velocity, Key and Mod Wheel against Pitch, Osc 2
-Pitch, Cutoff, Reso, Level and Pan. Drag a cell up for +, down for −.
+Pitch, Cutoff, Reso, Level and Pan. Drag a cell up for +, down for −; <Kbd>⌥</Kbd>-click it to type
+the amount (−100…+100 %), double-click to clear it.
 
 ## Macro
 

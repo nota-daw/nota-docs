@@ -6,11 +6,13 @@ sidebar:
 updated: "0.57.1"
 status: done
 sources:
+  - src/managed/Nota.App/DeviceCards/SidechainSourcePicker.cs
   - src/managed/Nota.App/DeviceChainView.cs
   - src/managed/Nota.App/DeviceChainView.Drop.cs
   - src/managed/Nota.App/DeviceChainView.Clipboard.cs
   - src/managed/Nota.App/DeviceChainView.Fold.cs
   - src/managed/Nota.App/DeviceCardKit.cs
+  - src/managed/Nota.App/Controls/ValueEntry.cs
 ---
 
 import { CardGrid, LinkCard, Aside } from '@astrojs/starlight/components';
@@ -42,6 +44,14 @@ where the device has one, and the on / off (bypass) switch — over its controls
 graphs work the same everywhere: drag, <Kbd>⇧</Kbd> for fine steps, double-click to reset; graphs
 are controls too (drag the nodes, curves and handles). A knob turns with an up / down drag; a
 horizontal slider follows a left / right drag, and up / down works on it too.
+
+To set an exact value, <Kbd>⌥</Kbd>-click the control (<Kbd>Alt</Kbd>-click on Windows and Linux) —
+or double-click the number under it — and type it in the units shown: `-6`, `1.5k`, `250 ms`,
+`L 30`, `1/16`. <Kbd>Return</Kbd> sets it, <Kbd>Esc</Kbd> cancels, <Kbd>Tab</Kbd> moves to the next
+value on the card. Graph handles, envelope nodes and mod-matrix cells take the same click: a handle
+with several values (an EQ band's frequency, gain and Q) opens on the first and <Kbd>Tab</Kbd> walks
+the rest. Right-click any of them for **Type value…** and **Reset to default** (**Clear** on a
+matrix cell).
 
 The mouse wheel scrolls a long chain sideways wherever the pointer is. A few controls take the wheel
 themselves only while you point at them: an EQ band's handle (its Q) and the small value boxes that
@@ -100,6 +110,14 @@ preset's name, so a variation is quick to keep.
 Compressor, Dynamic EQ-8, Ceiling, Level, Shutter, Auto Filter and Prism can listen to **another
 track** — pick it as the device's sidechain source (pre or post that track's fader). Nota Flux reacts
 to another track, and Auto Shift can follow another track's notes, the same way.
+
+A key can also listen to **one part** of another track's instrument: a pad of a
+[Drum Rack](racks/drum-rack/), a chain of an [Instrument Rack](racks/instrument-rack/) or a voice of
+[Nota Rhythm](instruments/rhythm/). The source picker lists them under their track — pick **Kick**
+under **Drums** to duck the bass from the kick alone. For a part, **Pre** is the part before its own
+effects (the raw hit) and **Post** is after its effects, level and pan. A muted pad still feeds its
+key, so you can keep a "ghost kick" that drives the ducking without being heard. Up to 16 different
+sources can be keyed at once; when they are all taken, the picker greys out the rest.
 
 ## Plug-ins
 

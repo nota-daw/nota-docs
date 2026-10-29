@@ -1,12 +1,13 @@
 ---
 title: "Audio"
-description: "Settings ▸ Audio — output and input devices, sample rate, buffer size and latency, WASAPI exclusive mode, a test tone and a CPU check."
+description: "Settings ▸ Audio — output and input devices, sample rate, buffer size and latency, WASAPI exclusive mode, ASIO on Windows, a test tone and a CPU check."
 sidebar:
   order: 1
-updated: "0.50.1"
+updated: "0.57.1"
 status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
+  - src/managed/Nota.Presentation/ViewModels/MainWindowViewModel.cs
 ---
 
 import Shot from '@components/Shot.astro';
@@ -28,6 +29,31 @@ Open Settings with **File ▸ Settings…**, or **Settings** on the start window
 **Latency** shows what the buffer means in milliseconds. A smaller buffer means less delay between
 playing and hearing — best while recording; a larger one gives the CPU more room — best while mixing
 big projects.
+
+## ASIO (Windows)
+
+On Windows, **Audio system** chooses between **WASAPI** (the rows above) and **ASIO** — the
+driver that came with your audio interface, for the lowest, steadiest latency. With no ASIO
+driver installed, the ASIO option is greyed out; install your interface's driver, or a generic
+one such as FlexASIO.
+
+With ASIO chosen, the rows change:
+
+| Setting | What it does |
+|---|---|
+| **Driver** | The ASIO driver to use. Nota opens one driver at a time and lets go of it when you switch away, so other programs can use it |
+| **Driver settings…** | Opens the driver's own panel. Change the buffer size there — Nota picks the change up within a couple of seconds and keeps playing |
+| **Output** · **Input** | The channel pair Nota plays through and records from, named as the driver names them (**Out 1 + 2**, **Analog 3 + 4**). Every other output stays silent. A driver without inputs says **No inputs on this driver** |
+| **Sample rate** | A request: if the driver can't run at that rate, the row goes back and says so |
+| **Buffer size** | Read-only — set in the driver's settings |
+
+**Latency** shows the driver's output latency and, when it has inputs, the round trip. Recorded
+audio is moved earlier by that latency, so takes line up with what you were playing along to.
+
+If the driver is missing, busy in another program or stops responding, Nota switches to WASAPI on
+the system default device; the status bar names the driver and the reason, and **Latency** reads
+**ASIO unavailable (…) → WASAPI**. Your choice stays ASIO: **Try again** (where **Driver
+settings…** was) goes back to the driver once it's free.
 
 ## Test
 

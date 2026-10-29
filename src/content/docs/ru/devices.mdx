@@ -6,11 +6,13 @@ sidebar:
 updated: "0.57.1"
 status: done
 sources:
+  - src/managed/Nota.App/DeviceCards/SidechainSourcePicker.cs
   - src/managed/Nota.App/DeviceChainView.cs
   - src/managed/Nota.App/DeviceChainView.Drop.cs
   - src/managed/Nota.App/DeviceChainView.Clipboard.cs
   - src/managed/Nota.App/DeviceChainView.Fold.cs
   - src/managed/Nota.App/DeviceCardKit.cs
+  - src/managed/Nota.App/Controls/ValueEntry.cs
 ---
 
 import { CardGrid, LinkCard, Aside } from '@astrojs/starlight/components';
@@ -42,6 +44,14 @@ import Kbd from '@components/Kbd.astro';
 везде работают одинаково: тяните, с <Kbd>⇧</Kbd> — мелкими шагами, двойной щелчок сбрасывает;
 графики — тоже регуляторы (тяните точки, кривые и ручки). Ручка крутится движением вверх / вниз;
 горизонтальный слайдер идёт за мышью влево / вправо, а вверх / вниз работает и на нём.
+
+Чтобы задать точное значение, щёлкните регулятор с <Kbd>⌥</Kbd> (на Windows и Linux — с <Kbd>Alt</Kbd>)
+или дважды щёлкните число под ним и введите его в тех же единицах: `-6`, `1.5k`, `250 ms`, `L 30`,
+`1/16`. <Kbd>Return</Kbd> применяет, <Kbd>Esc</Kbd> отменяет, <Kbd>Tab</Kbd> переходит к следующему
+значению карточки. Так же работают ручки графиков, точки огибающих и ячейки матрицы модуляции: если
+у ручки несколько значений (частота, усиление и Q полосы EQ), сначала откроется первое, остальные —
+по <Kbd>Tab</Kbd>. В меню правой кнопки — **Type value…** и **Reset to default** (у ячейки матрицы —
+**Clear**).
 
 Колесо мыши прокручивает длинную цепочку вбок, где бы ни был курсор. Колесо забирают себе только
 несколько регуляторов и только под курсором: ручка полосы эквалайзера (её Q) и маленькие поля,
@@ -100,6 +110,14 @@ import Kbd from '@components/Kbd.astro';
 Compressor, Dynamic EQ-8, Ceiling, Level, Shutter, Auto Filter и Prism умеют слушать **другой трек** —
 выберите его источником сайдчейна устройства (до или после фейдера того трека). Так же Nota Flux
 реагирует на другой трек, а Auto Shift может следовать за нотами другого трека.
+
+Ключ может слушать и **одну часть** инструмента другого трека: пэд [Drum Rack](racks/drum-rack/),
+цепочку [Instrument Rack](racks/instrument-rack/) или голос [Nota Rhythm](instruments/rhythm/). В
+списке источников они стоят под своим треком — выберите **Kick** под **Drums**, и бас будет
+приседать только от бочки. Для части **Pre** — это звук до её собственных эффектов (сам удар), а
+**Post** — после эффектов, громкости и панорамы. Заглушённый пэд продолжает питать ключ: можно
+держать «призрачную бочку», которая управляет дакингом, но не звучит. Одновременно можно слушать до
+16 разных источников; когда все заняты, остальные в списке становятся неактивными.
 
 ## Плагины
 
