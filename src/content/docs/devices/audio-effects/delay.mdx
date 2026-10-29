@@ -3,7 +3,7 @@ title: "Nota Delay"
 description: "Stereo delay — independent or linked left and right times, synced or free, ping-pong, a filtered and diffused feedback loop, tape wow, Freeze and tap tempo."
 sidebar:
   order: 6
-updated: "0.50.1"
+updated: "0.57.1"
 status: done
 sources:
   - src/native/nota.engine/src/Delay.h
@@ -14,13 +14,22 @@ import Shot from '@components/Shot.astro';
 
 Nota Delay repeats the sound: slapback, rhythmic eighths, dub throws, tape echoes, frozen beds.
 
-<Shot id="devices/audio-effects/delay/card" alt="Nota Delay, Time tab over the live repeat window" />
+<Shot id="devices/audio-effects/delay/card" alt="Nota Delay, Time tab with the live echoes and where the next repeats land" />
 
-**Layout:** the **Loop** column on the left (**Feedback**, **Spread**), a centre panel with two tabs
-over a live window of the repeats, a right panel (**Levels** / **Output**) and a status line that
-tells you how many repeats stay audible.
+**Layout:** the **Loop** column on the left (**Feedback**, **Spread**), a centre panel with two tabs,
+each one live graph of your audio that fills it, a right panel with the controls of the tab you're
+on (or **Output**), and a status line that tells you how many repeats stay audible.
+
+| Centre tab | Right panel |
+|---|---|
+| **Time** | ms / Sync, Link, Ping, Fade, the L and R times, Feedback, Spread, Tap tempo, Clear loop |
+| **Loop · Wow** | Feedback, Diffuse, Low cut, High cut, Wow rate, Wow, Freeze, Tape |
 
 ## Time
+
+The last seconds of your audio: the input as a grey wash and the echoes as a line, on the project's
+beat grid while it plays in **Sync**. The dots after the latest hit show where the next repeats will
+land and how loud they'll be — accent for the left channel, teal for the right.
 
 | Control | What it does |
 |---|---|
@@ -28,21 +37,26 @@ tells you how many repeats stay audible.
 | **L time** · **R time** | The two channels' times |
 | **Link** | The right channel follows the left |
 | **Ping** | Ping-pong — each repeat crosses to the other side |
-| **Fade on change** | Changing the time crossfades to the new one instead of gliding (no pitch bend) |
+| **Fade** | Changing the time crossfades to the new one instead of gliding (no pitch bend) |
 | **Tap tempo** | Tap four times to set the time by ear (switches to ms) |
 
 ## Loop · Wow
 
 <Shot id="devices/audio-effects/delay/loop-wow" alt="Nota Delay, Loop · Wow tab" />
 
-The feedback loop: a **low cut** and **high cut** filter (drag its handles), **Diffuse** (smears the
-repeats into a cloud), **Tape mode** (saturation), and tape **Wow** — **Wow rate** and **Wow depth**.
-**Freeze** holds the loop forever: the input is muted and the repeats stop decaying. **Clear
-loop** empties the buffer.
+How each of the first six repeats sounds: every pass round the loop goes through the **low cut**,
+the **high cut** and (in **Tape** mode) the tape's head loss, and loses the feedback, so each curve sits
+lower and narrower than the last. Drag the cut handles, double-click to open them. The grey line
+underneath is the echoes' live spectrum.
 
-## Levels and Output
+**Diffuse** smears the repeats into a cloud, **Tape** adds saturation, and tape **Wow** — **Wow rate**
+and **Wow** depth — bends the pitch. Right of the tabs: the filter range and, once Wow
+bends the pitch audibly, by how many cents. **Freeze** holds the loop
+forever: the input is muted and the repeats stop decaying. **Clear loop** empties the buffer.
 
-**Dry**, **Mix**, **Width**, **Mono f** (bass mono), **Wet only** (for a return track), **Out**, and
+## Output
+
+**Dry**, **Mix**, **Width**, **Mono** (bass mono), **Wet only** (for a return track), **Out**, and
 **Latency comp.** — keeps the echo exactly on time when Diffuse is up.
 
 ## Presets

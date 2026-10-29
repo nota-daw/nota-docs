@@ -3,7 +3,7 @@ title: "Nota Reverb"
 description: "Algorithmic reverb — Hall, Room, Plate and Chamber, with pre-delay, size, diffusion, early reflections, tone, tail modulation, Vintage colour and Freeze."
 sidebar:
   order: 5
-updated: "0.50.1"
+updated: "0.57.1"
 status: done
 sources:
   - src/native/nota.engine/src/Reverb.h
@@ -16,13 +16,23 @@ Nota Reverb puts a sound in a space — from a tight room to a cathedral, from a
 endless frozen wash. It's the reverb to reach for first; for convolution and hybrid spaces see
 [Nota Chamber](../chamber/).
 
-<Shot id="devices/audio-effects/reverb/card" alt="Nota Reverb, Space tab with the decay-tail window" />
+<Shot id="devices/audio-effects/reverb/card" alt="Nota Reverb, Space tab with the live tail against the set decay" />
 
-**Layout:** the **Tail** column on the left (**Decay**, **HF Damp**), a centre panel with two tabs
-over a live window of the decay tail, a right panel (**Levels** / **Output**) and a status line.
-The tail window is a control: drag the pre-delay marker, drag the tail to set the decay.
+**Layout:** the **Tail** column on the left (**Decay**, **HF Damp**), a centre panel with two tabs,
+each one live graph of your audio that fills it, a right panel with the controls of the tab you're
+on (or **Output**), and a status line. Both graphs are controls too.
+
+| Centre tab | Right panel |
+|---|---|
+| **Space** | Mode, Pre, Size, Diffuse, Decay, Early reflections, Freeze |
+| **Tone · Mod** | Low cut, High cut, HF Damp, Mod rate, Depth, Mod on tail, Vintage |
 
 ## Space
+
+The last six seconds of your audio: the input as a grey wash, the reverb's tail as a line, and the
+dashed line is the decay you've set, falling from the latest hit. When the tail follows the dashed
+line, the reverb rings as long as **Decay** says. **Drag the graph** to set the decay (right or up is
+longer), double-click to reset it. Right of the tabs: the mode, the RT60 and the pre-delay.
 
 | Control | What it does |
 |---|---|
@@ -38,15 +48,21 @@ The tail window is a control: drag the pre-delay marker, drag the tail to set th
 
 <Shot id="devices/audio-effects/reverb/tone-mod" alt="Nota Reverb, Tone · Mod tab" />
 
-**Low cut** and **High cut** shape the reverb's tone, **Width** its stereo spread. **Mod rate** and
-**Mod depth** add a chorus-like shimmer — on the whole reverb, or only the tail (**Mod on tail**).
-**Vintage** gives it the band-limited, grainy colour of early digital reverbs.
+How long the tail rings at each frequency (seconds, up the left): raise **HF Damp** and the highs die
+sooner. The shaded edges are the **Low cut** and **High cut** on the tail; drag their handles, double-click
+to reset. The grey line underneath is the tail's live spectrum. Right of the tabs: the decay at 250 Hz
+and at 4 kHz.
 
-## Levels and Output
+**Mod rate** and **Depth** add a chorus-like shimmer — on the
+whole reverb, or only the tail (**Mod on tail**). **Vintage** gives it the band-limited, grainy colour of
+early digital reverbs.
 
-**Dry**, **Mix** (dry / wet), **Width**, **Mono f** (bass mono below a frequency), **Wet only** (for a
+## Output
+
+**Dry**, **Mix** (dry / wet), **Width**, **Mono** (bass mono below a frequency), **Wet only** (for a
 return track), **Out**, and **Latency comp.** — starts the tail exactly where the pre-delay says.
-**Freeze** holds the tail forever (the input is muted); **Kill tail** clears what's ringing.
+**Kill tail** clears what's ringing; the **Wet** meter shows the tail's level. **Freeze** (on the **Space**
+panel) holds the tail forever, and the input is muted.
 
 ## Presets
 

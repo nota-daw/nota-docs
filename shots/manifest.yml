@@ -117,8 +117,8 @@ shots:
   # ── Audio effects
   - { id: devices/audio-effects/eq-8/card, source: app, scene: device, args: {effect: 0} }
   - { id: devices/audio-effects/compressor/card, source: app, scene: device, args: {effect: 1} }
-  - { id: devices/audio-effects/reverb/card, source: app, scene: device, args: {effect: 2} }
-  - { id: devices/audio-effects/delay/card, source: app, scene: device, args: {effect: 3} }
+  - { id: devices/audio-effects/reverb/card, source: app, scene: device, args: {effect: 2, clip: kick, blocks: 160} }
+  - { id: devices/audio-effects/delay/card, source: app, scene: device, args: {effect: 3, clip: kick, blocks: 90, set: "6=0.55"} }
   - { id: devices/audio-effects/utility/card, source: app, scene: device, args: {effect: 4} }
   - { id: devices/audio-effects/valve/card, source: app, scene: device, args: {effect: 6} }
   - { id: devices/audio-effects/auto-filter/card, source: app, scene: device, args: {effect: 7} }
@@ -189,8 +189,8 @@ shots:
   - { id: devices/instruments/mosaic/groups, source: app, scene: device, args: {instrument: 17, preset: "mosaic/Felt Piano", tab: "Groups"} }
   - { id: devices/audio-effects/compressor/motion, source: app, scene: device, args: {effect: 1, tab: "Motion"} }
   - { id: devices/audio-effects/compressor/sidechain, source: app, scene: device, args: {effect: 1, tab: "Sidechain"} }
-  - { id: devices/audio-effects/reverb/tone-mod, source: app, scene: device, args: {effect: 2, tab: "Tone \u00b7 Mod"} }
-  - { id: devices/audio-effects/delay/loop-wow, source: app, scene: device, args: {effect: 3, tab: "Loop \u00b7 Wow"} }
+  - { id: devices/audio-effects/reverb/tone-mod, source: app, scene: device, args: {effect: 2, clip: kick, blocks: 30, tab: "Tone \u00b7 Mod", set: "5=0.4,1=0.7"} }
+  - { id: devices/audio-effects/delay/loop-wow, source: app, scene: device, args: {effect: 3, clip: kick, blocks: 40, tab: "Loop \u00b7 Wow", set: "6=0.55,16=0.35,17=0.6"} }
   - { id: devices/audio-effects/utility/mono, source: app, scene: device, args: {effect: 4, tab: "Mono"} }
   - { id: devices/audio-effects/utility/levels, source: app, scene: device, args: {effect: 4, tab: "Levels"} }
   - { id: devices/audio-effects/valve/cab, source: app, scene: device, args: {effect: 6, tab: "Cab"} }

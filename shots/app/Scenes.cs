@@ -184,7 +184,14 @@ public sealed class Scenes
         // A little audio through the device so meters, spectra and envelopes have something to draw.
         _engine.Play();
         var buf = new float[1024 * 2];
-        for (int k = 0; k < 40; k++) _engine.RenderOffline(buf, 1024);
+        // `set`: "param=value,…" normalised device params before the audio runs.
+        if (shot.Str("set") is string sets)
+            foreach (var kv in sets.Split(','))
+            {
+                var pv = kv.Split('=');
+                _engine.DeviceSetParam(track, deviceIndex, int.Parse(pv[0]), float.Parse(pv[1], System.Globalization.CultureInfo.InvariantCulture));
+            }
+        for (int k = 0, nb = shot.Int("blocks") ?? 40; k < nb; k++) _engine.RenderOffline(buf, 1024);
         _engine.StopTransport();
 
         var view = new DeviceChainView(_engine, _presets, null, Kits);
