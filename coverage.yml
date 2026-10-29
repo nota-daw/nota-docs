@@ -186,8 +186,8 @@ sections:
 
   plugins:
     - page: plugins
-      covers: [VST3 (all platforms) and AU (macOS), plug-in card, open plug-in UI, state save/restore, missing plug-ins on load]
-      sources: [src/managed/Nota.App/DeviceCards/PluginCard.cs, src/managed/Nota.App/DeviceChainView.Plugin.cs, src/managed/Nota.App/MainWindow.MissingPlugins.cs]
+      covers: [VST3 (all platforms) and AU (macOS), plug-in card, plug-in card window picture, open plug-in UI, state save/restore, missing plug-ins on load]
+      sources: [src/managed/Nota.App/DeviceCards/PluginCard.cs, src/managed/Nota.App/DeviceChainView.Plugin.cs, src/managed/Nota.App/Controls/PluginPreviewBackdrop.cs, src/managed/Nota.App/MainWindow.MissingPlugins.cs]
       status: done
     - page: plugins/scanning
       covers: [scan paths, Rescan, failed plug-ins]
@@ -259,7 +259,7 @@ sections:
 
   preferences:
     # One page per Settings page (src/managed/Nota.App/PreferencesWindow.cs → Nav)
-    - {page: preferences/audio,      sources: [src/managed/Nota.App/PreferencesWindow.cs], covers: [device, sample rate, buffer, WASAPI exclusive], status: done}
+    - {page: preferences/audio,      sources: [src/managed/Nota.App/PreferencesWindow.cs], covers: [device, sample rate, buffer, WASAPI exclusive, ASIO], status: done}
     - {page: preferences/midi,       sources: [src/managed/Nota.App/PreferencesWindow.cs], status: done}
     - {page: preferences/gamepads,   sources: [src/managed/Nota.App/PreferencesWindow.cs], status: done}
     - {page: preferences/remote,     sources: [src/managed/Nota.App/PreferencesWindow.Remote.cs], status: done}
@@ -290,4 +290,7 @@ findings:
   - Mockup ↔ code drift per device is checked when each device page is written (parameter names/ranges come from the engine header + card).
 
 # New user-facing changes that arrived before their page was written (nota-docs skill appends here).
-pending: []
+pending:
+  - page: reference/shortcuts
+    change: "regenerate (npm run shortcuts) once nota-daw/nota#240 parts 2–3 merge — new rows: ⌥-click a graph handle / envelope node / mod-matrix cell, double-click a mod-matrix cell; clip ADSR row"
+    version: "0.57.1"

@@ -4,7 +4,7 @@ description: The clip grid for playing live and sketching — launching clips an
 sidebar:
   order: 2
 since: "0.50.1"
-updated: "0.50.1"
+updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.App/SessionView.cs
@@ -36,7 +36,10 @@ jam, and build a song live.
 
 Clips and scenes start in time with the music: on the next bar, or whatever **Quant** in the
 toolbar says — **None**, 1/16 … 1/2, **1 Bar**, 2, 4 or 8 bars. A clip's progress pie shows
-where it is in its own loop.
+where it is in its own loop. A muted track (or one silenced by another track's solo) launches and
+stops on time too, and its clip keeps its place, so it's in time when you unmute. With the
+transport's loop on, the loop start also counts as a launch point, so a short loop with no bar
+line inside it doesn't keep a clip waiting.
 
 ## The grid
 
@@ -56,6 +59,7 @@ its tracks away. Returns and the master close the row.
 | <Kbd>F2</Kbd> | Rename the selected clip or scene |
 | <Kbd>Delete</Kbd> | Delete the selected clip or scene |
 | Double-click a column header | Rename the track |
+| Click a return's or the master's header | Select it: its devices open in the panel below |
 | Right-click a header, a slot or the empty grid | Add an instrument, audio or return track, rename or delete one |
 
 You can insert, duplicate, capture and move scenes while the music plays. **Capture scene**
