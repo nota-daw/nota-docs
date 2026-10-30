@@ -4,10 +4,11 @@ description: A tour of the Nota main window — transport, browser, views, the d
 sidebar:
   order: 3
 since: "0.1.0"
-updated: "0.56.1"
+updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.App/MainWindow.axaml
+  - src/managed/Nota.App/MainWindow.AudioFormat.cs
   - src/managed/Nota.App/MainWindow.Menu.cs
   - src/managed/Nota.App/BrowserView.cs
   - src/managed/Nota.App/MainWindow.Detail.cs
@@ -96,7 +97,9 @@ the panel into a [window of its own](../../views/detail-panel/), and × closes i
 - **Help** — Documentation (this manual), What's new and About.
 
 The line along the bottom of the window reports what just happened ("Saved Night Drive",
-"Added Nota Volt") and shows the audio sample rate.
+"Added Nota Volt") and shows the sample rate and buffer size that are running
+("48 kHz · 256"). Click that readout to pick another buffer size — playback continues —
+or to open Settings ▸ Audio.
 
 <Aside title="⌘ or Ctrl?">
 Shortcuts are written the macOS way. On Windows and Linux, <Kbd>⌘</Kbd> is <Kbd>Ctrl</Kbd>
