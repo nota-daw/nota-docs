@@ -3,10 +3,11 @@ title: "Audio"
 description: "Settings ▸ Audio — output and input devices, sample rate, buffer size and latency, WASAPI exclusive mode, ASIO on Windows, a test tone and a CPU check."
 sidebar:
   order: 1
-updated: "0.57.1"
+updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
+  - src/managed/Nota.App/MainWindow.AudioFormat.cs
   - src/managed/Nota.Presentation/ViewModels/MainWindowViewModel.cs
 ---
 
@@ -29,6 +30,12 @@ Open Settings with **File ▸ Settings…**, or **Settings** on the start window
 **Latency** shows what the buffer means in milliseconds. A smaller buffer means less delay between
 playing and hearing — best while recording; a larger one gives the CPU more room — best while mixing
 big projects.
+
+The status bar shows the rate and buffer that are actually running ("48 kHz · 256"). Click it
+to pick another size from this same list — playback continues — or choose **Audio settings…**
+to open this page. The sizes stay unavailable while you are recording. Under ASIO the driver
+sets the buffer, so the menu offers **Driver settings…** instead; in WASAPI exclusive mode it
+tells you the device's own buffer is in use.
 
 ## ASIO (Windows)
 
