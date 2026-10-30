@@ -1,9 +1,9 @@
 ---
 title: "Appearance"
-description: "Settings ▸ Appearance — цветовая тема (Dark, Light или Follow system, темы Studio и Ember), вид волн, масштаб интерфейса и управление через MCP."
+description: "Settings ▸ Appearance — цветовая тема (Dark, Light или Follow system, темы Studio и Ember), вид волн, сторона заголовков треков, масштаб интерфейса и управление через MCP."
 sidebar:
   order: 8
-updated: "0.56.1"
+updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
@@ -20,6 +20,7 @@ import Shot from '@components/Shot.astro';
 |---|---|
 | **Colour theme** | **Dark**, **Light** или **Follow system**, а затем тема из карточек ниже — см. [Цветовые темы](#цветовые-темы) |
 | **Waveform** | Как рисуются аудиоклипы в Arrangement и сэмплы в превью браузера: **Bars** разносит пики, чтобы читался ритм; **Solid** рисует каждый пиксель |
+| **Track headers** | **Left** или **Right** — с какой стороны Arrangement стоит список треков. **Right** начинает таймлайн у левого края, рядом с браузером. Тот же переключатель — **View ▸ Track headers on the right** |
 | **Interface scale** | **75 %**, **100 %**, **125 %**, **150 %** или **200 %** — размер всего интерфейса. См. [Масштаб интерфейса](#масштаб-интерфейса) |
 | **AI control (MCP)** | Позволить ИИ-ассистенту работать в Nota — переключатель, порт, статус и **Copy config**. См. [Управление через MCP](../../ai/mcp/) |
 
