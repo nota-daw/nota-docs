@@ -96,8 +96,8 @@ sections:
       sources: [src/managed/Nota.App/AudioClipEditorView.cs, src/managed/Nota.App/ClipPropsView.cs, src/managed/Nota.App/ClipAdsrKit.cs, src/managed/Nota.App/ClipAudioExport.cs, src/managed/Nota.App/WaveformView.cs, src/native/nota.engine/src/Warp.h, src/native/nota.engine/src/TempoDetect.h]
       status: done
     - page: editing/recording
-      covers: [arm & record audio/MIDI, inputs, count-in, Session recording, latency]
-      sources: [src/native/nota.engine/src/Engine_Recording.cpp, src/managed/Nota.App/RecordPreview.cs]
+      covers: [arm & record audio/MIDI, inputs, count-in, Session recording, latency, take lanes and comping]
+      sources: [src/native/nota.engine/src/engine/Engine_Recording.cpp, src/native/nota.engine/src/engine/Engine_Takes.cpp, src/managed/Nota.App/ArrangementView.Takes.cs, src/managed/Nota.App/RecordPreview.cs]
       status: done
     - page: editing/automation
       covers: [automation lanes, draw/edit points, Lock Envelopes, MIDI-learned automation]

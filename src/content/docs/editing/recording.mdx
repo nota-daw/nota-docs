@@ -6,10 +6,12 @@ sidebar:
 updated: "0.58.1"
 status: done
 sources:
-  - src/native/nota.engine/src/Engine_Recording.cpp
+  - src/native/nota.engine/src/engine/Engine_Recording.cpp
+  - src/native/nota.engine/src/engine/Engine_Takes.cpp
   - src/managed/Nota.App/ArrangementView.cs
+  - src/managed/Nota.App/ArrangementView.Takes.cs
   - src/managed/Nota.App/SessionView.Toolbar.cs
-  - src/native/nota.engine/src/Engine_Render.cpp
+  - src/native/nota.engine/src/engine/Engine_Render.cpp
   - src/managed/Nota.App/RecordPreview.cs
 ---
 
@@ -89,9 +91,29 @@ monitored — it would feed back.
 
 ## Recording over a loop
 
-With the loop on, **audio** recording fills the loop range: each time round, the new pass
-replaces the previous one, so you can keep playing until you get it, then stop. Turning the
-loop on in the middle of a take starts recording the loop region from there.
+With the loop on, **audio** recording keeps every pass as a take instead of replacing the
+last one. Stop after the loop has come round at least once and the track holds one take per
+pass — **Take 1**, **Take 2**, and so on — numbered in the order you played them. A later
+recording on the same track continues the numbers. A pass that started or stopped in the
+middle of the loop keeps only what it recorded. Turning the loop on in the middle of a take
+starts recording the loop region from there.
+
+What plays is the **comp**, the track's own row. Right after recording it is the newest pass
+at every point of the loop, so it sounds the way loop recording did before.
+
+The header shows a disclosure and how many takes there are. The lanes start folded. Open
+them and each take is a row under the comp, with its waveform. The parts the comp uses are
+in the track colour; the rest of the take is dimmed.
+
+Drag across a take to use that stretch in the comp. The range follows the snap grid; hold
+<Kbd>⌥</Kbd> (<Kbd>Alt</Kbd> on Windows and Linux) to ignore it. It never extends past what
+that take recorded, and the rest of the comp stays put. One drag is one undo step.
+
+Right-click a lane for **Use whole take**, **Delete take** (the sound stays, the take goes)
+or **Flatten takes** (the comp becomes one clip and the takes of that recording go). Each is
+one undo step. Takes are saved with the project.
+
+One pass, the loop off, MIDI and Session slots still make a single clip and no takes.
 
 For **MIDI**, the cell next to **Loop** in the transport chooses what a new pass does
 (<Kbd>⌘ ⇧ R</Kbd> or **Transport → Loop record: overdub / replace** switch it too):
