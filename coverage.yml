@@ -76,8 +76,8 @@ sections:
       sources: [src/managed/Nota.App/ModularView.cs, src/native/nota.engine/src/Modulation.h]
       status: done
     - page: views/mixer
-      covers: [Mixer window ⇧⌘M, sends & returns, groups, master, meters, record source]
-      sources: [src/managed/Nota.App/MixerView.cs, src/managed/Nota.App/MixerWindow.cs, src/managed/Nota.App/MainWindow.Mixer.cs]
+      covers: [Mixer ⇧⌘M docked under the view or in its own window, pop-out / dock back, restored on launch, height-adaptive strips, sends & returns, groups, master, meters, record source]
+      sources: [src/managed/Nota.App/MixerView.cs, src/managed/Nota.App/MixerWindow.cs, src/managed/Nota.App/MainWindow.Mixer.cs, src/managed/Nota.App/MainWindow.Detail.cs]
       status: done
     - page: views/detail-panel
       covers: [bottom panel Devices/Clip, detach to own window (⧉), Device window]

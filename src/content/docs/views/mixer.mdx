@@ -1,24 +1,42 @@
 ---
 title: Mixer
-description: The Mixer window — a channel strip per track with inputs, sends, pan, volume, mute, solo and arm, returns and the master.
+description: The Mixer — docked under the view or in its own window — a channel strip per track with inputs, sends, pan, volume, mute, solo and arm, returns and the master.
 sidebar:
   order: 4
-updated: "0.51.2"
+updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.App/MixerView.cs
   - src/managed/Nota.App/MixerWindow.cs
   - src/managed/Nota.App/MainWindow.Mixer.cs
+  - src/managed/Nota.App/MainWindow.Detail.cs
 ---
 
 import { Aside } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
 
-The Mixer opens in its own window — **View ▸ Mixer** or <Kbd>⌘ ⇧ M</Kbd> — so you can keep it
-on a second screen next to the Arrangement or Session.
+**View ▸ Mixer** or <Kbd>⌘ ⇧ M</Kbd> shows the Mixer, and the same again hides it. It docks as
+a panel at the bottom of the main window, under the Arrangement, Session or Modular view, so
+you can mix and still see the song.
 
-<Shot id="views/mixer" alt="The Mixer window: a strip per track, the return and the master" />
+<Shot id="views/mixer-docked" alt="The Mixer docked under the Arrangement: a strip per track, the returns and the master" />
+
+## Docked or in a window
+
+- **Resize** the docked Mixer by dragging its top edge. It stays where it is when you switch
+  between Arrangement, Session and Modular.
+- The **Devices** / **Clip** panel can be open at the same time: the Mixer sits above it, and
+  each has its own edge to drag. In a short window the Mixer gets shorter first.
+- **To a second screen**: the ⧉ button at the top right of the docked Mixer moves it into a
+  window of its own. The window's dock button (top right of its title bar) brings it back.
+  **View ▸ Mixer in its own window** switches between the two as well.
+- **×** on the panel, or closing the window (<Kbd>Esc</Kbd> works there), hides the Mixer.
+
+Nota remembers whether the Mixer was shown, docked or in a window, and how tall the panel
+was, and opens it the same way next time.
+
+<Shot id="views/mixer" alt="The Mixer in its own window: a strip per track, the return and the master" />
 
 ## A channel strip
 
@@ -37,6 +55,19 @@ Return tracks come after the tracks, and the **Master** strip closes the row. It
 same master volume as the **Master** control in the transport bar and the Master row of the
 Arrangement — move one and the others follow; it is saved with the project. **Show** at the
 bottom switches the **Sends** and **I/O** sections on or off.
+
+Faders, pan and the mute, solo and arm buttons follow changes made anywhere else — a track
+header, the Session mixer, automation, undo or a MIDI controller.
+
+## When there is little room
+
+The strips fit the height they get. As the Mixer gets shorter, the **I/O** rows go first, then
+the **Sends**, then the fader gets shorter; the name, meter, fader, pan and buttons always
+stay. A section hidden for lack of room shows its **Show** button outlined instead of filled —
+click it to show the section anyway (the strips then scroll up and down), click again to turn
+it off.
+
+<Shot id="views/mixer-docked-compact" alt="A short docked Mixer: I/O and sends hidden, Sends and I/O outlined in the footer" />
 
 ## Sends and returns
 

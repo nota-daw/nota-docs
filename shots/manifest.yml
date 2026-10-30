@@ -44,6 +44,8 @@ shots:
   - { id: views/session, source: app, scene: main, args: {view: "session"} }
   - { id: views/modular, source: app, scene: main, args: {view: "modular", select: "Keys"} }
   - { id: views/mixer, source: app, scene: mixer }
+  - { id: views/mixer-docked, source: app, scene: main, args: {view: "arrangement", mixer: true, mixerHeight: 380} }
+  - { id: views/mixer-docked-compact, source: app, scene: main, args: {view: "arrangement", mixer: true, mixerHeight: 300, element: "MixerPanel"} }
   - { id: views/detail-panel, source: app, scene: main, args: {view: "arrangement", select: "Keys", element: "DetailPanel"} }
   - { id: devices/folded, source: app, scene: main, args: {view: "arrangement", select: "Keys", fold: "0", element: "DetailPanel"} }
   - { id: views/device-window/nota-bass-l, source: app, scene: device, args: {instrument: 3, chainInstrument: 7, trackName: "Bass", window: "GUI"} }
