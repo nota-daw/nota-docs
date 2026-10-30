@@ -1,9 +1,9 @@
 ---
 title: Arrangement
-description: The song on a timeline — moving and trimming clips, selecting, zooming, the overview strip, sections and clip names.
+description: The song on a timeline — moving and trimming clips, selecting, zooming, the overview strip, sections, clip names and which side the track headers sit on.
 sidebar:
   order: 1
-updated: "0.55.1"
+updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.App/ArrangementView.cs
@@ -125,6 +125,13 @@ the row.
 
 Track heights and the header width are saved with the project. They don't go into the undo
 history.
+
+**View ▸ Track headers on the right** puts the track list on the right, so the timeline
+starts at the left edge, next to the browser. The return and master headers, and the strips
+beside Overview, Sections and the ruler, move with it. Drag the seam toward the lanes to
+widen the headers; double-click it to reset the width. The same choice is **Settings ▸
+Appearance ▸ Track headers** (**Left** / **Right**). Nota remembers the side; it is not
+saved in the project.
 
 ## Clip names and groups
 
