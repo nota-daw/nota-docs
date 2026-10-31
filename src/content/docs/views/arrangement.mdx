@@ -3,7 +3,7 @@ title: Arrangement
 description: The song on a timeline — moving and trimming clips, selecting, zooming, the overview strip, sections and clip names.
 sidebar:
   order: 1
-updated: "0.55.1"
+updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.App/ArrangementView.cs
@@ -12,6 +12,7 @@ sources:
   - src/managed/Nota.App/ArrangementView.Overview.cs
   - src/managed/Nota.App/ArrangementView.Sections.cs
   - src/managed/Nota.App/ArrangementView.Sizing.cs
+  - src/managed/Nota.Application/Engine/SectionNames.cs
 ---
 
 import { Aside } from '@astrojs/starlight/components';
@@ -95,14 +96,40 @@ it reads which bars you're looking at ("bar 1–8 / 36"). **View ▸ Toggle over
 The **Sections** lane names the parts of the song — Intro, Verse, Drop — so the structure is
 readable at a glance.
 
-- Drag along the empty lane to mark a section over those bars.
+- Drag along the empty lane to mark a section over those bars. It gets an automatic name.
 - Click a section to jump the playhead to its start; double-click it to rename it.
 - Drag a section to move it, drag its edge to resize it — always in whole bars.
 - Right-click it for **Loop section**, **Select section** (as a time range across every track),
-  **Duplicate**, **Rename…** and **Delete**.
+  **Duplicate**, **Rename…**, **Reset to default name** and **Delete**.
 
 Each of these edits is one undo step. Sections are saved with the project. **View ▸ Toggle
 sections** hides the lane.
+
+### Section names
+
+A new section is named **Section N**, where N is its place in the song counted from the left.
+This is an *automatic* name: it renumbers when you add, move, duplicate or delete sections. A
+section you named yourself is counted too — if the second section is "Chorus", the third is
+still **Section 3** — and its name never changes on its own.
+
+Double-click a section (or right-click ▸ **Rename…**) to open the rename box:
+
+- For an automatic section the box opens empty, with the automatic name shown as a hint. A
+  caption under the box reads **Automatic name** or **Custom name**, following what you type.
+- <Kbd>Return</Kbd> keeps the name. It is one undo step, or none if nothing changed. Leading and
+  trailing spaces are trimmed, and an empty name goes back to automatic.
+- <Kbd>Esc</Kbd>, or a click anywhere else, cancels and changes nothing.
+- **Reset to default** in the box gives the section its automatic name back. It is available
+  only for a custom name.
+
+**Reset to default name** in the section's right-click menu does the same, and is greyed out
+while the name is already automatic. From the keyboard, open the [command
+palette](../../basics/command-palette/) and run **Reset section name**: it acts on the section
+under the playhead and says in the status bar what it did.
+
+Undo and redo bring back both the name and whether it was automatic. Sections you named in
+earlier versions of Nota — including ones called "Section 2" — load as custom names; reset one
+to make it automatic.
 
 ## Track sizes
 
