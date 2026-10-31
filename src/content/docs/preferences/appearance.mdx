@@ -3,7 +3,7 @@ title: "Appearance"
 description: "Settings ▸ Appearance — the colour theme (Dark, Light or Follow system, with Studio and Ember themes), how waveforms draw, the interface scale, and AI control over MCP."
 sidebar:
   order: 8
-updated: "0.56.1"
+updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
@@ -19,9 +19,26 @@ import Shot from '@components/Shot.astro';
 | Setting | What it does |
 |---|---|
 | **Colour theme** | **Dark**, **Light** or **Follow system**, then a theme from the cards below — see [Colour themes](#colour-themes) |
-| **Waveform** | How audio clips draw in the Arrangement, and samples in the browser's preview: **Bars** spaces the peaks out so the rhythm reads; **Solid** draws every pixel |
+| **Waveform** | How audio clips draw in the Arrangement: **Smooth** (the default), **Solid** or **Bars**. See [Waveform](#waveform) |
 | **Interface scale** | **75 %**, **100 %**, **125 %**, **150 %** or **200 %** — the size of the whole interface. See [Interface scale](#interface-scale) |
 | **AI control (MCP)** | Let an AI assistant work in Nota — the switch, the port, the status and **Copy config**. See [AI control over MCP](../../ai/mcp/) |
+
+## Waveform
+
+How audio clips draw on the Arrangement lanes:
+
+| Style | Looks like |
+|---|---|
+| **Smooth** | The default. A fine outline of the peaks, in a lighter shade, around a denser body that follows the loudness (RMS) of the audio. Zoomed out, no peak slips between pixels; zoomed in, the wave slopes from point to point, down to a thin line at sample level |
+| **Solid** | Every pixel drawn |
+| **Bars** | The peaks spaced out, so the rhythm reads |
+
+The choice applies at once to every clip and is saved. If you picked **Bars** in an earlier
+version, Nota shows **Smooth** once after the update; pick **Bars** again to bring it back.
+
+The [audio clip editor](../../editing/audio-clips/) always draws **Smooth**, whatever you pick
+here. The browser's [preview player](../../library/preview-player/) follows only **Solid**:
+with **Solid** it draws every pixel, and with **Smooth** or **Bars** it draws spaced bars.
 
 ## Colour themes
 

@@ -3,7 +3,7 @@ title: "Preview player"
 description: "Audition samples, presets, drum kits and devices from the browser before you load them — waveform, spectrum, loop, auto-play and demo tracks for effects."
 sidebar:
   order: 2
-updated: "0.50.1"
+updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.App/PreviewPlayer.cs
@@ -24,6 +24,9 @@ The file's real waveform — click it to play from that point, hover for the tim
 **Stop**, the time, **Loop**, **Auto** (play each file as you select it) and a preview volume
 (double-click it to reset to 0 dB). <Kbd>↑</Kbd> <Kbd>↓</Kbd> step through the files; with Auto on,
 each one plays as you land on it.
+
+The waveform follows [Settings ▸ Appearance ▸ Waveform](../../preferences/appearance/#waveform)
+only in part: **Solid** draws every pixel, while **Smooth** and **Bars** both draw spaced bars.
 
 ## Presets, kits and devices
 
