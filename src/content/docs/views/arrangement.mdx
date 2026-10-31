@@ -3,7 +3,7 @@ title: Arrangement
 description: The song on a timeline — moving and trimming clips, selecting, zooming, the overview strip, sections and clip names.
 sidebar:
   order: 1
-updated: "0.55.1"
+updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.App/ArrangementView.cs
@@ -117,11 +117,14 @@ Make tracks short to see a big song at once, or tall to work on one part.
 | Right-click a track ▸ **Track height** | Pick **Compact**, **Standard** or **Large** for the selection, or for all tracks |
 | Drag the seam between the track headers and the lanes | Widen or narrow the headers (160–480 px); double-click it to reset |
 
-The header shows what fits. A **compact** track keeps its name and mute, solo and record-arm
-on one line; volume, pan and the input stay in the [Mixer](../mixer/) and the track's menu. A
-**standard** track has the usual three rows. A **large** track gives the input (or MIDI
-source), the volume fader and the pan a row each. Clips, waveforms and automation grow with
-the row.
+The header shows what fits. Its buttons — mute, solo, record-arm and, on an audio track, the
+headphones **monitor** button — stay together at the right edge, against the level meter, at
+every height, so they don't move when you resize a track. A **compact** track keeps its name and
+those buttons on one line; volume, pan and the input stay in the [Mixer](../mixer/) and the
+track's menu. A **standard** track has the usual three rows, with the input (or MIDI source) on
+the left of the button row. A **large** track puts the buttons under the name, then gives the
+input (or MIDI source), the volume fader and the pan a row each. Clips, waveforms and
+automation grow with the row.
 
 Track heights and the header width are saved with the project. They don't go into the undo
 history.
