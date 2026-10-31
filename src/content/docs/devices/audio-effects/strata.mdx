@@ -20,7 +20,8 @@ pull a layer out later.
 
 ## Transport
 
-A bar.beat counter, a tick per beat that fills as the loop runs, and four actions. Each one is
+A bar.beat counter, a strip with a tick per beat that fills as the loop runs, and four actions. The
+strip is there before the first loop too, unlit until the loop closes. Each one is
 captioned with what it will do if you press it now; one that would do nothing is dimmed.
 
 | Action | Empty | First pass | Loop running |
@@ -37,8 +38,9 @@ beat. On the first pass the step is the song's grid, so the loop comes out a who
 ## Layers
 
 Every pass, listed: its number, name, waveform, state (**Play**, **Muted**, **Rec**), level and
-mute. The layer being recorded draws in red and fills as it is recorded; older layers draw dimmer,
-as Feedback sinks them. Drag a level bar to set it, double-click it for 0 dB, or double-click the
+mute. Each layer draws in its own shade of grey, the newest brightest; the layer being recorded
+draws in red and fills as it is recorded; older layers draw dimmer, as Feedback sinks them. Above
+the list, **n of 8 · one cycle shown** counts the layers. Drag a level bar to set it, double-click it for 0 dB, or double-click the
 number to type a value. All eight layers fit in the list.
 
 ## Loop
