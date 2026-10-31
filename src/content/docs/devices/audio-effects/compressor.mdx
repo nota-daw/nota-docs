@@ -3,7 +3,7 @@ title: "Nota Compressor"
 description: "Compressor with five characters, soft knee, peak / RMS / auto detection, look-ahead, range, auto release, parallel mix and a filtered sidechain."
 sidebar:
   order: 4
-updated: "0.50.1"
+updated: "0.57.1"
 status: done
 sources:
   - src/native/nota.engine/src/Compressor.h
@@ -18,25 +18,44 @@ result louder again. Glue a drum bus, level a vocal, pump a pad from the kick.
 <Shot id="devices/audio-effects/compressor/card" alt="Nota Compressor, Curve tab with the transfer curve and reduction history" />
 
 **Layout:** the **Level** column on the left (threshold against the live level, make-up), a centre
-panel with three tabs, a right panel (**Dynamics** / **Output**) and a status line.
+panel with three tabs, each one graph that fills it, a right panel (**Dynamics** / **Output**) and a
+status line. The live read-outs sit right of the tabs. The right panel's first tab follows the
+centre tab — **Dynamics**, **Timing** or **Key** — and **Output** stays beside it.
+
+| Centre tab | Right panel, first tab |
+|---|---|
+| **Curve** | **Dynamics**: Char, Detect, Ratio, Knee, Mix, Range, the reduction now and its peak, Auto gain |
+| **Motion** | **Timing**: Char, Attack, Release, Hold, Ahead (lookahead), the **Live** box, Auto-release |
+| **Sidechain** | **Key**: Source, Tap, External, Listen, HP, LP, Q, Stereo link |
+
+**Output** holds the in / out / GR levels, **Makeup**, **Mix**, **Range**, **Listen**, **Auto gain**,
+**External key** and **Stereo link**. On the **Sidechain** tab the Level column's second fader
+becomes **SC In** — the key's gain, driving the detector harder or softer — and MIDI learn on it
+follows, so it learns SC gain there and Makeup elsewhere. ⌥-click a fader to type a value,
+double-click to reset it.
 
 ## Curve
 
 The transfer curve and the history of gain reduction. **Drag the curve** to set threshold and ratio.
+Right of the tabs: the average and peak reduction and the crest factor before → after
+(**GR avg · peak · crest**).
 
 ## Motion
 
 <Shot id="devices/audio-effects/compressor/motion" alt="Nota Compressor, Motion tab" />
 
 The gain-reduction envelope drawn against the input, so you **see** attack and release work
-rather than guess.
+rather than guess. Right of the tabs: the last hit's measured transient and recovery, and how many
+hits the window holds. The **Live** box on the Timing panel shows the attack and release the
+detector really runs (after Character and auto-release), the time window the graph covers, and the
+GR peak; the **Char** chips sit on this panel too, so you can change the voicing while you watch.
 
 ## Sidechain
 
 <Shot id="devices/audio-effects/compressor/sidechain" alt="Nota Compressor, Sidechain tab with the key filters" />
 
-What the detector listens to: **Internal** (the track) or **External key** (another track, picked
-as the device's sidechain source, **Pre** or **Post** its fader). The key's spectrum is drawn under
+What the detector listens to: **Internal** (the track) or **External key** (another track — or one
+pad, chain or voice of it — picked as the device's sidechain source, **Pre** or **Post** its fader). The key's spectrum is drawn under
 its filters — drag the **HP** and **LP** handles; **Q** shapes both. **Listen** lets you hear the key.
 
 ## Dynamics and Output

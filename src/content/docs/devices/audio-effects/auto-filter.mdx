@@ -20,8 +20,12 @@ louder (auto-wah, envelope filter), an **LFO** sweeps it in time (wobble, gates,
 <Shot id="devices/audio-effects/auto-filter/card" alt="Nota Auto Filter, Filter tab with the response" />
 
 **Layout:** the **Shape** column on the left (**Cutoff** and **Reso** faders, with the modulated value
-marked), a centre panel with three tabs — each one window where you see the cutoff move — a right
-panel and a status line.
+marked), a centre panel with three tabs — each one graph, filling the panel, where you see the
+cutoff move — a right panel and a status line. The right panel's first tab follows the centre tab
+(**Filter**, **Envelope** or **LFO**, with that tab's controls); **Mod** and **Output** stay beside
+it. Right of the tabs: the live cutoff and its note on **Filter**, the events and the cutoff's reach
+on **Envelope**, the rate on **LFO** — and, when **Mod →** is **Reso** or **Both**, the resonance's
+reach too (**reso** … ±…). ⌥-click a control to type a value, double-click to reset it.
 
 ## Filter
 
@@ -33,27 +37,34 @@ panel and a status line.
 | **Freq** · **Reso** | Cutoff and resonance — or drag the response: sideways for the cutoff, up / down for the resonance, from where you grab it |
 | **Drive** | Pre-filter drive for colour |
 | Circuit | **Clean** or **Analog** (saturating) |
+| **Dry/Wet** · **Gain** | Blend and output trim |
+| **Mod →** | What the envelope and the LFO move: **Freq**, **Reso** or **Both** |
 
 ## Envelope
 
 <Shot id="devices/audio-effects/auto-filter/envelope" alt="Nota Auto Filter, Envelope tab with the cutoff over time" />
 
 An envelope follower: **Amount** (up or down), **Attack**, **Release** and **Hold** (a time, or
-infinite). It listens to the track itself or to a **key** — another track picked as the device's
-sidechain source. The window draws the cutoff over time.
+infinite). The **Sidechain key** switch at the bottom of the panel picks the key. It listens to the
+track itself or to a **key** — another track, or one pad, chain or voice of it, picked as the
+device's sidechain source. An event starts when the level rises through −24 dB (the onset threshold,
+shown right of the tabs). The window draws the cutoff over time.
 
 ## LFO
 
 <Shot id="devices/audio-effects/auto-filter/lfo" alt="Nota Auto Filter, LFO tab" />
 
 **Amount**, **Rate** (**Free** in Hz or synced to the tempo), wave — **Sine**, **Tri**, **Saw**,
-**Sqr**, **S&H** — with **Morph**, start offset, a stereo phase offset between the channels, and
-retrigger. The window draws two bars of it.
+**Sqr**, **S&H** — with **Morph**, **Phase** (start offset), **Smooth** (slews the movement), a
+**Stereo** phase offset between the channels, and **Retrig**. The window draws two bars of it.
 
-## Output
+## Mod and Output
 
-**→ Freq** / **→ Reso** — what the modulation moves: the cutoff, the resonance, or both. **Mod smooth** slews it,
-**Gain** trims, **Dry/Wet** blends.
+**Mod** sets what the modulation moves — **Freq**, **Reso** or **Both** — and the **Env** and
+**LFO** amounts, with **Gain** (on Filter) or **Mod smooth** (on Envelope and LFO; it slews the
+modulation) below them. Its **Cutoff** box shows the live cutoff, its note, and where the movement comes from. **Output** shows
+the in / out level and the live cutoff, with **Drive**, **Dry/Wet** and **Gain** (trims), **Retrig**,
+**Analog**, **Tempo sync** and **Stereo phase**.
 
 ## Presets
 
