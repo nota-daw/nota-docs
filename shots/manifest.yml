@@ -136,7 +136,7 @@ shots:
   - { id: devices/audio-effects/shutter/card, source: app, scene: device, args: {effect: 19} }
   - { id: devices/audio-effects/chamber/card, source: app, scene: device, args: {effect: 20} }
   - { id: devices/audio-effects/prism/card, source: app, scene: device, args: {effect: 21} }
-  - { id: devices/audio-effects/lens/card, source: app, scene: device, args: {effect: 22} }
+  - { id: devices/audio-effects/lens/card, source: app, scene: device, args: {effect: 22, clip: chords, live: 80} }
   - { id: devices/audio-effects/flanger/card, source: app, scene: device, args: {effect: 23} }
   - { id: devices/audio-effects/phaser/card, source: app, scene: device, args: {effect: 24} }
   - { id: devices/audio-effects/chorus/card, source: app, scene: device, args: {effect: 25} }
@@ -221,8 +221,8 @@ shots:
   - { id: devices/audio-effects/chamber/eq-mod, source: app, scene: device, args: {effect: 20, tab: "EQ \u00b7 Mod"} }
   - { id: devices/audio-effects/prism/band-detail, source: app, scene: device, args: {effect: 21, tab: "Band detail"} }
   - { id: devices/audio-effects/prism/time, source: app, scene: device, args: {effect: 21, tab: "Time"} }
-  - { id: devices/audio-effects/lens/scope, source: app, scene: device, args: {effect: 22, tab: "Scope"} }
-  - { id: devices/audio-effects/lens/waterfall, source: app, scene: device, args: {effect: 22, tab: "Waterfall"} }
+  - { id: devices/audio-effects/lens/scope, source: app, scene: device, args: {effect: 22, clip: chords, live: 80, tab: "Scope"} }
+  - { id: devices/audio-effects/lens/waterfall, source: app, scene: device, args: {effect: 22, clip: chords, live: 110, tab: "Waterfall"} }
   - { id: devices/midi-effects/arp/groove, source: app, scene: device, args: {midi: 0, tab: "Groove", instrument: 0} }
   - { id: devices/racks/drum-rack/mixer, source: app, scene: device, args: {instrument: 4, tab: "Mixer"} }
   - { id: devices/racks/drum-rack/macro, source: app, scene: device, args: {instrument: 4, tab: "Macro"} }

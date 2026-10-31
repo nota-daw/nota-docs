@@ -21,7 +21,7 @@ namespace NotaDocsShots;
 /// Every scene the manifest can ask for. A scene builds a window, renders it at 2× and saves
 /// the whole frame or a cropped control. Args come from the manifest entry's `args`.
 ///
-///   device    instrument | effect | midi (kind id), preset, tab, card (index in the chain),
+///   device    instrument | effect | midi (kind id), preset, tab, card (index in the chain), live (blocks played with the card open),
 ///             clip (a demo sample on an effect's track), sidechain + sidechainName (a demo sample on
 ///             a second track routed as the effect's key),
 ///             chainInstrument (an Instrument Rack's chain 1 instrument), trackName, window (click this text — a
@@ -214,6 +214,14 @@ public sealed class Scenes
             }
         view.RefreshSynthLive();
         Pump();
+        // `live`: keep the song playing with the card open, so views that read audio while they
+        // are shown (Lens) have something to draw; the transport stops after the shot.
+        bool live = shot.Int("live") is int lv && lv > 0;
+        if (live)
+        {
+            _engine.Play();
+            for (int k = 0; k < shot.Int("live"); k++) { _engine.RenderOffline(buf, 1024); view.RefreshSynthLive(); Pump(1); }
+        }
         if (shot.Str("window") is string open)
         {
             // Pop a device out (a rack chain's GUI button) and shoot its device window.
@@ -230,6 +238,7 @@ public sealed class Scenes
         var chain = view.GetVisualDescendants().OfType<StackPanel>().First(p => p.Orientation == Orientation.Horizontal && p.Children.Count > 0 && p.Bounds.Height > 200);
         var card = chain.Children[shot.Int("card") ?? 0];
         Save(win, shot.Id, card);
+        if (live) _engine.StopTransport();
         win.Close();
     }
 

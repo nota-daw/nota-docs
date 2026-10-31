@@ -17,31 +17,50 @@ master, to look at the spectrum, the waveform or how the sound evolves over time
 
 <Shot id="devices/audio-effects/lens/card" alt="Nota Lens, Spectrum view" />
 
-**Layout:** the **Scale** rail on the left, one large graph in the middle with three views, an
-**Analyze** / **Display** panel on the right and a status line.
+**Layout:** the **Scale** rail on the left, one graph in the middle that fills its panel, and the
+controls on the right. The middle has three views: **Spectrum**, **Scope** and **Waterfall**. The
+right panel has two tabs. The first is named after the view you're on and holds that view's
+controls; the second, **Display**, sets how the graph is drawn. Right of the view tabs sit a live
+reading, **Freeze** and the button that opens a bigger window. The reading gives the frequency, note
+and level under the pointer — on Spectrum also the FFT bin number; with the pointer away, the peak
+(Spectrum, Waterfall), the period with the peak-to-peak level and the RMS beside it (Scope) or the
+cursor measurement.
+
+| View | First right tab | Display |
+|---|---|---|
+| Spectrum | FFT, Window, Smooth, Decay, Tilt, Floor, Avg, Peak, Peak hold, Mid / Side | Source, Top, Range, Rate, Log freq, Note grid |
+| Scope | Sync, Cursors, Trig or Span, Edge, Level, Holdoff, Source, Key, Key gain, Layout | Afterglow, Persist, Traces, Bright, Rate, Mid / Side |
+| Waterfall | Speed, Window, FFT, Overlap, Avg, Gain, Floor, Contrast, Mid / Side | Source, Top, Range, Rate, Log freq, Note grid |
+
+With **Cursors** on, the Scope tab shows the cursor controls instead: A and B positions, **Snap to
+peaks**, **Re-arm** and **Export WAV**.
 
 ## Spectrum
 
 An FFT spectrum on a log frequency scale: **FFT** size and window, **Avg**, smoothing, decay, a
 **Tilt** (so a balanced mix looks flat), a floor, and **peak hold**. **Mid/Side** shows the mid or the
-side instead of left / right.
+side instead of left / right. Next to the graph's title: the FFT window length and the crest factor
+(**window** … ms · **crest** … dB).
 
 ## Scope
 
 <Shot id="devices/audio-effects/lens/scope" alt="Nota Lens, Scope view" />
 
 A triggered oscilloscope that behaves like a bench instrument: the trace is pinned to the trigger
-point and stands still, older passes fade (**Afterglow**). **Free** runs untriggered; a **Single**
-capture holds one sweep. **Cursors** A and B measure time and level between two points. **Export
-WAV** saves the captured window.
+point and stands still, older passes fade (**Afterglow**). **Trig** picks **Auto** (runs free when
+nothing triggers), **Normal** or **Single**, which holds one sweep until you press **Re-arm**.
+**Cursors** A and B measure time and level between two points; the reading gives Δt with its
+1/Δt in Hz and the note, and ΔV. **Export WAV** saves the captured window. Next to the graph's
+title: the capture state — **held**, **stable** or **free-run** — with the holdoff and the trigger
+edge.
 
 ### Tempo sync
 
-Turn on **Sync** above the scope to line it up with the song instead of a trigger. Pick a **Span**:
+Turn on **Sync** on the Scope tab to line it up with the song instead of a trigger. Pick a **Span**:
 ¼ beat, ½ beat, 1 beat, 2 beats, 1 bar, 2 bars or 4 bars (a bar follows the time signature). While
 the song plays, the scope shows that stretch of the beat grid: a 1 bar span starts on a bar line and
-ends on the next one. Beat lines are drawn across it, bar lines stronger, and the labels underneath
-give the bar and beat at each edge.
+ends on the next one. The **Trig** row turns into **Span** while Sync is on. Beat lines are drawn
+across it, bar lines stronger, and the labels underneath give the bar and beat at each edge.
 
 A sweep line follows the playhead. Left of it is the pass being drawn now; right of it, the previous
 pass fades out, so you always see a full span. This makes it easy to see whether a note's attack sits
@@ -54,11 +73,11 @@ on the beat or just after it, bar after bar.
 - Stopped, the scope rolls freely on a track that still sounds (an instrument you play, or a
   monitored input), with **free** in the corner. A stopped audio track is silent, so its scope keeps
   the last pass.
-- With Sync on, the time base and trigger knobs rest. **Freeze** holds both passes as they are.
+- With Sync on, Edge, Level and Holdoff rest. **Freeze** holds both passes as they are.
 
 ### Key overlay
 
-Lens takes a sidechain key, like the Compressor. In **Key** on the Analyze panel, pick another
+Lens takes a sidechain key, like the Compressor. In **Key** on the Scope tab, pick another
 track: its audio (after its effects) is drawn in teal over this track's trace, in the synced scope
 and in the triggered one, where it follows the same trigger and time base. The switch next to it
 hides the key's trace.
@@ -82,12 +101,15 @@ The window closes when you delete the device or open another project.
 <Shot id="devices/audio-effects/lens/waterfall" alt="Nota Lens, Waterfall view" />
 
 The spectrum over time, scrolling — see resonances ring, reverb tails decay and drum patterns repeat.
-**Contrast** and brightness set how much detail shows.
+**Contrast** and brightness set how much detail shows. Next to the graph's title: how much time one
+row covers.
 
 ## Common controls
 
-**Freeze** stops the display; **Source** picks what is analysed; the scale's top and range set the
-vertical view. The status line carries loudness and the measurements.
+**Freeze** (right of the view tabs) stops the display. **Source** picks what is analysed (on the
+Display tab for Spectrum and Waterfall, on the Scope tab for the scope). **Top** and **Range** on
+the Display tab set the vertical view; the two sliders on the Scale rail set them too, and on the
+scope they set volts and time per division. The status line carries loudness and the measurements.
 
 ## Presets
 
