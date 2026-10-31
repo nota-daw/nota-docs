@@ -3,13 +3,14 @@ title: "Shortcuts"
 description: "Settings ▸ Shortcuts — every keyboard shortcut and mouse gesture, grouped, with a filter."
 sidebar:
   order: 9
-updated: "0.50.1"
+updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
 ---
 
 import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
 
 <Shot id="preferences/shortcuts" alt="Settings ▸ Shortcuts" />
 
@@ -18,3 +19,16 @@ Tracks, Session, Piano roll, Play notes, Browser · preview, Gamepad and Mouse. 
 shortcuts** to find one.
 
 The same list, in full, is in [Keyboard shortcuts](../../reference/shortcuts/).
+
+## Velocity wheel
+
+At the top of the page, **Velocity wheel** sets how <Kbd>⇧</Kbd> + wheel changes the velocity of
+a note in the [piano roll](../../editing/piano-roll/#velocity):
+
+| Setting | What it does |
+|---|---|
+| **Direction** | **Wheel up lowers the velocity** — off by default, so wheel up raises it |
+| **Step** | How far one notch moves the velocity: **Off**, or 0.25× to 2× in steps of 0.25×. **1×** (the default) is one MIDI step per notch |
+
+With **Off**, <Kbd>⇧</Kbd> + wheel only scrolls, over notes too. The setting applies to every
+piano roll and is remembered.
