@@ -3,7 +3,7 @@ title: Audio clips and warp
 description: Editing audio clips — trimming, gain, pitch, reverse, warping to the tempo with markers, volume and pan envelopes, and the clip ADSR.
 sidebar:
   order: 2
-updated: "0.56.1"
+updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.App/AudioClipEditorView.cs
@@ -47,7 +47,9 @@ in **Auto** they get finer as you zoom in. Hold <Kbd>⌥</Kbd> while dragging to
 freely. An unwarped clip has no beat grid, so in **Sample** nothing snaps until you turn on
 **Warp** — the hint under the waveform says so.
 
-The **Sample** tab shows the waveform with the part of the file the clip plays. Its ruler reads
+The **Sample** tab shows the waveform with the part of the file the clip plays. It always draws the
+**Smooth** style — an outline of the peaks around a body that follows the loudness — whatever
+**Waveform** is set to in [Settings ▸ Appearance](../../preferences/appearance/#waveform). Its ruler reads
 where each moment plays in the Arrangement — in bars, or in time while the transport's position
 readout shows time. Click or drag the ruler, or drag the playhead line, to move the playhead
 there (on the grid on a warped clip; hold <Kbd>⌥</Kbd> to place it freely). The playhead shows
