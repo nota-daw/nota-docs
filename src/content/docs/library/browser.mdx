@@ -1,12 +1,13 @@
 ---
 title: "The browser"
-description: "The browser's tabs — instruments, effects, files, presets, projects, MIDI map and history — searching, favourites and tags, and dragging things into the project."
+description: "The browser's tabs — instruments, effects, files, presets, projects, MIDI map, history and the track inspector — searching, favourites and tags, and dragging things into the project."
 sidebar:
   order: 1
-updated: "0.56.1"
+updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.App/BrowserView.cs
+  - src/managed/Nota.App/TrackInspectorView.cs
   - src/managed/Nota.App/MainWindow.Browser.cs
   - src/managed/Nota.App/MainWindow.Files.cs
   - src/managed/Nota.App/MainWindow.Dnd.cs
@@ -37,6 +38,29 @@ browser**).
 | **Projects** | The projects in your projects folder — open, reveal (**Reveal in Finder** on macOS, **Show in Explorer** on Windows, **Show in file manager** on Linux) or delete |
 | **MIDI map** | Every control mapped to a controller, gamepad or phone — see [MIDI Learn](../../control/midi-learn/) |
 | **History** | The open project's [versions](../../basics/version-history/) |
+| **Track inspector** | The selected track's settings in one place — see below |
+
+## Track inspector
+
+The last icon on the rail, set apart by a hairline, opens the **Track inspector**. It shows the
+track the Devices panel shows: select a track and it follows. With nothing selected it reads
+**No track selected**. It gathers what you would otherwise reach from the track's right-click
+menu; the menu keeps all its entries.
+
+| Section | What it does |
+|---|---|
+| **Name** | Type to rename; <Kbd>Enter</Kbd> or clicking away keeps it, <Kbd>Esc</Kbd> puts the old name back. An empty name returns the track to its automatic one |
+| **Mute**, **Solo**, **Arm** | The header's buttons. A return has only **Mute**; a group has **Mute** and **Solo** |
+| **Input** | On an audio track, **Record input** (a hardware input, the master, another track or a return) and **Monitor input** (**On** / **Off**; not available while the master is the input). On an instrument track, **MIDI from** |
+| **Color** | The track palette — nine families in a base, a light and a dark shade — and **Auto** |
+| **Height** | **Compact**, **Standard** or **Large**. Not shown for a return |
+| **Freeze** | The track menu's freeze commands as buttons — **Freeze track**, **Live freeze**, **Unfreeze track**, **Flatten to audio track**, and on a live-freeze link **Edit source**, **Done — re-freeze**, **Discard edits** and **Flatten (remove source)**. Audio and instrument tracks only |
+
+Every control does what the header and the menu do, so undo, exclusive arming and the
+master-can't-be-monitored rule behave the same. The tab picks up changes made anywhere else — the
+header, the menu, undo — within a moment. A return shows its name, **Mute** and colour; the
+master shows only its name. Volume, pan, sends and output stay in the track header and the
+[Mixer](../../views/mixer/). The tab has no search box.
 
 ## Searching
 
