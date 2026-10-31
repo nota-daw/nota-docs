@@ -22,8 +22,9 @@ controls on the right. The middle has three views: **Spectrum**, **Scope** and *
 right panel has two tabs. The first is named after the view you're on and holds that view's
 controls; the second, **Display**, sets how the graph is drawn. Right of the view tabs sit a live
 reading, **Freeze** and the button that opens a bigger window. The reading gives the frequency, note
-and level under the pointer; with the pointer away, the peak (Spectrum, Waterfall), the period and
-level (Scope) or the cursor measurement.
+and level under the pointer — on Spectrum also the FFT bin number; with the pointer away, the peak
+(Spectrum, Waterfall), the period with the peak-to-peak level and the RMS beside it (Scope) or the
+cursor measurement.
 
 | View | First right tab | Display |
 |---|---|---|
@@ -38,7 +39,8 @@ peaks**, **Re-arm** and **Export WAV**.
 
 An FFT spectrum on a log frequency scale: **FFT** size and window, **Avg**, smoothing, decay, a
 **Tilt** (so a balanced mix looks flat), a floor, and **peak hold**. **Mid/Side** shows the mid or the
-side instead of left / right.
+side instead of left / right. Next to the graph's title: the FFT window length and the crest factor
+(**window** … ms · **crest** … dB).
 
 ## Scope
 
@@ -47,8 +49,10 @@ side instead of left / right.
 A triggered oscilloscope that behaves like a bench instrument: the trace is pinned to the trigger
 point and stands still, older passes fade (**Afterglow**). **Trig** picks **Auto** (runs free when
 nothing triggers), **Normal** or **Single**, which holds one sweep until you press **Re-arm**.
-**Cursors** A and B measure time and level between two points. **Export WAV** saves the captured
-window.
+**Cursors** A and B measure time and level between two points; the reading gives Δt with its
+1/Δt in Hz and the note, and ΔV. **Export WAV** saves the captured window. Next to the graph's
+title: the capture state — **held**, **stable** or **free-run** — with the holdoff and the trigger
+edge.
 
 ### Tempo sync
 
@@ -97,7 +101,8 @@ The window closes when you delete the device or open another project.
 <Shot id="devices/audio-effects/lens/waterfall" alt="Nota Lens, Waterfall view" />
 
 The spectrum over time, scrolling — see resonances ring, reverb tails decay and drum patterns repeat.
-**Contrast** and brightness set how much detail shows.
+**Contrast** and brightness set how much detail shows. Next to the graph's title: how much time one
+row covers.
 
 ## Common controls
 
