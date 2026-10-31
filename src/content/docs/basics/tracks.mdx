@@ -3,7 +3,7 @@ title: Tracks
 description: Instrument, audio, return and group tracks — adding, selecting, colouring, grouping, routing and freezing them.
 sidebar:
   order: 4
-updated: "0.56.1"
+updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.Infrastructure/Persistence/ProjectTemplate.cs
@@ -103,6 +103,10 @@ and position (**Audio · 3**); on a selection it reads **3 tracks**.
 
 Commands that show a current choice — **Record input**, **MIDI from** — print it on the
 right, so you can read it without opening the submenu. **Delete** is always last, in red.
+
+The browser's [Track inspector](../../library/browser/#track-inspector) tab shows the same
+settings — name, colour, height, input and freeze, plus mute, solo and arm — for the selected
+track, without opening a menu.
 
 ## Groups
 
