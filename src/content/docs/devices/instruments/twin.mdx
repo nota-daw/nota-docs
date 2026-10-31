@@ -1,0 +1,184 @@
+---
+title: "Nota Twin"
+description: "A morphing analog poly for up to 12 voices: every control has a side A and a side B, and Morph sweeps the whole sound between them. Expression per note, a 64-route matrix, effects, a sequencer and arpeggiator, and Split / Layer."
+sidebar:
+  order: 17
+updated: "0.58.1"
+since: "0.58.1"
+status: done
+sources:
+  - src/native/nota.engine/src/devices/instruments/Twin.h
+  - src/managed/Nota.App/DeviceCards/Instruments/TwinInstrumentCard.cs
+  - src/managed/Nota.Infrastructure/Persistence/FactoryPresetCatalog.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Twin is a polyphonic analog synth built around one idea: **two sounds in one patch**. Every
+sound control has a **side A** and a **side B**, and the **Morph** knob moves the whole sound from
+one to the other — oscillators, filters, envelopes, effects and the depth of every modulation
+route. Turn it slowly for an evolving pad, route it to pressure so each note morphs on its own, or
+let the sequencer sweep it step by step.
+
+<Shot id="devices/instruments/twin/card" alt="Nota Twin, Osc tab" />
+
+**Signal flow per voice:** Osc 1 + Osc 2 + noise → the **Multimode** filter and the **Ladder** filter
+(in series, in parallel or in between) → drive → amp. After the voices, each part has its own
+effects: Mod FX → Delay → Reverb.
+
+## Side A, side B and Morph
+
+The **Morph** knob on the left is on screen on every tab. Under it, the strip shows where the sound
+is now: the part as a bar, every sounding voice as a dot. **Edit A / B** picks the side the knobs
+change — and so the side that automation and MIDI learn write to. An automation lane says which
+side it drives: **Lower B · Ladder Cutoff**.
+
+Each knob also shows the other side: a tick outside its groove marks the other side's value, and
+while Morph sits between the two a dot marks the value you hear. Hover a knob for **A · B · now**.
+
+- **A → B** and **B → A** copy one side onto the other, **Swap** exchanges them; each is one undo
+  step.
+- Stepped controls (a filter mode, a slope, the voice mode) switch halfway through the morph.
+- Side B starts as a copy of side A, so a new patch doesn't change as you morph until you edit B.
+
+## Osc
+
+Two oscillators, each with **Wave** (triangle → saw → square, every shape in between), **Width**,
+**Metal** (a wavefolder for bright, metallic tones), **Level**, **Coarse** and **Fine**, and a
+**To filter** slider from *multi* to *ladder*: how much of it goes to each filter. Osc 2 adds **Sync** (Osc 2
+follows Osc 1), **Low** (a slow modulator instead of a pitch), **FM 1** (Osc 2 into Osc 1's pitch)
+and **FM cut** (Osc 2 into the multimode cutoff). **Noise** has its own level, colour and filter
+balance.
+
+## Filter
+
+<Shot id="devices/instruments/twin/filter" alt="Nota Twin, Filter tab" />
+
+The **Multimode** filter (low-pass, band-pass, high-pass and notch in between, in the Steiner
+style; **Mode** is a slider across LP · BP · HP · notch) and the **Ladder** (12 or 24 dB, chosen in
+its header; self-oscillating at high **Resonance**), each with **Cutoff**, envelope amount and
+keytracking. **Route** slides from series (multimode into ladder) to parallel, and its diagram
+shows the path. **Response** draws both filters and the combined curve. **Brute** feeds the output back into the filters for growl; **Drive** saturates them.
+
+## Env and LFO
+
+Three envelopes — **Filter env**, **Amp env** and **Mod env** (with **Delay** and **Loop**) — drawn
+as graphs: drag the handles, or ⌥-click one to type its value. Under each graph, the **Attack**,
+**Decay**, **Sustain** and **Release** values can be dragged too. **Velocity** sets how much the
+velocity moves each; **Curve** bends the shape.
+
+Three LFOs with six shapes (**Sine**, **Tri**, **Saw**, **Square**, **S&H**, **Smooth**), free or
+tempo-synced, per voice or one for the whole part (**Voice** / **Global**), with fade-in.
+**Vibrato** is LFO 1 on the pitch, opened by the mod wheel.
+
+## Matrix
+
+<Shot id="devices/instruments/twin/matrix" alt="Nota Twin, Matrix tab" />
+
+Up to **64 routes** per part. A route is a source, a destination and a **depth on each side**, so
+the depth morphs too. **+ Route** adds one; click a source or destination to change it, × removes
+it.
+
+- **Sources:** LFO 1–3, the three envelopes, velocity, release velocity (from a MIDI note-off),
+  key, pressure, slide, bend, the mod and pitch wheels, **Pad X / Y / Z**, Random (a new value
+  per note) and **Macro 1–8**.
+- **Destinations:** Morph, pitch (both oscillators or one), vibrato, or any sound control.
+
+A new patch starts with the expression routes: pressure and slide open the filters, **Pad X** moves
+the multimode cutoff, **Pad Y** the Morph. Change or remove them like any other route. The eight
+**Macros** beside the table are knobs to automate or map to a controller.
+
+## Expression
+
+Nota Twin plays per note: with a poly-aftertouch keyboard or an MPE controller, pressure, slide and
+per-note bend move only the note you touch. Route pressure to **Morph** and each note morphs on its
+own. The **Pad** on the Voice tab is a mouse-playable X · Y pad with a Z (pressure) ring; the
+pitch-bend range (**Bend range**, ±2 to ±24) is on the same tab.
+
+## FX
+
+**Mod FX** (**Chorus**, **Flanger**, **Phaser** or **Ensemble**), **Delay** (free or synced, ping-pong)
+and **Reverb**, each with its own **On**; an effect that is off greys out. They morph with the rest
+of the sound. **All** · **On** switches all three off when you would rather use Nota's effect
+devices.
+
+## Seq
+
+<Shot id="devices/instruments/twin/seq" alt="Nota Twin, Seq tab with a pattern" />
+
+In the **Sequencer** header, turn **On** and pick **Seq** or **Arp**. Both follow the transport.
+
+**Seq** plays one of 8 patterns of up to 64 steps. A step holds up to six notes, a velocity and a
+gate — or a tie into the next step. Click a step to select it; drag its bar up or down for the
+velocity and the bar along the bottom sideways for the gate (past the edge it ties into the next
+step). **Rest** clears the selected step. Set the **Pattern**, its length, the step **Rate** and **Swing**. With **Transpose** on,
+the key you hold moves the pattern (**Latch** keeps it moved); otherwise the keys you play sound
+with it.
+
+- **Record** — step record: play a chord, lift it, and it lands on the next step.
+- **Lane 1–4** — motion lanes: each sets one control step by step (the Morph, the pad's X, Y or Z,
+  or any sound control).
+  **Rec motion** records the knob as the pattern passes; **Smooth** glides between steps.
+- **To clip** writes the pattern as a MIDI clip at the playhead's bar and switches the sequencer off.
+
+**Arp** plays the keys you hold: **Up**, **Down**, **Up/down**, **Random**, **As played** or **Chord**,
+over 1–4 **Octaves**, with **Gate**, **Swing** and **Hold**.
+
+The patterns are saved with the project and in presets, and each pattern edit is one undo step.
+
+## Voice
+
+**Poly**, **Mono**, **Legato** or **Unison** (with **Detune**), the number of **Voices** (4–12),
+**Glide**, stereo **Spread** (by voice, by key or across the unison stack) and **Drift** — each
+voice slightly different, the same way every time you render.
+
+## Split and Layer
+
+<Shot id="devices/instruments/twin/split" alt="Nota Twin in Split, Voice tab" />
+
+Nota Twin has two parts, **Lower** and **Upper**, each a full Twin sound with its own sides, Morph,
+matrix and effects. Pick the layout at the right of the tab row:
+
+- **Single** — one sound, all the voices.
+- **Layer** — both parts play every key.
+- **Split** — keys below the split point play Lower, the rest play Upper.
+
+In Layer and Split, **Lower / Upper** picks the part every tab edits. On the Voice tab, the
+**Lower part** / **Upper part** section holds its **Volume**, **Pan** and **Octave**, the **Split**
+key (**Learn**: play a key to set it) and the share of the **Voices** (2 + 10 to 10 + 2). On the Seq tab, **Plays** sends the
+sequencer or the arpeggiator to Lower, Upper or both.
+
+**Parts**, in the header of the Voice tab's **Output** (or part) section, copies Lower onto Upper
+or back, swaps them, or loads a factory preset or one of your saved Twin presets into one part.
+Loading into Upper of a Single patch turns it into a Layer with the current sound as Lower.
+
+## Build a morphing pad from Init
+
+A two-sided pad in a few minutes, with the card only:
+
+1. Add Nota Twin, choose **Init** in the preset list and hold a chord.
+2. **Env** tab: drag the **Amp env** attack and release handles out — about 1 s attack, 2 s release.
+3. **Osc** tab: turn Osc 2's **Level** up and its **Fine** a little off centre for movement.
+4. **Filter** tab: bring the **Ladder** **Cutoff** down to a warm, dark sound.
+5. Switch **Edit** to **B**. Move both oscillators' **Wave** toward square, open the **Ladder**
+   **Cutoff** and raise its **Resonance**; on the **FX** tab turn **Reverb** **On**.
+6. Turn **Morph** slowly from 0 to 100 % — the pad travels from dark and soft to bright and
+   wide. Automate Morph, or map it to the mod wheel on the **Matrix** tab (**Mod wheel** →
+   **Morph**), to play the journey.
+
+## Presets
+
+57 factory presets in 11 folders: pads (**Warm Two-Filter Pad**, **Slow Bloom**, **Dream Morph
+Pad**), keys (**Twin EP**, **Clav Funk**, **Drawbar Organ**), brass, bass (**Steiner Bass**, **Acid
+Ladder**), leads (**Pressure Lead**, **Filter FM Scream**), plucks, strings (**String Machine**,
+**Morphing Strings**), FX, sequences and arpeggios (**Berlin Bass Seq**, **Morph Sequence**, **Arp
+Random Bells**), morphs that show the idea off (**Day to Night**, **Glass to Grit**, **Velocity
+Morph**, **Wheel Morph**) and Split & Layer setups (**Bass + Pad Split**, **Keys + Strings Layer**,
+**Arp Bass + Pad Split**). A preset with a sequence plays it when you preview it in the browser.
+
+## Sizes, AI control
+
+**L** shows every tab; **S** keeps Morph, the A / B switch, the pad and four knobs. Over MCP an AI
+can read the patch with both sides (`read_twin`), set a side (`set_twin_morph_side`), copy sides or
+parts (`copy_twin_side`, `copy_twin_part`), add routes by name (`set_twin_route`) and read, write
+or bounce patterns (`get_twin_pattern`, `set_twin_pattern`, `twin_pattern_to_clip`).

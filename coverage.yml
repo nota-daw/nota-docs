@@ -140,6 +140,7 @@ sections:
       - {kind: 15, name: Nota Consort,   page: devices/instruments/consort,   engine: Consort.h,        card: ConsortInstrumentCard.cs,   mockup: Nota Consort.html, status: done}
       - {kind: 16, name: Nota Keys,      page: devices/instruments/keys,      engine: Keys.h,           card: KeysInstrumentCard.cs,      mockup: Nota Keys.html, status: done}
       - {kind: 17, name: Nota Mosaic,    page: devices/instruments/mosaic,    engine: Mosaic.h,         card: MosaicInstrumentCard.cs,    mockup: Nota Mosaic.html, status: done}
+      - {kind: 18, name: Nota Twin,      page: devices/instruments/twin,      engine: Twin.h,           card: TwinInstrumentCard.cs, status: done}   # no mockup
     # Audio effects — engine builtinKind() id. Card: src/managed/Nota.App/DeviceCards/Bodies/<X>DeviceBody.cs
     audio-effects:
       - {kind: 0,  name: Nota EQ-8,         page: devices/audio-effects/eq-8,         engine: Eq.h,         card: EqDeviceBody.cs,         mockup: Nota EQ-8.html, status: done}

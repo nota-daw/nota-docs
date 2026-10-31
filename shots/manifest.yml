@@ -113,6 +113,7 @@ shots:
   - { id: devices/instruments/consort/card, source: app, scene: device, args: {instrument: 15} }
   - { id: devices/instruments/keys/card, source: app, scene: device, args: {instrument: 16} }
   - { id: devices/instruments/mosaic/card, source: app, scene: device, args: {instrument: 17, preset: "mosaic/Felt Piano"} }
+  - { id: devices/instruments/twin/card, source: app, scene: device, args: {instrument: 18, preset: "twin/Warm Two-Filter Pad"} }
 
   # ── Audio effects
   - { id: devices/audio-effects/eq-8/card, source: app, scene: device, args: {effect: 0} }
@@ -191,6 +192,10 @@ shots:
   - { id: devices/instruments/pentad/poly-mod, source: app, scene: device, args: {instrument: 14, tab: "Poly Mod"} }
   - { id: devices/instruments/consort/filters-env, source: app, scene: device, args: {instrument: 15, tab: "Filters \u00b7 Env"} }
   - { id: devices/instruments/consort/seq, source: app, scene: device, args: {instrument: 15, tab: "Seq"} }
+  - { id: devices/instruments/twin/filter, source: app, scene: device, args: {instrument: 18, preset: "twin/Warm Two-Filter Pad", tab: "Filter"} }
+  - { id: devices/instruments/twin/matrix, source: app, scene: device, args: {instrument: 18, preset: "twin/Wheel Morph", tab: "Matrix"} }
+  - { id: devices/instruments/twin/seq, source: app, scene: device, args: {instrument: 18, preset: "twin/Morph Sequence", tab: "Seq"} }
+  - { id: devices/instruments/twin/split, source: app, scene: device, args: {instrument: 18, preset: "twin/Bass + Pad Split", tab: "Voice"} }
   - { id: devices/instruments/consort/patch, source: app, scene: device, args: {instrument: 15, tab: "Patch"} }
   - { id: devices/instruments/keys/clav, source: app, scene: device, args: {instrument: 16, tab: "Clav"} }
   - { id: devices/instruments/keys/fx, source: app, scene: device, args: {instrument: 16, tab: "FX"} }
