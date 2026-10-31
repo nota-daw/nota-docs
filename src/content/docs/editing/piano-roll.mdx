@@ -17,6 +17,7 @@ sources:
   - src/managed/Nota.App/MidiToolsView.cs
   - src/managed/Nota.App/PianoRollView.ClipStrip.cs
   - src/managed/Nota.Application/Editing/ClipSet.cs
+  - src/managed/Nota.Application/Editing/NotePlacementDrag.cs
   - src/managed/Nota.Application/Midi/MidiToolCatalog.cs
   - src/managed/Nota.Application/Midi/MidiGenerators.cs
   - src/managed/Nota.Application/Midi/MidiTransforms.cs
@@ -36,6 +37,9 @@ tab of the panel at the bottom.
 | Do this | To |
 |---|---|
 | Double-click empty grid | Add a note, with the length and velocity of the note you last clicked, moved, resized or changed the velocity of |
+| Double-click empty grid, keep the button down and drag | Move the new note, in time and pitch |
+| … and hold <Kbd>⇧</Kbd> | Set its length — the end follows the pointer |
+| … and hold <Kbd>⌘</Kbd> | Set its velocity — drag up for louder, down for quieter |
 | Double-click a note | Delete it |
 | Drag a note | Move it in time and pitch |
 | Drag with <Kbd>⌥</Kbd> | Ignore the grid for this drag |
@@ -50,6 +54,15 @@ tab of the panel at the bottom.
 | <Kbd>Delete</Kbd> | Delete the selected notes |
 | Click the ruler · drag along it | Move the playhead there · scrub, snapped to the grid (<Kbd>⌥</Kbd> — freely) |
 | Drag the playhead line | Scrub, on the ruler or over empty grid — a click on it stays a click |
+
+Drag right after the double-click that adds a note and the note is shaped in the same gesture,
+without letting go. Nota reads <Kbd>⇧</Kbd> and <Kbd>⌘</Kbd> as you drag, so you can switch
+between moving, lengthening and setting velocity mid-drag; the note carries on from where it is, and
+<Kbd>⌘</Kbd> wins if both are held. Moving and lengthening follow the grid, and <Kbd>⌥</Kbd> ignores it.
+Velocity changes one MIDI step per 2 pixels, from 1 to 127. Let go without moving and you get a plain
+new note. The shaped note counts as the one you last touched, so the next note you add takes its
+length and velocity. In a clip in the Arrangement, adding and shaping the note is one undo step; in a
+Session slot, the drag is a second step.
 
 Edits play straight away — drag a note while the loop runs and you hear it move. The playhead
 shows in the piano roll whether the transport is playing or stopped, so you can see where
