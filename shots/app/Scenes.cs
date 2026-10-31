@@ -216,7 +216,8 @@ public sealed class Scenes
         Pump();
         view.RefreshSynthLive();
         Pump();
-        // `tab` clicks one control by its text, or a chain of them: "L>Filter".
+        // `tab` clicks one control by its text, or a chain of them: "L>Filter". When the text shows
+        // more than once, "Mod#2" picks the second (in the window's visual order).
         if (shot.Str("tab") is string tab)
             foreach (var part in tab.Split('>', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries))
             {
@@ -688,11 +689,14 @@ public sealed class Scenes
 
     private static readonly Avalonia.Input.Pointer Mouse = new(1, PointerType.Mouse, true);
 
-    /// <summary>Click the control that shows <paramref name="text"/> — a tab, segment or button.</summary>
+    /// <summary>Click the control that shows <paramref name="text"/> — a tab, segment or button.
+    /// "text#n" clicks the n-th control showing that text, for a label that also shows elsewhere.</summary>
     private static void ClickText(Window win, string text)
     {
-        var tb = win.GetVisualDescendants().OfType<TextBlock>().FirstOrDefault(x => x.Text == text)
-                 ?? throw new ArgumentException($"no '{text}' on screen");
+        int nth = 1, hash = text.LastIndexOf('#');
+        if (hash > 0 && int.TryParse(text[(hash + 1)..], out int n) && n >= 1) { nth = n; text = text[..hash]; }
+        var tb = win.GetVisualDescendants().OfType<TextBlock>().Where(x => x.Text == text).Skip(nth - 1).FirstOrDefault()
+                 ?? throw new ArgumentException($"no '{text}' #{nth} on screen");
         // A button (tab segments, Downloads' switch) takes a Click; anything else a pointer press.
         if (tb.GetVisualAncestors().OfType<Button>().FirstOrDefault() is { } button)
         {
