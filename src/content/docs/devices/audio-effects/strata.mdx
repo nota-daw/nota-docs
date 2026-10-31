@@ -3,10 +3,10 @@ title: "Nota Strata"
 description: "Multi-layer looper — record a loop, overdub new layers, each with its own waveform, level and mute; quantized to the bar, with feedback, speed, reverse and undo."
 sidebar:
   order: 16
-updated: "0.50.1"
+updated: "0.57.1"
 status: done
 sources:
-  - src/native/nota.engine/src/Strata.h
+  - src/native/nota.engine/src/devices/effects/Strata.h
   - src/managed/Nota.App/DeviceCards/Bodies/StrataDeviceBody.cs
 ---
 
@@ -16,25 +16,32 @@ Nota Strata is a looper on a track: record a phrase, then keep layering over it.
 one-buffer looper, every pass is its own **layer** — with its waveform, level and mute — so you can
 pull a layer out later.
 
-<Shot id="devices/audio-effects/strata/card" alt="Nota Strata with the live strip and the layer list" />
+<Shot id="devices/audio-effects/strata/card" alt="Nota Strata with the transport and the layer list" />
 
-## The live strip
+## Transport
 
-A big bar.beat counter, a strip that fills as the loop runs, and four actions — each captioned with
-what it will do next:
+A bar.beat counter, a strip with a tick per beat that fills as the loop runs, and four actions. The
+strip is there before the first loop too, unlit until the loop closes. Each one is
+captioned with what it will do if you press it now; one that would do nothing is dimmed.
 
-| Action | What it does |
-|---|---|
-| **Record** | The first pass sets the loop length |
-| **Overdub** | Each later pass records a fresh layer on top |
-| **Play** | Plays the loop |
-| **Stop** | Stops it |
+| Action | Empty | First pass | Loop running |
+|---|---|---|---|
+| **Record** | Starts the first pass | Closes the loop and plays it | Records a new layer from the loop's top |
+| **Overdub** | Starts the first pass | Closes the loop and records layer 2 straight away | Records a new layer from the next quantize step |
+| **Play** | — | Closes the loop and plays it | Plays every layer; from Stop, starts at the top |
+| **Stop** | — | Closes the loop and stops | Stops at the next quantize step and returns to the top |
 
-Actions happen on the loop's own bar grid (**Quantize**), so a late press still lands in time.
+**Quantize** sets that step: **Off** acts at once, **Bar** on the next bar, **1/4** on the next
+beat. On the first pass the step is the song's grid, so the loop comes out a whole number of bars
+(or beats). A press that is waiting for its step shows **waiting…** under the action.
 
 ## Layers
 
-Every pass, listed: its number, name, waveform, state (**Play**, **Muted**, **Rec**), level and mute.
+Every pass, listed: its number, name, waveform, state (**Play**, **Muted**, **Rec**), level and
+mute. Each layer draws in its own shade of grey, the newest brightest; the layer being recorded
+draws in red and fills as it is recorded; older layers draw dimmer, as Feedback sinks them. Above
+the list, **n of 8 · one cycle shown** counts the layers. Drag a level bar to set it, double-click it for 0 dB, or double-click the
+number to type a value. All eight layers fit in the list.
 
 ## Loop
 
@@ -43,10 +50,10 @@ Every pass, listed: its number, name, waveform, state (**Play**, **Muted**, **Re
 | **Feedback** | How much the layers already laid down fade on each pass |
 | **Input gain** | Level of what's recorded |
 | **Speed** · **Reverse** | Play the loop faster or slower, or backwards |
-| **Quantize** | The grid actions snap to |
-| **Count-in 1 bar** | A bar of count-in before the first Record |
-| **Set tempo from loop** | Makes the project tempo match the first loop |
-| **Undo** · **Export** · **Clear** | Remove the last layer · export the loop as audio · start over |
+| **Quantize** | The step actions wait for |
+| **Count-in 1 bar** | The first Record counts in one bar (the counter shows the beats left) before it records. Stop cancels the count-in |
+| **Set tempo from loop** | When the first loop closes, the song tempo changes so the loop is a whole number of bars |
+| **Undo** · **Export** · **Clear** | Remove the last layer · write the loop as you hear it (every unmuted layer at its level) to a WAV file · start over |
 
 The recorded layers are saved with the project.
 

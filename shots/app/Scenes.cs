@@ -25,7 +25,8 @@ namespace NotaDocsShots;
 ///             clip (a demo sample on an effect's track), sidechain + sidechainName (a demo sample on
 ///             a second track routed as the effect's key),
 ///             chainInstrument (an Instrument Rack's chain 1 instrument), trackName, window (click this text — a
-///             chain's GUI — and shoot the device window it opens)
+///             chain's GUI — and shoot the device window it opens), strata (a scripted take on a Strata
+///             looper; strataMute mutes its layer 1)
 ///   main      view (arrangement | session | modular), select (track name), clip (track name,
 ///             + clipIndex, audio: true for an audio clip) to open in the clip editor, with ("Track:clipIndex,…" —
 ///             more MIDI clips selected with it, so they open together), automation, tab (browser tab index),
@@ -189,6 +190,23 @@ public sealed class Scenes
         var buf = new float[1024 * 2];
         for (int k = 0; k < 40; k++) _engine.RenderOffline(buf, 1024);
         _engine.StopTransport();
+        // `strata`: a take on a looper (Quantize Off while it records) — two bars on the first
+        // pass, a full overdub, then halfway through a third pass, so one layer is still recording.
+        // `strataMute` mutes layer 1; layer 2 sits at −3.5 dB.
+        if (shot.Str("strata") is not null)
+        {
+            void Blocks(int n) { for (int k = 0; k < n; k++) _engine.RenderOffline(buf, 1024); }
+            _engine.DeviceSetParam(track, deviceIndex, 3, 0f);
+            _engine.Seek(0); _engine.Play();
+            _engine.DeviceAction(track, deviceIndex, 0, 0, 0); Blocks(173);   // Record: the first pass
+            _engine.DeviceAction(track, deviceIndex, 2, 0, 0); Blocks(2);     // Play: close the loop
+            _engine.Seek(0); _engine.DeviceAction(track, deviceIndex, 1, 0, 0); Blocks(174);   // Overdub: layer 2
+            _engine.Seek(0); _engine.DeviceAction(track, deviceIndex, 1, 0, 0); Blocks(80);    // Overdub: layer 3, half way
+            if (shot.Str("strataMute") is not null) _engine.DeviceAction(track, deviceIndex, 6, 0, 1f);
+            _engine.DeviceAction(track, deviceIndex, 7, 1, -3.5f);
+            _engine.DeviceSetParam(track, deviceIndex, 3, 1f);
+            Blocks(4);
+        }
 
         var view = new DeviceChainView(_engine, _presets, null, Kits);
         // An instrument preset names itself in the card's picker, as when the app applies it.
