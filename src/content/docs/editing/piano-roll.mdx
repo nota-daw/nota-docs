@@ -12,6 +12,7 @@ sources:
   - src/managed/Nota.App/PianoRollView.Fold.cs
   - src/managed/Nota.Presentation/PianoRowMap.cs
   - src/managed/Nota.App/ClipEditorView.cs
+  - src/managed/Nota.App/ClipPropsView.cs
   - src/managed/Nota.App/MainWindow.Detail.cs
   - src/managed/Nota.App/ClipEditorKit.cs
   - src/managed/Nota.App/MidiToolsView.cs
@@ -131,6 +132,34 @@ are quieter but just as editable.
 - <Kbd>⌘ D</Kbd> copies that run past a clip's end carry on into the next open clip;
   copies with no clip to land in are left out.
 
+## Track mode
+
+To work on a whole part instead of picking clips, switch the editor to **Track** mode. The
+**Clip | Track** switch is at the top of the **Clip** section in the left column (arrangement
+clips only — a Session slot has no switch), and the command palette has **Toggle clip editor
+track mode**.
+
+In **Track** mode the editor opens every MIDI clip on the clip's track, laid on the
+Arrangement's own bars from bar 1 — so a bass line spread over a dozen clips scrolls as one
+piece. The clip strip under the ruler marks where each clip begins and ends. Editing is the
+same as with [several clips at once](#several-clips-at-once): notes move over the seams, a
+rubber band can span clips, locked **reference** clips stay read-only, and one undo reverts the
+whole edit. Even a track with a single clip uses the Arrangement's bars here.
+
+- Double-click a MIDI clip, or select one, and its track opens with that clip **active** and
+  scrolled into view. If the track is already open, the editor isn't rebuilt: the clip just
+  becomes active. Select a clip on another track and that track opens instead.
+- Clips you draw, paste or record on the track join the editor. Split a clip (<Kbd>⌘ E</Kbd>,
+  **Split here**, or a split over a time range) and both halves stay open — you keep your zoom,
+  scroll and note selection, and the active clip is the one still starting at the same bar.
+  Locked **reference** clips stay locked where the clip hasn't moved.
+- A gap between clips is not part of any clip, so drawing there does nothing — the same as with
+  several clips.
+- **Edit selected clips together** leaves **Track** mode and opens just the clips you selected.
+
+Switching reopens the editor on the active clip: **Clip** shows that clip alone. The status bar
+says which mode you're in, and Nota remembers it between sessions — **Clip** is the default.
+
 ## Zoom
 
 | Do this | To |
@@ -153,7 +182,8 @@ standard row height, centred on its notes.
 
 ## The left column
 
-- **Clip** — **Start** and **Length**, and **Loop** with the loop length.
+- **Clip** — the **Clip | Track** switch (see [Track mode](#track-mode)), **Start** and
+  **Length**, and **Loop** with the loop length.
 - **Quantize** — its own step (1/32 to 1/2, triplets too; 1/16 by default), which doesn't
   change with the zoom. **Quantize** pulls the notes onto it, as far as **Strength** says —
   100 % is rigid, less keeps some of the feel. The clip tools use the same step.
