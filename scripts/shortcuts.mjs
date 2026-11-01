@@ -19,8 +19,10 @@ const block = src.slice(start, end);
 
 const unescape = (s) => s.replace(/\\u([0-9a-fA-F]{4})/g, (_, h) => String.fromCharCode(parseInt(h, 16))).replace(/\\"/g, '"');
 const groups = [];
-for (const g of block.matchAll(/\("([A-Z][^"]*)",\s*new\[\]\s*\{([\s\S]*?)\}\)/g)) {
-  const rows = [...g[2].matchAll(/\("((?:[^"\\]|\\.)*)",\s*"((?:[^"\\]|\\.)*)"\)/g)].map((m) => [unescape(m[1]), unescape(m[2])]);
+// The app's texts go through Loc.T("…") so they can be translated (specs/068-ui-language); the
+// English text inside is what this page documents, so the wrapper is read through.
+for (const g of block.matchAll(/\((?:Loc\.T\()?"([A-Z][^"]*)"\)?,\s*new\[\]\s*\{([\s\S]*?)\}\)/g)) {
+  const rows = [...g[2].matchAll(/\((?:Loc\.T\()?"((?:[^"\\]|\\.)*)"\)?,\s*(?:Loc\.T\()?"((?:[^"\\]|\\.)*)"\)?\)/g)].map((m) => [unescape(m[1]), unescape(m[2])]);
   groups.push({ title: g[1], rows });
 }
 if (!groups.length) throw new Error('no shortcut groups parsed');
