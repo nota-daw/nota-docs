@@ -172,6 +172,7 @@ shots:
   - { id: devices/instruments/sampler/filter, source: app, scene: device, args: {instrument: 1, tab: "Filter"} }
   - { id: devices/instruments/physical/resonator, source: app, scene: device, args: {instrument: 2, tab: "Resonator"} }
   - { id: devices/instruments/aurora/filter, source: app, scene: device, args: {instrument: 5, tab: "Filter"} }
+  - { id: devices/instruments/aurora/env, source: app, scene: device, args: {instrument: 5, tab: "Env"} }
   - { id: devices/instruments/aurora/mod, source: app, scene: device, args: {instrument: 5, tab: "Mod"} }
   - { id: devices/instruments/aurora/fx, source: app, scene: device, args: {instrument: 5, tab: "FX"} }
   - { id: devices/instruments/volt/filter, source: app, scene: device, args: {instrument: 6, tab: "Filter"} }
