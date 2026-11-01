@@ -8,6 +8,7 @@ status: done
 sources:
   - src/native/nota.engine/src/MidiClip.h
   - src/managed/Nota.App/PianoRollView.cs
+  - src/managed/Nota.Application/Editing/VelocityReset.cs
   - src/managed/Nota.App/PianoRollView.Expression.cs
   - src/managed/Nota.App/PianoRollView.Controllers.cs
   - src/managed/Nota.App/PianoRollView.Fold.cs
@@ -121,6 +122,13 @@ import Kbd from '@components/Kbd.astro';
 Полоса под нотами показывает velocity каждой ноты столбиком. Потяните столбик, чтобы задать
 значение; если выделено несколько нот, они двигаются вместе. <Kbd>⇧</Kbd> добавляет ноту в
 выделение.
+
+Чтобы вернуть ноте velocity по умолчанию (0,8 — такое значение получает первая нота), дважды
+щёлкните по её столбику или щёлкните правой кнопкой и выберите **Reset velocity**. Если нота
+выделена, сбрасывается всё выделение. Одна отмена возвращает прежние значения, хотя двойной
+щелчок до этого ещё и щёлкнул по столбику. Нота, которая уже на значении по умолчанию, не
+меняется; ноты заблокированного референсного клипа тоже. Значение по умолчанию фиксированное и
+не зависит от ноты, которой вы касались последней.
 
 Velocity можно менять и прямо на сетке: наведите указатель на ноту и покрутите колесо с
 <Kbd>⇧</Kbd> — каждый щелчок колеса меняет velocity на один шаг MIDI, в пределах от 1 до 127.
