@@ -29,7 +29,8 @@ public sealed class Redactor
         foreach (var name in new[] { Run("scutil", "--get", "ComputerName"), Run("scutil", "--get", "LocalHostName"), Environment.MachineName })
             if (name.Length > 2) AddLiteral(name, "Studio Mac");
         var full = Run("id", "-F");
-        foreach (var token in full.Split(' ', StringSplitOptions.RemoveEmptyEntries).Append(Environment.UserName).Where(t => t.Length > 2))
+        // A container's "root" account is no one's name, and scrubbing it would turn Scale's Root and Chord's Keep root into "you".
+        foreach (var token in full.Split(' ', StringSplitOptions.RemoveEmptyEntries).Append(Environment.UserName).Where(t => t.Length > 2 && !t.Equals("root", StringComparison.OrdinalIgnoreCase)))
         {
             // "Alex's AirPods" → "AirPods"; any other mention → "you".
             _rules.Add((new Regex($@"\b{Regex.Escape(token)}[’']s\s+", RegexOptions.IgnoreCase), ""));

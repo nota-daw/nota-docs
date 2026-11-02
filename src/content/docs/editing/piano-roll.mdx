@@ -29,7 +29,7 @@ import Kbd from '@components/Kbd.astro';
 Double-click a MIDI clip — in the Arrangement or a Session slot — and it opens in the **Clip**
 tab of the panel at the bottom.
 
-<Shot id="start-here/clip-editor" alt="A MIDI clip in the clip editor: clip settings on the left, notes and velocity stems on the right" />
+<Shot id="start-here/clip-editor" alt="A MIDI clip in the clip editor: the clip settings in a strip along the top, the notes and velocity stems under it" />
 
 ## Notes
 
@@ -116,7 +116,7 @@ together**, or the same command in the command palette, does it too.
 
 The notes of every open clip sit on the Arrangement's bars, each in its track's colour. The
 clip you double-clicked is the **active** clip: its notes are brightest, the header and the
-left column show it, **Envelopes** edits it, and new notes go into it. The other clips' notes
+settings strip show it, **Envelopes** edits it, and new notes go into it. The other clips' notes
 are quieter but just as editable.
 
 - Select, move, transpose, quantize, delete or run a **Tool** across clips — each note stays
@@ -151,19 +151,26 @@ rows so every note in the clip is in view. On Windows and Linux use <Kbd>Ctrl</K
 Each clip remembers its own zoom and scroll; a clip you haven't opened yet starts at the
 standard row height, centred on its notes.
 
-## The left column
+## The settings strip
+
+The clip's settings sit in one strip above the notes, so the notes get the full width. From
+left to right:
 
 - **Clip** — **Start** and **Length**, and **Loop** with the loop length.
 - **Quantize** — its own step (1/32 to 1/2, triplets too; 1/16 by default), which doesn't
-  change with the zoom. **Quantize** pulls the notes onto it, as far as **Strength** says —
-  100 % is rigid, less keeps some of the feel. The clip tools use the same step.
+  change with the zoom. **Quantize** pulls the notes onto it, as far as the **Strength** bar
+  next to it says — 100 % is rigid, less keeps some of the feel. Drag the bar, or double-click
+  it to go back to 80 %. The clip tools use the same step.
 
 Notes snap to the piano roll's [snap grid](../../basics/transport/#the-snap-grid): the chip
 in the clip editor's header shows the step (**Auto · 1/16**) and opens the grid menu. In
 **Auto** it follows the zoom, like the Arrangement's, but the two have separate settings (the
 audio clip editor shares the piano roll's).
 The arrows move the selection by that step.
-- **Transpose** — move the selection by semitones or octaves.
+- **Transpose** — **−** and **+** move the clip's notes a semitone at a time; the value
+  between them shows how far you've moved them.
+- **Selection** — the selected note's pitch, start, length and velocity, or the pitch and
+  velocity range of several.
 
 ## Scale
 

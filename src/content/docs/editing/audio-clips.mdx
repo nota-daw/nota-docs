@@ -3,7 +3,7 @@ title: Audio clips and warp
 description: Editing audio clips — trimming, gain, pitch, reverse, warping to the tempo with markers, volume and pan envelopes, and the clip ADSR.
 sidebar:
   order: 2
-updated: "0.56.1"
+updated: "0.57.1"
 status: done
 sources:
   - src/managed/Nota.App/AudioClipEditorView.cs
@@ -45,7 +45,7 @@ shared with the piano roll: it shows the step (**Auto · 1/16**) and opens the g
 trim brackets, the warp markers and the envelope points land on the lines in the waveform —
 in **Auto** they get finer as you zoom in. Hold <Kbd>⌥</Kbd> while dragging to place one
 freely. An unwarped clip has no beat grid, so in **Sample** nothing snaps until you turn on
-**Warp** — the hint under the waveform says so.
+**Warp** — the hint at the bottom of the settings column says so.
 
 The **Sample** tab shows the waveform with the part of the file the clip plays. Its ruler reads
 where each moment plays in the Arrangement — in bars, or in time while the transport's position
@@ -53,15 +53,21 @@ readout shows time. Click or drag the ruler, or drag the playhead line, to move 
 there (on the grid on a warped clip; hold <Kbd>⌥</Kbd> to place it freely). The playhead shows
 while stopped too.
 
-- **Clip** — **Start** and **Length**. Drag the brackets on the waveform to trim; on a warped
-  clip they land on the grid.
-- **Playback** — **Gain** (drag or double-click to type) and **Pitch** in semitones.
-  **Reverse** plays the clip backwards.
+The settings column beside the waveform fits without scrolling:
+
+- **Clip** — **Start** and **Length**, side by side. Drag the brackets on the waveform to trim;
+  on a warped clip they land on the grid.
+- **Playback** — **Gain**, a bar with its value inside (drag or double-click to type), and
+  **Pitch** in semitones. **Reverse** plays the clip backwards.
+- **Warp** — the switch sits on the section's title row, with its state (**off**, or how many
+  markers the clip has) and the stretch mode menu; then **Tempo**, **Detect tempo** beside **To
+  transients**, and the **Detected** tempo. See below.
 
 ## Warp
 
 **Warp** stretches the audio to the project tempo without changing its pitch, and keeps it in
-time when you change the tempo later. Choose how it stretches:
+time when you change the tempo later. Turn it on with the switch beside the **Warp** title,
+and choose how it stretches in the menu at the right of that row:
 
 | Mode | Best for |
 |---|---|

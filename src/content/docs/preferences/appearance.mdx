@@ -1,6 +1,6 @@
 ---
 title: "Appearance"
-description: "Settings ▸ Appearance — the colour theme (Dark, Light or Follow system, with Studio and Ember themes), how waveforms draw, the interface scale, and AI control over MCP."
+description: "Settings ▸ Appearance — the colour theme (Dark, Light or Follow system, with Studio and Ember themes), how waveforms draw, the interface scale and text size, and AI control over MCP."
 sidebar:
   order: 8
 updated: "0.56.1"
@@ -21,6 +21,7 @@ import Shot from '@components/Shot.astro';
 | **Colour theme** | **Dark**, **Light** or **Follow system**, then a theme from the cards below — see [Colour themes](#colour-themes) |
 | **Waveform** | How audio clips draw in the Arrangement, and samples in the browser's preview: **Bars** spaces the peaks out so the rhythm reads; **Solid** draws every pixel |
 | **Interface scale** | **75 %**, **100 %**, **125 %**, **150 %** or **200 %** — the size of the whole interface. See [Interface scale](#interface-scale) |
+| **Text size** | **Smaller**, **Default**, **Larger** or **Largest** — the size of the text alone. See [Text size](#text-size) |
 | **AI control (MCP)** | Let an AI assistant work in Nota — the switch, the port, the status and **Copy config**. See [AI control over MCP](../../ai/mcp/) |
 
 ## Colour themes
@@ -59,3 +60,13 @@ are tighter than usual.
 The scale is on top of the operating system's own display scaling, and the timeline, piano
 roll and audio editor still zoom their content as before. Plug-in windows are drawn by the
 plug-in and keep their own size.
+
+## Text size
+
+Makes the text in Nota a point smaller (**Smaller**) or one or two points larger
+(**Larger**, **Largest**) without changing anything else: buttons, knobs, track headers and
+device cards keep their size. Every text changes, in every window, at once, and the choice
+is saved for the next launch. Text inside device cards keeps its size, since each card has a
+fixed layout. At the larger sizes a long label that doesn't fit is shortened
+with an ellipsis (…); hover it to read it in full where it has a tooltip, or use
+[Interface scale](#interface-scale) instead, which makes everything larger together.
