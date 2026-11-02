@@ -3,7 +3,7 @@ title: Tracks
 description: Instrument, audio, return and group tracks — adding, selecting, colouring, grouping, routing and freezing them.
 sidebar:
   order: 4
-updated: "0.56.1"
+updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.Infrastructure/Persistence/ProjectTemplate.cs
@@ -110,7 +110,8 @@ Select tracks and press <Kbd>⌘ G</Kbd> to put them in a group; <Kbd>⌘ ⇧ G<
 A group is a submix: its fader, effects, mute and solo act on all its tracks together, and
 groups can sit inside groups. Its row stays slim — a titled bar with its arrow, mute, solo and
 level — and opens to the full controls when you select it. Click the arrow to fold the group's
-tracks away.
+tracks away; the [Mixer](../../views/mixer/#groups) folds with it, and folded groups are saved
+with the project.
 
 ## Routing
 
