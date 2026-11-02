@@ -2,6 +2,7 @@
 // Generates reference/shortcuts (EN + RU) from the app's own shortcut list:
 // PreferencesWindow.ShortcutGroups in ../nota (or $NOTA_REPO). Run `npm run shortcuts` after the
 // nota-shortcuts skill has brought that list up to date. Never edit the generated pages by hand.
+// Titles and texts may be wrapped in Loc.T("…") (the app's UI language lookup).
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -19,8 +20,8 @@ const block = src.slice(start, end);
 
 const unescape = (s) => s.replace(/\\u([0-9a-fA-F]{4})/g, (_, h) => String.fromCharCode(parseInt(h, 16))).replace(/\\"/g, '"');
 const groups = [];
-for (const g of block.matchAll(/\("([A-Z][^"]*)",\s*new\[\]\s*\{([\s\S]*?)\}\)/g)) {
-  const rows = [...g[2].matchAll(/\("((?:[^"\\]|\\.)*)",\s*"((?:[^"\\]|\\.)*)"\)/g)].map((m) => [unescape(m[1]), unescape(m[2])]);
+for (const g of block.matchAll(/\((?:Loc\.T\()?"([A-Z][^"]*)"\)?,\s*new\[\]\s*\{([\s\S]*?)\}\)/g)) {
+  const rows = [...g[2].matchAll(/\((?:Loc\.T\()?"((?:[^"\\]|\\.)*)"\)?,\s*(?:Loc\.T\()?"((?:[^"\\]|\\.)*)"\)?\)/g)].map((m) => [unescape(m[1]), unescape(m[2])]);
   groups.push({ title: g[1], rows });
 }
 if (!groups.length) throw new Error('no shortcut groups parsed');

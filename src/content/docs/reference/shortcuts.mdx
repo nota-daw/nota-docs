@@ -33,6 +33,8 @@ Shortcuts are written the macOS way: on Windows and Linux read <Kbd keys="⌘" /
 | Keys | Action |
 |---|---|
 | <Kbd keys="F11" /> | Enter / leave full screen — the title bar hides in full screen |
+| <Kbd keys="⌘ ⇧ F" /> | The clip editor fills the window / back to the split it had |
+| Double-click a panel edge | Reset the detail panel, the Mixer or the browser to its default size |
 
 ## Command palette
 
@@ -187,18 +189,25 @@ Shortcuts are written the macOS way: on Windows and Linux read <Kbd keys="⌘" /
 | <Kbd keys="⇧ ↑" /> · <Kbd keys="⇧ ↓" /> | Transpose by an octave |
 | <Kbd keys="⇧ ←" /> · <Kbd keys="⇧ →" /> | Shorten / lengthen the notes by the grid |
 | <Kbd keys="⌥ ↑" /> · <Kbd keys="⌥ ↓" /> | Velocity +10 / −10 · ⌥⇧ by 1 |
+| ⇧ + wheel over a note | Change its velocity · the whole selection's when the note is selected · elsewhere scroll sideways |
 | <Kbd keys="⌘ A" /> | Select all notes |
 | <Kbd keys="⌘ D" /> | Duplicate the selection · replaces the notes it lands on |
 | <Kbd keys="⌘ C" /> · <Kbd keys="⌘ X" /> · <Kbd keys="⌘ V" /> | Copy / cut / paste notes · paste lands on the originals |
 | <Kbd keys="Esc" /> | Deselect · moved or pasted notes replace the notes under them |
 | <Kbd keys="Delete" /> | Delete the selected notes |
 | Double-click empty grid | Add a note with the length and velocity of the last note touched · on a note, delete it |
+| Double-click and hold, drag | Shape the new note: move it · ⇧ set its length · ⌘ drag up / down for velocity |
 | Drag note edge | Change the note's start or end |
 | Click · drag the ruler | Move the playhead there · drag to scrub, snapped to the grid · ⌥ off the grid |
 | Drag the playhead line | Scrub the playhead · on the ruler or over empty grid |
 | Drag velocity stem | Set velocity · selected notes move together · ⇧ adds a note |
+| Double-click velocity stem | Put the note back to the default velocity (0.8) · the whole selection's when the note is selected · undo is one step |
+| Right-click velocity stem | Reset velocity from a menu · same as the double-click |
 | Drag in the Bend / Pres / Slide lane | Draw the selected note's MPE curve · ⌥ draws a straight line · drag a point to move it |
 | Double-click in an MPE lane | Add a point · on a point, delete it · right-click to clear the curve |
+| Click the controller tab | Show a MIDI controller under the notes · click it again to pick another CC, the pitch wheel or channel pressure |
+| Drag in the Sustain lane | Draw a pedal block on the grid · ⌘ off the grid · drag an edge to resize, the body to move · double-click or Delete removes it |
+| Drag in a controller lane | Draw the controller's curve · ⌥ draws a straight line · drag a point to move it · double-click adds or deletes a point |
 | Click a clip in the clip strip | Make it the active clip (several clips open) · its lock keeps it as a read-only reference |
 | ⌘⌥ + wheel | Zoom rows (vertical zoom) |
 | Click a key | Play it on the track's instrument · ⇧-drag glides through the keys · ⌘-click selects every note of that pitch |
@@ -253,11 +262,12 @@ Shortcuts are written the macOS way: on Windows and Linux read <Kbd keys="⌘" /
 
 | Keys | Action |
 |---|---|
-| Double-click clip | Open in the clip editor · on one of several selected MIDI clips, open them all together |
+| Double-click clip | Open in the clip editor, opening the detail panel · on one of several selected MIDI clips, open them all together |
+| Double-click a track header | Open its devices in the detail panel · a plug-in's own window is Open editor on its card |
 | Double-click a browser instrument | Swap it onto the selected instrument track · clips and effects stay · no track selected starts one |
 | ⌥ + double-click a browser instrument | Always start a new track with it |
 | Right-click the metronome | Count-in before Play / Record: off · 1 · 2 · 4 bars |
-| Drag an audio clip's ADSR handle | Shape attack · decay + sustain · release (top corners and the dot on hover) · double-click resets the stage |
+| Drag an audio clip's ADSR handle | Shape attack · decay + sustain · release (top corners and the dot on hover) · ⌥-click types the stage · double-click resets it |
 | ⇧-click track header | Add the track to the selection · again to remove it |
 | Right-click track headers | A multi-selection gets its own menu: colour, height, freeze, group, copy, duplicate, delete |
 | Drag a track's bottom edge | Resize the track (header or lane) · snaps to compact / standard / large · a multi-selection resizes together |
@@ -267,7 +277,8 @@ Shortcuts are written the macOS way: on Windows and Linux read <Kbd keys="⌘" /
 | Drag the track-list edge | Widen or narrow the track headers · double-click resets |
 | Drag sections lane | Mark a new section over the dragged bars |
 | Click section | Jump the playhead to its start |
-| Double-click section | Rename it |
+| Double-click section | Rename it · right-click → Reset to default name for its automatic Section N |
+| Return · Esc (renaming a section) | Keep the name (empty = automatic) · cancel |
 | Drag section · its edge | Move / resize it, snapped to bars |
 | Drag overview strip | Drag sideways to scroll · up / down to zoom out / in |
 | Drag overview edge | Zoom by resizing the viewport window |
@@ -283,7 +294,9 @@ Shortcuts are written the macOS way: on Windows and Linux read <Kbd keys="⌘" /
 | Drag slider | Left / right (or up / down) changes the value · hold ⌘ or ⇧ for fine steps |
 | ⌥-click a knob, fader or slider | Type a value (units like k, ms, dB, L / R work) · double-click its value does the same |
 | Return · Esc · Tab / ⇧Tab (typing a value) | Set it · cancel · set it and type the next / previous value on the card |
+| ⌥-click a graph handle, envelope node or mod-matrix cell | Type its values — a node with several (frequency · gain · Q, decay · sustain) takes Tab between them |
 | Double-click a knob, fader or slider | Reset the value to its default |
+| Double-click a mod-matrix cell | Clear the route (Volt, Aurora) · pull the cable (Consort) |
 | Right-click a knob, fader or slider | Type value… · Reset to default |
 | Drag jack → jack | Patch a cable in Nota Consort · ⌥-click a jack to pull its cables |
 | Click · ⇧ · ⌥ a Rhythm step | Step on / off · accent · quiet step — drag across to paint, up / down (or scroll) for its velocity |

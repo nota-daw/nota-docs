@@ -4,7 +4,7 @@ description: A tour of the Nota main window — transport, browser, views, the d
 sidebar:
   order: 3
 since: "0.1.0"
-updated: "0.56.1"
+updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.App/MainWindow.axaml
@@ -19,7 +19,7 @@ import Kbd from '@components/Kbd.astro';
 
 Everything in Nota happens in one window. It has four areas: the **transport bar** along the
 top, the **browser** on the left, the **view** in the middle, and the **detail panel**
-underneath, which opens when you select a track or a clip.
+underneath, which opens when you double-click a track or a clip.
 
 Along the very top runs the slim **title bar** with the project's name — it is also the
 drag handle. **Full screen** hides it: the macOS green button, or **View ▸ Toggle Full
@@ -79,8 +79,8 @@ The **Mixer** opens in a window of its own: **View ▸ Mixer** (<Kbd>⌘ ⇧ M</
 
 ## Detail panel
 
-Select a track and its devices appear in the panel at the bottom; double-click a clip and it
-opens there for editing. The tabs at its top left switch between **Devices**, **Pattern**
+Double-click a track's header and its devices appear in the panel at the bottom; double-click a
+clip and it opens there for editing. A single click only selects — an open panel follows it. The tabs at its top left switch between **Devices**, **Pattern**
 (the step pattern of a clip, on a Drum Rack track only) and **Clip** — <Kbd>Tab</Kbd> cycles them. On the
 right, **Freeze** and **Live freeze** render a track to audio to save CPU, the ⧉ button moves
 the panel into a [window of its own](../../views/detail-panel/), and × closes it.
