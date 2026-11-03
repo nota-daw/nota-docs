@@ -3,7 +3,7 @@ title: Arrangement
 description: The song on a timeline — moving and trimming clips, selecting, zooming, the overview strip, sections and clip names.
 sidebar:
   order: 1
-updated: "0.55.1"
+updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.App/ArrangementView.cs
@@ -97,12 +97,45 @@ readable at a glance.
 
 - Drag along the empty lane to mark a section over those bars.
 - Click a section to jump the playhead to its start; double-click it to rename it.
-- Drag a section to move it, drag its edge to resize it — always in whole bars.
+- Drag a section's edge to resize it, in whole bars. <Kbd>⌥</Kbd>-drag the section itself to
+  move just its marker, also in whole bars — the music under it stays.
 - Right-click it for **Loop section**, **Select section** (as a time range across every track),
-  **Duplicate**, **Rename…** and **Delete**.
+  **Duplicate**, **Rename…** and **Delete**. These act on the marker only.
 
 Each of these edits is one undo step. Sections are saved with the project. **View ▸ Toggle
 sections** hides the lane.
+
+### Rearranging the song
+
+Drag a section to another place and the music goes with it: every audio and MIDI clip in its
+span (clips crossing its edges are cut there), the automation on every track and the master,
+and take lanes. While you drag, a ghost of the section follows the pointer, an orange bar
+marks the boundary between sections where it will land, and the other sections show where
+they will end up. Let go to move it; drop it back on its own place, or press <Kbd>Esc</Kbd>, and
+nothing changes.
+
+The sections it passes close up to make room, so the song keeps its length and nothing before
+or after the rearranged part moves. To put the chorus before the verse, drag the chorus left
+until its middle passes the verse's.
+
+The section's right-click menu does the same without dragging, and works on the section and
+everything in it:
+
+| Item | Does |
+|---|---|
+| **Move earlier** / **Move later** | Swap it with the section before / after |
+| **Duplicate with content** | Put a copy of it, with its music, right after it; the rest of the song moves later |
+| **Delete with content** | Remove it and its music; the rest of the song moves up to close the gap |
+
+The command palette has the same four — **Move section earlier**, **Move section later**,
+**Duplicate section with content**, **Delete section with content** — for the section under the
+playhead. Each is one undo step.
+
+<Aside>
+A section that overlaps another can't take its music along — whose is the shared part? Its
+drag moves only the marker and the menu items are off; move its edge so the sections no longer
+overlap.
+</Aside>
 
 ## Track sizes
 
