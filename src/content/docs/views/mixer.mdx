@@ -3,7 +3,7 @@ title: Mixer
 description: The Mixer window — a channel strip per track with inputs, sends, pan, volume, mute, solo and arm, returns and the master.
 sidebar:
   order: 4
-updated: "0.51.2"
+updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.App/MixerView.cs
@@ -43,6 +43,11 @@ bottom switches the **Sends** and **I/O** sections on or off.
 A return track is a shared effect bus. Add one (right-click the empty space below the tracks ▸
 **Add return track**), put a Reverb or Delay on it, then turn up each track's send to it.
 Every track goes to the same reverb, and one fader on the return sets how much of it you hear.
+
+The same sends are in the Arrangement's track headers when a row is tall enough — see
+[Sends in the track headers](../arrangement/#sends-in-the-track-headers). A send move anywhere
+is one undo step, and a send can be automated like volume and pan — see
+[Automation](../../editing/automation/).
 
 <Aside>
 The Session view has the same mixer under its grid — see [Session](../session/#the-mixer-under-the-grid).

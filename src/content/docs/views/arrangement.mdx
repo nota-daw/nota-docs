@@ -3,7 +3,7 @@ title: Arrangement
 description: The song on a timeline — moving and trimming clips, selecting, zooming, the overview strip, sections and clip names.
 sidebar:
   order: 1
-updated: "0.55.1"
+updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.App/ArrangementView.cs
@@ -12,6 +12,7 @@ sources:
   - src/managed/Nota.App/ArrangementView.Overview.cs
   - src/managed/Nota.App/ArrangementView.Sections.cs
   - src/managed/Nota.App/ArrangementView.Sizing.cs
+  - src/managed/Nota.App/ArrangementView.Sends.cs
 ---
 
 import { Aside } from '@astrojs/starlight/components';
@@ -120,11 +121,36 @@ Make tracks short to see a big song at once, or tall to work on one part.
 The header shows what fits. A **compact** track keeps its name and mute, solo and record-arm
 on one line; volume, pan and the input stay in the [Mixer](../mixer/) and the track's menu. A
 **standard** track has the usual three rows. A **large** track gives the input (or MIDI
-source), the volume fader and the pan a row each. Clips, waveforms and automation grow with
-the row.
+source), the volume fader and the pan a row each — or puts volume and pan side by side when
+it shows [sends](#sends-in-the-track-headers). Clips, waveforms and automation grow with the
+row.
 
 Track heights and the header width are saved with the project. They don't go into the undo
 history.
+
+## Sends in the track headers
+
+A track tall enough for them — a **large** row, or a **standard** one from 88 px — shows its
+sends under volume and pan: one small knob per return track, **A**, **B**, … in the order of
+the returns, with the level beside it (**–** when the send is off). So you can set how much of a
+track goes to the reverb without opening the [Mixer](../mixer/).
+
+<Shot id="views/arrangement-track-sends" alt="Arrangement tracks at 96 px: under each track's volume and pan, a send knob A to the Reverb return; the Sends key at the top of the header column" />
+
+| Do this | To |
+|---|---|
+| Drag a send knob | Set the send |
+| Hover it | See the return's name and the level, e.g. **Send A · Reverb · 35%** |
+| Double-click it | Turn the send off |
+| <Kbd>⌥</Kbd>-click it | Type a value |
+
+The **Sends** key at the right end of the strip above the track headers shows or hides the
+send row on every track at once; it is lit while they are shown. It is saved with the project
+and only appears when the project has returns. In a narrow header the knobs drop their letter
+and level — hover one to read it.
+
+Every send move is one undo step, wherever you make it, and it records automation like volume
+does — see [Automation](../../editing/automation/).
 
 ## Clip names and groups
 

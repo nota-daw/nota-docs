@@ -31,6 +31,7 @@ namespace NotaDocsShots;
 ///             more MIDI clips selected with it, so they open together), automation, tab (browser tab index),
 ///             expand (a folder in that tab) + pick (a row to select, which the preview player takes), detailHeight, element, width, height,
 ///             fold (the selected track's audio effects to fold into strips, by chain index, e.g. "0,2"; "i" = the instrument)
+///             rows (every track row at this height in px; standard is 64)
 ///   palette   the command palette (⌘⇧P) over the main window: view, select (track), card (index of
 ///             an audio effect to select in Devices), query, down (rows to move), mods (alt | cmd | shift),
 ///             origin (devices: the Devices panel had the focus), crop (true: just the palette card)
@@ -394,6 +395,8 @@ public sealed class Scenes
         // Zoom: fit the whole song, or the app's default (28 px a beat from bar 1) — the view
         // keeps its zoom between shots otherwise.
         var tl = mw.FindControl<ArrangementView>("Timeline")!;
+        // Every track row at this height (e.g. 96: a standard row tall enough for its sends).
+        if (shot.Int("rows") is int rows) Invoke(tl, "SetAllTrackHeights", (double)rows);
         if (shot.Bool("fit")) Invoke(tl, "ZoomToFitProject");
         else Invoke(tl, "ApplyOverviewView", 28.0, 0.0);
         Pump(20);
@@ -401,7 +404,8 @@ public sealed class Scenes
         else HideUpdate();
         var element = shot.Str("element") is string el ? mw.FindControl<Control>(el) ?? throw new ArgumentException($"no control '{el}'") : null;
         Save(mw, shot.Id, element);
-        // The demo song is shared by every shot: open the folded cards again.
+        // The demo song is shared by every shot: back to standard rows, open the folded cards again.
+        if (shot.Int("rows") is not null) Invoke(tl, "SetAllTrackHeights", 64.0);
         if (shot.Str("select") is string sel && shot.Str("fold") is string unfold) Fold(mw, _demo.Track(sel), unfold, false);
     }
 
