@@ -3,7 +3,7 @@ title: Audio clips and warp
 description: Editing audio clips — trimming, gain, pitch, reverse, warping to the tempo with markers, volume and pan envelopes, and the clip ADSR.
 sidebar:
   order: 2
-updated: "0.56.1"
+updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.App/AudioClipEditorView.cs
@@ -100,9 +100,15 @@ audio clip and drag the handles in its top corners (or the dot that appears). <K
 a handle to type its time (the dot: decay, then sustain after <Kbd>Tab</Kbd>); double-click it to
 reset that stage.
 
+Splitting an audio clip also writes a 4 ms fade at the cut — **Release** on the left piece,
+**Attack** on the right — so the cut does not click. Drag those handles to make it longer or
+shorter. Settings → Appearance → **Fade audio clips when splitting** turns that off. **Fade at
+splits**, in the command palette or on the clip's menu, writes the same fade where two audio
+clips already touch.
+
 ## On the timeline
 
-Right-click an audio clip for **Reverse**, **Separate stems…** (split it into drums, bass,
+Right-click an audio clip for **Fade at splits**, **Reverse**, **Separate stems…** (split it into drums, bass,
 vocals and the rest — see [Separate Stems](../../ai/separate-stems/)) and **Convert** (turn its
 melody, harmony or drums into MIDI — see [Convert audio to MIDI](../midi-tools/)).
 
