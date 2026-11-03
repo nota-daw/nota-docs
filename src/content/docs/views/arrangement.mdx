@@ -3,7 +3,7 @@ title: Arrangement
 description: The song on a timeline — moving and trimming clips, selecting, zooming, the overview strip, sections and clip names.
 sidebar:
   order: 1
-updated: "0.55.1"
+updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.App/ArrangementView.cs
@@ -12,6 +12,7 @@ sources:
   - src/managed/Nota.App/ArrangementView.Overview.cs
   - src/managed/Nota.App/ArrangementView.Sections.cs
   - src/managed/Nota.App/ArrangementView.Sizing.cs
+  - src/managed/Nota.App/ArrangementView.Sends.cs
 ---
 
 import { Aside } from '@astrojs/starlight/components';
@@ -120,8 +121,13 @@ Make tracks short to see a big song at once, or tall to work on one part.
 The header shows what fits. A **compact** track keeps its name and mute, solo and record-arm
 on one line; volume, pan and the input stay in the [Mixer](../mixer/) and the track's menu. A
 **standard** track has the usual three rows. A **large** track gives the input (or MIDI
-source), the volume fader and the pan a row each. Clips, waveforms and automation grow with
-the row.
+source), the volume fader and the pan a row each. At the Large height (128 px) and taller,
+when the project has return tracks, that header also shows one small knob per return under
+the fader — volume and pan share a row so the knobs fit. Hover a knob for the return's name,
+double-click to turn the send off, and <Kbd>⌥</Kbd>-click to type a percent. The level is the
+same one the Mixer and the Sends card show. A shorter row leaves the sends in the Mixer.
+Moving a send is not an undo step, and a send has no automation lane. Clips, waveforms and
+automation grow with the row.
 
 Track heights and the header width are saved with the project. They don't go into the undo
 history.
