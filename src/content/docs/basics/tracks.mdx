@@ -3,13 +3,15 @@ title: Tracks
 description: Instrument, audio, return and group tracks — adding, selecting, colouring, grouping, routing and freezing them.
 sidebar:
   order: 4
-updated: "0.56.1"
+updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.Infrastructure/Persistence/ProjectTemplate.cs
   - src/managed/Nota.App/ArrangementView.cs
   - src/managed/Nota.App/ArrangementView.Tracks.cs
   - src/managed/Nota.App/ArrangementView.Groups.cs
+  - src/managed/Nota.App/ArrangementView.Link.cs
+  - src/managed/Nota.Presentation/TrackArm.cs
   - src/managed/Nota.App/TrackNames.cs
   - src/managed/Nota.App/MainWindow.Freeze.cs
   - src/managed/Nota.App/MainWindow.LiveFreeze.cs
@@ -104,18 +106,44 @@ and position (**Audio · 3**); on a selection it reads **3 tracks**.
 Commands that show a current choice — **Record input**, **MIDI from** — print it on the
 right, so you can read it without opening the submenu. **Delete** is always last, in red.
 
+The browser's [Track inspector](../../library/browser/#track-inspector) tab shows the same
+settings — name, colour, height, input and freeze, plus mute, solo and arm — for the selected
+track, without opening a menu.
+
 ## Groups
 
 Select tracks and press <Kbd>⌘ G</Kbd> to put them in a group; <Kbd>⌘ ⇧ G</Kbd> ungroups.
 A group is a submix: its fader, effects, mute and solo act on all its tracks together, and
 groups can sit inside groups. Its row stays slim — a titled bar with its arrow, mute, solo and
 level — and opens to the full controls when you select it. Click the arrow to fold the group's
-tracks away.
+tracks away; the [Mixer](../../views/mixer/#groups) folds with it, and folded groups are saved
+with the project.
+
+### Linked groups
+
+When the tracks of a group are takes of one performance — a dry and an amped guitar, say —
+turn on the group's **Link** key (the chain link next to its mute and solo, also in its Mixer
+strip and as **Link tracks** in its menu). The group's tracks then work as one:
+
+- **Arming** one track arms all of them; disarming one disarms them all.
+- **Clicking a clip** also selects the clips that start and end at the same place on the
+  other tracks. Moving, trimming, fading, duplicating, copying, cutting or deleting it does
+  the same to them, and one <Kbd>⌘ Z</Kbd> undoes it on every track.
+- **Splitting** (<Kbd>⌘ E</Kbd> or **Split here**) cuts every track of the group at that point.
+- A **time range** drawn on one of the tracks spans the whole group.
+- Moving a clip to another track takes its partners along in time only — they stay on their
+  own tracks.
+
+To work on one track without turning Link off, <Kbd>⌥</Kbd>-click the clip (or its arm):
+the clip is selected alone and the next edit touches only it. Linked tracks show a small
+chain link before their name; tracks in groups nested inside a linked group are linked too.
 
 ## Routing
 
 - **Sends** — every track can send part of its signal to each return track: turn up its send
-  in the [Mixer](../../views/mixer/) or the Session view. A new project comes with two
+  in the track header (at the Large height — see
+  [Sends in the track headers](../../views/arrangement/#sends-in-the-track-headers)), the
+  [Mixer](../../views/mixer/) or the Session view. A new project comes with two
   returns ready to send to: **Reverb** and **Delay**, both set to **Wet Only**.
 - **MIDI from** — an instrument track can play the MIDI of another instrument track through
   its own instrument, to layer two sounds. It gets the notes **after** the source's MIDI
