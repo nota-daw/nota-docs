@@ -15,13 +15,26 @@ const version = fs.readFileSync(path.join(appRepo, 'VERSION'), 'utf8').trim();
 const start = src.indexOf('ShortcutGroups =');
 const end = src.indexOf('};', start);
 if (start < 0 || end < 0) throw new Error('ShortcutGroups not found in ' + srcPath);
-const block = src.slice(start, end);
+// The list is localized by key (Loc.T("preferences.save_a_version_with_a"), specs/077); the
+// page wants the English text, which lives in the app's English reference.
+const enPath = 'src/managed/Nota.Application/Localization/en.json';
+const english = JSON.parse(fs.readFileSync(path.join(appRepo, enPath), 'utf8')).strings;
+const block = src.slice(start, end).replace(/Loc\.T\(\s*"([a-z0-9_.]+)"\s*\)/g, (_, key) => {
+  const text = english[key];
+  if (typeof text !== 'string') throw new Error(`ShortcutGroups uses ${key}, which is not a plain text in ${enPath}`);
+  return JSON.stringify(text);
+});
 
 const unescape = (s) => s.replace(/\\u([0-9a-fA-F]{4})/g, (_, h) => String.fromCharCode(parseInt(h, 16))).replace(/\\"/g, '"');
+// A string in the list is a C# literal, bare or wrapped in Loc.T(…) since the app was localised
+// (specs/068): `"text"` or `Loc.T("text")`. The English text is what the docs show.
+const str = String.raw`(?:Loc\.T\(\s*"((?:[^"\\]|\\.)*)"\s*\)|"((?:[^"\\]|\\.)*)")`;
+const groupRe = new RegExp(String.raw`\(\s*${str},\s*new\[\]\s*\{([\s\S]*?)\}\)`, 'g');
+const rowRe = new RegExp(String.raw`\(\s*${str},\s*${str}\s*\)`, 'g');
 const groups = [];
-for (const g of block.matchAll(/\("([A-Z][^"]*)",\s*new\[\]\s*\{([\s\S]*?)\}\)/g)) {
-  const rows = [...g[2].matchAll(/\("((?:[^"\\]|\\.)*)",\s*"((?:[^"\\]|\\.)*)"\)/g)].map((m) => [unescape(m[1]), unescape(m[2])]);
-  groups.push({ title: g[1], rows });
+for (const g of block.matchAll(groupRe)) {
+  const rows = [...g[3].matchAll(rowRe)].map((m) => [unescape(m[1] ?? m[2]), unescape(m[3] ?? m[4])]);
+  groups.push({ title: unescape(g[1] ?? g[2]), rows });
 }
 if (!groups.length) throw new Error('no shortcut groups parsed');
 
@@ -49,7 +62,7 @@ const renderKey = (key) =>
 
 const sentence = (t) => t.charAt(0) + t.slice(1).toLowerCase().replace(/\bmidi\b/g, 'MIDI').replace(/\bmacos\b/g, 'macOS');
 const ru = {
-  FILE: 'Файл', TRANSPORT: 'Транспорт', 'ARRANGEMENT & EDITING': 'Arrangement и редактирование',
+  FILE: 'Файл', WINDOW: 'Окно', TRANSPORT: 'Транспорт', 'ARRANGEMENT & EDITING': 'Arrangement и редактирование',
   'GRID (ARRANGEMENT OR CLIP EDITOR — WHICHEVER YOU USED LAST)': 'Сетка (Arrangement или редактор клипа — тот, где вы работали последним)',
   'TRACKS (AFTER A CLICK IN THE TRACK HEADERS)': 'Треки (после щелчка по заголовкам треков)',
   'DEVICES (AFTER A CLICK ON A DEVICE)': 'Устройства (после щелчка по устройству)',
