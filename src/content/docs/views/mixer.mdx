@@ -3,20 +3,25 @@ title: Mixer
 description: The Mixer window — a channel strip per track with inputs, sends, pan, volume, mute, solo and arm, returns and the master.
 sidebar:
   order: 4
-updated: "0.51.2"
+updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.App/MixerView.cs
+  - src/managed/Nota.App/MixerView.Compact.cs
   - src/managed/Nota.App/MixerWindow.cs
   - src/managed/Nota.App/MainWindow.Mixer.cs
+  - src/managed/Nota.App/GroupFold.cs
+  - src/managed/Nota.App/Controls/GroupBandsLayer.cs
+  - src/managed/Nota.App/Controls/MeterFader.cs
 ---
 
 import { Aside } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
 
-The Mixer opens in its own window — **View ▸ Mixer** or <Kbd>⌘ ⇧ M</Kbd> — so you can keep it
-on a second screen next to the Arrangement or Session.
+Show the Mixer with **View ▸ Mixer** or <Kbd>⌘ ⇧ M</Kbd>. It docks as a panel at the bottom of
+the main window, under the Arrangement, Session or Modular view; its pop-out button moves it
+into its own window, for a second screen, and the window's dock button brings it back.
 
 <Shot id="views/mixer" alt="The Mixer window: a strip per track, the return and the master" />
 
@@ -33,10 +38,52 @@ Top to bottom, each track gets:
   type a value; double-click the fader to reset it;
 - **Mute**, **Solo** and **arm** buttons.
 
-Return tracks come after the tracks, and the **Master** strip closes the row. Its fader is the
+Strips come in the Arrangement's order — a group's strip, then its tracks. Return tracks come
+after the tracks, and the **Master** strip closes the row. Its fader is the
 same master volume as the **Master** control in the transport bar and the Master row of the
 Arrangement — move one and the others follow; it is saved with the project. **Show** at the
 bottom switches the **Sends** and **I/O** sections on or off.
+
+## Groups
+
+Each group puts a bar with its name, in its colour, over its own strip and its tracks' strips,
+with a faint tint of the colour behind them. A group inside a group gets a second bar under the
+first, so you can read which family every strip belongs to.
+
+<Shot id="views/mixer-groups" alt="Group bars over the strips: Beat holds the Rhythm group and Bass, Rhythm holds Drums" />
+
+Click the arrow on a group's strip to fold the group: its tracks hide and only the group strip
+stays, so the rest of the song fits on screen. Folding a group here folds it in the
+Arrangement too, and the other way round; folded groups are saved with the project. A folded
+group's bar says how many strips it hides (**Beat +3**), and dots on its strip tell you when a
+hidden track is soloed (blue), armed (red) or has clipped (click the dot to clear it). Folding
+only changes what you see — the sound stays the same.
+
+<Shot id="views/mixer-group-folded" alt="The Beat group folded: its bar says +3 and its strip is outlined because a hidden track is selected" />
+
+The track you select anywhere gets an outline in the Mixer, and the Mixer scrolls to it. If
+that track is inside a folded group, the group's strip is outlined instead; the group stays
+folded.
+
+## Compact strips
+
+**Compact** in the Mixer's footer narrows every strip to 72 px, so about twice as many tracks
+fit on screen; click it again for the regular strips. Nota remembers the choice.
+
+<Shot id="views/mixer-compact" alt="Compact strips: a wide meter with a triangle for the volume, send and pan bars, full-width M, S and arm buttons" />
+
+A compact strip has everything a regular one has, in a narrower shape:
+
+- the **I/O** on one line (hover for the full routing);
+- the **A** and **B** sends as thin bars;
+- **Pan** as a bar that fills out from the centre — drag it up or down, double-click to centre;
+- a wide level **meter** that is also the volume fader. The triangle on its right edge marks the
+  volume on the meter's own scale, so a triangle at 0 sits at the meter's 0 dB. Drag anywhere on
+  the meter to change it (hold ⇧ for fine steps); a click without dragging clears the peak hold;
+- the gain value — drag it or double-click to type;
+- **Mute**, **Solo** and arm as buttons across the whole strip.
+
+MIDI Learn and automation recording work as on a regular strip.
 
 ## Sends and returns
 

@@ -3,7 +3,7 @@ title: "AI control over MCP"
 description: "Let an AI assistant such as Claude work in your open project through Nota's built-in MCP server — tracks, notes, devices, Session, mixing, export and more."
 sidebar:
   order: 3
-updated: "0.56.1"
+updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
@@ -41,7 +41,8 @@ network can reach it.
 ## What an AI can do
 
 - **Transport and project** — play, stop, tempo, signature, loop, metronome, a full snapshot of the
-  project, the arrangement's sections, and its version history (list, save with a note, switch, name
+  project, the arrangement's sections (`list_sections` and `set_sections` carry an `automatic` flag
+  for "Section N" names), and its version history (list, save with a note, switch, name
   and star).
 - **Tracks and mixer** — add and remove tracks, volume, pan, mute, solo, groups, sends and returns,
   meters.
