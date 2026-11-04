@@ -3,10 +3,11 @@ title: Главное окно
 description: Обзор главного окна Nota — транспорт, браузер, виды, нижняя панель и меню.
 sidebar:
   order: 3
-updated: "0.56.1"
+updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.App/MainWindow.axaml
+  - src/managed/Nota.App/MainWindow.AudioFormat.cs
   - src/managed/Nota.App/MainWindow.Menu.cs
   - src/managed/Nota.App/BrowserView.cs
   - src/managed/Nota.App/MainWindow.Detail.cs
@@ -95,7 +96,9 @@ Screen** (<Kbd>F11</Kbd>) на Windows и Linux разворачивает ра�
 - **Help** — Documentation (это руководство), What's new и About.
 
 Строка внизу окна сообщает, что только что произошло («Saved Night Drive», «Added Nota
-Volt»), и показывает частоту дискретизации.
+Volt»), и показывает текущие частоту и размер буфера («48 kHz · 256»). Нажмите на эту
+надпись, чтобы выбрать другой размер буфера — воспроизведение при этом продолжается — или
+открыть Settings ▸ Audio.
 
 <Aside title="⌘ или Ctrl?">
 Сочетания записаны как в macOS. В Windows и Linux <Kbd>⌘</Kbd> — это <Kbd>Ctrl</Kbd>,

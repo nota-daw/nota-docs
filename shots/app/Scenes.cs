@@ -465,13 +465,34 @@ public sealed class Scenes
     private void Mixer(Shot shot)
     {
         MainWindow(shot);   // the demo song
+        // specs/070 (app 0.59+): group: "Name:Track,Track" puts demo tracks under a new group;
+        // fold: true folds it; compact: true shows compact strips; select: a demo track or the group.
+        int groupId = -1;
+        if (shot.Str("group") is string g && g.Split(':') is [var gname, var members])
+        {
+            groupId = _engine.CreateGroup(members.Split(',').Select(_demo.Track).ToArray());
+            if (groupId > 0) _engine.SetTrackName(groupId, gname);
+        }
         var view = new MixerView(_engine);
+        var foldType = typeof(App).Assembly.GetType("Nota.App.GroupFold");
+        var foldProp = typeof(MixerView).GetProperty("Fold", BindingFlags.NonPublic | BindingFlags.Instance);
+        object? fold = foldType is not null && foldProp is not null ? Activator.CreateInstance(foldType, true) : null;
+        if (fold is not null) foldProp!.SetValue(view, fold);
+        if (shot.Bool("compact")) typeof(MixerView).GetProperty("Compact")?.SetValue(view, true);
         var win = Host(view, shot.Int("width") ?? 1200, shot.Int("height") ?? 560);
         win.Show();
         view.Refresh();
         Pump(20);
+        if (shot.Bool("fold") && fold is not null && groupId > 0) { foldType!.GetMethod("Toggle")!.Invoke(fold, new object[] { groupId }); Pump(10); }
+        if (shot.Str("select") is string sel)
+        {
+            int id = sel == shot.Str("group")?.Split(':')[0] ? groupId : _demo.Track(sel);
+            typeof(MixerView).GetMethod("FollowSelection", new[] { typeof(int) })?.Invoke(view, new object[] { id });
+            Pump(10);
+        }
         Save(win, shot.Id);
         win.Close();
+        if (groupId > 0) _engine.Ungroup(groupId);   // the demo song is shared by every shot
     }
 
     private void Prefs(Shot shot)

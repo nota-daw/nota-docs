@@ -3,13 +3,15 @@ title: Нижняя панель и окна устройств
 description: Панель под видом — Devices, Pattern и Clip, — её отдельное окно для второго экрана и окна устройств для цепочек рэков.
 sidebar:
   order: 5
-updated: "0.56.1"
+updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.App/MainWindow.Detail.cs
   - src/managed/Nota.App/MainWindow.DetailWindow.cs
   - src/managed/Nota.App/DetailWindow.cs
   - src/managed/Nota.App/DeviceWindow.cs
+  - src/managed/Nota.App/MainWindow.Browser.cs
+  - src/managed/Nota.App/MainWindow.Mixer.cs
 ---
 
 import { Aside } from '@astrojs/starlight/components';
@@ -33,7 +35,17 @@ import Kbd from '@components/Kbd.astro';
   [аудио](../../editing/audio-clips/).
 
 Высоту **Pattern** и **Clip** меняйте, перетаскивая верхний край панели; каждая вкладка помнит
-свою высоту. У **Devices** высота фиксированная — ровно по карточкам, её не изменить.
+свою высоту. Двойной щелчок по краю возвращает вкладке высоту по умолчанию — так же
+сбрасываются край браузера и верхний край встроенного Mixer. У **Devices** высота
+фиксированная — ровно по карточкам, её не изменить.
+
+## Редактор клипа на всё окно
+
+На вкладках **Clip** и **Pattern** кнопка развёртывания справа в заголовке — или
+<Kbd>⌘ ⇧ F</Kbd>, или **View ▸ Clip editor fills the window** — отдаёт редактору всё окно:
+браузер, Arrangement (или Session, Modular) и встроенный Mixer сворачиваются. Та же кнопка,
+теперь со стрелками внутрь, или та же клавиша возвращает их с прежними высотами. Выбор вида,
+показ Mixer или браузера и переход на **Devices** тоже возвращают обычное разделение.
 
 В заголовке — имя и тип трека; у трека инструмента там же задержка цепочки (**PDC**), которую
 Nota компенсирует автоматически.
