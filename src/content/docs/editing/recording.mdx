@@ -13,6 +13,7 @@ sources:
   - src/managed/Nota.App/SessionView.Toolbar.cs
   - src/native/nota.engine/src/engine/Engine_Render.cpp
   - src/managed/Nota.App/RecordPreview.cs
+  - src/native/nota.engine/src/engine/Engine_TakeRetry.cpp
 ---
 
 import { Aside, Steps } from '@astrojs/starlight/components';
@@ -67,6 +68,21 @@ where you played it, and the take's clip starts earlier to hold it. The same goe
 you are already holding when recording starts. A take that starts at 1.1 can't begin earlier,
 so its clip starts at 1.1 and the part of the note before it is kept out of sight: move the
 clip right and drag its left edge out to hear it.
+
+## Discard and retry a take
+
+Fluffed it? Press <Kbd>⌘ .</Kbd> (<Kbd>Ctrl .</Kbd> on Windows and Linux) — or
+**Transport → Discard and retry take** — while recording. The take is thrown away and recording
+starts again at once:
+
+- A take you started from stop goes back to where it began and counts in again, if a
+  count-in is set.
+- A take you punched in during playback goes back to where you pressed Play, so you hear the
+  run-up again.
+
+Nothing of the discarded take stays: no audio, no loop passes in the take lanes, no notes,
+controllers or automation, and no undo step — after you keep a take, one <Kbd>⌘ Z</Kbd>
+removes it. Hold the keys and they retry once; press again to go again.
 
 ## Mono or stereo input
 
@@ -144,6 +160,10 @@ to whole bars), or set **Fixed** to 1–8 bars and it stops by itself. An empty 
 stops the clip that track was playing. From stop, with a count-in set, the slot blinks
 **Rec in…** through the count-in and the take starts as it ends; a note you hold into the take
 starts with it. Stop during the count-in leaves the slot empty.
+
+<Kbd>⌘ .</Kbd> while a slot records drops only that slot's take: the other clips and the
+transport keep going, the slot shows **Rec in…** again and records from the next launch
+quantum (at once with quantize off).
 
 ## Recording automation
 
