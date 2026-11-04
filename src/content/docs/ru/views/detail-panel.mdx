@@ -10,6 +10,7 @@ sources:
   - src/managed/Nota.App/MainWindow.DetailWindow.cs
   - src/managed/Nota.App/DetailWindow.cs
   - src/managed/Nota.App/DeviceWindow.cs
+  - src/managed/Nota.App/ArrangementView.cs
   - src/managed/Nota.App/MainWindow.Browser.cs
   - src/managed/Nota.App/MainWindow.Mixer.cs
 ---
@@ -18,8 +19,15 @@ import { Aside } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
 
-Панель под Arrangement или Session подробно показывает то, с чем вы работаете. Выберите трек —
-она покажет его устройства; дважды щёлкните клип — откроет клип.
+Панель под Arrangement или Session подробно показывает то, с чем вы работаете. Дважды щёлкните
+заголовок трека — она откроется на его устройствах; дважды щёлкните клип (или заполненный слот
+Session) — откроет клип.
+
+Обычный щелчок только выделяет, так что панель не отнимает место у вида, пока вы её не позовёте.
+Открытая панель следует за выделением: щёлкните другой трек — покажет его устройства; щёлкните
+другой клип, когда открыта вкладка **Clip**, — покажет этот клип. Чтобы панель открывалась при
+любом выделении, включите **Open the detail panel when you select a track or clip** в
+[Settings ▸ Appearance](../../preferences/appearance/).
 
 <Shot id="views/detail-panel" alt="Нижняя панель с треком Keys: Nota Pentad и Nota EQ-8" />
 
@@ -51,7 +59,7 @@ import Kbd from '@components/Kbd.astro';
 Nota компенсирует автоматически.
 
 Справа: **Freeze** и **Live freeze** ([заморозка трека](../../basics/tracks/)), кнопка ⧉ и ×,
-закрывающий панель. **View ▸ Toggle detail panel** показывает или прячет её.
+закрывающий панель. **View ▸ Toggle detail panel** показывает или прячет её — на текущем выделении.
 
 ## Панель в отдельном окне
 

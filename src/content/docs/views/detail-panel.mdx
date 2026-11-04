@@ -10,6 +10,7 @@ sources:
   - src/managed/Nota.App/MainWindow.DetailWindow.cs
   - src/managed/Nota.App/DetailWindow.cs
   - src/managed/Nota.App/DeviceWindow.cs
+  - src/managed/Nota.App/ArrangementView.cs
   - src/managed/Nota.App/MainWindow.Browser.cs
   - src/managed/Nota.App/MainWindow.Mixer.cs
 ---
@@ -18,8 +19,15 @@ import { Aside } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
 
-The panel under the Arrangement or Session shows what you're working on in detail. Select a
-track and it shows the track's devices; double-click a clip and it opens the clip.
+The panel under the Arrangement or Session shows what you're working on in detail.
+Double-click a track's header and it opens on the track's devices; double-click a clip (or a
+filled Session slot) and it opens the clip.
+
+A plain click only selects, so the panel doesn't take room from the view until you ask for it.
+Once it is open, it follows the selection: click another track and it shows that track's
+devices; click another clip while the **Clip** tab is up and it shows that clip. To have every
+click open it, turn on **Open the detail panel when you select a track or clip** in
+[Settings ▸ Appearance](../../preferences/appearance/).
 
 <Shot id="views/detail-panel" alt="The detail panel showing the Keys track: Nota Pentad and Nota EQ-8" />
 
@@ -52,7 +60,7 @@ The header names the track and its type; for an instrument track it also shows t
 chain adds (**PDC**), which Nota compensates automatically.
 
 On the right: **Freeze** and **Live freeze** ([freezing a track](../../basics/tracks/#freezing-a-track)),
-the ⧉ button and × to close the panel. **View ▸ Toggle detail panel** shows or hides it.
+the ⧉ button and × to close the panel. **View ▸ Toggle detail panel** shows or hides it, on the current selection.
 
 ## The panel in its own window
 
