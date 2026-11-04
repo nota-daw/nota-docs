@@ -61,7 +61,7 @@ shots:
   - { id: editing/multi-clip-editor, source: app, scene: main, args: {view: "arrangement", clip: "Bass", clipIndex: 1, with: "Bass:0,Keys:2,Keys:3", element: "DetailPanel", width: 1200, detailHeight: 460} }
   - { id: editing/audio-clip-editor, source: app, scene: main, args: {view: "arrangement", clip: "Texture", audio: true, element: "DetailPanel", width: 1200, detailHeight: 420} }
   - { id: editing/automation-lanes, source: app, scene: main, args: {view: "arrangement", automation: true, fit: true, element: "Timeline", height: 760} }
-  - { id: views/arrangement-track-sends, source: app, scene: main, args: {view: "arrangement", rows: 96, element: "Timeline", width: 1100, height: 780} }
+  - { id: views/arrangement-track-sends, source: app, scene: main, args: {view: "arrangement", rows: 128, element: "Timeline", width: 1100, height: 780} }
   - { id: views/arrangement-timeline, source: app, scene: main, args: {view: "arrangement", fit: true, element: "Timeline", height: 760} }
 
   # ── Library

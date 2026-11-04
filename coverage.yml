@@ -62,7 +62,7 @@ sections:
 
   views:
     - page: views/arrangement
-      covers: [timeline, clips move/trim/duplicate/split/consolidate, grid & snap, zoom/scroll, overview strip, sections, clip names, lane controls, track heights & header width, send knobs in track headers + Sends key]
+      covers: [timeline, clips move/trim/duplicate/split/consolidate, grid & snap, zoom/scroll, overview strip, sections, clip names, lane controls, track heights & header width, send knobs in Large track headers]
       sources: [src/managed/Nota.App/ArrangementView.cs, src/managed/Nota.App/ArrangementView.ClipDrag.cs, src/managed/Nota.App/ArrangementView.Overview.cs, src/managed/Nota.App/ArrangementView.Sections.cs, src/managed/Nota.App/ArrangementView.LaneControl.cs, src/managed/Nota.App/ArrangementView.Sizing.cs, src/managed/Nota.App/ArrangementView.Sends.cs]
       mockup: Nota Arrangement.html
       status: done
@@ -100,7 +100,7 @@ sections:
       sources: [src/native/nota.engine/src/engine/Engine_Recording.cpp, src/native/nota.engine/src/engine/Engine_Takes.cpp, src/managed/Nota.App/ArrangementView.Takes.cs, src/managed/Nota.App/RecordPreview.cs]
       status: done
     - page: editing/automation
-      covers: [automation lanes, draw/edit points, send lanes (Send A · <return>), Lock Envelopes, MIDI-learned automation]
+      covers: [automation lanes, draw/edit points, Lock Envelopes, MIDI-learned automation]
       sources: [src/managed/Nota.App/ArrangementView.Automation.cs, src/native/nota.engine/src/Automation.h]
       status: done
     - page: editing/time-ranges

@@ -1,6 +1,6 @@
 ---
 title: Automation
-description: Drawing and recording automation lanes for volume, pan, sends and any device parameter; overriding and re-enabling; editing points and ranges.
+description: Drawing and recording automation lanes for volume, pan and any device parameter; overriding and re-enabling; editing points and ranges.
 sidebar:
   order: 4
 updated: "0.58.1"
@@ -14,9 +14,9 @@ import { Aside } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
 
-Automation makes a value move over time — a filter opening up, a fade, a send swelling into a
-drop. Any knob or fader in Nota can be automated: track volume, pan and sends, every parameter of a
-built-in device, plug-in parameters, MIDI effects.
+Automation makes a value move over time — a filter opening up, a fade, a delay swelling into a
+drop. Track volume and pan can be automated, and so can every parameter of a built-in device,
+plug-in parameters and MIDI effects. Sends can't: they have no automation lane.
 
 <Shot id="editing/automation-lanes" alt="Automation mode in the Arrangement: the Lead track's volume lane with a curve across the song" />
 
@@ -25,8 +25,6 @@ built-in device, plug-in parameters, MIDI effects.
 Click the **automation** button in the transport bar (<Kbd>⌘ ⇧ A</Kbd>). Each track's lane shows
 one parameter, picked with the pill at the start of the lane — click it and choose from the
 list. Parameters that already carry automation are marked with a dot and listed first.
-After **Volume** and **Pan** come the track's sends, one per return track: **Send A · Reverb**,
-**Send B · Delay** and so on.
 
 While automation mode is on, touching any knob or fader of a track — on a device, a plug-in or
 the mixer — switches that track's lane to it.
@@ -79,7 +77,5 @@ clips without dragging it along.
 
 <Aside type="tip">
 Lanes follow their device: reorder or remove devices and the automation stays with the
-parameter it belongs to. Send lanes follow their return the same way: delete a return and the
-send automation to it goes with it, while the sends to later returns keep theirs under their new
-letter.
+parameter it belongs to.
 </Aside>
