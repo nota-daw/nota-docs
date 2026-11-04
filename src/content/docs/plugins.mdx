@@ -3,11 +3,12 @@ title: "Plug-ins"
 description: "Using VST3 and AU plug-ins in Nota — adding them to tracks and racks, their card and editor window, state, latency and automation."
 sidebar:
   order: 1
-updated: "0.56.1"
+updated: "0.57.1"
 status: done
 sources:
   - src/managed/Nota.App/DeviceCards/PluginCard.cs
   - src/managed/Nota.App/DeviceChainView.Plugin.cs
+  - src/managed/Nota.App/Controls/PluginPreviewBackdrop.cs
   - src/managed/Nota.App/MainWindow.MissingPlugins.cs
 ---
 
@@ -41,6 +42,19 @@ The card comes in two sizes:
 button reads **Close editor** and closes it; the window also closes when the device is removed. If
 the window can't be opened, the status line says so. While it has focus, the computer keyboard still plays notes and the transport keys still
 work.
+
+Once you've opened a plug-in's window, its card shows what the plug-in looks like: the picture of the
+window becomes the card's background — the whole small card, the left column of the full one —
+toned down in the theme's card colour so the text and buttons stay readable. It fills the card
+without stretching, keeping the top of the window, where plug-ins put their name. The picture is
+retaken every time the window closes (by **Close editor** or the window's own close button), so it
+shows the settings you left. It stays with the device when you move, duplicate or copy it and is
+saved with the project, so the cards look the same when you reopen it. A plug-in whose window was
+never opened has a plain card.
+
+<Aside>
+The picture is taken on macOS and Windows. On Linux the card stays plain.
+</Aside>
 
 ## What Nota takes care of
 

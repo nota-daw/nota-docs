@@ -18,7 +18,20 @@ import { Aside } from '@astrojs/starlight/components';
   Follow [Install Nota ▸ macOS](../../start-here/install/): **Privacy & Security ▸ Open Anyway**, or
   `xattr -dr com.apple.quarantine /Applications/Nota.app` in Terminal.
 - **Windows SmartScreen** — **More info ▸ Run anyway**.
-- **Linux** — make the AppImage executable (`chmod +x`).
+- **Linux** — make the AppImage executable (`chmod +x`). If it still doesn't appear, run it from a
+  terminal to see why, and look in `~/.config/nota/logs/`. Since 0.58 Nota opens even when no audio
+  output works; the status line then says it runs without sound — pick a device in **Settings ▸ Audio**.
+
+## Linux: Open / Save does nothing, or files won't drop in
+
+- **File dialogs** — Nota asks the system's file dialog (xdg-desktop-portal) first. When the portal
+  has no working FileChooser backend, Nota notices within a few seconds and opens its own file
+  dialog instead, for the rest of the session. To always use Nota's own dialog, start it with
+  `NOTA_FILE_DIALOG=builtin`. Fixing the portal (installing the backend for your desktop, e.g.
+  `xdg-desktop-portal-gtk`) brings the system dialog back.
+- **Dragging files from a file manager** — Nota reads the usual file list and, since 0.58, also
+  file paths sent as text or as a GNOME / KDE file list. If a drop still does nothing, the log
+  (`~/.config/nota/logs/`) names the formats the drag offered — please attach it to a bug report.
 
 ## No sound
 

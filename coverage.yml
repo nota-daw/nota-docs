@@ -48,8 +48,8 @@ sections:
       mockup: Nota Transport.html
       status: done
     - page: basics/tracks
-      covers: [audio / instrument / return tracks, groups, names & colours, volume/pan/mute/solo/arm, track context menu, freeze & flatten]
-      sources: [src/managed/Nota.App/ArrangementView.Tracks.cs, src/managed/Nota.App/ArrangementView.Groups.cs, src/managed/Nota.App/TrackNames.cs, src/managed/Nota.App/MainWindow.Freeze.cs, src/managed/Nota.App/MainWindow.LiveFreeze.cs]
+      covers: [audio / instrument / return tracks, groups, linked groups (Link), names & colours, volume/pan/mute/solo/arm, track context menu, freeze & flatten]
+      sources: [src/managed/Nota.App/ArrangementView.Tracks.cs, src/managed/Nota.App/ArrangementView.Groups.cs, src/managed/Nota.App/ArrangementView.Link.cs, src/managed/Nota.App/TrackNames.cs, src/managed/Nota.App/MainWindow.Freeze.cs, src/managed/Nota.App/MainWindow.LiveFreeze.cs]
       status: done
     - page: basics/undo
       covers: [undo/redo for every edit, slider value typing]
@@ -62,8 +62,8 @@ sections:
 
   views:
     - page: views/arrangement
-      covers: [timeline, clips move/trim/duplicate/split/consolidate, grid & snap, zoom/scroll, overview strip, sections, clip names, lane controls]
-      sources: [src/managed/Nota.App/ArrangementView.cs, src/managed/Nota.App/ArrangementView.ClipDrag.cs, src/managed/Nota.App/ArrangementView.Overview.cs, src/managed/Nota.App/ArrangementView.Sections.cs, src/managed/Nota.App/ArrangementView.LaneControl.cs]
+      covers: [timeline, clips move/trim/duplicate/split/consolidate, grid & snap, zoom/scroll, overview strip, sections, clip names, lane controls, track heights & header width]
+      sources: [src/managed/Nota.App/ArrangementView.cs, src/managed/Nota.App/ArrangementView.ClipDrag.cs, src/managed/Nota.App/ArrangementView.Overview.cs, src/managed/Nota.App/ArrangementView.Sections.cs, src/managed/Nota.App/ArrangementView.LaneControl.cs, src/managed/Nota.App/ArrangementView.Sizing.cs]
       mockup: Nota Arrangement.html
       status: done
     - page: views/session
@@ -76,8 +76,8 @@ sections:
       sources: [src/managed/Nota.App/ModularView.cs, src/native/nota.engine/src/Modulation.h]
       status: done
     - page: views/mixer
-      covers: [Mixer window ⇧⌘M, sends & returns, groups, master, meters, record source]
-      sources: [src/managed/Nota.App/MixerView.cs, src/managed/Nota.App/MixerWindow.cs, src/managed/Nota.App/MainWindow.Mixer.cs]
+      covers: [Mixer ⇧⌘M docked or in its own window, sends & returns, group bars and folding (shared with the Arrangement, saved with the project), selection outline, compact strips, master, meters, record source]
+      sources: [src/managed/Nota.App/MixerView.cs, src/managed/Nota.App/MixerView.Compact.cs, src/managed/Nota.App/MixerWindow.cs, src/managed/Nota.App/MainWindow.Mixer.cs, src/managed/Nota.App/GroupFold.cs, src/managed/Nota.App/Controls/GroupBandsLayer.cs, src/managed/Nota.App/Controls/MeterFader.cs]
       status: done
     - page: views/detail-panel
       covers: [bottom panel Devices/Clip, detach to own window (⧉), Device window]
@@ -96,8 +96,8 @@ sections:
       sources: [src/managed/Nota.App/AudioClipEditorView.cs, src/managed/Nota.App/ClipPropsView.cs, src/managed/Nota.App/ClipAdsrKit.cs, src/managed/Nota.App/ClipAudioExport.cs, src/managed/Nota.App/WaveformView.cs, src/native/nota.engine/src/Warp.h, src/native/nota.engine/src/TempoDetect.h]
       status: done
     - page: editing/recording
-      covers: [arm & record audio/MIDI, inputs, count-in, Session recording, latency]
-      sources: [src/native/nota.engine/src/Engine_Recording.cpp, src/managed/Nota.App/RecordPreview.cs]
+      covers: [arm & record audio/MIDI, inputs, count-in, Session recording, latency, take lanes and comping]
+      sources: [src/native/nota.engine/src/engine/Engine_Recording.cpp, src/native/nota.engine/src/engine/Engine_Takes.cpp, src/managed/Nota.App/ArrangementView.Takes.cs, src/managed/Nota.App/RecordPreview.cs]
       status: done
     - page: editing/automation
       covers: [automation lanes, draw/edit points, Lock Envelopes, MIDI-learned automation]
@@ -178,15 +178,16 @@ sections:
       - {kind: 5, name: Nota Random,   page: devices/midi-effects/random,   engine: MidiRandom.h,     card: RandomMidiBody.cs,   mockup: Nota Random.html, status: done}
     # Racks. Card: src/managed/Nota.App/DeviceCards/Rack/
     racks:
-      - {kind: "instrument 3", name: Nota Instrument Rack,   page: devices/racks/instrument-rack,   engine: RackInstrument.h, card: RackCardView.cs, status: done}        # no mockup
+      - {kind: "instrument 3", name: Nota Instrument Rack,   page: devices/racks/instrument-rack,   engine: RackInstrument.h, card: RackCard.cs, mockup: Nota Racks.html, covers: [chains, chain MIDI effects (#329), zones + probe, mono/glide], status: done}
       - {kind: "instrument 4", name: Nota Drum Rack,         page: devices/racks/drum-rack,         engine: DrumRack.h,       card: RackCardView.Drum.cs,   mockup: Nota Drum Rack.html, covers: [pads, chains, 25 factory kits, sample drops], status: done}
-      - {kind: "effect 5",     name: Nota Audio Effect Rack, page: devices/racks/audio-effect-rack, engine: RackDevice.h,     card: RackCardView.cs, status: done}        # no mockup; Parallel/Series/Select
-      - {page: devices/racks/macros, covers: [macro knobs, mapping], card: MacroPanel.cs, status: done}
+      - {kind: "effect 5",     name: Nota Audio Effect Rack, page: devices/racks/audio-effect-rack, engine: RackDevice.h,     card: RackCard.cs, mockup: Nota Racks.html, covers: [Parallel/Serial/Select, selector, follow input], status: done}
+      - {kind: "midi 6",       name: Nota MIDI Effect Rack,  page: devices/racks/midi-effect-rack,  engine: MidiRack.h,       card: RackCard.cs, mockup: Nota Racks.html, covers: [chains of MIDI effects, zones, select, merge, pass-through], status: done}
+      - {page: devices/racks/macros, covers: [macro knobs, mapping in place, Macros tab, curves / Mixed, selector target, Drum Rack macro panel], card: "RackCard.Macros.cs, MacroPanel.cs", status: done}
 
   plugins:
     - page: plugins
-      covers: [VST3 (all platforms) and AU (macOS), plug-in card, open plug-in UI, state save/restore, missing plug-ins on load]
-      sources: [src/managed/Nota.App/DeviceCards/PluginCard.cs, src/managed/Nota.App/DeviceChainView.Plugin.cs, src/managed/Nota.App/MainWindow.MissingPlugins.cs]
+      covers: [VST3 (all platforms) and AU (macOS), plug-in card, plug-in card window picture, open plug-in UI, state save/restore, missing plug-ins on load]
+      sources: [src/managed/Nota.App/DeviceCards/PluginCard.cs, src/managed/Nota.App/DeviceChainView.Plugin.cs, src/managed/Nota.App/Controls/PluginPreviewBackdrop.cs, src/managed/Nota.App/MainWindow.MissingPlugins.cs]
       status: done
     - page: plugins/scanning
       covers: [scan paths, Rescan, failed plug-ins]
@@ -258,14 +259,14 @@ sections:
 
   preferences:
     # One page per Settings page (src/managed/Nota.App/PreferencesWindow.cs → Nav)
-    - {page: preferences/audio,      sources: [src/managed/Nota.App/PreferencesWindow.cs], covers: [device, sample rate, buffer, WASAPI exclusive], status: done}
+    - {page: preferences/audio,      sources: [src/managed/Nota.App/PreferencesWindow.cs], covers: [device, sample rate, buffer, WASAPI exclusive, ASIO], status: done}
     - {page: preferences/midi,       sources: [src/managed/Nota.App/PreferencesWindow.cs], status: done}
     - {page: preferences/gamepads,   sources: [src/managed/Nota.App/PreferencesWindow.cs], status: done}
     - {page: preferences/remote,     sources: [src/managed/Nota.App/PreferencesWindow.Remote.cs], status: done}
     - {page: preferences/plugins,    sources: [src/managed/Nota.App/PreferencesWindow.cs], status: done}
     - {page: preferences/downloads,  sources: [src/managed/Nota.App/PreferencesWindow.Downloads.cs, src/managed/Nota.App/PreferencesWindow.Store.cs, src/managed/Nota.App/PreferencesWindow.Samples.cs, src/managed/Nota.App/PreferencesWindow.Models.cs], status: done}
     - {page: preferences/library,    sources: [src/managed/Nota.App/PreferencesWindow.cs], status: done}
-    - {page: preferences/appearance, sources: [src/managed/Nota.App/PreferencesWindow.cs, src/managed/Nota.Application/Appearance.cs, src/managed/Nota.Application/InterfaceScale.cs, src/managed/Nota.App/Theme/NotaUiScale.cs], covers: [colour theme Dark/Light/Follow system with Studio and Ember themes, waveforms, interface scale 75–200 %, AI control], status: done}
+    - {page: preferences/appearance, sources: [src/managed/Nota.App/PreferencesWindow.cs, src/managed/Nota.Application/Appearance.cs, src/managed/Nota.Application/InterfaceScale.cs, src/managed/Nota.App/Theme/NotaUiScale.cs, src/managed/Nota.App/PreferencesWindow.Language.cs, src/managed/Nota.Application/Localization/UiLanguage.cs], covers: [colour theme Dark/Light/Follow system with Studio and Ember themes, waveforms, interface scale 75–200 %, interface language English/Français with restart, AI control], status: done}
     - {page: preferences/shortcuts,  sources: [src/managed/Nota.App/PreferencesWindow.cs], status: done}
     - {page: preferences/updates,    sources: [src/managed/Nota.App/PreferencesWindow.Updates.cs, src/managed/Nota.App/AppUpdates.cs, src/managed/Nota.App/MainWindow.Updates.cs], covers: [automatic update checks, Check now, Check for updates menu, status bar notice], status: done}
     # mockup for all: Nota Settings.html
@@ -289,4 +290,7 @@ findings:
   - Mockup ↔ code drift per device is checked when each device page is written (parameter names/ranges come from the engine header + card).
 
 # New user-facing changes that arrived before their page was written (nota-docs skill appends here).
-pending: []
+pending:
+  - page: reference/shortcuts
+    change: "regenerate (npm run shortcuts) once nota-daw/nota#240 parts 2–3 merge — new rows: ⌥-click a graph handle / envelope node / mod-matrix cell, double-click a mod-matrix cell; clip ADSR row"
+    version: "0.57.1"

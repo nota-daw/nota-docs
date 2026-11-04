@@ -3,9 +3,10 @@ title: "Nota Compressor"
 description: "Compressor with five characters, soft knee, peak / RMS / auto detection, look-ahead, range, auto release, parallel mix and a filtered sidechain."
 sidebar:
   order: 4
-updated: "0.50.1"
+updated: "0.57.1"
 status: done
 sources:
+  - src/managed/Nota.App/DeviceCards/SidechainSourcePicker.cs
   - src/native/nota.engine/src/Compressor.h
   - src/managed/Nota.App/DeviceCards/Bodies/CompressorDeviceBody.cs
 ---
@@ -36,7 +37,9 @@ rather than guess.
 <Shot id="devices/audio-effects/compressor/sidechain" alt="Nota Compressor, Sidechain tab with the key filters" />
 
 What the detector listens to: **Internal** (the track) or **External key** (another track, picked
-as the device's sidechain source, **Pre** or **Post** its fader). The key's spectrum is drawn under
+as the device's sidechain source, **Pre** or **Post** its fader). The key menu also lists the pads of
+a Drum Rack, the chains of an Instrument Rack and the voices of Nota Rhythm under their track — key
+off one of them and only it drives the compressor; **Listen** then reads, say, *Drums · Kick pre*. The key's spectrum is drawn under
 its filters — drag the **HP** and **LP** handles; **Q** shapes both. **Listen** lets you hear the key.
 
 ## Dynamics and Output
@@ -65,5 +68,5 @@ Pluck**, **Acoustic Guitar**, **Guitar Sustain**, **Piano Smooth**, **Pad Breath
 ## Tips
 
 - **Sidechain pump:** External key from the kick, fast attack, release to taste — or start from
-  **EDM Pump**.
+  **EDM Pump**. Kick inside a Drum Rack? Pick its pad (**Drums ▸ Kick**) rather than the whole kit.
 - **Parallel drums:** a heavy ratio with **Mix** around 40 %.
