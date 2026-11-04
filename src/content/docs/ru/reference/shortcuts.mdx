@@ -28,7 +28,7 @@ import Kbd from '@components/Kbd.astro';
 | <Kbd keys="⌘ ," /> | Settings |
 | <Kbd keys="⌘ Q" /> | Quit Nota · asks about unsaved changes first |
 
-## Window
+## Окно
 
 | Клавиши | Действие |
 |---|---|
@@ -190,8 +190,11 @@ import Kbd from '@components/Kbd.astro';
 | Click · drag the ruler | Move the playhead there · drag to scrub, snapped to the grid · ⌥ off the grid |
 | Drag the playhead line | Scrub the playhead · on the ruler or over empty grid |
 | Drag velocity stem | Set velocity · selected notes move together · ⇧ adds a note |
+| Double-click velocity stem | Put the note back to the default velocity (0.8) · the whole selection's when the note is selected · undo is one step |
+| Right-click velocity stem | Reset velocity from a menu · same as the double-click |
 | Drag in the Bend / Pres / Slide lane | Draw the selected note's MPE curve · ⌥ draws a straight line · drag a point to move it |
 | Double-click in an MPE lane | Add a point · on a point, delete it · right-click to clear the curve |
+| Click the Bend lane's range | Pick how far the Bend lane reaches: ±2, 12, 24, 48 or 96 semitones · a bend already on the notes can widen it further |
 | Click the controller tab | Show a MIDI controller under the notes · click it again to pick another CC, the pitch wheel or channel pressure |
 | Drag in the Sustain lane | Draw a pedal block on the grid · ⌘ off the grid · drag an edge to resize, the body to move · double-click or Delete removes it |
 | Drag in a controller lane | Draw the controller's curve · ⌥ draws a straight line · drag a point to move it · double-click adds or deletes a point |
@@ -249,7 +252,8 @@ import Kbd from '@components/Kbd.astro';
 
 | Клавиши | Действие |
 |---|---|
-| Double-click clip | Open in the clip editor · on one of several selected MIDI clips, open them all together |
+| Double-click clip | Open in the clip editor, opening the detail panel · on one of several selected MIDI clips, open them all together |
+| Double-click a track header | Open its devices in the detail panel · a plug-in's own window is Open editor on its card |
 | Double-click a browser instrument | Swap it onto the selected instrument track · clips and effects stay · no track selected starts one |
 | ⌥ + double-click a browser instrument | Always start a new track with it |
 | Right-click the metronome | Count-in before Play / Record: off · 1 · 2 · 4 bars |
@@ -267,7 +271,10 @@ import Kbd from '@components/Kbd.astro';
 | Click section | Jump the playhead to its start |
 | Double-click section | Rename it · right-click → Reset to default name for its automatic Section N |
 | Return · Esc (renaming a section) | Keep the name (empty = automatic) · cancel |
-| Drag section · its edge | Move / resize it, snapped to bars |
+| Drag section | Rearrange the song · it and everything in it move to the marked boundary, the sections between close up · Esc cancels |
+| ⌥-drag section | Move only the section marker, snapped to bars |
+| Drag section edge | Resize it, snapped to bars |
+| Right-click section | Move earlier / later · duplicate or delete with content |
 | Drag overview strip | Drag sideways to scroll · up / down to zoom out / in |
 | Drag overview edge | Zoom by resizing the viewport window |
 | Double-click overview | Fit the whole project on screen |
