@@ -4,7 +4,7 @@ description: Selecting a stretch of time across tracks, and what to do with it �
 sidebar:
   order: 5
 since: "0.50.1"
-updated: "0.50.1"
+updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.App/ArrangementView.cs
@@ -31,7 +31,7 @@ A **time range** is a stretch of the song across one or more tracks — not whol
 | **Duplicate time** | <Kbd>⌘ ⇧ D</Kbd> | Inserts a copy of the range right after it. Everything later — on every track, automation included — moves right; clips that cross the point are cut. Press again to repeat the copy. |
 | **Insert silence** | <Kbd>⌘ ⇧ I</Kbd> | Opens an empty gap as long as the range at its start, pushing everything from there right. |
 | **Duplicate** | <Kbd>⌘ D</Kbd> | Copies the range's material on the selected tracks right after it. Nothing moves to make room. |
-| **Split** | <Kbd>⌘ E</Kbd> | Cuts the clips at the range edges (without a range: at the playhead). |
+| **Split** | <Kbd>⌘ E</Kbd> | Cuts the clips at the range edges (without a range: at the playhead). An audio clip also gets a 4 ms fade at the cut, which you can drag longer or shorter; Settings → Appearance can turn that off. |
 | **Consolidate** | <Kbd>⌘ J</Kbd> | Replaces the material in the range with one clip per track — notes merged, audio rendered with its gain, pitch, warp and envelopes. |
 | **Loop** | <Kbd>⌘ L</Kbd> | Sets the loop to the range and turns it on. |
 | **Delete** | <Kbd>Delete</Kbd> | Deletes the material in the range, cutting clips at its edges. The gap stays. |
