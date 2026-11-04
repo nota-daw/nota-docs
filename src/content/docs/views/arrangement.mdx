@@ -1,6 +1,6 @@
 ---
 title: Arrangement
-description: The song on a timeline — moving and trimming clips, selecting, zooming, the overview strip, sections and clip names.
+description: The song on a timeline — moving and trimming clips, selecting, zooming, the overview strip, sections, clip names and which side the track headers sit on.
 sidebar:
   order: 1
 updated: "0.58.1"
@@ -12,6 +12,8 @@ sources:
   - src/managed/Nota.App/ArrangementView.Overview.cs
   - src/managed/Nota.App/ArrangementView.Sections.cs
   - src/managed/Nota.App/ArrangementView.Sizing.cs
+  - src/managed/Nota.App/ArrangementView.Sends.cs
+  - src/managed/Nota.Application/Engine/SectionNames.cs
 ---
 
 import { Aside } from '@astrojs/starlight/components';
@@ -27,6 +29,10 @@ From top to bottom: the **Overview** strip, the **Sections** lane, the ruler wit
 **Zoom** buttons, the tracks, and — pinned at the bottom — the return tracks and the master.
 
 ## Clips
+
+Audio clips show their waveform in the style you pick under
+[Settings ▸ Appearance ▸ Waveform](../../preferences/appearance/#waveform) — **Smooth** by
+default.
 
 | Do this | To |
 |---|---|
@@ -95,15 +101,41 @@ it reads which bars you're looking at ("bar 1–8 / 36"). **View ▸ Toggle over
 The **Sections** lane names the parts of the song — Intro, Verse, Drop — so the structure is
 readable at a glance.
 
-- Drag along the empty lane to mark a section over those bars.
+- Drag along the empty lane to mark a section over those bars. It gets an automatic name.
 - Click a section to jump the playhead to its start; double-click it to rename it.
 - Drag a section's edge to resize it, in whole bars. <Kbd>⌥</Kbd>-drag the section itself to
   move just its marker, also in whole bars — the music under it stays.
 - Right-click it for **Loop section**, **Select section** (as a time range across every track),
-  **Duplicate**, **Rename…** and **Delete**. These act on the marker only.
+  **Duplicate**, **Rename…**, **Reset to default name** and **Delete**. These act on the marker only.
 
 Each of these edits is one undo step. Sections are saved with the project. **View ▸ Toggle
 sections** hides the lane.
+
+### Section names
+
+A new section is named **Section N**, where N is its place in the song counted from the left.
+This is an *automatic* name: it renumbers when you add, move, duplicate or delete sections. A
+section you named yourself is counted too — if the second section is "Chorus", the third is
+still **Section 3** — and its name never changes on its own.
+
+Double-click a section (or right-click ▸ **Rename…**) to open the rename box:
+
+- For an automatic section the box opens empty, with the automatic name shown as a hint. A
+  caption under the box reads **Automatic name** or **Custom name**, following what you type.
+- <Kbd>Return</Kbd> keeps the name. It is one undo step, or none if nothing changed. Leading and
+  trailing spaces are trimmed, and an empty name goes back to automatic.
+- <Kbd>Esc</Kbd>, or a click anywhere else, cancels and changes nothing.
+- **Reset to default** in the box gives the section its automatic name back. It is available
+  only for a custom name.
+
+**Reset to default name** in the section's right-click menu does the same, and is greyed out
+while the name is already automatic. From the keyboard, open the [command
+palette](../../basics/command-palette/) and run **Reset section name**: it acts on the section
+under the playhead and says in the status bar what it did.
+
+Undo and redo bring back both the name and whether it was automatic. Sections you named in
+earlier versions of Nota — including ones called "Section 2" — load as custom names; reset one
+to make it automatic.
 
 ### Rearranging the song
 
@@ -150,14 +182,49 @@ Make tracks short to see a big song at once, or tall to work on one part.
 | Right-click a track ▸ **Track height** | Pick **Compact**, **Standard** or **Large** for the selection, or for all tracks |
 | Drag the seam between the track headers and the lanes | Widen or narrow the headers (160–480 px); double-click it to reset |
 
-The header shows what fits. A **compact** track keeps its name and mute, solo and record-arm
-on one line; volume, pan and the input stay in the [Mixer](../mixer/) and the track's menu. A
-**standard** track has the usual three rows. A **large** track gives the input (or MIDI
-source), the volume fader and the pan a row each. Clips, waveforms and automation grow with
-the row.
+The header shows what fits. Its buttons — mute, solo, record-arm and, on an audio track, the
+headphones **monitor** button — stay together at the right edge, against the level meter, at
+every height, so they don't move when you resize a track. A **compact** track keeps its name and
+those buttons on one line; volume, pan and the input stay in the [Mixer](../mixer/) and the
+track's menu. A **standard** track has the usual three rows, with the input (or MIDI source) on
+the left of the button row. A **large** track puts the buttons under the name, then gives the
+input (or MIDI source), the volume fader and the pan a row each — or puts volume and pan side
+by side when it shows [sends](#sends-in-the-track-headers). Clips, waveforms and automation
+grow with the row.
 
 Track heights and the header width are saved with the project. They don't go into the undo
 history.
+
+**View ▸ Track headers on the right** puts the track list on the right, so the timeline
+starts at the left edge, next to the browser. The return and master headers, and the strips
+beside Overview, Sections and the ruler, move with it. Drag the seam toward the lanes to
+widen the headers; double-click it to reset the width. The same choice is **Settings ▸
+Appearance ▸ Track headers** (**Left** / **Right**). Nota remembers the side; it is not
+saved in the project.
+
+## Sends in the track headers
+
+A track tall enough for them — a **large** row, or a **standard** one from 88 px — shows its
+sends under volume and pan: one small knob per return track, **A**, **B**, … in the order of
+the returns, with the level beside it (**–** when the send is off). So you can set how much of a
+track goes to the reverb without opening the [Mixer](../mixer/).
+
+<Shot id="views/arrangement-track-sends" alt="Arrangement tracks at 96 px: under each track's volume and pan, a send knob A to the Reverb return; the Sends key at the top of the header column" />
+
+| Do this | To |
+|---|---|
+| Drag a send knob | Set the send |
+| Hover it | See the return's name and the level, e.g. **Send A · Reverb · 35%** |
+| Double-click it | Turn the send off |
+| <Kbd>⌥</Kbd>-click it | Type a value |
+
+The **Sends** key at the right end of the strip above the track headers shows or hides the
+send row on every track at once; it is lit while they are shown. It is saved with the project
+and only appears when the project has returns. In a narrow header the knobs drop their letter
+and level — hover one to read it.
+
+Every send move is one undo step, wherever you make it, and it records automation like volume
+does — see [Automation](../../editing/automation/).
 
 ## Clip names and groups
 
