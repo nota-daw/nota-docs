@@ -48,8 +48,8 @@ sections:
       mockup: Nota Transport.html
       status: done
     - page: basics/tracks
-      covers: [audio / instrument / return tracks, groups, names & colours, volume/pan/mute/solo/arm, track context menu, freeze & flatten]
-      sources: [src/managed/Nota.App/ArrangementView.Tracks.cs, src/managed/Nota.App/ArrangementView.Groups.cs, src/managed/Nota.App/TrackNames.cs, src/managed/Nota.App/MainWindow.Freeze.cs, src/managed/Nota.App/MainWindow.LiveFreeze.cs]
+      covers: [audio / instrument / return tracks, groups, linked groups (Link), names & colours, volume/pan/mute/solo/arm, track context menu, freeze & flatten]
+      sources: [src/managed/Nota.App/ArrangementView.Tracks.cs, src/managed/Nota.App/ArrangementView.Groups.cs, src/managed/Nota.App/ArrangementView.Link.cs, src/managed/Nota.App/TrackNames.cs, src/managed/Nota.App/MainWindow.Freeze.cs, src/managed/Nota.App/MainWindow.LiveFreeze.cs]
       status: done
     - page: basics/undo
       covers: [undo/redo for every edit, slider value typing]
@@ -76,8 +76,8 @@ sections:
       sources: [src/managed/Nota.App/ModularView.cs, src/native/nota.engine/src/Modulation.h]
       status: done
     - page: views/mixer
-      covers: [Mixer window ⇧⌘M, sends & returns, groups, master, meters, record source]
-      sources: [src/managed/Nota.App/MixerView.cs, src/managed/Nota.App/MixerWindow.cs, src/managed/Nota.App/MainWindow.Mixer.cs]
+      covers: [Mixer ⇧⌘M docked or in its own window, sends & returns, group bars and folding (shared with the Arrangement, saved with the project), selection outline, compact strips, master, meters, record source]
+      sources: [src/managed/Nota.App/MixerView.cs, src/managed/Nota.App/MixerView.Compact.cs, src/managed/Nota.App/MixerWindow.cs, src/managed/Nota.App/MainWindow.Mixer.cs, src/managed/Nota.App/GroupFold.cs, src/managed/Nota.App/Controls/GroupBandsLayer.cs, src/managed/Nota.App/Controls/MeterFader.cs]
       status: done
     - page: views/detail-panel
       covers: [bottom panel Devices/Clip, detach to own window (⧉), Device window]
@@ -96,8 +96,8 @@ sections:
       sources: [src/managed/Nota.App/AudioClipEditorView.cs, src/managed/Nota.App/ClipPropsView.cs, src/managed/Nota.App/ClipAdsrKit.cs, src/managed/Nota.App/ClipAudioExport.cs, src/managed/Nota.App/WaveformView.cs, src/native/nota.engine/src/Warp.h, src/native/nota.engine/src/TempoDetect.h]
       status: done
     - page: editing/recording
-      covers: [arm & record audio/MIDI, inputs, count-in, Session recording, latency]
-      sources: [src/native/nota.engine/src/Engine_Recording.cpp, src/managed/Nota.App/RecordPreview.cs]
+      covers: [arm & record audio/MIDI, inputs, count-in, Session recording, latency, take lanes and comping]
+      sources: [src/native/nota.engine/src/engine/Engine_Recording.cpp, src/native/nota.engine/src/engine/Engine_Takes.cpp, src/managed/Nota.App/ArrangementView.Takes.cs, src/managed/Nota.App/RecordPreview.cs]
       status: done
     - page: editing/automation
       covers: [automation lanes, draw/edit points, Lock Envelopes, MIDI-learned automation]
@@ -201,7 +201,7 @@ sections:
   library:
     - page: library/browser
       covers: [browser tabs (Instruments, Effects, Samples/Files, Plug-ins, Presets, History…), search, drag into project]
-      sources: [src/managed/Nota.App/BrowserView.cs, src/managed/Nota.App/MainWindow.Browser.cs, src/managed/Nota.App/MainWindow.Files.cs]
+      sources: [src/managed/Nota.App/BrowserView.cs, src/managed/Nota.App/TrackInspectorView.cs, src/managed/Nota.App/MainWindow.Browser.cs, src/managed/Nota.App/MainWindow.Files.cs]
       mockup: Nota Browser.html
       status: done
     - page: library/preview-player

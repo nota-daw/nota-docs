@@ -8,6 +8,7 @@ updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.App/MainWindow.axaml
+  - src/managed/Nota.App/MainWindow.AudioFormat.cs
   - src/managed/Nota.App/MainWindow.Menu.cs
   - src/managed/Nota.App/BrowserView.cs
   - src/managed/Nota.App/MainWindow.Detail.cs
@@ -62,6 +63,7 @@ its tabs:
 | **Projects** | The projects in your projects folder |
 | **MIDI map** | Every control you've mapped to a controller or phone |
 | **History** | The [versions](../../basics/version-history/) of the open project |
+| **Track inspector** | The selected track's name, mute / solo / arm, input, colour, height and freeze commands |
 
 Double-click an instrument to add a track with it; double-click an effect to add it to the
 selected track; or drag either where you want it. The button at the bottom of the rail
@@ -96,7 +98,9 @@ the panel into a [window of its own](../../views/detail-panel/), and × closes i
 - **Help** — Documentation (this manual), What's new and About.
 
 The line along the bottom of the window reports what just happened ("Saved Night Drive",
-"Added Nota Volt") and shows the audio sample rate.
+"Added Nota Volt") and shows the sample rate and buffer size that are running
+("48 kHz · 256"). Click that readout to pick another buffer size — playback continues —
+or to open Settings ▸ Audio.
 
 <Aside title="⌘ or Ctrl?">
 Shortcuts are written the macOS way. On Windows and Linux, <Kbd>⌘</Kbd> is <Kbd>Ctrl</Kbd>

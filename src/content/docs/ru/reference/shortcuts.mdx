@@ -28,7 +28,7 @@ import Kbd from '@components/Kbd.astro';
 | <Kbd keys="⌘ ," /> | Settings |
 | <Kbd keys="⌘ Q" /> | Quit Nota · asks about unsaved changes first |
 
-## Window
+## Окно
 
 | Клавиши | Действие |
 |---|---|
@@ -141,17 +141,6 @@ import Kbd from '@components/Kbd.astro';
 | Drag a device's header | Move it within its chain · onto another chain's row to move it there |
 | Click a device | Select it for ⌘C ⌘X ⌘V ⌘D and Delete |
 
-## Racks
-
-| Клавиши | Действие |
-|---|---|
-| <Kbd keys="Esc" /> | End macro mapping (Map on the rack card) |
-| Drag a zone edge | Set a chain's key, velocity or select range · edges never cross |
-| Hover the zones | See which chains a note would play |
-| Double-click a chain or macro name | Rename it |
-| Right-click a macro | Map it to a parameter or the selector · clear its mappings |
-| Drag a card's grip | Move a device within its chain |
-
 ## Modular (после щелчка по холсту)
 
 | Клавиши | Действие |
@@ -185,7 +174,7 @@ import Kbd from '@components/Kbd.astro';
 | Клавиши | Действие |
 |---|---|
 | <Kbd keys="← →" /> | Move notes by the grid |
-| <Kbd keys="↑ ↓" /> | Transpose by a semitone · folded, by a row |
+| <Kbd keys="↑ ↓" /> | Transpose by a semitone |
 | <Kbd keys="⇧ ↑" /> · <Kbd keys="⇧ ↓" /> | Transpose by an octave |
 | <Kbd keys="⇧ ←" /> · <Kbd keys="⇧ →" /> | Shorten / lengthen the notes by the grid |
 | <Kbd keys="⌥ ↑" /> · <Kbd keys="⌥ ↓" /> | Velocity +10 / −10 · ⌥⇧ by 1 |
@@ -205,6 +194,7 @@ import Kbd from '@components/Kbd.astro';
 | Right-click velocity stem | Reset velocity from a menu · same as the double-click |
 | Drag in the Bend / Pres / Slide lane | Draw the selected note's MPE curve · ⌥ draws a straight line · drag a point to move it |
 | Double-click in an MPE lane | Add a point · on a point, delete it · right-click to clear the curve |
+| Click the Bend lane's range | Pick how far the Bend lane reaches: ±2, 12, 24, 48 or 96 semitones · a bend already on the notes can widen it further |
 | Click the controller tab | Show a MIDI controller under the notes · click it again to pick another CC, the pitch wheel or channel pressure |
 | Drag in the Sustain lane | Draw a pedal block on the grid · ⌘ off the grid · drag an edge to resize, the body to move · double-click or Delete removes it |
 | Drag in a controller lane | Draw the controller's curve · ⌥ draws a straight line · drag a point to move it · double-click adds or deletes a point |
@@ -273,13 +263,18 @@ import Kbd from '@components/Kbd.astro';
 | Drag a track's bottom edge | Resize the track (header or lane) · snaps to compact / standard / large · a multi-selection resizes together |
 | Drag a track's bottom edge + ⌥ | Resize every track at once |
 | Double-click a track's bottom edge | Back to the standard height |
+| Drag a return's or the master's bottom edge | Resize that row (header or lane) · same snaps · double-click goes back to compact |
+| ⌘-click / ⇧-click return headers | Select several returns · they resize together |
 | ⌥-click a height key in the track menu | Set every track to Compact · Standard · Large |
 | Drag the track-list edge | Widen or narrow the track headers · double-click resets |
 | Drag sections lane | Mark a new section over the dragged bars |
 | Click section | Jump the playhead to its start |
 | Double-click section | Rename it · right-click → Reset to default name for its automatic Section N |
 | Return · Esc (renaming a section) | Keep the name (empty = automatic) · cancel |
-| Drag section · its edge | Move / resize it, snapped to bars |
+| Drag section | Rearrange the song · it and everything in it move to the marked boundary, the sections between close up · Esc cancels |
+| ⌥-drag section | Move only the section marker, snapped to bars |
+| Drag section edge | Resize it, snapped to bars |
+| Right-click section | Move earlier / later · duplicate or delete with content |
 | Drag overview strip | Drag sideways to scroll · up / down to zoom out / in |
 | Drag overview edge | Zoom by resizing the viewport window |
 | Double-click overview | Fit the whole project on screen |

@@ -8,7 +8,8 @@
 #                         Bass, Keys, Lead, Texture, Reverb), element (x:Name to crop to), width, height
 #   scene: palette  args: select (demo track), card (audio effect index to select), origin: "devices",
 #                         query, down (rows), mods (alt | cmd | shift), crop (true: just the palette)
-#   scene: mixer · prefs (args: page = Settings sidebar index, 0 Audio … 8 Shortcuts)
+#   scene: mixer (args: group "Name:Track,Track", fold, compact, select, width, height)
+#   scene: prefs (args: page = Settings sidebar index, 0 Audio … 8 Shortcuts)
 #   scene: start · about · whatsnew · export · unsaved
 # source: remote — the Nota Remote phone page on the app repo's stand-in Nota (src/web/remote/mock),
 #   390 × 844 at 2×, Studio Dark / Studio Light. args: track (name), screen (tab: Pads, Keys, XY,
@@ -44,6 +45,9 @@ shots:
   - { id: views/session, source: app, scene: main, args: {view: "session"} }
   - { id: views/modular, source: app, scene: main, args: {view: "modular", select: "Keys"} }
   - { id: views/mixer, source: app, scene: mixer }
+  - { id: views/mixer-groups, source: app, scene: mixer, args: {group: "Beat:Rhythm,Drums,Bass", select: "Drums", width: 1600} }
+  - { id: views/mixer-group-folded, source: app, scene: mixer, args: {group: "Beat:Rhythm,Drums,Bass", fold: true, select: "Drums", width: 1200} }
+  - { id: views/mixer-compact, source: app, scene: mixer, args: {group: "Beat:Rhythm,Drums,Bass", compact: true, width: 1200} }
   - { id: views/detail-panel, source: app, scene: main, args: {view: "arrangement", select: "Keys", element: "DetailPanel"} }
   - { id: devices/folded, source: app, scene: main, args: {view: "arrangement", select: "Keys", fold: "0", element: "DetailPanel"} }
   - { id: views/device-window/nota-bass-l, source: app, scene: device, args: {instrument: 3, chainInstrument: 7, trackName: "Bass", window: "GUI"} }
@@ -61,6 +65,7 @@ shots:
   # ── Library
   - { id: library/browser, source: app, scene: main, args: {view: "arrangement", element: "Browser"} }
   - { id: library/files-tab, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 3, height: 640} }
+  - { id: library/track-inspector-tab, source: app, scene: main, args: {view: "arrangement", select: "Texture", element: "Browser", tab: 8, height: 900} }
   - { id: control/midi-map-tab, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 6, height: 640} }
   - { id: preferences/downloads-samples, source: app, scene: prefs, args: {page: 5, tab: "Sample packs"} }
   - { id: preferences/downloads-models, source: app, scene: prefs, args: {page: 5, tab: "AI models"} }
