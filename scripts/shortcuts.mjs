@@ -15,7 +15,8 @@ const version = fs.readFileSync(path.join(appRepo, 'VERSION'), 'utf8').trim();
 const start = src.indexOf('ShortcutGroups =');
 const end = src.indexOf('};', start);
 if (start < 0 || end < 0) throw new Error('ShortcutGroups not found in ' + srcPath);
-const block = src.slice(start, end);
+// The list is localized (Loc.T("text") or Loc.T("text", "context")); the page wants the English text.
+const block = src.slice(start, end).replace(/Loc\.T\(("(?:[^"\\]|\\.)*")(?:,\s*"(?:[^"\\]|\\.)*")?\)/g, '$1');
 
 const unescape = (s) => s.replace(/\\u([0-9a-fA-F]{4})/g, (_, h) => String.fromCharCode(parseInt(h, 16))).replace(/\\"/g, '"');
 // A string in the list is a C# literal, bare or wrapped in Loc.T(…) since the app was localised
