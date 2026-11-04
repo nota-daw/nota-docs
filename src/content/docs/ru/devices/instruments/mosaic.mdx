@@ -11,6 +11,7 @@ sources:
   - src/managed/Nota.App/DeviceCards/Instruments/MosaicInstrumentCard.cs
   - src/managed/Nota.App/MosaicCreateWindow.cs
   - src/managed/Nota.Infrastructure/Mosaic/MosaicLibrary.cs
+  - src/managed/Nota.Application/Instruments/Mosaic/SfzImporter.cs
 ---
 
 import Shot from '@components/Shot.astro';
@@ -38,6 +39,9 @@ round-robin группы; кроссфейды сглаживают перехо
   в паке есть SFZ-программы, они играют как задумано, вместе с CC-артикуляциями.
 - **Ваши сэмплы** — правый клик по папке на вкладке **Files** браузера → **Create
   multisample…**, или перетащите аудиофайлы либо папку на карточку (см. ниже).
+- **SFZ-библиотеки** — перетащите на карточку файл `.sfz` или папку библиотеки, в которой он
+  есть, и инструмент сразу играет, вместе с release-сэмплами и значениями `set_hdcc`. Из папки
+  Mosaic берёт первую программу, которую не подключает другая через `#include`.
 
 **Init** в начале списка пресетов очищает инструмент: ни одного сэмпла, все параметры по
 умолчанию, как у только что добавленного Mosaic. Кнопки ‹ › тоже проходят через него.

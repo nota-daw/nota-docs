@@ -3,13 +3,15 @@ title: Detail panel and device windows
 description: The panel under the view — Devices, Pattern and Clip — its own window for a second screen, and device windows for rack chains.
 sidebar:
   order: 5
-updated: "0.56.1"
+updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.App/MainWindow.Detail.cs
   - src/managed/Nota.App/MainWindow.DetailWindow.cs
   - src/managed/Nota.App/DetailWindow.cs
   - src/managed/Nota.App/DeviceWindow.cs
+  - src/managed/Nota.App/MainWindow.Browser.cs
+  - src/managed/Nota.App/MainWindow.Mixer.cs
 ---
 
 import { Aside } from '@astrojs/starlight/components';
@@ -33,7 +35,18 @@ The tabs in its top-left corner switch what it shows — <Kbd>Tab</Kbd> cycles t
   [audio](../../editing/audio-clips/) clip editor.
 
 Drag the panel's top edge to make **Pattern** and **Clip** taller or shorter; each keeps the
-height you gave it. **Devices** has a fixed height that fits the cards, so it can't be resized.
+height you gave it. Double-click the edge to put the tab back at its default height — the
+browser's edge and a docked Mixer's top edge reset the same way. **Devices** has a fixed
+height that fits the cards, so it can't be resized.
+
+## The clip editor filling the window
+
+On **Clip** and **Pattern**, the expand button at the right of the header — or
+<Kbd>⌘ ⇧ F</Kbd>, or **View ▸ Clip editor fills the window** — gives the editor the whole
+window: the browser, the Arrangement (or Session, Modular) and a docked Mixer fold away. The
+same button, now pointing inwards, or the same key brings them back at the heights they had.
+Picking a view, showing the Mixer or the browser, or switching to **Devices** also goes back
+to the split.
 
 The header names the track and its type; for an instrument track it also shows the delay the
 chain adds (**PDC**), which Nota compensates automatically.

@@ -9,6 +9,7 @@ sources:
   - src/native/nota.engine/src/MidiClip.h
   - src/managed/Nota.App/PianoRollView.cs
   - src/managed/Nota.App/PianoRollView.Expression.cs
+  - src/managed/Nota.App/PianoRollView.Controllers.cs
   - src/managed/Nota.App/PianoRollView.Fold.cs
   - src/managed/Nota.Presentation/PianoRowMap.cs
   - src/managed/Nota.App/ClipEditorView.cs
@@ -17,6 +18,7 @@ sources:
   - src/managed/Nota.App/MidiToolsView.cs
   - src/managed/Nota.App/PianoRollView.ClipStrip.cs
   - src/managed/Nota.Application/Editing/ClipSet.cs
+  - src/managed/Nota.Application/Editing/VelocityWheel.cs
   - src/managed/Nota.Application/Midi/MidiToolCatalog.cs
   - src/managed/Nota.Application/Midi/MidiGenerators.cs
   - src/managed/Nota.Application/Midi/MidiTransforms.cs
@@ -84,7 +86,7 @@ transpose or quantize the note and its expression goes along.
 ### Editing it
 
 The lane under the notes switches with the labels on its left: **Vel** (velocity), **Bend**, **Pres**
-(pressure) and **Slide**. In an MPE lane every note's curve is drawn over the note's own span; the
+(pressure) and **Slide**; the tab under them edits a [MIDI controller](#controllers). In an MPE lane every note's curve is drawn over the note's own span; the
 selected notes' curves are the ones you edit, with their points marked.
 
 | Do this | To |
@@ -104,6 +106,52 @@ that take [MPE](../../control/midi/#pitch-wheel-aftertouch-and-mpe).
 
 The lane under the notes shows each note's velocity as a stem. Drag a stem to set it; with
 several notes selected, they move together. <Kbd>⇧</Kbd> adds a note to the selection.
+
+You can also change velocity from the grid: with the pointer over a note, <Kbd>⇧</Kbd> + wheel
+raises or lowers it one MIDI step per notch, from 1 to 127. If the note is selected, the whole
+selection changes together. A run of notches is one undo step. With the pointer anywhere else,
+<Kbd>⇧</Kbd> + wheel still scrolls in time, and so it does over a note in a locked reference
+clip. A trackpad's small swipes add up, so a slow swipe still steps. The direction and the
+size of a step are in [Settings ▸ Shortcuts](../../preferences/shortcuts/#velocity-wheel).
+
+## Controllers
+
+The fifth tab in the lane's labels edits one MIDI controller over the whole clip — the sustain
+pedal, the mod wheel, any CC. The tab shows the controller's short name and a small arrow. Click it to
+show the lane; click it again to pick another controller:
+
+- the controllers the clip already holds data for come first, marked with an icon;
+- then **Sustain**, **Mod wheel**, **Pitch wheel**, **Channel pressure**, **Expression** and
+  **Breath**;
+- **Other CC** lists every remaining controller number, in groups of 16.
+
+The first time you open the tab it shows the first controller the clip has data for, or Sustain
+if there is none. The lane names the controller in its top-left corner, and reads out the value
+under the pointer on the right.
+
+**Pedals** — Sustain and the other on/off controllers (CC 64–69) — are drawn as blocks: the pedal
+is down wherever a block is.
+
+| Do this | To |
+|---|---|
+| Drag across empty lane | Draw a block, on the grid |
+| Drag a block | Move it |
+| Drag a block's edge | Change where it starts or ends |
+| <Kbd>⌘</Kbd> while dragging | Ignore the grid |
+| Double-click a block · select it and press <Kbd>Delete</Kbd> | Delete it |
+
+**Every other controller** is a curve:
+
+| Do this | To |
+|---|---|
+| Drag across the lane | Draw the curve over the stretch you drag; the rest of the curve stays as it was |
+| <Kbd>⌥</Kbd>-drag | Draw a straight line instead |
+| Drag a point | Move it in time and value |
+| Double-click | Add a point · on a point, delete it |
+
+The pitch wheel snaps to its centre when you draw near it. Right-click the lane and choose
+**Clear** (it names the controller) to remove its data from the clip. Every gesture is one undo
+step and plays back straight away.
 
 ## Several clips at once
 
@@ -136,7 +184,7 @@ are quieter but just as editable.
 | Do this | To |
 |---|---|
 | <Kbd>⌘</Kbd> + wheel | Zoom in time, toward the pointer |
-| <Kbd>⇧</Kbd> + wheel | Scroll in time |
+| <Kbd>⇧</Kbd> + wheel | Scroll in time — over a note it changes [velocity](#velocity) instead |
 | <Kbd>⌘ ⌥</Kbd> + wheel | Make the rows taller or shorter |
 | Drag up or down on the keys | Taller (down) or shorter (up) rows |
 | <Kbd>⌥</Kbd> + pinch on a trackpad | Taller or shorter rows |
