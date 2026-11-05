@@ -3,7 +3,7 @@ title: Piano roll
 description: Editing MIDI clips — drawing and moving notes, velocity, grid and quantize, scale and Fold, clip envelopes and the generator and transform tools.
 sidebar:
   order: 1
-updated: "0.58.1"
+updated: "0.59.1"
 status: done
 sources:
   - src/native/nota.engine/src/MidiClip.h
@@ -166,6 +166,19 @@ is down wherever a block is.
 The pitch wheel snaps to its centre when you draw near it. Right-click the lane and choose
 **Clear** (it names the controller) to remove its data from the clip. Every gesture is one undo
 step and plays back straight away.
+
+### More lanes
+
+To see several controllers at once, click **+ lane** under the entries of the left column: a
+new lane opens under the others, with its own controller menu in its top-left corner (the
+controller's name and CC number). The **×** beside it hides the lane; the controller's data
+stays in the clip. Each controller lane has a **127 / 64 / 0** scale on its left, lined up
+with the curve. The extra lanes share the notes' zoom and scroll position in time, and scroll
+up and down when they don't all fit.
+
+Drag the divider above the Velocity lane or above any controller lane to make that lane taller
+or shorter. Nota remembers each height, also after a restart; add the same lane or controller
+again and it comes back at that height.
 
 ## Several clips at once
 

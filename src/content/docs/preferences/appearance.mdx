@@ -3,7 +3,7 @@ title: "Appearance"
 description: "Settings ▸ Appearance — the colour theme (Dark, Light or Follow system, with Studio and Ember themes), how waveforms draw, which side the track headers sit on, the interface scale, the interface language, and AI control over MCP."
 sidebar:
   order: 8
-updated: "0.58.1"
+updated: "0.59.1"
 status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
@@ -27,8 +27,9 @@ import Shot from '@components/Shot.astro';
 | **Waveform** | How audio clips draw in the Arrangement: **Smooth** (the default), **Solid** or **Bars**. See [Waveform](#waveform) |
 | **Track headers** | **Left** or **Right** — which side of the Arrangement the track list sits on. **Right** starts the timeline at the left edge, next to the browser. The same switch is **View ▸ Track headers on the right** |
 | **Fade audio clips when splitting** | On by default. Splitting an audio clip writes a 4 ms fade at the cut. Drag the clip's corner handles to make it longer or shorter. MIDI clips are left alone |
+| **Label every note in the piano roll** | Off by default: the [piano roll](../../editing/piano-roll/)'s keys column names only the Cs. On: it names every note (C, C#, D …), a help while you learn them. Very short rows keep C only, so the names stay readable |
 | **Interface scale** | **75 %**, **100 %**, **125 %**, **150 %** or **200 %** — the size of the whole interface. See [Interface scale](#interface-scale) |
-| **Language** | The language of Nota's menus, panels and messages: **English** (the default) or **Français**. It applies after a restart. See [Language](#language) |
+| **Language** | The language of Nota's menus, panels and messages: **English** (the default) or a language downloaded from nota-translations. It applies after a restart. See [Language](#language) |
 | **Open the detail panel when you select a track or clip** | Off (default): a click only selects and a double-click opens the [detail panel](../../views/detail-panel/); an open panel follows the selection. On: every selection opens it |
 | **AI control (MCP)** | Let an AI assistant work in Nota — the switch, the port, the status and **Copy config**. See [AI control over MCP](../../ai/mcp/) |
 
