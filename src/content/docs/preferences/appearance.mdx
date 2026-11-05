@@ -1,6 +1,6 @@
 ---
 title: "Appearance"
-description: "Settings ▸ Appearance — the colour theme (Dark, Light or Follow system, with Studio and Ember themes), how waveforms draw, which side the track headers sit on, the interface scale, the interface language, and AI control over MCP."
+description: "Settings ▸ Appearance — the colour theme (Dark, Light or Follow system, with Studio and Ember themes), the accent colour, how waveforms draw, which side the track headers sit on, the interface scale, the interface language, and AI control over MCP."
 sidebar:
   order: 8
 updated: "0.59.1"
@@ -8,6 +8,9 @@ status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
   - src/managed/Nota.Application/Appearance.cs
+  - src/managed/Nota.Application/Accent.cs
+  - src/managed/Nota.App/PreferencesWindow.Accent.cs
+  - src/managed/Nota.App/Controls/ColourPicker.cs
   - src/managed/Nota.Application/InterfaceScale.cs
   - src/managed/Nota.App/Theme/NotaUiScale.cs
   - src/managed/Nota.App/PreferencesWindow.Language.cs
@@ -18,12 +21,14 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
 
 <Shot id="preferences/appearance" alt="Settings ▸ Appearance" />
 
 | Setting | What it does |
 |---|---|
 | **Colour theme** | **Dark**, **Light** or **Follow system**, then a theme from the cards below — see [Colour themes](#colour-themes) |
+| **Accent** | The colour of what is live or chosen: a preset swatch, or **Custom** for your own colour — see [Accent colour](#accent-colour) |
 | **Waveform** | How audio clips draw in the Arrangement: **Smooth** (the default), **Solid** or **Bars**. See [Waveform](#waveform) |
 | **Track headers** | **Left** or **Right** — which side of the Arrangement the track list sits on. **Right** starts the timeline at the left edge, next to the browser. The same switch is **View ▸ Track headers on the right** |
 | **Fade audio clips when splitting** | On by default. Splitting an audio clip writes a 4 ms fade at the cut. Drag the clip's corner handles to make it longer or shorter. MIDI clips are left alone |
@@ -69,6 +74,32 @@ switches the mode with it.
 Every pick applies at once to every open window — and to
 [Nota Remote](../../control/nota-remote/) while it follows Nota — and is saved. Themes change colours only — layout
 and sizes stay the same.
+
+## Accent colour
+
+The accent marks what is live or chosen: the playing Play key, the playhead, the loop,
+selected clips and notes, toggles that are on, the chosen segment, menu hover, a device's
+power switch and a knob while you drag it. It is orange by default; **Accent** under the
+colour theme changes it.
+
+- Click a swatch — **Orange**, **Lime**, **Aqua**, **Sky**, **Violet**, **Magenta** or
+  **Pink** (hover one for its name). The chosen swatch has a ring, and its name shows at the
+  end of the row.
+- Or click **Custom** for your own colour. A picker opens under it: drag in the
+  saturation/brightness area and along the hue strip, or type a hex value (`#4C6FFF`, or
+  short `#46F`). **In themes** shows how each of the four themes will wear it; a dot marks a
+  theme where Nota adjusted its lightness. Click outside the picker or press <Kbd>Return</Kbd>
+  to keep the colour, <Kbd>Esc</Kbd> to go back to the accent you had.
+
+One accent is worn in every theme, tuned to each so it stays readable: the hue is yours,
+the lightness may move a little in a theme where the accent would be too faint, or the text
+on it too weak. A colour that would read like the record red, the mute amber, the solo blue
+or the meter green — or a grey — is not applied; the picker says why and the accent stays
+as it was. Mute, solo, record, the meters, track colours and device colours never change
+with the accent.
+
+The choice applies at once to every open window and to [Nota Remote](../../control/nota-remote/),
+and is saved. The theme cards above show each theme with your accent.
 
 ## Interface scale
 
