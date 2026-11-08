@@ -5,6 +5,9 @@
 //   npm run shots -- devices/volt        ids equal to or under a prefix (several allowed)
 //   npm run shots -- --source app        only app (or design) shots
 //   npm run shots -- --theme light       only one theme
+//   npm run shots -- --lang fr          retake the app shots with that interface language, into
+//                                        src/assets/shots-fr/ (the Shot component prefers them on /fr/ pages;
+//                                        needs ../nota-translations or NOTA_TRANSLATIONS=<languages/fr.json>)
 //   CHROMIUM_PATH=/path/to/chromium      use that browser instead of Playwright's own
 //
 // design shots: ../nota-design mockups, served locally and shot with Playwright at 2×
@@ -26,8 +29,6 @@ import sharp from 'sharp';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const appRepo = path.resolve(process.env.NOTA_REPO ?? path.join(root, '../nota'));
 const designRepo = path.resolve(process.env.NOTA_DESIGN ?? path.join(root, '../nota-design'));
-const cache = path.join(root, 'shots/.cache');
-const assets = path.join(root, 'src/assets/shots');
 
 // ── args ────────────────────────────────────────────────────────────────────────────
 const argv = process.argv.slice(2);
@@ -36,8 +37,19 @@ const opt = (name) => {
   return i >= 0 ? argv.splice(i, 2)[1] : undefined;
 };
 const onlySource = opt('--source');
+const lang = opt('--lang');
 const onlyTheme = opt('--theme');
 const prefixes = argv.filter((a) => !a.startsWith('--'));
+
+// --lang <code>: app shots only, with that interface language, into their own folder.
+const cache = path.join(root, lang ? `shots/.cache-${lang}` : 'shots/.cache');
+const assets = path.join(root, lang ? `src/assets/shots-${lang}` : 'src/assets/shots');
+let langFile;
+if (lang) {
+  if (onlySource && onlySource !== 'app') throw new Error('--lang only applies to app shots');
+  langFile = path.resolve(process.env.NOTA_TRANSLATIONS ?? path.join(root, `../nota-translations/languages/${lang}.json`));
+  if (!fs.existsSync(langFile)) throw new Error(`language file not found: ${langFile} (set NOTA_TRANSLATIONS)`);
+}
 
 const manifest = YAML.parse(fs.readFileSync(path.join(root, 'shots/manifest.yml'), 'utf8'));
 const all = manifest.shots ?? [];
@@ -49,6 +61,7 @@ for (const s of all) {
 const wanted = all.filter(
   (s) =>
     (!onlySource || s.source === onlySource) &&
+    (!lang || s.source === 'app') &&
     (prefixes.length === 0 || prefixes.some((p) => s.id === p || s.id.startsWith(p.replace(/\/?$/, '/')))),
 );
 const themesOf = (s) => (s.themes ?? (s.source === 'design' ? ['dark'] : ['dark', 'light'])).filter((t) => !onlyTheme || t === onlyTheme);
@@ -200,7 +213,7 @@ if (app.length) {
     console.log(`── app · ${theme} · ${shots.length} shot(s)`);
     const run = spawnSync('dotnet', ['run', '--no-build', '--project', project, '--', job], {
       encoding: 'utf8',
-      env: { ...process.env, NOTA_DATA_DIR: data, NOTA_REPO: appRepo },
+      env: { ...process.env, NOTA_DATA_DIR: data, NOTA_REPO: appRepo, ...(langFile ? { NOTA_UI_LANGUAGE: langFile } : {}) },
     });
     const okIds = new Set();
     for (const line of (run.stdout ?? '').split('\n')) {

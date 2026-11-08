@@ -1,0 +1,46 @@
+---
+title: "Télécharger des plug-ins"
+description: "Installez en un clic des plug-ins VST3 gratuits et open source depuis le registre de plug-ins de Nota : Surge XT, Dexed, Dragonfly Reverb et bien d’autres."
+sidebar:
+  order: 3
+updated: "0.50.1"
+status: done
+sources:
+  - src/managed/Nota.App/PreferencesWindow.Store.cs
+  - src/managed/Nota.App/PreferencesWindow.Downloads.cs
+  - src/managed/Nota.App/DownloadJobs.cs
+---
+
+import Shot from '@components/Shot.astro';
+import { Aside } from '@astrojs/starlight/components';
+
+**Réglages ▸ Téléchargements ▸ Plug-ins** liste des plug-ins VST3 open source du
+[registre de plug-ins de Nota](https://github.com/nota-daw/nota-plugins-registry) : des synthés comme Surge XT et
+Dexed, des effets comme Dragonfly Reverb et CHOW Tape Model, des séquenceurs comme Stochas, et bien d’autres, prêts à
+être installés en un clic.
+
+<Shot id="preferences/downloads" alt="Réglages ▸ Téléchargements ▸ Plug-ins avec la liste des plug-ins" />
+
+## Trouver un plug-in
+
+Filtrez par **Tous**, **Instruments**, **Effets** ou **Installé** (chacun avec un compteur) et cherchez par nom.
+Chaque ligne montre le type du plug-in, son auteur, sa version et sa licence, une description d’une ligne, sa taille
+de téléchargement, et des icônes pour les systèmes sur lesquels il tourne (survolez pour les processeurs). Les
+plug-ins qui ne peuvent pas être installés sur cet ordinateur sont listés en dernier avec la raison. **Actualiser**
+recharge le registre.
+
+## Installer, mettre à jour, supprimer
+
+- **Installer** : télécharge le plug-in depuis la publication de son propre projet, le vérifie avec la somme de
+  contrôle du registre, le décompresse et l’analyse. Les installeurs ne sont jamais exécutés.
+- **Update to …** : apparaît quand une version plus récente est dans le registre.
+- **Supprimer** : le désinstalle ; les projets qui l’utilisent s’ouvrent sans lui jusqu’à ce que vous le réinstalliez.
+- **Source** : ouvre le dépôt du plug-in.
+
+Une barre de progression avec **Annuler** reste en bas de la fenêtre. Les téléchargements continuent après la
+fermeture des Réglages ; leur progression passe dans la ligne d’état de la fenêtre principale.
+
+<Aside>
+La même page contient **Packs d’échantillons** et **Modèles d’IA** : voir
+[Packs d’échantillons](../../library/sample-packs/) et [Modèles d’IA](../../ai/models/).
+</Aside>

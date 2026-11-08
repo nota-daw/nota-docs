@@ -1,0 +1,81 @@
+---
+title: "Nota Consort"
+description: "Synthé semi-modulaire paraphonique : quatre oscillateurs, un double filtre en échelle, deux enveloppes, un LFO, un séquenceur et arpégiateur de 16 pas, un delay analogique et un panneau de brassage à douze câbles."
+sidebar:
+  order: 14
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/Consort.h
+  - src/managed/Nota.App/DeviceCards/Instruments/ConsortInstrumentCard.cs
+---
+
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
+
+Nota Consort est un synthé semi-modulaire dans l’esprit d’un Moog paraphonique à quatre oscillateurs. Il se joue comme un
+gros synthé mono, comme deux ou quatre voix partageant un filtre, ou comme un vrai polysynthé, et un **patch bay** vous
+laisse le recâbler avec des câbles.
+
+<Shot id="devices/instruments/consort/card" alt="Nota Consort, onglet Osc · Mix" />
+
+**Chemin du signal :** VCO 1 à 4 (2 se synchronise sur 1, 4 sur 3) + bruit + EXT → mélangeur (avec drive) → deux filtres
+en échelle → VCA → delay analogique. Env 1 → coupure, Env 2 → VCA, LFO → hauteur, coupure, PWM.
+
+## Voix
+
+| Mode | Comment il se joue |
+|---|---|
+| **Mono** | Les quatre oscillateurs sur une note |
+| **Duo** | Les oscillateurs 1 + 2 et 3 + 4 prennent chacun une note |
+| **Para** | Chaque oscillateur prend sa propre note : paraphonie : ils partagent un filtre, un VCA et des enveloppes |
+| **True poly (16)** | Un interrupteur : 16 voix complètes, chacune avec quatre oscillateurs, deux filtres et deux enveloppes |
+
+**Multi trig** redéclenche les enveloppes partagées à chaque note ; **Unison detune** double les notes tenues sur les
+oscillateurs inactifs, désaccordées. Les trois interrupteurs sont sur l’onglet **Voices** du panneau de droite.
+**Glide** par oscillateur : **LCR** (vitesse constante), **LCT** (durée constante) ou **EXP**, éventuellement seulement
+en legato.
+
+## Onglets
+
+| Onglet | Ce qu’il y a |
+|---|---|
+| **Osc · Mix** | Les quatre oscillateurs (octave, accord, onde, largeur d’impulsion, sync) et le mélangeur avec bruit et drive |
+| **Filters · Env** | Le **double échelle** : **HP/LP ser** (série), **LP/LP st** ou **HP/LP st** (parallèle stéréo), coupure, résonance, écartement, suivi du clavier (0, ½, 1) ; les enveloppes de filtre et d’amplitude |
+| **LFO · Delay** | Le LFO (six formes ; vers tous les oscillateurs ou 2 + 4) et le **delay analogique** : un modèle à ligne à seaux (**BBD** : plus long est plus sombre, avec la respiration du compander et du souffle), **Ping** ou **Stereo**, ou une ligne **Digital** propre |
+| **Seq** | Un séquenceur et arpégiateur de 16 pas : voir plus bas |
+| **Patch** | Le patch bay : voir plus bas |
+
+<Shot id="devices/instruments/consort/filters-env" alt="Nota Consort, onglet Filters · Env" />
+
+## Séquenceur et arpégiateur
+
+<Shot id="devices/instruments/consort/seq" alt="Nota Consort, onglet Seq" />
+
+**Off**, **Seq** ou **Arp**. Seize pas, chacun une note, un **ratchet** (×2, ×3, ×4), une liaison ou un silence, de ±24
+demi-tons ; vitesses de 1/4 à 1/32 avec swing ; ordre **Fwd**, **Back** ou **Rnd** ; verrouillage (latch). En Seq, le
+clavier transpose la séquence ; en Arp, il parcourt l’accord tenu sur 1, 2 ou 3 octaves, et les types de pas façonnent
+toujours le rythme. Il se cale sur la grille pendant que le transport tourne.
+
+## Patch bay
+
+<Shot id="devices/instruments/consort/patch" alt="Nota Consort, onglet Patch avec la matrice de câbles" />
+
+Douze **câbles**, chacun une source, une destination et une profondeur ±. Les sources comprennent les oscillateurs, le
+filtre, le bruit, le LFO, les deux enveloppes, la hauteur du clavier, le gate et la vélocité, l’aftertouch, la molette
+de modulation, la hauteur, le gate et l’horloge du séquenceur, deux atténuateurs et un nœud sommateur. Les destinations
+comprennent la hauteur, la PWM, la coupure, la résonance, le VCA, le delay et la vitesse du LFO, plus des entrées
+**normalisées** (les gates d’enveloppe, l’entrée du filtre, l’entrée du VCA, l’entrée EXT) où un câble coupe la
+connexion par défaut. Les boucles de feedback sont permises.
+
+L’onglet Patch montre les câbles sous forme de matrice source × destination et de bande de jacks ; la ligne
+**Patch bay** sous la carte liste les câbles actifs et ouvre une surimpression pleine carte avec tous les jacks. Faites
+glisser de jack à jack pour câbler ; <Kbd>⌥</Kbd>-clic sur un jack pour en retirer les câbles.
+
+## Préréglages
+
+28 préréglages d’usine : nappes et accords (**Stereo Consort**, **Para Strings**, **Spread Voicing**,
+**Duo Sync Pad**, **Poly Pad**, **Glass Chords**, **Poly Keys**), basses (**Ladder Bass**, **Deep Sub**,
+**Feedback Growl**, **FM Growl**), leads (**Duo Fifths**, **Unison Lead**, **Sync Lead**, **Ladder Whistle**,
+**Wheel Wah**), séquences (**Ratchet Run**, **Acid Run**, **Arp Cascade**, **Random Arp**, **Latch Sequence**,
+**Trance Gate**) et patchs (**Patched Drift**, **Ring Bells**, **Wind Noise**, **Touch Stereo**, **Delay Warp**).

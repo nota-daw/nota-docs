@@ -1,0 +1,104 @@
+---
+title: "Nota Mosaic"
+description: "Un instrument multi-échantillons : des zones par touche et par vélocité, des couches avec round-robin, des échantillons de relâchement, la pédale de maintien et le MPE, à partir de packs d’échantillons installés, d’un dossier de vos propres échantillons ou de 11 instruments d’usine."
+sidebar:
+  order: 16
+updated: "0.51.1"
+status: done
+sources:
+  - src/native/nota.engine/src/Mosaic.h
+  - src/managed/Nota.App/DeviceCards/Instruments/MosaicInstrumentCard.cs
+  - src/managed/Nota.App/MosaicCreateWindow.cs
+  - src/managed/Nota.Infrastructure/Mosaic/MosaicLibrary.cs
+  - src/managed/Nota.Application/Instruments/Mosaic/SfzImporter.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Mosaic joue de nombreux échantillons sur le clavier : un vrai piano enregistré note par note, doux et fort, avec le
+choc de l’étouffoir au relâchement. Chaque échantillon est une **zone** : un rectangle de touches × vélocités avec sa
+propre note de base, son accord, son gain, son panoramique, son début / sa fin et sa boucle. Les zones se rassemblent en
+**groupes** : des couches avec un gain et un accord partagés et un **round-robin**, pour qu’une note répétée ne sonne pas
+comme une mitrailleuse.
+
+<Shot id="devices/instruments/mosaic/card" alt="Nota Mosaic, onglet Zones : la carte des zones au-dessus du clavier et le rail Voices" />
+
+Sur une note, chaque zone qui couvre la touche, la vélocité et l’étape de round-robin en cours du groupe sonne en même
+temps ; des fondus enchaînés mêlent les couches voisines. Les zones de **relâchement** sonnent quand vous lâchez la
+touche (ou la pédale), plus doucement plus vous l’avez tenue longtemps.
+
+## D’où vient le son
+
+- **Préréglages d’usine** : 11 préréglages sur des multi-échantillons intégrés : **Keys** (**Felt Piano**,
+  **Felt Piano Soft**, **Felt Piano Bright**, **Music Box**), **Mallets & Plucks** (**Glass Mallets**, **Nylon Guitar**,
+  **Brass Pluck**, **Brass Lead**) et **Pads** (**Warm Pad**, **Warm Pad Filtered**). Leurs échantillons sont créés la
+  première fois que vous en chargez un.
+- **Packs d’échantillons** : chaque pack installé dans **Réglages → Téléchargements → Packs d’échantillons** apparaît
+  dans le sélecteur de préréglage sous **Packs**, un préréglage par instrument qu’il contient. Un pack avec des
+  programmes SFZ les joue tels que conçus, articulations CC comprises.
+- **Vos propres échantillons** : clic droit sur un dossier dans l’onglet **Fichiers** du navigateur → **Créer un
+  multi-échantillon…**, ou déposez des fichiers audio ou un dossier sur la carte (voir plus bas).
+- **Bibliothèques SFZ** : déposez un fichier `.sfz`, ou un dossier de bibliothèque qui en contient un, sur la carte et
+  il joue tout de suite, échantillons de relâchement et valeurs par défaut `set_hdcc` compris. Dans un dossier, Mosaic
+  prend le premier programme qui n’est pas inclus par un autre avec `#include`.
+
+**Init**, en haut de la liste des préréglages, vide l’instrument : aucun échantillon et chaque paramètre à sa valeur par
+défaut, comme sur un Mosaic tout juste ajouté. ‹ › le parcourent aussi.
+
+Les échantillons sont référencés, pas copiés dans le projet. Ils se chargent en mémoire en arrière-plan : la carte
+montre une barre de progression et les notes restent silencieuses tant que tout n’est pas chargé. Si un projet ou un
+préréglage s’ouvre sur un ordinateur sans son pack, la carte le dit et propose **Installer le pack** ou
+**Localiser le dossier…**.
+
+## Créer un multi-échantillon
+
+Mosaic lit la note, la couche de vélocité, l’étape de round-robin et la marque de relâchement dans les noms de fichiers
+(`trombone_gb4.wav`, `_f_`, `_rr2`, `_rel`). À gauche, les instruments qu’il a trouvés, chacun avec son degré de
+certitude ; à droite, la carte des zones de celui qui est choisi avec ce qui demande un regard : des trous où des voisins
+ont été étirés, des doublons, des notes qu’il a dû deviner à l’écoute. Que C4 ou C3 soit le do du milieu diffère
+selon les bibliothèques : Mosaic vérifie donc l’octave à l’oreille et explique son verdict. **Créer N préréglages**
+enregistre un préréglage par instrument coché sous **Packs**, dans un dossier nommé d’après le vôtre.
+
+## Zones
+
+La carte a les touches en travers, la vélocité vers le haut, avec le clavier en dessous ; un repère marque la note de
+base de chaque zone. Cliquez sur une zone pour la sélectionner, faites-la glisser pour la déplacer, faites glisser un
+bord pour la redimensionner ; jouez au clavier pour l’entendre. **Attack / Release** bascule entre les zones entendues à
+l’appui et les zones de relâchement. La ligne en dessous modifie la zone sélectionnée : note de base, couche et
+round-robin, touches, vélocité, **Fine**, **Gain**, **Pan**. Chaque modification est une étape d’annulation.
+
+## Autres onglets
+
+| Onglet | Ce qu’il contient |
+|---|---|
+| **Sample** | L’échantillon de la zone sélectionnée : début, fin et boucle (faites-les glisser), mode de boucle, **Crossfade**, **Gain**, **Snap to zero**, **Trim silence** |
+| **Groups** | Les couches : zones, gain, accord, round-robin avec **RR mode** (**Sequential**, **Random**, **No repeat**), groupes exclusifs ; **Release Triggers** avec leur niveau et la courbe **Length → level** |
+| **Pitch** | **Transpose**, **Detune**, **Keytrack**, la note de base et l’accord fin de la zone, la plage de **Bend** MPE |
+| **Env** | L’enveloppe d’ampli : faites-la glisser ou utilisez **Attack**, **Decay**, **Sustain**, **Release** ; **Vel curve** ; **Pressure** MPE |
+| **Filter** | La réponse du filtre (faites-la glisser) : type, **Cutoff**, **Reso**, **Keytrack**, **Env → Cutoff** ; **Slide** MPE |
+
+<Shot id="devices/instruments/mosaic/groups" alt="Nota Mosaic, onglet Groups : couches, round-robin et déclencheurs de relâchement" />
+
+## Voices
+
+Le rail à droite : **Poly** avec 16, 32, 64 ou 128 voix, **Mono** (legato, avec glide) ou **Choke** ; **Volume**,
+**Pan**, **Glide**, la **Pedal**, **Output**, **Vel → Vol** et l’indicateur de niveau. Cliquez sur **Poly** pour sa
+fenêtre contextuelle : ce que font les voix, l’ordre de vol (voix relâchées d’abord, puis la plus faible, puis la plus
+ancienne), **Per key** (combien de frappes d’une même touche peuvent sonner) et **Old voice fade**.
+
+La taille S montre le nom, une mini-carte, le nombre de zones et de couches et la mémoire utilisée.
+
+## Le jouer
+
+- **Pédale de maintien :** la pédale de votre clavier (CC64) tient les notes ; les zones de relâchement sonnent quand
+  elle se relève.
+- **MPE :** le bend réaccorde la note, la pression ajoute du niveau, le slide ouvre le filtre : voir
+  [Contrôleurs MIDI](../../../control/midi/).
+
+## Astuces
+
+- **Un piano plus sec :** baissez **Rel vol** sur les déclencheurs de relâchement dans **Groups**.
+- **Une nappe à partir d’un son pincé :** un **Attack** lent et un **Release** long dans **Env**, puis fermez un peu le
+  filtre.
+- **Votre propre kit de notes :** nommez les fichiers comme `bass_c2_f_rr1.wav` et **Créer un multi-échantillon** les
+  dispose sans association manuelle.

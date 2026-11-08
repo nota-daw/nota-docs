@@ -1,0 +1,156 @@
+---
+title: "Transport"
+description: "Lecture, arrêt et enregistrement ; tempo, signature rythmique et tonalité du projet ; boucle, métronome, décompte, grille et suivi."
+sidebar:
+  order: 3
+updated: "0.56.1"
+status: done
+sources:
+  - src/managed/Nota.App/MainWindow.axaml
+  - src/managed/Nota.App/MainWindow.axaml.cs
+  - src/managed/Nota.App/MainWindow.Input.cs
+  - src/managed/Nota.App/ArrangementView.Controls.cs
+  - src/managed/Nota.App/SnapChip.cs
+  - src/managed/Nota.Application/Editing/SnapGrid.cs
+  - src/managed/Nota.Presentation/ViewModels/TransportViewModel.cs
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
+
+La barre de transport court le long du haut de la fenêtre principale. Elle contient ce qui joue le morceau et les
+réglages qui s’appliquent à tout le projet.
+
+<Shot id="basics/transport-bar" alt="La barre de transport" />
+
+## Lecture, arrêt, enregistrement
+
+| Commande | Touche | Ce qu’elle fait |
+|---|---|---|
+| **Lecture** | <Kbd>Space</Kbd> | Lance la lecture ; <Kbd>Space</Kbd> à nouveau l’arrête. |
+| **Pause** | <Kbd>⇧ Space</Kbd> | Arrête et laisse la tête de lecture où elle est ; la prochaine Lecture reprend à cet endroit. |
+| **Arrêt** | <Kbd>Return</Kbd> | Arrête, clips de Session compris. Appuyez à nouveau pour revenir au début du morceau. |
+| **Enregistrement** | <Kbd>⌘ R</Kbd> | Enregistre sur les pistes armées : voir [Enregistrement](../../editing/recording/). |
+
+Quand vous arrêtez, la tête de lecture revient là où la lecture avait commencé, pour que vous puissiez réécouter le
+même passage encore et encore. Pour vous arrêter là où vous êtes, mettez en pause avec <Kbd>⇧ Space</Kbd> (aussi
+**Transport ▸ Lecture / pause**). Cliquez dans la règle pour déplacer la tête de lecture ailleurs.
+
+L’indicateur de **position** affiche mesures.temps.doubles-croches. Cliquez dessus pour passer en minutes:secondes
+et revenir. Les règles le suivent : celles de l’Arrangement et des deux éditeurs de clip s’affichent en temps
+pendant que l’indicateur le fait.
+
+## Tempo, signature rythmique et tonalité
+
+- **BPM** : faites glisser vers le haut ou le bas pour changer le tempo par pas entiers, ou double-cliquez et
+  saisissez une valeur avec jusqu’à deux décimales. La plage va de 20 à 300 BPM.
+- **Tap** : tapez le temps dessus pour régler le tempo à l’oreille. Le tempo se déduit dès le deuxième coup et se
+  stabilise au fil des coups (il fait la moyenne des huit derniers) ; les quatre points comptent les temps. Changez
+  d’allure et il reprend aussitôt le nouveau tempo ; faites une pause de trois secondes pour commencer une nouvelle
+  série. On le trouve aussi dans la palette de commandes sous le nom **Tap tempo**, et dans une fenêtre étroite, c’est
+  la première de ces cellules à s’effacer.
+- **Signature rythmique** : faites glisser chaque nombre ; le nombre du bas évolue par puissances de deux
+  (2, 4, 8, 16). Le nombre du haut est le nombre de temps dans une mesure : le métronome, le décompte et toutes les
+  vues qui comptent les mesures le suivent (les barres et numéros de mesure de l’Arrangement, les grilles et règles
+  des éditeurs de clip, l’indicateur de position, et les champs mesure.temps du panneau de clip et de l’export).
+- **Tonalité** : la tonalité du projet, enregistrée avec lui. Cliquez dessus pour choisir une tonalité, ou
+  **Aucune tonalité**. Avec **Transposer à la tonalité du projet** activé dans le menu de l’onglet Fichiers, les
+  boucles que vous déposez sur l’Arrangement sont transposées dans cette tonalité ; les boucles sont toujours
+  calées sur le tempo du projet. Le clavier du téléphone de [Nota Remote](../../control/nota-remote/) l’utilise aussi.
+
+## Boucle
+
+**Boucle** affiche la plage de boucle définie sur la règle. <Kbd>⌘ L</Kbd> active ou désactive la boucle, et si des
+clips ou une plage de temps sont sélectionnés, il règle d’abord la boucle sur eux. Faites glisser le long de la règle
+pour tracer une plage de boucle à la main. Double-cliquez sur la plage de boucle dans la règle pour désactiver la
+boucle sans perdre la plage : elle reste sur la règle en gris, et un autre double-clic la réactive.
+
+Pour changer la plage, faites glisser l’une de ses extrémités sur la règle : le curseur devient une flèche
+horizontale et le bord s’éclaire là où vous pouvez le saisir, et l’autre extrémité ne bouge pas. Faites glisser la
+plage elle-même pour la déplacer sans changer sa longueur. Les deux s’accrochent à la grille ; maintenez <Kbd>⌥</Kbd>
+pour les placer librement. Pendant que vous faites glisser, la règle affiche le début, la fin et la longueur.
+
+Faites un **clic droit** sur la règle pour activer ou désactiver la boucle, boucler la sélection, ou **Effacer la
+région de boucle**. Effacer fait oublier la plage (désactiver la boucle la garde) ; les clips, notes et automations
+ne sont pas touchés.
+
+Les notes que vous tenez au-delà de la fin de la boucle continuent de sonner, et les queues de relâchement se
+prolongent dans le passage suivant.
+
+La cellule **Superposer** / **Remplacer** à côté (<Kbd>⌘ ⇧ R</Kbd>) règle la façon dont le MIDI enregistré dans la
+boucle se combine d’un passage à l’autre : voir
+[Enregistrer sur une boucle](../../editing/recording/#enregistrer-sur-une-boucle).
+
+## Métronome et décompte
+
+Le bouton de métronome (<Kbd>⌘ M</Kbd>) clique sur chaque temps pendant la lecture ou l’enregistrement.
+
+Faites un **clic droit** dessus pour choisir un **décompte** : désactivé, 1, 2 ou 4 mesures de clics avant Lecture et
+Enregistrement depuis l’arrêt, et avant qu’un emplacement de Session n’enregistre depuis l’arrêt. Le décompte sonne
+même métronome éteint, l’indicateur de position compte les mesures avant le début (−2.1, −1.4 …), et les clics ne
+sont jamais enregistrés. Arrêt annule un décompte. Nota retient le réglage.
+
+## Grille, accrochage et suivi
+
+- **Grille** : la grille d’accrochage de l’Arrangement : elle montre le pas sur lequel les clips s’accrochent
+  maintenant (**Grille auto** dessous tant qu’elle suit le zoom). Cliquez dessus pour le menu de la grille : voir
+  [La grille d’accrochage](#la-grille-daccrochage).
+- **Magnétisme** (l’aimant) : les clips s’accrochent à la grille pendant que vous les faites glisser (<Kbd>⌘ 4</Kbd>).
+  Maintenez <Kbd>⌥</Kbd> en faisant glisser pour placer un clip librement juste cette fois.
+- **Suivi** : l’Arrangement défile pour garder la tête de lecture en vue. Aussi dans **Affichage ▸ Suivre la tête de
+  lecture**. Faites défiler ailleurs pendant la lecture et le suivi se met en pause pour que vous puissiez regarder
+  autour : le bouton devient un contour, et <Kbd>P</Kbd>, un clic sur le bouton ou la prochaine Lecture le
+  reprend. Il ne défile jamais sous un clip que vous faites glisser.
+- **Afficher la tête de lecture** : <Kbd>P</Kbd> (ou **Affichage ▸ Afficher la tête de lecture**) fait défiler
+  l’Arrangement jusqu’à la tête de lecture sans la déplacer. Quand la tête de lecture est hors de l’écran, une flèche
+  à cette extrémité de la règle la désigne ; cliquez sur la flèche pour faire de même.
+- **Automation** : affiche les voies d’automation des pistes (<Kbd>⌘ ⇧ A</Kbd>). Le bouton à côté rend à leur
+  automation les commandes que vous avez bougées à la main : voir [Automation](../../editing/automation/).
+
+### La grille d’accrochage
+
+L’Arrangement et les éditeurs de clip ont chacun une grille d’accrochage : la cellule Grille ici, une pastille dans
+l’en-tête de l’éditeur de clip là (le piano roll et l’éditeur de clip audio partagent un seul réglage). Les deux
+réglages sont séparés et Nota les retient.
+
+- **Auto** (par défaut) : le pas suit le zoom, de sorte que vous vous accrochez aux lignes que vous voyez : zoomez
+  pour des croches et des doubles-croches, dézoomez et les clips se déplacent par mesures entières. **Narrow**,
+  **Medium** et **Wide** règlent la densité des lignes.
+- **Un pas fixe** : 1/32, 1/16, 1/8, 1/4, 1/2, 1 mesure, 2 mesures ou 4 mesures, quel que soit le zoom. Quand il est
+  plus fin que les lignes à l’écran, son étiquette s’estompe : zoomez pour le voir.
+- **Triolets** : trois pas là où il y en avait deux (1/8T, 1/16T …), en Auto comme en fixe.
+- **Magnétisme sur la grille** : le même interrupteur que l’aimant.
+
+| Touches | Fait |
+|---|---|
+| <Kbd>⌘ 1</Kbd> · <Kbd>⌘ 2</Kbd> | Resserrer · élargir la grille (en Auto, la densité) |
+| <Kbd>⌘ 3</Kbd> | Triolets activés / désactivés |
+| <Kbd>⌘ 4</Kbd> | Magnétisme activé / désactivé |
+| <Kbd>⌘ 5</Kbd> | Basculer entre Auto et le dernier pas fixe |
+
+Les touches agissent sur l’éditeur que vous avez utilisé en dernier (l’Arrangement, ou l’éditeur de clip, piano
+roll ou audio, une fois que vous avez cliqué dedans), et la barre d’état dit lequel. Pendant que l’éditeur de clip
+audio affiche **ADSR** ou un clip non calé, rien n’y suit de grille : les touches agissent alors sur l’Arrangement.
+Elles sont aussi dans **Édition ▸ Grille**.
+
+## Le côté droit
+
+- **MIDI** : [MIDI Learn](../../control/midi-learn/) : cliquez dessus, cliquez sur une commande dans Nota, puis
+  bougez un bouton de votre contrôleur.
+- **Télécommande** : affiche le code QR qui connecte un téléphone ([Nota Remote](../../control/nota-remote/)).
+- **DSP** : la part de chaque tampon audio dont le moteur a besoin. Près de 100 %, vous entendrez des coupures ;
+  augmentez la taille du tampon ou [gelez](../tracks/) une piste lourde. Survolez-le pour voir le processeur utilisé
+  par l’ensemble du processus Nota, à la même échelle que le moniteur de votre système. Quand la fenêtre est étroite,
+  l’indicateur se replie sur son seul nombre et c’est la dernière chose de la ligne à disparaître.
+- **Master** : le volume général, avec l’indicateur de niveau du master en dessous.
+
+<Aside type="tip">
+Les touches de transport fonctionnent dans toutes les fenêtres de Nota, y compris une fenêtre d’appareil détachée et
+le Mixeur.
+</Aside>
+
+## Quantification de lancement
+
+Dans la vue [Session](../../views/session/), les clips et les scènes démarrent à la mesure suivante (ou à une autre
+division) pour toujours tomber en rythme. Ce réglage, **Quant**, se trouve dans la barre d’outils de la Session.

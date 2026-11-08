@@ -1,0 +1,65 @@
+---
+title: "Nota Audio Effect Rack"
+description: "Des chaînes d’effets dans un seul appareil : exécutez-les en parallèle, en série, ou choisissez-les avec un sélecteur, avec dry / wet, gain, niveau par chaîne, muet / solo et huit macros."
+sidebar:
+  order: 3
+updated: "0.57.1"
+status: done
+sources:
+  - src/native/nota.engine/src/devices/racks/RackDevice.h
+  - src/native/nota.engine/src/devices/racks/RackCore.h
+  - src/managed/Nota.App/DeviceCards/Rack/RackCard.cs
+  - src/managed/Nota.App/DeviceCards/Rack/RackCard.Zones.cs
+  - src/managed/Nota.App/DeviceCards/Rack/RackCard.RightPanel.cs
+  - src/managed/Nota.App/DeviceChainView.Clipboard.cs
+---
+
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
+
+Nota Audio Effect Rack contient plusieurs **chaînes** d’effets dans un seul appareil. Traitez un son de plusieurs
+façons à la fois et mélangez-les, construisez un « patch » d’effets réutilisable avec quelques macros par-dessus, ou
+passez d’une chaîne d’effets à l’autre avec une seule commande.
+
+<Shot id="devices/racks/audio-effect-rack/card" alt="Nota Audio Effect Rack : les macros, la liste des chaînes, les effets de la chaîne choisie et Rack out" />
+
+Il utilise la même carte que l’[Instrument Rack](../instrument-rack/) : les [macros](../macros/), les onglets
+**Chains**, **Select** et **Macros**, le panneau **Chain** et **Rack out**. Les effets d’une chaîne se déplacent, se
+copient et se collent comme là-bas, et aussi entre le rack et la chaîne d’appareils de la piste.
+
+## Chaînes
+
+**+ Chain** en ajoute une (ou déposez un effet sur la liste des chaînes) ; la cible en pointillés à la fin d’une
+chaîne ajoute un effet : le menu liste les effets intégrés et un sous-menu **Plug-ins**. Chaque chaîne a un nom, son
+propre **Volume**, **Pan**, niveau, **muet** et **solo**. Clic droit sur une chaîne pour la dupliquer ou la supprimer.
+
+## Chains run
+
+<Shot id="devices/racks/audio-effect-rack/rack-out" alt="Rack out : Chains run, Dry/wet, Gain et les interrupteurs" />
+
+| Choix | Ce qui se passe |
+|---|---|
+| **Parallel** | Chaque chaîne traite l’entrée ; leurs sorties sont additionnées |
+| **Serial** | La chaîne 1 alimente la chaîne 2, de haut en bas |
+| **Select** | Seules jouent les chaînes dont la plage de sélection contient le sélecteur |
+
+Rack out contient aussi **Dry/wet**, **Gain** (±12 dB), **Follow input level** et **Latency compensation** (aligne les
+chaînes de latences différentes).
+
+## Select
+
+<Shot id="devices/racks/audio-effect-rack/select" alt="L’onglet Select : le sélecteur et la plage de sélection de chaque chaîne" />
+
+Chaque chaîne a une **plage de sélection** de 0 à 127 ; faites glisser ses bords. Faites glisser le **Selector** pour
+choisir quelles chaînes jouent, associez-le à une macro (clic droit sur le sélecteur, ou **Map to the selector** dans
+le menu d’une macro) et automatisez la macro, ou activez **Follow input level** pour que le volume de l’entrée le
+déplace. Les plages ne comptent qu’en mode Select.
+
+## Astuces
+
+- **Compression parallèle dans une boîte :** une chaîne sèche plus une chaîne avec un Compressor poussé, en Parallel.
+- **Un bouton, trois effets :** trois chaînes aux plages de sélection voisines, le sélecteur sur une macro.
+- **Envelopper et déballer :** sélectionnez des effets sur la piste (<Kbd>⇧</Kbd>-clic pour une série) et appuyez sur
+  <Kbd>⌘ G</Kbd> (ou **Grouper dans un rack** dans le menu du clic droit) pour les déplacer dans la première chaîne
+  d’un nouveau rack, réglages, automation et liens compris ; <Kbd>⌘ ⇧ G</Kbd> (**Dégrouper le rack**) remet les
+  appareils d’un rack à une chaîne. Voir [Grouper dans un rack](../../#grouper-dans-un-rack).

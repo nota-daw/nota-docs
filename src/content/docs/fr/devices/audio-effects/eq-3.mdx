@@ -1,0 +1,46 @@
+---
+title: "Nota EQ-3"
+description: "Isolateur DJ à trois bandes : faders Low, Mid et High avec kills, deux croisements réglables et une séparation de 24 ou 48 dB. Un EQ de performance."
+sidebar:
+  order: 2
+updated: "0.58.1"
+status: done
+sources:
+  - src/native/nota.engine/src/Eq3.h
+  - src/managed/Nota.App/DeviceCards/Bodies/Eq3DeviceBody.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota EQ-3 est un EQ de **performance**, comme sur une table de mixage DJ : trois bandes, un fader et un **Kill** chacune.
+Retirez les graves avant un drop et remettez-les d’un coup, amincissez un break, échangez le grave entre deux pistes.
+
+<Shot id="devices/audio-effects/eq-3/card" alt="Nota EQ-3 avec trois bandes et la fenêtre de réponse" />
+
+## Commandes
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Low** · **Mid** · **High** | Un fader par bande : de −24 à +6 dB dans la plage **Isolator**, ±15 dB en **Classic** |
+| **Kill** | Supprime complètement la bande, avec un bref fondu pour ne jamais claquer |
+| **Crossover** | Les deux points de séparation (Low / Mid et Mid / High) ; faites glisser les poignées en haut du graphique |
+| **Slope** | **LR 24** ou **LR 48** : la raideur de la séparation |
+| **Range** | **Isolator** (par défaut) ou **Classic** |
+| **Out** | Niveau de sortie |
+
+À 0 dB sur chaque bande, les trois bandes se rajoutent à plat : la séparation est alignée en phase. La fenêtre montre la
+courbe de chaque bande dans sa couleur, la somme en encre neutre et le spectre de sortie derrière, sous forme de forme
+pleine lue comme sur l’[EQ-8](../eq-8/#lanalyseur).
+
+## Préréglages
+
+30 préréglages d’usine : points de départ (**Classic Flat**, **Isolator 48**), kills et isolations (**DJ Kill Bass**,
+**Kill Mids**, **Kill Highs**, **Bass Swap**, **Bass Only**, **Mids Only**, **Highs Only**), transitions
+(**Transition Build**, **Breakdown Thin**), courbes (**Scoop**, **Smile**, **Bass Boost**, **Warm Up**, **Air Lift**,
+**Presence**), focus (**Sub Tighten**, **Mud Cut**, **Vocal Focus**, **Kick Focus**, **Hat Sizzle**, **Club Master**) et
+couleur (**Telephone**, **AM Radio**, **Lo-Fi Dull**, **Megaphone**).
+
+## Astuces
+
+- **Automatiser les kills :** dessinez un Low Kill pour la dernière mesure avant un drop.
+- **Associer les faders** à un contrôleur avec MIDI Learn et le jouer comme une table de mixage DJ.

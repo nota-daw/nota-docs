@@ -1,0 +1,53 @@
+---
+title: "Échantillons intelligents"
+description: "Nota apprend le tempo, la tonalité et le type de chaque échantillon de votre bibliothèque : filtrez par boucle ou one-shot, BPM et tonalité, trouvez des sons similaires et adaptez les boucles au projet."
+sidebar:
+  order: 3
+updated: "0.50.1"
+status: done
+sources:
+  - src/managed/Nota.App/BrowserView.cs
+  - src/native/nota.engine/src/SampleAnalysis.h
+---
+
+import Shot from '@components/Shot.astro';
+
+L’onglet **Fichiers** montre votre dossier Échantillons (défini dans [Réglages ▸ Bibliothèque](../../preferences/library/))
+sous forme d’arborescence, et Nota sait ce qu’il contient.
+
+<Shot id="library/files-tab" alt="L’onglet Fichiers avec des pastilles de filtre et des dossiers" width={300} />
+
+## Ce que Nota apprend
+
+En arrière-plan, Nota détermine pour chaque fichier son **tempo**, sa **tonalité**, s’il s’agit d’une **boucle** ou
+d’un **one-shot**, plus une empreinte de timbre. Un pack nouvellement installé passe en premier ; les résultats sont
+conservés, donc chaque fichier n’est analysé qu’une fois. La ligne d’état montre la progression.
+
+- Les noms passent d’abord : `Loop_124_Am`, `Pad C#m 90bpm` ou un dossier `One Shots` l’emportent sur l’analyse.
+- Le tempo exact d’une boucle vient de sa longueur : 16 temps en 7,742 s font 124,0.
+
+Les lignes l’affichent au bord droit : `124 · Am` pour une boucle, la note pour un coup accordé.
+
+## Filtrer
+
+Les pastilles sous le champ de recherche réduisent la liste :
+
+- **Boucles** · **One-shots**
+- **BPM** : une plage, avec **tempo du projet ±5 %** à un clic (les boucles qui se ferment se warpent proprement)
+- **Tonalité** : avec la tonalité du projet à un clic ; une tonalité correspond aussi à sa relative, si bien que la
+  mineur trouve aussi des boucles en do majeur
+
+## Sons similaires
+
+Clic droit sur un échantillon ▸ **Afficher les sons similaires** liste les échantillons les plus proches du même type,
+du plus proche au plus éloigné. Cliquez sur la pastille pour revenir à tous les échantillons.
+
+## Des boucles qui s’adaptent
+
+Déposez une boucle sur l’Arrangement et elle est **warpée sur le tempo du projet** à partir du tempo que Nota connaît
+déjà (⋮ ▸ **Warper les boucles au tempo du projet**, activé par défaut) ; la ligne d’état le dit : « boucle warpée
+124 → 120 BPM ». Avec ⋮ ▸ **Transposer à la tonalité du projet** activé, elle est aussi amenée à la
+[tonalité du projet](../../basics/transport/) par le plus court chemin. Les one-shots ne sont jamais warpés.
+
+Les fichiers MIDI (`.mid`) apparaissent aussi dans l’onglet Fichiers, et se déposent comme des échantillons : voir
+[Projets et enregistrement](../../basics/projects/).

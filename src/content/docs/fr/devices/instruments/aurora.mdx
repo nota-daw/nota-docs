@@ -1,0 +1,95 @@
+---
+title: "Nota Aurora"
+description: "Synthé à table d’ondes : deux oscillateurs à table d’ondes avec warp, un sub, unison, deux filtres routables, deux enveloppes, deux LFO, une matrice de modulation 8 × 7, huit macros et drive, chorus et reverb intégrés."
+sidebar:
+  order: 4
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/WavetableSynth.h
+  - src/managed/Nota.App/DeviceCards/Instruments/AuroraInstrumentCard.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Aurora est un synthé à table d’ondes : chaque oscillateur parcourt une **table** de formes d’onde, et déplacer sa
+**position** fait évoluer le son d’une forme à la suivante. Il est conçu pour des nappes qui évoluent, des basses
+numériques, des sons pincés et des cloches.
+
+<Shot id="devices/instruments/aurora/card" alt="Nota Aurora, onglet Osc avec la pile de tables d’ondes" />
+
+**Chemin du signal :** Osc 1 + Osc 2 + Sub (avec unison) → Filter 1 et Filter 2 (en parallèle ou en série, chaque source
+routée vers F1, F2, les deux ou sec) → enveloppe d’ampli → drive → chorus → reverb.
+
+Les **molettes** à gauche (pitch bend, molette de modulation) sont sur chaque onglet. Le rail à droite montre les
+commandes **Global** ou les **Macros**.
+
+## Osc
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Table** | La banque de tables d’ondes : **Analog**, **Pulse**, **Formant** ou **Chroma** |
+| **Position** | Où dans la table l’oscillateur lit (16 images) |
+| **Warp** · mode de warp | Courbe l’onde : **Off**, **Sync**, **Bend**, **PWM** ou **Fold** |
+| **Level** · **Oct** · **Semi** · **Fine** | Niveau et accord de chaque oscillateur ; chacun peut être désactivé |
+| **Sub** | Un oscillateur sub : niveau, octave et onde |
+| **Unison** | Voix, **Detune** et **Spread** de la pile d’unison |
+
+## Filter
+
+<Shot id="devices/instruments/aurora/filter" alt="Nota Aurora, onglet Filter" />
+
+Deux filtres, **F1** et **F2** : **LP**, **HP**, **BP** ou **Notch**, avec pente, coupure, résonance et quantités
+**Env**, **LFO** et **Key** : faites glisser la réponse pour la coupure et la résonance. **Routing** envoie Osc 1,
+Osc 2 et Sub chacun vers F1, F2, les deux ou sec, avec les filtres en **Parallel** ou en **Series**.
+
+## Env et LFO
+
+<Shot id="devices/instruments/aurora/env" alt="Nota Aurora, onglet Env avec les deux enveloppes et leurs cases A, D, S et R" />
+
+**Env 1** façonne l’amplitude, **Env 2** est libre pour la matrice de modulation ; toutes deux sont dessinées et
+modifiables à la souris. Sous chaque graphique, les cases **A**, **D**, **S** et **R** portent chacune un petit bouton :
+tournez le bouton, ou faites glisser n’importe où sur la case vers le haut ou le bas (maintenez **Shift** pour des pas
+fins), et double-cliquez sur la case pour saisir une valeur exacte. Double-cliquez sur le bouton pour le
+réinitialiser. Deux **LFO** (forme dont S&H, vitesse, profondeur, synchronisation au tempo facultative) montrent chacun
+où ils sont routés, au-dessus d’une fenêtre qui dessine le LFO sélectionné.
+
+## Mod
+
+<Shot id="devices/instruments/aurora/mod" alt="Nota Aurora, onglet Mod avec la matrice de modulation" />
+
+Une **matrice 8 × 7** : les sources (Env 1, Env 2, LFO 1, LFO 2, Velocity, Key, Mod Wheel, Random) sur le côté, les
+destinations (Pitch, Osc 2 Pitch, Position, Cutoff, Reso, Level, Pan) en travers. Faites glisser une cellule vers le
+haut pour une quantité positive, vers le bas pour une négative. **Clear all** la remet à zéro.
+
+Les **Macros** (huit, trois par page dans le rail) règlent chacune une valeur, une quantité et l’une de douze cibles.
+Associez-les à un contrôleur avec MIDI Learn pour du morphing à la main.
+
+## FX
+
+<Shot id="devices/instruments/aurora/fx" alt="Nota Aurora, onglet FX" />
+
+Chaque bloc a son propre interrupteur :
+
+- **Drive** : **Tube**, **Tape** ou **Fold**, avec **Tone**.
+- **Chorus** : 1, 2 ou 4 voix, avec la vitesse.
+- **Reverb** : **Room**, **Hall** ou **Plate**, avec **Size**.
+
+## Global
+
+Mode de voix (**Poly 16** ou **Mono**), plage de bend, position, coupure, unison, gain, panoramique et indicateur de
+niveau de la piste.
+
+## Préréglages
+
+25 préréglages d’usine : nappes (**Warm Pad**, **Glacier Pad**, **Glass Choir**, **Formant Pad**, **Air Strings**),
+basses (**Sub Bass**, **Reese Bass**, **Acid Table**, **Wobble Wave**, **Rubber Bass**), leads (**Detuned Lead**,
+**Super Saw**, **Fold Lead**, **Hollow Lead**), claviers et sons pincés (**Shimmer Arp**, **Motion Keys**,
+**Bright Pluck**, **Nylon Keys**, **Tape Keys**), cloches (**Glass Bells**, **Digital Bell**, **Chime Sequence**) et
+mouvement (**Deep Drone**, **Aurora Sweep**, **Split Filter**).
+
+## Astuces
+
+- **Le faire bouger :** routez LFO 1 vers **Position** dans la matrice avec une vitesse lente : le timbre dérive dans la
+  table.
+- **La molette de modulation comme morph :** mettez Mod Wheel sur Position et Cutoff ensemble.

@@ -11,6 +11,7 @@ using Avalonia.Threading;
 using Avalonia.VisualTree;
 using Nota.App;
 using Nota.Application;
+using Nota.Application.Localization;
 using Nota.Infrastructure;
 using Nota.Presentation;
 using SkiaSharp;
@@ -25,7 +26,7 @@ namespace NotaDocsShots;
 ///             clip (a demo sample on an effect's track), sidechain + sidechainName (a demo sample on
 ///             a second track routed as the effect's key),
 ///             chainInstrument (an Instrument Rack's chain 1 instrument), trackName, window (click this text — a
-///             chain's GUI — and shoot the device window it opens)
+///             chain device's "Open" — and shoot the device window it opens)
 ///   main      view (arrangement | session | modular), select (track name), clip (track name,
 ///             + clipIndex, audio: true for an audio clip) to open in the clip editor, with ("Track:clipIndex,…" —
 ///             more MIDI clips selected with it, so they open together), automation, tab (browser tab index),
@@ -108,8 +109,10 @@ public sealed class Scenes
             case "export": Simple(shot, new ExportWindow(128, 32, 124)); break;
             case "connect": Connect(shot); break;
             case "unsaved":
-                Simple(shot, new SaveChangesWindow("Unsaved changes", "Save changes to “Night Drive” before closing?",
-                    "Night Drive", "Unsaved for 12 minutes"));
+                // The texts the app shows when quitting with unsaved edits (MainWindow.Recovery.cs).
+                Simple(shot, new SaveChangesWindow(Loc.T("main.recovery.unsaved_changes"),
+                    Loc.T("main.recovery.do_you_really_want_to"), "Night Drive",
+                    Loc.F("main.recovery.unsaved_changes_n", "12\u2009min")));
                 break;
             default: throw new ArgumentException($"unknown scene '{shot.Scene}'");
         }
@@ -147,7 +150,7 @@ public sealed class Scenes
         else if (shot.Int("instrument") == 3)
         {
             track = _engine.AddInstrumentRackTrack();
-            if (shot.Int("chainInstrument") is int ck && !_engine.RackSetChainInstrument(track, 0, ck))
+            if (shot.Int("chainInstrument") is int ck && _engine.RackAddChain(track, ck) < 0)   // a new rack has no chains
                 throw new InvalidOperationException($"chain instrument {ck} did not load");
             if (shot.Str("trackName") is string tn) _engine.SetTrackName(track, tn);
         }
@@ -435,7 +438,7 @@ public sealed class Scenes
             if (shot.Int("card") is int card)
             {
                 var kindType = typeof(DeviceChainView).GetNestedType("ChainKind", BindingFlags.NonPublic)!;
-                Invoke(chain, "SelectDevice", Enum.Parse(kindType, "Effect"), card);
+                Invoke(chain, "SelectDevice", Enum.Parse(kindType, "Effect"), card, KeyModifiers.None);
             }
             typeof(MainWindow).GetField("_detailWasLastFocused", Private)!.SetValue(mw, shot.Str("origin") == "devices");
         }
@@ -699,12 +702,25 @@ public sealed class Scenes
         Pump();
     }
 
+    /// <summary>The running language's texts for an English UI string (none in English).</summary>
+    private static IEnumerable<string> Translations(string english)
+    {
+        if (Loc.Language == "en") yield break;
+        foreach (var key in Loc.English.Keys)
+            if (Loc.English.TryGet(key, out var en) && en.Other == english)
+                yield return Loc.T(key);
+    }
+
     private static readonly Avalonia.Input.Pointer Mouse = new(1, PointerType.Mouse, true);
 
     /// <summary>Click the control that shows <paramref name="text"/> — a tab, segment or button.</summary>
     private static void ClickText(Window win, string text)
     {
-        var tb = win.GetVisualDescendants().OfType<TextBlock>().FirstOrDefault(x => x.Text == text)
+        // The manifest names controls by their English text; in another language look for a translation
+        // of it that is on screen (one English text can have several keys).
+        var texts = win.GetVisualDescendants().OfType<TextBlock>().ToList();
+        var candidates = Translations(text).Append(text).ToList();
+        var tb = candidates.Select(c => texts.FirstOrDefault(x => x.Text == c)).FirstOrDefault(x => x != null)
                  ?? throw new ArgumentException($"no '{text}' on screen");
         // A button (tab segments, Downloads' switch) takes a Click; anything else a pointer press.
         if (tb.GetVisualAncestors().OfType<Button>().FirstOrDefault() is { } button)
@@ -714,7 +730,8 @@ public sealed class Scenes
             Pump();
             return;
         }
-        var target = (Control?)tb.Parent ?? tb;
+        // Press on the text itself: a handler on the text or on any parent sees it (the event bubbles).
+        var target = (Control)tb;
         var p = new Point(3, 3);
         target.RaiseEvent(new PointerPressedEventArgs(target, Mouse, target, p, 0,
             new PointerPointProperties(RawInputModifiers.LeftMouseButton, PointerUpdateKind.LeftButtonPressed), KeyModifiers.None, 1));
@@ -729,6 +746,7 @@ public sealed class Scenes
         Pump(5);
         _redactor.Apply(win, renames);
         Pump(3);
+        ClippedText.Report(win, id);
         var path = Path.Combine(_out, id + ".png");
         Directory.CreateDirectory(Path.GetDirectoryName(path)!);
         var frame = win.CaptureRenderedFrame() ?? throw new InvalidOperationException("no frame rendered");

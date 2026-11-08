@@ -1,0 +1,58 @@
+---
+title: "Nota Level"
+description: "Niveleur de volume : il pilote le gain pour que la sortie se tienne sur une cible en LUFS (ou sur le volume d’une piste de référence), avec une mesure instantanée, à court terme ou intégrée et un limiteur de sécurité de vrai pic."
+sidebar:
+  order: 18
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/AutoGain.h
+  - src/managed/Nota.App/DeviceCards/Bodies/AutoGainDeviceBody.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Level mesure le volume comme le font le streaming et la radiodiffusion (ITU-R BS.1770) et pilote un gain pour que la
+sortie se tienne sur une **cible** en LUFS. Utilisez-le pour niveler une voix, préparer un podcast, régler le gain avant
+une chaîne, ou caler une piste sur une autre.
+
+<Shot id="devices/audio-effects/level/card" alt="Nota Level : la correction, 8 secondes de volume face à la cible, les indicateurs" />
+
+## Correction
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Auto** / **Manual** | Auto pilote le gain vers la cible ; Manual applique le fader que vous réglez |
+| **Match** | En Manual : règle le gain sur la distance à la cible, une fois |
+| **Reset** | En Auto : redémarre la mesure à partir de maintenant |
+| **Target** | Le volume à atteindre : cliquez sur la valeur pour les normes (streaming, diffusion…) ou une **piste de référence** |
+| **Trim** | Un décalage par-dessus |
+
+Le gain appliqué s’affiche en grand, avec la raison quand il est retenu (gain max, vrai pic). Les pauses et les queues
+de relâchement ne sont pas remontées : tant que l’entrée est trop faible pour être nivelée, le gain se maintient.
+
+## Le graphique
+
+**Scale** : **Mom** (instantané, 0,4 s), **Short** (3 s) ou **Integ** (intégré, avec gate) : sur 8 secondes d’entrée, de
+sortie et de la cible avec sa bande de ±1 LU. Faites glisser la ligne de la cible.
+
+## Réponse et sécurité
+
+**Fast** / **Slow**, **Window** (combien d’historique de volume il moyenne), **Max Gain** (le plus qu’il changera
+jamais). **True-peak safe** : un limiteur à anticipation garde la sortie sous le **Ceiling** en dBTP ; son retard est
+compensé.
+
+## Caler sur une référence
+
+Choisissez une piste de référence comme cible (elle devient la source de sidechain de l’appareil) : Level cale alors le
+volume de cette piste sur celui-là, sur la même échelle.
+
+## Préréglages
+
+30 préréglages d’usine : cibles de livraison (**Stream −14 LUFS**, **Podcast −16 LUFS**, **Broadcast −23 LUFS**,
+**Club −9 LUFS**, **EBU R128 −23**, **ATSC A/85 −24**, **Apple Music −16**, **YouTube −14**, **Loud Master −11**,
+**Audiobook −18 (ACX)**, **Cinema Dialogue −27**, **Game Audio −24**, **Radio Loud −12**), niveleurs (**Voice Rider**,
+**Dialogue Leveler**, **Interview Balance**, **Live Stream Rider**, **Quiet Source Boost**, **Fast Leveler**,
+**Gentle Rider**, **Tight Rider**), calage (**Match Reference**, **Match Reference Fast**) et gain staging
+(**Gain Staging −18**, **Mix Bus −20**, **Mastering Prep −18**, **Music Bed −28**, **Sample Normalizer −12**,
+**True-Peak Guard**, **Static Boost +6**).

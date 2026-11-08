@@ -1,0 +1,91 @@
+---
+title: "Nota Vocoder"
+description: "Un vocoder à canaux : la piste qui le porte est la voix, et façonne une dent de scie interne, du bruit ou une autre piste à travers 8 à 32 bandes."
+sidebar:
+  order: 26
+since: "0.56.1"
+updated: "0.57.1"
+status: done
+sources:
+  - src/native/nota.engine/src/Vocoder.h
+  - src/managed/Nota.App/DeviceCards/Bodies/VocoderDeviceBody.cs
+  - src/managed/Nota.App/Controls/VocoderGraph.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Vocoder fait parler un son avec un autre. La piste sur laquelle vous le placez est la **voix** (le modulateur) : son
+niveau dans chaque bande de fréquences ouvre la même bande de la **porteuse**. Posez-le sur une voix et vous entendez
+tout de suite une voix de robot ; choisissez une nappe comme porteuse et la nappe dit les mots. Voix de robot, chœurs
+vocodés, leads talk-box, chuchotements.
+
+<Shot id="devices/audio-effects/vocoder/card" alt="Nota Vocoder : le modulateur et la porteuse, le graphique d’enveloppe au-dessus des boutons de bandes et la sortie" />
+
+## Modulator
+
+Le modulateur est toujours **cette piste**, en général une voix.
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Gain** | Ajuste la voix avant que les bandes ne l’entendent, ±24 dB |
+| **Key** | Le niveau de la voix après Gain |
+
+## Carrier
+
+| Choix | Son |
+|---|---|
+| **Saw** | Une dent de scie interne à la hauteur **Pitch** (C0 à C7, C3 par défaut) : le choix par défaut, une voix de robot |
+| **Noise** | Du bruit blanc, pour un chuchotement |
+| **Track** | Une autre piste, choisie plus bas : une nappe ou un synthé qui dit les mots |
+
+Avec **Saw** et **Noise**, le résultat suit le niveau de la voix. Avec **Track**, il reste au niveau de cette piste quelle
+que soit la voix ; les silences de la voix ferment quand même les bandes.
+
+Dans une chaîne de Rack d’instruments ou de Rack d’effets audio, le Vocoder n’a pas de sidechain : utilisez-y **Saw** ou
+**Noise** (avec **Track**, il laisse passer le son de la chaîne tel quel).
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Track picker** | La piste porteuse, avec sa couleur. Toutes les autres pistes et tous les retours sont proposés ; cette piste et les groupes qui la contiennent ne le sont pas (leur son contient la propre sortie du vocoder). En choisir une passe la porteuse sur **Track** ; **None** laisse cette piste jouer inchangée jusqu’à ce que vous en choisissiez une |
+| **Pre** / **Post** | Où la piste porteuse est prélevée : avant ses effets et son fader, ou après les deux. Avec **Pre**, coupez la piste porteuse (mute) pour n’entendre que le vocoder : elle continue d’alimenter les bandes |
+| **Tilt** | Éclaircit ou assombrit Saw ou Track autour de 1 kHz avant les bandes, ±12 dB ; une nappe terne parle plus clairement avec un peu plus d’aigus. Inactif sur Noise |
+| **Pitch** | La note de la dent de scie. Actif sur Saw seulement |
+
+## Bands
+
+Le graphique montre une barre par bande, le niveau du modulateur qu’elle contient, et une ligne turquoise pour le niveau
+de la porteuse dans les mêmes bandes. Les deux lignes verticales sont les bords de la plage de bandes : faites-en glisser
+une pour déplacer **Low** ou **High**, double-cliquez dessus pour la réinitialiser.
+
+| Commande | Plage | Ce qu’elle fait |
+|---|---|---|
+| **Bands** | 8 à 32 | Moins de bandes, plus robotique ; plus, plus clair |
+| **Low** | 20 Hz à 1 kHz | Le bord de la bande la plus basse |
+| **High** | 2 à 20 kHz | Le bord de la bande la plus haute |
+| **Q** | 1 à 10 | À quel point chaque bande est étroite |
+| **Formant** | ±12 st | Déplace les bandes de la porteuse par rapport à celles du modulateur : vers le haut, plus petit ; vers le bas, plus grand. La hauteur ne change pas |
+| **Attack** | 0,5 à 100 ms | À quelle vitesse une bande s’ouvre |
+| **Release** | 5 à 1000 ms | À quelle vitesse une bande se ferme ; plus long, plus lisse ; plus court, plus articulé |
+
+## Output
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Unvoiced** | Ajoute du bruit aigu là où le modulateur siffle (s, t, ch), pour que les consonnes restent claires |
+| **Mix** | Cette piste telle qu’elle est entrée face au son vocodé |
+| **Gain** | Niveau de sortie, ±12 dB |
+| **Hold** | Fige chaque bande là où elle est ; la porteuse continue de sonner à travers |
+
+Le vumètre au pied de la colonne est le niveau de sortie.
+
+## Préréglages
+
+Sept préréglages d’usine : voix (**Init**, **Robot choir**, **Talk box**, **Whisper**, **Lo-fi robot**) et nappes
+(**Strings choir**, **Deep giant**). **Talk box** et **Strings choir** utilisent une piste porteuse : choisissez-en une
+après les avoir chargés. Un préréglage ne nomme jamais de piste. Dans le navigateur, ces deux-là se préécoutent en
+vocodant la phrase de démo avec elle-même.
+
+## Agents
+
+Via MCP, le vocoder est un effet audio ordinaire (kind 26). Pour une piste porteuse, réglez son paramètre **Carrier** sur
+Track et routez la piste avec `set_device_sidechain`.

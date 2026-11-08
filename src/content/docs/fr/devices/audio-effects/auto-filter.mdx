@@ -1,0 +1,65 @@
+---
+title: "Nota Auto Filter"
+description: "Un filtre qui bouge : LP, BP, HP ou Notch avec morph et drive, balayé par un suiveur d’enveloppe (de la piste ou d’un sidechain) et un LFO qui peut se synchroniser, se morpher et s’étaler en stéréo."
+sidebar:
+  order: 9
+updated: "0.57.1"
+status: done
+sources:
+  - src/managed/Nota.App/Controls/AutoFilterCurve.cs
+  - src/native/nota.engine/src/AutoFilter.h
+  - src/managed/Nota.App/DeviceCards/Bodies/AutoFilterDeviceBody.cs
+---
+
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
+
+Nota Auto Filter est un filtre doté de mouvement : une **enveloppe** l’ouvre à mesure que le son monte (auto-wah, filtre
+d’enveloppe), un **LFO** le balaie en rythme (wobble, gates, mouvement lent).
+
+<Shot id="devices/audio-effects/auto-filter/card" alt="Nota Auto Filter, onglet Filter avec la réponse" />
+
+**Disposition :** la colonne **Shape** à gauche (faders **Cutoff** et **Reso**, avec la valeur modulée repérée), un
+panneau central à trois onglets (chacun une fenêtre où l’on voit la fréquence de coupure bouger), un panneau de droite
+et une ligne d’état.
+
+## Filter
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| Type | **LP**, **BP**, **HP** ou **Notch** |
+| **Morph** | Fond en continu d’un type à l’autre |
+| Slope | 12 ou 24 dB |
+| **Freq** · **Reso** | Coupure et résonance, ou faites glisser la réponse : sur le côté pour la coupure, vers le haut et le bas pour la résonance, depuis l’endroit où vous la saisissez |
+| **Drive** | Drive avant le filtre, pour la couleur |
+| Circuit | **Clean** ou **Analog** (saturant) |
+
+## Envelope
+
+<Shot id="devices/audio-effects/auto-filter/envelope" alt="Nota Auto Filter, onglet Envelope avec la coupure dans le temps" />
+
+Un suiveur d’enveloppe : **Amount** (vers le haut ou le bas), **Attack**, **Release** et **Hold** (une durée, ou
+infini). Il écoute la piste elle-même ou une **key** : une autre piste choisie comme source de sidechain de l’appareil.
+La fenêtre dessine la coupure dans le temps.
+
+## LFO
+
+<Shot id="devices/audio-effects/auto-filter/lfo" alt="Nota Auto Filter, onglet LFO" />
+
+**Amount**, **Rate** (**Free** en Hz ou synchronisé sur le tempo), onde (**Sine**, **Tri**, **Saw**, **Sqr**, **S&H**)
+avec **Morph**, décalage de départ, décalage de phase stéréo entre les canaux, et redéclenchement. La fenêtre en dessine
+deux mesures.
+
+## Output
+
+**→ Freq** / **→ Reso** : ce que la modulation déplace, la coupure, la résonance, ou les deux. **Mod smooth** la lisse,
+**Gain** ajuste, **Dry/Wet** mélange.
+
+## Préréglages
+
+30 préréglages d’usine : filtres statiques (**Clean Sweep**, **24 dB Low Cut**, **Telephone**, **Warm Analog LP**,
+**Resonant Peak**, **Notch Carve**), enveloppe (**Envelope Wah**, **Clav Wah**, **Funk Quack**, **Bass Auto-Wah**,
+**Reverse Wah**, **Drum Snap**, **Swell Opener**, **Resonance Bloom**, **Hold & Release**, **Talking Filter**), LFO
+(**Slow LFO Sweep**, **Pad Motion**, **Wobble 1/8**, **Dubstep Wub 1/16**, **Trance Gate**, **S&H Random**,
+**Glide Random**, **Saw Ramp Bar**, **Stereo Swirl**, **Notch Motion**, **Phaser-ish Notch**, **Reso Pulse**) et
+sidechain (**Sidechain Duck**, **Kick Pump HP**).

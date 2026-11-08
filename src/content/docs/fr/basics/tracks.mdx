@@ -1,0 +1,177 @@
+---
+title: "Pistes"
+description: "Pistes d’instrument, audio, de retour et de groupe : les ajouter, les sélectionner, les colorer, les grouper, les router et les geler."
+sidebar:
+  order: 4
+updated: "0.58.1"
+status: done
+sources:
+  - src/managed/Nota.Infrastructure/Persistence/ProjectTemplate.cs
+  - src/managed/Nota.App/ArrangementView.cs
+  - src/managed/Nota.App/ArrangementView.Tracks.cs
+  - src/managed/Nota.App/ArrangementView.Groups.cs
+  - src/managed/Nota.App/ArrangementView.Link.cs
+  - src/managed/Nota.Presentation/TrackArm.cs
+  - src/managed/Nota.App/TrackNames.cs
+  - src/managed/Nota.App/MainWindow.Freeze.cs
+  - src/managed/Nota.App/MainWindow.LiveFreeze.cs
+  - src/managed/Nota.App/MainWindow.Recent.cs
+  - src/managed/Nota.App/ArrangementView.Sizing.cs
+  - src/managed/Nota.App/MenuKit.cs
+  - src/managed/Nota.App/MenuKit.Rows.cs
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
+
+## Les types de piste
+
+| Piste | Contient | Joue à travers |
+|---|---|---|
+| **Instrument** | Des clips MIDI | Un instrument (intégré ou plug-in), puis ses effets |
+| **Audio** | Des clips audio | Ses effets |
+| **Retour** | Rien : elle reçoit des **envois** des autres pistes | Ses effets (une reverb ou un delay partagé) |
+| **Groupe** | D’autres pistes, repliées en dessous | Ses effets, comme un sous-mixage de ses pistes |
+| **Master** | La somme de tout | La sortie vers vos enceintes |
+
+Les pistes de retour et le master se trouvent en bas de l’Arrangement, sous les pistes qui défilent. Chacune de
+ces lignes a un indicateur de niveau et un fader de volume avec sa valeur en dB : montez un envoi et regardez bouger
+l’indicateur du retour, ou baissez un retour sans ouvrir le Mixeur. Double-cliquez sur un fader pour le remettre
+à 0 dB.
+
+## Ajouter des pistes
+
+- **Double-cliquez sur un instrument** dans le navigateur : une nouvelle piste d’instrument avec cet instrument et un
+  clip vide d’une mesure. Si une piste d’instrument est sélectionnée, l’instrument **remplace** celui de cette piste
+  (ses clips et ses effets restent, et Annuler ramène l’ancien), pour que vous puissiez essayer plusieurs
+  instruments à la suite sur une même partie. Maintenez **⌥** (Alt sous Windows et Linux) en double-cliquant pour
+  obtenir toujours une nouvelle piste. Les racks ne sont jamais remplacés ainsi.
+- **Faites glisser** un instrument, un échantillon ou une boucle depuis le navigateur vers l’espace vide sous les
+  pistes. Déposé sur une piste d’instrument existante, un instrument **remplace** celui de cette piste ; un
+  échantillon déposé sur une piste audio s’y place.
+- **Clic droit** sur l’espace vide sous les pistes : **Ajouter une piste d’instrument**, **Ajouter une piste audio**,
+  **Ajouter une piste de retour**. Le menu d’une piste a les mêmes sous **Ajouter une piste** (**Instrument**,
+  **Audio**, **Retour**) : la nouvelle piste se place juste après elle (ou à l’intérieur, si c’est un groupe).
+- **Ajouter une piste ▸ Récents** liste les cinq instruments que vous avez ajoutés le plus récemment, intégrés ou
+  plug-ins, depuis le navigateur, un menu ou un assistant IA. Cliquez sur l’un d’eux pour obtenir une nouvelle piste
+  avec cet instrument juste après la piste sur laquelle vous avez cliqué. La liste est la vôtre, pas celle du projet ;
+  un plug-in que vous désinstallez en disparaît jusqu’à ce que vous le réinstalliez.
+
+## L’en-tête de piste
+
+<Shot id="start-here/main-window" alt="L’Arrangement avec le groupe Rhythm et les pistes Drums, Bass, Keys, Lead et Texture" />
+
+Chaque en-tête porte le nom et le type de la piste, et :
+
+- **M** muet et **S** solo,
+- **●** armement : la piste enregistre quand vous appuyez sur Enregistrement, et une piste d’instrument armée joue
+  les notes de votre clavier. Un clic arme cette piste seule, et sélectionner une piste d’instrument aussi ;
+  <Kbd>⌘</Kbd>-clic en arme plusieurs,
+- l’entrée : pour une piste audio, l’entrée matérielle ; pour une piste d’instrument, **MIDI depuis** une autre
+  piste d’instrument (superposition, voir plus bas),
+- un fader de **volume** et une barre de **panoramique**, avec l’indicateur de la piste. Double-cliquez sur l’un ou
+  l’autre pour le réinitialiser.
+
+Faites glisser un en-tête par son nom pour déplacer la piste. Les appareils de la piste sélectionnée s’ouvrent dans
+le panneau du bas.
+
+Une piste courte ne garde que son nom et **M** / **S** / **●** sur une ligne ; une piste haute donne une ligne à
+l’entrée, au fader et au panoramique. Faites glisser le bord inférieur d’une piste pour changer sa hauteur : voir
+[Tailles de piste](../../views/arrangement/#tailles-de-piste).
+
+## Sélectionner plusieurs pistes
+
+Cliquez sur un en-tête, puis <Kbd>⇧</Kbd>-clic sur un autre pour sélectionner toutes les pistes entre les deux (dans
+les deux sens) ; <Kbd>⌘</Kbd>-clic ajoute ou retire une seule piste (ou cliquez sur un en-tête et appuyez sur
+<Kbd>⌘ A</Kbd> pour toutes les sélectionner). Ensuite <Kbd>⌘ C</Kbd> <Kbd>⌘ X</Kbd> <Kbd>⌘ V</Kbd> les copient,
+coupent et collent, <Kbd>⌘ D</Kbd> les duplique et <Kbd>Delete</Kbd> les supprime, chacun en une seule étape
+d’annulation. Faites un clic droit sur la sélection pour les colorer, les dimensionner, les geler ou les grouper
+toutes à la fois.
+
+## Le menu de piste : nom, couleur, hauteur
+
+Faites un clic droit sur un en-tête pour ouvrir le menu de la piste. Sa première ligne nomme la piste et indique son
+type et sa position (**Audio · 3**) ; sur une sélection, elle indique **3 pistes**.
+
+- **Couleur** : cliquez sur une pastille directement dans le menu : neuf familles de couleurs, chacune en teinte de
+  base, claire et sombre, plus **Auto**. La couleur actuelle est entourée. Une piste que vous n’avez pas colorée
+  prend la couleur de son groupe, une teinte par piste sœur, pour qu’un groupe se lise comme une famille.
+- **Hauteur** : **Compact**, **Standard** ou **Grand**. <Kbd>⌥</Kbd>-clic (Alt sous Windows et Linux) dimensionne
+  toutes les pistes à la fois. Vous pouvez aussi faire glisser le bord inférieur d’une piste.
+- **Renommer…** nomme la piste ; tant que vous ne le faites pas, une piste d’instrument porte le nom de son
+  instrument et une piste audio « Audio » suivi de son numéro.
+
+Les commandes qui montrent un choix en cours, comme **Entrée d’enregistrement** et **MIDI depuis**, l’affichent à
+droite, pour que vous le lisiez sans ouvrir le sous-menu. **Supprimer** est toujours en dernier, en rouge.
+
+L’onglet [Inspecteur de piste](../../library/browser/#inspecteur-de-piste) du navigateur montre les mêmes réglages
+(nom, couleur, hauteur, entrée et gel, plus muet, solo et armement) pour la piste sélectionnée, sans ouvrir de menu.
+
+## Groupes
+
+Sélectionnez des pistes et appuyez sur <Kbd>⌘ G</Kbd> pour les mettre dans un groupe. Sur un groupe sélectionné,
+<Kbd>⌘ ⇧ G</Kbd> (**Dégrouper** dans son menu) le dissout : ses pistes remontent d’un niveau et la piste de groupe
+disparaît avec ses effets ; <Kbd>⌘ Z</Kbd> la ramène. Sur une piste à l’intérieur d’un groupe, <Kbd>⌘ ⇧ G</Kbd>
+(**Retirer du groupe** dans son menu) sort seulement cette piste ; elle se place juste après le groupe, et le groupe
+garde ses autres pistes et ses effets. Vous pouvez aussi faire glisser l’en-tête d’une piste hors de son groupe :
+sur une piste en dehors de lui, ou au-dessus de la première ligne ou sous la dernière, ce qui marche même quand
+toutes les pistes du projet sont groupées.
+
+Cliquez sur la voie d’un groupe dans l’Arrangement pour sélectionner le groupe ; double-cliquez dessus pour voir les
+appareils du groupe dans le panneau du bas.
+
+Un groupe est un sous-mixage : son fader, ses effets, son muet et son solo agissent sur toutes ses pistes
+ensemble, et des groupes peuvent se trouver dans des groupes. Sa ligne reste fine (une barre titrée avec sa flèche,
+muet, solo et niveau) et s’ouvre sur toutes les commandes quand vous le sélectionnez. Cliquez sur la flèche pour
+replier les pistes du groupe ; le [Mixeur](../../views/mixer/#groupes) se replie avec lui, et les groupes repliés
+sont enregistrés avec le projet.
+
+### Groupes liés
+
+Quand les pistes d’un groupe sont des prises d’une même interprétation (une guitare directe et une guitare ampli,
+par exemple), activez la touche **Lier** du groupe (le maillon de chaîne à côté de son muet et de son solo, aussi
+dans sa tranche du Mixeur et sous le nom **Lier les pistes** dans son menu). Les pistes du groupe travaillent alors
+comme une seule :
+
+- **Armer** une piste les arme toutes ; en désarmer une les désarme toutes.
+- **Cliquer sur un clip** sélectionne aussi les clips qui commencent et finissent au même endroit sur les autres
+  pistes. Les déplacer, rogner, fondre, dupliquer, copier, couper ou supprimer fait la même chose aux autres, et un
+  seul <Kbd>⌘ Z</Kbd> l’annule sur toutes les pistes.
+- **Découper** (<Kbd>⌘ E</Kbd> ou **Découper ici**) coupe chaque piste du groupe à cet endroit.
+- Une **plage de temps** tracée sur l’une des pistes couvre tout le groupe.
+- Déplacer un clip vers une autre piste emmène ses partenaires dans le temps seulement : ils restent sur leurs
+  propres pistes.
+
+Pour travailler sur une seule piste sans désactiver Lier, <Kbd>⌥</Kbd>-clic sur le clip (ou sur son armement) : le
+clip est sélectionné seul et la modification suivante ne touche que lui. Les pistes liées montrent un petit maillon
+de chaîne avant leur nom ; les pistes des groupes imbriqués dans un groupe lié sont liées aussi.
+
+## Routage
+
+- **Envois** : chaque piste peut envoyer une partie de son signal vers chaque piste de retour : montez son envoi
+  dans l’en-tête de piste (à la hauteur Grand, voir
+  [Envois dans les en-têtes de piste](../../views/arrangement/#envois-dans-les-en-t%C3%AAtes-de-piste)), dans le
+  [Mixeur](../../views/mixer/) ou dans la vue Session. Un nouveau projet vient avec deux retours prêts à recevoir :
+  **Reverb** et **Delay**, tous deux réglés sur **Wet Only**.
+- **MIDI depuis** : une piste d’instrument peut jouer le MIDI d’une autre piste d’instrument à travers son propre
+  instrument, pour superposer deux sons. Elle reçoit les notes **après** les effets MIDI de la source : un arpégiateur
+  sur la source pilote donc les deux. Enregistrer sur la piste qui reçoit imprime ces notes dans un clip.
+- **Entrée d’enregistrement** : clic droit ▸ **Entrée d’enregistrement** choisit ce qu’une piste audio enregistre :
+  une entrée matérielle, le master ou une autre piste.
+
+## Geler une piste
+
+Une chaîne d’instrument ou d’effets lourde peut être rendue en audio pour libérer le processeur :
+
+- **Geler** (dans l’en-tête du panneau de détail) rend la piste et met ses appareils en veille ; elle joue
+  exactement pareil. Faites un clic droit sur **Geler** pour **Aplatir**, qui transforme définitivement la piste en
+  piste audio ordinaire.
+- **Gel en direct** rend l’audio sur une piste audio liée en dessous et met la source en veille. **Modifier la
+  source** réveille la source ; **Terminé** la gèle à nouveau. Dans le menu de la piste, **Gel en direct** est un
+  interrupteur : il est activé tant que la piste est gelée en direct, et le désactiver dégèle (réveille la source).
+
+<Aside>
+Annuler couvre l’ajout, la suppression, le groupement et le déplacement des pistes. Voir
+[Annuler et saisie de valeurs](../undo/).
+</Aside>

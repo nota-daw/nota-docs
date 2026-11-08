@@ -1,0 +1,53 @@
+---
+title: "Annuler et saisie de valeurs"
+description: "Annuler et rétablir, et les façons de régler une valeur avec précision : glisser, pas fins, saisie au clavier et réinitialisation."
+sidebar:
+  order: 5
+updated: "0.58.1"
+status: done
+sources:
+  - src/managed/Nota.App/PreferencesWindow.cs
+  - src/managed/Nota.App/DeviceCardKit.cs
+  - src/managed/Nota.App/DeviceCards/DeviceParamControls.cs
+  - src/native/nota.engine/src/Engine_Automation.cpp
+---
+
+import Kbd from '@components/Kbd.astro';
+
+## Annuler et rétablir
+
+**Édition ▸ Annuler** (<Kbd>⌘ Z</Kbd>) et **Édition ▸ Rétablir** (<Kbd>⌘ ⇧ Z</Kbd>) couvrent chaque modification :
+notes et clips, pistes, appareils et leurs réglages, automation, clips et scènes de Session, sections de
+l’arrangement. Un geste est une seule étape : faire glisser plusieurs clips, ou tourner un bouton d’une valeur
+à une autre, s’annule d’un coup. Il en va de même pour basculer un appareil entre **A** et **B**, saisir une
+valeur, un mouvement d’un bouton de contrôleur MIDI (il se termine quand le bouton reste immobile une seconde), un
+toucher sur Nota Remote, et chaque modification faite par un assistant IA.
+
+Les envois en font partie : déplacer un envoi est une seule étape, que vous le fassiez dans un en-tête de piste,
+le Mixeur, le mixeur de la Session ou la carte **Envois**. Muet, solo et les appareils à l’intérieur d’un rack
+ne sont pas dans l’historique.
+
+Pour revenir plus loin que ce que l’annulation atteint, au mixage d’hier par exemple, utilisez
+l’[historique des versions](../version-history/).
+
+## Régler des valeurs
+
+Les boutons, curseurs et nombres de tout Nota fonctionnent de la même façon :
+
+| Faire ceci | Pour |
+|---|---|
+| Glisser vers le haut / le bas | Changer la valeur |
+| Glisser en maintenant <Kbd>⌘</Kbd> ou <Kbd>⇧</Kbd> | La changer par pas fins |
+| Double-cliquer sur un bouton | Le remettre à sa valeur par défaut |
+| Double-cliquer sur la valeur d’un curseur | Saisir une valeur exacte |
+
+Quand vous saisissez une valeur, les unités fonctionnent : `-6`, `1.5k`, `250 ms`, `-3 dB`, `L 30`, `1/16`.
+<Kbd>Return</Kbd> valide la valeur, <Kbd>Esc</Kbd> annule. Cela marche dans les cartes d’appareils, l’éditeur de
+clip et les macros de rack.
+
+Les faders et les barres de panoramique de piste reviennent aussi à leur valeur par défaut au double-clic.
+
+## Automation et MIDI
+
+Toute valeur que vous pouvez tourner peut aussi être [automatisée](../../editing/automation/) ou associée à une
+commande matérielle avec [MIDI Learn](../../control/midi-learn/).

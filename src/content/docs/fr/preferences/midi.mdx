@@ -1,0 +1,25 @@
+---
+title: "MIDI"
+description: "Réglages ▸ MIDI : les entrées MIDI que Nota écoute, et le MPE."
+sidebar:
+  order: 2
+updated: "0.50.1"
+status: done
+sources:
+  - src/managed/Nota.App/PreferencesWindow.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+<Shot id="preferences/midi" alt="Réglages ▸ MIDI" />
+
+**Entrées MIDI** liste chaque contrôleur connecté avec un interrupteur. Désactivez-en un pour que Nota cesse de
+l’écouter ; les nouveaux appareils sont activés par défaut. Si rien n’est listé, connectez un contrôleur et rouvrez
+les Réglages.
+
+**MPE** : **Expression** active l’expression par note des contrôleurs MPE (activé par défaut : un clavier sur le
+canal 1 joue comme sans). **Amplitude du pitch bend** est la distance dont une note se courbe à pleine course sur les
+canaux 2 à 16 : ±12, ±24, ±48 (par défaut) ou ±96 demi-tons. Un contrôleur qui annonce sa propre plage la remplace.
+Voir [Molette de hauteur, aftertouch et MPE](../../control/midi/#molette-de-hauteur-aftertouch-et-mpe).
+
+Voir [Contrôleurs MIDI](../../control/midi/) et [MIDI Learn](../../control/midi-learn/).
