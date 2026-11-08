@@ -3,6 +3,8 @@
 // Shows src/assets/shots/dark/<id>.(webp|png) in the dark theme and
 // src/assets/shots/light/<id>.* in the light one. With only one variant it is shown in
 // both. Ids are listed in shots/manifest.yml; scripts/check.mjs fails on unknown ids.
+// On a translated locale (/fr/) a shot taken with that interface language
+// (src/assets/shots-fr/, `npm run shots -- --lang fr`) is used when there is one.
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 
@@ -14,12 +16,20 @@ interface Props {
   width?: number;
 }
 
-const files = import.meta.glob<{ default: ImageMetadata }>('/src/assets/shots/**/*.{webp,png}', {
+const files = import.meta.glob<{ default: ImageMetadata }>('/src/assets/shots*/**/*.{webp,png}', {
   eager: true,
 });
-const find = (theme: string) =>
-  files[`/src/assets/shots/${theme}/${Astro.props.id}.webp`]?.default ??
-  files[`/src/assets/shots/${theme}/${Astro.props.id}.png`]?.default;
+const locale = Astro.currentLocale;
+const roots = [...(locale && locale !== 'en' && locale !== 'root' ? [`shots-${locale}`] : []), 'shots'];
+const find = (theme: string) => {
+  for (const r of roots) {
+    const hit =
+      files[`/src/assets/${r}/${theme}/${Astro.props.id}.webp`]?.default ??
+      files[`/src/assets/${r}/${theme}/${Astro.props.id}.png`]?.default;
+    if (hit) return hit;
+  }
+  return undefined;
+};
 
 const { id, alt, caption } = Astro.props;
 const dark = find('dark');

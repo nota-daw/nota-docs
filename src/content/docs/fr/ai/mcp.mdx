@@ -1,0 +1,63 @@
+---
+title: "Pilotage par IA via MCP"
+description: "Laissez un assistant IA comme Claude travailler dans votre projet ouvert grâce au serveur MCP intégré de Nota : pistes, notes, appareils, Session, mixage, export et plus."
+sidebar:
+  order: 3
+updated: "0.58.1"
+status: done
+sources:
+  - src/managed/Nota.App/PreferencesWindow.cs
+  - src/managed/Nota.Mcp/Tools/ProjectTools.cs
+  - src/managed/Nota.Mcp/Tools/ExportTools.cs
+---
+
+import Shot from '@components/Shot.astro';
+import { Steps, Aside } from '@astrojs/starlight/components';
+
+Nota a un **serveur MCP** (Model Context Protocol) intégré. Une fois activé, un assistant IA, Claude Desktop ou Claude
+Code, peut lire et modifier le projet ouvert dans Nota : ajouter des pistes, écrire des notes, régler des appareils,
+construire des scènes de Session, mixer et exporter. Chaque modification qu’il fait apparaît tout de suite à l’écran
+et passe par l’annulation, comme les vôtres.
+
+## L’activer
+
+<Steps>
+
+1. **Réglages ▸ Apparence ▸ Contrôle par IA (MCP)** ▸ **Activer le serveur MCP (laisser une IA piloter Nota)**. Il est
+   désactivé par défaut.
+
+2. **Copier la config** copie une entrée de serveur toute prête ; ajoutez-la (ou l’URL) comme serveur MCP dans Claude
+   Desktop ou Claude Code.
+
+3. Demandez à l’assistant de travailler sur votre projet.
+
+</Steps>
+
+<Shot id="preferences/appearance" alt="Réglages ▸ Apparence avec la section Contrôle par IA (MCP)" />
+
+Le serveur n’écoute que sur votre propre ordinateur (`127.0.0.1`, port 3900 par défaut) : rien sur le réseau ne peut
+l’atteindre.
+
+## Ce qu’une IA peut faire
+
+- **Transport et projet** : lecture, arrêt, tempo, signature, boucle, métronome, un instantané complet du projet, les
+  sections de l’arrangement (`list_sections` et `set_sections` portent un indicateur `automatic` pour les noms
+  « Section N »), et son historique de versions (lister, enregistrer avec une note, basculer, nommer et étoiler).
+- **Pistes et mixeur** : ajouter et supprimer des pistes, volume, panoramique, muet, solo, groupes, envois et retours,
+  indicateurs de niveau.
+- **Notes et clips** : clips MIDI, notes et leurs courbes de contrôleur (pédale de maintien, molettes, n’importe quel
+  CC), voies et points d’automation.
+- **Appareils** : instruments, effets et effets MIDI par type, leurs paramètres, préréglages (d’usine et les vôtres),
+  racks et leurs chaînes, zones et macros, pads de Drum Rack, motifs de Nota Rhythm.
+- **Plug-ins** : lister, ajouter, ouvrir l’éditeur, lire et écrire les paramètres et l’état.
+- **Session** : tout le lanceur de clips : emplacements, clips, scènes, lancement, actions de suivi, enregistrement.
+- **Échantillons** : chercher dans la bibliothèque par type, tempo, tonalité et nom, trouver des sons similaires,
+  charger des échantillons.
+- **Fonctions d’IA** : Séparer les stems et Convertir en MIDI sur un clip.
+- **Export** : le master ou les stems en WAV, FLAC ou MP3 (`format`, `bitrateKbps` pour le MP3, `startBeat` pour
+  démarrer le rendu plus tard dans le morceau).
+- **MIDI** : lister les entrées et travailler avec les associations de MIDI Learn.
+
+<Aside>
+Certaines choses restent à vous : une IA ne peut ni supprimer des versions ni installer des modèles.
+</Aside>

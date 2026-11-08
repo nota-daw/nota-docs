@@ -3,7 +3,7 @@ title: Audio clips and warp
 description: Editing audio clips — trimming, gain, pitch, reverse, warping to the tempo with markers, volume and pan envelopes, and the clip ADSR.
 sidebar:
   order: 2
-updated: "0.56.1"
+updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.App/AudioClipEditorView.cs
@@ -47,7 +47,9 @@ in **Auto** they get finer as you zoom in. Hold <Kbd>⌥</Kbd> while dragging to
 freely. An unwarped clip has no beat grid, so in **Sample** nothing snaps until you turn on
 **Warp** — the hint under the waveform says so.
 
-The **Sample** tab shows the waveform with the part of the file the clip plays. Its ruler reads
+The **Sample** tab shows the waveform with the part of the file the clip plays. It always draws the
+**Smooth** style — an outline of the peaks around a body that follows the loudness — whatever
+**Waveform** is set to in [Settings ▸ Appearance](../../preferences/appearance/#waveform). Its ruler reads
 where each moment plays in the Arrangement — in bars, or in time while the transport's position
 readout shows time. Click or drag the ruler, or drag the playhead line, to move the playhead
 there (on the grid on a warped clip; hold <Kbd>⌥</Kbd> to place it freely). The playhead shows
@@ -96,12 +98,19 @@ clip as it plays — from its start, left to right even when the clip is reverse
 
 **ADSR** shapes the clip's start and end: **Attack** fades it in, **Decay** and **Sustain** set
 how it settles, **Release** fades it out. You can also shape it right on the timeline: hover an
-audio clip and drag the handles in its top corners (or the dot that appears). Double-click a
-handle to reset that stage.
+audio clip and drag the handles in its top corners (or the dot that appears). <Kbd>⌥</Kbd>-click
+a handle to type its time (the dot: decay, then sustain after <Kbd>Tab</Kbd>); double-click it to
+reset that stage.
+
+Splitting an audio clip also writes a 4 ms fade at the cut — **Release** on the left piece,
+**Attack** on the right — so the cut does not click. Drag those handles to make it longer or
+shorter. Settings → Appearance → **Fade audio clips when splitting** turns that off. **Fade at
+splits**, in the command palette or on the clip's menu, writes the same fade where two audio
+clips already touch.
 
 ## On the timeline
 
-Right-click an audio clip for **Reverse**, **Separate stems…** (split it into drums, bass,
+Right-click an audio clip for **Fade at splits**, **Reverse**, **Separate stems…** (split it into drums, bass,
 vocals and the rest — see [Separate Stems](../../ai/separate-stems/)) and **Convert** (turn its
 melody, harmony or drums into MIDI — see [Convert audio to MIDI](../midi-tools/)).
 

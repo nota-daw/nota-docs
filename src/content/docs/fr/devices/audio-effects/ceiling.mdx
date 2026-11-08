@@ -1,0 +1,64 @@
+---
+title: "Nota Ceiling"
+description: "Limiteur brick-wall à anticipation avec vrai pic, trois caractères, un passe-haut de sidechain, l’écoute Delta et un indicateur de volume EBU R128 complet face à une cible."
+sidebar:
+  order: 15
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/Ceiling.h
+  - src/managed/Nota.App/DeviceCards/Bodies/CeilingDeviceBody.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Ceiling rend une piste ou un master fort sans jamais dépasser : rien ne passe le **Ceiling**. Il mesure aussi le
+volume comme le font les services de streaming, pour que vous sachiez si un master est prêt à être livré sans un autre
+plug-in.
+
+<Shot id="devices/audio-effects/ceiling/card" alt="Nota Ceiling, onglet Level avec l’entrée, la partie au-dessus du plafond et la sortie" />
+
+**Chemin du signal :** **Gain** pousse le signal contre le plafond ; une anticipation laisse le gain baisser *avant*
+l’arrivée de chaque crête ; le relâchement récupère ; un écrêtage de sécurité final garantit qu’aucun échantillon ne
+passe.
+
+## Limiting
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Gain** | Pousse dans le limiteur : plus fort veut dire plus de limitation |
+| **Ceiling** | Le niveau de sortie maximal : faites-le glisser sur le graphique Level |
+| **Release** · relâchement auto | À quelle vitesse il récupère ; l’auto ralentit quand la réduction s’approfondit |
+| **Character** | **Clean**, **Punch** ou **Glue** (avec un écrêtage doux) |
+| **Look** | Durée d’anticipation |
+| **Link** | D’un centre collé à des canaux indépendants |
+| **True Peak** | Mesure aussi les crêtes entre échantillons, pour qu’un convertisseur ou un codec n’écrête jamais |
+| **SC HP** | Garde les graves hors du détecteur, pour que la basse cesse de faire pomper le mixage |
+| **Delta** | Entendre ce que le limiteur retire |
+
+Le détecteur peut aussi écouter une autre piste (**Internal** ou la source de sidechain de l’appareil).
+
+## Les graphiques
+
+| Onglet | Ce qu’il montre |
+|---|---|
+| **Level** | L’entrée, la partie au-dessus du plafond et la sortie sur 4 secondes, avec la réduction en dessous |
+| **Reduction** | La réduction et les transitoires qui ont atteint l’écrêteur |
+| **Loudness** | Le volume instantané, à court terme et intégré sur 60 secondes autour de la **Target** : faites-la glisser |
+
+<Shot id="devices/audio-effects/ceiling/loudness" alt="Nota Ceiling, onglet Loudness avec les LUFS face à la cible" />
+
+## Indicateurs
+
+**LUFS-M**, **LUFS-S**, **LUFS-I** (intégré), plage de volume (LRA), vrai pic et PLR, face à la **Target** que vous
+réglez.
+
+## Préréglages
+
+32 préréglages d’usine : cibles de mastering (**Master Safe**, **Transparent Safety**, **Loud Master**,
+**Streaming −1**, **Streaming −14**, **Apple Music −16**, **Podcast −16**, **Broadcast R128 −23**, **Club Master −8**,
+**CD Brickwall**, **Gentle Master**, **Vinyl Pre-Master**, **Bass-Heavy Master**, **Headroom −6**), bus et batterie
+(**Drum Punch**, **Drum Bus**, **Glue Bus**, **Mix Bus Glue**, **Kick Clipper**, **Snare Crack**, **808 Safety**),
+instruments (**Vocal Peak Catcher**, **Guitar Wall**, **Synth Lead Tamer**) et couleur (**Soft Clip Warmth**,
+**Pumping Smash**, **Brickwall Crush**, **Lo-Fi Squash**, **Hear the Squash**, **Live Zero Latency**,
+**Wide Mix Unlinked**).

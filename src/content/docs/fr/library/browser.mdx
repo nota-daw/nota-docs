@@ -1,0 +1,117 @@
+---
+title: "Le navigateur"
+description: "Les onglets du navigateur (instruments, effets, fichiers, préréglages, projets, carte MIDI, historique et inspecteur de piste), la recherche, les favoris et les étiquettes, et glisser des éléments dans le projet."
+sidebar:
+  order: 1
+updated: "0.58.1"
+status: done
+sources:
+  - src/managed/Nota.App/BrowserView.cs
+  - src/managed/Nota.App/TrackInspectorView.cs
+  - src/managed/Nota.App/MainWindow.Browser.cs
+  - src/managed/Nota.App/MainWindow.Files.cs
+  - src/managed/Nota.App/MainWindow.Dnd.cs
+  - src/managed/Nota.App/TagEditorWindow.cs
+  - src/managed/Nota.Application/Palette/DeviceCategories.cs
+  - src/managed/Nota.App/MenuKit.cs
+  - src/managed/Nota.Presentation/ViewModels/BrowserViewModel.cs
+---
+
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
+
+Le navigateur, à gauche de la fenêtre principale, contient tout ce que vous pouvez apporter dans un projet. Ses
+onglets sont les icônes le long de son bord gauche ; le bouton en bas le replie (aussi **Affichage ▸ Afficher/masquer
+le navigateur**).
+
+<Shot id="start-here/browser-instruments" alt="Le navigateur, onglet Instruments" width={300} />
+
+## Onglets
+
+| Onglet | Ce qu’il contient |
+|---|---|
+| **Instruments** | Les instruments de Nota (**Intégrés**) et vos plug-ins d’instrument (**Plug-ins**). Chaque appareil s’ouvre en dossiers de ses préréglages d’usine (Pads, Bass, Leads, Keys & Plucks…), avec **Init** en haut |
+| **Effets audio** | Les effets intégrés et les plug-ins d’effet, avec leurs préréglages (Vocals, Drums, Mix & Bus, Mastering…) |
+| **Effets MIDI** | Arpégiateur, accords, gamme, longueur, vélocité, aléatoire, avec leurs préréglages |
+| **Fichiers** | Votre bibliothèque d’échantillons sous forme d’arborescence de dossiers : voir [Échantillons intelligents](../smart-samples/) |
+| **Préréglages** | Les préréglages que vous avez enregistrés (clic droit sur l’en-tête d’un appareil ▸ **Enregistrer le préréglage**). Clic droit sur l’un d’eux pour le révéler ou le **Supprimer…** (vers la Corbeille) ; clic droit sur une ligne de dossier pour ouvrir le dossier des préréglages |
+| **Projets** | Les projets de votre dossier de projets : les ouvrir, les afficher (**Afficher dans le Finder** sur macOS, **Afficher dans l’Explorateur** sous Windows, **Afficher dans le gestionnaire de fichiers** sous Linux) ou les supprimer |
+| **Carte MIDI** | Chaque commande associée à un contrôleur, une manette ou un téléphone : voir [MIDI Learn](../../control/midi-learn/) |
+| **Historique** | Les [versions](../../basics/version-history/) du projet ouvert |
+| **Inspecteur de piste** | Les réglages de la piste sélectionnée au même endroit : voir ci-dessous |
+
+## Inspecteur de piste
+
+La dernière icône du rail, mise à part par un trait fin, ouvre l'**Inspecteur de piste**. Il montre la piste que montre
+le panneau Appareils : sélectionnez une piste et il la suit. Sans sélection, il indique **Aucune piste sélectionnée**.
+Il rassemble ce que vous atteindriez autrement depuis le menu du clic droit de la piste ; le menu garde toutes ses
+entrées.
+
+<Shot id="library/track-inspector-tab" alt="L’onglet Inspecteur de piste avec la piste audio Texture sélectionnée" width={300} />
+
+| Section | Ce qu’elle fait |
+|---|---|
+| **Nom** | Tapez pour renommer ; <Kbd>Enter</Kbd> ou un clic ailleurs le garde, <Kbd>Esc</Kbd> remet l’ancien nom. Un nom vide rend à la piste son nom automatique |
+| **Muet**, **Solo**, **Armer** | Les boutons de l’en-tête. Un retour n’a que **Muet** ; un groupe a **Muet** et **Solo** |
+| **Entrée** | Sur une piste audio, **Entrée d’enregistrement** (une entrée matérielle, le master, une autre piste ou un retour) et **Écoute de l’entrée** (**On** / **Off** ; indisponible tant que le master est l’entrée). Sur une piste d’instrument, **MIDI depuis** |
+| **Couleur** | La palette de pistes (neuf familles en teinte de base, claire et sombre) et **Auto** |
+| **Hauteur** | **Compact**, **Standard** ou **Grand**. Non affichée pour un retour |
+| **Geler** | Les commandes de gel du menu de la piste sous forme de boutons : **Geler la piste**, **Gel en direct**, **Dégeler la piste**, **Aplatir en piste audio**, et sur un lien de gel en direct **Modifier la source**, **Terminé — geler à nouveau**, **Abandonner les modifications** et **Aplatir (supprimer la source)**. Pistes audio et d’instrument seulement |
+
+Chaque commande fait ce que font l’en-tête et le menu : l’annulation, l’armement exclusif et la règle « le master ne
+peut pas être écouté » se comportent donc pareil. L’onglet prend en compte les changements faits ailleurs (l’en-tête,
+le menu, l’annulation) en un instant. Un retour montre son nom, **Muet** et sa couleur ; le master montre seulement son
+nom. Le volume, le panoramique, les envois et la sortie restent dans l’en-tête de piste et le
+[Mixeur](../../views/mixer/). L’onglet n’a pas de champ de recherche.
+
+## Rechercher
+
+Le champ de recherche filtre l’onglet et compte les résultats. C’est un seul champ pour tous les onglets : changez
+d’onglet et le nouvel onglet est filtré par ce que dit le champ. La recherche ouvre les dossiers de préréglages autour
+des résultats, et le nom d’un dossier (« Mastering ») liste ce dossier dans tous les appareils. La ligne d’état en bas
+compte ce qui est affiché : `16 intégrés · 0 plug-in`.
+
+Des **pastilles de catégorie** se trouvent au-dessus de la liste sur les onglets **Instruments**, **Effets audio** et
+**Effets MIDI** : **Synthés**, **Batterie**, **Samplers**… ; **EQ et filtre**, **Dynamique**, **Réverbération et
+delay**, **Modulation**… ; **Générer** et **Forme**. Cliquez sur l’une pour ne voir que ce genre d’appareil, cliquez
+à nouveau pour tout voir. Chaque onglet garde son propre choix, et les pastilles se combinent avec la recherche, les
+favoris et les étiquettes. Vos plug-ins rejoignent les mêmes catégories d’après la catégorie qu’ils annoncent ; tout
+ce que Nota ne reconnaît pas va sous **Autre**.
+
+Le bouton ⋮ à côté du champ de recherche contient les options d’affichage (étiquettes de type, pastilles de
+catégorie, regroupement par source, favoris en premier) et l’éditeur d’étiquettes.
+
+## Favoris et étiquettes
+
+Avec le regroupement par source activé, les en-têtes **Intégrés** et **Plug-ins** se replient : cliquez sur l’un pour
+replier sa section, cliquez à nouveau pour l’ouvrir.
+
+Mettez une étoile (★) à un appareil ou un préréglage pour en faire un favori : les favoris remontent en haut de leur
+section. Les **étiquettes** vous laissent regrouper les choses à votre façon : attribuez-les depuis le menu du clic
+droit, modifiez leur titre et leur couleur dans l’éditeur d’étiquettes, et filtrez avec les pastilles sous le champ
+de recherche.
+
+## Apporter des éléments dans le projet
+
+| Faire ceci | Pour |
+|---|---|
+| Double-cliquer sur un instrument | L’échanger sur la piste d’instrument sélectionnée (ses clips et ses effets restent) ; sans piste d’instrument sélectionnée, une nouvelle piste avec lui et un clip vide d’une mesure |
+| ⌥ + double-clic sur un instrument | Toujours une nouvelle piste avec lui |
+| Double-cliquer sur un effet | L’ajouter à la piste sélectionnée |
+| Double-cliquer sur un fichier MIDI | Le placer sur une nouvelle piste |
+| Faire glisser sur une piste ou un espace vide | Y ajouter l’instrument, l’effet, l’échantillon ou la boucle |
+| Faire glisser sur une chaîne d’appareils | Insérer l’effet entre des cartes (une barre marque l’endroit) ou remplacer la carte sous le pointeur |
+| Faire glisser sur un emplacement de Session | Y placer un échantillon ou un fichier MIDI |
+| Faire glisser sur une chaîne de rack ou un pad | Le charger là |
+
+Les effets et préréglages peuvent aussi être déposés sur une piste de retour ou sur le master.
+
+Un préréglage d’instrument déposé sur une piste d’instrument se charge dans l’instrument de cette piste : il change
+l’instrument si le préréglage est pour un autre, et les effets de la piste restent. Déposé sur un espace vide, il crée
+une nouvelle piste. Quoi que vous déposiez, la piste sur laquelle il atterrit devient la piste sélectionnée, y compris
+une piste nouvellement créée.
+
+## Écouter avant de charger
+
+Le **lecteur d’aperçu**, en bas du navigateur, joue les échantillons, préréglages, kits et appareils avant que vous les
+chargiez : voir [Lecteur d’aperçu](../preview-player/).

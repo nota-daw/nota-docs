@@ -1,0 +1,108 @@
+---
+title: "Nota Instrument Rack"
+description: "Plusieurs instruments en un : des chaînes découpées par zones de touches et de vélocité, chacune avec ses propres effets MIDI, instrument et effets, sous huit macros ; mono et glide pour tout le rack."
+sidebar:
+  order: 1
+updated: "0.57.1"
+status: done
+sources:
+  - src/native/nota.engine/src/devices/racks/RackInstrument.h
+  - src/native/nota.engine/src/devices/racks/RackCore.h
+  - src/managed/Nota.App/DeviceCards/Rack/RackCard.cs
+  - src/managed/Nota.App/DeviceCards/Rack/RackCard.Chains.cs
+  - src/managed/Nota.App/DeviceCards/Rack/RackCard.Zones.cs
+  - src/managed/Nota.App/DeviceCards/Rack/RackCard.RightPanel.cs
+  - src/managed/Nota.App/DeviceCards/Rack/RackCard.Clipboard.cs
+  - src/managed/Nota.App/DeviceCards/Rack/RackCardView.cs
+  - src/managed/Nota.Application/Engine/RackEngineProxies.cs
+---
+
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
+
+Nota Instrument Rack contient plusieurs **chaînes** sur une piste, chacune avec ses propres effets MIDI, instrument et
+effets. Superposez une nappe sous un son pincé, coupez le clavier en basse et lead, changez de sons selon la force avec
+laquelle vous jouez, ou gardez un instrument avec son Arp.
+
+<Shot id="devices/racks/instrument-rack/card" alt="Nota Instrument Rack : les macros, la liste des chaînes, les appareils de la chaîne choisie et le panneau Chain" />
+
+**Disposition :** huit [macros](../macros/) à gauche ; les onglets **Chains**, **Zones** et **Macros** au milieu ; le
+panneau **Chain** et **Rack out** à droite ; une ligne d’état en bas. Les racks Audio Effect et MIDI Effect utilisent
+la même carte.
+
+## Chaînes
+
+La liste montre chaque chaîne : sa couleur, son nom, **M** (muet) et **S** (solo), sa zone de touches et de vélocité,
+et son niveau. Cliquez sur une chaîne pour la choisir ; double-cliquez sur son nom pour la renommer. Clic droit dessus
+pour la **Dupliquer** ou la **Supprimer**.
+
+À droite se trouvent les appareils de la chaîne choisie, de gauche à droite comme circule le signal : ses effets
+**MIDI**, son instrument, ses effets audio. Chaque carte compacte montre les paramètres clés de l’appareil ; faites
+glisser un curseur pour en changer un, **Open** montre l’éditeur complet de l’appareil. Les cibles en pointillés
+ajoutent un appareil (cliquez pour la liste, ou déposez un appareil ou un préréglage depuis le Navigateur). Les effets
+MIDI tournent dans les 16 premières chaînes.
+
+Faites glisser un appareil par son en-tête pour le déplacer dans sa section (une barre montre où il atterrit), ou
+déposez-le sur la ligne d’une autre chaîne dans la liste pour l’y déplacer ; ses associations de macros le suivent.
+Cliquez sur un appareil pour le sélectionner, puis utilisez <Kbd>⌘ C</Kbd> / <Kbd>⌘ X</Kbd> / <Kbd>⌘ V</Kbd> /
+<Kbd>⌘ D</Kbd> / <Kbd>Delete</Kbd> ou son menu du clic droit (**Déplacer vers la gauche**, **Déplacer vers la droite**,
+**Copier**, **Couper**, **Coller**, **Dupliquer**, **Supprimer**). Le presse-papiers est aussi celui de la
+[chaîne d’appareils](../../) : copiez un effet sur la piste et collez-le dans une chaîne, ou l’inverse. Un appareil
+collé garde ses réglages mais pas ses associations de macros ; un effet avec une clé d’une autre piste perd son
+sidechain dans un rack. Le menu de ligne d’une chaîne et les cibles en pointillés proposent **Coller** à la fin de la
+chaîne.
+
+**+ Chain** (ou un instrument déposé sur la liste) ajoute une couche. Un instrument déposé sur une chaîne remplace son
+instrument.
+
+Chaque modification des chaînes s’annule avec <Kbd>⌘ Z</Kbd> : ajouter, dupliquer ou retirer une chaîne, ses
+appareils, son nom, ses zones et les associations des macros.
+
+## Nota Mosaic et un Drum Rack comme chaîne
+
+Une chaîne peut aussi contenir **Nota Mosaic** ou un **Nota Drum Rack** : déposez-le depuis le Navigateur sur le rack
+(une nouvelle chaîne) ou sur une chaîne (il remplace l’instrument de la chaîne), ou choisissez-le dans le menu
+d’instrument de la chaîne.
+
+- **Mosaic** : **GUI** ouvre l’éditeur complet de [Mosaic](../../instruments/mosaic/) pour cette chaîne :
+  préréglages, zones, progression du chargement. Le programme est enregistré avec le rack.
+- **Drum Rack** : **GUI** ouvre la carte du [Drum Rack](../drum-rack/) dans une fenêtre : pads, éditeur de pad,
+  macros, et les kits d’usine dans le sélecteur de préréglage de la fenêtre. Donnez à la chaîne une zone de touches
+  (disons C1–B1) et le kit joue là pendant que les autres chaînes jouent le reste du clavier. Pour tourner les macros
+  du Drum Rack de l’extérieur, associez-leur une macro du rack : ce sont les paramètres de l’instrument de la chaîne.
+
+Les racks s’imbriquent sur **un seul niveau** : un Drum Rack va seulement dans une chaîne d’Instrument Rack, pas sur
+un pad de Drum Rack ni dans un autre rack, et un Instrument Rack ne va jamais dans une chaîne. Un Drum Rack dans une
+chaîne n’a pas de **Swing** / **Humanize** : ils décalent les notes de toute la piste, donc ils appartiennent à une
+piste de Drum Rack.
+
+## Zones
+
+<Shot id="devices/racks/instrument-rack/zones" alt="L’onglet Zones : zones de touches et de vélocité par chaîne, avec la sonde sur E4" />
+
+Chaque chaîne ne joue que les notes à l’intérieur de sa zone de **touches** et de sa zone de **vélocité**. Faites
+glisser les bords d’une zone pour les régler ; des zones qui se chevauchent se superposent, des zones séparées se
+partagent le clavier. Survolez les zones pour tester une note : une ligne marque la touche, les chaînes qui la
+joueraient s’allument, et le pied les nomme.
+
+## Panneau Chain et Rack out
+
+**Chain** montre le **Volume** et le **Pan** de la chaîne choisie, ses zones (cliquez pour ouvrir l’onglet Zones),
+**Dupliquer** et **Supprimer**.
+
+<Shot id="devices/racks/instrument-rack/rack-out" alt="Rack out : Volume, Glide et Mono (last note)" />
+
+**Rack out** contient le **Volume** du rack, **Glide** et **Mono (last note)**. Avec mono activé, le rack joue une note
+à la fois et la dernière touche gagne ; la relâcher revient à la touche encore tenue. Glide fait glisser chaque nouvelle
+note depuis la hauteur précédente sur les instruments qui acceptent le pitch bend par note. Les chaînes qui contiennent
+des effets MIDI reçoivent les notes telles que jouées : ce sont leurs effets qui décident de ce qui sonne.
+
+## Astuces
+
+- **À partir d’un son déjà construit :** sélectionnez les effets MIDI, l’instrument et les effets après lui, appuyez
+  sur <Kbd>⌘ G</Kbd> : ils deviennent la première chaîne de ce rack, automation comprise ; ajoutez des chaînes pour le
+  superposer. Voir [Grouper dans un rack](../../#grouper-dans-un-rack).
+- **Basse et lead sur un seul clavier :** deux chaînes, touches jusqu’à B2 et à partir de C3.
+- **Couches de vélocité :** la même zone deux fois, vélocité 0–100 et 101–127.
+- **Un instrument et son Arp dans un seul préréglage :** déposez Nota Arp dans la section MIDI de la chaîne,
+  enregistrez le rack comme préréglage.

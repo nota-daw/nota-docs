@@ -1,0 +1,50 @@
+---
+title: "Nota Phaser"
+description: "Phaser : 2 à 12 étages passe-tout balayés par un LFO, avec feedback bipolaire, fréquence centrale, profondeur en octaves, synchro et décalage stéréo."
+sidebar:
+  order: 24
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/Phaser.h
+  - src/managed/Nota.App/DeviceCards/Bodies/PhaserDeviceBody.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Phaser décale la phase d’un son à travers une chaîne d’étages passe-tout et le mélange de nouveau à l’original :
+des encoches apparaissent et un LFO les balaie, le tourbillon d’une pédale phaser classique ou d’un haut-parleur
+rotatif.
+
+<Shot id="devices/audio-effects/phaser/card" alt="Nota Phaser : le LFO, la réponse passe-tout et les étages" />
+
+## LFO
+
+Sinus, triangle ou dent de scie ; **Hz** (libre, 0,02 à 8 Hz) ou **Sync** (de 4 mesures à 1/16, avec pointées et
+triolets) ; **Rate** ; **Stereo** : le LFO du canal droit court de 0 à 180° derrière le gauche.
+
+## La fenêtre
+
+La réponse passe-tout en direct de L et R, avec les encoches repérées : faites glisser vers la gauche et la droite pour
+**Center**, vers le haut et le bas pour **Feedback**, et en dessous la fréquence de coupure des deux canaux sur deux
+cycles.
+
+## Stages
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Stages** | 2, 4, 6, 8 ou 12 : plus d’étages, plus d’encoches (moitié moins que d’étages) |
+| **Center** | Centre du balayage, de 50 Hz à 5 kHz |
+| **Depth** | Jusqu’où il balaie, jusqu’à ±3 octaves |
+| **Feedback** | Bipolaire : positif creuse et affine les encoches ; négatif les déplace et les élargit |
+| **Mix** | 0 sec · 50 % les encoches les plus profondes · 100 % wet seulement (le déphasage seul) |
+
+## Préréglages
+
+35 préréglages d’usine : classiques (**Script 45**, **Small Stone**, **Vintage Six**, **Eight Stage Sweep**,
+**Two-Stage Shimmer**), doux (**Slow Swirl**, **Gentle Motion**, **Wide Stereo**, **Mono Swoosh**, **Deep Space**),
+résonants (**Whistler**, **Resonant Twelve**, **Jet Phase**, **Laser Sweep**, **Nasal Tube**), creux
+(**Hollow Step**, **Hollow Drift**, **Inverse Twelve**), synchronisés (**Quarter Pulse**, **Two-Bar Sweep**,
+**Four-Bar Rise**, **Eighth Chop**, **Dotted Wander**, **Triplet Flutter**, **Half-Bar Swell**), rotatifs
+(**Rotary Fast**, **Rotary Slow**) et pour instruments (**Guitar Classic**, **Electric Piano**, **Pad Drift**,
+**Drum Bus Swirl**, **Bass Motion**, **Vocal Air**, **Bubble Trouble**, **Static Notch**).

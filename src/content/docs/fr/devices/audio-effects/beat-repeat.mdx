@@ -1,0 +1,65 @@
+---
+title: "Nota Beat Repeat"
+description: "Stutter et glitch synchronisés sur le tempo : capture une tranche du temps et la répète, en changeant la hauteur, le fondu et le filtre de chaque répétition, au hasard ou à la demande."
+sidebar:
+  order: 13
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/BeatRepeat.h
+  - src/managed/Nota.App/DeviceCards/Bodies/BeatRepeatDeviceBody.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Beat Repeat saisit une courte tranche de ce qui joue et la répète en mesure : roulements de caisse claire, fills de
+fin de mesure, chops de voix, stutters glitchés.
+
+<Shot id="devices/audio-effects/beat-repeat/card" alt="Nota Beat Repeat, onglet Timeline avec la capture et les répétitions sur deux intervalles" />
+
+**Comment ça marche :** à chaque **Interval** (décalé par **Offset**), il tire les dés : **Chance**. S’il se déclenche, il
+capture une tranche de la longueur de **Grid** et la boucle jusqu’à la fin du **Gate**, chaque répétition étant
+transposée, atténuée et filtrée.
+
+## Timing
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Interval** · **Offset** | À quelle fréquence il peut se déclencher, et à quel endroit de la mesure |
+| **Grid** | Longueur de la tranche ; **Triplet** transforme la grille en triolets |
+| **Variation** | Laisse la grille flotter de quelques pas à chaque déclenchement |
+| **Chance** | Probabilité de se déclencher à chaque intervalle |
+| **Gate** | Combien de temps dure la répétition |
+| **Repeat** · **Latch** | Force une répétition maintenant, tant qu’on la tient (ou verrouillée) |
+
+L’onglet **Timeline** montre la capture et les répétitions sur deux intervalles ; **Slices** montre le son de l’intervalle
+avec l’offset, le gate et la tranche posés dessus : faites-les glisser.
+
+<Shot id="devices/audio-effects/beat-repeat/slices" alt="Nota Beat Repeat, onglet Slices" />
+
+## Character
+
+**Pitch** (et **Pitch decay** par répétition : une plongée), **Decay** (chaque répétition plus faible), **Volume**, et le
+**Filter** : activé / désactivé, **LP**, **BP** ou **HP**, **Freq** et largeur, éventuellement **narrowing with
+repeats**.
+
+<Shot id="devices/audio-effects/beat-repeat/filter" alt="Nota Beat Repeat, onglet Filter" />
+
+## Output
+
+Mode : **Mix** (les répétitions par-dessus le signal sec), **Insert** (les répétitions remplacent le sec pendant qu’elles
+jouent) ou **Gate** (seules les rafales sonnent) ; et **Mix** (dry / wet).
+
+## Préréglages
+
+31 préréglages d’usine : stutters (**Classic Stutter**, **Half-Bar Roll**, **Snare Stutter**, **End-of-Bar Fill**,
+**Build-Up Roll**, **Stutter Mix**, **Glitch Gate**, **Triplet Tumble**), aléatoire (**Random Glitch**, **Micro Buzz**,
+**Buffer Shuffle**, **Sparse Surprise**), hauteur (**Pitch Drop**, **Tape Drop**, **Octave Up Flutter**, **Fifth Echo**,
+**Dive Bomb**, **Chipmunk Roll**), filtré (**Filtered Chops**, **Telephone Repeats**, **Low-Pass Fade**,
+**High-Pass Riser**, **Radio Stutter**), par instrument (**Hat Roll**, **Kick Stutter**, **Vocal Chop**,
+**Vocal Echo Tail**) et performance (**Hold to Stutter**, **Latch Freeze**, **Gate Only Bursts**).
+
+## Astuces
+
+- **Le jouer en direct :** associez **Repeat** à un pad ou à une touche avec le MIDI Learn.
+- Beat Repeat a besoin que le transport tourne pour suivre la mesure.

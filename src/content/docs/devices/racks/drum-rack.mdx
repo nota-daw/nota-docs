@@ -3,9 +3,10 @@ title: "Nota Drum Rack"
 description: "Pads for drums and one-shots — up to 64 pads in four banks, each with its own sample or instrument and effects, choke groups, a mixer, kit macros and 25 factory kits."
 sidebar:
   order: 2
-updated: "0.57.1"
+updated: "0.58.1"
 status: done
 sources:
+  - src/managed/Nota.App/DeviceCards/SidechainSourcePicker.cs
   - src/native/nota.engine/src/DrumRack.h
   - src/managed/Nota.App/DeviceCards/Rack/RackCardView.Drum.cs
   - src/managed/Nota.App/DeviceCards/Rack/MacroPanel.cs
@@ -70,5 +71,13 @@ A Drum Rack can also sit in a chain of an [Instrument Rack](../instrument-rack/#
 where its card opens in a window.
 
 Double-click the clip and use the **Pattern** tab in the detail panel for a step grid with a row per
-pad — or the piano roll, where each pad is a note. Audio clips dragged from the Arrangement land on
+pad — or the piano roll, where each pad is a note. Turn on [Fold](../../../editing/piano-roll/#fold)
+there and the piano roll shows just the pads, one named row each. Audio clips dragged from the Arrangement land on
 the next free pad.
+
+## Sidechain from a pad
+
+A device on another track can key off a single pad: in its sidechain source picker, pick the pad
+under this track. **Pre** takes the pad's raw hit, before its effects and decay; **Post** takes it
+after its effects, decay, level and pan. The key stays on that pad when you add, remove or rename
+pads, and a muted pad still drives it — a "ghost kick" that ducks the bass without being heard.

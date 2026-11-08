@@ -3,9 +3,10 @@ title: "Nota Compressor"
 description: "Компрессор с пятью характерами, мягким коленом, детекцией peak / RMS / auto, look-ahead, ограничением диапазона, авто-релизом, параллельным миксом и фильтрованным сайдчейном."
 sidebar:
   order: 4
-updated: "0.50.1"
+updated: "0.57.1"
 status: done
 sources:
+  - src/managed/Nota.App/DeviceCards/SidechainSourcePicker.cs
   - src/native/nota.engine/src/Compressor.h
   - src/managed/Nota.App/DeviceCards/Bodies/CompressorDeviceBody.cs
 ---
@@ -35,7 +36,9 @@ Nota Compressor выравнивает сигнал: приглушает всё
 <Shot id="devices/audio-effects/compressor/sidechain" alt="Nota Compressor, вкладка Sidechain с фильтрами ключа" />
 
 Что слушает детектор: **Internal** (сам трек) или **External key** (другой трек — источник
-сайдчейна устройства, **Pre** или **Post** его фейдера). Спектр ключа нарисован под его фильтрами —
+сайдчейна устройства, **Pre** или **Post** его фейдера). В списке ключей под своим треком есть и
+пэды Drum Rack, цепочки Instrument Rack и голоса Nota Rhythm — выберите один, и компрессором будет
+управлять только он; **Listen** тогда покажет, например, *Drums · Kick pre*. Спектр ключа нарисован под его фильтрами —
 тяните ручки **HP** и **LP**; **Q** формирует оба. **Listen** позволяет услышать ключ.
 
 ## Dynamics и Output
@@ -64,5 +67,5 @@ Nota Compressor выравнивает сигнал: приглушает всё
 ## Советы
 
 - **Сайдчейн-пампинг:** External key от бочки, быстрая атака, релиз по вкусу — или начните с
-  **EDM Pump**.
+  **EDM Pump**. Бочка внутри Drum Rack? Выберите её пэд (**Drums ▸ Kick**), а не весь кит.
 - **Параллельные барабаны:** большое Ratio и **Mix** около 40 %.

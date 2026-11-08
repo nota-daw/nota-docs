@@ -1,0 +1,48 @@
+---
+title: "Nota Length"
+description: "Règle la longueur de chaque note (une division de tempo, des millisecondes ou un pourcentage du temps où elle a été tenue), façonnée par la vélocité, la hauteur et le hasard, avec legato et une limite à la mesure."
+sidebar:
+  order: 4
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/MidiNoteLength.h
+  - src/managed/Nota.App/DeviceCards/Midi/LengthMidiBody.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Length décide combien de temps durent les notes, quoi qu’on ait joué : un staccato net, des croches régulières, de
+longs bourdons à partir de brèves touches, ou des notes qui démarrent quand vous **relâchez** une touche.
+
+<Shot id="devices/midi-effects/length/card" alt="Nota Length : le mode de longueur, la fenêtre de gate et les modificateurs" />
+
+## Longueur
+
+| Mode | La note dure |
+|---|---|
+| **Sync** | Une division du tempo (huit au choix) |
+| **ms** | Un temps fixe |
+| **Gate %** | Une part du temps où la touche a été tenue : elle peut raccourcir ou étirer |
+
+**Start from** : **Note-on** (normal) ou **Note-off** : la note part quand la touche est relâchée.
+
+## Modificateurs
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Vel → Len** | Bipolaire : les notes plus fortes plus longues (+) ou plus courtes (−) |
+| **Key → Len** | Bipolaire : les notes plus graves plus longues (+) ou plus courtes (−) |
+| **Random** | Étalement de ± par note |
+| **Legato** | Étire chaque note jusqu’au début de la suivante |
+| **Clip length limit** | Une note ne franchit jamais la barre de mesure où elle a commencé |
+
+La fenêtre **Gate** montre une mesure de notes de démonstration : l’entrée en contour, la sortie en aplat, la plage de
+Random comme une bande.
+
+## Préréglages
+
+32 préréglages d’usine : divisions (**Staccato**, **Eighths**, **Tenuto 1/4**, **Half Notes**, **Whole Bar**,
+**Dotted Eighth**, **Quarter Triplet**, **32nd Blips**), temps fixes (**Blip 40ms**, **Fixed 120ms**, **Fixed 250ms**,
+**Fixed 500ms**, **One Second**), gates (**Half Gate**, **Tight Quarter Gate**, **Almost Legato**, **Stretch 150%**, …)
+et plus.

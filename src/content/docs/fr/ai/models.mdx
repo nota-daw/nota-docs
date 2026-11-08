@@ -1,0 +1,41 @@
+---
+title: "Modèles d’IA"
+description: "Les deux modèles d’IA facultatifs, htdemucs pour Séparer les stems et basic-pitch pour Convertir en MIDI, installés depuis les Réglages et exécutés entièrement sur votre ordinateur."
+sidebar:
+  order: 1
+updated: "0.50.1"
+status: done
+sources:
+  - src/managed/Nota.App/PreferencesWindow.Models.cs
+  - src/managed/Nota.Infrastructure/ModelStore/ModelCatalog.cs
+---
+
+import Shot from '@components/Shot.astro';
+import { Aside } from '@astrojs/starlight/components';
+
+Deux fonctions de Nota utilisent des modèles d’IA. Ce sont des téléchargements facultatifs, et ils s’exécutent **sur
+votre ordinateur** : l’audio que vous leur donnez ne le quitte jamais.
+
+| Modèle | Utilisé par | Taille | Par |
+|---|---|---|---|
+| **htdemucs** | [Séparer les stems](../separate-stems/) : sépare un mixage en batterie, basse, voix et le reste | environ 175 Mo | Meta AI (Demucs v4), MIT |
+| **basic-pitch** | [Convertir en MIDI](../../editing/midi-tools/) : entend chaque note, accords compris | moins de 1 Mo | Spotify, Apache-2.0 |
+
+Les deux tournent sur **ONNX Runtime**, qui arrive avec le premier modèle que vous installez et part avec le dernier
+que vous retirez.
+
+## Installer et retirer
+
+<Shot id="preferences/downloads-models" alt="Réglages ▸ Téléchargements ▸ Modèles d’IA" />
+
+**Réglages ▸ Téléchargements ▸ Modèles d’IA** : **Installer** télécharge un modèle depuis l’endroit où ses auteurs le
+publient et le vérifie avec la somme de contrôle fixée dans Nota ; **Supprimer** le supprime (la fonction propose
+alors de le télécharger à nouveau) ; **Source** ouvre la page du projet du modèle.
+
+Vous n’avez pas à venir ici d’abord : **Séparer les stems…** et le menu **Convertir** proposent le téléchargement la
+première fois que vous en avez besoin. Les téléchargements continuent après la fermeture des Réglages ; leur progression
+passe dans la ligne d’état de la fenêtre principale.
+
+<Aside>
+Si ONNX Runtime n’a pas de version pour votre ordinateur, la page le dit et les modèles ne peuvent pas y tourner.
+</Aside>

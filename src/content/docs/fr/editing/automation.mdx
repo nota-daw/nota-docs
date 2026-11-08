@@ -1,0 +1,80 @@
+---
+title: "Automation"
+description: "Dessiner et enregistrer des voies d’automation pour le volume, le panoramique et n’importe quel paramètre d’appareil ; reprendre la main et la rendre ; modifier points et plages."
+sidebar:
+  order: 4
+updated: "0.58.1"
+status: done
+sources:
+  - src/managed/Nota.App/ArrangementView.Automation.cs
+  - src/native/nota.engine/src/Automation.h
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
+
+L’automation fait bouger une valeur dans le temps : un filtre qui s’ouvre, un fondu, un delay qui gonfle jusqu’à un
+drop. Le volume et le panoramique d’une piste peuvent être automatisés, tout comme chaque paramètre d’un appareil
+intégré, les paramètres de plug-ins et les effets MIDI. Les envois non : ils n’ont pas de voie d’automation.
+
+<Shot id="editing/automation-lanes" alt="Le mode automation dans l’Arrangement : la voie de volume de la piste Lead avec une courbe sur tout le morceau" />
+
+## Afficher les voies
+
+Cliquez sur le bouton **automation** de la barre de transport (<Kbd>⌘ ⇧ A</Kbd>). La voie de chaque piste montre un
+paramètre, choisi avec la pastille au début de la voie : cliquez dessus et choisissez dans la liste. Les paramètres
+qui portent déjà de l’automation sont marqués d’un point et listés en premier.
+
+Tant que le mode automation est actif, toucher n’importe quel bouton ou fader d’une piste, sur un appareil, un plug-in
+ou le mixeur, bascule la voie de cette piste sur lui.
+
+## Dessiner
+
+| Faire ceci | Pour |
+|---|---|
+| Double-cliquer sur la voie | Ajouter un point (aussi entre deux points) |
+| Faire glisser un point | Le déplacer |
+| Double-cliquer sur un point | Le supprimer |
+| <Kbd>⌥</Kbd>-glisser un segment | Le courber |
+| <Kbd>⇧</Kbd>-glisser | Sélectionner une plage de la voie |
+| <Kbd>⌘ C</Kbd> <Kbd>⌘ X</Kbd> <Kbd>⌘ V</Kbd> · <Kbd>⌘ D</Kbd> | Copier, couper, coller · dupliquer la plage sélectionnée |
+
+Un simple clic déplace la tête de lecture, comme partout ailleurs dans l’Arrangement. Faites un clic droit sur la
+voie pour **Copier**, **Couper**, **Coller** et **Supprimer l’automation**.
+
+## Enregistrer l’automation
+
+Il n’y a pas de mode à régler. Appuyez sur **Enregistrement** et bougez une commande : sa voie enregistre ce que vous
+faites. Une commande que vous bougez à la souris cesse d’écrire quand vous la lâchez ; un bouton, fader, stick ou
+gâchette matériel continue d’écrire sa dernière valeur jusqu’à l’arrêt du transport. Les envois s’enregistrent de la
+même façon : bougez un bouton d’envoi dans un en-tête de piste, le Mixeur ou la carte **Envois**.
+
+## Reprendre la main
+
+L’automation est toujours lue. Si vous bougez une commande automatisée **sans enregistrer**, votre main gagne : cette
+voie est contournée et cesse de ramener le bouton. Le bouton à côté de celui de l’automation s’allume tant que
+quelque chose est contourné : cliquez dessus pour rendre toutes les voies à la lecture.
+
+## L’automation suit les clips
+
+Quand vous déplacez des clips, l’automation qui est sous eux suit. Déplacé vers **une autre piste**, un clip n’emporte
+que son automation de Volume et de Pan : l’automation d’appareil reste sur la piste pour laquelle elle a été écrite.
+**Édition ▸ Verrouiller les enveloppes** épingle plutôt toute l’automation à la timeline, pour que vous puissiez
+réorganiser les clips sans la traîner avec eux.
+
+## Autres types d’enveloppe
+
+- Le **volume général** a sa propre voie sur la ligne Master : cliquez dessus pour ajouter des points.
+- Un **clip MIDI** a des enveloppes de Vélocité et de Volume à l’intérieur du clip : voir
+  [Piano roll](../piano-roll/#enveloppes).
+- Un **clip audio** a des enveloppes de Volume et de Pan et un ADSR : voir
+  [Clips audio](../audio-clips/#enveloppe).
+- Pour bouger un bouton avec le volume sonore d’une piste plutôt qu’avec des points dessinés (un contrôleur de crête,
+  ou faire céder une piste sous une autre), câblez un **Envelope Follower** dans Modular : voir
+  [Bouger un bouton avec le volume d’une autre piste](../../views/modular/#bouger-un-bouton-avec-le-volume-dune-autre-piste).
+
+<Aside type="tip">
+Les voies suivent leur appareil : réordonnez ou retirez des appareils et l’automation reste avec le paramètre auquel
+elle appartient.
+</Aside>

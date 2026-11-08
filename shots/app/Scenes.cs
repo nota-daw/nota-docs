@@ -11,6 +11,7 @@ using Avalonia.Threading;
 using Avalonia.VisualTree;
 using Nota.App;
 using Nota.Application;
+using Nota.Application.Localization;
 using Nota.Infrastructure;
 using Nota.Presentation;
 using SkiaSharp;
@@ -25,12 +26,13 @@ namespace NotaDocsShots;
 ///             clip (a demo sample on an effect's track), sidechain + sidechainName (a demo sample on
 ///             a second track routed as the effect's key),
 ///             chainInstrument (an Instrument Rack's chain 1 instrument), trackName, window (click this text — a
-///             chain's GUI — and shoot the device window it opens)
+///             chain device's "Open" — and shoot the device window it opens)
 ///   main      view (arrangement | session | modular), select (track name), clip (track name,
 ///             + clipIndex, audio: true for an audio clip) to open in the clip editor, with ("Track:clipIndex,…" —
 ///             more MIDI clips selected with it, so they open together), automation, tab (browser tab index),
 ///             expand (a folder in that tab) + pick (a row to select, which the preview player takes), detailHeight, element, width, height,
 ///             fold (the selected track's audio effects to fold into strips, by chain index, e.g. "0,2"; "i" = the instrument)
+///             rows (every track row at this height in px; standard is 64)
 ///   palette   the command palette (⌘⇧P) over the main window: view, select (track), card (index of
 ///             an audio effect to select in Devices), query, down (rows to move), mods (alt | cmd | shift),
 ///             origin (devices: the Devices panel had the focus), crop (true: just the palette card)
@@ -107,8 +109,10 @@ public sealed class Scenes
             case "export": Simple(shot, new ExportWindow(128, 32, 124)); break;
             case "connect": Connect(shot); break;
             case "unsaved":
-                Simple(shot, new SaveChangesWindow("Unsaved changes", "Save changes to “Night Drive” before closing?",
-                    "Night Drive", "Unsaved for 12 minutes"));
+                // The texts the app shows when quitting with unsaved edits (MainWindow.Recovery.cs).
+                Simple(shot, new SaveChangesWindow(Loc.T("main.recovery.unsaved_changes"),
+                    Loc.T("main.recovery.do_you_really_want_to"), "Night Drive",
+                    Loc.F("main.recovery.unsaved_changes_n", "12\u2009min")));
                 break;
             default: throw new ArgumentException($"unknown scene '{shot.Scene}'");
         }
@@ -146,7 +150,7 @@ public sealed class Scenes
         else if (shot.Int("instrument") == 3)
         {
             track = _engine.AddInstrumentRackTrack();
-            if (shot.Int("chainInstrument") is int ck && !_engine.RackSetChainInstrument(track, 0, ck))
+            if (shot.Int("chainInstrument") is int ck && _engine.RackAddChain(track, ck) < 0)   // a new rack has no chains
                 throw new InvalidOperationException($"chain instrument {ck} did not load");
             if (shot.Str("trackName") is string tn) _engine.SetTrackName(track, tn);
         }
@@ -394,6 +398,8 @@ public sealed class Scenes
         // Zoom: fit the whole song, or the app's default (28 px a beat from bar 1) — the view
         // keeps its zoom between shots otherwise.
         var tl = mw.FindControl<ArrangementView>("Timeline")!;
+        // Every track row at this height (e.g. 96: a standard row tall enough for its sends).
+        if (shot.Int("rows") is int rows) Invoke(tl, "SetAllTrackHeights", (double)rows);
         if (shot.Bool("fit")) Invoke(tl, "ZoomToFitProject");
         else Invoke(tl, "ApplyOverviewView", 28.0, 0.0);
         Pump(20);
@@ -401,7 +407,8 @@ public sealed class Scenes
         else HideUpdate();
         var element = shot.Str("element") is string el ? mw.FindControl<Control>(el) ?? throw new ArgumentException($"no control '{el}'") : null;
         Save(mw, shot.Id, element);
-        // The demo song is shared by every shot: open the folded cards again.
+        // The demo song is shared by every shot: back to standard rows, open the folded cards again.
+        if (shot.Int("rows") is not null) Invoke(tl, "SetAllTrackHeights", 64.0);
         if (shot.Str("select") is string sel && shot.Str("fold") is string unfold) Fold(mw, _demo.Track(sel), unfold, false);
     }
 
@@ -431,7 +438,7 @@ public sealed class Scenes
             if (shot.Int("card") is int card)
             {
                 var kindType = typeof(DeviceChainView).GetNestedType("ChainKind", BindingFlags.NonPublic)!;
-                Invoke(chain, "SelectDevice", Enum.Parse(kindType, "Effect"), card);
+                Invoke(chain, "SelectDevice", Enum.Parse(kindType, "Effect"), card, KeyModifiers.None);
             }
             typeof(MainWindow).GetField("_detailWasLastFocused", Private)!.SetValue(mw, shot.Str("origin") == "devices");
         }
@@ -465,13 +472,34 @@ public sealed class Scenes
     private void Mixer(Shot shot)
     {
         MainWindow(shot);   // the demo song
+        // specs/070 (app 0.59+): group: "Name:Track,Track" puts demo tracks under a new group;
+        // fold: true folds it; compact: true shows compact strips; select: a demo track or the group.
+        int groupId = -1;
+        if (shot.Str("group") is string g && g.Split(':') is [var gname, var members])
+        {
+            groupId = _engine.CreateGroup(members.Split(',').Select(_demo.Track).ToArray());
+            if (groupId > 0) _engine.SetTrackName(groupId, gname);
+        }
         var view = new MixerView(_engine);
+        var foldType = typeof(App).Assembly.GetType("Nota.App.GroupFold");
+        var foldProp = typeof(MixerView).GetProperty("Fold", BindingFlags.NonPublic | BindingFlags.Instance);
+        object? fold = foldType is not null && foldProp is not null ? Activator.CreateInstance(foldType, true) : null;
+        if (fold is not null) foldProp!.SetValue(view, fold);
+        if (shot.Bool("compact")) typeof(MixerView).GetProperty("Compact")?.SetValue(view, true);
         var win = Host(view, shot.Int("width") ?? 1200, shot.Int("height") ?? 560);
         win.Show();
         view.Refresh();
         Pump(20);
+        if (shot.Bool("fold") && fold is not null && groupId > 0) { foldType!.GetMethod("Toggle")!.Invoke(fold, new object[] { groupId }); Pump(10); }
+        if (shot.Str("select") is string sel)
+        {
+            int id = sel == shot.Str("group")?.Split(':')[0] ? groupId : _demo.Track(sel);
+            typeof(MixerView).GetMethod("FollowSelection", new[] { typeof(int) })?.Invoke(view, new object[] { id });
+            Pump(10);
+        }
         Save(win, shot.Id);
         win.Close();
+        if (groupId > 0) _engine.Ungroup(groupId);   // the demo song is shared by every shot
     }
 
     private void Prefs(Shot shot)
@@ -674,12 +702,25 @@ public sealed class Scenes
         Pump();
     }
 
+    /// <summary>The running language's texts for an English UI string (none in English).</summary>
+    private static IEnumerable<string> Translations(string english)
+    {
+        if (Loc.Language == "en") yield break;
+        foreach (var key in Loc.English.Keys)
+            if (Loc.English.TryGet(key, out var en) && en.Other == english)
+                yield return Loc.T(key);
+    }
+
     private static readonly Avalonia.Input.Pointer Mouse = new(1, PointerType.Mouse, true);
 
     /// <summary>Click the control that shows <paramref name="text"/> — a tab, segment or button.</summary>
     private static void ClickText(Window win, string text)
     {
-        var tb = win.GetVisualDescendants().OfType<TextBlock>().FirstOrDefault(x => x.Text == text)
+        // The manifest names controls by their English text; in another language look for a translation
+        // of it that is on screen (one English text can have several keys).
+        var texts = win.GetVisualDescendants().OfType<TextBlock>().ToList();
+        var candidates = Translations(text).Append(text).ToList();
+        var tb = candidates.Select(c => texts.FirstOrDefault(x => x.Text == c)).FirstOrDefault(x => x != null)
                  ?? throw new ArgumentException($"no '{text}' on screen");
         // A button (tab segments, Downloads' switch) takes a Click; anything else a pointer press.
         if (tb.GetVisualAncestors().OfType<Button>().FirstOrDefault() is { } button)
@@ -689,7 +730,8 @@ public sealed class Scenes
             Pump();
             return;
         }
-        var target = (Control?)tb.Parent ?? tb;
+        // Press on the text itself: a handler on the text or on any parent sees it (the event bubbles).
+        var target = (Control)tb;
         var p = new Point(3, 3);
         target.RaiseEvent(new PointerPressedEventArgs(target, Mouse, target, p, 0,
             new PointerPointProperties(RawInputModifiers.LeftMouseButton, PointerUpdateKind.LeftButtonPressed), KeyModifiers.None, 1));
@@ -704,6 +746,7 @@ public sealed class Scenes
         Pump(5);
         _redactor.Apply(win, renames);
         Pump(3);
+        ClippedText.Report(win, id);
         var path = Path.Combine(_out, id + ".png");
         Directory.CreateDirectory(Path.GetDirectoryName(path)!);
         var frame = win.CaptureRenderedFrame() ?? throw new InvalidOperationException("no frame rendered");

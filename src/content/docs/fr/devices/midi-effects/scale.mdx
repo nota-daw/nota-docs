@@ -1,0 +1,53 @@
+---
+title: "Nota Scale"
+description: "Accroche les notes à une gamme : onze gammes ou un ensemble de notes personnalisé, en ramenant les mauvaises notes vers le bas, le haut ou la plus proche, avec une plage, une transposition, le suivi de tonalité et Learn."
+sidebar:
+  order: 3
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/MidiScale.h
+  - src/managed/Nota.App/DeviceCards/Midi/ScaleMidiBody.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Scale garde chaque note dans la tonalité. Jouez n’importe quoi : chaque touche du clavier tombe sur une note de la
+gamme. Pratique pour improviser, pour des parties aléatoires et génératives, et pour garder un contrôleur dans la
+tonalité.
+
+<Shot id="devices/midi-effects/scale/card" alt="Nota Scale : la tonique et le type, la carte des notes et les réglages de repli" />
+
+## Tonique et type
+
+**Root** (la tonique de la tonalité) et le **type** : **Major**, **Minor**, **Harm Minor**, **Dorian**, **Phryg**,
+**Lydian**, **Mixolyd**, **Penta**, **Penta Min**, **Chromatic** ou **Custom**, chacun avec son nombre de notes.
+
+## Carte des notes
+
+Les douze notes sous forme de cellules : les notes de la gamme pleines, la tonique bordée, les autres indiquant où elles
+se replient. Cliquez sur une cellule pour ajouter ou retirer cette note : le type passe à **Custom**. La note qui sonne
+à l’instant s’allume.
+
+## Repli et options
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Fold** | Où va une note hors gamme : **Nearest**, **Down** ou **Up** |
+| **Transpose** | Décale le résultat |
+| **Range** | Seules les notes dans la plage sont accrochées ; les autres passent |
+| **Follow key** | La tonique suit la tonalité de ce que vous jouez |
+| **Learn** | Tant qu’il est activé, les notes passent et chaque note que vous jouez est collectée dans une gamme Custom |
+| **Clear** | Vider l’ensemble personnalisé |
+
+**Last in → out** montre la dernière note et où elle est allée.
+
+[Auto Shift](../../audio-effects/auto-shift/) peut copier la tonalité et la gamme de cet appareil pour la correction de
+hauteur, et la surimpression **Gamme** du piano roll utilise les mêmes gammes.
+
+## Préréglages
+
+35 préréglages d’usine : tonalités et modes (**C Major**, **A Minor**, **E Minor Down**, **G Major Up**,
+**A Harmonic Minor**, **C Melodic Minor**, **D Dorian**, **E Phrygian**, **F Lydian**, **G Mixolydian**, **B Locrian**),
+pentatoniques et blues (**C Penta**, **A Penta Minor**, **Black Keys (F# Penta)**, **A Blues**), **White Keys Only**,
+**E Phrygian Dominant** et plus.

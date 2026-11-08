@@ -1,0 +1,84 @@
+---
+title: "Panneau de détail et fenêtres d’appareil"
+description: "Le panneau sous la vue (Appareils, Motif et Clip), sa propre fenêtre pour un second écran, et les fenêtres d’appareil pour les chaînes de rack."
+sidebar:
+  order: 5
+updated: "0.58.1"
+status: done
+sources:
+  - src/managed/Nota.App/MainWindow.Detail.cs
+  - src/managed/Nota.App/MainWindow.DetailWindow.cs
+  - src/managed/Nota.App/DetailWindow.cs
+  - src/managed/Nota.App/DeviceWindow.cs
+  - src/managed/Nota.App/ArrangementView.cs
+  - src/managed/Nota.App/MainWindow.Browser.cs
+  - src/managed/Nota.App/MainWindow.Mixer.cs
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
+
+Le panneau sous l’Arrangement ou la Session montre en détail ce sur quoi vous travaillez. Double-cliquez sur
+l’en-tête d’une piste et il s’ouvre sur les appareils de la piste ; double-cliquez sur un clip (ou un emplacement de
+Session rempli) et il ouvre le clip.
+
+Un simple clic ne fait que sélectionner : le panneau ne prend donc pas de place à la vue tant que vous ne le
+demandez pas. Une fois ouvert, il suit la sélection : cliquez sur une autre piste et il montre ses appareils ;
+cliquez sur un autre clip pendant que l’onglet **Clip** est au premier plan et il montre ce clip. Pour qu’il s’ouvre
+à chaque clic, activez **Ouvrir le panneau de détail à la sélection d’une piste ou d’un clip** dans
+[Réglages ▸ Apparence](../../preferences/appearance/).
+
+<Shot id="views/detail-panel" alt="Le panneau de détail montrant la piste Keys : Nota Pentad et Nota EQ-8" />
+
+## Appareils, Motif, Clip
+
+Les onglets en haut à gauche changent ce qu’il montre ; <Kbd>Tab</Kbd> les parcourt :
+
+- **Appareils** : la [chaîne d’appareils](../../devices/) de la piste : effets MIDI, instrument et effets, de gauche
+  à droite. Faites défiler latéralement quand ils ne tiennent pas.
+- **Motif** : la grille de pas d’un clip MIDI sur une piste de Drum Rack. L’onglet n’existe que sur une piste de
+  Drum Rack.
+- **Clip** : le clip sélectionné dans l’éditeur de clip [MIDI](../../editing/piano-roll/) ou
+  [audio](../../editing/audio-clips/).
+
+Faites glisser le bord supérieur du panneau pour rendre **Motif** et **Clip** plus hauts ou plus courts ; chacun garde
+la hauteur que vous lui avez donnée. Double-cliquez sur le bord pour remettre l’onglet à sa hauteur par défaut : le
+bord du navigateur et le bord supérieur d’un Mixeur ancré se réinitialisent de la même façon. **Appareils** a une
+hauteur fixe qui convient aux cartes, donc il ne peut pas être redimensionné.
+
+## L’éditeur de clip qui remplit la fenêtre
+
+Sur **Clip** et **Motif**, le bouton d’agrandissement à droite de l’en-tête, ou <Kbd>⌘ ⇧ F</Kbd>, ou
+**Affichage ▸ L’éditeur de clips remplit la fenêtre**, donne à l’éditeur toute la fenêtre : le navigateur,
+l’Arrangement (ou la Session, Modular) et un Mixeur ancré se replient. Le même bouton, qui pointe maintenant vers
+l’intérieur, ou la même touche les ramène aux hauteurs qu’ils avaient. Choisir une vue, afficher le Mixeur ou le
+navigateur, ou passer sur **Appareils** revient aussi à la séparation.
+
+L’en-tête nomme la piste et son type ; pour une piste d’instrument, il montre aussi le retard que la chaîne ajoute
+(**PDC**), que Nota compense automatiquement.
+
+À droite : **Geler** et **Gel en direct** ([geler une piste](../../basics/tracks/#geler-une-piste)), le bouton ⧉ et
+× pour fermer le panneau. **Affichage ▸ Afficher/masquer le panneau de détail** l’affiche ou le masque, sur la
+sélection en cours.
+
+## Le panneau dans sa propre fenêtre
+
+⧉ déplace le panneau dans une fenêtre à part, utile sur un second écran. Cette fenêtre montre
+l'**éditeur de clip en haut et la chaîne d’appareils en dessous**, tous deux en même temps, avec un séparateur entre
+eux. Fermez-la et le panneau se réancre sous la vue.
+
+## Fenêtres d’appareil
+
+Un appareil dans un rack (le sampler d’un pad de Drum Rack, le synthé d’une chaîne d’Instrument Rack, un effet dans
+une chaîne d’Audio Effect Rack ou sur une voix de Nota Rhythm) s’ouvre dans sa propre fenêtre. Sa barre de titre
+porte le nom de l’appareil et de la piste et le sélecteur de préréglage, plus le commutateur de taille **S / L** et
+l’interrupteur de contournement quand l’appareil en a ; l’appareil complet est en dessous, avec une ligne d’état en
+bas.
+
+<Shot id="views/device-window/nota-bass-l" alt="Une fenêtre d’appareil : Nota Bass ouvert depuis une chaîne d’Instrument Rack" width={560} />
+
+<Aside>
+Les touches de transport (<Kbd>Space</Kbd>, <Kbd>Return</Kbd>, <Kbd>⌘ R</Kbd>) et l’annulation continuent de
+fonctionner pendant qu’une fenêtre détachée a le focus.
+</Aside>

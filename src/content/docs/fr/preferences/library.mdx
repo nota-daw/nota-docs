@@ -1,0 +1,30 @@
+---
+title: "Bibliothèque"
+description: "Réglages ▸ Bibliothèque : les dossiers Échantillons et Projets, et l’interrupteur de l’historique des versions des projets."
+sidebar:
+  order: 7
+updated: "0.50.1"
+status: done
+sources:
+  - src/managed/Nota.App/PreferencesWindow.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+<Shot id="preferences/library" alt="Réglages ▸ Bibliothèque" />
+
+## Dossiers de contenu
+
+- **Échantillons** : le dossier que montre l’onglet **Fichiers** du navigateur et qu’analysent les
+  [Échantillons intelligents](../../library/smart-samples/) ; les packs d’échantillons s’y installent. Par défaut
+  `~/Music/Nota Samples`.
+- **Projets** : le dossier que liste l’onglet **Projets** du navigateur. Par défaut `~/Documents/Nota Projects`.
+
+**Choisir…** sélectionne un autre dossier.
+
+## Historique des versions
+
+**Conserver un historique des versions de chaque projet** : chaque enregistrement crée une version, listée dans
+l’onglet Historique du navigateur ; les versions partagent leur audio, donc chacune ne coûte que ce qu’elle ajoute.
+Activé par défaut. Le désactiver **efface** l’historique du projet ouvert, après un avertissement
+(**Désactiver et effacer**). Voir [Historique des versions](../../basics/version-history/).

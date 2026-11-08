@@ -1,0 +1,79 @@
+---
+title: "Premier lancement"
+description: "La fenêtre de démarrage, les projets récents, les mises à jour, Nouveautés et la récupération du travail non enregistré."
+sidebar:
+  order: 2
+updated: "0.56.1"
+status: done
+sources:
+  - src/managed/Nota.App/WelcomeWindow.cs
+  - src/managed/Nota.App/MainWindow.Welcome.cs
+  - src/managed/Nota.App/WhatsNewWindow.cs
+  - src/managed/Nota.App/AboutWindow.cs
+  - src/managed/Nota.App/MainWindow.Recovery.cs
+  - src/managed/Nota.App/MainWindow.Updates.cs
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
+
+## La fenêtre de démarrage
+
+Quand Nota s’ouvre, la fenêtre de démarrage passe en premier. C’est le moyen le plus rapide de retrouver ce
+sur quoi vous travailliez.
+
+<Shot id="start-here/start-window" alt="La fenêtre de démarrage de Nota avec Nouveau projet, Ouvrir un projet et une liste de projets récents" />
+
+- **Nouveau projet** : un [nouveau projet](../../basics/projects/#un-nouveau-projet) dans la fenêtre principale,
+  avec une piste d’instrument, une piste audio et les retours **Reverb** / **Delay** prêts.
+- **Ouvrir un projet…** : choisissez un projet `.nota` n’importe où sur le disque.
+- **Projets récents** : les projets que vous avez ouverts ou enregistrés récemment, du plus récent au plus
+  ancien, avec la date de votre dernière modification. Cliquez sur l’un d’eux pour le sélectionner,
+  double-cliquez dessus (ou sélectionnez-le et appuyez sur <Kbd>Return</Kbd>) pour l’ouvrir. Les flèches
+  parcourent la liste. La même liste se trouve dans **Fichier ▸ Ouvrir un projet récent** dans la fenêtre principale.
+- **Afficher au démarrage** : désactivez la fenêtre de démarrage si vous préférez arriver directement dans un
+  nouveau projet. **Fichier ▸ Nouveau** (<Kbd>⌘ N</Kbd>) et **Fichier ▸ Ouvrir…** (<Kbd>⌘ O</Kbd>)
+  font la même chose depuis la fenêtre principale.
+- **Documentation**, **Réglages** et **Nouveautés**, en bas, ouvrent ce manuel (sur
+  [Votre première piste](../first-track/)) et ces fenêtres. Plus tard, cliquez sur le numéro de version en bas à
+  droite de la fenêtre principale (ou choisissez **Aide ▸ Nouveautés**) pour relire les notes de version.
+
+Pour fermer la fenêtre de démarrage et garder le projet en cours, appuyez sur <Kbd>Esc</Kbd> ou cliquez sur la
+fenêtre principale derrière.
+
+## Quand une nouvelle version est disponible
+
+La fenêtre de démarrage affiche aussi une bannière quand une nouvelle version de Nota est disponible : **Mettre à jour**
+la télécharge avec une barre de progression et la vérifie avec la somme de contrôle de la publication, **Notes de version**
+ouvre la page de la publication, **Ignorer** masque la bannière. Une fois le téléchargement terminé, choisissez
+**Redémarrer maintenant**, ou **Plus tard** : elle s’installe alors à la prochaine fermeture. La même mise à jour apparaît
+aussi dans la barre d’état de la fenêtre principale, pour que vous ne la manquiez pas quand la fenêtre de démarrage est
+désactivée (voir [Mises à jour](../install/#mises-à-jour)).
+
+## Nouveautés
+
+Après une mise à jour, une fenêtre **Nouveautés** montre, une seule fois, les notes de version de chaque version depuis
+celle que vous aviez. Ce sont les mêmes notes que sur la page de la publication. Vous pouvez les rouvrir à tout moment
+avec **Aide ▸ Nouveautés**, ou lire le [journal des modifications](../../reference/changelog/).
+
+<Shot id="start-here/whats-new" alt="La fenêtre Nouveautés avec les notes de version de Nota 0.55.1" width={460} />
+
+**Aide ▸ À propos de Nota** affiche les versions de l’application et du moteur, ainsi que la licence.
+
+## Si Nota ne s’est pas fermé correctement
+
+Pendant que vous travaillez, Nota garde en arrière-plan une copie de récupération du projet ouvert (environ toutes les
+30 secondes, et seulement s’il y a eu un changement). Si Nota ou votre ordinateur s’arrête de façon inattendue, le
+lancement suivant demande :
+
+> Nota ne s’est pas fermé correctement. Récupérer le travail non enregistré de … ?
+
+**Récupérer** remet le projet tel qu’il était ; **Ignorer** jette la copie de récupération.
+La copie de récupération est un filet de sécurité, pas un enregistrement : enregistrez votre projet comme d’habitude
+(<Kbd>⌘ S</Kbd>), voir [Projets et enregistrement](../../basics/projects/).
+
+<Aside title="⌘ ou Ctrl ?">
+Ce manuel écrit les raccourcis à la manière de macOS. Sous Windows et Linux, lisez <Kbd>⌘</Kbd> comme
+<Kbd>Ctrl</Kbd> et <Kbd>⌥</Kbd> comme <Kbd>Alt</Kbd>.
+</Aside>

@@ -15,9 +15,9 @@ import { Aside } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
 
-Automation makes a value move over time — a filter opening up, a fade, a send swelling into a
-drop. Any knob or fader in Nota can be automated: track volume and pan, every parameter of a
-built-in device, plug-in parameters, MIDI effects.
+Automation makes a value move over time — a filter opening up, a fade, a delay swelling into a
+drop. Track volume and pan can be automated, and so can every parameter of a built-in device,
+plug-in parameters and MIDI effects. Sends can't: they have no automation lane.
 
 <Shot id="editing/automation-lanes" alt="Automation mode in the Arrangement: the Lead track's volume lane with a curve across the song" />
 
@@ -52,7 +52,8 @@ for **Copy**, **Cut**, **Paste** and **Delete automation**.
 
 There are no modes to set. Press **Record** and move a control: its lane records what you do.
 A control you move with the mouse stops writing when you let go; a hardware knob, fader, stick
-or trigger keeps writing its last value until the transport stops.
+or trigger keeps writing its last value until the transport stops. Sends record the same way —
+move a send knob in a track header, the Mixer or the **Sends** card.
 
 ## Taking over by hand
 
@@ -75,6 +76,9 @@ clips without dragging it along.
   [Piano roll](../piano-roll/#envelopes).
 - An **audio clip** has Volume and Pan envelopes and an ADSR — see
   [Audio clips](../audio-clips/#envelope).
+- To move a knob with a track's loudness instead of drawn points (a peak controller, or ducking
+  one track under another), patch an **Envelope Follower** in Modular — see
+  [Move a knob with another track's loudness](../../views/modular/#move-a-knob-with-another-tracks-loudness).
 
 <Aside type="tip">
 Lanes follow their device: reorder or remove devices and the automation stays with the

@@ -1,0 +1,60 @@
+---
+title: "Nota Delay"
+description: "Delay stéréo : temps gauche et droit indépendants ou liés, synchronisés ou libres, ping-pong, une boucle de feedback filtrée et diffusée, wow de bande, Freeze et tap tempo."
+sidebar:
+  order: 6
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/Delay.h
+  - src/managed/Nota.App/DeviceCards/Bodies/DelayDeviceBody.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Delay répète le son : slapback, croches rythmiques, lancers dub, échos de bande, lits figés.
+
+<Shot id="devices/audio-effects/delay/card" alt="Nota Delay, onglet Time au-dessus de la fenêtre des répétitions en direct" />
+
+**Disposition :** la colonne **Loop** à gauche (**Feedback**, **Spread**), un panneau central à deux onglets au-dessus
+d’une fenêtre en direct des répétitions, un panneau de droite (**Levels** / **Output**) et une ligne d’état qui vous dit
+combien de répétitions restent audibles.
+
+## Time
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Sync** / **ms** | Le temps en division de note (1/16 … 1/2, triolets et pointées compris) ou en millisecondes (jusqu’à 2 s) |
+| **L time** · **R time** | Les temps des deux canaux |
+| **Link** | Le canal droit suit le gauche |
+| **Ping** | Ping-pong : chaque répétition passe de l’autre côté |
+| **Fade on change** | Changer le temps fait un fondu enchaîné vers le nouveau au lieu de glisser (pas de pitch bend) |
+| **Tap tempo** | Tapez quatre fois pour régler le temps à l’oreille (passe en ms) |
+
+## Loop · Wow
+
+<Shot id="devices/audio-effects/delay/loop-wow" alt="Nota Delay, onglet Loop · Wow" />
+
+La boucle de feedback : un filtre **low cut** et **high cut** (faites glisser ses poignées), **Diffuse** (étale les
+répétitions en nuage), **Tape mode** (saturation), et le **Wow** de bande : **Wow rate** et **Wow depth**. **Freeze**
+garde la boucle pour toujours : l’entrée est coupée et les répétitions cessent de décroître. **Clear loop** vide la
+mémoire tampon.
+
+## Levels et Output
+
+**Dry**, **Mix**, **Width**, **Mono f** (basses en mono), **Wet only** (pour une piste de retour), **Out**, et
+**Latency comp.** : garde l’écho exactement en mesure quand Diffuse est monté.
+
+## Préréglages
+
+30 préréglages d’usine : courts (**Slapback**, **Doubler**, **Rockabilly Slap**, **Haas Widener**, **Slap Wide**),
+rythmiques (**Eighth Bounce**, **Dub Eighths**, **Ping Quarter**, **Dotted Eighth**, **Triplet Roll**,
+**Sixteenth Stutter**, **Half-Note Wash**, **Cross Rhythm**, **Polyrhythm 3:4**, **Wide Quarters**,
+**Trance Gate Echo**), bande (**Tape Echo**, **Space Echo**, **Warped Tape**, **Bucket Brigade**, **Repitch Riser**),
+couleur et espace (**Vocal Throw**, **Telephone Echo**, **Diffuse Cloud**, **Ambient Wash**, **Dark Cavern**,
+**Tape Hold**, **Frozen Bed**) et pour les retours (**Send · Eighth**, **Send · Quarter**).
+
+## Astuces
+
+- **Lancer dub :** montez l’envoi vers un retour Delay sur le dernier mot d’une phrase, puis redescendez-le.
+- **Large sans écho :** 10 à 25 ms d’un seul côté (**Haas Widener**).

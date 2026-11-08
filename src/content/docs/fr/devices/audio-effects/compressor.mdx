@@ -1,0 +1,73 @@
+---
+title: "Nota Compressor"
+description: "Compresseur à cinq caractères, genou doux, détection crête / RMS / auto, anticipation, plage, relâchement automatique, mixage parallèle et un sidechain filtré."
+sidebar:
+  order: 4
+updated: "0.57.1"
+status: done
+sources:
+  - src/managed/Nota.App/DeviceCards/SidechainSourcePicker.cs
+  - src/native/nota.engine/src/Compressor.h
+  - src/managed/Nota.App/DeviceCards/Bodies/CompressorDeviceBody.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Compressor égalise un signal : il baisse ce qui dépasse le seuil, puis remonte le niveau du résultat. Collez un bus
+de batterie, nivelez une voix, faites pomper une nappe sur la grosse caisse.
+
+<Shot id="devices/audio-effects/compressor/card" alt="Nota Compressor, onglet Curve avec la courbe de transfert et l’historique de réduction" />
+
+**Disposition :** la colonne **Level** à gauche (le seuil face au niveau en direct, le gain de compensation), un panneau
+central à trois onglets, un panneau de droite (**Dynamics** / **Output**) et une ligne d’état.
+
+## Curve
+
+La courbe de transfert et l’historique de la réduction de gain. **Faites glisser la courbe** pour régler le seuil et le
+ratio.
+
+## Motion
+
+<Shot id="devices/audio-effects/compressor/motion" alt="Nota Compressor, onglet Motion" />
+
+L’enveloppe de réduction de gain dessinée contre l’entrée, pour que vous **voyiez** l’attaque et le relâchement
+travailler plutôt que de deviner.
+
+## Sidechain
+
+<Shot id="devices/audio-effects/compressor/sidechain" alt="Nota Compressor, onglet Sidechain avec les filtres de clé" />
+
+Ce que le détecteur écoute : **Internal** (la piste) ou **External key** (une autre piste, choisie comme source de
+sidechain de l’appareil, **Pre** ou **Post** son fader). Le menu de clé liste aussi les pads d’un Drum Rack, les chaînes
+d’un Instrument Rack et les voix de Nota Rhythm sous leur piste : pilotez-vous depuis l’un d’eux et lui seul pilote le
+compresseur ; **Listen** indique alors, par exemple, *Drums · Kick pre*. Le spectre de la clé est dessiné sous ses
+filtres : faites glisser les poignées **HP** et **LP** ; **Q** façonne les deux. **Listen** vous laisse entendre la clé.
+
+## Dynamics et Output
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Thresh** · **Ratio** · **Knee** | Où il commence, avec quelle dureté, avec quelle progressivité |
+| **Attack** · **Hold** · **Release** | À quelle vitesse il serre, tient, relâche : le relâchement **Auto** suit le matériau |
+| **Detect** | **Peak**, **RMS** ou **Auto** |
+| **Lookahead** | Réagit avant que la crête n’arrive ; le retard est compensé automatiquement |
+| **Range** | Le maximum qu’il réduira jamais |
+| **Char** | Cinq voicings : **Clean**, **Glue**, **Punch**, **Opto**, **FET** |
+| **Makeup** · **Auto gain** | Gain après compression, à la main ou automatique |
+| **Mix** | Dry / wet : la compression parallèle en un bouton |
+| **Stereo link** | Un seul gain pour les deux canaux, ou chaque canal seul |
+
+## Préréglages
+
+31 préréglages d’usine : batterie (**Drum Glue**, **Drum Punch**, **Snare Punch**, **Kick Tighten**, **Room Smash**,
+**Overheads Tame**, **Hat Smooth**), bus et master (**Bus Glue**, **Bus Parallel**, **Mix Bus Gentle**,
+**Master Leveler**, **Brick Limit**, **Peak Catcher**), voix (**Vocal Opto**, **Vocal Leveler**, **Vocal Presence**,
+**Rap Vocal**, **De-Esser**), instruments (**Bass Even**, **Bass Pluck**, **Acoustic Guitar**, **Guitar Sustain**,
+**Piano Smooth**, **Pad Breathe**) et ducking (**Kick Duck**, **EDM Pump**, **Gentle Duck**, **Voice-over Duck**,
+**Bass Under Kick**).
+
+## Astuces
+
+- **Pompage en sidechain :** clé External depuis la grosse caisse, attaque rapide, relâchement à votre goût, ou partez
+  de **EDM Pump**. La grosse caisse est dans un Drum Rack ? Choisissez son pad (**Drums ▸ Kick**) plutôt que tout le kit.
+- **Batterie parallèle :** un ratio élevé avec **Mix** vers 40 %.

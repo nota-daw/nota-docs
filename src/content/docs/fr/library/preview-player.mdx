@@ -1,0 +1,50 @@
+---
+title: "Lecteur d’aperçu"
+description: "Écouter des échantillons, préréglages, kits de batterie et appareils depuis le navigateur avant de les charger : forme d’onde, spectre, boucle, lecture automatique et pistes de démonstration pour les effets."
+sidebar:
+  order: 2
+updated: "0.58.1"
+status: done
+sources:
+  - src/managed/Nota.App/PreviewPlayer.cs
+  - src/native/nota.engine/src/Audition.h
+---
+
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
+
+Le lecteur en bas du navigateur vous laisse entendre quelque chose avant qu’il n’entre dans le projet. Il apparaît dès
+que vous utilisez une liste.
+
+<Shot id="library/preview-player" alt="Le lecteur d’aperçu avec une forme d’onde, le transport et le volume" width={300} />
+
+## Échantillons (onglet Fichiers)
+
+La vraie forme d’onde du fichier (cliquez dessus pour jouer à partir de ce point, survolez pour voir le temps), avec
+**Lecture** / **Arrêt**, le temps, **Boucle**, **Auto** (jouer chaque fichier dès que vous le sélectionnez) et un
+volume d’aperçu (double-cliquez pour le remettre à 0 dB). <Kbd>↑</Kbd> <Kbd>↓</Kbd> parcourent les fichiers ; avec
+Auto activé, chacun joue dès que vous y arrivez.
+
+La forme d’onde ne suit que partiellement [Réglages ▸ Apparence ▸ Forme d’onde](../../preferences/appearance/#forme-donde) :
+**Plein** dessine chaque pixel, tandis que **Lisse** et **Barres** dessinent tous deux des barres espacées.
+
+## Préréglages, kits et appareils
+
+Sous les onglets **Instruments**, **Effets audio**, **Effets MIDI** et **Préréglages**, le même lecteur joue le
+préréglage d’usine, le préréglage enregistré, le kit de batterie ou l’appareil sélectionné. Ces onglets ont leur propre
+**Auto**, désactivé par défaut : appuyez sur Lecture, ou activez Auto pour entendre chacun dès que vous le
+sélectionnez. Les sons sont rendus en quelques millisecondes et la ligne suivante est préparée à l’avance : parcourir
+un dossier est donc instantané.
+
+- Les **instruments** jouent une phrase qui leur convient : un accord pour les nappes, un riff pour les basses, une
+  ligne pour les leads, un arpège pour les sons pincés et les cloches.
+- Les **kits de batterie** (Drum Rack et Nota Rhythm) jouent un groove sur leurs propres pads.
+- Les **effets MIDI** jouent une phrase qui montre ce qu’ils font.
+- Les **effets audio** traitent une **piste de démonstration** : Drums, Keys ou Bass, ou des boucles de genre (Pop,
+  House, Techno, Hip-Hop, Trap, Drum & Bass, Synthwave, Ambient). Une piste qui convient à l’effet est choisie pour
+  vous ; le bouton de piste en choisit une autre (faites défiler dessus pour les parcourir), ou l’échantillon que vous
+  avez sélectionné en dernier dans Fichiers.
+
+**Wave / Spec** bascule la fenêtre entre la forme d’onde et un spectre en direct.
+
+Les Instrument Racks et les préréglages de plug-ins ne sont pas écoutés : le lecteur dit pourquoi.

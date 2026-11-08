@@ -1,0 +1,72 @@
+---
+title: "Nota Bass"
+description: "Synthé de basse d’abord mono : un oscillateur qui évolue, un sub, un filtre avec drive et sa propre enveloppe, un LFO pour le wobble, glide et legato."
+sidebar:
+  order: 6
+updated: "0.55.1"
+status: done
+sources:
+  - src/native/nota.engine/src/BassSynth.h
+  - src/managed/Nota.App/DeviceCards/Instruments/BassInstrumentCard.cs
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+
+<Aside title="Nota Volt a pris le relais">
+Nota Bass n’est plus proposé dans le navigateur ni pour les nouvelles pistes : [Nota Volt](../volt/) fait tout ce qu’il
+faisait (le morphing de forme, la largeur d’impulsion, le sub comme Osc 2 une octave plus bas, le drive du filtre et de
+la sortie, la pile de notes tenues, Legato et le wobble piloté par la molette) et reprend tous ses préréglages, dans ses
+propres dossiers. Un projet qui utilise déjà Nota Bass s’ouvre, joue et montre toujours cette carte.
+</Aside>
+
+Nota Bass est réglé pour le grave : un oscillateur qui évolue du sinus à l’impulsion, un oscillateur sub en dessous, un
+filtre avec drive, et une voix mono avec glide. Subs, 808, lignes acid, reese et basses wobble.
+
+<Shot id="devices/instruments/bass/card" alt="Nota Bass, onglet Signal" />
+
+**Chemin du signal :** Osc + Sub → pré-drive → filtre (avec son enveloppe, la touche et le LFO) → enveloppe d’ampli →
+drive de sortie.
+
+## Signal
+
+| Section | Commandes |
+|---|---|
+| **Osc** | **Shape** fait évoluer sinus → triangle → dent de scie → impulsion ; **PW** à l’extrémité impulsion ; **Oct**, **Semi**, **Level** |
+| **Sub** | Sinus, triangle ou carré, 1 ou 2 octaves plus bas, **Level** |
+| **Filter** | **LP**, **HP**, **BP** ou **Notch**, 12 ou 24 dB ; **Cutoff**, **Reso**, **Drive**, quantités **Env** et **Key** : faites glisser le pad de réponse |
+
+## Mod
+
+<Shot id="devices/instruments/bass/mod" alt="Nota Bass, onglet Mod avec les enveloppes et le LFO" />
+
+Les enveloppes d'**amp** et de **filter**, dessinées et modifiables à la souris ; le **LFO** (vitesse, onde dont S&H) avec
+deux destinations : le filtre et **LFO → Pitch** ; et les quantités de vélocité **Vel → Amp** et **Vel → Fil**.
+
+## Global
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Mono** / **Poly 16** | Mono joue la dernière note que vous tenez : une vraie basse |
+| **Legato** | En Mono, une note jouée par-dessus une note tenue glisse vers elle sans nouvelle attaque |
+| **Glide** | Durée du glissement entre les notes |
+| **Unison** | Voix plus épaisses, désaccordées |
+| **Drive** | Saturation de sortie |
+| **Bend** · **Volume** · **Pan** | Plage de bend (1 à 12 demi-tons), niveau, position |
+
+La **molette de modulation** ouvre le LFO sur la coupure : un wobble joué à la main.
+
+## Préréglages
+
+25 préréglages d’usine : subs (**Sub Rumble**, **808 Sub**, **Dub Sub**, **Techno Rumble**, **Soft Round**), mono
+classiques (**Pluck Bass**, **Classic Mono**, **Pulse Bass**, **Rubber Bass**, **Stab Bass**, **Octave Bass**,
+**Drift Bass**), acid (**Acid 303**, **Acid Slide**), lourdes (**Reese Bass**, **Growl Bass**, **Wobble Bass**,
+**Hoover Bass**, **Fuzz Bass**, **Vowel Bass**, **Wheel Wobble**, **S&H Bass**) et jouées (**Finger Bass**,
+**Picked Bass**, **Funk Slap**).
+
+## Astuces
+
+- **Glissandos façon 303 :** Mono + **Legato** + un peu de **Glide** ; faites se chevaucher les notes dans le piano
+  roll là où vous voulez un glissando.
+- **Garder le sub propre :** laissez le Sub porter le grave et poussez le **Drive** sur l’Osc pour les harmoniques
+  hautes.
