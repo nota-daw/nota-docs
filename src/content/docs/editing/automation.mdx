@@ -7,7 +7,8 @@ updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.App/ArrangementView.Automation.cs
-  - src/native/nota.engine/src/Automation.h
+  - src/managed/Nota.App/ArrangementView.AutoEditor.cs
+  - src/native/nota.engine/src/engine/Automation.h
 ---
 
 import { Aside } from '@astrojs/starlight/components';
@@ -28,6 +29,10 @@ list. Parameters that already carry automation are marked with a dot and listed 
 
 While automation mode is on, touching any knob or fader of a track — on a device, a plug-in or
 the mixer — switches that track's lane to it.
+
+Return tracks have lanes too, in their rows pinned under the tracks: volume, pan and the
+parameters of the devices on the return. They edit exactly like a track's lane. The master
+row below them carries the master volume.
 
 ## Drawing
 

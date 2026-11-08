@@ -14,6 +14,7 @@ sources:
   - src/managed/Nota.App/ArrangementView.Sizing.cs
   - src/managed/Nota.App/ArrangementView.Sends.cs
   - src/managed/Nota.Application/Engine/SectionNames.cs
+  - src/managed/Nota.App/ArrangementView.Controls.cs
 ---
 
 import { Aside } from '@astrojs/starlight/components';
@@ -192,8 +193,14 @@ input (or MIDI source), the volume fader and the pan a row each — or puts volu
 by side when it shows [sends](#sends-in-the-track-headers). Clips, waveforms and automation
 grow with the row.
 
-Track heights and the header width are saved with the project. They don't go into the undo
-history.
+The return and master rows pinned at the bottom resize the same way — drag their bottom
+edge, or right-click ▸ **Height** — and start **compact**. <Kbd>⌘</Kbd>- or <Kbd>⇧</Kbd>-click
+returns to select several and size them together. A return shows its mute from the
+standard height and its pan when large. <Kbd>⌥</Kbd>-drag and the all-tracks sizes leave them
+alone. When they would take more than about half the arrangement, the pinned part scrolls.
+
+Track, return and master heights and the header width are saved with the project. They don't
+go into the undo history.
 
 **View ▸ Track headers on the right** puts the track list on the right, so the timeline
 starts at the left edge, next to the browser. The return and master headers, and the strips
