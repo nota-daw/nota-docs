@@ -109,8 +109,10 @@ public sealed class Scenes
             case "export": Simple(shot, new ExportWindow(128, 32, 124)); break;
             case "connect": Connect(shot); break;
             case "unsaved":
-                Simple(shot, new SaveChangesWindow("Unsaved changes", "Save changes to “Night Drive” before closing?",
-                    "Night Drive", "Unsaved for 12 minutes"));
+                // The texts the app shows when quitting with unsaved edits (MainWindow.Recovery.cs).
+                Simple(shot, new SaveChangesWindow(Loc.T("main.recovery.unsaved_changes"),
+                    Loc.T("main.recovery.do_you_really_want_to"), "Night Drive",
+                    Loc.F("main.recovery.unsaved_changes_n", "12\u2009min")));
                 break;
             default: throw new ArgumentException($"unknown scene '{shot.Scene}'");
         }
