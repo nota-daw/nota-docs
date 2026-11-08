@@ -1,0 +1,58 @@
+---
+title: "Nota Chorus"
+description: "Chorus en trois modes : Classic (deux voix), Ensemble (trois voix, le son des string machines) et Vibrato, avec feedback, largeur, un passe-haut et la chaleur d’une ligne à seaux."
+sidebar:
+  order: 25
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/Chorus.h
+  - src/managed/Nota.App/DeviceCards/Bodies/ChorusDeviceBody.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Chorus épaissit et élargit un son avec des copies légèrement retardées et doucement désaccordées de lui-même.
+Synthés larges, guitares miroitantes, string machines, doublages de voix.
+
+<Shot id="devices/audio-effects/chorus/card" alt="Nota Chorus : le LFO et le mode, les voix sur deux cycles et les commandes de voix" />
+
+## Modes
+
+| Mode | Voix | Caractère |
+|---|---|---|
+| **Classic** | Deux : gauche et droite, 8 ms ± 5 ms | Le chorus stéréo classique ; **Offset** (0 à 180°) règle de combien le LFO de la voix droite est en retard |
+| **Ensemble** | Trois, à 120° l’une de l’autre : gauche, centre, droite ; 12 ms ± 6 ms | Le son luxuriant des string machines |
+| **Vibrato** | La paire Classic sur une ligne courte, 3 ms ± 2,5 ms, wet seulement | Un tremblement de hauteur sans le signal sec |
+
+## LFO
+
+Un sinus, **Hz** (libre, 0,02 à 8 Hz) ou **Sync** (4 mesures à 1/16, avec triolets), et **Rate**. **HPF** garde les
+graves hors du signal wet (désactivé, ou de 20 Hz à 2 kHz), pour que la basse reste solide.
+
+## La fenêtre
+
+Chaque voix sur deux cycles, sous forme de son retard (**τ**) ou de son désaccord en cents (**ct**), avec une tête qui
+avance ; faites glisser vers le haut et le bas pour **Amount**. En dessous, le champ stéréo des voix.
+
+## Voice
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Amount** | Profondeur de la modulation |
+| **Feedback** | Bipolaire, ±90 % : vers le flanger et la résonance |
+| **Width** | 0 % mono · 100 % tel quel · 200 % de côté en plus |
+| **Warmth** | Une couleur de ligne à seaux : plus sombre et doucement saturée |
+| **Mix** | Dry / wet (verrouillé sur wet en Vibrato) |
+
+La colonne montre aussi les plages de désaccord et de retard que vous obtenez.
+
+## Préréglages
+
+34 préréglages d’usine : classiques (**Wide Duo**, **Subtle Thicken**, **Lush Chorus**, **Dimension Wide**,
+**Dark BBD**, **Slow Drift**, **Mono Chorus**, **Quadrature**, **Fast Shimmer**), ensemble (**String Machine**,
+**Solina Strings**, **Tri-Chorus**, **Wide Ensemble**, **Choir Pad**, **Organ Ensemble**), vibrato et tremblement
+(**Tape Wobble**, **Gentle Vibrato**, **Stereo Vibrato**, **Rotary Throb**, **Warped Record**, **Seasick**), effets
+(**Metallic Chorus**, **Jet Chorus**, **Negative Space**), synchronisés (**Quarter Pulse**, **Bar Swell**,
+**Triplet Shiver**, **Four-Bar Drift**) et pour instruments (**Vocal Double**, **Bass Chorus**, **Electric Piano**,
+**Clean Guitar**, **Synth Pad Wide**, **Drum Bus Air**).

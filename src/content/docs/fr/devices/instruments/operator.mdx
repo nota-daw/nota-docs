@@ -1,0 +1,64 @@
+---
+title: "Nota Operator"
+description: "Synthé FM à 4 opérateurs : quatre opérateurs avec leur propre rapport, niveau, onde et enveloppe, 11 algorithmes, feedback et un filtre après la FM."
+sidebar:
+  order: 8
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/OperatorSynth.h
+  - src/managed/Nota.App/DeviceCards/Instruments/OperatorInstrumentCard.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Operator est un synthé FM : quatre oscillateurs, les **opérateurs** A, B, C, D, se courbent mutuellement la phase
+pour fabriquer des harmoniques qu’un filtre ne peut pas produire. Pianos électriques, cloches, nappes vitreuses, basses
+slap et FM.
+
+<Shot id="devices/instruments/operator/card" alt="Nota Operator, onglet Operators" />
+
+**Chemin du signal :** opérateurs A à D, câblés par l'**algorithme** (les modulateurs courbent leurs cibles ; A peut se
+réinjecter en lui-même) → porteuses → filtre → volume.
+
+Dans la carte, une porteuse (ce qui arrive à la sortie) est dessinée en encre neutre, un modulateur en **bleu
+sarcelle**. Les **molettes** (pitch bend, molette de modulation sur la profondeur FM) restent sur chaque onglet.
+
+## Opérateurs
+
+Chaque opérateur, sur une ligne : son rôle en mots, **Wave** (Sin, Tri, Saw, Sqr), **Crs** (rapport de fréquence : 0.5,
+1, 2 … 14 ou 16), **Fine** (désaccord), **Level** avec ses dB.
+
+## Algorithme
+
+<Shot id="devices/instruments/operator/algorithm" alt="Nota Operator, onglet Algorithm avec les topologies et le schéma de routage" />
+
+Onze topologies sous forme de croquis (chaînes, piles, parallèle (additif)) et un schéma de routage : faites glisser un
+opérateur sur un autre pour changer le routage. **Feedback** réinjecte l’opérateur A en lui-même pour du grain et du
+bruit.
+
+## Filtre · Ampli
+
+<Shot id="devices/instruments/operator/filter-amp" alt="Nota Operator, onglet Filter · Amp avec la réponse et le spectre en direct" />
+
+Un filtre soustractif après la FM : **LP**, **HP** ou **BP**, **Freq**, **Reso**, **Key Trk**, et le volume de sortie,
+à côté d’un **spectre** harmonique en direct.
+
+## Rail
+
+**Global :** profondeur **FM**, **Feedback**, **Tone**, **Glide**, plage de bend, mode de voix (**Poly 12** / **Mono**),
+**Volume**, et **Vel → FM** (jouez plus fort pour une note plus brillante). **Env :** l’ADSR de l’opérateur
+sélectionné, dessiné et modifiable à la souris, avec le suivi **Key → Lvl** et **Vel → Lvl**.
+
+## Préréglages
+
+25 préréglages d’usine : nappes (**Glass Pad**, **Air Pad**, **Choir Pad**, **Warm Strings**), basses (**FM Bass**,
+**Slap Bass**, **Sub Sine**, **Growl Bass**), leads (**Bright Lead**, **Reed Lead**, **Metal Lead**, **Whistle**),
+claviers (**E-Piano**, **Tine Keys**, **Wurly**, **Clav**, **Harpsichord**, **Drawbar Organ**), cloches et mailloches
+(**FM Bell**, **Tubular Bell**, **Music Box**, **Marimba**, **Kalimba**, **Log Drum**) et **Brass Section**.
+
+## Astuces
+
+- **Piano électrique classique :** une porteuse 1:1 avec un modulateur au rapport 14 et un decay court sur le
+  modulateur : c’est la « tine ».
+- **Plus brillant avec la vélocité :** montez **Vel → FM** pour que les notes douces restent veloutées.

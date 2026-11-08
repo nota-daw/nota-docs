@@ -1,0 +1,237 @@
+---
+title: "Arrangement"
+description: "Le morceau sur une timeline : déplacer et rogner des clips, sélectionner, zoomer, la bande d’aperçu, les sections, les noms de clips et le côté où se trouvent les en-têtes de piste."
+sidebar:
+  order: 1
+updated: "0.58.1"
+status: done
+sources:
+  - src/managed/Nota.App/ArrangementView.cs
+  - src/managed/Nota.App/ArrangementView.LaneControl.cs
+  - src/managed/Nota.App/ArrangementView.ClipDrag.cs
+  - src/managed/Nota.App/ArrangementView.Overview.cs
+  - src/managed/Nota.App/ArrangementView.Sections.cs
+  - src/managed/Nota.App/ArrangementView.Sizing.cs
+  - src/managed/Nota.App/ArrangementView.Sends.cs
+  - src/managed/Nota.Application/Engine/SectionNames.cs
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
+
+L’Arrangement étale le morceau de gauche à droite : une ligne par piste, le temps courant le long de la règle. C’est
+là que le morceau prend sa forme finale.
+
+<Shot id="views/arrangement-timeline" alt="L’Arrangement avec tout le morceau de démonstration en vue : le groupe Rhythm, Keys, Lead et Texture" />
+
+De haut en bas : la bande **Aperçu**, la voie **Sections**, la règle avec les boutons **Zoom**, les pistes, et, épinglés
+en bas, les pistes de retour et le master.
+
+## Clips
+
+Les clips audio montrent leur forme d’onde dans le style que vous choisissez sous
+[Réglages ▸ Apparence ▸ Forme d’onde](../../preferences/appearance/#forme-donde) : **Lisse** par défaut.
+
+| Faire ceci | Pour |
+|---|---|
+| Double-cliquer sur un espace vide d’une piste d’instrument | Y créer un clip MIDI |
+| Cliquer sur un clip | Le sélectionner |
+| Faire glisser un clip | Le déplacer : le long de la piste, ou vers une autre piste du même type |
+| Faire glisser des clips dans l’espace vide sous la dernière piste | Les déplacer vers une nouvelle piste (une par piste d’origine), avec le même instrument, les mêmes appareils et le même mixage |
+| <Kbd>←</Kbd> <Kbd>→</Kbd> | Décaler les clips sélectionnés du pas de la grille (<Kbd>⌥</Kbd> : d’une quadruple croche) |
+| <Kbd>⌥ ↑</Kbd> <Kbd>⌥ ↓</Kbd> | Déplacer les clips sélectionnés vers la piste suivante, vers le haut ou le bas, qui peut les accueillir, aux mêmes temps |
+| Faire glisser le bord gauche ou droit d’un clip | Le rogner |
+| Faire glisser avec <Kbd>⌥</Kbd> | Ignorer la grille pour ce glissement |
+| Double-cliquer sur un clip | L’ouvrir dans l’[éditeur de clip](../../editing/piano-roll/) |
+| <Kbd>⌘</Kbd>-clic | Ajouter ou retirer un clip de la sélection |
+| Faire glisser sur un espace vide | Sélectionner tous les clips que le rectangle touche |
+| <Kbd>⌘ A</Kbd> | Sélectionner tous les clips |
+
+Les clips s’accrochent à la [grille d’accrochage](../../basics/transport/#la-grille-daccrochage) pendant que vous les
+faites glisser (en **Auto**, elle suit le zoom, donc ils tombent sur les lignes que vous voyez), et les bords des
+clips voisins les attirent. Le bouton aimant (<Kbd>⌘ 4</Kbd>) désactive l’accrochage. Faire glisser plusieurs clips
+sélectionnés les déplace ensemble, en une seule étape d’annulation.
+
+Pendant que vous faites glisser des clips sous la dernière piste, un anneau **Nouvelle piste** montre où ils vont
+arriver. Au relâchement, chaque piste d’où viennent les clips obtient une nouvelle piste semblable, placée au-dessus
+des retours, et les clips s’y déplacent ; une seule annulation reprend les deux. Les flèches déplacent aussi toute la
+sélection en bloc : un décalage vers la gauche s’arrête au début du morceau, et <Kbd>⌥ ↑</Kbd> / <Kbd>⌥ ↓</Kbd>
+sautent les pistes qui ne peuvent pas contenir les clips (les clips audio vont sur des pistes audio, les clips MIDI
+sur des pistes d’instrument). Chaque appui de touche est une étape d’annulation.
+
+Faites un clic droit sur un clip pour **Découper ici**, **Dupliquer**, **Supprimer**, **Désactiver le clip**,
+**Inverser** (audio), **Consolider**, **Copier** / **Couper** / **Coller**, **Renommer…**, **Boucler la
+sélection**, **Copier vers Session** / **Copier vers la scène**, et, pour l’audio, **Séparer les stems…** et
+**Convertir** ([Convertir de l’audio en MIDI](../../editing/midi-tools/)). La plupart agissent sur toute la
+sélection à la fois.
+
+<Aside type="tip">
+<Kbd>0</Kbd> désactive les clips sélectionnés : ils restent en place, grisés, et ne jouent rien. <Kbd>0</Kbd> à
+nouveau les réactive. Un moyen rapide d’essayer une partie sans elle.
+</Aside>
+
+## Plages de temps
+
+<Kbd>⇧</Kbd>-glisser n’importe où dans les voies, même en partant d’un clip, sélectionne une étendue de temps à
+travers les pistes au lieu de clips entiers. Une plage est ce sur quoi agissent
+[Dupliquer le temps, Insérer du silence, Découper et Consolider](../../editing/time-ranges/), et <Kbd>⌘ L</Kbd> la
+met en boucle.
+
+## Se déplacer
+
+| Faire ceci | Pour |
+|---|---|
+| <Kbd>⌘</Kbd> + défilement | Zoomer et dézoomer autour du pointeur de la souris |
+| <Kbd>⇧</Kbd> + défilement, ou un balayage latéral | Faire défiler le long du morceau |
+| Défilement | Faire défiler les pistes |
+| **Zoom −** / **+** | Dézoomer / zoomer |
+| Cliquer dans la règle | Déplacer la tête de lecture |
+| Faire glisser le long de la règle | Tracer une plage de boucle |
+| Double-cliquer sur la plage de boucle | Désactiver ou réactiver la boucle ; la plage reste |
+
+### La bande d’aperçu
+
+L'**Aperçu**, au-dessus de la règle, montre tout le morceau en miniature, avec la partie à l’écran comme une fenêtre
+posée dessus. Faites glisser la fenêtre latéralement pour défiler, vers le haut ou le bas (ou par ses bords) pour
+zoomer, et double-cliquez sur la bande pour faire tenir tout le morceau à l’écran. L’étiquette à côté indique quelles
+mesures vous regardez (« mesure 1–8 / 36 »). **Affichage ▸ Afficher/masquer l’aperçu** la masque.
+
+## Sections
+
+La voie **Sections** nomme les parties du morceau (Intro, Couplet, Drop) pour que la structure se lise d’un coup d'œil.
+
+- Faites glisser le long de la voie vide pour marquer une section sur ces mesures. Elle reçoit un nom automatique.
+- Cliquez sur une section pour envoyer la tête de lecture à son début ; double-cliquez dessus pour la renommer.
+- Faites glisser le bord d’une section pour la redimensionner, par mesures entières. <Kbd>⌥</Kbd>-glisser la section
+  elle-même ne déplace que son repère, aussi par mesures entières : la musique en dessous reste.
+- Faites un clic droit dessus pour **Boucler la section**, **Sélectionner la section** (comme une plage de temps sur
+  toutes les pistes), **Dupliquer**, **Renommer…**, **Rétablir le nom par défaut** et **Supprimer**. Ces commandes
+  n’agissent que sur le repère.
+
+Chacune de ces modifications est une étape d’annulation. Les sections sont enregistrées avec le projet.
+**Affichage ▸ Afficher/masquer les sections** masque la voie.
+
+### Noms de section
+
+Une nouvelle section s’appelle **Section N**, où N est sa place dans le morceau en comptant depuis la gauche. C’est
+un nom *automatique* : il se renumérote quand vous ajoutez, déplacez, dupliquez ou supprimez des sections. Une section
+que vous avez nommée vous-même compte aussi : si la deuxième section s’appelle « Refrain », la troisième reste
+**Section 3**, et son nom ne change jamais tout seul.
+
+Double-cliquez sur une section (ou clic droit ▸ **Renommer…**) pour ouvrir la boîte de renommage :
+
+- Pour une section automatique, la boîte s’ouvre vide, avec le nom automatique affiché en indice. Une légende sous la
+  boîte indique **Nom automatique** ou **Nom personnalisé**, selon ce que vous tapez.
+- <Kbd>Return</Kbd> garde le nom. C’est une étape d’annulation, ou aucune si rien n’a changé. Les espaces au début
+  et à la fin sont supprimés, et un nom vide revient à l’automatique.
+- <Kbd>Esc</Kbd>, ou un clic ailleurs, annule et ne change rien.
+- **Rétablir par défaut** dans la boîte redonne à la section son nom automatique. Il n’est disponible que pour un
+  nom personnalisé.
+
+**Rétablir le nom par défaut** dans le menu du clic droit de la section fait la même chose, et est grisé tant que le
+nom est déjà automatique. Au clavier, ouvrez la [palette de commandes](../../basics/command-palette/) et lancez
+**Rétablir le nom de la section** : elle agit sur la section sous la tête de lecture et dit dans la barre d’état ce
+qu’elle a fait.
+
+Annuler et rétablir ramènent à la fois le nom et le fait qu’il était automatique. Les sections que vous avez nommées
+dans les versions précédentes de Nota (y compris celles appelées « Section 2 ») se chargent comme des noms
+personnalisés ; rétablissez-en une pour la rendre automatique.
+
+### Réorganiser le morceau
+
+Faites glisser une section ailleurs et la musique la suit : chaque clip audio et MIDI dans son étendue (les clips
+qui franchissent ses bords sont coupés là), l’automation de chaque piste et du master, et les voies de prises. Pendant
+que vous faites glisser, un fantôme de la section suit le pointeur, une barre orange marque la frontière entre
+sections où elle atterrira, et les autres sections montrent où elles finiront. Relâchez pour la déplacer ; remettez-la
+à sa propre place, ou appuyez sur <Kbd>Esc</Kbd>, et rien ne change.
+
+Les sections qu’elle dépasse se referment pour faire de la place, si bien que le morceau garde sa longueur et que
+rien avant ou après la partie réorganisée ne bouge. Pour mettre le refrain avant le couplet, faites glisser le
+refrain vers la gauche jusqu’à ce que son milieu dépasse celui du couplet.
+
+Le menu du clic droit de la section fait la même chose sans glisser, et agit sur la section et tout ce qu’elle
+contient :
+
+| Élément | Fait |
+|---|---|
+| **Déplacer plus tôt** / **Déplacer plus tard** | L’échanger avec la section d’avant / d’après |
+| **Dupliquer avec le contenu** | Placer une copie, avec sa musique, juste après elle ; le reste du morceau se décale plus tard |
+| **Supprimer avec le contenu** | La retirer avec sa musique ; le reste du morceau remonte pour combler le vide |
+
+La palette de commandes a les mêmes quatre (**Déplacer la section plus tôt**, **Déplacer la section plus tard**,
+**Dupliquer la section avec son contenu**, **Supprimer la section avec son contenu**) pour la section sous la tête
+de lecture. Chacune est une étape d’annulation.
+
+<Aside>
+Une section qui en chevauche une autre ne peut pas emporter sa musique : à qui appartient la partie commune ? Son
+glissement ne déplace que le repère et les éléments de menu sont désactivés ; déplacez son bord pour que les sections
+ne se chevauchent plus.
+</Aside>
+
+## Tailles de piste
+
+Rendez les pistes courtes pour voir un grand morceau d’un coup, ou hautes pour travailler sur une partie.
+
+| Faire ceci | Pour |
+|---|---|
+| Faire glisser le bord inférieur d’une piste (dans son en-tête ou sa voie) | La rendre plus haute ou plus courte, de 30 à 256 px ; elle s’accroche légèrement aux trois tailles ci-dessous |
+| La même chose avec plusieurs pistes sélectionnées | Les redimensionner toutes ensemble |
+| <Kbd>⌥</Kbd> + faire glisser un bord inférieur | Redimensionner toutes les pistes à la fois |
+| Double-cliquer sur un bord inférieur | Revenir à la hauteur standard |
+| Clic droit sur une piste ▸ **Hauteur** | Choisir **Compact**, **Standard** ou **Grand** pour la sélection, ou pour toutes les pistes |
+| Faire glisser la jointure entre les en-têtes de piste et les voies | Élargir ou rétrécir les en-têtes (160 à 480 px) ; double-cliquez dessus pour réinitialiser |
+
+L’en-tête montre ce qui tient. Ses boutons (muet, solo, armement et, sur une piste audio, le bouton d’écoute en
+casque) restent ensemble au bord droit, contre l’indicateur de niveau, à toutes les hauteurs : ils ne bougent donc
+pas quand vous redimensionnez une piste. Une piste **compacte** garde son nom et ces boutons sur une ligne ; le
+volume, le panoramique et l’entrée restent dans le [Mixeur](../mixer/) et le menu de la piste. Une piste
+**standard** a les trois lignes habituelles, avec l’entrée (ou la source MIDI) à gauche de la ligne de boutons. Une
+piste **grande** place les boutons sous le nom, puis donne à l’entrée (ou la source MIDI), au fader de volume et au
+panoramique une ligne chacun, ou met le volume et le panoramique côte à côte quand elle montre des
+[envois](#envois-dans-les-en-têtes-de-piste). Les clips, formes d’onde et automations grandissent avec la ligne.
+
+La hauteur des pistes et la largeur des en-têtes sont enregistrées avec le projet. Elles ne vont pas dans l’historique
+d’annulation.
+
+**Affichage ▸ En-têtes de piste à droite** met la liste des pistes à droite, pour que la timeline commence au bord
+gauche, à côté du navigateur. Les en-têtes de retour et de master, et les bandes à côté de l’Aperçu, des Sections et
+de la règle, suivent. Faites glisser la jointure vers les voies pour élargir les en-têtes ; double-cliquez dessus
+pour réinitialiser la largeur. Le même choix est **Réglages ▸ Apparence ▸ En-têtes de piste** (**Gauche** /
+**Droite**). Nota retient le côté ; il n’est pas enregistré dans le projet.
+
+## Envois dans les en-têtes de piste
+
+Une piste à la hauteur **Grand** (128 px) ou plus haute montre ses envois sous le volume et le panoramique : un petit
+bouton par piste de retour, **A**, **B**, … dans l’ordre des retours, avec le niveau à côté (**–** quand l’envoi est
+coupé). Vous pouvez donc régler la part d’une piste qui va à la reverb sans ouvrir le [Mixeur](../mixer/). La ligne
+n’apparaît que si le projet a des retours ; une piste plus courte laisse ses envois dans le Mixeur.
+
+<Shot id="views/arrangement-track-sends" alt="Des pistes de l’Arrangement à la hauteur Grand : sous le volume et le panoramique de chaque piste, un bouton d’envoi A vers le retour Reverb" />
+
+| Faire ceci | Pour |
+|---|---|
+| Faire glisser un bouton d’envoi | Régler l’envoi |
+| Le survoler | Voir le nom du retour et le niveau, p. ex. **Send A · Reverb · 35%** |
+| Double-cliquer dessus | Couper l’envoi |
+| <Kbd>⌥</Kbd>-clic dessus | Saisir une valeur |
+
+Le niveau est le même que celui du Mixeur et de la carte Envois de la piste : le bouger à un endroit le bouge
+partout. Dans un en-tête étroit, les boutons perdent leur lettre et leur niveau : survolez-en un pour le lire.
+
+Un déplacement d’envoi n’est pas une étape d’annulation, et un envoi n’a pas de voie d’automation.
+
+## Noms de clips et groupes
+
+Un clip n’affiche son nom qu’au début d’une série de clips, si bien qu’un motif répété se lit comme un seul bloc ; un
+clip que vous avez nommé à la main affiche toujours son nom. **Affichage ▸ Noms des clips** alterne entre chaque
+clip, le premier de chaque série, et aucun.
+
+Les pistes de groupe se replient en une fine barre titrée avec muet, solo et niveau, et s’ouvrent sur toutes leurs
+commandes quand on les sélectionne : voir [Pistes](../../basics/tracks/#groupes).
+
+## Arrangement et Session ensemble
+
+Les clips passent entre l’Arrangement et la [Session](../session/) avec le presse-papiers ou <Kbd>⌘ ⇧ C</Kbd> : voir
+[Copier, coller et glisser](../../editing/clipboard/). Quand une piste joue des clips de Session, ses clips
+d’Arrangement attendent ; **Retour à l’arrangement** dans la barre d’outils de la Session rend les pistes.

@@ -1,0 +1,72 @@
+---
+title: "Nota Physical"
+description: "Synthèse modale : une mailloche ou une rafale de bruit frappe un ou deux résonateurs en bois, métal, verre, corde ou peau. Marimbas, cloches, kalimbas, sons pincés et métal frappé."
+sidebar:
+  order: 3
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/PhysicalSynth.h
+  - src/managed/Nota.App/DeviceCards/Instruments/PhysicalInstrumentCard.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Physical construit les sons comme les objets les produisent : quelque chose **frappe** (une mailloche, une rafale
+de bruit) et quelque chose **résonne** (un résonateur accordé comme une poutre, une lame de marimba, une corde, une peau
+de tambour, une plaque ou un tuyau). C’est l’instrument des mailloches, cloches, sons pincés et percussions frappées
+qui répondent à la force avec laquelle vous jouez.
+
+<Shot id="devices/instruments/physical/card" alt="Nota Physical, onglet Exciter" />
+
+**Chemin du signal :** mailloche + bruit → résonateur 1 et résonateur 2 (en série ou en parallèle) → sortie. Jusqu’à 8
+voix.
+
+## Exciter
+
+Ce qui frappe les résonateurs.
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Mallet** : level · **Stiff** · **Noise** · **Color** | Une frappe : des mailloches plus dures excitent plus de partiels aigus ; le bruit ajoute le claquement du coup |
+| **Noise** : type · **Freq** · **Reso** · level | Une rafale de bruit filtré, pour le souffle, l’archet ou le raclement |
+| **Noise Env** : A · D · S · R | Comment la rafale de bruit évolue ; **Env** balaie son filtre |
+
+## Resonator
+
+<Shot id="devices/instruments/physical/resonator" alt="Nota Physical, onglet Resonator avec les partiels de la banque" />
+
+Deux banques de résonateurs accordés ; la banque 2 peut être désactivée. Le graphique montre les partiels de chaque
+banque tels que le moteur les accorde : faites glisser ↔ pour **Ratio**, ↕ pour **Bright**.
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Type** | Le matériau : **Beam**, **Marimba**, **String**, **Membrane**, **Plate**, **Pipe** |
+| **Decay** | Combien de temps il résonne |
+| **Material** | À quelle vitesse les partiels aigus s’éteignent par rapport aux graves : du bois au métal |
+| **Bright** | La part des partiels aigus que vous entendez |
+| **Inharm** | Écarte les partiels d’une série harmonique pure : sonorité de cloche |
+| **Ratio** | Accord des partiels par rapport à la note |
+| **Hit** | Où il est frappé : le centre ou le bord |
+| **Tune** | Accord de la banque |
+| **Struct** | **1 → 2** (série : la banque 1 fait résonner la banque 2, comme une corde sur un corps) ou **1 + 2** (parallèle : les deux sont frappées) |
+| **Mix 1+2** | Équilibre entre la banque 1 et la banque 2 |
+
+## Output
+
+**Poly** (8 voix) ou **Mono** (une nouvelle frappe coupe la précédente), **Tune**, **Fine**, **Note off** (comment le son
+réagit quand vous relâchez une touche), **Volume** et **Pan**.
+
+## Préréglages
+
+32 préréglages d’usine : mailloches (**Marimba**, **Vibraphone**, **Xylophone**, **Glockenspiel**, **Bass Marimba**,
+**Balafon**), cloches (**Glass Bell**, **Tubular**, **Church Bell**, **Music Box**, **Crystal Chime**, **Gamelan**,
+**Singing Bowl**, **Wind Chimes**), percussions (**Wood Block**, **Hand Drum**, **Steel Drum**, **Log Drum**,
+**Cowbell**, **Clave**, **Sub Thump**), sons pincés (**Kalimba**, **Harp Pluck**, **Koto**, **Tine Keys**) et sons
+soufflés ou frottés (**Pan Flute**, **Blown Bottle**, **Bowed Glass**, **Metal Plate**).
+
+## Astuces
+
+- **La vélocité compte :** une frappe plus forte fait ressortir plus de partiels : jouez-le donc depuis un clavier ou
+  façonnez les vélocités dans le piano roll.
+- **Du bois au métal :** partez de Marimba, montez **Material** et **Inharm** pas à pas.

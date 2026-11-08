@@ -1,0 +1,74 @@
+---
+title: "Audio"
+description: "Réglages ▸ Audio : appareils de sortie et d’entrée, fréquence d’échantillonnage, taille du tampon et latence, mode exclusif WASAPI, ASIO sous Windows, une tonalité de test et un test du CPU."
+sidebar:
+  order: 1
+updated: "0.58.1"
+status: done
+sources:
+  - src/managed/Nota.App/PreferencesWindow.cs
+  - src/managed/Nota.App/MainWindow.AudioFormat.cs
+  - src/managed/Nota.Presentation/ViewModels/MainWindowViewModel.cs
+---
+
+import Shot from '@components/Shot.astro';
+import { Aside } from '@astrojs/starlight/components';
+
+Ouvrez les Réglages avec **Fichier ▸ Réglages…**, ou **Réglages** dans la fenêtre de démarrage.
+
+<Shot id="preferences/audio" alt="Réglages ▸ Audio" />
+
+## Appareil audio
+
+| Réglage | Ce qu’il fait |
+|---|---|
+| **Sortie** · **Entrée** | L’appareil audio par lequel Nota joue et sur lequel il enregistre |
+| **Fréquence d’échantillonnage** | Valeur par défaut de l’appareil, 44 100, 48 000, 88 200 ou 96 000 Hz |
+| **Taille de la mémoire tampon** | Valeur par défaut de l’appareil, 64, 128, 256, 512, 1024 ou 2048 échantillons |
+| **Mode exclusif** (Windows) | WASAPI exclusif : la latence la plus basse, mais les autres applications deviennent silencieuses pendant que Nota joue |
+
+**Latence** montre ce que représente le tampon en millisecondes. Un tampon plus petit veut dire moins de délai entre ce
+que vous jouez et ce que vous entendez : idéal pendant l’enregistrement ; un plus grand donne plus de marge au
+processeur : idéal pour mixer de gros projets.
+
+La barre d’état montre la fréquence et le tampon réellement utilisés (« 48 kHz · 256 »). Cliquez dessus pour choisir
+une autre taille dans cette même liste (la lecture continue), ou choisissez **Réglages audio…** pour ouvrir cette page.
+Les tailles restent indisponibles pendant que vous enregistrez. Sous ASIO, c’est le pilote qui règle le tampon : le
+menu propose donc **Réglages du pilote…** à la place ; en mode exclusif WASAPI, il vous dit que c’est le tampon propre
+de l’appareil qui est utilisé.
+
+## ASIO (Windows)
+
+Sous Windows, **Système audio** choisit entre **WASAPI** (les lignes ci-dessus) et **ASIO** : le pilote fourni avec
+votre interface audio, pour la latence la plus basse et la plus stable. Sans pilote ASIO installé, l’option ASIO est
+grisée ; installez le pilote de votre interface, ou un pilote générique comme FlexASIO.
+
+Avec ASIO choisi, les lignes changent :
+
+| Réglage | Ce qu’il fait |
+|---|---|
+| **Pilote** | Le pilote ASIO à utiliser. Nota ouvre un seul pilote à la fois et le lâche quand vous changez, pour que d’autres programmes puissent l’utiliser |
+| **Réglages du pilote…** | Ouvre le panneau propre du pilote. Changez-y la taille du tampon : Nota prend le changement en compte en quelques secondes et continue à jouer |
+| **Sortie** · **Entrée** | La paire de canaux par laquelle Nota joue et sur laquelle il enregistre, nommée comme le pilote les nomme (**Out 1 + 2**, **Analog 3 + 4**). Toutes les autres sorties restent silencieuses. Un pilote sans entrées indique **Aucune entrée sur ce pilote** |
+| **Fréquence d’échantillonnage** | Une demande : si le pilote ne peut pas tourner à cette fréquence, la ligne revient en arrière et le dit |
+| **Taille de la mémoire tampon** | En lecture seule : elle se règle dans les réglages du pilote |
+
+**Latence** montre la latence de sortie du pilote et, quand il a des entrées, l’aller-retour. L’audio enregistré est
+avancé de cette latence, pour que les prises s’alignent avec ce sur quoi vous jouiez.
+
+Si le pilote est absent, occupé dans un autre programme ou cesse de répondre, Nota passe en WASAPI sur l’appareil par
+défaut du système ; la barre d’état nomme le pilote et la raison, et **Latence** indique
+**ASIO unavailable (…) → WASAPI**. Votre choix reste ASIO : **Réessayer** (à la place de **Réglages du pilote…**)
+revient au pilote dès qu’il est libre.
+
+## Test
+
+- **Contrôle de la sortie** : **Jouer une tonalité de test** : un sinus de 440 Hz discret à travers le master, pour
+  vérifier que vous entendez bien Nota.
+- **Performances** : **Test du CPU** mesure la charge du fil audio pendant 5 secondes. Jouez votre projet pendant ce
+  temps pour obtenir un chiffre réaliste : il indique la moyenne, le pic et les éventuelles coupures.
+
+<Aside>
+Pas de son avec un casque Bluetooth sous macOS ? Choisissez-le comme Sortie ici ; voir aussi
+[Dépannage](../../reference/troubleshooting/).
+</Aside>

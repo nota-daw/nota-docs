@@ -1,0 +1,66 @@
+---
+title: "Nota Grain"
+description: "Sampler granulaire : un nuage de petits grains lit un échantillon : balayez-le, figez-le ou jouez-le au clavier, avec spray, jitter, un filtre et un dry/wet contre l’échantillon brut."
+sidebar:
+  order: 9
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/GrainSynth.h
+  - src/managed/Nota.App/DeviceCards/Instruments/GrainInstrumentCard.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Grain découpe un échantillon en minuscules **grains** qui se chevauchent et en joue un nuage depuis une **position
+de lecture** que vous déplacez, figez ou balayez. Une voix devient une nappe, un mot un bourdon, une note de guitare un
+miroitement. Il est livré avec un son par défaut : il joue donc avant que vous ne chargiez le vôtre.
+
+<Shot id="devices/instruments/grain/card" alt="Nota Grain avec un échantillon, la position de lecture et le nuage de grains" />
+
+**Faire entrer un échantillon :** déposez un fichier du navigateur sur la carte, ou faites glisser un clip audio de
+l’Arrangement sur la piste.
+
+**Chemin du signal :** échantillon → position de lecture → nuage de grains (taille, densité, spray, hauteur, étalement)
+et une tête de lecture sèche → **Dry/Wet** → filtre → enveloppe d’ampli.
+
+Le graphique montre l’échantillon, la bande de **Spray** autour de la position de lecture en pointillés, la tête de
+lecture de chaque voix et chaque grain en train de jouer (points bleu sarcelle : haut pour la gauche, bas pour la
+droite). **Faites glisser sur l’échantillon pour déplacer Position.**
+
+## Read (le rail)
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Scan** / **Freeze** / **Key** | La position de lecture avance à la vitesse **Scan**, reste en place, ou suit la touche que vous jouez |
+| **Position** | À quel endroit de l’échantillon les grains sont lus |
+| Vitesse **Scan** | La vitesse à laquelle la position voyage |
+| **Spray** | Dispersion aléatoire de chaque grain autour de la position |
+| **Volume** · **Dry/Wet** | Niveau de sortie · l’échantillon brut contre le nuage |
+
+## Onglets
+
+| Onglet | Commandes |
+|---|---|
+| **Grain** | Forme de fenêtre (Hann, Gauss, Tukey, Tri), **Size**, **Density**, **Spread** stéréo |
+| **Pitch** | **Root** (la touche qui joue l’échantillon tel qu’enregistré : un fichier déposé peut la régler d’après une note dans son nom), **Coarse**, **Fine** |
+| **Variation** | **Pos Rand**, **Pitch Rand** et **Pan Rand** par grain |
+| **Filter** | **LP**, **HP** ou **BP**, **Freq**, **Reso** |
+| **Amp** | L’enveloppe de tout le nuage : A · D · S · R |
+
+<Shot id="devices/instruments/grain/variation" alt="Nota Grain, onglet Variation" />
+
+## Préréglages
+
+50 préréglages d’usine, beaucoup avec leur propre son source : textures figées (**Half Frozen**, **Frozen Choir**,
+**Frozen Bell**), nappes (**Slow Bloom**, **Glass Pad**, **Shimmer**, **String Cloud**, **Warm Ensemble**), voix
+(**Vowel Drift**, **Vowel Slicer**, **Whisper Cloud**, **Angel Octave**), basses (**Sub Grain**, **Grain Bass**,
+**Growl Cloud**), claviers et sons pincés (**Grain Keys**, **Soft Pluck**, **Nylon Halo**, **Harp Scan**,
+**Kalimba Cloud**, **Marimba Grains**) et points de départ utilitaires (**Sample Plus**, **Plain Sampler**,
+**Slow Scan**).
+
+## Astuces
+
+- **Nappe instantanée :** Freeze sur une partie tenue de l’échantillon, une grande Size, une forte Density, un peu de
+  Spray et de Pitch Rand.
+- **Sampler simple :** Dry/Wet entièrement sec joue l’échantillon tel quel : ajoutez ensuite le nuage à votre goût.

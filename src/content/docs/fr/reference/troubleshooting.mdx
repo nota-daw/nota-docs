@@ -1,0 +1,108 @@
+---
+title: "Dépannage"
+description: "Des solutions aux problèmes courants : Nota ne s’ouvre pas, pas de son, crépitements, un contrôleur ou un plug-in qui n’apparaît pas, un téléphone qui ne se connecte pas."
+sidebar:
+  order: 3
+updated: "0.56.1"
+status: done
+sources:
+  - README.md
+  - src/native/nota.engine/pluginhost/scanner/abi_pluginscanner.cpp
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+## Nota ne s’ouvre pas
+
+- **macOS dit « Nota » n’a pas été ouvert, ou « est endommagé »** : Nota n’est pas encore signé avec un certificat
+  payant. Suivez [Installer Nota ▸ macOS](../../start-here/install/) : **Confidentialité et sécurité ▸ Ouvrir quand
+  même**, ou `xattr -dr com.apple.quarantine /Applications/Nota.app` dans le Terminal.
+- **SmartScreen de Windows** : **Informations complémentaires ▸ Exécuter quand même**.
+- **Linux** : rendez l’AppImage exécutable (`chmod +x`). S’il n’apparaît toujours pas, lancez-le depuis un terminal pour
+  voir pourquoi, et regardez dans `~/.config/nota/logs/`. Depuis la 0.58, Nota s’ouvre même quand aucune sortie audio ne
+  fonctionne ; la ligne d’état dit alors qu’il tourne sans son : choisissez un appareil dans **Réglages ▸ Audio**.
+
+## Linux : Ouvrir / Enregistrer ne fait rien, ou les fichiers ne se déposent pas
+
+- **Boîtes de dialogue de fichiers** : Nota demande d’abord la boîte de dialogue de fichiers du système
+  (xdg-desktop-portal). Quand le portail n’a pas de moteur FileChooser qui fonctionne, Nota s’en aperçoit en quelques
+  secondes et ouvre à la place sa propre boîte de dialogue, pour le reste de la session. Pour toujours utiliser celle
+  de Nota, lancez-le avec `NOTA_FILE_DIALOG=builtin`. Réparer le portail (installer le moteur de votre bureau, p. ex.
+  `xdg-desktop-portal-gtk`) ramène la boîte de dialogue du système.
+- **Glisser des fichiers depuis un gestionnaire de fichiers** : Nota lit la liste de fichiers habituelle et, depuis la
+  0.58, aussi les chemins de fichiers envoyés sous forme de texte ou de liste de fichiers GNOME / KDE. Si un dépôt ne
+  fait toujours rien, le journal (`~/.config/nota/logs/`) nomme les formats que le glissement proposait : joignez-le à
+  un rapport de bug.
+
+## Pas de son
+
+1. **Réglages ▸ Audio ▸ Jouer une tonalité de test.** Pas de tonalité ? Vérifiez **Sortie** : le bon appareil, et le
+   volume de votre système.
+2. De la tonalité mais pas de musique ? Vérifiez que la piste n’est pas en muet, qu’une autre piste n’est pas en solo,
+   et que le volume général (**Master**) est monté.
+3. Une piste d’instrument ne joue que s’il y a des notes, ou quand vous la jouez.
+
+**Casques Bluetooth (AirPods et autres) sous macOS** : depuis la 0.50.1, Nota laisse tranquille la fréquence
+d’échantillonnage du casque, qui ne devient donc plus silencieux. Sur une version plus ancienne, mettez à jour.
+
+## Crépitements, coupures, processeur élevé
+
+- Augmentez la **Taille de la mémoire tampon** dans [Réglages ▸ Audio](../../preferences/audio/).
+- Lancez **Test du CPU** pendant que le projet joue pour voir la charge et les éventuelles coupures.
+- [Gelez](../../basics/tracks/#geler-une-piste) les pistes lourdes.
+- Désactivez le suréchantillonnage dans les appareils qui en ont, et utilisez moins de voix en unison.
+
+## Un contrôleur MIDI ne fait rien
+
+- **Réglages ▸ MIDI** : est-il listé, et activé ? Branché pendant que les Réglages étaient ouverts ? Rouvrez-les.
+- Regardez le point sur le bouton **MIDI** : il clignote dès que quelque chose arrive.
+- Les notes vont vers la piste d’instrument sélectionnée ; pour enregistrer, armez-la.
+
+## Un plug-in est introuvable
+
+- **Réglages ▸ Plug-ins ▸ Relancer l’analyse des plug-ins.**
+- Pas dans un dossier standard ? **Ajouter un dossier…** là (VST3). Les plug-ins AU viennent du registre du système.
+- Un projet s’est ouvert sans certains plug-ins : si le registre de Nota les propose, Nota offre de les installer et de
+  rouvrir le projet.
+- Toujours absent après une nouvelle analyse ? Cherchez-le dans `plugin-scan.log` : voir
+  [Le journal d’analyse](../../plugins/scanning/#le-journal-danalyse). Un plug-in qui a planté ou s’est figé là est
+  ignoré jusqu’à ce qu’il change ou que vous appuyiez à nouveau sur **Relancer l’analyse des plug-ins**.
+
+## L’analyse des plug-ins est longue
+
+La première analyse charge chaque plug-in une fois, quatre à la fois : une grosse collection peut prendre plusieurs
+minutes. La ligne d’état les compte (**Analyse des plug-ins · 312 sur 1 000**), et ce qui est trouvé est gardé même si
+vous quittez à mi-chemin. Les analyses suivantes ne chargent que les nouveaux plug-ins. Si le compte cesse de bouger
+longtemps, `plugin-scan.log` nomme les plug-ins en cours de chargement : voir
+[Le journal d’analyse](../../plugins/scanning/#le-journal-danalyse).
+
+## Le téléphone ne peut pas se connecter
+
+- Même réseau ? Un Wi-Fi invité garde souvent les appareils séparés : utilisez le point d’accès du téléphone ou un
+  câble USB.
+- **Réglages ▸ Télécommande** : est-elle activée ? Autorisez Nota sur le réseau local (macOS) ou les réseaux privés
+  (Windows), et dans votre pare-feu sur le port indiqué.
+- Un téléphone oublié doit scanner un nouveau code.
+
+## La manette ne fait rien
+
+L’entrée de manette n’existe que sous macOS pour l’instant. Activez-la dans **Réglages ▸ Manettes**.
+
+## La mise à jour ne s’est pas installée
+
+Une copie lancée directement depuis l’image disque ne peut pas se remplacer elle-même : la bannière renvoie vers la
+page de la version. Installez d’abord Nota dans Applications.
+
+## Nota s’est fermé de façon inattendue
+
+Au lancement suivant, choisissez **Récupérer** pour retrouver le travail depuis votre dernier enregistrement. Voir
+[Premier lancement](../../start-here/first-launch/).
+
+## Les fonctions d’IA ne peuvent pas tourner
+
+**Réglages ▸ Téléchargements ▸ Modèles d’IA** le dit quand ONNX Runtime n’a pas de version pour votre ordinateur.
+
+<Aside>
+Toujours bloqué ? Demandez sur [Discord](https://discord.gg/apf4Q2JKWk) ou
+[ouvrez une issue](https://github.com/nota-daw/nota/issues/new/choose) : chaque rapport est lu.
+</Aside>

@@ -1,0 +1,74 @@
+---
+title: "Nota Shutter"
+description: "Noise gate et ducker avec hystérésis, look-ahead, formes, sidechain filtré et mode trigger, plus un motif de pas dessinable et synchronisé sur le tempo pour un gate rythmique."
+sidebar:
+  order: 19
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/Shutter.h
+  - src/managed/Nota.App/DeviceCards/Bodies/ShutterDeviceBody.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Shutter ouvre et ferme un signal. En **gate**, il nettoie le bruit et les fuites entre les coups ; retourné, il
+**ducke** un son sous un autre ; et son onglet **Pattern** en fait un gate rythmique, synchronisé sur le tempo, que vous
+dessinez.
+
+<Shot id="devices/audio-effects/shutter/card" alt="Nota Shutter, onglet Signal avec l’entrée et la sortie gatée" />
+
+## Le gate
+
+Le shutter **s’ouvre** quand le niveau franchit le **Threshold** et **se ferme** quand il retombe sous le **Return** :
+l’écart l’empêche de claquer.
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Threshold** · **Return** | Niveaux d’ouverture et de fermeture |
+| **Attack** · **Hold** · **Release** | Façonnent chaque ouverture |
+| Shape | **Linear**, **Log** (le classique) ou **Snap** (reste ouvert, puis se ferme net) |
+| **Floor** | De combien le signal fermé baisse : −∞ coupe tout, plus haut en laisse passer un peu |
+| **Lookahead** | S’ouvre juste avant un transitoire |
+| **Flip** | Transforme le gate en ducker |
+| **Retrigger** | Chaque coup déclenche une enveloppe attack → hold → release (mode trigger) |
+
+## Envelope
+
+<Shot id="devices/audio-effects/shutter/envelope" alt="Nota Shutter, onglet Envelope avec une ouverture dessinée" />
+
+Une ouverture dessinée à partir de l’attack, du hold, du release, de la forme et du floor.
+
+## Sidechain
+
+Le détecteur écoute cette piste ou un **External sidechain** (une autre piste), à travers son propre **Detector filter**
+passe-bande, avec **Listen** pour l’entendre et **Peak hold**. Déclenchez un gate depuis la grosse caisse pour hacher une
+nappe ; duckez une basse sous la grosse caisse.
+
+## Pattern
+
+<Shot id="devices/audio-effects/shutter/pattern" alt="Nota Shutter, onglet Pattern avec un motif de gate de 16 pas" />
+
+Un motif de gain en pas, synchronisé sur le tempo : un **gate rythmique**.
+
+- Dessinez les pas avec **Draw**, **Line**, **Erase** et **Flip** sur une grille de **8**, **16** ou **32** pas.
+- Feuilletez les formes de motif, ou tirez-en une nouvelle avec le dé et **Complexity**.
+- **Smooth** fait des rampes vers chaque pas, **Swing** retarde les pas pairs.
+- **Rate** va de la noire à 4 mesures en **Sync** (ou de 4 à 0,25 Hz en **Free**) ; **Depth** règle de combien un pas vide
+  baisse.
+- Une note MIDI sur la piste peut relancer le motif ; **Gated** ne le joue que tant que le gate à seuil est ouvert.
+- **Target** : **Volume** (il gate l’audio) ou **Map** : l’audio reste intact et le motif devient une source CV pour la
+  [vue Modulaire](../../../views/modular/).
+
+Chaque pas et chaque réglage de motif peuvent être automatisés.
+
+## Préréglages
+
+45 préréglages d’usine : gates de batterie (**Tight Drums**, **Kick Gate**, **Snare Gate**, **Tom Gate**,
+**Hi-Hat Cleanup**, **Overhead Tamer**, **Room Mic Gate**, **Hard Slice**, **Gated Reverb**, **Drum Trigger**), voix
+(**Vocal Gate**, **Gentle Cleanup**, **Podcast Voice**, **Breath Softener**, **Dialogue Room Tone**, **Soft Expander**),
+instruments (**Guitar Noise Gate**, **High-Gain Chug**, **Bass DI Gate**, **Pad Tail Cut**), ducking (**Kick Duck**,
+**Sidechain Pump**, **Bass Under Kick**, **Voice-Over Duck**) et 15 motifs (**Trance 16ths**, **Offbeat Pump**,
+**Four-Floor Pump**, **Stutter Bar**, **Halftime Chop**, **Ramp Up**, **Chop Shop**, **Swung Gate**,
+**Dotted Eighths**, **Slow Pad Gate**, **Free Tremolo**, **32nd Roll**, **Gate Rider**, **MIDI Retrig Chop**,
+**Map Sequencer**) entre autres.

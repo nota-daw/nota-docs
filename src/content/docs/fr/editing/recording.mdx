@@ -1,0 +1,181 @@
+---
+title: "Enregistrement"
+description: "Enregistrer de l’audio et du MIDI : armer des pistes, entrées, écoute, décompte, enregistrer sur une boucle et enregistrer dans des emplacements de Session."
+sidebar:
+  order: 3
+updated: "0.58.1"
+status: done
+sources:
+  - src/native/nota.engine/src/engine/Engine_Recording.cpp
+  - src/native/nota.engine/src/engine/Engine_Takes.cpp
+  - src/managed/Nota.App/ArrangementView.cs
+  - src/managed/Nota.App/ArrangementView.Takes.cs
+  - src/managed/Nota.App/SessionView.Toolbar.cs
+  - src/native/nota.engine/src/engine/Engine_Render.cpp
+  - src/managed/Nota.App/RecordPreview.cs
+  - src/native/nota.engine/src/engine/Engine_TakeRetry.cpp
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+import Kbd from '@components/Kbd.astro';
+
+## Enregistrer dans l’Arrangement
+
+<Steps>
+
+1. **Armez** la piste : cliquez sur le bouton **●** de son en-tête. Une piste audio enregistre de l’audio, une
+   piste d’instrument enregistre du MIDI.
+
+2. Choisissez ce qu’elle enregistre. Pour une **piste audio**, clic droit sur l’en-tête ▸ **Entrée
+   d’enregistrement** : l’entrée matérielle, le master ou une autre piste. Une **piste d’instrument** enregistre les
+   notes que vous jouez sur un clavier MIDI, le clavier de l’ordinateur, une manette ou votre téléphone.
+
+3. Placez la tête de lecture là où la prise doit commencer et appuyez sur **Enregistrement** (<Kbd>⌘ R</Kbd>).
+   Appuyez sur <Kbd>Space</Kbd> ou **Arrêt** pour finir.
+
+</Steps>
+
+Un clic sur **●** arme cette piste et désarme les autres, ce qui permet de choisir rapidement l’instrument que vous
+jouez. <Kbd>⌘</Kbd>-clic (<Kbd>Ctrl</Kbd>-clic sous Windows et Linux) arme une piste et garde les autres armées :
+pendant l’enregistrement, un clic ne désarme jamais une autre piste. Sélectionner une piste d’instrument, ou en
+ajouter une, l’arme de la même façon, pour que le clavier joue la piste où vous êtes ; cela laisse les armements
+tranquilles quand plusieurs pistes ou une piste audio sont armées. Armez une piste d’instrument et une piste audio
+ensemble et une seule prise enregistre les deux : le MIDI et l’audio. Nota enregistre la première piste armée de
+chaque type.
+
+Désarmer une piste pendant qu’elle enregistre termine sa prise.
+
+Un clic sur **●** arme cette piste seule et désarme les autres, si bien que choisir l’instrument que joue le clavier
+se fait en un clic. <Kbd>⌘</Kbd>-clic (<Kbd>Ctrl</Kbd>-clic sous Windows et Linux) arme plusieurs pistes. Pendant
+l’enregistrement, un clic ne désarme jamais une autre piste.
+
+Pour que la sélection choisisse la piste, activez **Transport ▸ Armement automatique de la piste sélectionnée** :
+sélectionner alors une piste d’instrument l’arme, sauf si plusieurs pistes ou une piste audio sont armées. C’est
+désactivé par défaut.
+
+Pendant l’enregistrement d’une prise MIDI, chaque note apparaît au moment où vous appuyez sur la touche et grandit
+avec la tête de lecture tant que vous la tenez ; une nouvelle note clignote dans la couleur d’accent en arrivant. Les
+mêmes notes en direct s’affichent dans le [piano roll](../piano-roll/) quand il a la prise ouverte, et dans un
+emplacement de Session en cours d’enregistrement.
+
+## Décompte
+
+Faites un clic droit sur le métronome pour un **décompte** de 1, 2 ou 4 mesures. Enregistrer depuis l’arrêt compte
+d’abord ; les clics ne font jamais partie de la prise. Voir
+[Transport](../../basics/transport/#métronome-et-décompte).
+
+Les notes que vous jouez pendant le décompte sont enregistrées : une levée avant la première mesure tombe exactement
+là où vous l’avez jouée, et le clip de la prise commence plus tôt pour la contenir. Il en va de même pour une touche
+que vous tenez déjà quand l’enregistrement démarre. Une prise qui commence à 1.1 ne peut pas commencer plus tôt : son
+clip commence donc à 1.1 et la partie de la note qui précède est gardée hors de vue ; déplacez le clip vers la droite
+et faites glisser son bord gauche vers l’extérieur pour l’entendre.
+
+## Abandonner et refaire une prise
+
+Raté ? Appuyez sur <Kbd>⌘ .</Kbd> (<Kbd>Ctrl .</Kbd> sous Windows et Linux), ou
+**Transport → Abandonner et refaire la prise**, pendant l’enregistrement. La prise est jetée et l’enregistrement
+repart aussitôt :
+
+- Une prise commencée depuis l’arrêt revient à son début et recompte, si un décompte est réglé.
+- Une prise où vous êtes entré en cours de lecture revient là où vous avez appuyé sur Lecture, pour que vous
+  réentendiez l’élan.
+
+Rien de la prise abandonnée ne reste : ni audio, ni passages de boucle dans les voies de prises, ni notes,
+contrôleurs ou automation, et aucune étape d’annulation : une fois que vous gardez une prise, un seul <Kbd>⌘ Z</Kbd>
+la retire. Maintenez les touches et elles réessaient une fois ; appuyez à nouveau pour repartir.
+
+## Entrée mono ou stéréo
+
+L’entrée matérielle est listée trois fois : dans **Entrée d’enregistrement**, dans la case d’entrée de l’en-tête et
+dans la ligne **I/O** du mixeur de Session :
+
+- **Ext 1** : l’entrée 1 seule, une source mono comme un micro. Elle est enregistrée et entendue au centre, des deux
+  côtés.
+- **Ext 2** : l’entrée 2 seule, de la même façon.
+- **Ext 1/2** : les deux entrées comme une paire stéréo : un synthé stéréo, une paire de micros stéréo, la sortie
+  d’une console.
+
+Une nouvelle piste audio prend **Ext 1**, puisque la plupart des micros sont mono. Avec un micro branché sur l’entrée 1
+d’une interface à deux entrées, **Ext 1/2** l’enregistrerait à gauche seulement. Les projets créés avant la 0.58
+gardent la paire stéréo.
+
+## Entendre l’entrée
+
+Le bouton casque dans l’en-tête d’une piste audio, juste après **M** / **S** / **●**, active l'**écoute** : vous
+entendez l’entrée en direct à travers les effets et le fader de la piste, que le transport joue ou non. Les pistes
+compactes l’ont aussi. Pendant que l’écoute est active, la piste joue son entrée au lieu de ses clips. Le master ne
+peut pas être écouté : il bouclerait sur lui-même.
+
+## Enregistrer sur une boucle
+
+Avec la boucle active, l’enregistrement **audio** garde chaque passage comme une prise au lieu de remplacer le
+précédent. Arrêtez après que la boucle a fait au moins un tour et la piste contient une prise par passage : **Prise
+1**, **Prise 2**, et ainsi de suite, numérotées dans l’ordre où vous les avez jouées. Un enregistrement ultérieur sur
+la même piste continue les numéros. Un passage qui a commencé ou fini au milieu de la boucle ne garde que ce qu’il a
+enregistré. Activer la boucle au milieu d’une prise commence à enregistrer la région de boucle à partir de là.
+
+Ce qui joue est le **comp**, la ligne propre de la piste. Juste après l’enregistrement, c’est le passage le plus
+récent à chaque point de la boucle : il sonne donc comme l’enregistrement en boucle d’avant.
+
+L’en-tête montre un triangle de dépliage et le nombre de prises. Les voies commencent repliées. Ouvrez-les et chaque
+prise est une ligne sous le comp, avec sa forme d’onde. Les parties que le comp utilise sont dans la couleur de la
+piste ; le reste de la prise est assombri.
+
+Faites glisser sur une prise pour utiliser cette étendue dans le comp. La plage suit la grille d’accrochage ;
+maintenez <Kbd>⌥</Kbd> (<Kbd>Alt</Kbd> sous Windows et Linux) pour l’ignorer. Elle ne dépasse jamais ce que cette
+prise a enregistré, et le reste du comp ne bouge pas. Un glissement est une étape d’annulation.
+
+Faites un clic droit sur une voie pour **Utiliser la prise entière**, **Supprimer la prise** (le son reste, la prise
+disparaît) ou **Aplatir les prises** (le comp devient un seul clip et les prises de cet enregistrement s’en vont).
+Chacune est une étape d’annulation. Les prises sont enregistrées avec le projet.
+
+Un seul passage, la boucle désactivée, le MIDI et les emplacements de Session font toujours un seul clip et pas de
+prises.
+
+Pour le **MIDI**, la cellule à côté de **Boucle** dans le transport choisit ce que fait un nouveau passage
+(<Kbd>⌘ ⇧ R</Kbd> ou **Transport → Enregistrement en boucle : superposition / remplacement** la bascule aussi) :
+
+- **Superposer** : chaque passage s’ajoute à la prise. Construisez un rythme par couches : la grosse caisse au
+  premier passage, la caisse claire au suivant, les charlestons ensuite.
+- **Remplacer** : la première note que vous jouez sur un nouveau passage efface ce que les passages précédents de
+  cette prise ont enregistré, si bien que seul votre dernier passage reste. Un passage où vous ne jouez pas laisse la
+  prise comme elle est, et les notes qui étaient dans le clip avant que vous n’appuyiez sur enregistrement restent
+  toujours.
+
+Un changement prend effet à partir du passage suivant, et Nota retient votre choix. Les emplacements de Session gardent
+leur propre enregistrement par superposition.
+
+Une touche que vous tenez au-delà de la fin de la boucle continue de sonner, et dans la prise elle devient deux
+notes : une jusqu’à la fin de la boucle et une depuis son début.
+
+## Enregistrer depuis une autre piste
+
+L'**Entrée d’enregistrement** d’une piste audio peut être une autre piste, un groupe ou un retour : pratique pour
+imprimer une interprétation à travers ses effets, ou un sous-mixage, en audio. Nota la garde alignée à
+l’échantillon près.
+
+## Enregistrer dans la Session
+
+Dans la [vue Session](../../views/session/#enregistrer-dans-un-emplacement), armez une piste, sélectionnez une scène et
+cliquez sur **Rec session** : la prise va dans l’emplacement de cette piste. Cliquez à nouveau pour la garder (coupée
+à des mesures entières), ou réglez **Fixe** sur 1 à 8 mesures et elle s’arrête toute seule. **Enregistrer ici**, sur un
+emplacement vide, fait la même chose pour cet emplacement. Une piste joue un emplacement à la fois : une prise arrête
+donc le clip que cette piste jouait. Depuis l’arrêt, avec un décompte réglé, l’emplacement clignote **Rec dans…** tout
+au long du décompte et la prise démarre à sa fin ; une note que vous tenez dans la prise démarre avec elle. Arrêter
+pendant le décompte laisse l’emplacement vide.
+
+<Kbd>⌘ .</Kbd> pendant qu’un emplacement enregistre n’abandonne que la prise de cet emplacement : les autres clips
+et le transport continuent, l’emplacement affiche à nouveau **Rec dans…** et enregistre à partir de la prochaine
+quantification de lancement (tout de suite si la quantification est désactivée).
+
+## Enregistrer l’automation
+
+**Enregistrement** enregistre aussi l’automation : tant qu’il est actif, bougez n’importe quel bouton ou fader et la
+voie de ce paramètre écrit ce que vous faites. Voir [Automation](../automation/#enregistrer-lautomation).
+
+<Aside type="tip">
+La latence compte surtout pendant l’enregistrement. Choisissez un petit tampon dans
+[Réglages ▸ Audio](../../preferences/audio/) pendant que vous enregistrez et un plus grand pendant que vous mixez.
+Sous Windows avec un pilote [ASIO](../../preferences/audio/#asio-windows), les prises sont aussi avancées de la latence
+que le pilote annonce, pour qu’elles s’alignent avec ce sur quoi vous jouiez.
+</Aside>

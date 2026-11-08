@@ -1,0 +1,30 @@
+---
+title: "Documentation de Nota"
+description: "Le manuel utilisateur de Nota, une DAW gratuite et open source pour macOS, Windows et Linux."
+template: splash
+hero:
+  tagline: Tout ce que Nota sait faire et comment s’en servir, de la première piste au dernier bouton d’appareil.
+  image:
+    file: ../../../assets/hero-icon.svg
+    alt: Nota
+  actions:
+    - text: Installer Nota
+      link: start-here/install/
+      icon: right-arrow
+    - text: Tour de la fenêtre principale
+      link: start-here/main-window/
+      variant: minimal
+---
+
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+<CardGrid>
+  <LinkCard title="Pour commencer" description="Installer Nota, vous repérer et faire une première piste." href="start-here/install/" />
+  <LinkCard title="Vues" description="Arrangement, Session, Modular et le Mixeur." href="views/arrangement/" />
+  <LinkCard title="Édition" description="Notes, clips audio, enregistrement, automation et plages de temps." href="editing/piano-roll/" />
+  <LinkCard title="Appareils" description="Tous les instruments, effets, effets MIDI et racks intégrés." href="devices/" />
+  <LinkCard title="Navigateur et bibliothèque" description="Échantillons, préréglages, étiquettes intelligentes et packs d’échantillons." href="library/browser/" />
+  <LinkCard title="Contrôleurs et Remote" description="MIDI, MIDI Learn, manettes et votre téléphone comme contrôleur." href="control/midi/" />
+  <LinkCard title="IA" description="Séparation en stems, audio vers MIDI et pilotage via MCP." href="ai/models/" />
+  <LinkCard title="Raccourcis" description="Toutes les touches et tous les gestes au même endroit." href="reference/shortcuts/" />
+</CardGrid>

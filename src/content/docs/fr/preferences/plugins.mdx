@@ -1,0 +1,25 @@
+---
+title: "Plug-ins"
+description: "Réglages ▸ Plug-ins : les dossiers que Nota analyse pour les plug-ins VST3, et Relancer l’analyse."
+sidebar:
+  order: 5
+updated: "0.56.1"
+status: done
+sources:
+  - src/managed/Nota.App/PreferencesWindow.cs
+  - src/managed/Nota.App/PluginScan.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+<Shot id="preferences/plugins" alt="Réglages ▸ Plug-ins" />
+
+- **Dossiers d’analyse des plug-ins** : des dossiers supplémentaires où chercher des plug-ins VST3, en plus de ceux
+  du système et du dossier dans lequel Nota installe les plug-ins du registre. **Ajouter un dossier…** et
+  **Supprimer**. Les plug-ins AU viennent du registre du système.
+- **Relancer l’analyse des plug-ins** : charge chaque plug-in qui n’est pas encore dans le catalogue, en les comptant
+  au fur et à mesure (**Analyse des plug-ins · 312 sur 1 000 · …**), puis indique combien de plug-ins Nota connaît et
+  combien n’ont pas pu être chargés. Elle réessaie aussi les plug-ins qui ont échoué avant, que les analyses ordinaires
+  ignorent.
+
+Voir [Analyser les plug-ins](../../plugins/scanning/).

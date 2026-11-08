@@ -1,0 +1,108 @@
+---
+title: "La fenêtre principale"
+description: "Un tour de la fenêtre principale de Nota : transport, navigateur, vues, panneau de détail et menus."
+sidebar:
+  order: 3
+updated: "0.58.1"
+status: done
+sources:
+  - src/managed/Nota.App/MainWindow.axaml
+  - src/managed/Nota.App/MainWindow.AudioFormat.cs
+  - src/managed/Nota.App/MainWindow.Menu.cs
+  - src/managed/Nota.App/BrowserView.cs
+  - src/managed/Nota.App/MainWindow.Detail.cs
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
+
+Tout se passe dans une seule fenêtre dans Nota. Elle a quatre zones : la **barre de transport** tout en haut,
+le **navigateur** à gauche, la **vue** au milieu et le **panneau de détail** en dessous, qui s’ouvre quand vous
+double-cliquez sur une piste ou un clip.
+
+Tout en haut court la fine **barre de titre** avec le nom du projet ; elle sert aussi de poignée pour déplacer la
+fenêtre. Le **plein écran** la masque : le bouton vert de macOS, ou **Affichage ▸ Activer/quitter le plein écran**
+(<Kbd>F11</Kbd>) sous Windows et Linux, remplit l’écran d’un bord à l’autre, et quitter le plein écran fait revenir la
+barre. Une fenêtre agrandie garde sa barre de titre.
+
+<Shot id="start-here/main-window-devices" alt="La fenêtre principale de Nota : la barre de transport en haut, le navigateur à gauche, l’Arrangement au milieu et les appareils de la piste Keys en dessous" />
+
+## Barre de transport
+
+<Shot id="basics/transport-bar" alt="La barre de transport" />
+
+De gauche à droite :
+
+- **Arrangement, Session et Modular** : trois touches à icône qui changent la vue du milieu ; survolez-en une
+  pour voir son nom.
+- **Arrêt, Lecture, Enregistrement** et la **position** : cliquez sur la position pour basculer entre mesures
+  et minutes:secondes.
+- **Boucle** : la plage de boucle définie sur la règle.
+- **BPM**, la signature rythmique, la **Tonalité** (celle du projet) et la **Grille** (la grille d’accrochage).
+- **Métronome**, **suivre la tête de lecture**, **accrocher à la grille** et **voies d’automation**.
+- **MIDI** : associez un contrôleur matériel à n’importe quelle commande ([MIDI Learn](../../control/midi-learn/)).
+- **Télécommande** : jouez et pilotez Nota depuis votre téléphone ([Nota Remote](../../control/nota-remote/)).
+- **Master** : le volume général et son indicateur de niveau.
+
+Chaque commande est expliquée dans [Transport](../../basics/transport/).
+
+## Navigateur
+
+Le navigateur contient tout ce que vous pouvez apporter dans un projet. Les icônes le long de son bord gauche
+sont ses onglets :
+
+| Onglet | Ce qu’il contient |
+|---|---|
+| **Instruments** | Les instruments de Nota et vos plug-ins d’instrument, avec leurs préréglages |
+| **Effets audio** | Les effets intégrés et les plug-ins d’effet |
+| **Effets MIDI** | Arpégiateur, accords, gammes et autres processeurs de notes |
+| **Fichiers** | Votre bibliothèque d’échantillons et tout dossier que vous ajoutez, avec des étiquettes intelligentes |
+| **Préréglages** | Les préréglages que vous avez enregistrés, par catégorie et par appareil (les préréglages d’usine se trouvent sous chaque appareil dans les trois premiers onglets) |
+| **Projets** | Les projets de votre dossier de projets |
+| **Carte MIDI** | Chaque commande que vous avez associée à un contrôleur ou à un téléphone |
+| **Historique** | Les [versions](../../basics/version-history/) du projet ouvert |
+| **Inspecteur de piste** | Le nom de la piste sélectionnée, muet / solo / armement, entrée, couleur, hauteur et commandes de gel |
+
+Double-cliquez sur un instrument pour ajouter une piste qui l’utilise ; double-cliquez sur un effet pour l’ajouter à la
+piste sélectionnée ; ou faites glisser l’un ou l’autre à l’endroit voulu. Le bouton en bas du rail replie le
+navigateur. Plus de détails dans [Le navigateur](../../library/browser/).
+
+## La vue
+
+Le milieu de la fenêtre montre l’une des trois vues :
+
+- **[Arrangement](../../views/arrangement/)** : le morceau sur une timeline, de gauche à droite.
+- **[Session](../../views/session/)** : une grille de clips que vous lancez en direct, scène par scène.
+- **[Modular](../../views/modular/)** : les appareils d’une piste sous forme de graphe que vous pouvez câbler.
+
+Le **Mixeur** s’ouvre dans sa propre fenêtre : **Affichage ▸ Mixeur** (<Kbd>⌘ ⇧ M</Kbd>).
+
+## Panneau de détail
+
+Double-cliquez sur l’en-tête d’une piste et ses appareils apparaissent dans le panneau du bas ; double-cliquez sur
+un clip et il s’y ouvre pour être modifié. Un simple clic ne fait que sélectionner : un panneau ouvert le suit.
+Les onglets en haut à gauche du panneau alternent entre **Appareils**, **Motif** (le motif pas à pas d’un clip, sur une
+piste de Drum Rack seulement) et **Clip** ; <Kbd>Tab</Kbd> les parcourt. À droite, **Geler** et **Gel en direct** rendent
+une piste en audio pour économiser du processeur, le bouton ⧉ déplace le panneau dans une
+[fenêtre à part](../../views/detail-panel/), et × le ferme.
+
+## Menus et ligne d’état
+
+- **Fichier** : nouveau, ouvrir, enregistrer, versions, import et export.
+- **Édition** : annuler, presse-papiers, découpe, regroupement, duplication de temps, et **Grille** (les commandes de
+  la grille d’accrochage).
+- **Affichage** : le mixeur, Connecter un téléphone…, Activer/quitter le plein écran, et les commutateurs du navigateur,
+  du panneau de détail, de l’aperçu, de la voie des sections, du suivi de la tête de lecture et des noms de clips.
+- **Transport** : lecture, enregistrement, boucle et métronome.
+- **Aide** : Documentation (ce manuel), Nouveautés et À propos.
+
+La ligne tout en bas de la fenêtre indique ce qui vient de se passer (« Night Drive enregistré », « Nota Volt ajouté »)
+et affiche la fréquence d’échantillonnage et la taille de tampon en cours (« 48 kHz · 256 »). Cliquez sur cet
+indicateur pour choisir une autre taille de tampon, la lecture continue, ou pour ouvrir Réglages ▸ Audio.
+
+<Aside title="⌘ ou Ctrl ?">
+Les raccourcis sont écrits à la manière de macOS. Sous Windows et Linux, <Kbd>⌘</Kbd> correspond à <Kbd>Ctrl</Kbd>
+et <Kbd>⌥</Kbd> à <Kbd>Alt</Kbd>. Tous sont listés dans les
+[Raccourcis clavier](../../reference/shortcuts/).
+</Aside>

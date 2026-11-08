@@ -1,0 +1,71 @@
+---
+title: "Macros"
+description: "Huit boutons nommés sur un rack ou un kit qui pilotent chacun beaucoup de paramètres à la fois, chacun sur sa propre plage."
+sidebar:
+  order: 5
+updated: "0.57.1"
+status: done
+sources:
+  - src/native/nota.engine/src/devices/racks/RackCore.h
+  - src/managed/Nota.App/DeviceCards/Rack/MacroPanel.cs
+  - src/managed/Nota.App/DeviceCards/Rack/RackCard.Macros.cs
+  - src/managed/Nota.App/DeviceCards/Rack/RackCard.MacroTab.cs
+---
+
+import Kbd from '@components/Kbd.astro';
+import Shot from '@components/Shot.astro';
+
+Chaque rack ([Instrument Rack](../instrument-rack/), [Drum Rack](../drum-rack/),
+[Audio Effect Rack](../audio-effect-rack/) et [MIDI Effect Rack](../midi-effect-rack/)) et
+[Nota Rhythm](../../instruments/rhythm/) a **huit macros** : des boutons nommés qui pilotent n’importe quels
+paramètres à l’intérieur, si bien qu’un seul bouton peut ouvrir toutes les reverbs de caisse claire et de clap à la
+fois, ou faire évoluer un patch superposé entier.
+
+## Sur les racks Instrument, Audio Effect et MIDI Effect
+
+Chaque macro est un petit bouton avec son nom, sa valeur (— quand elle ne pilote rien) et, en bleu sarcelle, son nombre
+de cibles. Faites-la glisser vers le haut ou le bas ; un double-clic la remet à 0.
+
+<Shot id="devices/racks/instrument-rack/mapping" alt="Association de la Macro 1 sur place : chaque paramètre de la chaîne est entouré de bleu sarcelle" />
+
+**Associer sur place :** choisissez une macro et appuyez sur **Map**. La carte passe sur **Chains**, et chaque paramètre
+des appareils de la chaîne choisie reçoit un contour bleu sarcelle : cliquez sur l’un pour l’associer à la macro,
+cliquez à nouveau pour le dissocier. Un paramètre appartient à une seule macro : l’associer à nouveau le déplace.
+Choisissez une autre chaîne pour associer aussi ses paramètres ; appuyez à nouveau sur **Map** ou sur <Kbd>Esc</Kbd>
+pour finir. Un paramètre associé montre l’étiquette de sa macro (**M1** …) et suit la macro ; cliquez dessus pour ouvrir
+la macro.
+
+<Shot id="devices/racks/instrument-rack/macros" alt="L’onglet Macros : Bright, sa courbe (Mixed) et deux cibles avec leurs plages" />
+
+**L’onglet Macros** montre la macro choisie : double-cliquez sur son nom pour la renommer, choisissez sa **Curve**
+(**Lin**, **Exp**, **Log**, **S**) et faites glisser la plage de chaque cible : la bande bleu sarcelle va du min au
+max, et un min au-dessus du max inverse la réponse. Quand un projet a donné aux cibles des courbes différentes, la
+courbe indique **Mixed** jusqu’à ce que vous en choisissiez une pour toutes. **×** retire une cible.
+
+Dans les racks Audio Effect et MIDI Effect, le **sélecteur** peut aussi être une cible : clic droit sur le sélecteur
+dans l’onglet Select / Zones, ou choisissez **Map to the selector** dans le menu du clic droit d’une macro.
+
+## Sur le Drum Rack et Nota Rhythm
+
+Chaque macro montre sa valeur, son nom et, en bleu sarcelle, où elle va (« → Reverb · Snare, Clap »). Une macro non
+assignée est une cellule vide en pointillés.
+
+### Associer
+
+1. Sélectionnez une macro.
+2. Appuyez sur **Map** et choisissez la cible : les commandes propres d’un pad (Volume, Pan, Tune, Decay), un paramètre
+   de l’instrument d’une chaîne, ou de l’un de ses effets.
+3. Répétez pour ajouter d’autres récepteurs.
+
+Les **récepteurs** de la macro sélectionnée sont listés avec leur plage sous forme de bande bleu sarcelle et la valeur
+actuelle sous forme de repère : faites glisser les extrémités de la bande pour régler la plage que couvre chaque
+récepteur.
+
+Clic droit sur une macro pour voir ses récepteurs et ses plages, la **Renommer**, ou l'**Effacer**. Les kits d’usine se
+chargent avec leurs propres macros (Tune, Decay, Hats, Drive / Tape, Room, Echo, 808 / Sub, selon ce que le kit a).
+
+## Contrôler les macros
+
+Les macros sont des paramètres comme les autres : automatisez-les, associez-les à un contrôleur avec
+[MIDI Learn](../../../control/midi-learn/), ou jouez-les depuis l’écran **Macros** de votre téléphone dans
+[Nota Remote](../../../control/nota-remote/).

@@ -1,0 +1,43 @@
+---
+title: "Nota Chord"
+description: "Transforme chaque note en accord : jusqu’à six voix ajoutées avec leur propre intervalle et vélocité, strum, voicing ouvert et repli dans une gamme."
+sidebar:
+  order: 2
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/MidiChord.h
+  - src/managed/Nota.App/DeviceCards/Midi/ChordMidiBody.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Chord joue un accord à partir de chaque note que vous jouez : un doigt, toute l’harmonie.
+
+<Shot id="devices/midi-effects/chord/card" alt="Nota Chord : le type, les décalages et le clavier du résultat" />
+
+## Type et décalages
+
+**Type** choisit une forme (**Maj7**, **Min7**, **Sus4**, **5th**) ou **Custom**. Les **Shifts** sont six voix
+ajoutées : chacune a un point marche / arrêt, un intervalle de −12 … +12 demi-tons (nommé : M3, P5, M7…) et un
+décalage de vélocité que vous faites glisser. Modifier un décalage passe le type sur Custom. **Keep root** joue aussi la
+note que vous avez pressée.
+
+## Résultat
+
+Les noms de notes de l’accord et un clavier de trois octaves : votre note, les notes ajoutées, une fondamentale non
+jouée entourée. Il joue un strum une fois par mesure pendant que le transport tourne, et après chaque modification,
+pour que vous entendiez la forme.
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Strum** | Étale les notes de l’accord du grave à l’aigu, à tant de ms d’écart : un strum de guitare |
+| **Spread** | Ouvre le voicing : à ⅓ une voix sur deux monte d’une octave, à ⅔ les autres aussi |
+| **Fold in scale** | Une note ajoutée hors de la gamme (**Fold Key**, majeure ou mineure) descend d’un demi-ton pour y entrer |
+
+## Préréglages
+
+34 préréglages d’usine : triades et septièmes (**Major Triad**, **Minor Triad**, **Sus2**, **Sus4**,
+**Power Chord**, **Augmented**, **Maj7**, **Min7**, **Dominant 7**, **Sixth**, **Minor 6**, **Diminished 7**,
+**Half-Diminished**) et voicings larges et modernes (**Maj7 Wide**, **Add9 Open**, **Min9 Open**, **Neo-Soul m11**,
+**Rootless Maj9**, **Rootless Dom9**, **Quartal**, …).

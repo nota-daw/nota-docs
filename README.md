@@ -1,6 +1,6 @@
 # Nota Docs
 
-The user manual for [Nota](https://github.com/nota-daw/nota), in English and Russian.
+The user manual for [Nota](https://github.com/nota-daw/nota), in English, Russian and French.
 Built with [Astro Starlight](https://starlight.astro.build) and published to GitHub Pages.
 
 ```bash
@@ -24,7 +24,13 @@ npm run shots      # retake screenshots (see below); `-- devices/volt` for one p
 - **design** shots come from the `../nota-design` mockups via Playwright (dark only).
 
 Images land in `src/assets/shots/{dark,light}/<id>.webp`; `<Shot id>` picks the variant that
-matches the site theme.
+matches the site theme. On `/fr/` pages it prefers the image in `shots-fr/` and falls back to
+the English one.
+
+French shots need the French language file of [nota-translations](https://github.com/nota-daw/nota-translations)
+(`../nota-translations/languages/fr.json`, or `NOTA_TRANSLATIONS=<file>`):
+`npm run shots -- --lang fr [id-prefix…]`. Design and Remote shots stay English. Keep an image only if it
+differs from the English render (cards that show nothing but device and parameter names are identical).
 
 ## Layout
 
@@ -32,8 +38,10 @@ matches the site theme.
 |---|---|
 | `src/content/docs/<slug>.mdx` | English page |
 | `src/content/docs/ru/<slug>.mdx` | Russian twin — same path, same structure |
+| `src/content/docs/fr/<slug>.mdx` | French twin (may lag behind: a missing or older one is a warning, and the page falls back to English) |
 | `src/components/` | `Shot` (themed screenshot), `Kbd` (key caps) — import via `@components/…` |
 | `src/assets/shots/{dark,light}/` | Screenshots, listed in `shots/manifest.yml` |
+| `src/assets/shots-fr/{dark,light}/` | The app shots taken with the French interface (`npm run shots -- --lang fr`); only those that differ from the English one |
 | `templates/` | `device.mdx`, `page.mdx` — copy for a new page |
 | `coverage.yml` | Every app feature → its page, with the app source paths it's written from |
 | `PLAN.md` | Structure, stages, writing rules |

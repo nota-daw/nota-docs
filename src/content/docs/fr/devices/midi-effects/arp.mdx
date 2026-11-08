@@ -1,0 +1,57 @@
+---
+title: "Nota Arp"
+description: "Arpégiateur pas à pas : ordre des notes, vitesse, octaves, gate, swing, maintien et redéclenchement, plus six voies de groove de 16 pas pour la vélocité, la longueur, la probabilité, les ratchets, la transposition et l’activation."
+sidebar:
+  order: 1
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/Arpeggiator.h
+  - src/managed/Nota.App/DeviceCards/Midi/ArpMidiBody.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Arp transforme les notes tenues en motif qui court. Jouez un accord, obtenez une séquence (montante, descendante,
+dans l’ordre où vous l’avez jouée, aléatoire), façonnée pas à pas par ses voies de groove.
+
+<Shot id="devices/midi-effects/arp/card" alt="Nota Arp dans sa grande vue, fenêtre Pattern" />
+
+Les effets MIDI se placent avant l’instrument dans la chaîne d’une piste : ajoutez-en un depuis l’onglet **Effets MIDI**
+du navigateur. Le commutateur **S / L** de l’en-tête choisit une carte compacte ou complète.
+
+## Ordre
+
+**Up**, **Down**, **Up · Down**, **Down · Up**, **Converge**, **Diverge**, **As played**, **Random** ou **Chord**
+(l’accord entier à chaque pas). L’ordre parcourt toute l’étendue sur les octaves choisies : Up · Down sur deux octaves
+monte de C3 à B4 et revient.
+
+## Vitesse et jeu
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Free** / **Sync** | Vitesse en millisecondes, ou une division de note |
+| **Gate** | Longueur de la note en part du pas |
+| **Swing** | Retarde les pas pairs |
+| **Vel Amt** | Dans quelle mesure la vélocité jouée est conservée |
+| **Octaves** | Sur combien d’octaves s’étend le motif |
+| **Retrig** | Redémarre le motif : **Off**, à chaque nouvelle **Note**, ou sur le **Beat** |
+| **Transpose** | Décale la sortie |
+| **Steps** | Longueur de boucle du motif |
+| **Hold** | Continue de jouer après que vous avez relâché |
+| **Restart** | Redémarre le motif maintenant |
+
+## Groove
+
+<Shot id="devices/midi-effects/arp/groove" alt="Nota Arp, voies de groove" />
+
+Six voies de 16 pas (**Velocity**, **Length**, **Chance**, **Ratchet** (répète la note d’un pas), **Transpose** et
+**On**) dessinent une variation par pas dans le motif. La fenêtre s’anime : la tête parcourt les pas et la cellule qui
+sonne s’allume.
+
+## Préréglages
+
+30 préréglages d’usine, des simples défilés (**Up 1/16**, **Down 1/8**, **Octave Up-Down**, **Down-Up Cascade**,
+**Converge**, **Diverge Bloom**, **As Played Hook**, **Four-Octave Rise**) aux grooves (**Trance Gate**,
+**House Offbeat Stab**, **Swing Groove**, **Velocity Accents**, **Bar Retrig Riff**, **Triplet Roll**,
+**Free Run 150 ms**) et au-delà.

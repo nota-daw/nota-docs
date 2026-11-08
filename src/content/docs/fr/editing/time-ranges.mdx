@@ -1,0 +1,46 @@
+---
+title: "Plages de temps"
+description: "Sélectionner une étendue de temps à travers les pistes, et ce qu’on peut en faire : dupliquer le temps, insérer du silence, découper, consolider, boucler."
+sidebar:
+  order: 5
+updated: "0.58.1"
+status: done
+sources:
+  - src/managed/Nota.App/ArrangementView.cs
+  - src/managed/Nota.App/ArrangementView.LaneControl.cs
+  - src/managed/Nota.App/ArrangementView.Sections.cs
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import Kbd from '@components/Kbd.astro';
+
+Une **plage de temps** est une étendue du morceau sur une ou plusieurs pistes : pas des clips entiers, mais « les
+mesures 9 à 17 ». C’est ainsi que vous retravaillez la structure d’un morceau.
+
+## Sélectionner une plage
+
+- <Kbd>⇧</Kbd>-glisser dans les voies de l’Arrangement : le glissement peut partir d’un espace vide ou d’un clip. Les
+  bords s’accrochent à la grille (<Kbd>⌥</Kbd> pour les placer librement).
+- Clic droit sur une section ▸ **Sélectionner la section** pour la sélectionner comme une plage sur toutes les pistes.
+
+## Travailler sur la plage
+
+| Commande | Touche | Ce qu’elle fait |
+|---|---|---|
+| **Dupliquer le temps** | <Kbd>⌘ ⇧ D</Kbd> | Insère une copie de la plage juste après elle. Tout ce qui suit, sur chaque piste, automation comprise, se décale vers la droite ; les clips qui franchissent ce point sont coupés. Appuyez à nouveau pour répéter la copie. |
+| **Insérer du silence** | <Kbd>⌘ ⇧ I</Kbd> | Ouvre un vide aussi long que la plage à son début, en repoussant tout ce qui suit vers la droite. |
+| **Dupliquer** | <Kbd>⌘ D</Kbd> | Copie le matériel de la plage sur les pistes sélectionnées juste après elle. Rien ne bouge pour faire de la place. |
+| **Découper** | <Kbd>⌘ E</Kbd> | Coupe les clips aux bords de la plage (sans plage : à la tête de lecture). Un clip audio reçoit aussi un fondu de 4 ms à la coupure, que vous pouvez allonger ou raccourcir en le faisant glisser ; Réglages → Apparence peut le désactiver. |
+| **Consolider** | <Kbd>⌘ J</Kbd> | Remplace le matériel de la plage par un clip par piste : notes fusionnées, audio rendu avec son gain, sa hauteur, son warp et ses enveloppes. |
+| **Boucle** | <Kbd>⌘ L</Kbd> | Règle la boucle sur la plage et l’active. |
+| **Supprimer** | <Kbd>Delete</Kbd> | Supprime le matériel de la plage, en coupant les clips à ses bords. Le vide reste. |
+| **Coller l’audio rendu** | <Kbd>⌘ ⇧ V</Kbd> | Rend la dernière plage d’une piste audio ou d’instrument à travers toute sa chaîne (avant le fader) et la colle comme un clip audio sur la piste audio sélectionnée, à la tête de lecture, par-dessus ce qui s’y trouve. |
+
+**Dupliquer le temps** et **Insérer du silence** agissent sur tout le morceau, pas seulement sur les pistes
+sélectionnées : c’est le moyen d’ajouter une mesure ou un refrain sans décaler chaque piste à la main. Ils sont aussi
+dans le menu **Édition** et dans le menu du clic droit de la plage.
+
+<Aside type="tip">
+Pour répéter un refrain : clic droit sur sa section ▸ **Sélectionner la section**, puis <Kbd>⌘ ⇧ D</Kbd>. Ou clic
+droit sur la section ▸ **Dupliquer**.
+</Aside>

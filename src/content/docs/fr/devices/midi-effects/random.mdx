@@ -1,0 +1,51 @@
+---
+title: "Nota Random"
+description: "Fait varier les notes au hasard (hauteur, vélocité, timing, omissions et octaves) avec une distribution en cloche, plate ou « walk », par note ou par mesure, une graine verrouillable et l’accrochage à une gamme."
+sidebar:
+  order: 6
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/MidiRandom.h
+  - src/managed/Nota.App/DeviceCards/Midi/RandomMidiBody.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Random ajoute un hasard contrôlé : un batteur un peu relâché, des notes fantômes qui vont et viennent, une mélodie
+qui vagabonde, des charlestons qui s’éclaircissent. C’est reproductible : verrouillez la graine et la même variation
+joue à chaque fois.
+
+<Shot id="devices/midi-effects/random/card" alt="Nota Random : ce qui varie, la barre de sortie et les dés" />
+
+## Ce qui varie
+
+| Dimension | Plage |
+|---|---|
+| **Note** | ± demi-tons |
+| **Velocity** | ±64 |
+| **Timing** | 0 à 100 ms de retard (un effet en temps réel ne peut que retarder) |
+| **Skip** | Abandonner la note |
+| **Octave** | ±2 octaves |
+
+## Dés
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Chance** | Avec quelle probabilité une note est modifiée |
+| **Distribution** | **Gauss** (une cloche : les petits changements plus souvent), **Even** (plate) ou **Walk** (dérive de note en note) |
+| **Per note** / **Per bar** | Tirer pour chaque note, ou une fois pour la mesure |
+| **Seed** · **Reroll** | La graine du tirage ; relancer pour en obtenir une nouvelle |
+| **Lock** | Garder la mesure affichée et la répéter à chaque mesure |
+| **Stay in scale** | Accrocher les hauteurs modifiées à do majeur |
+
+La fenêtre **Output** montre une mesure de notes de démonstration : l’entrée en pointillés, la sortie en aplat (plus
+clair = plus fort, un lien quand la hauteur a bougé, × quand elle est omise). Chaque mesure est un nouveau tirage tant
+que vous ne la verrouillez pas.
+
+## Préréglages
+
+32 préréglages d’usine : humanisation (**Human Touch**, **Loose Drummer**, **Tight Humanize**, **Lazy Behind**,
+**Velocity Shimmer**, **Accent Lottery**), éclaircissement (**Ghost Notes**, **Sparse Hats**, **Thin Out**,
+**Stutter Drop**), hauteur (**Pitch Roulette**, **Gentle Wander**, **Melodic Drift**, **Wide Leaps**,
+**Chromatic Smear**, …) et plus.

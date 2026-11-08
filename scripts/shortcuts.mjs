@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-// Generates reference/shortcuts (EN + RU) from the app's own shortcut list:
+// Generates reference/shortcuts (EN + RU, and FR when the translations repo is next to this one) from
+// the app's own shortcut list:
 // PreferencesWindow.ShortcutGroups in ../nota (or $NOTA_REPO). Run `npm run shortcuts` after the
 // nota-shortcuts skill has brought that list up to date. Never edit the generated pages by hand.
 import fs from 'node:fs';
@@ -19,11 +20,14 @@ if (start < 0 || end < 0) throw new Error('ShortcutGroups not found in ' + srcPa
 // page wants the English text, which lives in the app's English reference.
 const enPath = 'src/managed/Nota.Application/Localization/en.json';
 const english = JSON.parse(fs.readFileSync(path.join(appRepo, enPath), 'utf8')).strings;
-const block = src.slice(start, end).replace(/Loc\.T\(\s*"([a-z0-9_.]+)"\s*\)/g, (_, key) => {
-  const text = english[key];
-  if (typeof text !== 'string') throw new Error(`ShortcutGroups uses ${key}, which is not a plain text in ${enPath}`);
-  return JSON.stringify(text);
-});
+const rawBlock = src.slice(start, end);
+// `texts` is a language file's strings; a key it lacks (or a plural) falls back to English, as in the app.
+const localize = (texts) =>
+  rawBlock.replace(/Loc\.T\(\s*"([a-z0-9_.]+)"\s*\)/g, (_, key) => {
+    const text = typeof texts[key] === 'string' ? texts[key] : english[key];
+    if (typeof text !== 'string') throw new Error(`ShortcutGroups uses ${key}, which is not a plain text in ${enPath}`);
+    return JSON.stringify(text);
+  });
 
 const unescape = (s) => s.replace(/\\u([0-9a-fA-F]{4})/g, (_, h) => String.fromCharCode(parseInt(h, 16))).replace(/\\"/g, '"');
 // A string in the list is a C# literal, bare or wrapped in Loc.T(…) since the app was localised
@@ -31,12 +35,22 @@ const unescape = (s) => s.replace(/\\u([0-9a-fA-F]{4})/g, (_, h) => String.fromC
 const str = String.raw`(?:Loc\.T\(\s*"((?:[^"\\]|\\.)*)"\s*\)|"((?:[^"\\]|\\.)*)")`;
 const groupRe = new RegExp(String.raw`\(\s*${str},\s*new\[\]\s*\{([\s\S]*?)\}\)`, 'g');
 const rowRe = new RegExp(String.raw`\(\s*${str},\s*${str}\s*\)`, 'g');
-const groups = [];
-for (const g of block.matchAll(groupRe)) {
-  const rows = [...g[3].matchAll(rowRe)].map((m) => [unescape(m[1] ?? m[2]), unescape(m[3] ?? m[4])]);
-  groups.push({ title: unescape(g[1] ?? g[2]), rows });
-}
-if (!groups.length) throw new Error('no shortcut groups parsed');
+const parseGroups = (block) => {
+  const found = [];
+  for (const g of block.matchAll(groupRe)) {
+    const rows = [...g[3].matchAll(rowRe)].map((m) => [unescape(m[1] ?? m[2]), unescape(m[3] ?? m[4])]);
+    found.push({ title: unescape(g[1] ?? g[2]), rows });
+  }
+  if (!found.length) throw new Error('no shortcut groups parsed');
+  return found;
+};
+const groups = parseGroups(localize(english));
+
+// French comes from nota-translations (a sibling checkout, or $NOTA_TRANSLATIONS = a languages/fr.json).
+const frPath = process.env.NOTA_TRANSLATIONS ?? path.join(root, '../nota-translations/languages/fr.json');
+const frTexts = fs.existsSync(frPath) ? JSON.parse(fs.readFileSync(frPath, 'utf8')).strings : null;
+const groupsFr = frTexts ? parseGroups(localize(frTexts)) : null;
+if (!frTexts) console.warn(`no ${frPath}: reference/shortcuts is generated in English and Russian only`);
 
 // Same rule as PreferencesWindow.IsKeyToken: a key has no lower-case letters, or is a named key.
 const named = new Set(['Space', 'Return', 'Delete', 'Tab', 'Esc']);
@@ -74,32 +88,36 @@ const ru = {
 
 const page = (lang) => {
   const en = lang === 'en';
+  const fr = lang === 'fr';
+  const list = fr ? groupsFr : groups;
   const fm = [
     '---',
-    `title: "${en ? 'Keyboard shortcuts' : 'Горячие клавиши'}"`,
-    `description: "${en ? 'Every keyboard shortcut and mouse gesture in Nota, grouped as on the Settings ▸ Shortcuts page.' : 'Все сочетания клавиш и жесты мыши в Nota, по группам, как на странице Settings ▸ Shortcuts.'}"`,
+    `title: "${en ? 'Keyboard shortcuts' : fr ? 'Raccourcis clavier' : 'Горячие клавиши'}"`,
+    `description: "${en ? 'Every keyboard shortcut and mouse gesture in Nota, grouped as on the Settings ▸ Shortcuts page.' : fr ? 'Tous les raccourcis clavier et gestes de souris de Nota, par groupes, comme dans la page Réglages ▸ Raccourcis.' : 'Все сочетания клавиш и жесты мыши в Nota, по группам, как на странице Settings ▸ Shortcuts.'}"`,
     'sidebar:\n  order: 1',
     `updated: "${version}"`,
     'status: done',
     `sources:\n  - ${srcPath}`,
     '---',
   ].join('\n');
-  const intro = en
+  const intro = fr
+    ? `Cette page est générée à partir de la liste de **Réglages ▸ Raccourcis**, les deux concordent donc toujours.\nLes raccourcis sont écrits à la manière de macOS : sous Windows et Linux, lisez <Kbd keys="⌘" /> comme **Ctrl** et\n<Kbd keys="⌥" /> comme **Alt**.`
+    : en
     ? `This page is generated from the list on **Settings ▸ Shortcuts**, so the two always match.\nShortcuts are written the macOS way: on Windows and Linux read <Kbd keys="⌘" /> as **Ctrl** and\n<Kbd keys="⌥" /> as **Alt**.`
     : `Страница собрана из списка на **Settings ▸ Shortcuts**, поэтому они всегда совпадают. Описания\nдействий — на английском, как в приложении. Сочетания записаны как в macOS: в Windows и Linux\n<Kbd keys="⌘" /> — это **Ctrl**, а <Kbd keys="⌥" /> — **Alt**.`;
-  const body = groups
+  const body = list
     .map((g) => {
-      const head = en ? sentence(g.title) : ru[g.title.toUpperCase()] ?? sentence(g.title);
-      const th = en ? '| Keys | Action |' : '| Клавиши | Действие |';
+      const head = en || fr ? sentence(g.title) : ru[g.title.toUpperCase()] ?? sentence(g.title);
+      const th = en ? '| Keys | Action |' : fr ? '| Touches | Action |' : '| Клавиши | Действие |';
       return `## ${head}\n\n${th}\n|---|---|\n` + g.rows.map(([k, a]) => `| ${renderKey(k)} | ${esc(a)} |`).join('\n');
     })
     .join('\n\n');
   return `${fm}\n\n{/* Generated by scripts/shortcuts.mjs from ${srcPath} — do not edit by hand. */}\n\nimport Kbd from '@components/Kbd.astro';\n\n${intro}\n\n${body}\n`;
 };
 
-for (const [lang, dir] of [['en', ''], ['ru', 'ru/']]) {
+for (const [lang, dir] of [['en', ''], ['ru', 'ru/'], ...(groupsFr ? [['fr', 'fr/']] : [])]) {
   const file = path.join(root, 'src/content/docs', dir, 'reference/shortcuts.mdx');
   fs.mkdirSync(path.dirname(file), { recursive: true });
   fs.writeFileSync(file, page(lang));
 }
-console.log(`${groups.length} groups · ${groups.reduce((n, g) => n + g.rows.length, 0)} shortcuts → reference/shortcuts (en, ru)`);
+console.log(`${groups.length} groups · ${groups.reduce((n, g) => n + g.rows.length, 0)} shortcuts → reference/shortcuts (${groupsFr ? 'en, ru, fr' : 'en, ru'})`);

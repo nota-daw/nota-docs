@@ -1,0 +1,123 @@
+---
+title: "Nota Remote"
+description: "Votre téléphone ou tablette comme contrôleur : scannez un code QR et jouez des pads, des touches, un pad XY avec inclinaison, le mixeur, des macros et la grille de Session en Wi-Fi ou en USB, sans rien installer."
+sidebar:
+  order: 4
+updated: "0.53.1"
+status: done
+sources:
+  - src/web/remote/src/screens/Keys.svelte
+  - src/web/remote/src/components/Sheets.svelte
+  - src/web/remote/src/lib/theme.svelte.ts
+  - src/managed/Nota.App/MainWindow.Remote.cs
+  - src/managed/Nota.App/PreferencesWindow.Remote.cs
+  - src/managed/Nota.Remote/RemoteServer.cs
+  - src/managed/Nota.Remote/RemotePairing.cs
+---
+
+import Shot from '@components/Shot.astro';
+import ShotRow from '@components/ShotRow.astro';
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Nota Remote transforme un téléphone ou une tablette en contrôleur. Rien à installer : Nota sert lui-même la page, par
+votre Wi-Fi local ou un câble USB.
+
+## Se connecter
+
+<Steps>
+
+1. Cliquez sur **Télécommande** dans la barre de transport (ou **Affichage ▸ Connecter un téléphone…**). La première
+   fois, autorisez le contrôle depuis un téléphone ; sous macOS, autorisez aussi Nota à trouver des appareils sur le
+   réseau local.
+
+2. Scannez le code QR avec l’appareil photo du téléphone. Ou ouvrez l’adresse affichée et saisissez le code à quatre
+   chiffres (il change toutes les deux minutes).
+
+3. Le téléphone joue Nota en quelques secondes. Ajoutez-le à l’écran d’accueil pour une app plein écran qui se
+   reconnecte toute seule après un écran verrouillé ou une liaison coupée.
+
+</Steps>
+
+<Shot id="control/nota-remote/connect-phone" alt="Le panneau Connecter un téléphone avec le code QR, l’adresse, le code et les téléphones connectés" width={360} />
+
+Un téléphone que vous avez appairé est **de confiance** : il se reconnecte depuis l’icône de son écran d’accueil sans
+code jusqu’à ce que vous l’oubliiez dans [Réglages ▸ Télécommande](../../preferences/remote/).
+
+L'**USB** marche aussi : un téléphone sur un câble (le partage de connexion USB sur Android, le Partage Internet sur le
+Mac) obtient une liaison instantanée, sans radio. Nota remarque le câble, met son adresse dans le QR, et marque le
+téléphone **USB**.
+
+## Les écrans
+
+Chaque écran partage un même en-tête : le sélecteur de piste, un mini-transport et l’état de la liaison. Touchez la
+position pour le **grand transport** (lecture, arrêt, enregistrement, boucle, métronome, annuler, tap tempo, saut aux
+sections).
+
+| Écran | Ce qu’il fait |
+|---|---|
+| **Pads** | Une grille de pads : les pads d’un Drum Rack par nom, des banques, vélocité maximale, répétition de note |
+| **Keys** | Un **Keyboard**, une grille **Scale** dans la tonalité du projet, ou des **Chords** ; **Expressive** pour les synthés MPE |
+| **XY** | Un pad XY sur les commandes de la piste, avec **Hold** / **Return** et **Tilt** : le mouvement du téléphone le pilote |
+| **Mixer** | Faders, muet, solo et armement pour chaque piste |
+| **Macros** | Les macros de l’appareil sélectionné sous forme de boutons |
+| **Scenes** | La grille de Session : lancer des clips et des scènes |
+
+Les écrans se lisent comme ceux de Nota : l’orange marque ce qui joue, est tenu ou est activé ; **M** s’allume en
+ambre, **S** en bleu et **Arm** en rouge, comme dans le Mixeur.
+
+<ShotRow>
+  <Shot id="control/nota-remote/pads" alt="Nota Remote sur un téléphone : l’écran Pads d’un Drum Rack" width={240} />
+  <Shot id="control/nota-remote/xy" alt="Nota Remote : le pad XY sur Cutoff et Resonance, avec Hold, Return et Tilt" width={240} />
+  <Shot id="control/nota-remote/scenes" alt="Nota Remote : la grille de Session avec des clips en cours de lecture et en attente" width={240} />
+</ShotRow>
+
+Sur une piste dont le synthé joue du [MPE](../midi/#molette-de-hauteur-aftertouch-et-mpe), **Keys** affiche un
+interrupteur **Expressive** dans Keyboard et Scale. Quand il est activé, un doigt garde la note qu’il a frappée au
+lieu de glisser vers la touche suivante : glissez latéralement pour la courber (la largeur d’une touche est son pas de
+hauteur : une touche blanche sur le clavier, un degré de gamme sur la grille), et vers le haut ou le bas de la touche
+pour changer son timbre. Un téléphone ou une tablette qui perçoit la force du toucher envoie aussi la pression.
+
+## Couleurs
+
+Le téléphone porte le thème de couleurs de Nota et change avec lui. Choisissez un autre thème dans
+[Réglages ▸ Apparence](../../preferences/appearance/), ou laissez **Suivre le système** faire passer Nota du sombre au
+clair, et le téléphone suit en un instant : pas de rechargement, et une note tenue continue de sonner.
+
+Vous choisissez comment dans le menu **⋯** du téléphone, sous **Theme** :
+
+| Choix | Ce que porte le téléphone |
+|---|---|
+| **Follow Nota** | Le thème que Nota porte à l’instant (le choix par défaut) |
+| **Follow phone** | Votre thème **En mode sombre** tant que le téléphone est en mode sombre, votre thème **En mode clair** tant qu’il est clair : les deux choix dans Réglages ▸ Apparence |
+
+La ligne sous l’interrupteur dit ce que le téléphone porte et pourquoi, par exemple *Studio Dark · as Nota wears it*.
+
+<ShotRow>
+  <Shot id="control/nota-remote/theme-menu" alt="Le menu ⋯ du téléphone : Theme avec Follow Nota et Follow phone, et le thème porté" width={240} />
+  <Shot id="control/nota-remote/ember" alt="Nota Remote portant un thème Ember" width={240} />
+</ShotRow>
+
+Un téléphone qui s’est déjà connecté s’ouvre aussitôt dans son dernier thème, avant que Nota ne réponde ; un nouveau
+téléphone démarre en Studio Dark jusqu’à ce que Nota envoie ses couleurs.
+
+## Un téléphone est un contrôleur de plus
+
+Ses notes s’enregistrent comme celles du clavier de l’ordinateur ; les faders et les macros font bouger les commandes
+de Nota (un geste, une étape d’annulation) ; ses boutons et ses axes XY peuvent être associés avec
+[MIDI Learn](../midi-learn/) comme du matériel. Le pad XY et l’inclinaison sont associés par piste : le XY de chaque
+piste joue donc son propre son.
+
+Plusieurs téléphones peuvent jouer en même temps, chacun sur sa propre piste : la liste des pistes et le mixeur
+montrent qui joue quoi.
+
+## Ce que les téléphones peuvent faire
+
+Dans [Réglages ▸ Télécommande](../../preferences/remote/) : **Jouer des notes uniquement** (pads et touches ; le
+mixeur, le transport et les associations sont en lecture seule) ou **Jouer et piloter le projet** (aussi le mixeur, le
+transport, les macros, le XY et la Session).
+
+<Aside type="caution">
+Si les téléphones ne peuvent pas se connecter : vérifiez qu’ils sont sur le même réseau (un Wi-Fi invité garde souvent
+les appareils séparés : utilisez plutôt le point d’accès du téléphone ou un câble USB), que la Télécommande est
+activée, et que votre pare-feu autorise Nota sur le port indiqué dans les Réglages.
+</Aside>

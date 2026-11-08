@@ -21,6 +21,10 @@
 #   board cell (drops its label and caption).
 # themes: [dark] / [light] to restrict; default is both for app, dark for design.
 #
+# Translated shots: `npm run shots -- --lang fr` retakes the app shots with that interface language into
+# src/assets/shots-fr/. In `args`, name controls by their English text (tab, window …): the harness
+# looks for their translation on screen. Design and remote shots are not translated.
+#
 # Prefer app shots: they match the code and come in both themes. Use design only for what the
 # app can't render or for card states a scene can't reach yet.
 shots:
@@ -51,7 +55,7 @@ shots:
   - { id: views/mixer-compact, source: app, scene: mixer, args: {group: "Beat:Rhythm,Drums,Bass", compact: true, width: 1200} }
   - { id: views/detail-panel, source: app, scene: main, args: {view: "arrangement", select: "Keys", element: "DetailPanel"} }
   - { id: devices/folded, source: app, scene: main, args: {view: "arrangement", select: "Keys", fold: "0", element: "DetailPanel"} }
-  - { id: views/device-window/nota-bass-l, source: app, scene: device, args: {instrument: 3, chainInstrument: 7, trackName: "Bass", window: "GUI"} }
+  - { id: views/device-window/nota-bass-l, source: app, scene: device, args: {instrument: 3, chainInstrument: 7, trackName: "Bass", window: "Open"} }
   - { id: views/device-window/nota-level-s, source: design, file: "Nota Device Window.html", label: "Nota Level S" }
   - { id: views/device-window/dexed-l, source: design, file: "Nota Device Window.html", label: "Dexed L" }
 

@@ -1,0 +1,100 @@
+---
+title: "Nota Lens"
+description: "Analyseur : un spectre, un oscilloscope déclenché et un waterfall dans une seule carte, avec peak hold, curseurs, mid / side et sonie. L’audio passe sans être touché."
+sidebar:
+  order: 22
+updated: "0.58.1"
+status: done
+sources:
+  - src/native/nota.engine/src/Lens.h
+  - src/managed/Nota.App/DeviceCards/Bodies/LensDeviceBody.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Lens montre de quoi un son est fait. Il ne change rien : placez-le n’importe où dans une chaîne, ou sur le master,
+pour regarder le spectre, la forme d’onde ou la façon dont le son évolue dans le temps.
+
+<Shot id="devices/audio-effects/lens/card" alt="Nota Lens, vue Spectrum" />
+
+**Disposition :** le rail **Scale** à gauche, un grand graphique au milieu avec trois vues, un panneau **Analyze** /
+**Display** à droite et une ligne d’état.
+
+## Spectrum
+
+Un spectre FFT sur une échelle de fréquences logarithmique : taille et fenêtre **FFT**, **Avg**, lissage, decay, une
+inclinaison **Tilt** (pour qu’un mix équilibré paraisse plat), un plancher et un **peak hold**. **Mid/Side** montre le
+mid ou le side au lieu de gauche / droite.
+
+## Scope
+
+<Shot id="devices/audio-effects/lens/scope" alt="Nota Lens, vue Scope" />
+
+Un oscilloscope déclenché qui se comporte comme un instrument de laboratoire : la trace est épinglée au point de
+déclenchement et reste immobile, les passages plus anciens s’estompent (**Afterglow**). **Free** tourne sans
+déclenchement ; une capture **Single** retient un seul balayage. Les **Cursors** A et B mesurent le temps et le niveau
+entre deux points. **Export WAV** enregistre la fenêtre capturée.
+
+### Synchro sur le tempo
+
+Activez **Sync** au-dessus du scope pour l’aligner sur le morceau plutôt que sur un déclencheur. Choisissez un **Span** :
+¼ de temps, ½ temps, 1 temps, 2 temps, 1 mesure, 2 mesures ou 4 mesures (une mesure suit la signature rythmique). Pendant
+la lecture, le scope montre cette portion de la grille de temps : un span de 1 mesure commence sur une barre de mesure
+et finit sur la suivante. Des lignes de temps sont tracées en travers, les barres de mesure plus marquées, et les
+étiquettes en dessous donnent la mesure et le temps à chaque bord.
+
+Une ligne de balayage suit la tête de lecture. À sa gauche, le passage en cours de tracé ; à sa droite, le passage
+précédent s’estompe, si bien que vous voyez toujours un span complet. Cela permet de voir facilement si l’attaque d’une
+note tombe sur le temps ou juste après, mesure après mesure.
+
+- Les longs spans sont tracés à partir d’un historique de crêtes, si bien qu’un clic ou un transitoire garde toute sa
+  hauteur, même sur 4 mesures.
+- Un déplacement ou un retour de boucle relance le passage à la nouvelle position, au lieu de tracer l’ancien audio sous
+  les nouvelles lignes de temps.
+- À l’arrêt, le scope défile librement sur une piste qui sonne encore (un instrument que vous jouez, ou une entrée
+  monitorée), avec **free** dans le coin. Une piste audio à l’arrêt est silencieuse, son scope garde donc le dernier
+  passage.
+- Avec Sync activé, la base de temps et les boutons de déclenchement se reposent. **Freeze** retient les deux passages
+  tels quels.
+
+### Superposition d’une key
+
+Lens accepte une key de sidechain, comme le Compressor. Dans **Key** sur le panneau Analyze, choisissez une autre piste :
+son audio (après ses effets) est tracé en turquoise par-dessus la trace de cette piste, dans le scope synchronisé et
+dans le scope déclenché, où il suit le même déclencheur et la même base de temps. L’interrupteur à côté masque la trace
+de la key.
+
+- **Key Gain** (−24 à +24 dB) met à l’échelle uniquement la trace de la key, pour comparer une key faible à un signal
+  fort. Cela ne change rien à ce que vous entendez.
+- **Layout** place les deux traces sur le même axe (**Overlay**) ou la key dans la moitié basse (**Stacked**).
+- **Source** et **Mid/Side** choisissent le canal pour les deux traces.
+
+Un usage typique : placez Lens sur la basse, déclenchez-le depuis la grosse caisse, réglez Sync sur 1 mesure, et voyez si
+la basse est duckée là où la grosse caisse frappe.
+
+### Fenêtre agrandie
+
+Le bouton à droite des onglets de vue ouvre Lens dans sa propre fenêtre, que vous pouvez redimensionner ou déplacer sur
+un autre écran. Elle montre les mêmes vues et les mêmes commandes que la carte, et les deux se suivent. La fenêtre se
+ferme quand vous supprimez l’appareil ou ouvrez un autre projet.
+
+## Waterfall
+
+<Shot id="devices/audio-effects/lens/waterfall" alt="Nota Lens, vue Waterfall" />
+
+Le spectre dans le temps, qui défile : voyez les résonances sonner, les queues de reverb décroître et les motifs de
+batterie se répéter. **Contrast** et la luminosité règlent la quantité de détails affichée.
+
+## Commandes communes
+
+**Freeze** arrête l’affichage ; **Source** choisit ce qui est analysé ; le haut et la plage de l’échelle règlent la vue
+verticale. La ligne d’état porte la sonie et les mesures.
+
+## Préréglages
+
+32 préréglages d’usine : spectre (**Mix Overview**, **Fine Resolution**, **Fast Response**, **Low End Focus**,
+**Tonal Balance**, **Peak Finder**, **Flat-Top Calibration**, **Mid / Side Check**, **Noise Floor**, **Tuning Check**,
+**Loudness Watch**, **Linear Sweep**, **Master Bus**), scope (**Scope · Waveform**, **· Transient**, **· Single Shot**,
+**· Sub Bass**, **· Clip Watch**, **· Side Signal**, **· Afterglow**, **· Cursor Measure**, **· High Frequency**,
+**· Left Channel**, **· Right Channel**, **· Falling Edge**) et waterfall (**Waterfall · Arrangement**, **· Detail**,
+**· Resonance Hunt**, **· Reverb Tail**, **· Noise Print**, **· Drum Pattern**, **· Vocal Formants**).

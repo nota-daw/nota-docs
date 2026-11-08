@@ -1,0 +1,84 @@
+---
+title: "Nota Drum Rack"
+description: "Des pads pour la batterie et les one-shots : jusqu’à 64 pads en quatre banques, chacun avec son propre échantillon ou instrument et ses effets, des groupes de coupure, un mixeur, des macros de kit et 25 kits d’usine."
+sidebar:
+  order: 2
+updated: "0.58.1"
+status: done
+sources:
+  - src/managed/Nota.App/DeviceCards/SidechainSourcePicker.cs
+  - src/native/nota.engine/src/DrumRack.h
+  - src/managed/Nota.App/DeviceCards/Rack/RackCardView.Drum.cs
+  - src/managed/Nota.App/DeviceCards/Rack/MacroPanel.cs
+---
+
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
+
+Nota Drum Rack joue un son différent sur chaque pad. Chargez des one-shots ou des instruments sur les pads, donnez à
+chacun ses propres effets, et programmez-le depuis le piano roll ou la grille de pas **Motif**.
+
+<Shot id="devices/racks/drum-rack/card" alt="Nota Drum Rack avec le kit Volta : la grille de pads et le pad sélectionné" />
+
+## Kits
+
+Le **sélecteur de kit** dans l’en-tête de la carte charge n’importe lequel des **25 kits d’usine** sur place, et nomme
+le kit que contient le rack : *Volta*, *Kompakt*, *Micron*, *Linnwood*, *Atelier*, *Cellar*, *Neon*, *Foundry*, *Terra*,
+*Aether*, *Brass Room*, *Breakline*, *Bunker*, *Pixel*, *Velvet*, *Circuit*, *Yard*, *Byte*, *Lagoon*, *Titan*,
+*Shuffle*, *Mirrorball*, *Pit*, *Hyper* et *Crate*, de l’analogique chaleureux et du PCM des années 80 aux breaks
+jungle, aux log drums d’amapiano et aux percussions d’orchestre.
+
+Chaque kit a 16 pads sur la carte General MIDI (notes 36 à 51), des charlestons coupés ensemble, son propre swing et
+sa propre humanisation, des effets sur les pads (saturation de grosse caisse, reverb de caisse claire et de clap, delay
+de charleston) et ses propres macros. Les sons sont synthétisés au premier lancement, et apparaissent dans l’onglet
+**Fichiers** du navigateur sous **Nota Kits**, prêts à être glissés n’importe où.
+
+## Pads
+
+Une grille 4 × 4, le pad 1 en bas à gauche comme sur le matériel, en banques **C1** à **C4** (16 notes chacune,
+jusqu’à 64 pads).
+
+- **Cliquez** sur un pad pour le jouer et le sélectionner. Un pad qui sonne s’allume dans sa couleur.
+- Un pad avec un échantillon qui ne boucle pas joue son coup en entier, même si la note est courte : un one-shot.
+  Activez la boucle de l’échantillon, ou chargez un instrument, et le pad s’arrête quand la note finit.
+- Cliquer sur un pad ne joue que ce rack, même pendant qu’une autre piste est armée pour l’enregistrement.
+- **Déposez** des échantillons sur un pad pour les charger (plusieurs remplissent les pads suivants) ; un pad vide
+  propose aussi un instrument. Un échantillon déposé sur un pad qui en joue déjà un n’échange que le son : le niveau,
+  le panoramique, les envois, la coupure et les effets du pad restent. Un pad joue Nota Sampler, un synthé intégré ou
+  [Nota Mosaic](../../instruments/mosaic/).
+- **Clic droit** sur un pad pour le renommer, régler son groupe de **choke**, ouvrir sa chaîne ou le retirer.
+- **Fold** masque les pads vides. **Swing** et **Humanize** façonnent le ressenti du kit.
+- <Kbd>⌘ Z</Kbd> annule un dépôt (plusieurs échantillons déposés ensemble sont une seule étape), un renommage, un
+  changement de note et les modifications de la chaîne du pad.
+
+Le panneau **Pad** à droite modifie le pad sélectionné : son one-shot avec une tête de lecture, **Volume**, **Pan**,
+**Tune**, **Decay**, le groupe de **choke** (les pads d’un même groupe se coupent mutuellement : charleston ouvert et
+fermé), et l’éditeur de son instrument.
+
+## Mixeur, Chaîne et Macro
+
+<Shot id="devices/racks/drum-rack/mixer" alt="Nota Drum Rack, vue Mixeur" />
+
+- **Mixeur** : les pads chargés de la banque en lignes : volume, panoramique, muet, solo, choke.
+- **Chaîne** : la chaîne d’appareils du pad sélectionné : son instrument et ses propres effets.
+- **Macro** : les huit [macros](../macros/) du kit, associées aux commandes des pads, aux instruments des pads et aux
+  effets des pads.
+
+<Shot id="devices/racks/drum-rack/macro" alt="Nota Drum Rack, vue Macro" />
+
+## Programmer
+
+Un Drum Rack peut aussi se trouver dans une chaîne d’un
+[Instrument Rack](../instrument-rack/#nota-mosaic-et-un-drum-rack-comme-cha%C3%AEne), où sa carte s’ouvre dans une fenêtre.
+
+Double-cliquez sur le clip et utilisez l’onglet **Motif** du panneau de détail pour une grille de pas avec une ligne
+par pad, ou le piano roll, où chaque pad est une note. Activez-y [Replier](../../../editing/piano-roll/#replier) et le
+piano roll ne montre que les pads, une ligne nommée chacun. Les clips audio glissés depuis l’Arrangement arrivent sur
+le prochain pad libre.
+
+## Sidechain depuis un pad
+
+Un appareil d’une autre piste peut se caler sur un seul pad : dans son sélecteur de source de sidechain, choisissez le
+pad sous cette piste. **Pre** prend le coup brut du pad, avant ses effets et son decay ; **Post** le prend après ses
+effets, son decay, son niveau et son panoramique. La clé reste sur ce pad quand vous ajoutez, retirez ou renommez des
+pads, et un pad en muet la pilote quand même : une « grosse caisse fantôme » qui fait céder la basse sans s’entendre.

@@ -7,6 +7,9 @@
 // Checks:
 //   - every EN page has a RU twin at the same path, and vice versa
 //   - the twins agree on `updated:` (one language was updated without the other)
+//   - French (fr/) may lag: a missing or older FR twin is a note, not an error (Starlight shows the
+//     English page, with a notice, where French does not exist yet); an FR page without an EN
+//     original is still an error
 //   - every page listed in coverage.yml exists
 //   - every <Shot id="…"> is listed in shots/manifest.yml, and every listed shot has a file
 //   - every `sources:` path exists in the app repo (../nota, or $NOTA_REPO)
@@ -39,9 +42,11 @@ const pages = walk(docs).filter((f) => /\.mdx?$/.test(f));
 const slugOf = (f) => path.relative(docs, f).replace(/\.mdx?$/, '');
 const en = new Map();
 const ru = new Map();
+const fr = new Map();
 for (const f of pages) {
   const slug = slugOf(f);
   if (slug.startsWith('ru/')) ru.set(slug.slice(3), f);
+  else if (slug.startsWith('fr/')) fr.set(slug.slice(3), f);
   else en.set(slug, f);
 }
 
@@ -60,6 +65,19 @@ for (const [slug, f] of en) {
   }
 }
 for (const slug of ru.keys()) if (!en.has(slug)) errors.push(`RU page without EN original: ru/${slug}`);
+
+// French: translated page by page, so a missing twin is expected. An FR page older than its EN
+// original is worth a warning (the English changed after the translation).
+for (const slug of fr.keys()) if (!en.has(slug)) errors.push(`FR page without EN original: fr/${slug}`);
+for (const [slug, f] of fr) {
+  const original = en.get(slug);
+  if (!original) continue;
+  const a = frontmatter(original);
+  const b = frontmatter(f);
+  if ((a.updated ?? '') !== (b.updated ?? ''))
+    warnings.push(`FR page behind the English: fr/${slug} updated=${b.updated ?? '—'} but ${slug} updated=${a.updated ?? '—'}`);
+}
+if (en.size > fr.size) warnings.push(`French: ${fr.size} of ${en.size} pages translated`);
 
 // ── coverage.yml ────────────────────────────────────────────────────────────────────
 const coverage = YAML.parse(fs.readFileSync(path.join(root, 'coverage.yml'), 'utf8'));
@@ -93,6 +111,17 @@ const onDisk = new Set(
 );
 for (const id of shotIds) if (!onDisk.has(id)) warnings.push(`shot ${id} is in the manifest but not taken — run npm run shots -- ${id}`);
 for (const id of onDisk) if (!shotIds.has(id)) warnings.push(`shot file ${id} is not in shots/manifest.yml (stale? delete it)`);
+
+// translated shots (npm run shots -- --lang fr): only app shots, and every id must be in the manifest
+for (const lang of fs.readdirSync(path.join(root, 'src/assets')).filter((d) => d.startsWith('shots-'))) {
+  const dir = path.join(root, 'src/assets', lang);
+  for (const f of walk(dir).filter((f) => /\.(webp|png)$/.test(f))) {
+    const id = path.relative(dir, f).split(path.sep).slice(1).join('/').replace(/\.(webp|png)$/, '');
+    const s = (manifest.shots ?? []).find((x) => x.id === id);
+    if (!s) warnings.push(`${lang}/${id} is not in shots/manifest.yml (stale? delete it)`);
+    else if (s.source !== 'app') errors.push(`${lang}/${id}: only app shots are translated (source: ${s.source})`);
+  }
+}
 
 // ── links in the built site ─────────────────────────────────────────────────────────
 const dist = path.join(root, 'dist');
