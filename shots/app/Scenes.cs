@@ -746,6 +746,7 @@ public sealed class Scenes
         Pump(5);
         _redactor.Apply(win, renames);
         Pump(3);
+        ClippedText.Report(win, id);
         var path = Path.Combine(_out, id + ".png");
         Directory.CreateDirectory(Path.GetDirectoryName(path)!);
         var frame = win.CaptureRenderedFrame() ?? throw new InvalidOperationException("no frame rendered");

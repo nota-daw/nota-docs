@@ -32,6 +32,10 @@ French shots need the French language file of [nota-translations](https://github
 `npm run shots -- --lang fr [id-prefix…]`. Design and Remote shots stay English. Keep an image only if it
 differs from the English render (cards that show nothing but device and parameter names are identical).
 
+To find translated text that does not fit its place, set `NOTA_SHOTS_CLIPS=<file>` while taking the shots: the
+harness appends one line per text drawn wider than its box ("shot id, what, text"). Run it for English and for the
+language, and read the lines the language adds (a text clipped in English too is a layout limit, not a translation).
+
 ## Layout
 
 | Path | What |
