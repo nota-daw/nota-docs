@@ -3,7 +3,7 @@ title: "Annuler et saisie de valeurs"
 description: "Annuler et rétablir, et les façons de régler une valeur avec précision : glisser, pas fins, saisie au clavier et réinitialisation."
 sidebar:
   order: 5
-updated: "0.58.1"
+updated: "0.59.2"
 status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
@@ -23,9 +23,9 @@ l’arrangement. Un geste est une seule étape : faire glisser plusieurs clips
 valeur, un mouvement d’un bouton de contrôleur MIDI (il se termine quand le bouton reste immobile une seconde), un
 toucher sur Nota Remote, et chaque modification faite par un assistant IA.
 
-Les envois en font partie : déplacer un envoi est une seule étape, que vous le fassiez dans un en-tête de piste,
-le Mixeur, le mixeur de la Session ou la carte **Envois**. Muet, solo et les appareils à l’intérieur d’un rack
-ne sont pas dans l’historique.
+Les envois n’en font pas partie : un envoi est un niveau en direct, donc le déplacer n’est pas une étape, que ce soit
+dans un en-tête de piste, le Mixeur, le mixeur de la Session ou la carte **Envois**. Muet, solo et les appareils à
+l’intérieur d’un rack non plus.
 
 Pour revenir plus loin que ce que l’annulation atteint, au mixage d’hier par exemple, utilisez
 l’[historique des versions](../version-history/).

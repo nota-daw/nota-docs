@@ -3,7 +3,7 @@ title: "Enregistrement"
 description: "Enregistrer de l’audio et du MIDI : armer des pistes, entrées, écoute, décompte, enregistrer sur une boucle et enregistrer dans des emplacements de Session."
 sidebar:
   order: 3
-updated: "0.58.1"
+updated: "0.59.2"
 status: done
 sources:
   - src/native/nota.engine/src/engine/Engine_Recording.cpp
@@ -35,19 +35,13 @@ import Kbd from '@components/Kbd.astro';
 
 </Steps>
 
-Un clic sur **●** arme cette piste et désarme les autres, ce qui permet de choisir rapidement l’instrument que vous
-jouez. <Kbd>⌘</Kbd>-clic (<Kbd>Ctrl</Kbd>-clic sous Windows et Linux) arme une piste et garde les autres armées :
-pendant l’enregistrement, un clic ne désarme jamais une autre piste. Sélectionner une piste d’instrument, ou en
-ajouter une, l’arme de la même façon, pour que le clavier joue la piste où vous êtes ; cela laisse les armements
-tranquilles quand plusieurs pistes ou une piste audio sont armées. Armez une piste d’instrument et une piste audio
+Un clic sur **●** arme cette piste seule et désarme les autres, si bien que choisir l’instrument que joue le clavier
+se fait en un clic. <Kbd>⌘</Kbd>-clic (<Kbd>Ctrl</Kbd>-clic sous Windows et Linux) arme plusieurs pistes. Pendant
+l’enregistrement, un clic ne désarme jamais une autre piste. Armez une piste d’instrument et une piste audio
 ensemble et une seule prise enregistre les deux : le MIDI et l’audio. Nota enregistre la première piste armée de
 chaque type.
 
 Désarmer une piste pendant qu’elle enregistre termine sa prise.
-
-Un clic sur **●** arme cette piste seule et désarme les autres, si bien que choisir l’instrument que joue le clavier
-se fait en un clic. <Kbd>⌘</Kbd>-clic (<Kbd>Ctrl</Kbd>-clic sous Windows et Linux) arme plusieurs pistes. Pendant
-l’enregistrement, un clic ne désarme jamais une autre piste.
 
 Pour que la sélection choisisse la piste, activez **Transport ▸ Armement automatique de la piste sélectionnée** :
 sélectionner alors une piste d’instrument l’arme, sauf si plusieurs pistes ou une piste audio sont armées. C’est
