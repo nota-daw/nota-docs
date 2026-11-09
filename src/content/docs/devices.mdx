@@ -3,7 +3,7 @@ title: "Devices"
 description: "How a track's device chain works — instruments, audio effects, MIDI effects and racks; adding, reordering, bypassing, presets, A/B compare — and an index of every built-in device."
 sidebar:
   order: 0
-updated: "0.57.1"
+updated: "0.59.2"
 status: done
 sources:
   - src/managed/Nota.App/DeviceCards/SidechainSourcePicker.cs
@@ -42,7 +42,9 @@ effects process that sound. An audio track has no instrument — only audio effe
 ## The card
 
 Each device is a card with a header — name, preset picker (**‹ Init ⌄ ›**), the **S / L** size switch
-where the device has one, and the on / off (bypass) switch — over its controls. Knobs, sliders and
+where the device has one, and the on / off (bypass) switch — over its controls. On an **S** card the
+preset picker is a small list button instead, so the name keeps its room: its menu has **Previous
+preset**, **Next preset**, **Init** and the presets, and its tooltip names the one loaded. Knobs, sliders and
 graphs work the same everywhere: drag, <Kbd>⇧</Kbd> for fine steps, double-click to reset; graphs
 are controls too (drag the nodes, curves and handles). A knob turns with an up / down drag; a
 horizontal slider follows a left / right drag, and up / down works on it too.
@@ -54,6 +56,25 @@ value on the card. Graph handles, envelope nodes and mod-matrix cells take the s
 with several values (an EQ band's frequency, gain and Q) opens on the first and <Kbd>Tab</Kbd> walks
 the rest. Right-click any of them for **Type value…** and **Reset to default** (**Clear** on a
 matrix cell).
+
+### Card sizes, XL and a window of its own
+
+**S** is a 260 px card with the main graph and a few knobs; **L** is the full card. Nota EQ-8,
+Dynamic EQ-8, Lens and Auto Filter add two bigger views:
+
+- **XL** in the size switch moves the whole editor into a panel above the chain, as wide as the
+  chain, with the graph stretched to fill it. The card stays in the chain as a small one that says
+  **Open in XL above**. A track has one device in XL, the panel follows the selected track, and the
+  size comes back with the project. While XL is open the Devices panel can be resized by its top
+  edge: the XL panel takes the height and keeps it next time. **Shrink** in the panel's header, or
+  <Kbd>Esc</Kbd>, returns the device to **L**. The panel has no delete button — delete the device
+  from its card.
+- The **pop-out** button next to the size switch (also in the XL panel) opens the editor in its own
+  window. Resize it or move it to another display; its title bar has the presets and the on / off
+  switch. While the window is open, the card in the chain says **Open in its own window** — click it
+  or the pop-out button to bring the window forward. Closing the window brings the editor back to the
+  card. The window stays on its track when you select another one, and closes when you delete the
+  device or open another project.
 
 The mouse wheel scrolls a long chain sideways wherever the pointer is. A few controls take the wheel
 themselves only while you point at them: an EQ band's handle (its Q) and the small value boxes that
