@@ -39,7 +39,9 @@ namespace NotaDocsShots;
 ///   mixer     width, height
 ///             update (available | downloading | ready: a newer release in the status bar, element: StatusBar)
 ///   prefs     page (index in Settings' sidebar, 0 = Audio), tab (a switch on the page),
-///             check (Updates: run a check against the local feed first), update (as main)
+///             check (Updates: run a check against the local feed first), update (as main),
+///             themes (Appearance: user themes from shots/app/themes in the themes folder, one broken),
+///             scrollTo (a text on the page: scroll its page so that text sits near the top)
 ///   connect   the Connect phone popup, with Nota Remote switched on
 ///   start · about · whatsnew · export · unsaved
 /// </summary>
@@ -506,6 +508,7 @@ public sealed class Scenes
     {
         var settings = (ISettingsService)App.Services!.GetService(typeof(ISettingsService))!;
         var vm = App.Services!.GetService(typeof(MainWindowViewModel)) as MainWindowViewModel;
+        var themes = shot.Bool("themes") ? SeedThemes() : null;
         var win = new PreferencesWindow(new SettingsViewModel(settings), vm);
         Scale2(win);
         win.Show();
@@ -522,8 +525,41 @@ public sealed class Scenes
             for (int i = 0; i < 40; i++) Pump(5);
         }
         else for (int i = 0; i < 20; i++) Pump(5);
+        if (shot.Str("scrollTo") is string target)
+        {
+            ScrollTo(win, target);
+            for (int i = 0; i < 10; i++) Pump(5);
+        }
         Save(win, shot.Id);
         win.Close();
+        if (themes is not null) Directory.Delete(themes, true);
+    }
+
+    // Scroll the page holding <text> so that text sits a little below the page's top edge.
+    private static void ScrollTo(Window win, string text)
+    {
+        var candidates = Translations(text).Append(text).ToList();
+        var texts = win.GetVisualDescendants().OfType<TextBlock>().ToList();
+        var tb = candidates.Select(c => texts.FirstOrDefault(x => x.Text == c)).FirstOrDefault(x => x != null)
+                 ?? throw new ArgumentException($"no '{text}' on screen");
+        // The page's own scroller: the nearest one that has more content than it shows.
+        var sv = tb.GetVisualAncestors().OfType<ScrollViewer>().FirstOrDefault(v => v.Extent.Height > v.Viewport.Height + 1)
+                 ?? throw new ArgumentException($"'{text}' does not scroll");
+        if (sv.Content is not Visual content || tb.TranslatePoint(new Point(0, 0), content) is not { } at) return;
+        sv.Offset = new Vector(sv.Offset.X, Math.Max(0, at.Y - 40));
+        if (Environment.GetEnvironmentVariable("NOTA_SHOTS_DEBUG") != null)
+            Console.WriteLine($"scroll {text}: y {at.Y}, extent {sv.Extent.Height}, viewport {sv.Viewport.Height}, offset {sv.Offset.Y}");
+    }
+
+    // The themes folder (spec 087) with the sample themes, so Appearance shows user theme cards
+    // and the list of files that could not be loaded. Removed again after the shot.
+    private static string SeedThemes()
+    {
+        var folder = Path.Combine(Environment.GetEnvironmentVariable("NOTA_DATA_DIR")!, "Themes");
+        Directory.CreateDirectory(folder);
+        foreach (var f in Directory.GetFiles(Path.Combine(AppContext.BaseDirectory, "themes"), "*.json"))
+            File.Copy(f, Path.Combine(folder, Path.GetFileName(f)), true);
+        return folder;
     }
 
     // ---- self-update (#58), through reflection so the harness builds against older apps ------

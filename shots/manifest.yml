@@ -104,6 +104,7 @@ shots:
   - { id: preferences/downloads, source: app, scene: prefs, args: {page: 5} }
   - { id: preferences/library, source: app, scene: prefs, args: {page: 6} }
   - { id: preferences/appearance, source: app, scene: prefs, args: {page: 7} }
+  - { id: preferences/appearance-themes, source: app, scene: prefs, args: {page: 7, themes: true, scrollTo: "Ember Graphite"} }
   - { id: preferences/shortcuts, source: app, scene: prefs, args: {page: 8} }
   - { id: preferences/updates, source: app, scene: prefs, args: {page: 9, check: true} }
 
