@@ -38,7 +38,8 @@ namespace NotaDocsShots;
 ///             origin (devices: the Devices panel had the focus), crop (true: just the palette card)
 ///   mixer     width, height
 ///             update (available | downloading | ready: a newer release in the status bar, element: StatusBar)
-///   prefs     page (index in Settings' sidebar, 0 = Audio), tab (a switch on the page),
+///   prefs     id (the page id: Audio, Outputs, Inputs, MCP, Appearance, Language, Editing …; or
+///             page, its index in the sidebar, for older apps), tab (a switch on the page),
 ///             check (Updates: run a check against the local feed first), update (as main),
 ///             themes (Appearance: user themes from shots/app/themes in the themes folder, one broken),
 ///             scrollTo (a text on the page: scroll its page so that text sits near the top)
@@ -515,7 +516,10 @@ public sealed class Scenes
         Pump(10);
         if (shot.Bool("check")) CheckUpdates(settings);
         else if (shot.Str("update") is string stage) FakeUpdate(stage);
-        Invoke(win, "Select", shot.Int("page") ?? 0);
+        // Pages are chosen by id (spec 088: "Audio", "Outputs", "MCP" …); page (an index) is kept
+        // for app versions that predate it.
+        if (shot.Str("id") is string id) win.ShowPage(id);
+        else Invoke(win, "Select", shot.Int("page") ?? 0);
         Pump(30);
         // A page's own switch (Downloads: "Sample Packs", "AI Models"); registries load from the
         // network, so give the list a moment.

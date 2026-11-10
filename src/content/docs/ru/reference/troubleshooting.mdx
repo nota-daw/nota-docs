@@ -3,7 +3,7 @@ title: "Решение проблем"
 description: "Решения частых проблем — Nota не открывается, нет звука, треск, не виден контроллер или плагин, телефон не подключается."
 sidebar:
   order: 3
-updated: "0.56.1"
+updated: "0.59.2"
 status: done
 sources:
   - README.md
@@ -21,7 +21,7 @@ import { Aside } from '@astrojs/starlight/components';
 - **Linux** — сделайте AppImage исполняемым (`chmod +x`). Если окно так и не появилось, запустите
   его из терминала, чтобы увидеть причину, и загляните в `~/.config/nota/logs/`. С 0.58 Nota
   открывается, даже если ни один аудиовыход не работает: строка состояния скажет, что звука нет, —
-  выберите устройство в **Settings ▸ Audio**.
+  выберите устройство в **Settings ▸ Outputs**.
 
 ## Linux: Open / Save ничего не делают, или файлы не перетаскиваются
 
@@ -37,7 +37,7 @@ import { Aside } from '@astrojs/starlight/components';
 
 ## Нет звука
 
-1. **Settings ▸ Audio ▸ Play test tone.** Тона нет? Проверьте **Output** — нужное ли устройство — и
+1. **[Settings ▸ Outputs](../../preferences/outputs/) ▸ Play test tone.** Тона нет? Проверьте **Output** — нужное ли устройство — и
    системную громкость.
 2. Тон есть, а музыки нет? Проверьте, что трек не заглушён, другой трек не в solo, а громкость мастера
    (**Master**) поднята.

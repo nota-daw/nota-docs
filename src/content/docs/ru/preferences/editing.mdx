@@ -1,0 +1,21 @@
+---
+title: "Editing"
+description: "Settings ▸ Editing — названия нот в пианоролле, фейды при разрезе аудиоклипов и то, открывает ли выделение нижнюю панель."
+sidebar:
+  order: 12
+updated: "0.59.2"
+since: "0.59.2"
+status: done
+sources:
+  - src/managed/Nota.App/PreferencesWindow.Editing.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+<Shot id="preferences/editing" alt="Settings ▸ Editing" />
+
+| Настройка | Что делает |
+|---|---|
+| **Label every note in the piano roll** | Выключено по умолчанию: в колонке клавиш [пианоролла](../../editing/piano-roll/) подписаны только ноты C. Включено: подписана каждая нота (C, C#, D …) — удобно, пока вы учите их названия. На очень низких рядах остаются только C, чтобы подписи читались |
+| **Fade audio clips when splitting** | Включено по умолчанию. Разрез [аудиоклипа](../../editing/audio-clips/) пишет фейд 4 ms на разрезе, чтобы не было щелчка. Потяните угловые ручки клипа, чтобы сделать его длиннее или короче. Клипы MIDI не меняются |
+| **Open the detail panel when you select a track or clip** | Выключено (по умолчанию): щелчок только выделяет, а [нижнюю панель](../../views/detail-panel/) открывает двойной щелчок; открытая панель следует за выделением. Включено: панель открывается при любом выделении |

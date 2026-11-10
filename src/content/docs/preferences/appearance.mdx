@@ -1,8 +1,8 @@
 ---
 title: "Appearance"
-description: "Settings ▸ Appearance — the colour theme (Dark, Light or Follow system, with Studio and Ember themes and your own), the accent colour, how waveforms draw, which side the track headers sit on, the interface scale, the interface language, and AI control over MCP."
+description: "Settings ▸ Appearance — the colour theme (Dark, Light or Follow system, with Studio and Ember themes and your own), the accent colour, how waveforms draw, which side the track headers sit on, the interface scale and the text size."
 sidebar:
-  order: 8
+  order: 10
 updated: "0.59.2"
 status: done
 sources:
@@ -15,11 +15,6 @@ sources:
   - src/managed/Nota.App/Controls/ColourPicker.cs
   - src/managed/Nota.Application/InterfaceScale.cs
   - src/managed/Nota.App/Theme/NotaUiScale.cs
-  - src/managed/Nota.App/PreferencesWindow.Language.cs
-  - src/managed/Nota.Application/Localization/UiLanguage.cs
-  - src/managed/Nota.App/LanguageDownloads.cs
-  - src/managed/Nota.Infrastructure/Languages/LanguageCatalog.cs
-  - src/managed/Nota.Infrastructure/Languages/InstalledLanguages.cs
 ---
 
 import Shot from '@components/Shot.astro';
@@ -28,18 +23,17 @@ import { Steps } from '@astrojs/starlight/components';
 
 <Shot id="preferences/appearance" alt="Settings ▸ Appearance" />
 
+The interface language is on its own page, [Language](../language/); the editing switches that
+used to sit here are on [Editing](../editing/), and AI control on [AI control (MCP)](../mcp/).
+
 | Setting | What it does |
 |---|---|
 | **Colour theme** | **Dark**, **Light** or **Follow system**, then a theme from the cards below — a built-in one or [your own](#your-own-themes). See [Colour themes](#colour-themes) |
 | **Accent** | The colour of what is live or chosen: a preset swatch, or **Custom** for your own colour — see [Accent colour](#accent-colour) |
 | **Waveform** | How audio clips draw in the Arrangement: **Smooth** (the default), **Solid** or **Bars**. See [Waveform](#waveform) |
 | **Track headers** | **Left** or **Right** — which side of the Arrangement the track list sits on. **Right** starts the timeline at the left edge, next to the browser. The same switch is **View ▸ Track headers on the right** |
-| **Fade audio clips when splitting** | On by default. Splitting an audio clip writes a 4 ms fade at the cut. Drag the clip's corner handles to make it longer or shorter. MIDI clips are left alone |
-| **Label every note in the piano roll** | Off by default: the [piano roll](../../editing/piano-roll/)'s keys column names only the Cs. On: it names every note (C, C#, D …), a help while you learn them. Very short rows keep C only, so the names stay readable |
+| **Text size** | **Smaller**, **Default**, **Larger** or **Largest** — every text a step smaller or larger without changing the layout. Long labels may shorten with an ellipsis at the larger sizes |
 | **Interface scale** | **75 %**, **100 %**, **125 %**, **150 %** or **200 %** — the size of the whole interface. See [Interface scale](#interface-scale) |
-| **Language** | The language of Nota's menus, panels and messages: **English** (the default) or a language downloaded from nota-translations. It applies after a restart. See [Language](#language) |
-| **Open the detail panel when you select a track or clip** | Off (default): a click only selects and a double-click opens the [detail panel](../../views/detail-panel/); an open panel follows the selection. On: every selection opens it |
-| **AI control (MCP)** | Let an AI assistant work in Nota — the switch, the port, the status and **Copy config**. See [AI control over MCP](../../ai/mcp/) |
 
 ## Waveform
 
@@ -174,51 +168,3 @@ are tighter than usual.
 The scale is on top of the operating system's own display scaling, and the timeline, piano
 roll and audio editor still zoom their content as before. Plug-in windows are drawn by the
 plug-in and keep their own size.
-
-## Language
-
-Sets the language of Nota's menus, panels, dialogs, tooltips, status and error messages and the
-command palette. Nota comes in **English**; every other language is downloaded from
-[nota-translations](https://github.com/nota-daw/nota-translations), where translators keep them.
-The list shows English, the languages you have, and — when Nota is online — the ones you can
-download, each in its own name with how much of this version it covers (**99 %**: a few new texts
-still show in English).
-
-Pick a language you don't have and Nota downloads it right there (a small bar shows the
-progress), checks it against its published checksum and keeps it, so it works offline from then
-on. If the download fails the row says why and nothing changes. When a better translation of your
-language is published, an **Update** button appears beside the list; **Remove** deletes the
-chosen language (Nota goes back to English from the next start).
-
-The choice is saved and applies the next time Nota starts. Right after you pick one the row says
-**Applies after restart**, with a small **Restart** button beside it: it closes Nota the usual way
-(asking first about unsaved changes — cancel that and Nota stays open) and opens it again in the
-new language. Pick the language that is running again and the note goes away. A copy of Nota that
-can't start itself again (a development build) says **Applies the next time Nota starts**
-instead.
-
-If you used French before Nota started downloading languages, it fetches French in the
-background on its first start, still in English, and the status bar says **Français is ready —
-restart to use it**; click it to restart. With **Check for updates automatically** off (Settings ▸
-[Updates](../updates/)) Nota never goes online by itself: the row offers **Show available
-languages**, and you download a language by choosing it.
-
-**Load file…** is for translators: pick a language file from your disk and Nota runs in it after
-a restart, reading it from that place each time, so you can edit and restart to see your changes.
-The entries it can't use are listed under the row (and those show in English). How to write and
-publish a translation is in the nota-translations README.
-
-What the language doesn't touch:
-
-- **Device and parameter names** — "Cutoff", "Attack", "Reverb", "Nota Volt" — stay in English
-  in every language, as in studio vocabulary and tutorials. The tooltips and descriptions
-  around them are translated.
-- **Your own names** for projects, tracks, clips, scenes and sections are never translated, and
-  the language never changes what is saved in a project.
-- [Nota Remote](../../control/nota-remote/), the [AI control](../../ai/mcp/) tool descriptions and
-  the log files are not translated.
-
-On a Mac, the system's own text — the application menu's **Hide** and **Quit**, the open and
-save panels — follows the language too, from the next start. English is the default whatever
-your operating system's language is: nothing changes until you choose. A text that has no
-translation yet shows in English.
