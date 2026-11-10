@@ -22,45 +22,55 @@ another track**.
 there while keeping the formants (the voice's character) where they were. The dry signal is delayed
 by the same amount, and the delay is compensated, so **Mix** never smears.
 
-**Layout:** the **Pitch** column on the left (where the voice is, the correction now), a centre panel
-with three tabs, a right panel (**Shift** / **Detect**) and a status line.
+**Layout:** a centre panel with three tabs — **Trace**, **Scale**, **MIDI**, each a window with its
+own knobs beside it — and a right panel that follows the tab: **Detect** on Trace, **Key** on
+Scale, **MIDI** on MIDI. Under the right panel, whichever tab is open, sit **Preserve formants** and
+the output knobs **Shift**, **Dry/Wet** and **Formant**. The tab bar reads out what the voice is
+doing now (input note → target). The **S / L** switch in the header folds the card to **S**: the
+trace over **Key**, **Scale**, **Amount**, **Speed**, **Human** and **Dry/Wet**.
 
 ## Trace
 
-The detected pitch and the corrected pitch on the scale's note lanes, over time.
-
-## Scale
-
-<Shot id="devices/audio-effects/auto-shift/scale" alt="Nota Auto Shift, Scale tab with the sung-note histogram" />
-
-**Key** and **Scale** — **Chromatic**, **Major**, **Minor**, **Penta Maj**, **Penta Min** — or a
-**Custom** set: click notes on and off. A histogram of the notes actually sung sits under them.
-**Learn** listens for about 16 bars and picks the key; **Key Source** **Auto** follows the learned
-key. **Follow Scale device** copies the key and scale of a [Nota Scale](../../midi-effects/scale/)
-on the track.
-
-## MIDI
-
-The target comes from the notes another track plays (pick it as the device's sidechain source):
-**Note** mode snaps to the exact note, **Scale** mode uses the notes as a scale; **Latch**, **Oct
-Lock** and a **Bend** range shape it.
-
-## Shift
+The detected pitch and the corrected pitch on the scale's note lanes, over time, with the knobs
+that shape the correction beside it:
 
 | Control | What it does |
 |---|---|
 | **Amount** | How far the pitch is pulled to the target |
 | **Speed** | How fast it gets there — slow is natural, instant is hard tune |
 | **Human** | Keeps vibrato around the corrected note |
-| **Range** | Only corrects notes within this distance |
-| **Shift** · **Fine** | Transpose the result |
-| **Formant** · **Formant shift** | Keep the voice's character, or move it on its own (bigger, smaller voice) |
-| **Mix** | Dry / wet |
 
-## Detect
+The right panel is **Detect**: a voice preset in its title bar (**Voice · soprano**, **Instrument**…)
+sets **Low** / **High** — the note range to look for — and **Sens**; **Skip sibilants** leaves "s"
+and "t" sounds alone.
 
-**Det Low** / **Det High** — the note range to look for — and **Det Sens**; **Skip sibilants** leaves
-"s" and "t" sounds alone.
+## Scale
+
+<Shot id="devices/audio-effects/auto-shift/scale" alt="Nota Auto Shift, Scale tab with the sung-note histogram" />
+
+A histogram of the notes actually sung, with the scale's notes in a row under it: click a note
+to add it or take it out (the scale becomes **Custom**).
+
+The right panel is **Key**. Its title bar picks where the key comes from: **Auto** follows the key
+you sing, **Manual** uses the one you set, **MIDI** takes the target from another track (the MIDI
+tab). Under it: **Key** and **Scale** (**Chromatic**, **Major**, **Minor**, **Penta Maj**, **Penta
+Min**, eight more modes, or **Custom**), **Fine** (±100 cents), **Range** (only notes within this
+distance are corrected), **Learn** — listens for about 16 bars and shows the key it found — and
+**Follow Scale device**, which copies the key and scale of a [Nota Scale](../../midi-effects/scale/)
+on the track.
+
+## MIDI
+
+The target comes from the notes another track plays. **Glide** and **Bend** (the widest move that
+glides; wider leaps jump) sit beside the window. The right panel is **MIDI**: the source track in
+its title bar, **Note** (snap to the exact note) or **Scale** (use the notes as a scale), **Latch**,
+**Oct lock** and **Pitch bend from MIDI**.
+
+## Output
+
+**Preserve formants** keeps the voice's character when it is shifted. **Shift** transposes the
+result (±12 semitones), **Dry/Wet** blends, **Formant** moves the formants on their own (a bigger or
+smaller voice).
 
 ## Presets
 
