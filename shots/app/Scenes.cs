@@ -36,10 +36,14 @@ namespace NotaDocsShots;
 ///   palette   the command palette (⌘⇧P) over the main window: view, select (track), card (index of
 ///             an audio effect to select in Devices), query, down (rows to move), mods (alt | cmd | shift),
 ///             origin (devices: the Devices panel had the focus), crop (true: just the palette card)
-///   mixer     width, height
+///   mixer     width, height, group, fold, compact, select
+///             cue ("Track,Track": a pretend 4-output device with Cue on 3/4 and the click to Cue, these
+///             demo tracks in Cue), mute (a demo track to mute), cueMissing (the device shrinks to 2
+///             outputs after, so the Cue pair is missing)
 ///             update (available | downloading | ready: a newer release in the status bar, element: StatusBar)
 ///   prefs     id (the page id: Audio, Outputs, Inputs, MCP, Appearance, Language, Editing …; or
 ///             page, its index in the sidebar, for older apps), tab (a switch on the page),
+///             height, cue (as mixer: Output pairs on a pretend 4-output device),
 ///             check (Updates: run a check against the local feed first), update (as main),
 ///             themes (Appearance: user themes from shots/app/themes in the themes folder, one broken),
 ///             scrollTo (a text on the page: scroll its page so that text sits near the top)
@@ -483,6 +487,7 @@ public sealed class Scenes
             groupId = _engine.CreateGroup(members.Split(',').Select(_demo.Track).ToArray());
             if (groupId > 0) _engine.SetTrackName(groupId, gname);
         }
+        var cue = shot.Str("cue") is string cueTracks ? CueOn(cueTracks, shot.Str("mute"), shot.Bool("cueMissing")) : null;
         var view = new MixerView(_engine);
         var foldType = typeof(App).Assembly.GetType("Nota.App.GroupFold");
         var foldProp = typeof(MixerView).GetProperty("Fold", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -503,6 +508,7 @@ public sealed class Scenes
         Save(win, shot.Id);
         win.Close();
         if (groupId > 0) _engine.Ungroup(groupId);   // the demo song is shared by every shot
+        cue?.Invoke();
     }
 
     private void Prefs(Shot shot)
@@ -510,10 +516,12 @@ public sealed class Scenes
         var settings = (ISettingsService)App.Services!.GetService(typeof(ISettingsService))!;
         var vm = App.Services!.GetService(typeof(MainWindowViewModel)) as MainWindowViewModel;
         var themes = shot.Bool("themes") ? SeedThemes() : null;
+        var cue = shot.Str("cue") is string cueTracks ? CueOn(cueTracks, null, false) : null;
         var win = new PreferencesWindow(new SettingsViewModel(settings), vm);
         Scale2(win);
         win.Show();
         Pump(10);
+        if (shot.Int("height") is int h) { win.Height = h * 2; Pump(10); }   // after Show: the window restores its size
         if (shot.Bool("check")) CheckUpdates(settings);
         else if (shot.Str("update") is string stage) FakeUpdate(stage);
         // Pages are chosen by id (spec 088: "Audio", "Outputs", "MCP" …); page (an index) is kept
@@ -537,6 +545,7 @@ public sealed class Scenes
         Save(win, shot.Id);
         win.Close();
         if (themes is not null) Directory.Delete(themes, true);
+        cue?.Invoke();
     }
 
     // Scroll the page holding <text> so that text sits a little below the page's top edge.
@@ -564,6 +573,47 @@ public sealed class Scenes
         foreach (var f in Directory.GetFiles(Path.Combine(AppContext.BaseDirectory, "themes"), "*.json"))
             File.Copy(f, Path.Combine(folder, Path.GetFileName(f)), true);
         return folder;
+    }
+
+    // ---- Cue output (specs/089, app 0.60+), through reflection so the harness builds against older apps
+
+    // A pretend 4-output device: Main on 1/2, Cue on 3/4, the click to Cue at −6 dB; the named demo
+    // tracks in Cue. Returns the undo, since the engine and settings are shared by every shot.
+    private Action CueOn(string tracks, string? mute, bool missing)
+    {
+        var app = typeof(App).Assembly;
+        var appl = typeof(Settings).Assembly;
+        var et = _engine.GetType();
+        var setDevice = et.GetMethod("SetTestOutputDevice") ?? throw new MissingMethodException("NotaEngine", "SetTestOutputDevice (needs app 0.60+)");
+        var settings = (ISettingsService)App.Services!.GetService(typeof(ISettingsService))!;
+        var push = app.GetType("Nota.App.OutputSetupAccess")!.GetMethod("Push")!;
+        setDevice.Invoke(_engine, new object[] { 4 });
+        object? Prop(string name) => typeof(IAudioEngine).GetProperty(name)?.GetValue(_engine) ?? et.GetProperty(name)?.GetValue(_engine);
+        string uid = (string)(typeof(IAudioEngine).GetMethod("EffectiveOutputUid") ?? et.GetMethod("EffectiveOutputUid"))!.Invoke(_engine, null)!;
+        string key = (string)appl.GetType("Nota.Application.OutputSetups")!.GetMethod("KeyOf")!.Invoke(null, new[] { Prop("AudioSystem"), uid, Prop("AsioDriver") })!;
+        var setupType = appl.GetType("Nota.Application.OutputSetup")!;
+        var setup = Activator.CreateInstance(setupType)!;
+        setupType.GetProperty("CueFirst")!.SetValue(setup, 3);
+        setupType.GetProperty("Click")!.SetValue(setup, Enum.Parse(appl.GetType("Nota.Application.ClickDestination")!, "Cue"));
+        setupType.GetProperty("ClickDb")!.SetValue(setup, -6);
+        var setups = (System.Collections.IDictionary)typeof(Settings).GetProperty("OutputSetups")!.GetValue(settings.Current)!;
+        setups[key] = setup;
+        push.Invoke(null, new object[] { _engine });
+        var setCue = typeof(IAudioEngine).GetMethod("SetTrackCue")!;
+        var ids = tracks.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(_demo.Track).ToArray();
+        foreach (var id in ids) setCue.Invoke(_engine, new object[] { id, true });
+        if (mute is not null) _engine.SetTrackMute(_demo.Track(mute), true);
+        if (missing) setDevice.Invoke(_engine, new object[] { 2 });
+        Pump(5);
+        return () =>
+        {
+            foreach (var id in ids) setCue.Invoke(_engine, new object[] { id, false });
+            if (mute is not null) _engine.SetTrackMute(_demo.Track(mute), false);
+            setups.Remove(key);
+            setDevice.Invoke(_engine, new object[] { 0 });
+            push.Invoke(null, new object[] { _engine });
+            Pump(5);
+        };
     }
 
     // ---- self-update (#58), through reflection so the harness builds against older apps ------

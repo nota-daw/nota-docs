@@ -3,9 +3,10 @@ title: Треки
 description: Треки инструментов, аудио, возвратов и группы — как добавлять, выделять, раскрашивать, группировать, маршрутизировать и замораживать.
 sidebar:
   order: 4
-updated: "0.58.1"
+updated: "0.59.2"
 status: done
 sources:
+  - src/managed/Nota.App/CueKey.cs
   - src/managed/Nota.Infrastructure/Persistence/ProjectTemplate.cs
   - src/managed/Nota.App/ArrangementView.cs
   - src/managed/Nota.App/ArrangementView.Tracks.cs
@@ -66,6 +67,9 @@ import Kbd from '@components/Kbd.astro';
 В заголовке — имя и тип трека, а ещё:
 
 - **M** — mute (заглушить) и **S** — solo,
+- кнопка **Cue** (наушники) рядом с **S**, пока вы пользуетесь выходом Cue: она ставит трек в
+  ваш личный [микс Cue](../../views/mixer/#cue-ваш-собственный-микс). У аудиотрека кнопка с
+  наушниками после кнопки записи — это **мониторинг** входа, а не Cue,
 - **●** — готовность к записи: трек пишет, когда вы нажимаете Record, а подготовленный трек
   инструмента играет ноты с вашей клавиатуры. Щелчок готовит только этот трек, как и выбор трека
   инструмента; <Kbd>⌘</Kbd>-щелчок —
@@ -108,7 +112,7 @@ import Kbd from '@components/Kbd.astro';
 подменю открывать не нужно. **Delete** всегда в конце и выделен красным.
 
 Вкладка [Track inspector](../../library/browser/#track-inspector) в браузере показывает те же
-настройки — имя, цвет, высоту, вход и заморозку, а также mute, solo и arm — для выбранного
+настройки — имя, цвет, высоту, вход и заморозку, а также mute, solo, Cue и arm — для выбранного
 трека, и меню открывать не нужно.
 
 ## Группы

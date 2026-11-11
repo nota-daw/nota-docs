@@ -76,8 +76,8 @@ sections:
       sources: [src/managed/Nota.App/ModularView.cs, src/native/nota.engine/src/Modulation.h]
       status: done
     - page: views/mixer
-      covers: [Mixer ⇧⌘M docked or in its own window, sends & returns, group bars and folding (shared with the Arrangement, saved with the project), selection outline, compact strips, master, meters, record source]
-      sources: [src/managed/Nota.App/MixerView.cs, src/managed/Nota.App/MixerView.Compact.cs, src/managed/Nota.App/MixerWindow.cs, src/managed/Nota.App/MainWindow.Mixer.cs, src/managed/Nota.App/GroupFold.cs, src/managed/Nota.App/Controls/GroupBandsLayer.cs, src/managed/Nota.App/Controls/MeterFader.cs]
+      covers: [Mixer ⇧⌘M docked or in its own window, sends & returns, group bars and folding (shared with the Arrangement, saved with the project), selection outline, compact strips, master, meters, record source, Cue key and Cue strip (private Cue mix)]
+      sources: [src/managed/Nota.App/MixerView.cs, src/managed/Nota.App/MixerView.Compact.cs, src/managed/Nota.App/MixerView.Cue.cs, src/managed/Nota.App/CueKey.cs, src/managed/Nota.App/MixerWindow.cs, src/managed/Nota.App/MainWindow.Mixer.cs, src/managed/Nota.App/GroupFold.cs, src/managed/Nota.App/Controls/GroupBandsLayer.cs, src/managed/Nota.App/Controls/MeterFader.cs]
       status: done
     - page: views/detail-panel
       covers: [bottom panel Devices/Clip, detach to own window (⧉), Device window]
@@ -260,7 +260,7 @@ sections:
   preferences:
     # One page per Settings page (src/managed/Nota.App/PreferencesWindow.cs → Nav)
     - {page: preferences/audio,      sources: [src/managed/Nota.App/PreferencesWindow.cs], covers: [sample rate, buffer, latency, WASAPI exclusive, ASIO driver, CPU check], status: done}
-    - {page: preferences/outputs,    sources: [src/managed/Nota.App/PreferencesWindow.AudioIo.cs], covers: [output device, ASIO output pair, test tone], status: done}
+    - {page: preferences/outputs,    sources: [src/managed/Nota.App/PreferencesWindow.AudioIo.cs, src/managed/Nota.App/PreferencesWindow.Outputs.cs], covers: [output device, Output pairs (Main, Cue, click, click level), ASIO, test tone], status: done}
     - {page: preferences/inputs,     sources: [src/managed/Nota.App/PreferencesWindow.AudioIo.cs], covers: [input device, ASIO input pair, inputs setup — switches, names, stereo pairs], status: done}
     - {page: preferences/midi,       sources: [src/managed/Nota.App/PreferencesWindow.cs], status: done}
     - {page: preferences/gamepads,   sources: [src/managed/Nota.App/PreferencesWindow.cs], status: done}
