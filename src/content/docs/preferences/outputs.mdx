@@ -1,0 +1,37 @@
+---
+title: "Outputs"
+description: "Settings ▸ Outputs — the audio device Nota plays through (under ASIO, the driver's output pair) and the test tone."
+sidebar:
+  order: 2
+updated: "0.59.2"
+since: "0.59.2"
+status: done
+sources:
+  - src/managed/Nota.App/PreferencesWindow.AudioIo.cs
+  - src/managed/Nota.App/PreferencesWindow.cs
+---
+
+import Shot from '@components/Shot.astro';
+import { Aside } from '@astrojs/starlight/components';
+
+<Shot id="preferences/outputs" alt="Settings ▸ Outputs" />
+
+| Setting | What it does |
+|---|---|
+| **Output** | The audio device Nota plays through. **System default** follows the computer's own choice |
+| **Output check** | **Play test tone** — a quiet 440 Hz sine through the master, to check you hear Nota at all. It stops when you leave the page |
+
+Sample rate, buffer size and latency are on [Audio](../audio/).
+
+## ASIO (Windows)
+
+With **ASIO** chosen as the audio system on [Audio](../audio/#asio-windows), the driver is both
+Nota's output and its input, so it is picked there, not here. This page names it, with
+**Change on the Audio page** to go there, and while the driver runs, **Output** picks the channel
+pair Nota plays through, named as the driver names them (**Out 1 + 2**, **Analog 3 + 4**). Every
+other output stays silent.
+
+<Aside>
+No sound with Bluetooth headphones on macOS? Pick them as the **Output** here; see also
+[Troubleshooting](../../reference/troubleshooting/).
+</Aside>

@@ -1,0 +1,24 @@
+---
+title: "AI control (MCP)"
+description: "Settings ▸ AI control (MCP) — переключатель MCP-сервера Nota, его порт и статус и готовый конфиг для Claude Desktop или Claude Code."
+sidebar:
+  order: 7
+updated: "0.59.2"
+since: "0.59.2"
+status: done
+sources:
+  - src/managed/Nota.App/PreferencesWindow.Mcp.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+<Shot id="preferences/mcp" alt="Settings ▸ AI control (MCP)" />
+
+| Настройка | Что делает |
+|---|---|
+| **Enable MCP server (let an AI drive Nota)** | Выключено по умолчанию. Включено: ИИ-ассистент на этом компьютере может работать в открытом проекте |
+| **Port** | Порт сервера, по умолчанию **3900**. Смените его, если этот порт занят другой программой |
+| **Status** | Пока сервер работает — **Listening on http://127.0.0.1:3900/ (loopback)**, иначе **Off**. Достучаться до него могут только программы на этом компьютере |
+| **Copy config** | Копирует готовый конфиг с текущим портом; добавьте его (или адрес) как MCP-сервер в Claude Desktop или Claude Code |
+
+Что ассистент умеет и как его подключить — в разделе [Управление через MCP](../../ai/mcp/).
