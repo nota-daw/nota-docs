@@ -1,0 +1,37 @@
+---
+title: "Outputs"
+description: "Settings ▸ Outputs — аудиоустройство, через которое играет Nota (в ASIO — пара выходов драйвера), и тестовый тон."
+sidebar:
+  order: 2
+updated: "0.59.2"
+since: "0.59.2"
+status: done
+sources:
+  - src/managed/Nota.App/PreferencesWindow.AudioIo.cs
+  - src/managed/Nota.App/PreferencesWindow.cs
+---
+
+import Shot from '@components/Shot.astro';
+import { Aside } from '@astrojs/starlight/components';
+
+<Shot id="preferences/outputs" alt="Settings ▸ Outputs" />
+
+| Настройка | Что делает |
+|---|---|
+| **Output** | Аудиоустройство, через которое играет Nota. **System default** — то, что выбрано в системе |
+| **Output check** | **Play test tone** — тихий синус 440 Гц через мастер, чтобы проверить, что Nota вообще слышно. Тон выключается, когда вы уходите со страницы |
+
+Частота дискретизации, размер буфера и задержка — на странице [Audio](../audio/).
+
+## ASIO (Windows)
+
+Если на странице [Audio](../audio/#asio-windows) выбрана аудиосистема **ASIO**, драйвер служит
+Nota и выходом, и входом, поэтому выбирается он там. Здесь написано его имя и есть кнопка
+**Change on the Audio page**, а пока драйвер работает, **Output** выбирает пару каналов, через
+которую играет Nota, — с именами, которые даёт драйвер (**Out 1 + 2**, **Analog 3 + 4**).
+Остальные выходы молчат.
+
+<Aside>
+Нет звука в Bluetooth-наушниках на macOS? Выберите их в **Output** здесь; см. также
+[Решение проблем](../../reference/troubleshooting/).
+</Aside>
