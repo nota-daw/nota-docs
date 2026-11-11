@@ -3,12 +3,13 @@ title: "AI control over MCP"
 description: "Let an AI assistant such as Claude work in your open project through Nota's built-in MCP server — tracks, notes, devices, Session, mixing, export and more."
 sidebar:
   order: 3
-updated: "0.58.1"
+updated: "0.59.2"
 status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
   - src/managed/Nota.Mcp/Tools/ProjectTools.cs
   - src/managed/Nota.Mcp/Tools/ExportTools.cs
+  - src/managed/Nota.Mcp/Tools/ThemeTools.cs
 ---
 
 import Shot from '@components/Shot.astro';
@@ -57,7 +58,43 @@ network can reach it.
 - **Export** — the master or stems to WAV, FLAC or MP3 (`format`, `bitrateKbps` for MP3,
   `startBeat` to start the render later in the song).
 - **MIDI** — list inputs and work with MIDI Learn mappings.
+- **Themes** — read, check, preview, save and wear colour themes, so an assistant can design one
+  with you. See [Design a theme](#design-a-theme).
 
 <Aside>
 Some things stay yours: an AI can't delete versions or install models.
 </Aside>
+
+## Design a theme
+
+Give an assistant a palette — a few colours, a photo's mood, "like an old mixing desk" — and it
+can turn it into a full [theme of your own](../../preferences/appearance/#your-own-themes), check
+that it stays readable and show you how it looks before anything changes on your screen.
+
+<Steps>
+
+1. It reads a built-in theme as a template (`get_theme`) and what each colour is for
+   (`get_theme_catalogue`), and the fonts installed on your computer (`list_system_fonts`).
+
+2. It writes its version and checks it (`validate_theme`): every problem with the key it is
+   about, and every readability warning with the contrast it measured.
+
+3. It renders previews (`preview_theme`): one picture for each part of Nota — the whole
+   window, the top bar, the arrangement, the mixer, a device rack, the piano roll, the browser,
+   Settings, a menu and a dialog — from a fixed sample project, off screen. Your window doesn't
+   change. By default the pictures wear your [accent colour](../../preferences/appearance/#accent-colour),
+   as the theme really would; it can ask for the theme's own accent instead.
+
+4. When you want to see it for real, it puts it on (`try_on_theme`): Nota wears the theme
+   without saving it, until it takes it off (`revert_try_on`), you pick a theme in Settings, or
+   Nota restarts.
+
+5. It saves the theme into your themes folder (`save_theme`) — the card appears in
+   Appearance at once — and wears it (`apply_theme`), exactly as if you had clicked the card.
+
+</Steps>
+
+An assistant can't overwrite a built-in theme, and replaces one of your own only when it says
+so. It can also list your themes (`list_themes`) with the files that failed to load and why,
+so it can help fix a theme you wrote by hand. The file format is on
+[Theme files](../../reference/theme-files/).
