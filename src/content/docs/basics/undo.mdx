@@ -3,7 +3,7 @@ title: Undo and value entry
 description: Undo and redo, and the ways to set a value exactly — dragging, fine steps, typing and resetting.
 sidebar:
   order: 5
-updated: "0.58.1"
+updated: "0.59.2"
 status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
@@ -23,9 +23,9 @@ one value to another, undoes in one go. So is switching a device between **A** a
 typing a value, one movement of a MIDI controller knob (it ends when the knob rests for a
 second), one touch on Nota Remote, and each change an AI assistant makes.
 
-Sends are in it too: a send move is one step whether you make it in a track header, the Mixer,
-the Session mixer or the **Sends** card. Mute, solo and the devices inside a rack are not in the
-history.
+Sends are not in it: a send is a live level, so moving one is not a step, whether you move it in
+a track header, the Mixer, the Session mixer or the **Sends** card. Nor are mute, solo and the
+devices inside a rack.
 
 To go back further than undo reaches — to yesterday's mix, say — use
 [version history](../version-history/).
