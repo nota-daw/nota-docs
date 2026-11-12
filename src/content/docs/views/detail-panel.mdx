@@ -3,9 +3,10 @@ title: Detail panel and device windows
 description: The panel under the view — Devices, Pattern and Clip — its own window for a second screen, and device windows for rack chains.
 sidebar:
   order: 5
-updated: "0.58.1"
+updated: "0.59.2"
 status: done
 sources:
+  - src/managed/Nota.App/PreferencesWindow.Editing.cs
   - src/managed/Nota.App/MainWindow.Detail.cs
   - src/managed/Nota.App/MainWindow.DetailWindow.cs
   - src/managed/Nota.App/DetailWindow.cs
@@ -27,7 +28,7 @@ A plain click only selects, so the panel doesn't take room from the view until y
 Once it is open, it follows the selection: click another track and it shows that track's
 devices; click another clip while the **Clip** tab is up and it shows that clip. To have every
 click open it, turn on **Open the detail panel when you select a track or clip** in
-[Settings ▸ Appearance](../../preferences/appearance/).
+[Settings ▸ Editing](../../preferences/editing/).
 
 <Shot id="views/detail-panel" alt="The detail panel showing the Keys track: Nota Pentad and Nota EQ-8" />
 

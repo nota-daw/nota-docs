@@ -10,6 +10,7 @@ sources:
   - src/managed/Nota.Application/Themes/ThemeFile.cs
   - src/managed/Nota.Application/Themes/SkinGeometry.cs
   - src/managed/Nota.Application/Themes/ThemeFolder.cs
+  - src/managed/Nota.Application/Looks.cs
   - src/managed/Nota.App/Theme/token-roles.json
 ---
 
@@ -40,13 +41,13 @@ import { Aside } from '@astrojs/starlight/components';
 
 | Ключ | Что в нём |
 |---|---|
-| `formatVersion` | `1` (только цвета) или `2` (цвета, а также `font` и `radius`) |
+| `formatVersion` | `1` (только цвета), `2` (цвета, а также `font` и `radius`) или `3` (ещё и `font.values`) |
 | `id` | То, по чему Nota запоминает ваш выбор: строчные латинские буквы, цифры и одиночные дефисы, например `night-shift`. Не id встроенной темы (`studio-dark`, `studio-light`, `ember-graphite`, `ember-paper`), не `system` и не id другого файла в папке |
 | `name` | Имя на карточке, от 1 до 40 символов |
 | `kind` | `dark` или `light` — в каком ряду стоит карточка и какое место она может занять в **Follow system** |
 | `colors` | По цвету `#RRGGBB` на каждый токен ниже. Несколько токенов могут быть полупрозрачными и принимают `#AARRGGBB` |
-| `font` | Только в формате 2, необязательно. `{ "family": "<имя шрифта>" }` |
-| `radius` | Только в формате 2, необязательно. `{ "scale": …, "steps": { … } }` |
+| `font` | В формате 2 или 3, необязательно. `{ "family": "<имя шрифта>" }`; в формате 3 можно добавить `"values": "<имя шрифта>"`, и тогда `family` можно опустить |
+| `radius` | В формате 2 или 3, необязательно. `{ "scale": …, "steps": { … } }` |
 
 Имя файла может быть любым — Nota смотрит на `id` внутри. Файлы, которые Nota пишет сама
 (**Duplicate** или тема, сохранённая ИИ), называются `<id>.json`. Читаются только файлы `.json`
@@ -87,6 +88,15 @@ import { Aside } from '@astrojs/starlight/components';
 Шрифт, которого нет на этом компьютере, — не ошибка: Nota возьмёт Geist, а карточка об этом
 предупредит. Без `font` тема использует Geist.
 
+`font.values` (формат 3) — шрифт для значений и показаний: темпа, позиции, dB, Hz, счётчиков.
+Без него значения набраны Geist в новом виде и Geist Mono в
+[классическом](../../preferences/appearance/#классический-вид). Если шрифта значений нет на
+компьютере, это тоже предупреждение, и используется шрифт самого вида.
+
+```json
+"font": { "family": "IBM Plex Sans", "values": "IBM Plex Mono" }
+```
+
 ## Углы
 
 `radius.scale` умножает все скруглённые углы Nota: `1` — как задумано дизайном (по умолчанию),
@@ -107,6 +117,10 @@ import { Aside } from '@astrojs/starlight/components';
 
 Ступень без своего значения — это значение по дизайну, умноженное на `scale` и округлённое до
 целых пикселей. Пристыкованные панели в любой теме остаются квадратными.
+
+Тема с ключом `radius` сохраняет свои углы и в
+[классическом виде](../../preferences/appearance/#классический-вид). Тема без него получает
+там классические углы: 3 px для `card`, `group` и `field`, 2 px для остальных.
 
 ## Проверки
 

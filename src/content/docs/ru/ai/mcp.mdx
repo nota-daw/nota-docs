@@ -6,6 +6,7 @@ sidebar:
 updated: "0.59.2"
 status: done
 sources:
+  - src/managed/Nota.App/PreferencesWindow.Mcp.cs
   - src/managed/Nota.App/PreferencesWindow.cs
   - src/managed/Nota.Mcp/Tools/ProjectTools.cs
   - src/managed/Nota.Mcp/Tools/ExportTools.cs
@@ -24,7 +25,7 @@ import { Steps, Aside } from '@astrojs/starlight/components';
 
 <Steps>
 
-1. **Settings ▸ Appearance ▸ AI control (MCP)** ▸ **Enable MCP server (let an AI drive Nota)**. По
+1. [**Settings ▸ AI control (MCP)**](../../preferences/mcp/) ▸ **Enable MCP server (let an AI drive Nota)**. По
    умолчанию выключено.
 
 2. **Copy config** копирует готовую запись сервера; добавьте её (или URL) как MCP-сервер в Claude
@@ -34,7 +35,7 @@ import { Steps, Aside } from '@astrojs/starlight/components';
 
 </Steps>
 
-<Shot id="preferences/appearance" alt="Settings ▸ Appearance с разделом AI control (MCP)" />
+<Shot id="preferences/mcp" alt="Settings ▸ AI control (MCP)" />
 
 Сервер слушает только ваш компьютер (`127.0.0.1`, по умолчанию порт 3900) — из сети к нему не
 достучаться.
@@ -99,3 +100,9 @@ import { Steps, Aside } from '@astrojs/starlight/components';
 попросит. Ещё он может получить список ваших тем (`list_themes`) вместе с файлами, которые не
 загрузились, и причинами — и помочь починить тему, написанную вручную. Формат файла описан на
 странице [Файлы тем](../../reference/theme-files/).
+
+Ассистент может переключить и [вид](../../preferences/appearance/#классический-вид) (`set_look`:
+`new` или `classic`) — так же, как переключатель в Appearance. Он умеет рендерить превью в
+любом виде (`preview_theme` с `look`) и прочитать встроенную тему в классических цветах
+(`get_theme` с `look: classic`), чтобы начать с неё свою классическую тему. Какой вид
+сейчас на вас, он узнаёт из `list_themes`.
