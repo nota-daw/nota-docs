@@ -1,0 +1,29 @@
+---
+title: "Télécommande"
+description: "Réglages ▸ Télécommande : autoriser les téléphones à piloter Nota, le port, ce que les téléphones peuvent faire, et les appareils de confiance."
+sidebar:
+  order: 4
+updated: "0.50.1"
+status: done
+sources:
+  - src/managed/Nota.App/PreferencesWindow.Remote.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+<Shot id="preferences/remote" alt="Réglages ▸ Télécommande" />
+
+| Réglage | Ce qu’il fait |
+|---|---|
+| **Autoriser le contrôle depuis un téléphone** | Active Nota Remote (désactivé par défaut) |
+| **Port** | Le port réseau auquel se connectent les téléphones (7788 par défaut) ; autorisez-le dans votre pare-feu s’il y en a un |
+| **État** | Où Nota écoute, y compris une adresse USB quand un téléphone est sur un câble |
+| **Les téléphones peuvent** | **Jouer des notes uniquement** (pads et touches) ou **Jouer et piloter le projet** (aussi le mixeur, le transport, les macros, le XY et la Session) |
+
+**Appareils de confiance** liste les téléphones qui ont été appairés. Un téléphone de confiance se reconnecte depuis
+l’icône de son écran d’accueil sans code ; **Oublier** le déconnecte, et il doit scanner un nouveau code pour revenir.
+Désactiver la Télécommande déconnecte tout le monde.
+
+Quand vous l’activez, macOS demande si Nota peut trouver des appareils sur le réseau local (Windows : s’il peut
+utiliser le réseau) : autorisez-le, sans quoi les téléphones ne peuvent pas atteindre Nota. Voir
+[Nota Remote](../../control/nota-remote/).

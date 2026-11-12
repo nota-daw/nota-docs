@@ -3,9 +3,10 @@ title: "Nota Compressor"
 description: "Compressor with five characters, soft knee, peak / RMS / auto detection, look-ahead, range, auto release, parallel mix and a filtered sidechain."
 sidebar:
   order: 4
-updated: "0.50.1"
+updated: "0.57.1"
 status: done
 sources:
+  - src/managed/Nota.App/DeviceCards/SidechainSourcePicker.cs
   - src/native/nota.engine/src/Compressor.h
   - src/managed/Nota.App/DeviceCards/Bodies/CompressorDeviceBody.cs
 ---
@@ -17,8 +18,14 @@ result louder again. Glue a drum bus, level a vocal, pump a pad from the kick.
 
 <Shot id="devices/audio-effects/compressor/card" alt="Nota Compressor, Curve tab with the transfer curve and reduction history" />
 
-**Layout:** the **Level** column on the left (threshold against the live level, make-up), a centre
-panel with three tabs, a right panel (**Dynamics** / **Output**) and a status line.
+**Layout:** three graphs in the centre — **Curve** (**Threshold**, **Ratio** and **Knee** beside it,
+the character under it), **Motion** (**Attack**, **Release** and **Hold** beside it) and
+**Sidechain** (**HP**, **LP** and **Q** beside it) — and a right panel that follows the tab:
+**Dynamics** (the detector, Range, the output levels, Auto gain, Stereo link), **Timing**
+(Auto-release, look-ahead, what the detector runs now) and the **key** (External, Listen, the
+source, its tap, SC Gain). Under it on every tab sit **Dry/Wet** and **Makeup**. The **S / L**
+switch in the header folds the card to **S**: the curve over the character and **Threshold**,
+**Ratio**, **Release** and **Dry/Wet**.
 
 ## Curve
 
@@ -36,7 +43,9 @@ rather than guess.
 <Shot id="devices/audio-effects/compressor/sidechain" alt="Nota Compressor, Sidechain tab with the key filters" />
 
 What the detector listens to: **Internal** (the track) or **External key** (another track, picked
-as the device's sidechain source, **Pre** or **Post** its fader). The key's spectrum is drawn under
+as the device's sidechain source, **Pre** or **Post** its fader). The key menu also lists the pads of
+a Drum Rack, the chains of an Instrument Rack and the voices of Nota Rhythm under their track — key
+off one of them and only it drives the compressor; **Listen** then reads, say, *Drums · Kick pre*. The key's spectrum is drawn under
 its filters — drag the **HP** and **LP** handles; **Q** shapes both. **Listen** lets you hear the key.
 
 ## Dynamics and Output
@@ -65,5 +74,5 @@ Pluck**, **Acoustic Guitar**, **Guitar Sustain**, **Piano Smooth**, **Pad Breath
 ## Tips
 
 - **Sidechain pump:** External key from the kick, fast attack, release to taste — or start from
-  **EDM Pump**.
+  **EDM Pump**. Kick inside a Drum Rack? Pick its pad (**Drums ▸ Kick**) rather than the whole kit.
 - **Parallel drums:** a heavy ratio with **Mix** around 40 %.

@@ -1,0 +1,55 @@
+---
+title: "Nota Dynamic EQ-8"
+description: "Égaliseur à huit bandes où chaque bande peut réagir au niveau : céder quand ça devient fort ou se relever quand ça devient doux, piloté par elle-même ou par une autre piste."
+sidebar:
+  order: 3
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/DynamicEq.h
+  - src/managed/Nota.App/DeviceCards/Bodies/DynamicEqDeviceBody.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Dynamic EQ-8 est un égaliseur à huit bandes dans lequel chaque bande peut aussi se comporter comme un petit
+compresseur ou expandeur pour ses seules fréquences. Dompter la sibilance seulement quand elle survient, creuser les
+graves seulement quand la grosse caisse frappe, relever l’air seulement quand une voix devient douce.
+
+<Shot id="devices/audio-effects/dynamic-eq/card" alt="Nota Dynamic EQ-8 avec le graphique de réponse et le panneau de bande" />
+
+## Une bande
+
+La moitié statique est la même que sur l’[EQ-8](../eq-8/) : type, **Freq**, **Gain**, **Q**. La moitié dynamique :
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| Mode | **Static** : une bande d’EQ ordinaire ; **Duck** : agit quand la bande devient plus forte que le seuil ; **Lift** : agit quand elle descend en dessous |
+| **Thresh** | Le niveau où elle commence à agir ; le niveau actuel de la bande y est marqué |
+| **Range** | De combien de dB à pleine action : négatif coupe, positif booste (un Duck qui booste est une expansion vers le haut) |
+| **Attack** · **Release** | Avec quelle rapidité elle agit et relâche |
+| **Key** | **Self** (le signal propre de la bande) ou **Ext** (une autre piste : la source de sidechain de l’appareil) |
+| **Solo** | N’entendre que cette bande |
+
+Seuls les shelves et les bells prennent un gain dynamique. La pleine action est atteinte 6 dB au-delà du seuil. Les
+pastilles de bande au-dessus du graphique s’allument avec l’activité de chaque bande.
+
+## Global
+
+**Dynamic** désactive d’un coup toutes les dynamiques : un A/B instantané de ce qu’elles font. **Out** règle le niveau
+de sortie.
+
+## Préréglages
+
+33 préréglages d’usine : voix (**De-Ess**, **De-Ess Soft**, **De-Harsh Vox**, **Vocal Tame**, **Vocal Presence**,
+**Proximity Control**, **Air Lift Vocal**, **Podcast Voice**), mixage et mastering (**Mix Bus Air**, **Mud Control**,
+**Harshness Guard**, **Warm Master**, **Master Glue EQ**, **Loudness Contour**), batterie (**Punch Tighten**,
+**Kick Box Cut**, **Snare Ring Tamer**, **Cymbal Smoother**, **Room Mic Duck**), basse (**Bass Control**,
+**Bass Clarity**, **Sub Tamer**, **Kick Ducks Bass**) et plus (**Vocal Pocket**, **Voiceover Space**,
+**Guitar Resonance**, **Piano Boom Control**, **Pad Smoother**, **Upward Air**, **Hiss Dip**).
+
+## Astuces
+
+- **Faire de la place pour la voix :** sur une nappe, une bell Duck autour de 2 à 3 kHz pilotée en **Ext** par la piste
+  de voix.
+- **Grosse caisse et basse :** sur la basse, un low shelf Duck piloté par la grosse caisse (**Kick Ducks Bass**).

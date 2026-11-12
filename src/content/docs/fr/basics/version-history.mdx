@@ -1,0 +1,77 @@
+---
+title: Historique des versions
+description: Chaque enregistrement garde une version du projet. Revenez à n’importe laquelle, ouvrez-en une comme copie, nommez-les, étoilez-les et faites le ménage.
+sidebar:
+  order: 2
+updated: "0.59.1"
+status: done
+sources:
+  - src/managed/Nota.App/HistoryView.cs
+  - src/managed/Nota.App/MainWindow.History.cs
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
+
+Chaque fois que vous enregistrez, Nota garde une version du projet à l’intérieur de celui-ci. Rien n’est écrasé :
+vous pouvez revenir à l’état du morceau d’il y a une heure ou une semaine, ou tenter quelque chose d’audacieux en
+sachant que l’ancienne version est à un clic.
+
+## L’onglet Historique
+
+Ouvrez l’onglet **Historique** du navigateur (l’icône d’horloge en bas du rail). Les versions sont listées de la
+plus récente à la plus ancienne, reliées par une ligne ; le point orange marque la version où se trouve le projet.
+
+<Shot id="basics/history-tab" alt="L’onglet Historique avec quatre versions : Hook and texture, Tempo 120 → 124, Added Keys, First beat" width={300} />
+
+Chaque version se décrit par ce qui a changé (« Added Keys », « Tempo 120.00 → 124.00 »), de sorte que la liste se
+lit sans notes. Une version avec une note ou un nom affiche cela à la place. Le compteur en haut indique combien de
+versions il y a et quelle place elles occupent.
+
+## Enregistrer des versions
+
+- **Fichier ▸ Enregistrer** (<Kbd>⌘ S</Kbd>) : enregistre une version.
+- **Fichier ▸ Enregistrer une version avec note…** (<Kbd>⌥ ⌘ S</Kbd>) : demande *Qu’est-ce qui a changé dans cette
+  version ?* et garde votre réponse avec elle.
+
+Les versions partagent leur audio : chacune ne coûte que ce qu’elle ajoute. **Enregistrer sous** emporte tout
+l’historique dans le nouveau projet.
+
+## Revenir en arrière
+
+Cliquez sur une version pour voir ses détails, puis :
+
+- **Basculer** : le projet revient à cette version. Si vous avez des modifications non enregistrées, Nota propose
+  d’abord de les enregistrer comme nouvelle version, pour que rien ne soit perdu.
+- **Ouvrir une copie** : ouvre cette version comme un nouveau projet séparé et laisse celui-ci tel qu’il est.
+
+Enregistrer après être revenu à une version plus ancienne démarre une **branche** : les versions plus récentes
+restent, et l’arbre montre où les chemins se séparent.
+
+## Noms, notes et étoiles
+
+Faites un clic droit sur une version pour **Nommer…**, **Ajouter une note…**, **Étoiler** et
+**Supprimer la version…**. Étoilez les versions qui comptent : un mixage que vous avez envoyé, la prise que tout le
+monde a aimée. Le bouton ☆ en haut de l’onglet ne liste alors que les versions étoilées, de la plus récente à la plus
+ancienne ; cliquez à nouveau dessus pour revoir tout l’arbre.
+
+Vous ne pouvez pas supprimer la version où se trouve le projet ; basculez d’abord vers une autre.
+
+## Faire le ménage
+
+Pour supprimer plusieurs versions d’un coup, sélectionnez-les : <Kbd>⌘</Kbd>-clic (<Kbd>Ctrl</Kbd>-clic sous
+Windows et Linux) ajoute une version à la sélection, <Kbd>⇧</Kbd>-clic sélectionne une série. Le pied de l’onglet
+indique alors combien sont sélectionnées et quand elles ont été enregistrées ; **Supprimer N versions…** là, ou dans
+le menu du clic droit, les supprime après une seule confirmation. La version où se trouve le projet n’est jamais
+supprimée : elle reste, et le pied de l’onglet le dit.
+
+Le menu en haut de l’onglet supprime d’un coup toutes les versions **sans nom**, en gardant celles que vous avez
+nommées. Pour arrêter complètement d’enregistrer des versions, désactivez **Conserver un historique des versions de
+chaque projet** dans [Réglages ▸ Bibliothèque](../../preferences/library/) : Nota prévient d’abord, car cela
+efface l’historique existant.
+
+<Aside>
+Un projet enregistré par une version plus récente de Nota montre ses versions plus récentes, mais il faut mettre à
+jour pour les ouvrir.
+</Aside>

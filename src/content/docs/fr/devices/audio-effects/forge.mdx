@@ -1,0 +1,54 @@
+---
+title: "Nota Forge"
+description: "Saturateur multi-étages : trois étages avec leur propre algorithme, drive, bias, tonalité, largeur et feedback, routés en série, en parallèle, mid / side ou par bande, avec un LFO et une enveloppe."
+sidebar:
+  order: 17
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/Forge.h
+  - src/managed/Nota.App/DeviceCards/Bodies/ForgeDeviceBody.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Forge, ce sont trois saturateurs en un (bande, lampe, diode, fuzz, repliement) que vous pouvez empiler, mélanger,
+séparer en mid et side, ou à qui donner chacun une bande de fréquences.
+
+<Shot id="devices/audio-effects/forge/card" alt="Nota Forge : le routage et les trois étages, la courbe de transfert et les harmoniques, la forme de l’étage" />
+
+## Routing
+
+| Routage | Comment les trois étages se combinent |
+|---|---|
+| **Serial** | 1 → 2 → 3 |
+| **Parallel** | Les trois depuis la même entrée, moyennés |
+| **M/S** | Étage 1 sur le mid, étage 2 sur le side, étage 3 sur le stéréo recombiné |
+| **Multi** | Étage 1 sur les graves (sous 180 Hz), étage 2 sur les médiums, étage 3 sur les aigus (au-dessus de 2,4 kHz) : un étage désactivé laisse passer sa bande intacte |
+
+## Un étage
+
+À gauche, chaque étage a son point d’activation, son type, son rôle dans le routage, un trim de sortie (faites glisser les
+dB), **Drive** et un **Feedback** turquoise. Cliquez sur un étage pour modifier sa **forme** à droite : **Bias**
+(asymétrie : harmoniques paires), **Tone** (une inclinaison de ±12 dB après lui) et **Width** (son image stéréo,
+de 0 à 200 %).
+
+## Le centre
+
+**Amount** (drive dans la chaîne), **Wet** et **Out** sur la courbe de transfert (tout l’appareil, chaque étage en
+filigrane, la courbe modulée par le LFO en pointillés) et les harmoniques d’un sinus à −6 dB avec son THD. Faites glisser
+le nœud sur la courbe pour Amount.
+
+## Modulation
+
+**LFO → Drive** (libre ou synchronisé, avec **Rate**) fait respirer le drive ; **Env → Tone** ouvre la tonalité à mesure
+que le signal monte. **Oversample** réduit l’aliasing aux réglages durs.
+
+## Préréglages
+
+32 préréglages d’usine : chaleur (**Cabinet Heat**, **Tape Glue**, **Tube Warmth**, **Console Bus**, **Vocal Silk**,
+**Bass Weight**, **Parallel Warmth**, **Warm Master**), drive (**Diode Crunch**, **Amp Stack**, **Guitar Edge**,
+**Snare Crack**, **Fuzz Wall**, **Digital Hard Clip**, **Broken Speaker**, **Feedback Scream**), repliement
+(**Fold Bells**, **Wavefolder Synth**), bus et parallèle (**Drum Glue**, **NY Drums**, **Bass Parallel Grit**),
+mid / side (**Wide Air**, **Mono Grit Core**, **Side Sizzle**), multibande (**Multiband Drive**, **Low-End Only**,
+**Presence Lift**) et mouvement (**Breathing Drive**, **Wobble Crunch**, **Envelope Bite**, **Slow Tide**).

@@ -1,0 +1,38 @@
+---
+title: "Convertir de l’audio en MIDI"
+description: "Transformer la mélodie, l’harmonie ou la batterie d’un clip audio en piste MIDI, ou le découper sur des pads de Drum Rack."
+sidebar:
+  order: 7
+updated: "0.56.1"
+status: done
+sources:
+  - src/managed/Nota.App/MainWindow.Convert.cs
+  - src/managed/Nota.App/ArrangementView.LaneControl.cs
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Faites un clic droit sur un clip audio dans l’Arrangement ▸ **Convertir** :
+
+| Commande | Ce que vous obtenez |
+|---|---|
+| **Mélodie vers une nouvelle piste MIDI** | L’air, une seule ligne de notes, sur une nouvelle piste Nota Volt. Idéal pour des lignes à une note et des voix nettes. Demande le modèle d’IA (voir plus bas). |
+| **Harmonie vers une nouvelle piste MIDI** | Les accords et les notes jouées ensemble, sur une nouvelle piste Nota Volt. Idéal pour des accords tenus et des nappes. Demande le modèle d’IA (voir plus bas). |
+| **Batterie vers une nouvelle piste MIDI** | Un nouveau Drum Rack avec un pad pour chaque sorte de coup qu’il entend (grosse caisse, caisse claire, charleston…), chacun doté de son coup le plus fort, et un clip MIDI qui les joue là où ils étaient. |
+| **Tranches vers une nouvelle piste MIDI** | Le clip coupé à ses attaques (ou en 16 tranches égales) sur des pads de Drum Rack à partir de C1, avec un clip MIDI qui rejoue les tranches dans l’ordre. |
+
+Le clip MIDI se place sous le clip d’origine, en rythme avec lui ; la ligne d’état dit combien de notes ou de pads
+il a créés. La conversion tourne en arrière-plan avec une fenêtre de progression que vous pouvez annuler.
+
+## La mélodie et l’harmonie demandent le modèle d’IA
+
+**Mélodie** et **Harmonie** utilisent le modèle d’IA **basic-pitch**, qui entend chaque note, accords compris. Tant
+qu’il n’est pas installé, le menu **Convertir** montre à leur place **Obtenir le modèle d’IA pour la mélodie et
+l’harmonie…** ; une fois installé, les deux commandes apparaissent (sans redémarrage). Le modèle tourne sur votre
+ordinateur : rien n’est envoyé en ligne. **Batterie** et **Tranches** n’en ont pas besoin. Vous pouvez le retirer
+plus tard dans [Réglages ▸ Téléchargements ▸ Modèles d’IA](../../ai/models/).
+
+<Aside type="tip">
+Les parties solistes et propres se convertissent le mieux. Pour un mixage complet, séparez-le d’abord avec
+[Séparer les stems](../../ai/separate-stems/), puis convertissez le stem que vous voulez.
+</Aside>

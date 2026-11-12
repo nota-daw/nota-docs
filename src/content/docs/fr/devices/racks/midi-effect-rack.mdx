@@ -1,0 +1,66 @@
+---
+title: "Nota MIDI Effect Rack"
+description: "Des chaînes d’effets MIDI dans un seul appareil : répartissez les notes par touche, vélocité ou sélecteur, façonnez chaque partie avec son propre Arp, Chord ou Scale, et fusionnez-les avant l’instrument."
+sidebar:
+  order: 4
+updated: "0.57.1"
+status: done
+sources:
+  - src/native/nota.engine/src/devices/racks/MidiRack.h
+  - src/native/nota.engine/src/devices/racks/RackCore.h
+  - src/managed/Nota.App/DeviceCards/Rack/RackCard.cs
+  - src/managed/Nota.App/DeviceCards/Rack/RackCard.Zones.cs
+  - src/managed/Nota.App/DeviceCards/Rack/RackCard.RightPanel.cs
+---
+
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
+
+Nota MIDI Effect Rack se place avec les autres effets MIDI, avant l’instrument de la piste. Ses **chaînes** prennent
+chacune une partie de ce que vous jouez et la font passer dans leurs propres effets MIDI (un arpège au-dessus de C3,
+des accords en dessous, des accents seulement sur les coups forts), et leurs notes fusionnent dans un seul instrument.
+
+<Shot id="devices/racks/midi-effect-rack/card" alt="Nota MIDI Effect Rack : trois chaînes (Arp lead, Chords, Accents) avec l’Arp et le Scale de la chaîne Arp lead" />
+
+Il utilise la même carte que l’[Instrument Rack](../instrument-rack/) : les [macros](../macros/), les onglets
+**Chains**, **Zones** et **Macros**, le panneau **Chain** et **Output**. Vous le trouvez dans le Navigateur sous
+**Effets MIDI · Racks**. Les effets MIDI d’une chaîne se déplacent, se copient et se collent comme dans l’Instrument
+Rack, entre chaînes, racks et les effets MIDI propres de la piste.
+
+## Chaînes
+
+Une chaîne est une rangée d’effets MIDI intégrés (Arp, Chord, Scale, Length, Velocity, Random) qui s’exécutent de
+gauche à droite. Déposez-les depuis le Navigateur sur la chaîne ou sur la cible en pointillés ; un effet MIDI déposé
+sur la liste des chaînes démarre une nouvelle chaîne. Un rack contient jusqu’à 16 chaînes.
+
+Dans le panneau **Chain**, **Volume** met à l’échelle la vélocité des notes de la chaîne (100 % la laisse telle
+quelle, 0 % rend la chaîne silencieuse) et **Transpose** les monte ou les descend de jusqu’à 48 demi-tons.
+
+## Zones
+
+<Shot id="devices/racks/midi-effect-rack/zones" alt="L’onglet Zones : zones de touches et de vélocité, le sélecteur et les plages de sélection" />
+
+Chaque chaîne prend les notes à l’intérieur de ses zones de **touches** et de **vélocité** ; faites glisser les bords
+pour les régler et survolez pour voir quelles chaînes une note atteindrait. En mode Select, le **Selector** et la fine
+**plage de sélection** de chaque chaîne sous sa zone de touches décident plutôt quelles chaînes reçoivent des notes :
+associez le sélecteur à une macro pour changer de partie depuis un contrôleur.
+
+## Output
+
+<Shot id="devices/racks/midi-effect-rack/output" alt="Output : Chains run, Merge duplicate notes et Pass through outside zones" />
+
+| Réglage | Ce qu’il fait |
+|---|---|
+| **Parallel** | Une note va vers chaque chaîne dont elle touche la zone |
+| **Select** | Seules les chaînes dont la plage de sélection contient le sélecteur reçoivent des notes |
+| **Merge duplicate notes** | Deux chaînes qui envoient la même hauteur ne la jouent qu’une fois |
+| **Pass through outside zones** | Les notes qu’aucune chaîne ne prend arrivent à l’instrument inchangées |
+
+## Astuces
+
+- **À partir des effets MIDI de la piste :** sélectionnez-les (<Kbd>⇧</Kbd>-clic pour une série) et appuyez sur
+  <Kbd>⌘ G</Kbd> pour les replier dans un nouveau MIDI Effect Rack ; <Kbd>⌘ ⇧ G</Kbd> les ressort.
+- **Arp en deux parties :** une chaîne Arp à partir de C3, une chaîne Chord en dessous, toutes deux vers un seul synthé.
+- **Accents :** une chaîne avec une vélocité de 110 à 127 et un Random, pour que seuls les coups forts vagabondent.
+- **Des parties sur une macro :** mode Select, des chaînes aux plages de sélection voisines, le sélecteur sur une
+  macro.

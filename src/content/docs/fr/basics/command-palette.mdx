@@ -1,0 +1,108 @@
+---
+title: "Palette de commandes"
+description: "Un seul champ de recherche pour chaque commande, piste, appareil, plug-in et préréglage : ⌘⇧P depuis n’importe quelle fenêtre, et ce que vous choisissez va là où vous l’avez ouverte."
+sidebar:
+  order: 6
+updated: "0.50.1"
+status: done
+sources:
+  - src/managed/Nota.App/CommandPaletteView.cs
+  - src/managed/Nota.App/MainWindow.Palette.cs
+  - src/managed/Nota.App/MainWindow.Commands.cs
+  - src/managed/Nota.Application/Palette/CommandCatalog.cs
+  - src/managed/Nota.Application/Palette/PaletteTargets.cs
+  - src/managed/Nota.Application/Palette/SemanticVocabulary.cs
+  - src/managed/Nota.Presentation/DeviceInsertService.cs
+---
+
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+La palette de commandes trouve tout dans Nota en tapant : une commande de menu, une piste, un appareil intégré, un
+plug-in, un préréglage ou un kit. Appuyez sur <Kbd>⌘ ⇧ P</Kbd> (<Kbd>Ctrl Shift P</Kbd> sous Windows et Linux) dans
+n’importe quelle fenêtre, même quand un champ de texte a le focus, et appuyez à nouveau pour la fermer.
+
+<Shot id="basics/command-palette" alt="La palette de commandes au-dessus de la fenêtre principale : la requête « тёплый пэд » liste des préréglages de pad chaud, chacun avec la raison pour laquelle il a été trouvé" />
+
+## Placer un appareil là où vous êtes
+
+Ce que vous choisissez va **à l’endroit d’où vous avez ouvert la palette**, et la pastille à droite du champ dit où,
+avant que vous n’appuyiez sur <Kbd>Return</Kbd>, par exemple **→ Bass · après Nota Compressor** ou
+**→ nouvelle piste MIDI**.
+
+| Ouverte depuis | Où va un appareil ou un préréglage |
+|---|---|
+| Panneau **Appareils** (ancré ou dans sa propre fenêtre) | Juste après la carte sélectionnée ; sans carte sélectionnée, à la fin de sa section (effets MIDI ou effets audio) |
+| **Modular** | La piste affichée dans Modular ; un nœud Modular (LFO, ADSR, Math…) arrive sur le canevas sans connexion, sous le pointeur ou au milieu de la vue |
+| **Arrangement**, **Session**, **Mixeur**, **Navigateur** | La piste sélectionnée, à la fin de sa chaîne |
+| **Piano roll** | La piste du clip en cours de modification |
+
+Un instrument sur une piste qui en a déjà un le **remplace** : les clips, les autres appareils et le volume restent.
+Sur un **Instrument Rack**, il ajoute une chaîne ; sur un **Drum Rack**, il remplit le prochain pad libre. Sans
+piste sélectionnée, un instrument ou un préréglage d’instrument crée une nouvelle piste ; un effet affiche
+**Sélectionner d’abord une piste** et ne peut pas être appliqué. Un effet MIDI ne peut pas aller sur une piste
+audio, et la ligne le dit.
+
+<Shot id="basics/command-palette-replace" alt="La palette avec ⌥ maintenue : la pastille indique « → Bass · remplace Nota Compressor »" />
+
+Maintenez un modificateur pour changer ce que fait <Kbd>Return</Kbd> ; la pastille et le pied de la palette suivent :
+
+- <Kbd>⌘ Return</Kbd> : un instrument ou un préréglage d’instrument sur une **nouvelle piste** ; sur une piste, l’ouvre dans **Appareils**.
+- <Kbd>⌥ Return</Kbd> : **remplace** l’appareil sélectionné au lieu d’insérer après lui.
+- <Kbd>⇧ Return</Kbd> : applique et **garde la palette ouverte** ; l’appareil suivant se place après celui que vous venez d’ajouter.
+
+Chaque application est une seule étape d’annulation. Une courte note en bas de la fenêtre confirme ce qui s’est
+passé et a un bouton **Annuler** (ou appuyez sur <Kbd>⌘ Z</Kbd>).
+
+## Chercher par nom ou par sens
+
+- **Les noms, de façon souple.** Les lettres dans l’ordre suffisent : **afl** trouve **Nota Auto Filter**, **nv**
+  trouve **Nota Vintage**. Les lettres correspondantes s’allument. « Nota » au début d’un nom ne compte pas :
+  tapez le mot distinctif.
+- **Une faute de frappe par mot** est pardonnée (**reverv**, **compresor**).
+- **La mauvaise disposition de clavier** est aussi lue : **кумуки** tapé avec la disposition russe trouve
+  **reverb**, et une ligne sous les filtres le dit.
+- **Le sens, en anglais ou en russe.** Chaque appareil, plug-in et préréglage sait ce qu’il est, comment il sonne,
+  quel rôle il joue et à quoi on l’utilise. Donc **warm pad**, **тёплый пэд**, **reverb for vocals**,
+  **компрессор на барабаны**, **sidechain** ou **bass for techno** trouvent tous quelque chose, et un résultat
+  trouvé par son sens plutôt que par son nom montre pourquoi, par exemple **warm · pad**. Un nom qui correspond
+  exactement arrive toujours en premier.
+
+## Filtrer par type
+
+Tapez un préfixe, ou appuyez sur <Kbd>Tab</Kbd> / <Kbd>⇧ Tab</Kbd> pour parcourir les pastilles au-dessus de la liste :
+
+| Préfixe | Trouve |
+|---|---|
+| `>` | Les actions : commandes de menu et de vue, transport, pages de Réglages, chacune avec son raccourci |
+| `@` | Les pistes, y compris les groupes, les retours et le master |
+| `+` | Les appareils et plug-ins (un plug-in affiche son fabricant et son format) |
+| `#` | Les préréglages : d’usine, les vôtres, et les kits de batterie |
+| `~` | Les nœuds Modular (seulement quand elle est ouverte depuis Modular) |
+
+Une action qui ne peut pas s’exécuter pour l’instant (**Quantifier les notes** sans clip MIDI ouvert) reste masquée
+tant que vous ne tapez pas son nom ; elle apparaît alors en grisé avec la raison.
+
+Sans rien taper, la palette montre **Récents**, les cinq dernières choses que vous en avez appliquées, et des
+suggestions selon l’endroit où vous êtes : des effets dans Appareils, des nœuds dans Modular, **Lancer la scène** et
+**Arrêter tous les clips** dans Session. Les choses que vous utilisez souvent, depuis la palette ou le navigateur,
+remontent avec le temps.
+
+## Touches
+
+| Touche | Fait |
+|---|---|
+| <Kbd>↑ ↓</Kbd> <Kbd>PgUp PgDn</Kbd> <Kbd>Home End</Kbd> | Se déplacer dans les résultats |
+| <Kbd>Return</Kbd> | Appliquer (voir les modificateurs plus haut) |
+| <Kbd>Tab</Kbd> | Filtre de type suivant |
+| <Kbd>Esc</Kbd> | Fermer et revenir là où vous étiez |
+
+La souris marche aussi : survoler sélectionne une ligne, un clic l’applique, un clic à l’extérieur ferme la
+palette. <Kbd>Space</Kbd> tape une espace dans le champ : elle ne lance pas la lecture tant que la palette est
+ouverte.
+
+<Aside>
+La palette, le menu et les raccourcis clavier exécutent les mêmes commandes : un raccourci affiché dans la palette
+est donc celui du menu et de **Réglages ▸ Raccourcis**.
+</Aside>

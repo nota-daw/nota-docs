@@ -21,6 +21,12 @@ fills, vocal chops, glitchy stutters.
 fires, it captures a **Grid**-long slice and loops it until the **Gate** ends, each repeat pitched,
 faded and filtered.
 
+**Layout:** a centre panel with three tabs — **Timeline**, **Slices**, **Filter**, each a window with
+the knobs it shows beside it — and a right panel that follows the tab: **Repeat** on Timeline,
+**Capture** on Slices, **Filter** on Filter. Under the right panel, whichever tab is open, sit the
+output knobs **Decay**, **Dry/Wet** and **Volume**. The **S / L** switch in the header folds the card
+to **S**: the timeline over **Interval**, **Repeat**, **Chance**, **Gate**, **Decay** and **Dry/Wet**.
+
 ## Timing
 
 | Control | What it does |
@@ -32,23 +38,28 @@ faded and filtered.
 | **Gate** | How long the repeating lasts |
 | **Repeat** · **Latch** | Force a repeat now, as long as it's held (or latched on) |
 
-The **Timeline** tab shows capture and repeats over two intervals; **Slices** shows the interval's
-sound with the offset, gate and slice on it — drag them.
+The **Timeline** tab shows capture and repeats over two intervals, with **Chance** and
+**Variation** beside it; its right panel is **Repeat**: the mode in its title bar, **Repeat** and
+**Reset**, **Latch**, and what the repeater is doing now. **Slices** shows the interval's sound with
+the offset, gate and slice on it — drag them, or turn **Offset** and **Gate** beside it; its right
+panel is **Capture**: **Interval** and **Grid** (with its triplets) and the slice it takes.
 
 <Shot id="devices/audio-effects/beat-repeat/slices" alt="Nota Beat Repeat, Slices tab" />
 
-## Character
+## Filter and pitch
 
-**Pitch** (and **Pitch decay** per repeat — a dive), **Decay** (each repeat quieter), **Volume**, and
-the **Filter**: on / off, **LP**, **BP** or **HP**, **Freq** and width, optionally **narrowing with
-repeats**.
+The **Filter** tab draws the repeat filter on the same graph as Auto Filter, with a later
+repeat's response dashed; drag it sideways for the frequency and up or down for the width (up is
+narrower), or turn **Freq** and **Width** beside it. Its right panel has the filter's switch and **LP**, **BP** or **HP** in the title bar,
+**Narrow with repeats**, **Pitch** and **Pitch decay** (each repeat lower — a dive).
 
 <Shot id="devices/audio-effects/beat-repeat/filter" alt="Nota Beat Repeat, Filter tab" />
 
 ## Output
 
-Mode: **Mix** (repeats over the dry), **Insert** (repeats replace the dry while they play) or **Gate**
-(only the bursts sound); and **Mix** (dry / wet).
+**Decay** makes each repeat quieter, **Dry/Wet** blends, **Volume** sets the repeats' level. The mode
+in the Repeat panel picks how they meet the dry signal: **Mix** (repeats over the dry), **Insert**
+(repeats replace the dry while they play) or **Gate** (only the bursts sound).
 
 ## Presets
 

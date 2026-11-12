@@ -1,0 +1,71 @@
+---
+title: "Nota Flux"
+description: "Un synthé vectoriel qui écoute : passez d’un monde de timbre à un autre sur un pad XY, et laissez l’audio d’une autre piste pousser le filtre, la hauteur, l’espace ou le vecteur lui-même."
+sidebar:
+  order: 10
+updated: "0.57.1"
+status: done
+sources:
+  - src/managed/Nota.App/DeviceCards/SidechainSourcePicker.cs
+  - src/native/nota.engine/src/FluxSynth.h
+  - src/managed/Nota.App/DeviceCards/Instruments/FluxInstrumentCard.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Flux a une petite surface et beaucoup à l’intérieur. Un **pad XY** mélange quatre mondes de timbre ; une poignée de
+macros à un bouton les façonnent ; et **React** laisse le synthé *écouter* une autre piste : une boucle de batterie peut
+faire respirer une nappe en rythme.
+
+<Shot id="devices/instruments/flux/card" alt="Nota Flux : le pad vectoriel, React et les macros" />
+
+**Chemin du signal :** vecteur (mélange de quatre mondes) → oscillateur (dent de scie ↔ carré ↔ bruit, avec un jumeau
+désaccordé) + sub → drive → filtre passe-bas → enveloppe d’ampli → **Space** (une petite reverb stéréo et de la
+largeur).
+
+## Vector
+
+Les quatre coins du pad sont les **mondes** : **Warm** (dent de scie douce), **Glass** (carré brillant), **Moog** (gras
+et résonant) et **Grain** (rugueux, bruité). Faites glisser le point pour les mélanger. Chaque monde apporte sa propre
+résonance, son unison et son drive : déplacer le point change donc tout à la fois, sans que vous les réglions jamais
+directement. Un anneau bleu sarcelle en pointillés montre où Motion et React tirent le point.
+
+## React
+
+React transforme le son d’une autre piste en modulation : pas un ducker, une source.
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| Source | La piste que Flux écoute, ou un pad, une chaîne ou une voix de celle-ci, listés sous la piste (**No source** = React désactivé). React l’entend après ses effets |
+| **Listen** | Avec quelle force il réagit |
+| **Target** | Ce qu’il fait bouger : **Filter**, **Pitch**, **Space** ou **Vector** (le point danse en rythme) |
+
+L’oscilloscope montre ce que Flux entend (enveloppe, transitoires, inclinaison spectrale) à côté de la réaction.
+
+## Macros
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Age** | Usure analogique : un accord qui dérive et un peu de souffle |
+| **Motion** | Une lente dérive du vecteur, synchronisée sur le tempo, avec sa vitesse |
+| **Filter** | Brillance |
+| **Env** | Forme de l’enveloppe : de pincée à lente |
+| **Space** | Reverb et largeur |
+| **Glide** · **Tune** · **Gain** | Portamento, accord, niveau |
+
+La ligne d’état relit le patch en mots : le mélange des mondes, ou ce que fait React.
+
+## Préréglages
+
+25 préréglages d’usine : nappes (**Warm Drift**, **Velvet Pad**, **Grain Pad**, **Tape Choir**, **Slow Tide**), basses
+(**Moog Bass**, **Sub Pressure**, **Rubber Bass**), leads (**Moog Lead**, **Portamento Lead**, **Analog Brass**),
+claviers (**Glass Keys**, **Glass Pluck**, **Crystal Bells**, **Night Keys**), patchs réactifs (**Reactive Vector**,
+**Filter Chase**, **Pumping Chords**, **Duck Space**, **Vector Dance**, **Pitch Wobble**) et textures (**Dust Drone**,
+**Grain Storm**, **Digital Rain**, **Broken Radio**).
+
+## Astuces
+
+- **Pomper sans compresseur :** choisissez la piste de batterie comme source de React, Target **Filter** : la nappe
+  s’ouvre et se ferme avec la grosse caisse.
+- **Automatiser le point :** Vector X et Y sont des paramètres : dessinez-les dans une voie d’automation pour un lent
+  voyage de timbre.

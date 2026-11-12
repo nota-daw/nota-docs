@@ -1,0 +1,64 @@
+---
+title: "Nota Chamber"
+description: "Reverb hybride : un moteur de convolution sans latence avec seize espaces intégrés ou votre propre réponse impulsionnelle, à côté d’un moteur algorithmique avec Dark Hall, Plate, Quartz et Shimmer, mélangés en parallèle ou en série."
+sidebar:
+  order: 20
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/Chamber.h
+  - src/managed/Nota.App/DeviceCards/Bodies/ChamberDeviceBody.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Chamber est deux reverbs en une : un moteur de **convolution** qui rejoue des espaces à la sonorité réaliste, et un
+moteur **algorithmique** pour des queues luxuriantes, modulées et miroitantes. Mélangez-les, ou faites passer l’un dans
+l’autre.
+
+<Shot id="devices/audio-effects/chamber/card" alt="Nota Chamber, onglet Convolution avec la réponse impulsionnelle" />
+
+**Disposition :** la colonne **Blend** à gauche (convolution ⇄ algorithme, et **Dry/Wet**), un panneau central à trois
+onglets, un panneau de droite (**Levels** / **Output**) et une ligne d’état.
+
+## Convolution
+
+Seize réponses impulsionnelles intégrées : halls (**Concert Hall · Wide**, **Stone Vault**, **Cathedral**,
+**Scoring Stage**), pièces (**Wood Chamber**, **Live Room**, **Drum Room**, **Tiled Bathroom**), plaques
+(**Vocal Plate**, **Bright Plate**), **Spring Tank**, espaces (**Car Park**, **Stairwell**, **Forest Clearing**) et
+effets (**Gated Room**, **Metal Tank**), ou **les vôtres** : déposez un WAV, FLAC ou MP3 sur la vue IR, ou utilisez
+**Load…** (mono, stéréo ou vrai stéréo à 4 canaux).
+
+Façonnez-la avec les réglages **Start** et **Decay** (faites-les glisser sur la vue), un fondu d’entrée **Attack**,
+**Size** (étirement temporel), **Reverse** et **True Stereo**, plus un pré-délai (libre ou synchronisé). Le moteur n’a
+aucune latence ; désactiver **Zero Latency** économise du processeur.
+
+## Algorithm
+
+<Shot id="devices/audio-effects/chamber/algorithm" alt="Nota Chamber, onglet Algorithm" />
+
+**Dark Hall**, **Plate**, **Quartz** ou **Shimmer** : **Decay** par bande (grave, médium, aigu : faites glisser les
+repères RT60), **Size**, **Diffuse**, **Damping**, modulation, une couleur **Vintage**, et pour Shimmer un transpositeur
+(réinjecté dans la queue, ou par-dessus). **Freeze** garde la queue (entrée coupée sauf si **Freeze In** est activé). Son
+propre pré-délai, libre ou synchronisé.
+
+## EQ · Mod
+
+<Shot id="devices/audio-effects/chamber/eq-mod" alt="Nota Chamber, onglet EQ · Mod" />
+
+Un EQ à 4 bandes que vous pouvez placer **à l’entrée**, **sur la queue** ou **à la sortie** (faites glisser ses
+poignées), et les réglages de modulation.
+
+## Levels et Output
+
+**Routing** : parallèle, ou **Serial** (la convolution dans l’algorithme). **Dry**, **Dry/Wet**, **Width**, basses en
+mono, **Ducking** (l’entrée repousse la reverb vers le bas tant qu’elle joue), **Wet only** (pour un retour) et gain de
+sortie.
+
+## Préréglages
+
+22 préréglages d’usine : halls (**Stone Vault**, **Concert Hall**, **Cathedral Wash**, **Scoring Stage**,
+**Vintage Hall**, **Ducked Vocal Hall**), pièces (**Wood Chamber**, **Drum Room**, **Live Room**, **Car Park**,
+**Gated Snare**), plaques et ressorts (**Vocal Plate**, **Snare Plate**, **Spring Box**, **Metal Tank**), effets
+(**Wide Shimmer**, **Octave Down Bloom**, **Endless Pad**, **Reverse Swell**, **Forest Echoes**) et pour les retours
+(**Send · Big Hall**, **Send · Plate**).

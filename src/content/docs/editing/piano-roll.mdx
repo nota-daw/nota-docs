@@ -3,20 +3,25 @@ title: Piano roll
 description: Editing MIDI clips — drawing and moving notes, velocity, grid and quantize, scale and Fold, clip envelopes and the generator and transform tools.
 sidebar:
   order: 1
-updated: "0.58.1"
+updated: "0.59.1"
 status: done
 sources:
   - src/native/nota.engine/src/MidiClip.h
   - src/managed/Nota.App/PianoRollView.cs
+  - src/managed/Nota.Application/Editing/VelocityReset.cs
   - src/managed/Nota.App/PianoRollView.Expression.cs
+  - src/managed/Nota.App/PianoRollView.Controllers.cs
   - src/managed/Nota.App/PianoRollView.Fold.cs
   - src/managed/Nota.Presentation/PianoRowMap.cs
   - src/managed/Nota.App/ClipEditorView.cs
+  - src/managed/Nota.App/ClipPropsView.cs
   - src/managed/Nota.App/MainWindow.Detail.cs
   - src/managed/Nota.App/ClipEditorKit.cs
   - src/managed/Nota.App/MidiToolsView.cs
   - src/managed/Nota.App/PianoRollView.ClipStrip.cs
   - src/managed/Nota.Application/Editing/ClipSet.cs
+  - src/managed/Nota.Application/Editing/NotePlacementDrag.cs
+  - src/managed/Nota.Application/Editing/VelocityWheel.cs
   - src/managed/Nota.Application/Midi/MidiToolCatalog.cs
   - src/managed/Nota.Application/Midi/MidiGenerators.cs
   - src/managed/Nota.Application/Midi/MidiTransforms.cs
@@ -36,6 +41,9 @@ tab of the panel at the bottom.
 | Do this | To |
 |---|---|
 | Double-click empty grid | Add a note, with the length and velocity of the note you last clicked, moved, resized or changed the velocity of |
+| Double-click empty grid, keep the button down and drag | Move the new note, in time and pitch |
+| … and hold <Kbd>⇧</Kbd> | Set its length — the end follows the pointer |
+| … and hold <Kbd>⌘</Kbd> | Set its velocity — drag up for louder, down for quieter |
 | Double-click a note | Delete it |
 | Drag a note | Move it in time and pitch |
 | Drag with <Kbd>⌥</Kbd> | Ignore the grid for this drag |
@@ -50,6 +58,15 @@ tab of the panel at the bottom.
 | <Kbd>Delete</Kbd> | Delete the selected notes |
 | Click the ruler · drag along it | Move the playhead there · scrub, snapped to the grid (<Kbd>⌥</Kbd> — freely) |
 | Drag the playhead line | Scrub, on the ruler or over empty grid — a click on it stays a click |
+
+Drag right after the double-click that adds a note and the note is shaped in the same gesture,
+without letting go. Nota reads <Kbd>⇧</Kbd> and <Kbd>⌘</Kbd> as you drag, so you can switch
+between moving, lengthening and setting velocity mid-drag; the note carries on from where it is, and
+<Kbd>⌘</Kbd> wins if both are held. Moving and lengthening follow the grid, and <Kbd>⌥</Kbd> ignores it.
+Velocity changes one MIDI step per 2 pixels, from 1 to 127. Let go without moving and you get a plain
+new note. The shaped note counts as the one you last touched, so the next note you add takes its
+length and velocity. In a clip in the Arrangement, adding and shaping the note is one undo step; in a
+Session slot, the drag is a second step.
 
 Edits play straight away — drag a note while the loop runs and you hear it move. The playhead
 shows in the piano roll whether the transport is playing or stopped, so you can see where
@@ -84,7 +101,7 @@ transpose or quantize the note and its expression goes along.
 ### Editing it
 
 The lane under the notes switches with the labels on its left: **Vel** (velocity), **Bend**, **Pres**
-(pressure) and **Slide**. In an MPE lane every note's curve is drawn over the note's own span; the
+(pressure) and **Slide**; the tab under them edits a [MIDI controller](#controllers). In an MPE lane every note's curve is drawn over the note's own span; the
 selected notes' curves are the ones you edit, with their points marked.
 
 | Do this | To |
@@ -104,6 +121,71 @@ that take [MPE](../../control/midi/#pitch-wheel-aftertouch-and-mpe).
 
 The lane under the notes shows each note's velocity as a stem. Drag a stem to set it; with
 several notes selected, they move together. <Kbd>⇧</Kbd> adds a note to the selection.
+
+To put a note back to the default velocity (0.8, the one a first note gets), double-click its
+stem, or right-click it and choose **Reset velocity**. When the note is selected, the whole
+selection is reset. A single undo brings the old velocities back, even though the double-click
+also clicked the stem. A note already at the default is left alone, and so are the notes of a
+locked reference clip. The default is fixed: it does not follow the note you touched last.
+
+You can also change velocity from the grid: with the pointer over a note, <Kbd>⇧</Kbd> + wheel
+raises or lowers it one MIDI step per notch, from 1 to 127. If the note is selected, the whole
+selection changes together. A run of notches is one undo step. With the pointer anywhere else,
+<Kbd>⇧</Kbd> + wheel still scrolls in time, and so it does over a note in a locked reference
+clip. A trackpad's small swipes add up, so a slow swipe still steps. The direction and the
+size of a step are in [Settings ▸ Shortcuts](../../preferences/shortcuts/#velocity-wheel).
+
+## Controllers
+
+The fifth tab in the lane's labels edits one MIDI controller over the whole clip — the sustain
+pedal, the mod wheel, any CC. The tab shows the controller's short name and a small arrow. Click it to
+show the lane; click it again to pick another controller:
+
+- the controllers the clip already holds data for come first, marked with an icon;
+- then **Sustain**, **Mod wheel**, **Pitch wheel**, **Channel pressure**, **Expression** and
+  **Breath**;
+- **Other CC** lists every remaining controller number, in groups of 16.
+
+The first time you open the tab it shows the first controller the clip has data for, or Sustain
+if there is none. The lane names the controller in its top-left corner, and reads out the value
+under the pointer on the right.
+
+**Pedals** — Sustain and the other on/off controllers (CC 64–69) — are drawn as blocks: the pedal
+is down wherever a block is.
+
+| Do this | To |
+|---|---|
+| Drag across empty lane | Draw a block, on the grid |
+| Drag a block | Move it |
+| Drag a block's edge | Change where it starts or ends |
+| <Kbd>⌘</Kbd> while dragging | Ignore the grid |
+| Double-click a block · select it and press <Kbd>Delete</Kbd> | Delete it |
+
+**Every other controller** is a curve:
+
+| Do this | To |
+|---|---|
+| Drag across the lane | Draw the curve over the stretch you drag; the rest of the curve stays as it was |
+| <Kbd>⌥</Kbd>-drag | Draw a straight line instead |
+| Drag a point | Move it in time and value |
+| Double-click | Add a point · on a point, delete it |
+
+The pitch wheel snaps to its centre when you draw near it. Right-click the lane and choose
+**Clear** (it names the controller) to remove its data from the clip. Every gesture is one undo
+step and plays back straight away.
+
+### More lanes
+
+To see several controllers at once, click **+ lane** under the entries of the left column: a
+new lane opens under the others, with its own controller menu in its top-left corner (the
+controller's name and CC number). The **×** beside it hides the lane; the controller's data
+stays in the clip. Each controller lane has a **127 / 64 / 0** scale on its left, lined up
+with the curve. The extra lanes share the notes' zoom and scroll position in time, and scroll
+up and down when they don't all fit.
+
+Drag the divider above the Velocity lane or above any controller lane to make that lane taller
+or shorter. Nota remembers each height, also after a restart; add the same lane or controller
+again and it comes back at that height.
 
 ## Several clips at once
 
@@ -131,12 +213,40 @@ are quieter but just as editable.
 - <Kbd>⌘ D</Kbd> copies that run past a clip's end carry on into the next open clip;
   copies with no clip to land in are left out.
 
+## Track mode
+
+To work on a whole part instead of picking clips, switch the editor to **Track** mode. The
+**Clip | Track** switch is at the top of the **Clip** section in the left column (arrangement
+clips only — a Session slot has no switch), and the command palette has **Toggle clip editor
+track mode**.
+
+In **Track** mode the editor opens every MIDI clip on the clip's track, laid on the
+Arrangement's own bars from bar 1 — so a bass line spread over a dozen clips scrolls as one
+piece. The clip strip under the ruler marks where each clip begins and ends. Editing is the
+same as with [several clips at once](#several-clips-at-once): notes move over the seams, a
+rubber band can span clips, locked **reference** clips stay read-only, and one undo reverts the
+whole edit. Even a track with a single clip uses the Arrangement's bars here.
+
+- Double-click a MIDI clip, or select one, and its track opens with that clip **active** and
+  scrolled into view. If the track is already open, the editor isn't rebuilt: the clip just
+  becomes active. Select a clip on another track and that track opens instead.
+- Clips you draw, paste or record on the track join the editor. Split a clip (<Kbd>⌘ E</Kbd>,
+  **Split here**, or a split over a time range) and both halves stay open — you keep your zoom,
+  scroll and note selection, and the active clip is the one still starting at the same bar.
+  Locked **reference** clips stay locked where the clip hasn't moved.
+- A gap between clips is not part of any clip, so drawing there does nothing — the same as with
+  several clips.
+- **Edit selected clips together** leaves **Track** mode and opens just the clips you selected.
+
+Switching reopens the editor on the active clip: **Clip** shows that clip alone. The status bar
+says which mode you're in, and Nota remembers it between sessions — **Clip** is the default.
+
 ## Zoom
 
 | Do this | To |
 |---|---|
 | <Kbd>⌘</Kbd> + wheel | Zoom in time, toward the pointer |
-| <Kbd>⇧</Kbd> + wheel | Scroll in time |
+| <Kbd>⇧</Kbd> + wheel | Scroll in time — over a note it changes [velocity](#velocity) instead |
 | <Kbd>⌘ ⌥</Kbd> + wheel | Make the rows taller or shorter |
 | Drag up or down on the keys | Taller (down) or shorter (up) rows |
 | <Kbd>⌥</Kbd> + pinch on a trackpad | Taller or shorter rows |
@@ -156,7 +266,8 @@ standard row height, centred on its notes.
 The clip's settings sit in one strip above the notes, so the notes get the full width. From
 left to right:
 
-- **Clip** — **Start** and **Length**, and **Loop** with the loop length.
+- **Clip** — the **Clip | Track** switch (see [Track mode](#track-mode)), **Start** and
+  **Length**, and **Loop** with the loop length.
 - **Quantize** — its own step (1/32 to 1/2, triplets too; 1/16 by default), which doesn't
   change with the zoom. **Quantize** pulls the notes onto it, as far as the **Strength** bar
   next to it says — 100 % is rigid, less keeps some of the feel. Drag the bar, or double-click

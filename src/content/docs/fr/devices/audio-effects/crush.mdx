@@ -1,0 +1,53 @@
+---
+title: "Nota Crush"
+description: "Bit crusher : réduction de la profondeur de bits et de la fréquence d’échantillonnage en trois caractères, avec drive, grain (dither, jitter, plancher de bruit), filtres anti-alias et post, gain automatique et dry / wet."
+sidebar:
+  order: 14
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/Crush.h
+  - src/managed/Nota.App/DeviceCards/Bodies/CrushDeviceBody.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Crush abaisse la profondeur de bits et la fréquence d’échantillonnage : vieux samplers, consoles de jeu, radios
+cassées, destruction numérique.
+
+<Shot id="devices/audio-effects/crush/card" alt="Nota Crush, onglet Quantiser avec les marches tenues et quantifiées" />
+
+**Chemin du signal :** drive → filtre anti-alias → échantillonneur-bloqueur (avec jitter) → dither → forme →
+quantification → plancher de bruit → filtre post → filtre DC → mix → gain automatique.
+
+## Les graphiques
+
+| Onglet | Ce qu’il montre (et ce que vous pouvez faire glisser) |
+|---|---|
+| **Quantiser** | Les marches tenues et quantifiées sur un sinus : glissez vers le haut et le bas pour **Bits**, vers la gauche et la droite pour **Rate** |
+| **Spectrum** | Le spectre de sortie, ce que le crush a ajouté, et les images au-dessus du Nyquist réduit : faites glisser les lignes du Nyquist et du filtre |
+| **Transfer** | La courbe de transfert : faites glisser pour **Drive** |
+
+<Shot id="devices/audio-effects/crush/spectrum" alt="Nota Crush, onglet Spectrum" />
+
+## Commandes
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Mode** | **Digital** (troncature dure), **Analog** (écrêtage doux) ou **Fold** (repliement d’onde) |
+| **Bits** · **Rate** | La profondeur de bits et la fréquence d’échantillonnage réduite |
+| **Drive** | Drive d’entrée |
+| **Anti-alias** | Filtre ce que la fréquence réduite replierait : activé pour du lisse, désactivé pour un aliasing rugueux |
+| **Dither** · **Jitter** · **Noise** | Le grain : bruit de dither, jitter d’horloge, plancher de bruit |
+| **Filter** | Un passe-bas post pour dompter les aigus |
+| **DC filter** | Retire tout décalage DC |
+| **Wet** · **Gain** · auto gain | Dry / wet, sortie, et recalage de la sortie sur la sonie de l’entrée |
+
+## Préréglages
+
+33 préréglages d’usine : lo-fi (**Broken Radio**, **Lo-Fi Warmth**, **Lo-Fi Tape**, **Dusty Sampler**, **SP-1200 Grit**,
+**MPC Crunch**, **Vinyl Dust**, **Warm 12-Bit**), radio (**Telephone Line**, **AM Transmitter**, **Walkie-Talkie**), jeux
+(**8-Bit Arcade**, **4-Bit Handheld**, **NES Pulse**, **16-Bit Console**, **Game Boy Wave**, **Speak & Spell**), mix
+(**Subtle Air**, **Parallel Grit**, **Hi-Hat Sizzle**, **Drum Bus Dirt**), destruction (**Digital Grit**, **1-Bit Buzz**,
+**Aliasing Storm**, **Broken Clock**, **Bitrot**, **Sub Destroyer**, **Broken Toy**) et repliement (**Folded Crunch**,
+**Gentle Fold**, **West Coast Fold**, **Metal Fold**).

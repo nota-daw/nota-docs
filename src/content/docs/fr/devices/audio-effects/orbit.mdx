@@ -1,0 +1,50 @@
+---
+title: "Nota Orbit"
+description: "Auto-pan et trémolo sur un seul LFO : la phase entre gauche et droite va du trémolo à l’auto-pan. Sinus, triangle, dent de scie, carré ou S&H ; libre ou synchronisé."
+sidebar:
+  order: 11
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/AutoPan.h
+  - src/managed/Nota.App/DeviceCards/Bodies/AutoPanDeviceBody.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Orbit déplace un son en volume et dans l’espace avec un seul LFO. La **Phase** entre les canaux gauche et droit
+décide de ce que vous entendez : à **0°**, les deux baissent ensemble, c’est un trémolo ; à **180°**, l’un est fort
+pendant que l’autre est faible, c’est un auto-pan ; entre les deux, un tourbillon.
+
+<Shot id="devices/audio-effects/orbit/card" alt="Nota Orbit : le LFO, le gain des deux canaux sur deux cycles et les commandes de mouvement" />
+
+## LFO
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| Wave | **Sine**, **Triangle**, **Saw**, **Square** ou **S&H** (pas aléatoires) |
+| **Hz** / **Sync** | Libre, de 0,01 à 40 Hz, ou synchronisé sur une division de 4 mesures à 1/32, pointées et triolets compris |
+| **Rate** | La vitesse (affichée en grand, avec sa période) |
+| **Shape** | Affûte les ondes douces vers un carré ; sur S&H, c’est le **Glide** entre les pas |
+
+Synchronisé, le LFO se cale sur la position dans le morceau et repart sur la mesure.
+
+## La fenêtre
+
+Le gain des deux canaux sur deux cycles, avec une tête qui avance et le plancher de la profondeur. Faites glisser vers le
+haut et le bas pour **Amount**, vers la gauche et la droite pour **Phase**. En dessous, la position stéréo sur une ligne
+G–D.
+
+## Motion
+
+**Amount** (profondeur), **Phase** avec des crans à **0°**, **90°** et **180°**, **Mix** (dry / wet) et les vumètres de
+sortie. La ligne d’état nomme le mode obtenu : trémolo, auto-pan ou un décalage entre les deux.
+
+## Préréglages
+
+31 préréglages d’usine : panoramique (**Classic Pan**, **Slow Sweep**, **Hard Square**, **Wide Drift**, **Gentle Sway**,
+**Quarter Circle**, **Ping Pong**, **Eighth Swirl**, **Bar Sweep**, **Two-Bar Drift**, **Quarter Pan**,
+**Dotted Bounce**, **Triplet Roll**, **Saw Rotor**), trémolo (**Tremolo**, **Chop Gate**, **Chop Trem**,
+**Vintage Amp Trem**, **Deep Throb**, **Helicopter**, **Sidechain Pump**, **Stutter 32**) et aléatoire et mouvement
+(**Random Space**, **Random Steps**, **Drifting Cloud**, **Glitch Gate**, **Wander**, **Stereo Breath**,
+**Mix Motion**, **Offset Swirl**).

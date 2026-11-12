@@ -1,0 +1,69 @@
+---
+title: "Nota Valve"
+description: "Ampli guitare : sept voicings d’ampli de Clean à Heavy plus un ampli Bass, un tone stack, cinq baffles avec micro, distance et position, des coupures, un noise gate et dry / wet."
+sidebar:
+  order: 8
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/Amp.h
+  - src/managed/Nota.App/DeviceCards/Bodies/ValveDeviceBody.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Valve est un ampli et son baffle : branchez-y directement une guitare ou une basse, ou servez-vous-en pour du grain
+sur des claviers, des voix et des batteries.
+
+<Shot id="devices/audio-effects/valve/card" alt="Nota Valve, onglet Amp avec la réponse du tone stack" />
+
+**Chemin du signal :** pré-filtre → **Bright** → préampli (suréchantillonné) → tone stack → **Deep** → baffle →
+coupure grave / aiguë → compensation de gain → sortie → gate → mix.
+
+**Disposition :** la colonne **Stage** à gauche (faders **Gain** et **Output**), un panneau central à trois onglets, un
+panneau de droite (**Cabinet** / **Output**) et une ligne d’état.
+
+## Amp
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| Model | **Clean**, **Boost**, **Blues**, **Rock**, **Lead**, **Heavy**, **Bass** |
+| **Gain** | Saturation du préampli |
+| **Bass** · **Middle** · **Treble** · **Presence** | Le tone stack ; **Mid freq** balaie le médium |
+| **Bright** · **Deep** | Des interrupteurs pour plus d’aigus et plus de grave |
+| **Even only** | Un préampli à harmoniques paires seulement : chaud plutôt que grinçant |
+
+Le graphique montre la réponse du tone stack face à une réponse plate.
+
+## Cab
+
+<Shot id="devices/audio-effects/valve/cab" alt="Nota Valve, onglet Cab avec la réponse du baffle" />
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| Cabinet | **Match** (suit le modèle), **1×12 Open**, **2×12 Combo**, **4×12 Closed**, **1×15 Bass** |
+| Mic | **Dyn** (dynamique), **Cond** (statique) ou **Ribbon** |
+| **Distance** · **Axis** · position | À quelle distance est le micro, dans l’axe ou hors axe, sur le **Cap** ou le **Edge** du haut-parleur |
+| **Low cut** · **High cut** | Rognent les extrêmes du baffle |
+
+Le graphique montre la réponse de ce baffle face au micro dans l’axe sur le cap.
+
+## Harmonics
+
+<Shot id="devices/audio-effects/valve/harmonics" alt="Nota Valve, onglet Harmonics" />
+
+Les harmoniques que le préampli ajoute à l’instant : voyez comment Gain et le modèle changent le caractère.
+
+## Output
+
+**Output**, **Mix** (dry / wet), **Auto comp** (garde le niveau stable quand Gain change), le **Gate** (déclenché par
+l’entrée, pour couper le souffle entre les notes), **Oversampling** et l’activation du baffle.
+
+## Préréglages
+
+31 préréglages d’usine : clean (**Clean Combo**, **Jazz Box**, **Glassy Clean**, **Funk Snap**, **Country Twang**),
+blues (**Blues Breakup**, **Edge of Breakup**, **Texas Blues**, **Smooth Blues Lead**, **Even Warmth**), rock
+(**Rock Crunch**, **Classic Stack**, **Arena Rhythm**, **Indie Jangle**, **Garage Fuzz**), lead (**Lead Sustain**,
+**Singing Lead**, **Shred Lead**), heavy (**Heavy Chug**, **Modern Metal**, **Doom Sludge**, **Djent Tight**), basse
+(**Bass Amp**, **Bass Growl**, **Bass DI Clean**, **Bass Drive Blend**) et au-delà de la guitare (**Lo-Fi Radio Amp**,
+**Keys Grit**, **Vocal Tube Color**, **Drum Crunch**, **Parallel Grind**).

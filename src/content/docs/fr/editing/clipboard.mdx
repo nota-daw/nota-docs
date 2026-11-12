@@ -1,0 +1,66 @@
+---
+title: "Copier, coller et glisser"
+description: "Le presse-papiers pour les clips, notes, pistes et appareils ; déplacer des clips entre l’Arrangement et la Session ; glisser des clips audio dans des instruments."
+sidebar:
+  order: 6
+updated: "0.50.1"
+status: done
+sources:
+  - src/managed/Nota.App/ClipTransfer.cs
+  - src/managed/Nota.App/MainWindow.Dnd.cs
+  - src/managed/Nota.App/ArrangementView.ClipDrag.cs
+  - src/managed/Nota.App/DeviceChainView.Clipboard.cs
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import Kbd from '@components/Kbd.astro';
+
+<Kbd>⌘ C</Kbd>, <Kbd>⌘ X</Kbd>, <Kbd>⌘ V</Kbd> et <Kbd>⌘ D</Kbd> (dupliquer) agissent sur ce sur quoi vous avez
+cliqué en dernier :
+
+| Où | Ce qu’ils copient |
+|---|---|
+| Voies de l’Arrangement | Des clips, ou une plage d’automation en mode automation |
+| En-têtes de piste | Des pistes entières : un groupe avec ses pistes ; les pistes collées arrivent après celle qui est sélectionnée |
+| Grille de Session | Un clip ou une scène |
+| Éditeur de clip | Des notes |
+| Chaîne d’appareils | Des appareils (clic droit sur l’en-tête d’un appareil ▸ **Copier**) |
+
+Chaque collage est une seule étape d’annulation.
+
+## Entre l’Arrangement et la Session
+
+Le presse-papiers transporte des clips dans les deux sens : copiez des clips sur la timeline et collez-les sur un
+emplacement de Session, ou copiez un emplacement et collez-le sur la timeline.
+
+**⌘ ⇧ C** envoie la sélection directement de l’autre côté, aussi sous le nom **Copier vers Session** /
+**Copier vers l’arrangement** dans les menus du clic droit et le menu Édition :
+
+- **Arrangement → Session :** les clips arrivent dans la première ligne de scène où ils tiennent tous (les clips de
+  chaque piste le long de sa colonne, dans l’ordre du temps), en ajoutant des scènes si besoin. **Copier vers la
+  scène** vous laisse choisir la scène.
+- **Session → Arrangement :** un clip, un emplacement de groupe ou une scène entière arrive sur la timeline à la tête
+  de lecture, sans recouvrir les clips déjà présents.
+
+Les notes, enveloppes de clip, noms, warp, hauteur et gain suivent.
+
+## Des clips audio dans des instruments
+
+Faites glisser un clip audio de l’Arrangement sur la ligne d’une piste avec un **Sampler**, **Nota Grain**, un **Drum
+Rack** ou un **Instrument Rack** et son audio s’y charge : un Drum Rack le prend sur le prochain pad libre. Restez
+au-dessus d’une piste d’instrument pendant le glissement et ses appareils s’ouvrent : un pad précis n’est donc qu’un
+mouvement de plus.
+
+Sortez un clip de l’Arrangement et il devient un **échantillon** que vous pouvez déposer partout où un échantillon va :
+un pad de Drum Rack, un Grain, une voix de Nota Rhythm, un emplacement de Session. Le clip lui-même reste où il était ;
+l’échantillon est la partie du clip que vous entendez.
+
+## Glisser depuis le navigateur
+
+Tout ce qui est dans le navigateur peut être glissé dans le projet : instruments et effets sur des pistes ou des
+chaînes d’appareils, échantillons et boucles sur des pistes ou des emplacements, fichiers MIDI sur des pistes
+d’instrument, préréglages sur des appareils. Voir [Le navigateur](../../library/browser/).
+
+<Aside type="tip">
+Maintenez <Kbd>⌥</Kbd> en faisant glisser un clip dans la grille de Session pour le copier au lieu de le déplacer.
+</Aside>

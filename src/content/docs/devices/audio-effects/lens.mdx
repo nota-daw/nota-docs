@@ -17,8 +17,16 @@ master, to look at the spectrum, the waveform or how the sound evolves over time
 
 <Shot id="devices/audio-effects/lens/card" alt="Nota Lens, Spectrum view" />
 
-**Layout:** the **Scale** rail on the left, one large graph in the middle with three views, an
-**Analyze** / **Display** panel on the right and a status line.
+**Layout:** one large graph with three views — **Spectrum** (Smooth, Decay and Tilt beside it, the
+FFT size and Mid / Side under it), **Scope** (Time/Div, Volt/Div and the trigger level beside it, Sync,
+the trigger or span and Afterglow under it) and **Waterfall** (Gain, Floor and Contrast beside it, the
+speed under it) — with the source (**L+R** / **L** / **R**) and **Freeze** in the tab bar, and a right
+panel that follows the view: the spectrum's peak hold, window, averaging, floor and scale with the
+peak / crest / LUFS read-out and the cursor; the scope's **Cursors** switch and layout, holdoff, key,
+afterglow settings and the capture read-out (the cursors' measurements while Cursors is on); the
+waterfall's window, FFT, overlap, averaging and frame rate. An analyzer has no output stage, so there
+are no output knobs. The **S / L** switch in the header folds the card to **S**: the spectrum over
+the source and **Smooth**, **Decay**, **Tilt** and **Floor**.
 
 ## Spectrum
 
@@ -58,7 +66,7 @@ on the beat or just after it, bar after bar.
 
 ### Key overlay
 
-Lens takes a sidechain key, like the Compressor. In **Key** on the Analyze panel, pick another
+Lens takes a sidechain key, like the Compressor. In **Key** on the Scope panel, pick another
 track: its audio (after its effects) is drawn in teal over this track's trace, in the synced scope
 and in the triggered one, where it follows the same trigger and time base. The switch next to it
 hides the key's trace.

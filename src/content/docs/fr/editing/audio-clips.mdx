@@ -1,0 +1,123 @@
+---
+title: "Clips audio et warp"
+description: "Modifier des clips audio : rogner, gain, hauteur, inversion, warp sur le tempo avec des repères, enveloppes de volume et de panoramique, et l’ADSR du clip."
+sidebar:
+  order: 2
+updated: "0.58.1"
+status: done
+sources:
+  - src/managed/Nota.App/AudioClipEditorView.cs
+  - src/managed/Nota.App/SnapChip.cs
+  - src/managed/Nota.App/ClipAdsrKit.cs
+  - src/managed/Nota.App/ClipPropsView.cs
+  - src/managed/Nota.App/MainWindow.AudioImport.cs
+  - src/native/nota.engine/src/Warp.h
+  - src/native/nota.engine/src/TempoDetect.h
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
+
+L’audio entre dans un projet en faisant glisser des fichiers depuis le navigateur ou votre gestionnaire de fichiers,
+avec **Fichier ▸ Importer de l’audio…**, ou en [enregistrant](../recording/). Double-cliquez sur un clip audio, dans
+l’Arrangement ou un emplacement de Session, pour l’ouvrir dans l’éditeur de clip.
+
+<Shot id="editing/audio-clip-editor" alt="Un clip audio dans l’éditeur de clip : l’onglet Échantillon avec la forme d’onde, le début et la longueur du clip, le gain et la hauteur" />
+
+## Tempo et tonalité quand vous déposez un fichier
+
+Nota analyse chaque fichier qu’il importe. Une **boucle** (ou une longue prise avec un tempo net) est calée sur le
+tempo du projet en arrivant, et la ligne d’état le dit : « boucle warpée 124 → 120 BPM ». Avec **Transposer à la
+tonalité du projet** activé (le menu ⋮ de l’onglet Fichiers), elle est aussi amenée à la
+[tonalité du projet](../../basics/transport/#tempo-signature-rythmique-et-tonalité) par le plus court chemin. Un
+**one-shot** (une grosse caisse, un coup) n’est jamais warpé.
+
+Les longs fichiers se décodent en arrière-plan : la piste apparaît tout de suite et sa forme d’onde se remplit. Le
+warp tourne aussi en arrière-plan : la piste affiche « Traitement… » jusqu’à ce que le clip soit étiré au tempo.
+Quand vous changez le tempo, les repères, le rognage, la hauteur ou le mode de warp d’un clip, il continue à jouer sa
+version précédente jusqu’à ce que la nouvelle soit prête.
+
+## Échantillon
+
+La pastille de l’en-tête est la [grille d’accrochage](../../basics/transport/#la-grille-daccrochage) des éditeurs de
+clip, partagée avec le piano roll : elle montre le pas (**Auto · 1/16**) et ouvre le menu de la grille. Les crochets
+de rognage, les repères de warp et les points d’enveloppe tombent sur les lignes de la forme d’onde : en **Auto**,
+elles s’affinent à mesure que vous zoomez. Maintenez <Kbd>⌥</Kbd> en faisant glisser pour en placer un librement. Un
+clip non warpé n’a pas de grille rythmique : dans **Échantillon**, rien ne s’accroche tant que vous n’activez pas
+**Warp** ; l’indice sous la forme d’onde le dit.
+
+L’onglet **Échantillon** montre la forme d’onde avec la partie du fichier que joue le clip. Il dessine toujours le
+style **Lisse** (un contour des crêtes autour d’un corps qui suit le volume sonore), quel que soit le réglage de
+**Forme d’onde** dans [Réglages ▸ Apparence](../../preferences/appearance/#forme-donde). Sa règle indique où chaque moment
+joue dans l’Arrangement, en mesures, ou en temps quand l’indicateur de position du transport affiche le temps.
+Cliquez ou faites glisser sur la règle, ou faites glisser la ligne de la tête de lecture, pour y déplacer la tête de
+lecture (sur la grille pour un clip warpé ; maintenez <Kbd>⌥</Kbd> pour la placer librement). La tête de lecture
+s’affiche aussi à l’arrêt.
+
+- **Clip** : **Début** et **Longueur**. Faites glisser les crochets sur la forme d’onde pour rogner ; sur un clip
+  warpé, ils tombent sur la grille.
+- **Lecture** : **Gain** (glisser ou double-cliquer pour saisir) et **Hauteur** en demi-tons. **Inverser** joue le clip
+  à l’envers.
+
+## Warp
+
+**Warp** étire l’audio sur le tempo du projet sans changer sa hauteur, et le garde en mesure quand vous changez le
+tempo plus tard. Choisissez comment il s’étire :
+
+| Mode | Idéal pour |
+|---|---|
+| **Beats** | Batteries et boucles percussives : garde les coups nets |
+| **Tones** | Matière monophonique et hauteur marquée : voix, basse, leads |
+| **Texture** | Nappes, ambiances, sons bruités |
+| **Re-Pitch** | Comme une bande : la vitesse et la hauteur changent ensemble |
+| **Complex** | Mixages complets et matière dense |
+| **Complex Pro** | Mixages complets, avec plus de soin pour les formants |
+
+**Tempo**, sous l’interrupteur Warp, est le tempo auquel l’audio a été enregistré. Faites-le glisser ou double-cliquez
+pour en saisir un : Nota étire le clip de ce tempo vers celui du projet, et vos repères gardent leur place dans le
+temps. Un tempo détecté à moitié ou au double de la vitesse est à un clic : **÷2** ou **×2**. Sur un clip non warpé,
+régler un tempo active **Warp**.
+
+**Détecter le tempo** lit le tempo du fichier et l’aligne sur le projet. Pour un contrôle plus fin, utilisez des
+**repères** : double-cliquez sur la forme d’onde pour épingler un repère, puis faites-le glisser pour aligner ce
+moment sur la grille ; la forme d’onde s’étire pendant que vous faites glisser, et le clip est re-warpé quand vous
+relâchez. <Kbd>Esc</Kbd> pendant le glissement remet le repère. **Aux transitoires** épingle un repère sur chaque
+attaque, pour qu’une boucle de batterie se cale sur la grille.
+
+Désactiver **Warp** garde les repères. Réactivez-le et le clip joue comme vous l’avez laissé ; il en va de même pour
+l’annulation, un projet enregistré et un clip que vous découpez ou rognez pendant que le warp est désactivé.
+
+## Enveloppe
+
+**Enveloppe** dessine des courbes de **Volume** et de **Pan** sur le clip. Cliquez pour ajouter un point, faites-le
+glisser pour le déplacer, clic droit pour le supprimer. Les points s’accrochent dans le temps à la grille, qui suit
+ici le clip pendant la lecture : depuis son début, de gauche à droite même quand le clip est inversé.
+
+## ADSR
+
+**ADSR** façonne le début et la fin du clip : **Attaque** le fait entrer en fondu, **Déclin** et **Maintien** règlent
+comment il se stabilise, **Relâchement** le fait sortir en fondu. Vous pouvez aussi le façonner directement sur la
+timeline : survolez un clip audio et faites glisser les poignées de ses coins supérieurs (ou le point qui apparaît).
+<Kbd>⌥</Kbd>-clic sur une poignée pour saisir sa durée (le point : le déclin, puis le maintien après <Kbd>Tab</Kbd>) ;
+double-cliquez dessus pour réinitialiser cette étape.
+
+Découper un clip audio écrit aussi un fondu de 4 ms à la coupure (**Relâchement** sur le morceau de gauche,
+**Attaque** sur celui de droite), pour que la coupure ne claque pas. Faites glisser ces poignées pour l’allonger ou le
+raccourcir. Réglages → Apparence → **Fondu sur les clips audio à la découpe** le désactive. **Fondu aux découpes**, dans la
+palette de commandes ou le menu du clip, écrit le même fondu là où deux clips audio se touchent déjà.
+
+## Sur la timeline
+
+Faites un clic droit sur un clip audio pour **Fondu aux découpes**, **Inverser**, **Séparer les stems…** (le séparer en
+batterie, basse, voix et le reste, voir [Séparer les stems](../../ai/separate-stems/)) et **Convertir** (transformer
+sa mélodie, son harmonie ou sa batterie en MIDI, voir [Convertir de l’audio en MIDI](../midi-tools/)).
+
+Faites glisser un clip audio sur une piste avec un Sampler, Nota Grain, un Drum Rack ou un Instrument Rack et son
+audio s’y charge ; sortez-le de l’Arrangement et il devient un échantillon que vous pouvez déposer n’importe où : voir
+[Copier, coller et glisser](../clipboard/#des-clips-audio-dans-des-instruments).
+
+<Aside type="tip">
+Un clip ne joue que la partie entre ses crochets, mais tout le fichier reste dans le projet : rognez largement, vous
+pourrez toujours le rouvrir.
+</Aside>

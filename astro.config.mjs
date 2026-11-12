@@ -5,10 +5,30 @@ import starlight from '@astrojs/starlight';
 // GitHub Pages serves the site from /<repo>/; the deploy workflow passes the base path.
 const base = process.env.BASE_PATH ?? '/';
 
-/** A sidebar group whose pages come from one directory, labelled in both languages. */
+/** French sidebar labels, by the English label. The names follow the French app (Réglages, Appareils…). */
+const fr = {
+  'Start here': 'Pour commencer',
+  Basics: 'Bases',
+  Views: 'Vues',
+  Editing: 'Édition',
+  Devices: 'Appareils',
+  Instruments: 'Instruments',
+  'Audio effects': 'Effets audio',
+  'MIDI effects': 'Effets MIDI',
+  Racks: 'Racks',
+  'Plug-ins': 'Plug-ins',
+  'Browser & library': 'Navigateur et bibliothèque',
+  'Controllers & Remote': 'Contrôleurs et Remote',
+  AI: 'IA',
+  Export: 'Export',
+  Settings: 'Réglages',
+  Reference: 'Référence',
+};
+
+/** A sidebar group whose pages come from one directory, labelled in every language. */
 const group = (label, ru, directory, extra = {}) => ({
   label,
-  translations: { ru },
+  translations: { ru, fr: fr[label] },
   items: [{ autogenerate: { directory } }],
   ...extra,
 });
@@ -31,6 +51,7 @@ export default defineConfig({
       locales: {
         root: { label: 'English', lang: 'en' },
         ru: { label: 'Русский', lang: 'ru' },
+        fr: { label: 'Français', lang: 'fr' },
       },
       social: [
         { icon: 'github', label: 'GitHub', href: 'https://github.com/nota-daw/nota' },
@@ -50,7 +71,7 @@ export default defineConfig({
         group('Editing', 'Редактирование', 'editing'),
         {
           label: 'Devices',
-          translations: { ru: 'Устройства' },
+          translations: { ru: 'Устройства', fr: fr.Devices },
           items: [
             { slug: 'devices' },
             group('Instruments', 'Инструменты', 'devices/instruments', { collapsed: true }),

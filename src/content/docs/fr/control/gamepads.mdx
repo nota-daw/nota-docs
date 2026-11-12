@@ -1,0 +1,50 @@
+---
+title: "Manettes"
+description: "Utiliser une manette de jeu comme petit clavier et comme contrôleur : les boutons de face et les gâchettes jouent des notes, et n’importe quel bouton, stick ou gâchette peut être assigné. macOS."
+sidebar:
+  order: 3
+updated: "0.50.1"
+status: done
+sources:
+  - src/managed/Nota.App/MainWindow.Gamepad.cs
+  - src/native/nota.engine/src/GamepadInput.h
+  - src/managed/Nota.App/PreferencesWindow.cs
+---
+
+import Shot from '@components/Shot.astro';
+import { Aside } from '@astrojs/starlight/components';
+
+Sous macOS, une manette de jeu (Xbox, DualShock, DualSense, Switch Pro, 8BitDo) peut jouer des notes et piloter les
+commandes de Nota.
+
+## L’activer
+
+**Réglages ▸ Manettes** ▸ **Utiliser une manette connectée pour les notes et les commandes assignées**. Les manettes
+connectées apparaissent dans la liste, avec le dernier bouton pressé ; branchez et débranchez librement.
+
+<Shot id="preferences/gamepads" alt="Réglages ▸ Manettes avec la disposition" />
+
+## Jouer
+
+| Commande | Joue |
+|---|---|
+| Boutons de face | C4 · D4 · E4 · F4 |
+| Gâchettes (boutons d’épaule) | G4 · A4 · B4 · C5 |
+| Croix ↑ / ↓ | Octave −1 / +1 |
+| Croix ← / → | Vélocité − / + |
+
+Les notes vont vers la piste d’instrument armée (appuyez sur Enregistrement pour les capturer) ou vers la piste que
+vous écoutez. Débrancher relâche les notes tenues.
+
+## Assigner
+
+Avec [MIDI Learn](../midi-learn/), **n’importe quel bouton** peut piloter une commande à la place : il cesse de jouer
+sa note, et le reste de la manette garde la disposition ci-dessus, si bien qu’un seul contrôleur joue et mixe à la
+fois. Les **sticks et les gâchettes** s’assignent comme des commandes continues : balayer un filtre, piloter un
+fader. Les sticks reposent au centre (avec une zone morte, pour qu’un stick usé ne dérive pas), les gâchettes
+reposent à zéro. Les assignations suivent la commande, pas l’emplacement de la manette : rebrancher ne les casse
+donc pas.
+
+<Aside>
+L’entrée de manette n’existe que sous macOS dans cette version.
+</Aside>

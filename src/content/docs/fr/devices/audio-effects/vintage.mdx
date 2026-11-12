@@ -1,0 +1,60 @@
+---
+title: "Nota Vintage"
+description: "Âge et saturation en six époques (Vinyl, Cassette, Reel-to-Reel, VHS, Tube et Analog) avec drive, tonalité, wow, flutter, souffle, craquements et usure."
+sidebar:
+  order: 10
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/Vintage.h
+  - src/managed/Nota.App/DeviceCards/Bodies/VintageDeviceBody.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Vintage donne aux sons un air ancien, chaud ou usé : un disque poussiéreux, une cassette étirée, une bande-son de
+VHS, un préampli à lampes, un bus de console.
+
+<Shot id="devices/audio-effects/vintage/card" alt="Nota Vintage, onglet Curve avec la courbe de transfert" />
+
+**Chemin du signal :** wow / flutter → saturation → étage de sortie → tonalité, head bump et limitation de bande →
+souffle et craquements → gain automatique → mix.
+
+**Disposition :** la colonne **State** à gauche (faders **Drive** et **Wear**), un panneau central à trois onglets
+surmonté de la liste des caractères, un panneau de droite et une ligne d’état.
+
+## Les époques
+
+Chaque **caractère** règle sa propre saturation, inclinaison de tonalité, head bump, limitation de bande et son niveau de
+base de souffle, de craquements et de wow : **Vinyl**, **Cassette**, **Reel-to-Reel**, **VHS**, **Tube**, **Analog**.
+**Character off** garde vos réglages sans le voicing de l’époque.
+
+## Curve
+
+La courbe de transfert que parcourt la saturation : **Drive** la pousse plus fort. **Even harmonics only** donne une
+couleur chaude, de type lampe, sans grain.
+
+## Wear
+
+<Shot id="devices/audio-effects/vintage/wear" alt="Nota Vintage, onglet Wear avec la dérive de hauteur" />
+
+La dérive de hauteur sur les quatre dernières secondes. **Wow** (lent, libre ou synchronisé sur le tempo) et **Flutter**
+(rapide), chacun avec sa vitesse ; **Wear**, un macro d’âge qui monte tout à la fois et peut suivre l’entrée ;
+**Stereo drift** laisse les canaux s’écarter l’un de l’autre.
+
+## Output
+
+<Shot id="devices/audio-effects/vintage/output" alt="Nota Vintage, onglet Output avec les harmoniques et le plancher de souffle" />
+
+Les harmoniques face au plancher de souffle. **Noise** (souffle, avec un filtre **Hiss HP**) et **Crackle** ; la
+tonalité : **Tone**, un modèle **Warm**, **Flat** ou **Dark**, des shelves **Low** et **High** ; l’étage de sortie
+(**Tube** ou **Analog**), **Oversampling**, **Auto comp**, **Mix** et **Output**.
+
+## Préréglages
+
+30 préréglages d’usine : vinyle (**Dusty Vinyl**, **78 RPM Shellac**, **Clean Crackle**, **Warped Record**,
+**Gated Dust**), bande (**Lo-Fi Beat Tape**, **Warped Cassette**, **Worn Deck**, **Chewed Tape**, **Walkman**,
+**Reel Warmth**, **Tape Saturation**, **Mastering Tape**, **Tape Sway 1/2**, **Seasick 2 Bars**), vidéo (**VHS Fever**,
+**VHS Dream**, **Broken Tracking**), lampe et analogique (**Tube Glow**, **Tube Glue**, **Even Warmth**, **Hot Preamp**,
+**Parallel Tube**, **Analog Glue**, **Console Bus**, **Transformer Color**, **Crunch Drive**, **Neutral Saturator**) et
+radio (**Telephone Line**, **AM Radio**).

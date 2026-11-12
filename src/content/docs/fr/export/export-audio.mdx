@@ -1,0 +1,44 @@
+---
+title: "Exporter de l’audio"
+description: "Rendre le morceau, la boucle ou une plage de votre choix en WAV, FLAC ou MP3 : fréquence d’échantillonnage, profondeur de bits ou débit, normalisation au vrai crête, dithering, queue de relâchement et stems."
+sidebar:
+  order: 1
+updated: "0.51.2"
+status: done
+sources:
+  - src/managed/Nota.App/ExportWindow.cs
+  - src/managed/Nota.Infrastructure/Audio/AudioExporter.cs
+  - src/native/nota.engine/src/nota_encoder.cpp
+  - src/native/nota.engine/src/Engine_Render.cpp
+---
+
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
+
+**Fichier ▸ Exporter de l’audio…** (<Kbd>⌘ ⇧ E</Kbd>) rend le projet en un fichier audio : WAV, FLAC ou MP3.
+
+<Shot id="export/export-window" alt="La fenêtre Exporter de l’audio" width={280} />
+
+| Option | Ce qu’elle fait |
+|---|---|
+| **Plage** | **Boucle** (la plage de boucle), **Morceau entier**, ou **Personnalisé** : saisissez un début et une fin sous la forme mesure.temps.double-croche, comptés à partir de 1 comme dans le transport (`5` ou `5.1` est le début de la mesure 5, `5.3` son troisième temps). L’export s’arrête à la position de fin : `1` à `5` fait donc quatre mesures. La fin doit venir après le début ; tant que ce n’est pas le cas, Exporter reste désactivé |
+| **Format** | **WAV** (non compressé), **FLAC** (sans perte, environ la moitié de la taille du WAV) ou **MP3** (léger et facile à partager) |
+| **Fréquence d’échantillonnage** | 44 100, 48 000 ou 96 000 Hz ; le 96 000 n’est pas proposé pour le MP3 (le format plafonne à 48 000) |
+| **Profondeur de bits** | WAV : 16-bit, 24-bit ou 32-bit float · FLAC : 16-bit ou 24-bit |
+| **Qualité** | MP3 seulement : débit constant de 128 à 320 kbps, 320 par défaut |
+| **Normalize −1 dBTP** | Amène la plus forte crête réelle (entre échantillons) à −1 dBTP, mesurée exactement sur le rendu : elle ne dépasse donc jamais |
+| **Dithering** | Dithering TPDF, proposé pour le WAV 16-bit et le FLAC seulement |
+| **Ajouter une queue de relâchement d'1 mesure** | Laisse les reverbs et les delays sonner jusqu’au bout après la fin |
+| **Exporter les stems** | Un fichier par piste (après le fader), dans le format choisi, au lieu du mixage |
+
+La fenêtre estime le nombre de fichiers et leur taille avant que vous ne commenciez ; l’estimation suit le format. Le
+rendu est hors ligne et exact au bit près ; une fenêtre de progression le montre. Le FLAC est sans perte : le fichier
+décodé est identique au rendu. Le MP3 est avec perte et porte quelques millisecondes de remplissage du codec au début :
+les lecteurs qui lisent l’étiquette sans coupure compensent automatiquement.
+
+Avec **Exporter les stems** et Normalize activé, tous les stems partagent un même gain tiré du mixage complet : ils
+s’additionnent donc toujours au mixage à −1 dBTP.
+
+Pour des cibles de volume (−14 LUFS pour le streaming et ainsi de suite), masterisez avec
+[Nota Ceiling](../../devices/audio-effects/ceiling/) ou [Nota Level](../../devices/audio-effects/level/) avant
+d’exporter.
