@@ -10,7 +10,7 @@
 #   scene: palette  args: select (demo track), card (audio effect index to select), origin: "devices",
 #                         query, down (rows), mods (alt | cmd | shift), crop (true: just the palette)
 #   scene: mixer (args: group "Name:Track,Track", fold, compact, select, width, height)
-#   scene: prefs (args: page = Settings sidebar index, 0 Audio … 8 Shortcuts)
+#   scene: prefs (args: pageId = Settings page id ("Library", "Shortcuts"…), or page = sidebar index on older apps)
 #   scene: start · about · whatsnew · export · unsaved
 # source: remote — the Nota Remote phone page on the app repo's stand-in Nota (src/web/remote/mock),
 #   390 × 844 at 2×, Studio Dark / Studio Light. args: track (name), screen (tab: Pads, Keys, XY,
@@ -71,6 +71,10 @@ shots:
   # ── Library
   - { id: library/browser, source: app, scene: main, args: {view: "arrangement", element: "Browser"} }
   - { id: library/files-tab, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 3, height: 640} }
+  - { id: library/files-folders, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 3, places: true, height: 640} }
+  - { id: library/files-browse, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 3, browse: "Loops", pick: "Pad Am 124 bpm.wav", height: 640} }
+  - { id: library/files-located, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 3, expand: "Drums", pick: "Hat closed.wav", locate: "Drums/Kick 808.wav", height: 640} }
+  - { id: library/projects-tab, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 5, projects: true, height: 480} }
   - { id: library/track-inspector-tab, source: app, scene: main, args: {view: "arrangement", select: "Texture", element: "Browser", tab: 8, height: 900} }
   - { id: control/midi-map-tab, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 6, height: 640} }
   - { id: preferences/downloads-samples, source: app, scene: prefs, args: {page: 5, tab: "Sample packs"} }
@@ -102,7 +106,7 @@ shots:
   - { id: preferences/remote, source: app, scene: prefs, args: {page: 3} }
   - { id: preferences/plugins, source: app, scene: prefs, args: {page: 4} }
   - { id: preferences/downloads, source: app, scene: prefs, args: {page: 5} }
-  - { id: preferences/library, source: app, scene: prefs, args: {page: 6} }
+  - { id: preferences/library, source: app, scene: prefs, args: {pageId: "Library"} }
   - { id: preferences/appearance, source: app, scene: prefs, args: {page: 7} }
   - { id: preferences/appearance-themes, source: app, scene: prefs, args: {page: 7, themes: true, scrollTo: "Ember Graphite"} }
   - { id: preferences/shortcuts, source: app, scene: prefs, args: {page: 8} }

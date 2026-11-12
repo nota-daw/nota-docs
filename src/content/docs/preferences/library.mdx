@@ -1,25 +1,41 @@
 ---
 title: "Library"
-description: "Settings ▸ Library — the Samples and Projects folders, and the project version history switch."
+description: "Settings ▸ Library — your sample folders, the Projects folder and the project version history switch."
 sidebar:
   order: 7
-updated: "0.50.1"
+updated: "0.59.2"
 status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
+  - src/managed/Nota.App/PreferencesWindow.SampleFolders.cs
+  - src/managed/Nota.Infrastructure/Settings/SettingsService.cs
 ---
 
 import Shot from '@components/Shot.astro';
 
 <Shot id="preferences/library" alt="Settings ▸ Library" />
 
+## Sample folders
+
+The folders the browser's **Files** tab shows and [Smart samples](../../library/smart-samples/)
+analyses. At first there is one, `~/Music/Nota Samples`.
+
+- **Add folder…** — pick one or more folders; you can also drop folders from Finder / Explorer onto
+  the list. A folder already in the list, or inside or around one, isn't added (a note says why).
+- **Set as default** — the default folder is where [sample packs](../../library/sample-packs/)
+  install. It is marked **default**.
+- **Rename…** — the name the browser shows; the folder on disk keeps its own.
+- **Show** — opens the folder in Finder / Explorer.
+- **Remove** — takes the folder out of the browser; nothing on disk changes. The last folder can't
+  be removed; removing the default makes the next one the default, after a question.
+
+A folder on a drive that isn't connected is marked **unavailable** and stays in the list. The same
+list can be changed from the [Files tab](../../library/browser/#sample-folders).
+
 ## Content folders
 
-- **Samples** — the folder the browser's **Files** tab shows and [Smart samples](../../library/smart-samples/)
-  analyses; sample packs install into it. By default `~/Music/Nota Samples`.
 - **Projects** — the folder the browser's **Projects** tab lists. By default `~/Documents/Nota Projects`.
-
-**Choose…** picks another folder.
+  **Choose…** picks another folder.
 
 ## Version history
 

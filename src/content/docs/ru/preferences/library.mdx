@@ -1,27 +1,42 @@
 ---
 title: "Library"
-description: "Settings ▸ Library — папки Samples и Projects и переключатель истории версий проектов."
+description: "Settings ▸ Library — ваши папки сэмплов, папка Projects и переключатель истории версий проектов."
 sidebar:
   order: 7
-updated: "0.50.1"
+updated: "0.59.2"
 status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
+  - src/managed/Nota.App/PreferencesWindow.SampleFolders.cs
+  - src/managed/Nota.Infrastructure/Settings/SettingsService.cs
 ---
 
 import Shot from '@components/Shot.astro';
 
 <Shot id="preferences/library" alt="Settings ▸ Library" />
 
+## Sample folders
+
+Папки, которые показывает вкладка браузера **Files** и анализируют
+[умные сэмплы](../../library/smart-samples/). Сначала папка одна — `~/Music/Nota Samples`.
+
+- **Add folder…** — выберите одну или несколько папок; папки можно и перетащить из Finder /
+  Проводника прямо на список. Папку, которая уже есть в списке или лежит внутри (или снаружи)
+  одной из них, Nota не добавит и скажет почему.
+- **Set as default** — в папку по умолчанию ставятся [сэмпл-паки](../../library/sample-packs/).
+  Она отмечена **default**.
+- **Rename…** — имя, которое показывает браузер; папка на диске своё имя сохраняет.
+- **Show** — открывает папку в Finder / Проводнике.
+- **Remove** — убирает папку из браузера; на диске ничего не меняется. Последнюю папку убрать
+  нельзя; если убрать папку по умолчанию, ею после вопроса станет следующая.
+
+Папка на отключённом диске помечается **unavailable** и остаётся в списке. Тот же список можно
+менять и из [вкладки Files](../../library/browser/#папки-сэмплов).
+
 ## Content folders
 
-- **Samples** — папка, которую показывает вкладка браузера **Files** и анализируют
-  [умные сэмплы](../../library/smart-samples/); в неё ставятся сэмпл-паки. По умолчанию
-  `~/Music/Nota Samples`.
 - **Projects** — папка, которую показывает вкладка браузера **Projects**. По умолчанию
-  `~/Documents/Nota Projects`.
-
-**Choose…** выбирает другую папку.
+  `~/Documents/Nota Projects`. **Choose…** выбирает другую папку.
 
 ## Version history
 

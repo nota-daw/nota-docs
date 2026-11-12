@@ -3,7 +3,7 @@ title: Аудиоклипы и warp
 description: Редактирование аудиоклипов — обрезка, усиление, высота, реверс, подгонка к темпу с маркерами, огибающие громкости и панорамы, ADSR клипа.
 sidebar:
   order: 2
-updated: "0.58.1"
+updated: "0.59.2"
 status: done
 sources:
   - src/managed/Nota.App/AudioClipEditorView.cs
@@ -13,6 +13,7 @@ sources:
   - src/managed/Nota.App/MainWindow.AudioImport.cs
   - src/native/nota.engine/src/Warp.h
   - src/native/nota.engine/src/TempoDetect.h
+  - src/managed/Nota.App/LocateMenu.cs
 ---
 
 import { Aside } from '@astrojs/starlight/components';
@@ -113,7 +114,8 @@ Settings → Appearance → **Fade audio clips when splitting** выключае
 
 Правый щелчок по аудиоклипу: **Fade at splits**, **Reverse**, **Separate stems…** (разделить на ударные, бас, вокал
 и остальное — см. [Разделение на стемы](../../ai/separate-stems/)) и **Convert** (превратить
-мелодию, гармонию или ударные в MIDI — см. [Конвертация аудио в MIDI](../midi-tools/)).
+мелодию, гармонию или ударные в MIDI — см. [Конвертация аудио в MIDI](../midi-tools/)). **Locate ▸ In browser / In Finder**
+находит файл, из которого сделан клип, — см. [Браузер](../../library/browser/#как-найти-файл-клипа).
 
 Перетащите аудиоклип на трек с Sampler, Nota Grain, Drum Rack или Instrument Rack — и его звук
 загрузится туда; вытащите клип из Arrangement — и он станет сэмплом, который можно бросить куда
