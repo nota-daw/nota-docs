@@ -22,7 +22,7 @@ namespace NotaDocsShots;
 /// Every scene the manifest can ask for. A scene builds a window, renders it at 2× and saves
 /// the whole frame or a cropped control. Args come from the manifest entry's `args`.
 ///
-///   device    instrument | effect | midi (kind id), preset, tab, card (index in the chain),
+///   device    instrument | effect | midi (kind id), preset, tab, card (index in the chain), wt1 / wt2 (a demo sample as Aurora's wavetable),
 ///             clip (a demo sample on an effect's track), sidechain + sidechainName (a demo sample on
 ///             a second track routed as the effect's key),
 ///             chainInstrument (an Instrument Rack's chain 1 instrument), trackName, window (click this text — a
@@ -196,6 +196,18 @@ public sealed class Scenes
                 }
             }
         }
+        // `wt1` / `wt2`: a demo sample imported as Aurora Osc 1 / Osc 2's wavetable (nota
+        // specs/053). Called by reflection so the harness still builds against an app without it.
+        foreach (var (key, osc) in new[] { ("wt1", 0), ("wt2", 1) })
+            if (shot.Str(key) is string wt)
+            {
+                var et = _engine.GetType();
+                var build = et.GetMethod("AuroraTableBuild") ?? throw new InvalidOperationException("this Nota has no wavetable import");
+                var a = new object?[] { _demo.Sample(wt), null };
+                if ((int)build.Invoke(_engine, a)! != 0) throw new InvalidOperationException($"wavetable '{wt}' did not build");
+                et.GetMethod("AuroraSetTable")!.Invoke(_engine, new object[] { track, osc, a[1]!, false });
+                et.GetMethod("AuroraTableFree")!.Invoke(_engine, new[] { a[1]! });
+            }
         // A little audio through the device so meters, spectra and envelopes have something to draw.
         _engine.Play();
         var buf = new float[1024 * 2];
@@ -233,7 +245,8 @@ public sealed class Scenes
         Pump();
         view.RefreshSynthLive();
         Pump();
-        // `tab` clicks one control by its text, or a chain of them: "L>Filter".
+        // `tab` clicks one control by its text, or a chain of them: "L>Filter". When the text shows
+        // more than once, "Mod#2" picks the second (in the window's visual order).
         if (shot.Str("tab") is string tab)
             foreach (var part in tab.Split('>', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries))
             {
@@ -924,15 +937,18 @@ public sealed class Scenes
 
     private static readonly Avalonia.Input.Pointer Mouse = new(1, PointerType.Mouse, true);
 
-    /// <summary>Click the control that shows <paramref name="text"/> — a tab, segment or button.</summary>
+    /// <summary>Click the control that shows <paramref name="text"/> — a tab, segment or button.
+    /// "text#n" clicks the n-th control showing that text, for a label that also shows elsewhere.</summary>
     private static void ClickText(Window win, string text)
     {
+        int nth = 1, hash = text.LastIndexOf('#');
+        if (hash > 0 && int.TryParse(text[(hash + 1)..], out int n) && n >= 1) { nth = n; text = text[..hash]; }
         // The manifest names controls by their English text; in another language look for a translation
         // of it that is on screen (one English text can have several keys).
         var texts = win.GetVisualDescendants().OfType<TextBlock>().ToList();
         var candidates = Translations(text).Append(text).ToList();
-        var tb = candidates.Select(c => texts.FirstOrDefault(x => x.Text == c)).FirstOrDefault(x => x != null)
-                 ?? throw new ArgumentException($"no '{text}' on screen");
+        var tb = candidates.Select(c => texts.Where(x => x.Text == c).Skip(nth - 1).FirstOrDefault()).FirstOrDefault(x => x != null)
+                 ?? throw new ArgumentException($"no '{text}' #{nth} on screen");
         // A button (tab segments, Downloads' switch) takes a Click; anything else a pointer press.
         if (tb.GetVisualAncestors().OfType<Button>().FirstOrDefault() is { } button)
         {
