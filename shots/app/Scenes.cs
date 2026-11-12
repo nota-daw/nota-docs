@@ -23,6 +23,7 @@ namespace NotaDocsShots;
 /// the whole frame or a cropped control. Args come from the manifest entry's `args`.
 ///
 ///   device    instrument | effect | midi (kind id), preset, tab, card (index in the chain), wt1 / wt2 (a demo sample as Aurora's wavetable),
+///             live (blocks played with the card open), set ("param=value,…" before the audio runs), blocks,
 ///             clip (a demo sample on an effect's track), sidechain + sidechainName (a demo sample on
 ///             a second track routed as the effect's key),
 ///             chainInstrument (an Instrument Rack's chain 1 instrument), trackName, window (click this text — a
@@ -211,7 +212,14 @@ public sealed class Scenes
         // A little audio through the device so meters, spectra and envelopes have something to draw.
         _engine.Play();
         var buf = new float[1024 * 2];
-        for (int k = 0; k < 40; k++) _engine.RenderOffline(buf, 1024);
+        // `set`: "param=value,…" normalised device params before the audio runs.
+        if (shot.Str("set") is string sets)
+            foreach (var kv in sets.Split(','))
+            {
+                var pv = kv.Split('=');
+                _engine.DeviceSetParam(track, deviceIndex, int.Parse(pv[0]), float.Parse(pv[1], System.Globalization.CultureInfo.InvariantCulture));
+            }
+        for (int k = 0, nb = shot.Int("blocks") ?? 40; k < nb; k++) _engine.RenderOffline(buf, 1024);
         _engine.StopTransport();
         // `strata`: a take on a looper (Quantize Off while it records) — two bars on the first
         // pass, a full overdub, then halfway through a third pass, so one layer is still recording.
@@ -219,12 +227,25 @@ public sealed class Scenes
         if (shot.Str("strata") is not null)
         {
             void Blocks(int n) { for (int k = 0; k < n; k++) _engine.RenderOffline(buf, 1024); }
+            // Strata applies a command at its next step (the first pass waits for the song's bar),
+            // so render until the looper's scope shows no command pending (S_Pending in the card).
+            var sc = new float[64];
+            void Settle()
+            {
+                for (int k = 0; k < 400; k++)
+                {
+                    int n = _engine.DeviceScope(track, deviceIndex, sc, sc.Length);
+                    if (n > 33 && sc[33] < 0) return;
+                    _engine.RenderOffline(buf, 1024);
+                }
+                throw new InvalidOperationException("Strata never applied the command");
+            }
             _engine.DeviceSetParam(track, deviceIndex, 3, 0f);
             _engine.Seek(0); _engine.Play();
-            _engine.DeviceAction(track, deviceIndex, 0, 0, 0); Blocks(173);   // Record: the first pass
-            _engine.DeviceAction(track, deviceIndex, 2, 0, 0); Blocks(2);     // Play: close the loop
-            _engine.Seek(0); _engine.DeviceAction(track, deviceIndex, 1, 0, 0); Blocks(174);   // Overdub: layer 2
-            _engine.Seek(0); _engine.DeviceAction(track, deviceIndex, 1, 0, 0); Blocks(80);    // Overdub: layer 3, half way
+            _engine.DeviceAction(track, deviceIndex, 0, 0, 0); Settle(); Blocks(160);   // Record: the first pass, just short of two bars
+            _engine.DeviceAction(track, deviceIndex, 2, 0, 0); Settle(); Blocks(2);   // Play: close the loop (at the song's next bar)
+            _engine.Seek(0); _engine.DeviceAction(track, deviceIndex, 1, 0, 0); Settle(); Blocks(174);   // Overdub: layer 2
+            _engine.Seek(0); _engine.DeviceAction(track, deviceIndex, 1, 0, 0); Settle(); Blocks(80);    // Overdub: layer 3, half way
             if (shot.Str("strataMute") is not null) _engine.DeviceAction(track, deviceIndex, 6, 0, 1f);
             _engine.DeviceAction(track, deviceIndex, 7, 1, -3.5f);
             _engine.DeviceSetParam(track, deviceIndex, 3, 1f);
@@ -256,6 +277,14 @@ public sealed class Scenes
             }
         view.RefreshSynthLive();
         Pump();
+        // `live`: keep the song playing with the card open, so views that read audio while they
+        // are shown (Lens) have something to draw; the transport stops after the shot.
+        bool live = shot.Int("live") is int lv && lv > 0;
+        if (live)
+        {
+            _engine.Play();
+            for (int k = 0; k < shot.Int("live"); k++) { _engine.RenderOffline(buf, 1024); view.RefreshSynthLive(); Pump(1); }
+        }
         if (shot.Str("window") is string open)
         {
             // Pop a device out (a rack chain's GUI button) and shoot its device window.
@@ -272,6 +301,7 @@ public sealed class Scenes
         var chain = view.GetVisualDescendants().OfType<StackPanel>().First(p => p.Orientation == Orientation.Horizontal && p.Children.Count > 0 && p.Bounds.Height > 200);
         var card = chain.Children[shot.Int("card") ?? 0];
         Save(win, shot.Id, card);
+        if (live) _engine.StopTransport();
         win.Close();
     }
 
@@ -426,7 +456,8 @@ public sealed class Scenes
             // player below the list takes the row.
             var list = ((ListBox[])typeof(BrowserView).GetField("_pages", Private)!.GetValue(browser)!)[shot.Int("tab") ?? 0];
             BrowserItem? Row(string name) => (list.ItemsSource as System.Collections.IEnumerable)?.OfType<BrowserItem>().FirstOrDefault(r => r.Name == name);
-            if (shot.Str("expand") is string folder)
+            // Folders stay open between shots: open it only when the row isn't showing yet.
+            if (shot.Str("expand") is string folder && Row(pick) is null)
             {
                 var vm = (BrowserViewModel)typeof(BrowserView).GetField("_vm", Private)!.GetValue(browser)!;
                 vm.ToggleExpand(Row(folder) ?? throw new ArgumentException($"no folder '{folder}'"));

@@ -143,8 +143,8 @@ shots:
   # ── Audio effects
   - { id: devices/audio-effects/eq-8/card, source: app, scene: device, args: {effect: 0} }
   - { id: devices/audio-effects/compressor/card, source: app, scene: device, args: {effect: 1} }
-  - { id: devices/audio-effects/reverb/card, source: app, scene: device, args: {effect: 2} }
-  - { id: devices/audio-effects/delay/card, source: app, scene: device, args: {effect: 3} }
+  - { id: devices/audio-effects/reverb/card, source: app, scene: device, args: {effect: 2, clip: kick, blocks: 160} }
+  - { id: devices/audio-effects/delay/card, source: app, scene: device, args: {effect: 3, clip: kick, blocks: 90, set: "6=0.55"} }
   - { id: devices/audio-effects/utility/card, source: app, scene: device, args: {effect: 4} }
   - { id: devices/audio-effects/valve/card, source: app, scene: device, args: {effect: 6} }
   - { id: devices/audio-effects/auto-filter/card, source: app, scene: device, args: {effect: 7} }
@@ -162,7 +162,7 @@ shots:
   - { id: devices/audio-effects/shutter/card, source: app, scene: device, args: {effect: 19} }
   - { id: devices/audio-effects/chamber/card, source: app, scene: device, args: {effect: 20} }
   - { id: devices/audio-effects/prism/card, source: app, scene: device, args: {effect: 21} }
-  - { id: devices/audio-effects/lens/card, source: app, scene: device, args: {effect: 22} }
+  - { id: devices/audio-effects/lens/card, source: app, scene: device, args: {effect: 22, clip: chords, live: 80} }
   - { id: devices/audio-effects/flanger/card, source: app, scene: device, args: {effect: 23} }
   - { id: devices/audio-effects/phaser/card, source: app, scene: device, args: {effect: 24} }
   - { id: devices/audio-effects/chorus/card, source: app, scene: device, args: {effect: 25} }
@@ -215,9 +215,9 @@ shots:
   - { id: devices/instruments/rhythm/fx, source: app, scene: device, args: {instrument: 12, tab: "FX"} }
   - { id: devices/instruments/rhythm/macro, source: app, scene: device, args: {instrument: 12, tab: "Macro"} }
   - { id: devices/instruments/monolith/modifiers, source: app, scene: device, args: {instrument: 13, tab: "Modifiers"} }
-  - { id: devices/instruments/pentad/filter-amp, source: app, scene: device, args: {instrument: 14, tab: "Filter \u00b7 Amp"} }
+  - { id: devices/instruments/pentad/filter-amp, source: app, scene: device, args: {instrument: 14, tab: "Filter"} }
   - { id: devices/instruments/pentad/poly-mod, source: app, scene: device, args: {instrument: 14, tab: "Poly Mod"} }
-  - { id: devices/instruments/consort/filters-env, source: app, scene: device, args: {instrument: 15, tab: "Filters \u00b7 Env"} }
+  - { id: devices/instruments/consort/filters-env, source: app, scene: device, args: {instrument: 15, tab: "Filters"} }
   - { id: devices/instruments/consort/seq, source: app, scene: device, args: {instrument: 15, tab: "Seq"} }
   - { id: devices/instruments/consort/patch, source: app, scene: device, args: {instrument: 15, tab: "Patch"} }
   - { id: devices/instruments/keys/clav, source: app, scene: device, args: {instrument: 16, tab: "Clav"} }
@@ -226,8 +226,8 @@ shots:
   - { id: devices/instruments/mosaic/groups, source: app, scene: device, args: {instrument: 17, preset: "mosaic/Felt Piano", tab: "Groups"} }
   - { id: devices/audio-effects/compressor/motion, source: app, scene: device, args: {effect: 1, tab: "Motion"} }
   - { id: devices/audio-effects/compressor/sidechain, source: app, scene: device, args: {effect: 1, tab: "Sidechain"} }
-  - { id: devices/audio-effects/reverb/tone-mod, source: app, scene: device, args: {effect: 2, tab: "Tone \u00b7 Mod"} }
-  - { id: devices/audio-effects/delay/loop-wow, source: app, scene: device, args: {effect: 3, tab: "Loop \u00b7 Wow"} }
+  - { id: devices/audio-effects/reverb/tone-mod, source: app, scene: device, args: {effect: 2, clip: kick, blocks: 30, tab: "Tone \u00b7 Mod", set: "5=0.4,1=0.7"} }
+  - { id: devices/audio-effects/delay/loop-wow, source: app, scene: device, args: {effect: 3, clip: kick, blocks: 40, tab: "Loop \u00b7 Wow", set: "6=0.55,16=0.35,17=0.6"} }
   - { id: devices/audio-effects/utility/mono, source: app, scene: device, args: {effect: 4, tab: "Mono"} }
   - { id: devices/audio-effects/utility/levels, source: app, scene: device, args: {effect: 4, tab: "Levels"} }
   - { id: devices/audio-effects/valve/cab, source: app, scene: device, args: {effect: 6, tab: "Cab"} }
@@ -249,8 +249,8 @@ shots:
   - { id: devices/audio-effects/chamber/eq-mod, source: app, scene: device, args: {effect: 20, tab: "EQ \u00b7 Mod"} }
   - { id: devices/audio-effects/prism/band-detail, source: app, scene: device, args: {effect: 21, tab: "Band detail"} }
   - { id: devices/audio-effects/prism/time, source: app, scene: device, args: {effect: 21, tab: "Time"} }
-  - { id: devices/audio-effects/lens/scope, source: app, scene: device, args: {effect: 22, tab: "Scope"} }
-  - { id: devices/audio-effects/lens/waterfall, source: app, scene: device, args: {effect: 22, tab: "Waterfall"} }
+  - { id: devices/audio-effects/lens/scope, source: app, scene: device, args: {effect: 22, clip: chords, live: 80, tab: "Scope"} }
+  - { id: devices/audio-effects/lens/waterfall, source: app, scene: device, args: {effect: 22, clip: chords, live: 110, tab: "Waterfall"} }
   - { id: devices/midi-effects/arp/groove, source: app, scene: device, args: {midi: 0, tab: "Groove", instrument: 0} }
   - { id: devices/racks/drum-rack/mixer, source: app, scene: device, args: {instrument: 4, tab: "Mixer"} }
   - { id: devices/racks/drum-rack/macro, source: app, scene: device, args: {instrument: 4, tab: "Macro"} }
