@@ -387,6 +387,8 @@ public sealed class Scenes
         // The browser tab sticks between shots, so always set it (Instruments by default).
         var browser = mw.FindControl<BrowserView>("Browser")!;
         typeof(BrowserView).GetMethod("SelectTab", Private)!.Invoke(browser, new object[] { shot.Int("tab") ?? 0 });
+        var bvm = (BrowserViewModel)typeof(BrowserView).GetField("_vm", Private)!.GetValue(browser)!;
+        var files = FilesScene(shot, browser, bvm);
         if (shot.Str("pick") is string pick)
         {
             // Open a folder (`expand`) and select a row in it, as a click would: the preview
@@ -414,9 +416,110 @@ public sealed class Scenes
         else HideUpdate();
         var element = shot.Str("element") is string el ? mw.FindControl<Control>(el) ?? throw new ArgumentException($"no control '{el}'") : null;
         Save(mw, shot.Id, element);
+        files?.Invoke();   // the Files tab back to one folder, the tree, nothing marked
         // The demo song is shared by every shot: back to standard rows, open the folded cards again.
         if (shot.Int("rows") is not null) Invoke(tl, "SetAllTrackHeights", 64.0);
         if (shot.Str("select") is string sel && shot.Str("fold") is string unfold) Fold(mw, _demo.Track(sel), unfold, false);
+    }
+
+    // The Files and Projects tabs (spec 092): `places: true` adds a second sample folder
+    // ("Splice Packs"), `browse: "<folder under Nota Samples>"` switches Files to the browse
+    // view there, `locate: "<file under Nota Samples>"` marks that file as the selected clip's,
+    // `projects: true` fills the projects folder with three saved projects. Returns what puts
+    // the shared state back after the shot.
+    private Action? FilesScene(Shot shot, BrowserView browser, BrowserViewModel vm)
+    {
+        var settings = (ISettingsService)App.Services!.GetService(typeof(ISettingsService))!;
+        var samples = settings.ResolvedSamplesFolder();
+        var undo = new List<Action>();
+        void Mode(bool on) => typeof(BrowserView).GetMethod("SetBrowseMode", Private)!.Invoke(browser, new object[] { on });
+        // The tree is walked in the background: wait for the whole of it.
+        void Rebuild()
+        {
+            // Let the rebuilds a folder change posts start first; ours, the last, wins.
+            for (int i = 0; i < 10; i++) Pump(5);
+            var t = vm.RebuildSamplesAsync();
+            while (!t.IsCompleted) Pump(2);
+            Pump(10);
+        }
+        if (shot.Bool("places"))
+        {
+            var data = Environment.GetEnvironmentVariable("NOTA_DATA_DIR")!;
+            var splice = Path.Combine(data, "Splice Packs");
+            Directory.CreateDirectory(Path.Combine(splice, "Vocals"));
+            foreach (var (sub, file, src) in new[] { ("Vocals", "Vox chop 90 bpm.wav", "pad"), ("", "Riser.wav", "chords") })
+            {
+                var dst = Path.Combine(splice, sub, file);
+                if (!File.Exists(dst)) File.Copy(_demo.Sample(src), dst);
+            }
+            settings.AddSampleFolder(splice);
+            settings.RenameSampleFolder(settings.ResolvedSampleFolders().Count - 1, "Splice");
+            Rebuild();
+            foreach (var root in vm.Samples.Where(r => r.PlaceIndex >= 0).ToList()) vm.ToggleExpand(root);
+            for (int i = 0; i < 20; i++) Pump(5);
+            // Headless, the list only lays out when asked: walk it to its last row and back so
+            // every row is realised before the capture.
+            var list = ((ListBox[])typeof(BrowserView).GetField("_pages", Private)!.GetValue(browser)!)[3];
+            if (vm.Samples.Count > 0)
+            {
+                list.ScrollIntoView(vm.Samples[^1]); browser.UpdateLayout(); Pump(5);
+                list.ScrollIntoView(vm.Samples[0]); browser.UpdateLayout(); Pump(5);
+            }
+            undo.Add(() =>
+            {
+                var all = settings.ResolvedSampleFolders();
+                for (int i = all.Count - 1; i > 0; i--) settings.RemoveSampleFolder(i);
+                Rebuild();
+            });
+        }
+        if (shot.Str("browse") is string rel)
+        {
+            var dir = Path.Combine(samples, rel);
+            // A folder with every kind of file: the ones Nota can't add show faded.
+            File.WriteAllText(Path.Combine(dir, "Read me.txt"), "Pack notes.\n");
+            File.WriteAllBytes(Path.Combine(dir, "Cover.png"), new byte[] { 0x89, 0x50, 0x4E, 0x47 }.Concat(new byte[96_000]).ToArray());
+            File.WriteAllBytes(Path.Combine(dir, "Groove.mid"), new byte[] { 0x4D, 0x54, 0x68, 0x64, 0, 0, 0, 6, 0, 0, 0, 1, 0, 0x60, 0x4D, 0x54, 0x72, 0x6B, 0, 0, 0, 4, 0, 0xFF, 0x2F, 0 });
+            Mode(true);
+            vm.BrowseTo(dir);
+            for (int i = 0; i < 20; i++) Pump(5);
+            undo.Add(() =>
+            {
+                Mode(false);
+                foreach (var f in new[] { "Read me.txt", "Cover.png", "Groove.mid" }) File.Delete(Path.Combine(dir, f));
+                Rebuild();
+            });
+        }
+        if (shot.Str("locate") is string loc)
+        {
+            vm.SetLocatedPath(Path.Combine(samples, loc));
+            Pump(10);
+            undo.Add(() => vm.SetLocatedPath(null));
+        }
+        if (shot.Bool("projects"))
+        {
+            var root = settings.ResolvedProjectsFolder();
+            var now = DateTime.Now;
+            foreach (var (name, bpm, key, tracks, beats, ago) in new[]
+            {
+                ("Night Drive", 120.0, "Am", 7, 128.0, 0.2), ("Sketch 14", 90.0, (string?)null, 4, 64.0, 26.0), ("Remix final", 128.0, "F#m", 23, 388.0, 75.0),
+            })
+            {
+                var b = Path.Combine(root, name + ".nota");
+                Directory.CreateDirectory(b);
+                var tr = string.Join(",", Enumerable.Range(0, tracks).Select(i => i == 0
+                    ? $"{{\"type\":1,\"midiClips\":[{{\"startBeat\":0,\"lengthBeats\":{beats}}}]}}" : "{\"type\":1}"));
+                var keyJson = key is null ? "" : $",\"key\":\"{key}\"";
+                var manifest = Path.Combine(b, "project.json");
+                File.WriteAllText(manifest, $"{{\"transport\":{{\"bpm\":{bpm}{keyJson}}},\"tracks\":[{tr}]}}");
+                File.SetLastWriteTime(manifest, now.AddHours(-ago));
+            }
+            vm.OpenProjectPath = Path.Combine(root, "Night Drive.nota");
+            vm.RebuildProjects();
+            vm.ProjectSummariesTask.Wait(TimeSpan.FromSeconds(10));
+            for (int i = 0; i < 20; i++) Pump(5);
+            undo.Add(() => vm.OpenProjectPath = null);
+        }
+        return undo.Count == 0 ? null : () => { foreach (var u in undo) u(); Pump(10); };
     }
 
     // Fold (or unfold) devices on a track and redraw its chain. Through reflection, so the

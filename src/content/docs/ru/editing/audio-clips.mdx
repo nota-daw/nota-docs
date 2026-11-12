@@ -14,6 +14,7 @@ sources:
   - src/managed/Nota.App/MainWindow.AudioImport.cs
   - src/native/nota.engine/src/Warp.h
   - src/native/nota.engine/src/TempoDetect.h
+  - src/managed/Nota.App/LocateMenu.cs
 ---
 
 import { Aside } from '@astrojs/starlight/components';
@@ -114,7 +115,8 @@ transients** ставит маркер на каждый удар — и бар�
 
 Правый щелчок по аудиоклипу: **Fade at splits**, **Reverse**, **Separate stems…** (разделить на ударные, бас, вокал
 и остальное — см. [Разделение на стемы](../../ai/separate-stems/)) и **Convert** (превратить
-мелодию, гармонию или ударные в MIDI — см. [Конвертация аудио в MIDI](../midi-tools/)).
+мелодию, гармонию или ударные в MIDI — см. [Конвертация аудио в MIDI](../midi-tools/)). **Locate ▸ In browser / In Finder**
+находит файл, из которого сделан клип, — см. [Браузер](../../library/browser/#как-найти-файл-клипа).
 
 Перетащите аудиоклип на трек с Sampler, Nota Grain, Drum Rack или Instrument Rack — и его звук
 загрузится туда; вытащите клип из Arrangement — и он станет сэмплом, который можно бросить куда

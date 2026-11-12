@@ -200,8 +200,8 @@ sections:
 
   library:
     - page: library/browser
-      covers: [browser tabs (Instruments, Effects, Samples/Files, Plug-ins, Presets, History…), search, drag into project]
-      sources: [src/managed/Nota.App/BrowserView.cs, src/managed/Nota.App/TrackInspectorView.cs, src/managed/Nota.App/MainWindow.Browser.cs, src/managed/Nota.App/MainWindow.Files.cs]
+      covers: [browser tabs (Instruments, Effects, Samples/Files, Plug-ins, Presets, History…), search, drag into project, sample folders, Files browse view, Locate, Projects tab]
+      sources: [src/managed/Nota.App/BrowserView.cs, src/managed/Nota.App/TrackInspectorView.cs, src/managed/Nota.App/MainWindow.Browser.cs, src/managed/Nota.App/MainWindow.Files.cs, src/managed/Nota.App/BrowserView.Files.cs, src/managed/Nota.App/BrowserView.Projects.cs, src/managed/Nota.App/LocateMenu.cs]
       mockup: Nota Browser.html
       status: done
     - page: library/preview-player

@@ -76,6 +76,10 @@ shots:
   # ── Library
   - { id: library/browser, source: app, scene: main, args: {view: "arrangement", element: "Browser"} }
   - { id: library/files-tab, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 3, height: 640} }
+  - { id: library/files-folders, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 3, places: true, height: 640} }
+  - { id: library/files-browse, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 3, browse: "Loops", pick: "Pad Am 124 bpm.wav", height: 640} }
+  - { id: library/files-located, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 3, expand: "Drums", pick: "Hat closed.wav", locate: "Drums/Kick 808.wav", height: 640} }
+  - { id: library/projects-tab, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 5, projects: true, height: 480} }
   - { id: library/track-inspector-tab, source: app, scene: main, args: {view: "arrangement", select: "Texture", element: "Browser", tab: 8, height: 900} }
   - { id: control/midi-map-tab, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 6, height: 640} }
   - { id: preferences/downloads-samples, source: app, scene: prefs, args: {id: "Downloads", tab: "Sample packs"} }
