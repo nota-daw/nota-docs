@@ -6,6 +6,7 @@ sidebar:
 updated: "0.59.2"
 status: done
 sources:
+  - src/managed/Nota.App/PreferencesWindow.Mcp.cs
   - src/managed/Nota.App/PreferencesWindow.cs
   - src/managed/Nota.Mcp/Tools/ProjectTools.cs
   - src/managed/Nota.Mcp/Tools/ExportTools.cs
@@ -24,7 +25,7 @@ and goes through undo, like your own.
 
 <Steps>
 
-1. **Settings ▸ Appearance ▸ AI control (MCP)** ▸ **Enable MCP server (let an AI drive Nota)**. It's off
+1. [**Settings ▸ AI control (MCP)**](../../preferences/mcp/) ▸ **Enable MCP server (let an AI drive Nota)**. It's off
    by default.
 
 2. **Copy config** copies a ready-made server entry; add it (or the URL) as an MCP server in Claude
@@ -34,7 +35,7 @@ and goes through undo, like your own.
 
 </Steps>
 
-<Shot id="preferences/appearance" alt="Settings ▸ Appearance with the AI control (MCP) section" />
+<Shot id="preferences/mcp" alt="Settings ▸ AI control (MCP)" />
 
 The server listens only on your own computer (`127.0.0.1`, port 3900 by default) — nothing on the
 network can reach it.
