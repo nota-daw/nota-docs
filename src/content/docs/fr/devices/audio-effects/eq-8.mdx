@@ -1,0 +1,96 @@
+---
+title: "Nota EQ-8"
+description: "Égaliseur paramétrique à huit bandes : coupes, shelves, bells et notches avec pente au choix, mid / side et gauche / droite par bande, un analyseur en direct, une échelle et un gain automatique."
+sidebar:
+  order: 1
+updated: "0.58.1"
+status: done
+sources:
+  - src/native/nota.engine/src/devices/effects/Eq.h
+  - src/managed/Nota.App/DeviceCards/Bodies/EqDeviceBody.cs
+  - src/native/nota.engine/src/dsp/primitives/SpectrumAnalyzer.h
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota EQ-8 est un égaliseur de console de mixage à huit bandes. Utilisez-le pour nettoyer le brouillard, couper les
+grondements, ajouter de l’air, creuser de la place pour un son autour d’un autre : sur la paire stéréo, le mid ou le
+side.
+
+<Shot id="devices/audio-effects/eq-8/card" alt="Nota EQ-8 avec les pastilles de bande, le graphique de réponse et le panneau de bande" />
+
+## Le graphique
+
+Chaque bande est un nœud numéroté sur la courbe de réponse : faites-le glisser, latéralement pour la fréquence, vers le
+haut et le bas pour le gain. Les pastilles de bande au-dessus du graphique activent et désactivent les bandes et en
+sélectionnent une pour le panneau de droite.
+
+## L’analyseur
+
+Derrière la courbe, le spectre montre où se situe l’énergie du son. **Analyzer**, dans le coin, choisit ce qu’il montre :
+
+- **Post** (par défaut) : le son après l’EQ sous forme de forme pleine, avec le son qui entre en ligne discrète
+  par-dessus, si bien que l’effet de l’EQ se lit comme l’écart entre les deux.
+- **Pre** : le son qui entre, plein.
+- **Off** : rien, et aucune analyse ne tourne.
+
+Chaque point lit un sixième d’octave : un son stable s’affiche donc à son propre niveau et le bruit rose se lit plat. La
+forme monte aussitôt sur un coup et retombe en environ un tiers de seconde.
+
+- **60 / 90 / 120** règle la plage : le bord inférieur du graphique est à autant de dB sous 0 dBFS (90 par défaut).
+  L’échelle ±dB de la courbe d’EQ elle-même ne change pas.
+- **Peak** ajoute une fine ligne au plus haut niveau de chaque fréquence ces derniers instants. Elle tient 1,5
+  seconde, puis retombe.
+
+Range et Peak sont enregistrés avec l’appareil et dans ses préréglages. Ils ne changent que l’affichage, jamais le son.
+
+## Une bande
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| Type | **Low cut**, **Low shelf**, **Bell**, **Notch**, **High shelf**, **High cut** |
+| **Freq** · **Gain** · **Q** | Où, combien, sur quelle largeur (sur les coupes, **Reso**) |
+| **Slope** | Pour les coupes : 12, 24 ou 48 dB par octave |
+| **Channel** | **St** (les deux canaux), **Mid**, **Side**, **L** ou **R** : une bande peut ainsi éclaircir seulement les côtés, ou dompter un seul canal |
+
+## Étiquettes et notes de bande
+
+Donnez un nom à une bande pour que son rôle se voie d’un coup d'œil : sélectionnez-la et tapez dans **Label**, en haut du
+panneau de bande (jusqu’à 24 caractères). Le nom apparaît à côté du nœud de la bande dans le graphique, suit le nœud
+quand vous le faites glisser, et remplace le type de bande sur sa pastille.
+
+Pour l’histoire plus longue, cliquez sur l’étiquette dans le graphique, ou sur **Note** à côté du champ Label. Une boîte
+s’ouvre avec l’étiquette et une note de jusqu’à 2000 caractères, sauts de ligne compris. Cliquez à l’extérieur, appuyez
+sur **Esc** ou **⌘ Enter** (**Ctrl+Enter** sous Windows et Linux) pour la fermer ; le texte est gardé. Une bande avec une
+note montre un petit point sur son étiquette, et survoler l’étiquette montre la note.
+
+- Les étiquettes qui se chevaucheraient sont écartées, avec un fin trait vers leur nœud.
+- **Labels**, dans la barre de l’analyseur, masque toutes les étiquettes et les points de note dans le graphique (les
+  pastilles et le panneau de bande les montrent toujours). C’est enregistré avec l’appareil.
+- Les étiquettes et les notes sont enregistrées avec le projet et dans vos propres préréglages, et suivent quand vous
+  dupliquez l’appareil ou la piste. Chaque modification est une étape d’annulation. Un préréglage d’usine ou **Init** les
+  efface, et double-cliquer sur un espace vide pour une nouvelle bell démarre cette bande sans étiquette.
+- Elles ne changent jamais le son, et ne peuvent pas être automatisées.
+
+## Global
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Scale** | Multiplie d’un coup le gain de chaque shelf et bell, de 0 à 200 % : 50 % divise toute la courbe par deux |
+| **Output** | Réglage du niveau de sortie |
+| **Auto gain** | Compense le changement moyen de niveau des shelves et bells, pour que vous jugiez une modification au même volume |
+
+## Préréglages
+
+34 préréglages d’usine : tonalité (**Bass Boost**, **Air & Presence**, **Smile Curve**, **Loudness Contour**,
+**Master Tilt**), nettoyage (**Low Cut**, **Sub Rumble Filter**, **Mud Cut**, **Hum Removal 50 Hz** / **60 Hz**,
+**Mono Low End**), mixage (**Clean Mix Bus**, **Pad Tuck**, **Double-Track Split**, **Wide Air**, **Focus Center**),
+voix (**Vocal Presence**, **De-Box Vocal**, **Sibilance Tamer**, **Podcast Voice**), batterie (**Kick Punch**,
+**Snare Crack**, **Overheads Air**, **Hi-Hat Clean**), instruments (**Bass Definition**, **Acoustic Guitar**,
+**Electric Guitar Cab**, **Piano Clarity**) et couleur (**Telephone**, **Lo-Fi Radio**, **Band Pass**).
+
+## Astuces
+
+- **Couper étroit, booster large :** trouvez une fréquence agressive avec une bell étroite et boostée, puis passez-la en
+  coupe.
+- **Graves en mono :** une coupe grave sur la bande **Side** vers 120 Hz garde la basse au centre.

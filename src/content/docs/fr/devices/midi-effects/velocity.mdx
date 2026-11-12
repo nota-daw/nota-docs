@@ -1,0 +1,41 @@
+---
+title: "Nota Velocity"
+description: "Remodèle la vélocité des notes (une courbe, un compander ou une valeur fixe) vers une plage de sortie, avec une humanisation aléatoire vers le haut, le bas ou les deux."
+sidebar:
+  order: 5
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/MidiVelocity.h
+  - src/managed/Nota.App/DeviceCards/Midi/VelocityMidiBody.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Velocity change la force avec laquelle les notes frappent : égaliser un clavier raide, donner de la vie à des
+parties programmées, écraser la dynamique dans une plage, ou rendre toutes les notes identiques.
+
+<Shot id="devices/midi-effects/velocity/card" alt="Nota Velocity : le mode, la courbe de transfert avec les dernières notes, la plage de sortie" />
+
+## Mode
+
+| Mode | Ce qu’il fait |
+|---|---|
+| **Curve** | **Drive** au-dessus de 1 relève les notes douces, en dessous de 1 les pousse vers le bas |
+| **Compand** | Pareil autour du milieu : au-dessus de 1 étire vers les bords, en dessous de 1 resserre vers le milieu |
+| **Fixed** | Chaque note reçoit une seule **Value** |
+
+## Transfert et plage
+
+Le graphique **Transfer** (entrée en abscisse, sortie en ordonnée) montre la courbe, la bande sur laquelle Random peut
+s’étaler, l'**Out range** en pointillés et les 12 dernières notes sous forme de points. **Out range** (**Low** /
+**High**) resserre le résultat dans ces limites ; une note n’atteint jamais 0.
+
+**Random** (activé / désactivé et quantité jusqu’à ±64) humanise : dans **Both** sens, seulement **Up** ou seulement
+**Down**. **Last 12 notes** compare les vélocités d’entrée et de sortie.
+
+## Préréglages
+
+32 préréglages d’usine : humanisation (**Humanize**, **Humanize Subtle**, **Humanize Loose**, **Loose Soft Hands**,
+**Tight Groove**, **Chaos**), toucher (**Soft Hands**, **Light Touch**, **Feather**, **Heavy Hands**, **Hard Hitter**,
+**Stiff Keyboard Fix**, **Soft Pedal**), façonnage (**Push Up**, **Pull Down**, **Gentle Compress**, …) et plus.

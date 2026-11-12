@@ -1,0 +1,137 @@
+---
+title: "Installer Nota"
+description: "Télécharger Nota pour macOS, Windows ou Linux et l’ouvrir pour la première fois."
+sidebar:
+  order: 1
+updated: "0.57.1"
+status: done
+sources:
+  - README.md
+  - .github/workflows/release.yml
+  - src/managed/Nota.App/MainWindow.Updates.cs
+---
+
+import { Aside, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+
+Nota est gratuit et open source. Chaque version est compilée à partir du code sur GitHub et publiée
+sur la [page des versions](https://github.com/nota-daw/nota/releases/latest).
+
+## Choisir le bon fichier
+
+| Système | Fichier |
+|---|---|
+| **macOS 13 ou plus récent**, Apple Silicon (M1 et suivants) | `Nota-<version>-arm64.dmg` |
+| **macOS 13 ou plus récent**, Intel | `Nota-<version>-x86_64.dmg` |
+| **Windows 10 / 11**, la plupart des PC | `Nota-Setup-<version>-x64.exe` |
+| **Windows 11** sur ARM | `Nota-Setup-<version>-arm64.exe` |
+| **Linux**, la plupart des PC | `Nota-<version>-x86_64.AppImage` |
+| **Linux** sur ARM | `Nota-<version>-aarch64.AppImage` |
+
+Vous ne savez pas quel Mac vous avez ? Ouvrez le menu Pomme ▸ **À propos de ce Mac** : « Apple M… »
+signifie Apple Silicon, « Intel » signifie Intel.
+
+## Installer et ouvrir
+
+Nota n’est pas encore signé avec un certificat payant d’Apple ou de Microsoft : la première fois que
+vous l’ouvrez, votre système vous demande de confirmer. Cela n’arrive qu’une fois.
+
+<Tabs syncKey="os">
+<TabItem label="macOS">
+
+<Steps>
+
+1. Ouvrez le `.dmg` téléchargé et faites glisser **Nota** dans **Applications**.
+
+2. Ouvrez Nota depuis Applications. macOS l’arrête avec le message *« Nota » n’a pas été ouvert*
+   (versions plus anciennes : *« Nota » ne peut pas être ouvert car Apple ne peut pas vérifier qu’il
+   ne contient pas de logiciel malveillant*). Cliquez sur **Terminé**, et non sur *Placer dans la corbeille*.
+
+3. Ouvrez **Réglages Système ▸ Confidentialité et sécurité** et descendez jusqu’à **Sécurité**. À côté de
+   *« Nota » a été bloqué pour protéger votre Mac*, cliquez sur **Ouvrir quand même**, confirmez avec
+   votre mot de passe ou Touch ID, puis cliquez encore une fois sur **Ouvrir quand même**.
+
+</Steps>
+
+À partir de là, Nota s’ouvre comme n’importe quelle autre app.
+
+<Aside type="caution" title="Il refuse toujours de s’ouvrir, ou macOS dit que Nota « est endommagé » ?">
+C’est la même vérification, avec une formulation plus alarmante : le téléchargement n’est pas cassé.
+Ouvrez le **Terminal** (Applications ▸ Utilitaires) et lancez :
+
+```bash
+xattr -dr com.apple.quarantine /Applications/Nota.app
+```
+
+Cela retire la marque « téléchargé depuis Internet » de Nota uniquement. Sous macOS 13 à 14, vous pouvez
+aussi faire un clic droit sur Nota dans Applications ▸ **Ouvrir** ▸ **Ouvrir**.
+</Aside>
+
+</TabItem>
+<TabItem label="Windows">
+
+<Steps>
+
+1. Lancez `Nota-Setup-<version>-x64.exe` (ou `-arm64.exe`).
+
+2. Si SmartScreen affiche *Windows a protégé votre ordinateur*, cliquez sur **Informations complémentaires ▸ Exécuter quand même**.
+
+3. Suivez l’installeur. Nota apparaît dans le menu Démarrer.
+
+</Steps>
+
+Sous Windows, Nota peut utiliser le pilote **ASIO** de votre interface ou le **mode exclusif WASAPI** pour la latence la plus
+basse, voir [Réglages ▸ Audio](../../preferences/audio/).
+
+</TabItem>
+<TabItem label="Linux">
+
+<Steps>
+
+1. Rendez l’AppImage exécutable, dans un terminal :
+
+   ```bash
+   chmod +x Nota-*.AppImage
+   ```
+
+   ou cochez **Autoriser l’exécution du fichier comme un programme** dans Propriétés ▸ Permissions du fichier.
+
+2. Double-cliquez dessus, ou lancez `./Nota-<version>-x86_64.AppImage`.
+
+</Steps>
+
+L’AppImage fonctionne sur toute distribution avec glibc 2.28 ou plus récent : RHEL, Alma et Rocky 8 et 9,
+Debian 10+, Ubuntu 18.10+ et tout ce qui est plus récent.
+
+Nota garde ses réglages dans `~/.config/nota` (ou `$XDG_CONFIG_HOME/nota`).
+
+Nota joue via PulseAudio / ALSA et lit le MIDI via ALSA.
+
+</TabItem>
+</Tabs>
+
+## Mises à jour
+
+Nota cherche lui-même les nouvelles versions, à chaque lancement et une fois par jour pendant qu’il tourne.
+Quand une version est disponible, la [fenêtre de démarrage](../first-launch/) affiche une bannière et la barre
+d’état affiche **Nota X est disponible** à côté du numéro de version. Cliquez sur **Mettre à jour** (dans la barre
+d’état, cliquez d’abord sur l’avis) : Nota télécharge la version, la vérifie avec la somme de contrôle de la
+publication et l’installe quand vous cliquez sur **Redémarrer maintenant** / **Redémarrer pour passer à Nota X**
+(ou à la prochaine fermeture). Après une mise à jour, **Nouveautés** montre ce qui a changé.
+
+<Shot id="start-here/update-notice" alt="La barre d’état : une nouvelle version de Nota est disponible, à côté du numéro de version" />
+
+**Aide ▸ Rechercher des mises à jour…** (sur macOS aussi dans le menu **Nota**) vérifie tout de suite et vous
+dit si vous êtes à jour. Pour arrêter les vérifications automatiques, désactivez **Rechercher les mises à jour
+automatiquement** dans [Réglages ▸ Mises à jour](../../preferences/updates/).
+
+<Aside>
+Une copie qui ne peut pas se remplacer elle-même, par exemple lancée directement depuis l’image disque, renvoie
+vers la page de la version au lieu de se mettre à jour sur place.
+</Aside>
+
+## Et ensuite
+
+- [Premier lancement](../first-launch/) : la fenêtre de démarrage, Nouveautés et la récupération du travail.
+- [La fenêtre principale](../main-window/) : un tour de tout ce qui est à l’écran.
+- [Votre première piste](../first-track/) : d’un projet vide à un WAV exporté.

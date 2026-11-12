@@ -1,0 +1,67 @@
+---
+title: "Nota Monolith"
+description: "Synthé mono dans le moule du Minimoog Model D : trois oscillateurs, un mélangeur avec bruit et feedback, un filtre en échelle auto-oscillant et deux contours."
+sidebar:
+  order: 12
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/Monolith.h
+  - src/managed/Nota.App/DeviceCards/Instruments/MonolithInstrumentCard.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Monolith est un synthé monophonique conçu comme le Minimoog Model D : le DSP propre de Nota, fidèle à la façon dont
+cet instrument se joue. Trois oscillateurs, un mélangeur que vous pouvez saturer, un filtre en échelle de 24 dB et deux
+générateurs de contour : basses épaisses, leads chantants, cuivres.
+
+<Shot id="devices/instruments/monolith/card" alt="Nota Monolith, onglet Controllers · Osc Bank" />
+
+**Chemin du signal :** Osc 1 + Osc 2 + Osc 3 + bruit (+ feedback) → mélangeur → passe-bas en échelle → VCA. Osc 3 ou
+le bruit peuvent moduler les oscillateurs ou le filtre via la molette de modulation.
+
+Les **molettes** (pitch bend, molette de modulation) sont toujours à gauche.
+
+## Controllers · Osc Bank
+
+| Section | Commandes |
+|---|---|
+| **Controllers** | **Tune** général, **Glide** (activé / désactivé et durée), **Mod Mix** (Osc 3 ↔ bruit comme source de modulation), interrupteurs **Osc mod** et **Filter mod** |
+| **Osc 1 / 2 / 3** | **Range** (LO, 32' … 2'), **Wave** (triangle, dent de requin, dent de scie, carré, impulsion large et étroite ; Osc 3 a une dent de scie inversée à la place de la dent de requin), **Tune** de ±7 demi-tons sur Osc 2 et 3 |
+| **Osc 3 kbd** | Désactivé, Osc 3 devient un LFO libre |
+
+## Modifiers
+
+<Shot id="devices/instruments/monolith/modifiers" alt="Nota Monolith, onglet Modifiers avec le filtre et les deux contours" />
+
+| Section | Commandes |
+|---|---|
+| **Filter** | **Cutoff**, **Emphasis** (résonance : le filtre en échelle auto-oscille), quantité de **Contour**, suivi du clavier (⅓, ⅔) |
+| **Filter contour** | Attack, Decay, Sustain |
+| **Loudness contour** | Attack, Decay, Sustain |
+| **Decay** | Un seul interrupteur pour les deux contours : le relâchement suit le decay, comme sur l’original |
+
+## Mixer
+
+Niveau et marche / arrêt de chaque oscillateur, **Noise** (blanc ou rose) et **Ext**, le chemin **Feedback** qui
+sature le mélangeur pour du grondement.
+
+## Output
+
+**Volume**, **Priority** (grave, aigu ou dernière note), **Legato** (déclenchement unique), plage de **Bend**
+(±2 … ±12), voix en **Unison** avec désaccord, **Drift** (légère instabilité analogique), **Bass compensation**,
+vélocité vers l’ampli et le filtre, et un **A-440 tone** pour accorder.
+
+## Préréglages
+
+20 préréglages d’usine : basses (**Taurus Bass**, **Fat Bass**, **Reese Bass**, **Funk Square**, **Rubber Bass**,
+**Sub Boom**, **Growl Overload**), leads (**Classic Lead**, **Hollow Lead**, **Screaming Lead**, **Portamento**,
+**Bright Lead**, **Soft Flute**, **Whistle**), et plus (**Pulse Pad**, **Brass Section**, **Fifths Stack**,
+**Detune Unison**, **Sci-Fi Mod**, **Random Bleeps**).
+
+## Astuces
+
+- **Lead classique :** Osc 2 et 3 à quelques cents d’Osc 1, Emphasis à mi-course, un court contour de filtre, Glide
+  activé.
+- **Grondement :** montez le **Feedback** du mélangeur jusqu’à ce que le filtre en échelle commence à mordre.

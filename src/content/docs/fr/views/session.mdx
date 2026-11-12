@@ -1,0 +1,123 @@
+---
+title: "Session"
+description: "La grille de clips pour jouer en direct et esquisser : lancer des clips et des scènes, modes de lancement, actions de suivi, tempo de scène, enregistrement en Session et le mixeur sous la grille."
+sidebar:
+  order: 2
+updated: "0.58.1"
+status: done
+sources:
+  - src/managed/Nota.App/SessionView.cs
+  - src/managed/Nota.App/SessionView.Grid.cs
+  - src/managed/Nota.App/SessionView.Inspector.cs
+  - src/managed/Nota.App/SessionView.Toolbar.cs
+  - src/managed/Nota.App/SessionView.Mixer.cs
+  - src/native/nota.engine/src/SessionPlayer.h
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
+
+La vue Session est une grille de clips : une **colonne** par piste, une **ligne** par scène. Chaque clip boucle
+jusqu’à ce que vous en lanciez un autre dans sa colonne : vous pouvez ainsi essayer des parties les unes contre les
+autres, improviser, et construire un morceau en direct.
+
+<Shot id="views/session" alt="La vue Session : les scènes Intro, Verse et Drop, la grille de clips, l’inspecteur à droite et le mixeur sous la grille" />
+
+## Lancer
+
+- **Cliquez** sur un emplacement pour le sélectionner ; cliquez sur son triangle **▶** pour le lancer.
+- Lancez toute une ligne avec le **▶** à côté du nom de sa scène, à gauche.
+- Le bouton **■** en bas d’une colonne arrête cette piste ; **Tout arrêter** (ou **Arrêter tous les clips** sous la
+  grille) arrête tout. **Arrêt** du transport (<Kbd>Return</Kbd>) arrête aussi les clips, tout de suite.
+- <Kbd>Return</Kbd> lance ce qui est sélectionné.
+
+Les clips et les scènes démarrent en mesure avec la musique : à la mesure suivante, ou selon ce que dit **Quant** dans
+la barre d’outils : **Aucun**, 1/16 … 1/2, **1 mesure**, 2, 4 ou 8 mesures. Le camembert de progression d’un clip
+montre où il en est dans sa propre boucle. Une piste en muet (ou rendue silencieuse par le solo d’une autre piste)
+se lance et s’arrête aussi en mesure, et son clip garde sa place, si bien qu’il est en mesure quand vous rétablissez
+le son. Quand la boucle du transport est active, le début de la boucle compte aussi comme point de lancement : une
+courte boucle sans barre de mesure à l’intérieur ne laisse donc pas un clip attendre.
+
+## La grille
+
+Les colonnes portent le nom et la couleur de la piste ; un clip a un nom, une couleur, un aperçu de ses notes ou de
+sa forme d’onde, et sa longueur en mesures. Une piste de groupe est une colonne que vous pouvez lancer, et qui replie
+ses pistes. Les retours et le master ferment la rangée.
+
+| Faire ceci | Pour |
+|---|---|
+| Touches fléchées | Déplacer la sélection entre emplacements et scènes |
+| Double-cliquer sur un emplacement | Modifier le clip ; un emplacement MIDI vide reçoit un nouveau clip |
+| Faire glisser un clip vers un autre emplacement | Le déplacer ; avec <Kbd>⌥</Kbd>, le copier |
+| Faire glisser une scène vers le haut ou le bas | Réordonner les scènes |
+| <Kbd>⌘ C</Kbd> <Kbd>⌘ X</Kbd> <Kbd>⌘ V</Kbd> | Copier, couper, coller un clip (un clip coupé se déplace quand on le colle) |
+| <Kbd>⌘ D</Kbd> | Dupliquer un clip dans l’emplacement du dessous, ou une scène sous elle-même |
+| <Kbd>⌘ I</Kbd> | Insérer une scène sous la sélection |
+| <Kbd>F2</Kbd> | Renommer le clip ou la scène sélectionné |
+| <Kbd>Delete</Kbd> | Supprimer le clip ou la scène sélectionné |
+| Double-cliquer sur l’en-tête d’une colonne | Renommer la piste |
+| Cliquer sur l’en-tête d’un retour ou du master | Le sélectionner : ses appareils s’ouvrent dans le panneau du dessous |
+| Clic droit sur un en-tête, un emplacement ou la grille vide | Ajouter une piste d’instrument, audio ou de retour, en renommer ou en supprimer une |
+
+Vous pouvez insérer, dupliquer, capturer et déplacer des scènes pendant que la musique joue. **Capturer la scène**
+copie les clips qui jouent à l’instant dans une nouvelle scène.
+
+Les emplacements audio sont de vrais clips audio : double-cliquez sur l’un d’eux pour le même
+[éditeur de clip audio](../../editing/audio-clips/) que dans l’Arrangement.
+
+## L’inspecteur
+
+Le panneau à droite modifie ce qui est sélectionné.
+
+**Un clip :**
+
+- Mode de **lancement** : **Déclencheur** (démarre et continue de jouer), **Gate** (joue tant qu’on le maintient),
+  **Bascule** (démarre / arrête à chaque lancement) ou **Répéter** (redéclenche en mesure tant qu’on le maintient).
+- **Quantifier** : sa propre quantification de lancement, ou la globale.
+- **Legato** : reprend là où en était le clip qui jouait, à la même position, au lieu de repartir du début.
+- **Boucle** : désactivée, le clip devient un one-shot.
+- **Vélocité %** : dans quelle mesure la vélocité de lancement (d’un pad ou d’une touche) module le clip.
+- **Action de suivi** : ce qui se passe après que le clip a joué un moment : deux actions **A** et **B**, avec une
+  probabilité entre elles et une durée. Actions : **Suivant**, **Encore**, **Précédent**, **Premier**, **Dernier**,
+  **Quelconque**, **Autre**, **Arrêt** et **Sauter à** une scène.
+- **Couleur**, **Renommer**, **Dupliquer**, **Supprimer**, **Vers l’arrangement**.
+
+**Une scène :** un nom et une couleur, un **Tempo** et une **Signature** qui s’appliquent au lancement (**Lancer sans
+changement de tempo** les ignore), et **Next after** : passer à la scène suivante après un nombre de mesures.
+
+**Un emplacement vide :** **Insérer un clip MIDI**, **Coller**, **Enregistrer ici**, et **Bouton d’arrêt** :
+désactivez-le pour que le lancement de cette scène laisse cette piste jouer au lieu de l’arrêter.
+
+Le commutateur **Suivi** dans la barre d’outils active ou désactive d’un coup toutes les actions de suivi.
+
+## Enregistrer dans un emplacement
+
+Armez une piste, sélectionnez une scène et cliquez sur **Rec session** : Nota enregistre dans l’emplacement de cette
+piste dans la scène sélectionnée. Cliquez à nouveau sur **Rec session** pour garder la prise ; les prises sans durée
+fixe sont coupées à des mesures entières. Ou réglez **Fixe** sur 1, 2, 4 ou 8 mesures, et la prise s’arrête toute
+seule.
+
+Quand le transport est arrêté et qu’un [décompte](../../basics/transport/#métronome-et-décompte) est réglé,
+l’emplacement affiche **Rec dans…** pendant que les clics jouent et la prise démarre à leur fin. Une note que vous
+commencez pendant le décompte et que vous tenez encore est alors enregistrée depuis le début de la prise. Arrêter
+pendant le décompte annule la prise et laisse l’emplacement vide. Quand le transport tourne déjà, il n’y a pas de
+décompte : la prise démarre sur la quantification de lancement.
+
+## Le mixeur sous la grille
+
+Sous la grille se trouve un mixeur pour chaque colonne. Affichez ou masquez ses sections avec **I/O**, **Envois** et
+**Mixeur** dans la barre d’outils : entrées et sorties, l’envoi vers chaque retour, panoramique, volume, muet, solo et
+armement.
+
+## Session et Arrangement
+
+Une piste joue soit son clip de Session, soit ses clips d’Arrangement. Lancer un emplacement prend la piste en main ;
+**Retour à l’arrangement** rend toutes les pistes, et le badge **Arr** d’une colonne rend seulement cette piste.
+
+Les clips se copient dans les deux sens : <Kbd>⌘ ⇧ C</Kbd> envoie le clip, l’emplacement de groupe ou la scène
+sélectionné vers l’Arrangement, à la tête de lecture. Voir [Copier, coller et glisser](../../editing/clipboard/).
+
+<Aside>
+Votre téléphone peut aussi lancer des clips et des scènes : voir [Nota Remote](../../control/nota-remote/).
+</Aside>

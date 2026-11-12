@@ -1,0 +1,65 @@
+---
+title: "Nota Prism"
+description: "Dynamique à trois bandes : compressez au-dessus et expansez ou relevez en dessous d’un seuil dans chaque bande, avec croisements, sidechain par bande, anticipation, compensation automatique et un mixage cohérent en phase."
+sidebar:
+  order: 21
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/Prism.h
+  - src/managed/Nota.App/DeviceCards/Bodies/PrismDeviceBody.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Prism sépare le son en **Low**, **Mid** et **High** et traite la dynamique de chaque bande à part : dompter le grave
+sans toucher la voix, relever les détails discrets des aigus, coller un bus, tout écraser vers le haut.
+
+<Shot id="devices/audio-effects/prism/card" alt="Nota Prism, onglet Bands avec le spectre et les croisements" />
+
+Les bandes sont codées par couleur : **Low** olive, **Mid** encre neutre, **High** bleu sarcelle.
+
+## Bands
+
+Le spectre avec les deux **croisements** : faites-les glisser. Choisissez 3 bandes, 2 (Low + Mid) ou 1 (pleine bande).
+Les croisements sont alignés en phase, si bien que les bandes se rajoutent à plat.
+
+## Band detail
+
+<Shot id="devices/audio-effects/prism/band-detail" alt="Nota Prism, onglet Band detail avec la courbe de transfert" />
+
+Chaque bande a deux processeurs : faites glisser leurs points de seuil sur la courbe de transfert :
+
+| Processeur | Ce qu’il fait |
+|---|---|
+| **Above** | Compresse ce qui dépasse son seuil : ratio de 1:1 à ∞:1, genou doux |
+| **Below** | Sous un second seuil : expanse vers le bas (ratio > 1) ou relève vers le haut (ratio < 1), à ± **Floor** dB |
+
+Chacun avec **Attack** et **Release** (relâchement automatique sur Above), et un **Gain** de bande. **Solo** sur une
+bande pour l’entendre seule.
+
+## Time
+
+<Shot id="devices/audio-effects/prism/time" alt="Nota Prism, onglet Time" />
+
+Le niveau d’entrée et de détecteur de chaque bande dans le temps, pour que vous voyiez à quoi réagit la dynamique.
+
+## Global et Output
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Amount** | Met à l’échelle chaque ratio : 0 % désactive la dynamique |
+| **Detect** | Peak ou RMS |
+| **Lookahead** | Réagit avant les crêtes ; compensé automatiquement |
+| **Auto makeup** | Restaure le niveau perdu à la compression |
+| **Mix** | Mélange parallèle avec le signal sec, cohérent en phase |
+| **Output** · soft clip | Gain de sortie, et un écrêteur doux à −0,3 dBFS |
+
+Un sidechain d’une autre piste est séparé dans les mêmes bandes : chaque bande se cale donc sur la bande correspondante
+de la clé ; **Listen** vous laisse entendre la clé.
+
+## Préréglages
+
+12 préréglages d’usine : **Bus Glue**, **Upward Squash**, **Noise Floor Cleanup**, **Single-Band Leveler**,
+**Parallel Crush**, **Low-End Tamer**, **Gentle Master**, **Air Lift**, **Vocal Control**, **De-Esser**,
+**Drum Punch** et **Two-Band Bass**.

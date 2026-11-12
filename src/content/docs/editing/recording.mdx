@@ -3,14 +3,17 @@ title: Recording
 description: Recording audio and MIDI — arming tracks, inputs, monitoring, count-in, recording over a loop, and recording into Session slots.
 sidebar:
   order: 3
-updated: "0.58.1"
+updated: "0.59.2"
 status: done
 sources:
-  - src/native/nota.engine/src/Engine_Recording.cpp
+  - src/native/nota.engine/src/engine/Engine_Recording.cpp
+  - src/native/nota.engine/src/engine/Engine_Takes.cpp
   - src/managed/Nota.App/ArrangementView.cs
+  - src/managed/Nota.App/ArrangementView.Takes.cs
   - src/managed/Nota.App/SessionView.Toolbar.cs
-  - src/native/nota.engine/src/Engine_Render.cpp
+  - src/native/nota.engine/src/engine/Engine_Render.cpp
   - src/managed/Nota.App/RecordPreview.cs
+  - src/native/nota.engine/src/engine/Engine_TakeRetry.cpp
 ---
 
 import { Aside, Steps } from '@astrojs/starlight/components';
@@ -32,19 +35,13 @@ import Kbd from '@components/Kbd.astro';
 
 </Steps>
 
-A click on **●** arms that track and disarms the others, so it's quick to pick the instrument you
-play. <Kbd>⌘</Kbd>-click (<Kbd>Ctrl</Kbd>-click on Windows and Linux) arms a track and keeps the
-others armed — while recording, a click never disarms another track. Selecting an instrument
-track, or adding one, arms it the same way, so the keyboard plays the track you're on; that
-leaves the arms alone when several tracks or an audio track are armed. Arm an instrument track
-and an audio track together and one take records both — the MIDI and
-the audio. Nota records the first armed track of each kind.
-
-Disarming a track while it records ends its take.
-
 A click on **●** arms that track alone and disarms the others, so picking the instrument the
 keyboard plays is one click. <Kbd>⌘</Kbd>-click (<Kbd>Ctrl</Kbd>-click on Windows and Linux)
-arms several tracks. While recording, a click never disarms another track.
+arms several tracks. While recording, a click never disarms another track. Arm an instrument
+track and an audio track together and one take records both — the MIDI and the audio. Nota
+records the first armed track of each kind.
+
+Disarming a track while it records ends its take.
 
 To have the selection pick the track, turn on **Transport ▸ Auto-arm selected track**: then
 selecting an instrument track arms it, unless several tracks or an audio track are armed. It
@@ -66,6 +63,21 @@ you are already holding when recording starts. A take that starts at 1.1 can't b
 so its clip starts at 1.1 and the part of the note before it is kept out of sight: move the
 clip right and drag its left edge out to hear it.
 
+## Discard and retry a take
+
+Fluffed it? Press <Kbd>⌘ .</Kbd> (<Kbd>Ctrl .</Kbd> on Windows and Linux) — or
+**Transport → Discard and retry take** — while recording. The take is thrown away and recording
+starts again at once:
+
+- A take you started from stop goes back to where it began and counts in again, if a
+  count-in is set.
+- A take you punched in during playback goes back to where you pressed Play, so you hear the
+  run-up again.
+
+Nothing of the discarded take stays: no audio, no loop passes in the take lanes, no notes,
+controllers or automation, and no undo step — after you keep a take, one <Kbd>⌘ Z</Kbd>
+removes it. Hold the keys and they retry once; press again to go again.
+
 ## Mono or stereo input
 
 The hardware input is listed three times — in **Record input**, the header's input box and the
@@ -82,16 +94,36 @@ the stereo pair.
 
 ## Hearing the input
 
-The headphones button next to an audio track's input turns on **monitoring**: you hear the
-input live through the track's effects and fader, whether or not the transport is playing.
-While monitoring is on, the track plays its input instead of its clips. The master can't be
+The headphones button in an audio track's header, right after **M** / **S** / **●**, turns on
+**monitoring**: you hear the input live through the track's effects and fader, whether or not
+the transport is playing. Compact tracks have it too. While monitoring is on, the track plays its input instead of its clips. The master can't be
 monitored — it would feed back.
 
 ## Recording over a loop
 
-With the loop on, **audio** recording fills the loop range: each time round, the new pass
-replaces the previous one, so you can keep playing until you get it, then stop. Turning the
-loop on in the middle of a take starts recording the loop region from there.
+With the loop on, **audio** recording keeps every pass as a take instead of replacing the
+last one. Stop after the loop has come round at least once and the track holds one take per
+pass — **Take 1**, **Take 2**, and so on — numbered in the order you played them. A later
+recording on the same track continues the numbers. A pass that started or stopped in the
+middle of the loop keeps only what it recorded. Turning the loop on in the middle of a take
+starts recording the loop region from there.
+
+What plays is the **comp**, the track's own row. Right after recording it is the newest pass
+at every point of the loop, so it sounds the way loop recording did before.
+
+The header shows a disclosure and how many takes there are. The lanes start folded. Open
+them and each take is a row under the comp, with its waveform. The parts the comp uses are
+in the track colour; the rest of the take is dimmed.
+
+Drag across a take to use that stretch in the comp. The range follows the snap grid; hold
+<Kbd>⌥</Kbd> (<Kbd>Alt</Kbd> on Windows and Linux) to ignore it. It never extends past what
+that take recorded, and the rest of the comp stays put. One drag is one undo step.
+
+Right-click a lane for **Use whole take**, **Delete take** (the sound stays, the take goes)
+or **Flatten takes** (the comp becomes one clip and the takes of that recording go). Each is
+one undo step. Takes are saved with the project.
+
+One pass, the loop off, MIDI and Session slots still make a single clip and no takes.
 
 For **MIDI**, the loop-record button next to **Loop** in the transport chooses what a new pass does
 (<Kbd>⌘ ⇧ R</Kbd> or **Transport → Loop record: overdub / replace** switch it too):
@@ -123,6 +155,10 @@ stops the clip that track was playing. From stop, with a count-in set, the slot 
 **Rec in…** through the count-in and the take starts as it ends; a note you hold into the take
 starts with it. Stop during the count-in leaves the slot empty.
 
+<Kbd>⌘ .</Kbd> while a slot records drops only that slot's take: the other clips and the
+transport keep going, the slot shows **Rec in…** again and records from the next launch
+quantum (at once with quantize off).
+
 ## Recording automation
 
 **Record** also records automation: while it's on, move any knob or fader and that parameter's
@@ -131,4 +167,6 @@ lane writes what you do. See [Automation](../automation/#recording-automation).
 <Aside type="tip">
 Latency matters most when recording. Pick a small buffer in
 [Settings ▸ Audio](../../preferences/audio/) while you record and a larger one while you mix.
+On Windows with an [ASIO](../../preferences/audio/#asio-windows) driver, takes are also moved
+earlier by the latency the driver reports, so they line up with what you played along to.
 </Aside>

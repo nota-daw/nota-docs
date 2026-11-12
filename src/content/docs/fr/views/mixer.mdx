@@ -1,0 +1,100 @@
+---
+title: "Mixeur"
+description: "La fenêtre du Mixeur : une tranche par piste avec entrées, envois, panoramique, volume, muet, solo et armement, les retours et le master."
+sidebar:
+  order: 4
+updated: "0.58.1"
+status: done
+sources:
+  - src/managed/Nota.App/MixerView.cs
+  - src/managed/Nota.App/MixerView.Compact.cs
+  - src/managed/Nota.App/MixerWindow.cs
+  - src/managed/Nota.App/MainWindow.Mixer.cs
+  - src/managed/Nota.App/GroupFold.cs
+  - src/managed/Nota.App/Controls/GroupBandsLayer.cs
+  - src/managed/Nota.App/Controls/MeterFader.cs
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
+
+Affichez le Mixeur avec **Affichage ▸ Mixeur** ou <Kbd>⌘ ⇧ M</Kbd>. Il s’ancre comme un panneau en bas de la
+fenêtre principale, sous la vue Arrangement, Session ou Modular ; son bouton de détachement le déplace dans sa propre
+fenêtre, pour un second écran, et le bouton d’ancrage de la fenêtre le ramène.
+
+<Shot id="views/mixer" alt="La fenêtre du Mixeur : une tranche par piste, le retour et le master" />
+
+## Une tranche de console
+
+De haut en bas, chaque piste a :
+
+- son **nom** et sa couleur ;
+- **I/O** : ce que la piste écoute : l’entrée audio (**Entrée 1** …) et **Écoute** (**Auto** ou **Entrée**) pour les
+  pistes audio, **MIDI In** / **MIDI To** pour les pistes d’instrument ; les tranches de groupe et de retour montrent
+  ce qui les alimente ;
+- **Envois** : un bouton par piste de retour ;
+- **Pan** et le fader de **volume** avec son indicateur. Faites glisser l’affichage du gain ou double-cliquez dessus
+  pour saisir une valeur ; double-cliquez sur le fader pour le réinitialiser ;
+- les boutons **Muet**, **Solo** et d'**armement**.
+
+Les tranches suivent l’ordre de l’Arrangement : la tranche d’un groupe, puis ses pistes. Les pistes de retour viennent
+après les pistes, et la tranche **Master** ferme la rangée. Son fader est le même volume général que la commande
+**Master** de la barre de transport et la ligne Master de l’Arrangement : bougez l’un et les autres suivent ; il est
+enregistré avec le projet. **Afficher** en bas active ou désactive les sections **Envois** et **I/O**.
+
+## Groupes
+
+Chaque groupe place une barre avec son nom, dans sa couleur, au-dessus de sa propre tranche et de celles de ses
+pistes, avec une légère teinte de la couleur derrière elles. Un groupe dans un groupe obtient une deuxième barre sous
+la première, pour que vous puissiez lire à quelle famille appartient chaque tranche.
+
+<Shot id="views/mixer-groups" alt="Des barres de groupe au-dessus des tranches : Beat contient le groupe Rhythm et Bass, Rhythm contient Drums" />
+
+Cliquez sur la flèche de la tranche d’un groupe pour le replier : ses pistes se masquent et seule la tranche du groupe
+reste, pour que le reste du morceau tienne à l’écran. Replier un groupe ici le replie aussi dans l’Arrangement, et
+inversement ; les groupes repliés sont enregistrés avec le projet. La barre d’un groupe replié dit combien de tranches
+il masque (**Beat +3**), et des points sur sa tranche indiquent quand une piste masquée est en solo (bleu), armée
+(rouge) ou a saturé (cliquez sur le point pour l’effacer). Replier ne change que ce que vous voyez : le son reste le
+même.
+
+<Shot id="views/mixer-group-folded" alt="Le groupe Beat replié : sa barre indique +3 et sa tranche est entourée parce qu’une piste masquée est sélectionnée" />
+
+La piste que vous sélectionnez n’importe où est entourée dans le Mixeur, et le Mixeur défile jusqu’à elle. Si cette
+piste est dans un groupe replié, c’est la tranche du groupe qui est entourée ; le groupe reste replié.
+
+## Tranches compactes
+
+**Compact** dans le pied du Mixeur rétrécit chaque tranche à 72 px, si bien qu’environ deux fois plus de pistes
+tiennent à l’écran ; cliquez à nouveau dessus pour revenir aux tranches normales. Nota retient le choix.
+
+<Shot id="views/mixer-compact" alt="Des tranches compactes : un large indicateur de niveau avec un triangle pour le volume, des barres d’envoi et de panoramique, des boutons M, S et d’armement pleine largeur" />
+
+Une tranche compacte a tout ce qu’a une tranche normale, sous une forme plus étroite :
+
+- l'**I/O** sur une ligne (survolez pour voir le routage complet) ;
+- les envois **A** et **B** comme de fines barres ;
+- **Pan** comme une barre qui se remplit à partir du centre : faites-la glisser vers le haut ou le bas, double-cliquez
+  pour recentrer ;
+- un large **indicateur de niveau** qui est aussi le fader de volume. Le triangle sur son bord droit marque le volume
+  sur l’échelle propre de l’indicateur : un triangle à 0 est donc au 0 dB de l’indicateur. Faites glisser n’importe où
+  sur l’indicateur pour le changer (maintenez ⇧ pour des pas fins) ; un clic sans glisser efface le maintien de crête ;
+- la valeur du gain : faites-la glisser ou double-cliquez pour la saisir ;
+- **Muet**, **Solo** et armement comme des boutons sur toute la largeur de la tranche.
+
+MIDI Learn et l’enregistrement d’automation fonctionnent comme sur une tranche normale.
+
+## Envois et retours
+
+Une piste de retour est un bus d’effet partagé. Ajoutez-en une (clic droit sur l’espace vide sous les pistes ▸
+**Ajouter une piste de retour**), mettez-y une Reverb ou un Delay, puis montez l’envoi de chaque piste vers elle.
+Toutes les pistes vont vers la même reverb, et un seul fader sur le retour règle la quantité que vous en entendez.
+
+Les mêmes envois se trouvent dans les en-têtes de piste de l’Arrangement à la hauteur Grand : voir
+[Envois dans les en-têtes de piste](../arrangement/#envois-dans-les-en-têtes-de-piste). Un déplacement d’envoi n’est
+pas une étape d’annulation, et un envoi n’a pas de voie d’automation.
+
+<Aside>
+La vue Session a le même mixeur sous sa grille : voir [Session](../session/#le-mixeur-sous-la-grille). Le volume, le
+panoramique, le muet et le solo d’une piste sont aussi dans chaque [en-tête de piste](../../basics/tracks/).
+</Aside>

@@ -1,0 +1,81 @@
+---
+title: "Plug-ins"
+description: "Utiliser des plug-ins VST3 et AU dans Nota : les ajouter aux pistes et aux racks, leur carte et leur fenêtre d’éditeur, l’état, la latence et l’automation."
+sidebar:
+  order: 1
+updated: "0.59.2"
+status: done
+sources:
+  - src/managed/Nota.App/DeviceCards/PluginCard.cs
+  - src/managed/Nota.App/DeviceChainView.Plugin.cs
+  - src/managed/Nota.App/Controls/PluginPreviewBackdrop.cs
+  - src/managed/Nota.App/MainWindow.MissingPlugins.cs
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Nota héberge les plug-ins **VST3** sous macOS, Windows et Linux, et **AU** (Audio Units) sous macOS, instruments et
+effets confondus. Ils se placent dans la chaîne d’une piste ou à l’intérieur d’un rack comme les appareils propres de
+Nota.
+
+## Ajouter un plug-in
+
+Les plug-ins analysés apparaissent dans les onglets **Instruments** et **Effets audio** du navigateur, sous
+**Plug-ins**, après les appareils intégrés de Nota. L’étiquette au bord droit nomme le format et le fabricant, ce qui
+permet de distinguer les versions AU et VST3 d’un même plug-in. Double-cliquez ou glissez-en un, exactement comme un
+appareil intégré. La fenêtre du plug-in s’ouvre dès qu’il arrive ; désactivez cela dans
+**Réglages ▸ Plug-ins ▸ Ouvrir la fenêtre du plug-in à l’insertion**. Charger un projet, annuler et coller ne
+l’ouvrent jamais.
+
+Il n’y est pas ? Vérifiez [Analyser les plug-ins](scanning/), ou installez des plug-ins open source gratuits depuis
+[Réglages ▸ Téléchargements](get-plugins/).
+
+## La carte du plug-in
+
+La carte existe en deux tailles :
+
+- **Small** : fabricant, format, nombre de paramètres et latence, avec **Ouvrir l’éditeur** et **Enregistrer le
+  préréglage**.
+- **Full** : chaque paramètre sous forme de bouton, avec un filtre et des pages, montrant le texte de valeur propre au
+  plug-in (double-cliquez sur un bouton pour sa valeur par défaut), et une source de **sidechain** quand le plug-in en
+  a une.
+
+**Ouvrir l’éditeur** ouvre la fenêtre propre du plug-in, au premier plan et avec le focus. Tant que la fenêtre est
+ouverte, le bouton indique **Fermer l’éditeur** et la ferme ; la fenêtre se ferme aussi quand l’appareil est retiré. Si
+la fenêtre ne peut pas s’ouvrir, la ligne d’état le dit. Tant qu’elle a le focus, le clavier de l’ordinateur joue
+toujours des notes et les touches de transport fonctionnent toujours.
+
+Une fois que vous avez ouvert la fenêtre d’un plug-in, sa carte montre à quoi il ressemble : l’image de la fenêtre
+devient l’arrière-plan de la carte (toute la petite carte, la colonne de gauche de la grande), atténuée dans la
+couleur de carte du thème pour que le texte et les boutons restent lisibles. Elle remplit la carte sans s’étirer, en
+gardant le haut de la fenêtre, où les plug-ins mettent leur nom. L’image est reprise chaque fois que la fenêtre se
+ferme (par **Fermer l’éditeur** ou par le bouton de fermeture de la fenêtre), si bien qu’elle montre les réglages que
+vous avez laissés. Elle reste avec l’appareil quand vous le déplacez, le dupliquez ou le copiez et est enregistrée avec
+le projet : les cartes ont donc le même aspect à la réouverture. Un plug-in dont la fenêtre n’a jamais été ouverte a
+une carte unie.
+
+<Aside>
+L’image est prise sous macOS et Windows. Sous Linux, la carte reste unie.
+</Aside>
+
+## Ce dont Nota s’occupe
+
+- **État** : les réglages de chaque plug-in sont enregistrés dans le projet.
+- **Latence** : la compensation du retard des plug-ins garde les pistes alignées.
+- **Tempo et position** : les plug-ins reçoivent le tempo, la position, l’état de lecture et les points de boucle,
+  si bien que les delays synchronisés, LFO, arpégiateurs et loopers suivent le morceau.
+- **Automation et MIDI Learn** : les paramètres de plug-ins peuvent être [automatisés](../editing/automation/) et
+  [associés à un contrôleur](../control/midi-learn/).
+- **Contournement** : l’interrupteur dans l’en-tête de la carte, comme sur n’importe quel appareil.
+
+## Ouvrir un projet avec des plug-ins manquants
+
+Si un projet utilise des plug-ins qui ne sont pas sur cet ordinateur, Nota l’ouvre quand même et dit ce qui a été
+ignoré. Si le [registre de plug-ins de Nota](get-plugins/) les propose, Nota offre de les installer et de rouvrir le
+projet, pour qu’ils reviennent avec leurs réglages enregistrés. Les plug-ins sont retrouvés même quand ils sont
+installés dans un autre dossier que sur l’ordinateur qui a enregistré le projet.
+
+<Aside>
+Les plug-ins sont analysés dans un processus séparé : un plug-in qui plante pendant une analyse ne peut donc pas
+entraîner Nota avec lui.
+</Aside>

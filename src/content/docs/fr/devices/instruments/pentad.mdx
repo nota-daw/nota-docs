@@ -1,0 +1,67 @@
+---
+title: "Nota Pentad"
+description: "Poly analogique à cinq voix dans le moule du Prophet-5 : deux oscillateurs avec sync, un filtre à 4 pôles, Poly-Mod, Wheel-Mod et dérive vintage, en 5, 10 ou 16 voix."
+sidebar:
+  order: 13
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/Pentad.h
+  - src/managed/Nota.App/DeviceCards/Instruments/PentadInstrumentCard.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Pentad est un synthé analogique polyphonique dans l’esprit du Sequential Prophet-5 (Rev 3). Chaque voix a sa propre
+dérive, si bien que les accords respirent comme sur le vrai : stabs cuivrés, leads en sync, cloches poly-mod et cordes
+chaleureuses.
+
+<Shot id="devices/instruments/pentad/card" alt="Nota Pentad, onglet Oscillators" />
+
+**Chemin du signal par voix :** Osc A (dent de scie + impulsion, sync dur sur B) + Osc B (dent de scie, triangle,
+impulsion ; peut tourner comme un LFO basse fréquence) + bruit → mélangeur → passe-bas à 4 pôles → VCA. **Poly-Mod**
+laisse l’enveloppe du filtre et Osc B moduler la fréquence et la largeur d’impulsion d’Osc A et la coupure ;
+**Wheel-Mod** envoie le LFO et le bruit via la molette de modulation.
+
+## Oscillateurs
+
+Osc A et Osc B : **Oct**, **Fine**, formes d’onde, largeur d’impulsion, **Sync** (A sur B), **Lo freq** sur B (en faire
+un LFO) et **Kbd** (B suit le clavier ou non). **Glide** (Off, On, Leg) et le **Mode** (**Poly**, **Uni**, **Mono**)
+sont aussi ici.
+
+## Filtre · Ampli
+
+<Shot id="devices/instruments/pentad/filter-amp" alt="Nota Pentad, onglet Filter · Amp" />
+
+Le filtre à 4 pôles (**Cutoff**, résonance, **Keytrack** (0, ½, 1) et quantité d’enveloppe) avec son **Filter env** et
+l'**Amp env** (A · D · S · R chacune). La résonance auto-oscille en un sinus propre et jouable ; les basses
+s’amincissent quand la résonance monte, comme sur l’original : **Bass comp** les restaure.
+
+## Poly Mod
+
+<Shot id="devices/instruments/pentad/poly-mod" alt="Nota Pentad, onglet Poly Mod" />
+
+**Poly-Mod** : l’enveloppe du filtre et Osc B, à fréquence audio, vers la fréquence d’Osc A, sa largeur d’impulsion et
+le filtre : cloches métalliques et grondement façon FM. **Wheel-Mod** : le LFO (avec Free / Sync) mêlé au bruit, sa
+quantité plus la molette de modulation, vers la fréquence et la largeur d’impulsion des oscillateurs et la coupure.
+**Aftertouch** peut pousser la coupure ou le LFO.
+
+## Mixer et Output
+
+**Mixer :** niveaux d’Osc A, d’Osc B et de **Noise** (blanc ou rose). **Output :** accord et volume généraux, **Drift**
+(étalement vintage par voix), **Noise floor**, **Oversampling** (×2 ou ×4 dans chaque voix), et la configuration des
+voix : **5**, **10** ou **16** voix, comment les voix sont allouées, et piles d’unison.
+
+## Préréglages
+
+40 préréglages d’usine répartis entre cordes et nappes (**Glass Strings**, **Analog Strings**, **Warm Pad**,
+**PWM Pad**, **Choir Vox**, **Sweep Pad**, **Solar Drift**), basses (**Pentad Bass**, **Sync Bass**, **Unison Bass**,
+**Pluck Bass**, **Sub Drone**), leads (**Sync Lead**, **Unison Lead**, **Pulse Lead**, **Screamer**, **Fifth Lead**),
+claviers (**Poly Keys**, **Riley Organ**, **Clavi**, **Bell Keys**, **Harpsi**), cuivres (**Poly Brass**,
+**Soft Horns**, **Brass Stab**, **Sync Brass**) et effets poly-mod (**Poly-Mod Bells**, **Metallic Clang**,
+**Env Sync Sweep**, **Laser Zap**).
+
+## Astuces
+
+- **Lead en sync :** Sync activé, balayez la hauteur d’Osc A avec l’enveloppe du filtre via Poly-Mod.
+- **Grands accords :** 10 ou 16 voix avec un peu de Drift : chaque note est légèrement différente.

@@ -1,0 +1,226 @@
+---
+title: "Appareils"
+description: "Comment fonctionne la chaîne d’appareils d’une piste (instruments, effets audio, effets MIDI et racks ; ajouter, réordonner, contourner, préréglages, comparaison A/B) et un index de chaque appareil intégré."
+sidebar:
+  order: 0
+updated: "0.57.1"
+status: done
+sources:
+  - src/managed/Nota.App/DeviceCards/SidechainSourcePicker.cs
+  - src/managed/Nota.App/DeviceChainView.cs
+  - src/managed/Nota.App/DeviceChainView.Drop.cs
+  - src/managed/Nota.App/DeviceChainView.Clipboard.cs
+  - src/managed/Nota.App/DeviceChainView.Fold.cs
+  - src/managed/Nota.App/DeviceChainView.Move.cs
+  - src/managed/Nota.Presentation/DeviceSelection.cs
+  - src/managed/Nota.App/DeviceCardKit.cs
+  - src/managed/Nota.App/Controls/ValueEntry.cs
+---
+
+import { CardGrid, LinkCard, Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
+
+Chaque piste a une **chaîne d’appareils** : les appareils qui fabriquent et façonnent son son, de gauche à droite.
+Sélectionnez une piste pour voir sa chaîne dans le panneau du bas.
+
+<Shot id="views/detail-panel" alt="La chaîne d’appareils de la piste Keys : Nota Pentad, puis Nota EQ-8" />
+
+**Effets MIDI → instrument → effets audio.** Les effets MIDI (un arpégiateur, un générateur d’accords) changent les
+notes avant que l’instrument ne les joue ; l’instrument transforme les notes en son ; les effets audio traitent ce son.
+Une piste audio n’a pas d’instrument : seulement des effets audio.
+
+## Ajouter des appareils
+
+- **Double-cliquez** sur un instrument ou un effet dans le navigateur : un effet va sur la piste sélectionnée. Sans
+  piste pour l’accueillir, un effet audio crée sa propre piste audio.
+- **Faites-le glisser** du navigateur sur une piste, ou dans la chaîne à l’endroit voulu.
+- Cliquez sur le **+** à la fin de la chaîne : le navigateur s’ouvre sur **Effets audio** avec le curseur dans sa
+  recherche : tapez le nom de l’effet, puis double-cliquez dessus.
+- Déposer un instrument sur une piste d’instrument **remplace** son instrument.
+
+## La carte
+
+Chaque appareil est une carte avec un en-tête (nom, sélecteur de préréglage (**‹ Init ⌄ ›**), commutateur de taille
+**S / L** quand l’appareil en a un, et interrupteur marche / arrêt (contournement)) au-dessus de ses commandes. Les
+boutons, curseurs et graphiques fonctionnent partout de la même façon : glisser, <Kbd>⇧</Kbd> pour des pas fins,
+double-clic pour réinitialiser ; les graphiques sont aussi des commandes (faites glisser les nœuds, les courbes et les
+poignées). Un bouton tourne avec un glissement vers le haut ou le bas ; un curseur horizontal suit un glissement vers
+la gauche ou la droite, et le haut / bas marche aussi dessus.
+
+Pour régler une valeur exacte, <Kbd>⌥</Kbd>-clic sur la commande (<Kbd>Alt</Kbd>-clic sous Windows et Linux), ou
+double-clic sur le nombre en dessous, et saisissez-la dans les unités affichées : `-6`, `1.5k`, `250 ms`, `L 30`,
+`1/16`. <Kbd>Return</Kbd> valide, <Kbd>Esc</Kbd> annule, <Kbd>Tab</Kbd> passe à la valeur suivante de la carte. Les
+poignées de graphique, les nœuds d’enveloppe et les cellules de matrice de modulation acceptent le même clic : une
+poignée à plusieurs valeurs (la fréquence, le gain et le Q d’une bande d’EQ) s’ouvre sur la première et <Kbd>Tab</Kbd>
+parcourt les autres. Clic droit sur l’une d’elles pour **Saisir une valeur…** et **Rétablir par défaut**
+(**Effacer** sur une cellule de matrice).
+
+La molette de la souris fait défiler une longue chaîne latéralement où que soit le pointeur. Quelques commandes
+prennent la molette elles-mêmes seulement quand vous les pointez : la poignée d’une bande d’EQ (son Q) et les petites
+cases de valeur qui parcourent une liste (un modèle, une gamme, une note fondamentale).
+
+La liste des préréglages commence par **Init** : choisissez-le pour remettre chaque paramètre à sa valeur par défaut,
+comme sur un appareil tout juste ajouté. La taille de la carte et un échantillon chargé restent. **‹ ›** parcourent
+aussi Init : après le dernier préréglage vient donc Init, puis à nouveau le premier.
+
+| Faire ceci | Pour |
+|---|---|
+| Faire glisser l’en-tête | Déplacer l’appareil dans la chaîne |
+| Double-cliquer sur l’en-tête | Replier la carte en une bande étroite (voir plus bas) |
+| Cliquer sur un appareil · <Kbd>Delete</Kbd> | Le supprimer |
+| <Kbd>⇧</Kbd>-clic · <Kbd>⌘</Kbd>-clic sur un autre appareil | Sélectionner une série d’appareils / en ajouter ou en retirer un (voir [Plusieurs appareils à la fois](#plusieurs-appareils-%C3%A0-la-fois)) |
+| Cliquer sur un appareil · <Kbd>⌘ C</Kbd> · <Kbd>⌘ X</Kbd> · <Kbd>⌘ V</Kbd> | Le copier / couper / coller avec tous ses réglages ; le collage arrive après l’appareil sélectionné, sur cette piste ou une autre, ou dans la chaîne d’un rack |
+| Cliquer sur un appareil · <Kbd>⌘ D</Kbd> | Le dupliquer juste après lui-même |
+| Sélectionner des appareils · <Kbd>⌘ G</Kbd> | Les grouper dans un rack à leur place (voir [Grouper dans un rack](#grouper-dans-un-rack)) ; <Kbd>⌘ ⇧ G</Kbd> sur un rack à une chaîne en ressort ses appareils |
+| Clic droit sur l’en-tête | **Déplacer vers la gauche** / **Déplacer vers la droite**, **Copier**, **Coller**, **Dupliquer**, **Supprimer**, préréglages, **Enregistrer le préréglage**, comparaison A / B, **Documentation** (la page de cet appareil dans le manuel) et **Replier** |
+| Cliquer sur l’interrupteur | Contourner l’appareil |
+
+Sur une carte d'**instrument**, l’interrupteur éteint l’instrument : il devient silencieux sans mettre la piste en muet
+ni rien supprimer, pratique pour comparer des couches ou entendre la piste sans lui. Il s’estompe en quelques
+millisecondes puis n’utilise plus de processeur ; les effets MIDI avant lui et les effets audio après lui gardent leurs
+réglages (la queue d’une reverb sonne jusqu’au bout). Rallumé, il joue à partir de la note suivante. L’interrupteur est
+enregistré avec le projet.
+
+### Plusieurs appareils à la fois
+
+<Kbd>⇧</Kbd>-clic sur un second appareil pour sélectionner tous les appareils entre les deux, à travers les effets
+MIDI, l’instrument et les effets audio, dans l’ordre de la chaîne. <Kbd>⌘</Kbd>-clic (Ctrl sous Windows et Linux)
+ajoute un appareil à la sélection ou le retire. <Kbd>Esc</Kbd> ou un clic sur l’espace vide de la chaîne l’efface ;
+changer de piste aussi.
+
+Tout ce que vous faites agit alors sur toute la sélection, en une seule étape d’annulation :
+
+- **Copier**, **Couper**, **Coller** : les copies se collent ensemble, dans l’ordre, chacune dans sa propre section
+  (les effets MIDI parmi les effets MIDI, les effets audio parmi les effets audio), après le dernier appareil
+  sélectionné de là. Un instrument copié remplace l’instrument de la piste sur laquelle vous collez ; une piste qui ne
+  peut pas accueillir un appareil (une piste audio et un effet MIDI) l’ignore et la ligne d’état dit combien.
+- **Dupliquer** copie chaque série d’effets sélectionnés juste après elle-même.
+- **Supprimer** les retire tous. Avec l’instrument sélectionné aussi, sa piste s’en va, et Nota demande d’abord à
+  chaque fois, si bien qu’un <Kbd>⇧</Kbd>-clic qui a balayé l’instrument ne peut pas emporter la piste par accident.
+- Faites glisser l’en-tête d’un appareil sélectionné pour déplacer ensemble les appareils sélectionnés de cette
+  section.
+- **Déplacer vers la piste ▸** dans le menu les déplace tous vers une autre piste.
+
+Un clic droit sur un appareil sélectionné ouvre un menu pour toute la sélection ; son en-tête montre combien
+d’appareils elle contient.
+
+### Grouper dans un rack
+
+Sélectionnez des appareils côte à côte et appuyez sur <Kbd>⌘ G</Kbd> (ou **Grouper dans un rack** dans le menu du clic
+droit). Ils passent dans un nouveau rack à leur place, comme sa première chaîne, avec tous leurs réglages, et la piste
+sonne pareil. Le rack découle de ce que vous avez sélectionné :
+
+| Sélectionné | Devient |
+|---|---|
+| Des effets audio | Un [Audio Effect Rack](racks/audio-effect-rack/) |
+| Des effets MIDI | Un [MIDI Effect Rack](racks/midi-effect-rack/) |
+| L’instrument, avec les effets MIDI juste avant et / ou les effets audio juste après | Un [Instrument Rack](racks/instrument-rack/) comme instrument de la piste : effets MIDI, instrument et effets audio dans sa première chaîne |
+
+L’automation, les liens de modulation, la voie CC d’un Arp et les clés de sidechain sur les appareils entrent dans le
+rack avec eux et continuent de fonctionner ; dans l’Arrangement, une telle voie se lit comme
+**Audio Effect Rack / Reverb · Mix**. Le groupe peut maintenant être dupliqué, enregistré comme un seul préréglage, ou
+recevoir plus de chaînes et de macros.
+
+<Kbd>⌘ ⇧ G</Kbd> (**Dégrouper le rack**) sur un rack à une chaîne remet ses appareils là où se trouvait le rack, liens
+compris ; les macros du rack et les réglages de chaîne s’en vont. Grouper n’est pas proposé quand la sélection a un
+trou, mélange des effets MIDI et audio sans l’instrument entre eux, ou contient un rack (les racks ne vont pas dans
+des racks) : la ligne d’état dit pourquoi.
+
+### Replier un appareil
+
+Quand une chaîne est plus longue que le panneau, repliez les appareils sur lesquels vous ne travaillez pas :
+**double-cliquez** sur l’en-tête d’une carte (pas sur son sélecteur de préréglage ni son interrupteur), ou choisissez
+**Replier** dans son menu du clic droit. La carte devient une bande étroite avec son nom et son interrupteur marche /
+arrêt, et le reste de la chaîne vient en vue. Un appareil replié joue toujours, se contourne depuis son interrupteur,
+se déplace par glissement et ouvre son menu. **Double-cliquez** sur la bande (ou **Déplier** dans son menu) pour rouvrir
+la carte. Le repli est enregistré avec le projet.
+
+<Shot id="devices/folded" alt="Une chaîne d’appareils avec Nota EQ-8 replié en une bande étroite entre l’instrument et l’effet suivant" />
+
+La **comparaison A / B** garde deux versions des réglages d’un appareil : basculez entre **A** et **B** pour comparer,
+**Copier A vers B** pour démarrer une variation.
+
+## Préréglages
+
+Chaque appareil intégré est livré avec des préréglages d’usine : les flèches les parcourent, le nom ouvre la liste.
+Dans le navigateur, un appareil se déplie en dossiers de ses préréglages d’usine (Pads, Bass, Leads…).
+**Enregistrer le préréglage** stocke les vôtres ; ils apparaissent dans l’onglet **Préréglages** du navigateur. Un
+aperçu dans le navigateur joue un préréglage d’effet à travers une courte démonstration : vous pouvez donc écouter
+avant de charger.
+
+L’en-tête garde le nom du préréglage que vous avez chargé. Dès que vous changez un paramètre de son, il indique
+**Nom \*** (survolez-le pour « Changé depuis le chargement de … ») ; remettez le paramètre, annulez, ou choisissez à
+nouveau le préréglage et la marque disparaît. La taille de la carte et les réglages de l’analyseur de l’EQ Eight ne
+comptent pas comme des changements. Le nom reste avec l’appareil quand vous le copiez, le dupliquez ou le déplacez, et
+il est enregistré avec le projet. Charger un préréglage, ou Init, est une seule étape d’annulation.
+**Enregistrer le préréglage** part du nom du préréglage chargé : une variation se garde donc vite.
+
+## Sidechain
+
+Compressor, Dynamic EQ-8, Ceiling, Level, Shutter, Auto Filter et Prism peuvent écouter **une autre piste** : choisissez-la
+comme source de sidechain de l’appareil (avant ou après le fader de cette piste). Nota Flux réagit à une autre piste, et
+Auto Shift peut suivre les notes d’une autre piste, de la même façon.
+
+Une clé peut aussi écouter **une partie** de l’instrument d’une autre piste : un pad d’un
+[Drum Rack](racks/drum-rack/), une chaîne d’un [Instrument Rack](racks/instrument-rack/) ou une voix de
+[Nota Rhythm](instruments/rhythm/). Le sélecteur de source les liste sous leur piste : choisissez **Kick** sous
+**Drums** pour faire céder la basse sur la seule grosse caisse. Pour une partie, **Pre** est la partie avant ses propres
+effets (le coup brut) et **Post** est après ses effets, son niveau et son panoramique. Un pad en muet alimente quand même
+sa clé : vous pouvez donc garder une « grosse caisse fantôme » qui pilote le ducking sans s’entendre. Jusqu’à 16 sources
+différentes peuvent servir de clé en même temps ; quand elles sont toutes prises, le sélecteur grise les autres.
+
+## Plug-ins
+
+Les plug-ins VST3 (et AU sous macOS) se placent dans la chaîne comme des appareils intégrés. Leur carte montre les
+paramètres ; **Ouvrir l’éditeur** ouvre la fenêtre propre du plug-in. Voir [Plug-ins](../plugins/).
+
+<Aside>
+Toute commande de tout appareil peut être [automatisée](../editing/automation/), associée à un contrôleur avec
+[MIDI Learn](../control/midi-learn/), ou câblée en CV dans la [vue Modular](../views/modular/).
+</Aside>
+
+## Instruments
+
+<CardGrid>
+  <LinkCard title="Nota Sampler" description="Joue un échantillon sur le clavier" href="instruments/sampler/" />
+  <LinkCard title="Nota Physical" description="Synthèse modale : maillets, cloches, sons pincés" href="instruments/physical/" />
+  <LinkCard title="Nota Aurora" description="Synthé à table d’ondes" href="instruments/aurora/" />
+  <LinkCard title="Nota Volt" description="Analogique virtuel à deux chemins, l’instrument par défaut" href="instruments/volt/" />
+  <LinkCard title="Nota Pendulum" description="Arpèges génératifs qui se balancent" href="instruments/pendulum/" />
+  <LinkCard title="Nota Operator" description="FM à 4 opérateurs" href="instruments/operator/" />
+  <LinkCard title="Nota Grain" description="Sampler granulaire" href="instruments/grain/" />
+  <LinkCard title="Nota Flux" description="Synthé vectoriel qui écoute" href="instruments/flux/" />
+  <LinkCard title="Nota Rhythm" description="Boîte à rythmes à huit voix" href="instruments/rhythm/" />
+  <LinkCard title="Nota Monolith" description="Synthé mono de style Model D" href="instruments/monolith/" />
+  <LinkCard title="Nota Pentad" description="Poly analogique de style Prophet-5" href="instruments/pentad/" />
+  <LinkCard title="Nota Consort" description="Semi-modulaire paraphonique" href="instruments/consort/" />
+  <LinkCard title="Nota Keys" description="Piano électrique modélisé : tine, suitcase, anche, clav" href="instruments/keys/" />
+  <LinkCard title="Nota Mosaic" description="Instrument multi-échantillons : zones, couches, round-robin" href="instruments/mosaic/" />
+</CardGrid>
+
+[Nota Synth](instruments/synth/) et [Nota Bass](instruments/bass/) ne sont plus proposés pour les nouvelles pistes :
+Nota Volt couvre les deux et reprend leurs préréglages. Les projets qui les utilisent s’ouvrent et jouent toujours.
+
+## Effets audio
+
+<CardGrid>
+  <LinkCard title="EQ-8 · EQ-3 · Dynamic EQ-8" description="Paramétrique, isolateur DJ, EQ dynamique" href="audio-effects/eq-8/" />
+  <LinkCard title="Compressor · Prism · Ceiling · Level" description="Dynamique, multibande, limiteur, volume" href="audio-effects/compressor/" />
+  <LinkCard title="Reverb · Chamber · Delay" description="Espace et écho" href="audio-effects/reverb/" />
+  <LinkCard title="Chorus · Flanger · Phaser · Orbit" description="Modulation, panoramique et trémolo" href="audio-effects/chorus/" />
+  <LinkCard title="Vocoder" description="Une voix de robot, ou une nappe qui dit les mots" href="audio-effects/vocoder/" />
+  <LinkCard title="Valve · Vintage · Forge · Crush" description="Ampli, vieillissement, saturation, réduction de bits" href="audio-effects/valve/" />
+  <LinkCard title="Auto Filter · Shutter · Beat Repeat" description="Filtre mobile, gate, bégaiement" href="audio-effects/auto-filter/" />
+  <LinkCard title="Auto Shift · Strata · Utility · Lens" description="Correction de hauteur, looper, outils, analyseur" href="audio-effects/auto-shift/" />
+</CardGrid>
+
+## Effets MIDI et racks
+
+<CardGrid>
+  <LinkCard title="Arp · Chord · Scale" description="Arpégiateur, accords, rester dans la gamme" href="midi-effects/arp/" />
+  <LinkCard title="Length · Velocity · Random" description="Longueur des notes, dynamique, hasard" href="midi-effects/length/" />
+  <LinkCard title="Instrument Rack · Drum Rack" description="Couches, découpages et pads" href="racks/instrument-rack/" />
+  <LinkCard title="Audio Effect Rack · Macros" description="Effets en parallèle et boutons de macro" href="racks/audio-effect-rack/" />
+  <LinkCard title="MIDI Effect Rack" description="Répartir les notes entre des chaînes d’effets MIDI" href="racks/midi-effect-rack/" />
+</CardGrid>

@@ -1,0 +1,65 @@
+---
+title: "Analyser les plug-ins"
+description: "Où Nota cherche les plug-ins VST3 et AU, ajouter vos propres dossiers et relancer l’analyse."
+sidebar:
+  order: 2
+updated: "0.56.1"
+status: done
+sources:
+  - src/managed/Nota.App/PluginScan.cs
+  - src/managed/Nota.App/PreferencesWindow.cs
+  - src/managed/Nota.App/PreferencesWindow.Store.cs
+  - src/native/nota.engine/pluginhost/scanner/abi_pluginscanner.cpp
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota construit un catalogue de vos plug-ins installés en chargeant chaque nouveau plug-in dans un processus séparé :
+un plug-in qui se comporte mal ne peut donc pas faire planter Nota. Les plug-ins déjà dans le catalogue ne sont pas
+rechargés : seule la première analyse d’une grosse collection prend du temps.
+
+## Où Nota cherche
+
+- **VST3** : les dossiers VST3 standard du système : sous macOS `~/Library/Audio/Plug-Ins/VST3` et
+  `/Library/Audio/Plug-Ins/VST3` ; sous Windows `C:\Program Files\Common Files\VST3` ; sous Linux `~/.vst3`,
+  `/usr/lib/vst3` et `/usr/local/lib/vst3`, plus le dossier dans lequel Nota installe les plug-ins du registre, et
+  tout dossier que vous ajoutez.
+- **AU** (macOS) : le registre des Audio Units du système.
+
+## Ajouter un dossier et relancer l’analyse
+
+<Shot id="preferences/plugins" alt="Réglages ▸ Plug-ins : dossiers d’analyse et Relancer l’analyse" />
+
+1. Ouvrez **Réglages ▸ Plug-ins**.
+2. **Ajouter un dossier…** ajoute un dossier où chercher des plug-ins VST3 ; **Supprimer** en retire un.
+3. **Relancer l’analyse des plug-ins** parcourt chaque dossier et charge les plug-ins qu’il n’a pas encore vus. Pendant
+   qu’elle tourne, la ligne d’état les compte, p. ex. **Analyse des plug-ins · 312 sur 1 000 · …**. Quand elle est
+   terminée, elle dit combien de plug-ins Nota connaît et combien n’ont pas pu être chargés.
+
+Les plug-ins installés depuis [Réglages ▸ Téléchargements](../get-plugins/) sont analysés automatiquement, seulement
+dans le dossier où ils vont : en installer un ne relance donc pas l’analyse de toute votre collection.
+
+## Comment se passe une analyse
+
+- Nota charge quatre plug-ins à la fois.
+- Un plug-in qui se fige est arrêté après 30 secondes et réessayé une fois seul, avec deux minutes pour charger : un
+  plug-in lourd qui était juste lent y entre donc quand même.
+- Ce que l’analyse trouve est enregistré au fur et à mesure. Si vous quittez Nota à mi-chemin, l’analyse suivante
+  reprend là où elle s’était arrêtée.
+- Un plug-in qui plante, se fige ou s’avère ne rien contenir est mémorisé et ignoré par les analyses suivantes, pour
+  qu’il ne coûte plus de temps. Il est réessayé quand son fichier change (vous le mettez à jour) ou quand vous appuyez
+  sur **Relancer l’analyse des plug-ins**.
+
+## Le journal d’analyse
+
+Chaque analyse écrit `plugin-scan.log` dans le dossier `logs` du dossier de données de Nota :
+
+| Système | Dossier |
+|---|---|
+| macOS | `~/Library/Application Support/Nota/logs` |
+| Windows | `%APPDATA%\Nota\logs` |
+| Linux | `~/.config/nota/logs` |
+
+Il contient une ligne par plug-in chargé : s’il a fonctionné, combien de plug-ins il contenait et combien de temps il a
+pris. Un plug-in qui n’apparaît pas, ou une analyse qui prend bien plus longtemps que prévu, se repère en général
+facilement là : joignez le fichier quand vous [signalez un problème](https://github.com/nota-daw/nota/issues/new/choose).

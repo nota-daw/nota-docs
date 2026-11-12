@@ -1,0 +1,73 @@
+---
+title: "Nota Rhythm"
+description: "Boîte à rythmes à huit voix avec un séquenceur de 16 pas : voix de synthèse ou d’échantillon, effets par voix, swing et humanisation, quatre banques de motifs et huit macros de kit."
+sidebar:
+  order: 11
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/RhythmMachine.h
+  - src/managed/Nota.App/DeviceCards/Instruments/RhythmInstrumentCard.cs
+---
+
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
+
+Nota Rhythm est une groovebox autonome : huit voix de batterie et un séquenceur de 16 pas qui joue en mesure avec le
+transport. Il démarre sur un kit d’usine ; les notes MIDI déclenchent aussi les voix en direct, si bien que vous pouvez
+jouer au doigt par-dessus le motif.
+
+<Shot id="devices/instruments/rhythm/card" alt="Nota Rhythm : le kit, la voix sélectionnée, Perform et la bande de pas" />
+
+## La carte, de gauche à droite
+
+**Kit** : les huit voix : couleur, nom, une marque **fx** quand elle a des effets, et **syn** ou **smp** (synthèse ou
+échantillon). Cliquez sur une voix pour la sélectionner et l’entendre ; déposez un fichier audio dessus pour charger un
+échantillon ; clic droit pour plus. Le sélecteur de préréglage de l’en-tête choisit le **kit** : les mêmes 25 kits
+d’usine que le [Drum Rack](../../racks/drum-rack/).
+
+**Voice** : la voix sélectionnée, sur deux onglets :
+
+- **Sound** : une voix de synthèse montre son contour de **hit** (faites glisser horizontalement pour Decay, vers le
+  haut ou le bas pour Tune) et **Tune**, **Decay**, **Punch**, **Tone**, **Drive**, **Level**. Une voix d’échantillon
+  montre le fichier avec ses lignes **Start** / fin, **Reverse**, et Start · Length · Tune · Decay · Drive · Level.
+- **FX** : la chaîne d’effets propre de la voix : cliquez sur un emplacement pour la carte de l’effet, ajoutez-en un
+  depuis le menu ou déposez-en un. Une caisse claire peut avoir sa propre reverb, une grosse caisse sa propre
+  saturation.
+
+**Perform** : **Swing**, **Human** (jitter de vélocité) et **Accent**, puis **Master** et **Glue** (un doux compresseur
+de bus sur tout le kit), et l’indicateur de niveau.
+
+**Step** : les 16 pas de la voix sélectionnée dans les banques **A** à **D**, avec une voie de vélocité en dessous.
+
+## Programmer les pas
+
+| Faire ceci | Pour |
+|---|---|
+| Cliquer sur un pas | L’activer ou le désactiver |
+| <Kbd>⇧</Kbd>-clic | L’accentuer |
+| <Kbd>⌥</Kbd>-clic | En faire un pas doux |
+| Faire glisser sur des pas | Les peindre |
+| Faire glisser un pas vers le haut / le bas (ou défiler) | Régler sa vélocité |
+
+Le menu des pas remplit chaque temps, chaque croche ou chaque double-croche, ajoute des contretemps, et décale le motif
+vers la gauche ou la droite. Les pas sont des doubles-croches : 16 pas font une mesure.
+
+Les voix de synthèse sont une grosse caisse (sinus avec une chute de hauteur et un claquement), une caisse claire (ton
+plus bruit), un clap, un rim, des charlestons fermé et ouvert (le fermé coupe l’ouvert, à la 808), un tom et une perc.
+
+## Macros
+
+<Shot id="devices/instruments/rhythm/macro" alt="Nota Rhythm, les huit macros du kit" />
+
+**Macro** dans l’en-tête remplace le panneau par les **huit macros** du kit. Chacune pilote une ou plusieurs cibles (le
+Decay d’une voix, le Glue, ou un paramètre de l’effet d’une voix) sur une plage : un seul bouton peut ainsi ouvrir
+toutes les reverbs de caisse claire et de clap à la fois. Sélectionnez une macro et **Map** une commande dessus ; clic
+droit sur une macro pour ses cibles et ses plages, la renommer ou l’effacer. Un kit d’usine se charge avec ses propres
+macros.
+
+## Astuces
+
+- **Un rythme en une minute :** choisissez un kit dans l’en-tête, sélectionnez la grosse caisse, cliquez sur les pas 1,
+  5, 9 et 13, puis la caisse claire sur 5 et 13, et montez un peu **Swing**.
+- **Apporter vos propres sons :** déposez des one-shots du navigateur sur les voix.

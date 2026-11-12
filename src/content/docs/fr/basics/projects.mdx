@@ -1,0 +1,94 @@
+---
+title: Projets et enregistrement
+description: Ce qu’est un projet .nota, enregistrer et ouvrir, le dossier des projets, la récupération après un plantage et quitter avec des modifications non enregistrées.
+sidebar:
+  order: 1
+updated: "0.51.2"
+status: done
+sources:
+  - src/managed/Nota.Infrastructure/Persistence/ProjectTemplate.cs
+  - src/managed/Nota.App/MainWindow.Files.cs
+  - src/managed/Nota.App/MainWindow.Recovery.cs
+  - src/managed/Nota.App/SaveChangesWindow.cs
+  - src/managed/Nota.App/MainWindow.MidiImport.cs
+  - src/managed/Nota.App/MainWindow.MissingPlugins.cs
+  - src/managed/Nota.Infrastructure/Persistence/BundleContent.cs
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
+
+## Un projet est un dossier
+
+Un projet Nota est un dossier dont le nom se termine par `.nota`. Tout ce dont le projet a besoin se trouve
+à l’intérieur : l’arrangement et la session, les réglages de chaque appareil, l’état des plug-ins, et
+**des copies de tout l’audio utilisé**. Déplacez-le, compressez-le et envoyez-le, ou sauvegardez-le comme un
+seul élément : rien ne manque. Laissez son contenu tel quel, Nota le gère.
+
+Un audio identique n’est stocké qu’une fois, et un enregistrement n’écrit que ce qui a changé : enregistrer
+reste rapide, même dans des projets remplis d’échantillons.
+
+## Nouveau, ouvrir, enregistrer
+
+| Commande | Touche | |
+|---|---|---|
+| **Fichier ▸ Nouveau** | <Kbd>⌘ N</Kbd> | Un [nouveau projet](#un-nouveau-projet), prêt à jouer. |
+| **Fichier ▸ Ouvrir…** | <Kbd>⌘ O</Kbd> | Ouvrir un projet `.nota`. |
+| **Fichier ▸ Enregistrer** | <Kbd>⌘ S</Kbd> | Enregistrer ; la première fois, choisissez un nom et un emplacement. Chaque enregistrement crée aussi une [version](../version-history/). |
+| **Fichier ▸ Enregistrer sous…** | <Kbd>⌘ ⇧ S</Kbd> | Enregistrer sous un nouveau nom. L’historique des versions suit. |
+| **Fichier ▸ Enregistrer une version avec note…** | <Kbd>⌥ ⌘ S</Kbd> | Enregistrer et dire ce qui a changé. |
+
+Vous pouvez aussi ouvrir un projet depuis la liste récente de la
+[fenêtre de démarrage](../../start-here/first-launch/) ou depuis l’onglet **Projets** du navigateur, qui liste le
+dossier des projets : **Documents ▸ Nota Projects**, sauf si vous en choisissez un autre dans
+[Réglages ▸ Bibliothèque](../../preferences/library/). **Ouvrir**, **Enregistrer sous** et le panneau de
+nouveau projet démarrent aussi dans ce dossier.
+
+## Un nouveau projet
+
+Un nouveau projet, comme celui avec lequel Nota s’ouvre quand la fenêtre de démarrage est désactivée, n’est pas
+vide. Il contient une piste d’instrument avec **Nota Volt** et un clip vide d’une mesure, une piste audio, et deux
+pistes de retour : **Reverb** avec Nota Reverb et **Delay** avec Nota Delay, tous deux réglés sur **Wet Only**.
+Jouez tout de suite, ou montez l’[envoi](../tracks/#routage) d’une piste pour ajouter de l’espace ou des échos. Ce
+sont des pistes ordinaires : renommez-les, changez-les ou supprimez-les comme vous voulez. Un nouveau projet
+compte comme inchangé et n’a rien à annuler : vous pouvez le fermer sans qu’on vous demande de l’enregistrer.
+
+## Apporter du matériel
+
+- **Fichier ▸ Importer de l’audio…** place des fichiers audio sur une nouvelle piste. Il s’ouvre dans le dossier
+  d’où vous avez importé en dernier, le dossier Échantillons la première fois.
+- Faites glisser des fichiers audio ou `.mid` depuis le Finder / l’Explorateur ou l’onglet **Fichiers** du
+  navigateur vers l’Arrangement. Un fichier MIDI arrive sur la piste d’instrument où vous le déposez, un clip par
+  partie ; les parties en plus obtiennent de nouvelles pistes en dessous. Déposé sur un emplacement de Session, le
+  fichier entier devient un seul clip.
+
+L’audio est copié dans le projet à l’enregistrement : les fichiers d’origine peuvent donc être déplacés ou
+disparaître ensuite.
+
+## Plug-ins manquants
+
+Si un projet utilise des plug-ins qui ne sont pas installés sur cet ordinateur, Nota l’ouvre quand même et dit ce
+qui a été ignoré. Quand le [registre de plug-ins de Nota](../../plugins/get-plugins/) les propose, Nota offre de
+les installer et de rouvrir le projet, pour que les appareils reviennent avec leurs réglages enregistrés.
+
+## Quitter avec des modifications non enregistrées
+
+Quitter (**Fichier ▸ Quitter** ou <Kbd>⌘ Q</Kbd>, sur macOS **Nota ▸ Quitter Nota**) ou fermer un projet qui a des
+modifications demande d’abord confirmation, et vous dit depuis combien de temps elles ne sont pas enregistrées :
+
+<Shot id="basics/unsaved-dialog" alt="La boîte de dialogue des modifications non enregistrées : Ne pas enregistrer, Annuler, Enregistrer" width={420} />
+
+**Enregistrer** (ou <Kbd>Return</Kbd>) enregistre sur-le-champ puis ferme ; **Ne pas enregistrer** abandonne les
+modifications ; **Annuler** (ou <Kbd>Esc</Kbd>) revient au projet.
+
+## Récupération après un plantage
+
+Pendant que vous travaillez, Nota garde en arrière-plan une copie de récupération du projet ouvert. Si Nota
+s’arrête de façon inattendue, le lancement suivant propose de **Récupérer** ce travail ou de l'**Ignorer** : voir
+[Premier lancement](../../start-here/first-launch/#si-nota-ne-sest-pas-fermé-correctement).
+
+<Aside type="caution">
+La copie de récupération est un filet de sécurité, pas un substitut à l’enregistrement. Enregistrez souvent :
+chaque enregistrement est aussi une version à laquelle vous pouvez revenir.
+</Aside>

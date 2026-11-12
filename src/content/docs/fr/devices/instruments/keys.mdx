@@ -1,0 +1,117 @@
+---
+title: "Nota Keys"
+description: "Un piano électrique modélisé : modèles tine, suitcase, reed et clav, une courbe de micro modifiable à la souris, une pédale de maintien, et un préampli, un trémolo, un phaser, un chorus et un baffle."
+sidebar:
+  order: 15
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/Keys.h
+  - src/managed/Nota.App/DeviceCards/Instruments/KeysInstrumentCard.cs
+  - src/managed/Nota.App/Controls/KeysViews.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Keys est un piano électrique construit à partir de sa physique : un **marteau** frappe une **tine** (avec sa barre
+de tonalité), une **anche** (reed) ou une **corde**, et la vibration passe devant un **micro** qui la colore : plus vous
+jouez fort, plus ça grogne. Quatre modèles en un seul instrument : **Tine** et **Suitcase** (le piano à tines
+classique, scène et suitcase), **Reed** (le piano à anches) et **Clav** (une corde frappée et étouffée avec deux
+micros).
+
+<Shot id="devices/instruments/keys/card" alt="Nota Keys, onglet Sound : marteau, résonateur, courbe du micro, étouffoir et rail Play" />
+
+**Chemin du signal :** marteau → tine / anche / corde → micro → préampli → trémolo → phaser → chorus → baffle → sortie.
+Jusqu’à 64 voix.
+
+La carte a deux tailles : **L** avec les onglets **Sound** et **FX**, et **S** avec le modèle, le micro et quatre
+boutons. Basculez avec **S / L** dans l’en-tête.
+
+## Sound
+
+Les pastilles de modèle (**Tine**, **Suitcase**, **Reed**, **Clav**) se trouvent dans la bande d’onglets. Choisir un
+modèle règle aussi le micro et le baffle avec lesquels on l’entend d’habitude.
+
+| Section | Commande | Ce qu’elle fait |
+|---|---|---|
+| **Hammer** | **Hard** | Dureté du marteau : doux est sombre et rond, dur est brillant et percussif |
+| | **Vel→H** | De combien le marteau durcit quand vous jouez plus fort |
+| | **Noise** | Le choc du marteau, désactivé ou de −60 à −12 dB |
+| **Resonator** | **Decay** | Combien de temps une note résonne, de 25 % à 400 % de la durée naturelle du modèle |
+| | **Body** | Le poids du fondamental et de la barre de tonalité |
+| | **Bright** | Les partiels aigus de type cloche |
+| | **Key→Br** | Plus brillant vers le haut du clavier (ou plus sombre, sous le centre) |
+| **Pickup** | le graphique | Faites glisser le point : ↔ **Symmetry**, ↕ **Distance** (voir plus bas) |
+| **Damper** | **Damper** | À quelle vitesse une touche relâchée s’arrête : bas, elle continue de résonner, haut, elle s’arrête en environ 25 ms |
+| | **Rel N** | Le choc de l’étouffoir en feutre au relâchement |
+| | **CC64 / Pedal** | La pédale de maintien : cliquez dessus, automatisez-la, ou appuyez sur la pédale de votre clavier |
+
+### La courbe du micro
+
+Le graphique est la vraie courbe de transfert que traverse le son, pas une image de celle-ci. La bande bleu sarcelle
+montre l’amplitude d’une note à pleine vélocité. **Distance** (haut / bas) rapproche le micro : la courbe se courbe
+davantage et les notes fortes saturent ; **Symmetry** (gauche / droite) décale la tine par rapport au micro, ajoutant
+des harmoniques paires : c’est le **bark**, lu au-dessus du graphique, et les barres H1 à H8 montrent ce que la courbe
+fait à un sinus. Les notes douces restent dans le milieu droit de la courbe et sonnent propres ; les notes dures
+atteignent ses coudes.
+
+<Shot id="devices/instruments/keys/clav" alt="Nota Keys avec le modèle Clav : la corde et ses deux micros" />
+
+Avec **Clav**, le graphique montre à la place la corde et ses deux micros : **Upper** est fin et brillant, **Lower** plus
+plein, **Both** les additionne.
+
+### Play
+
+Le rail à droite : **Tune** (±50 cents), **Age** (chaque touche dérive un peu en hauteur, en decay et en niveau : la
+même chose à chaque fois), **Stretch** (un étirement d’octave comme un piano accordé) et **Voices** (8, 16, 32 ou 64).
+La grille montre les voix : brillantes pour les touches enfoncées, ternes pour les notes qui s’éteignent ou tenues par la
+pédale. Refrapper une touche qui résonne frappe à nouveau la même tine.
+
+## FX
+
+<Shot id="devices/instruments/keys/fx" alt="Nota Keys, onglet FX : préampli, trémolo, phaser, chorus, baffle et sortie" />
+
+Chaque effet a son point d’alimentation ; la chaîne en mots se trouve à droite de la bande d’onglets.
+
+| Effet | Commandes |
+|---|---|
+| **Preamp** | **Drive** vers un écrêteur doux, étagères **Bass** et **Treble** (±12 dB) |
+| **Tremolo** | **Mono** (niveau) ou **Stereo** (auto-pan, le son suitcase) ; **Rate** : libre (0,5 à 15 Hz) ou **Tempo** (1/1 à 1/32) ; **Depth** |
+| **Phaser** | **Rate** (0,05 à 5 Hz) et **Depth** |
+| **Chorus** | **Mix** |
+| **Cabinet** | **Off**, **Suitcase** (2×12″ en bois), **Combo** (le haut-parleur du piano à anches) ou **DI** (ligne) |
+| **Output** | **Volume** et **Pan** |
+
+Un trémolo synchronisé sur le tempo se cale sur la mesure pendant que le transport tourne : un gel ou un bounce sonne
+donc exactement comme la lecture.
+
+## Taille S
+
+<Shot id="devices/instruments/keys/mini" alt="Nota Keys, taille S : modèle, micro et quatre boutons" />
+
+Le modèle, le graphique du micro, et **Hard**, **Pickup** (distance), **Drive** et **Trem** (profondeur). Le sélecteur de
+préréglage est le même qu’en L.
+
+## Le jouer
+
+- **La vélocité est l’instrument.** Le bark, la brillance et le marteau suivent tous la force avec laquelle vous jouez :
+  enregistrez depuis un clavier ou façonnez les vélocités dans le piano roll.
+- **Pédale de maintien :** la pédale de votre clavier (CC64) tient les notes ; le bouton **Pedal** et sa voie
+  d’automation font de même dans un clip. La relever fait retomber les étouffoirs sur tout ce qu’elle tenait.
+- **MPE :** le bend réaccorde une note, la pression pousse la tine plus fort dans le micro, le slide décale la symétrie
+  du micro : voir [Contrôleurs MIDI](../../../control/midi/).
+
+## Préréglages
+
+40 préréglages d’usine dans six dossiers : **Basics** (**Mk I Stage**, **Suitcase Init**, **200A Classic**,
+**D6 Funk**), **Tine** (de **Ballad Tine** et **Mellow Mk II** à **Bark Lead**, **Phase Ninety** et **Tine Bells**),
+**Suitcase** (**Suitcase Stereo**, **Slow Pan**, **Fast Pan**, **Synced Eighths**, **Dream Case**…), **Reed**
+(**Reed Bark**, **School Reed**, **Reed Tremolo**, **Overdriven Reed**…), **Clav** (**D6 Bright**, **Clav Lower**,
+**Funk Drive**, **Muted Clav**…) et **Character** (**Lo-Fi Keys**, **Detuned Tape**, **Toy Box**, **Ambient Tine**).
+
+## Astuces
+
+- **Du grondement à la demande :** baissez **Distance** et poussez **Symmetry** hors du centre, puis jouez plus fort :
+  les notes douces restent suaves, les fortes aboient.
+- **Le son suitcase :** modèle **Suitcase**, trémolo **Stereo** autour de 4 à 5 Hz, baffle **Suitcase**.
+- **Clav funky :** **Clav**, micro **Upper**, **Damper** haut, une touche de **Phaser**.

@@ -1,0 +1,36 @@
+---
+title: "Mises à jour"
+description: "Réglages ▸ Mises à jour : vérifications automatiques des nouvelles versions, Rechercher maintenant et mise à jour sur place."
+sidebar:
+  order: 10
+updated: "0.56.1"
+status: done
+sources:
+  - src/managed/Nota.App/PreferencesWindow.Updates.cs
+  - src/managed/Nota.App/AppUpdates.cs
+  - src/managed/Nota.App/MainWindow.Updates.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+<Shot id="preferences/updates" alt="Réglages ▸ Mises à jour" />
+
+## Mises à jour automatiques
+
+**Rechercher les mises à jour automatiquement** : à chaque lancement et une fois par jour pendant qu’il tourne, Nota
+demande à GitHub si une version plus récente est disponible. Activé par défaut. Rien n’est téléchargé tant que vous ne
+cliquez pas sur **Mettre à jour** ; désactivez-le et Nota ne vérifie que quand vous le demandez.
+
+## Cette version
+
+Montre la version que vous avez et ce qu’a trouvé la dernière vérification : que c’est la dernière, qu’une version plus
+récente est disponible, ou que GitHub n’a pas pu être joint. **Rechercher maintenant** redemande.
+
+Quand une version plus récente est disponible, **Mettre à jour** la télécharge ici (la progression s’affiche sur la
+page et dans la barre d’état ; **Annuler** l’arrête). Elle s’installe à la prochaine fermeture de Nota, ou tout de
+suite avec **Redémarrer pour passer à Nota X** dans la barre d’état. Une copie qui ne peut pas se remplacer elle-même
+(une version de développement, ou une copie lancée directement depuis l’image disque) le dit, et son bouton indique
+**Télécharger** : il ouvre la page de la version.
+
+Voir [Mises à jour](../../start-here/install/#mises-à-jour) pour les autres endroits où Nota vous signale une nouvelle
+version.
