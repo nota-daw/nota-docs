@@ -1,0 +1,346 @@
+---
+title: "Piano roll"
+description: "Modifier des clips MIDI : dessiner et déplacer des notes, vélocité, grille et quantification, gamme et repli, enveloppes de clip et outils de génération et de transformation."
+sidebar:
+  order: 1
+updated: "0.59.1"
+status: done
+sources:
+  - src/native/nota.engine/src/MidiClip.h
+  - src/managed/Nota.App/PianoRollView.cs
+  - src/managed/Nota.Application/Editing/VelocityReset.cs
+  - src/managed/Nota.App/PianoRollView.Expression.cs
+  - src/managed/Nota.App/PianoRollView.Controllers.cs
+  - src/managed/Nota.App/PianoRollView.Fold.cs
+  - src/managed/Nota.Presentation/PianoRowMap.cs
+  - src/managed/Nota.App/ClipEditorView.cs
+  - src/managed/Nota.App/ClipPropsView.cs
+  - src/managed/Nota.App/MainWindow.Detail.cs
+  - src/managed/Nota.App/ClipEditorKit.cs
+  - src/managed/Nota.App/MidiToolsView.cs
+  - src/managed/Nota.App/PianoRollView.ClipStrip.cs
+  - src/managed/Nota.Application/Editing/ClipSet.cs
+  - src/managed/Nota.Application/Editing/NotePlacementDrag.cs
+  - src/managed/Nota.Application/Editing/VelocityWheel.cs
+  - src/managed/Nota.Application/Midi/MidiToolCatalog.cs
+  - src/managed/Nota.Application/Midi/MidiGenerators.cs
+  - src/managed/Nota.Application/Midi/MidiTransforms.cs
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
+
+Double-cliquez sur un clip MIDI, dans l’Arrangement ou un emplacement de Session, et il s’ouvre dans l’onglet
+**Clip** du panneau du bas.
+
+<Shot id="start-here/clip-editor" alt="Un clip MIDI dans l’éditeur de clip : réglages du clip à gauche, notes et tiges de vélocité à droite" />
+
+## Notes
+
+| Faire ceci | Pour |
+|---|---|
+| Double-cliquer sur la grille vide | Ajouter une note, avec la longueur et la vélocité de la dernière note sur laquelle vous avez cliqué, que vous avez déplacée, redimensionnée ou dont vous avez changé la vélocité |
+| Double-cliquer sur la grille vide, garder le bouton enfoncé et faire glisser | Déplacer la nouvelle note, dans le temps et en hauteur |
+| … et maintenir <Kbd>⇧</Kbd> | Régler sa longueur : la fin suit le pointeur |
+| … et maintenir <Kbd>⌘</Kbd> | Régler sa vélocité : vers le haut pour plus fort, vers le bas pour plus doux |
+| Double-cliquer sur une note | La supprimer |
+| Faire glisser une note | La déplacer dans le temps et en hauteur |
+| Glisser avec <Kbd>⌥</Kbd> | Ignorer la grille pour ce glissement |
+| Faire glisser le bord d’une note | Changer où elle commence ou finit |
+| Cliquer sur une note · <Kbd>⇧</Kbd>-clic | La sélectionner · l’ajouter à la sélection |
+| Faire glisser sur la grille vide | Sélectionner les notes du rectangle |
+| <Kbd>⌘ A</Kbd> | Sélectionner toutes les notes |
+| <Kbd>←</Kbd> <Kbd>→</Kbd> | Déplacer la sélection selon la grille |
+| <Kbd>↑</Kbd> <Kbd>↓</Kbd> · <Kbd>⇧ ↑</Kbd> <Kbd>⇧ ↓</Kbd> | Transposer d’un demi-ton · d’une octave |
+| <Kbd>⌘ D</Kbd> | Dupliquer la sélection juste après elle-même (en remplaçant les notes sur lesquelles elle tombe) |
+| <Kbd>⌘ C</Kbd> <Kbd>⌘ X</Kbd> <Kbd>⌘ V</Kbd> | Copier, couper, coller des notes |
+| <Kbd>Delete</Kbd> | Supprimer les notes sélectionnées |
+| Cliquer sur la règle · faire glisser le long de celle-ci | Y déplacer la tête de lecture · balayer, accroché à la grille (<Kbd>⌥</Kbd> : librement) |
+| Faire glisser la ligne de la tête de lecture | Balayer, sur la règle ou sur la grille vide : un clic dessus reste un clic |
+
+Faites glisser juste après le double-clic qui ajoute une note et la note est façonnée dans le même geste, sans lâcher.
+Nota lit <Kbd>⇧</Kbd> et <Kbd>⌘</Kbd> pendant que vous faites glisser : vous pouvez donc passer du déplacement à
+l’allongement et au réglage de la vélocité en plein glissement ; la note repart de là où elle est, et <Kbd>⌘</Kbd>
+l’emporte si les deux sont maintenues. Le déplacement et l’allongement suivent la grille, et <Kbd>⌥</Kbd> l’ignore. La
+vélocité change d’un pas MIDI tous les 2 pixels, de 1 à 127. Lâchez sans bouger et vous obtenez une simple nouvelle
+note. La note façonnée compte comme la dernière que vous avez touchée : la prochaine note que vous ajouterez prendra sa
+longueur et sa vélocité. Dans un clip de l’Arrangement, ajouter et façonner la note est une seule étape d’annulation ;
+dans un emplacement de Session, le glissement est une deuxième étape.
+
+Les modifications se jouent tout de suite : faites glisser une note pendant que la boucle tourne et vous l’entendez
+bouger. La tête de lecture s’affiche dans le piano roll que le transport joue ou soit arrêté, pour que vous voyiez où
+la lecture démarre. La règle indique où le clip se trouve dans l’Arrangement (un clip à la mesure 9 commence à 9) et
+passe en temps avec l’indicateur de position du transport. Un clip dans un emplacement de Session joue sur sa propre
+horloge de boucle : sa règle compte donc depuis le début de l’emplacement et ne déplace pas la tête de lecture.
+
+## Entendre les notes
+
+Avec l’interrupteur **haut-parleur** de l’en-tête de l’éditeur de clip activé (il l’est par défaut), une note joue sur
+l’instrument de la piste pendant que vous la placez, cliquez dessus ou la faites glisser, et rejoue à chaque nouvelle
+hauteur pendant le glissement : vous pouvez ainsi trouver une hauteur à l’oreille sans lancer la lecture. Désactivez
+l’interrupteur pour modifier en silence ; Nota le retient. Rien ne joue ainsi pendant l’enregistrement d’une prise.
+
+Les touches à gauche sont aussi un clavier, quel que soit l’interrupteur :
+
+| Faire ceci | Pour |
+|---|---|
+| Cliquer sur une touche | La jouer jusqu’à ce que vous la lâchiez |
+| <Kbd>⇧</Kbd>-glisser le long des touches | Les parcourir en jouant chacune |
+| <Kbd>⌘</Kbd>-clic sur une touche · <Kbd>⌘ ⇧</Kbd>-clic | Sélectionner toutes les notes de cette hauteur · les ajouter à la sélection |
+| Faire glisser vers le haut ou le bas sur les touches | Zoomer sur les lignes (la touche cesse de sonner) |
+
+## MPE enregistré
+
+Une note enregistrée depuis un [contrôleur MPE](../../control/midi/#molette-de-hauteur-aftertouch-et-mpe) ou depuis les
+touches **Expressive** de Nota Remote porte son expression : une ligne au-dessus de la note trace la hauteur qu’elle a
+jouée (une ligne par demi-ton) et une teinte qui monte depuis son plancher montre la pression. Déplacez, copiez,
+dupliquez, transposez ou quantifiez la note et son expression suit.
+
+### La modifier
+
+La voie sous les notes change avec les étiquettes à sa gauche : **Vel** (vélocité), **Bend**, **Pres** (pression) et
+**Slide** ; l’onglet en dessous modifie un [contrôleur MIDI](#contrôleurs). Dans une voie MPE, la courbe de chaque note
+est dessinée sur l’étendue propre de la note ; les courbes des notes sélectionnées sont celles que vous modifiez, avec
+leurs points marqués.
+
+| Faire ceci | Pour |
+|---|---|
+| Faire glisser sur une note | Dessiner sa courbe sur l’étendue que vous parcourez (la note la plus haute à cet endroit est sélectionnée s’il n’y en a aucune) |
+| <Kbd>⌥</Kbd>-glisser | Dessiner plutôt une ligne droite |
+| Faire glisser un point | Le déplacer dans le temps et en valeur |
+| Double-cliquer | Ajouter un point · sur un point, le supprimer |
+| Clic droit | **Effacer** la courbe de cette voie ou **Effacer toute l’expression** sur les notes sélectionnées |
+
+**Bend** est en demi-tons et se met à l’échelle de ce qu’il contient (±2, 12, 24, 48 ou 96) ; **Pres** et **Slide**
+vont de 0 à 100 %, le slide reposant au milieu. Chaque geste est une étape d’annulation et se joue tout de suite.
+L’expression dessinée fonctionne sur n’importe quelle note (aucun contrôleur MPE nécessaire) et se joue sur les synthés
+qui prennent en charge le [MPE](../../control/midi/#molette-de-hauteur-aftertouch-et-mpe).
+
+## Vélocité
+
+La voie sous les notes montre la vélocité de chaque note sous forme de tige. Faites glisser une tige pour la régler ;
+avec plusieurs notes sélectionnées, elles bougent ensemble. <Kbd>⇧</Kbd> ajoute une note à la sélection.
+
+Pour remettre une note à la vélocité par défaut (0,8, celle que reçoit une première note), double-cliquez sur sa tige,
+ou faites un clic droit dessus et choisissez **Réinitialiser la vélocité**. Quand la note est sélectionnée, toute la
+sélection est réinitialisée. Une seule annulation ramène les anciennes vélocités, même si le double-clic a aussi cliqué
+sur la tige. Une note déjà à la valeur par défaut est laissée telle quelle, de même que les notes d’un clip de
+référence verrouillé. La valeur par défaut est fixe : elle ne suit pas la note que vous avez touchée en dernier.
+
+Vous pouvez aussi changer la vélocité depuis la grille : avec le pointeur sur une note, <Kbd>⇧</Kbd> + molette la
+monte ou la baisse d’un pas MIDI par cran, de 1 à 127. Si la note est sélectionnée, toute la sélection change
+ensemble. Une série de crans est une seule étape d’annulation. Avec le pointeur ailleurs, <Kbd>⇧</Kbd> + molette fait
+toujours défiler dans le temps, et c’est aussi le cas au-dessus d’une note d’un clip de référence verrouillé. Les
+petits balayages d’un trackpad s’additionnent : un balayage lent fait donc quand même un pas. Le sens et la taille d’un
+pas se règlent dans [Réglages ▸ Raccourcis](../../preferences/shortcuts/#molette-de-v%C3%A9locit%C3%A9).
+
+## Contrôleurs
+
+Le cinquième onglet des étiquettes de la voie modifie un contrôleur MIDI sur tout le clip : la pédale de maintien, la
+molette de modulation, n’importe quel CC. L’onglet montre le nom court du contrôleur et une petite flèche. Cliquez
+dessus pour afficher la voie ; cliquez à nouveau pour choisir un autre contrôleur :
+
+- les contrôleurs pour lesquels le clip contient déjà des données viennent en premier, marqués d’une icône ;
+- puis **Sustain**, **Mod wheel**, **Pitch wheel**, **Channel pressure**, **Expression** et **Breath** ;
+- **Autre CC** liste tous les autres numéros de contrôleur, par groupes de 16.
+
+La première fois que vous ouvrez l’onglet, il montre le premier contrôleur pour lequel le clip a des données, ou
+Sustain s’il n’y en a pas. La voie nomme le contrôleur dans son coin supérieur gauche, et affiche la valeur sous le
+pointeur à droite.
+
+Les **pédales** (Sustain et les autres contrôleurs actif / inactif, CC 64 à 69) sont dessinées comme des blocs : la
+pédale est enfoncée partout où il y a un bloc.
+
+| Faire ceci | Pour |
+|---|---|
+| Faire glisser sur la voie vide | Dessiner un bloc, sur la grille |
+| Faire glisser un bloc | Le déplacer |
+| Faire glisser le bord d’un bloc | Changer où il commence ou finit |
+| <Kbd>⌘</Kbd> pendant le glissement | Ignorer la grille |
+| Double-cliquer sur un bloc · le sélectionner et appuyer sur <Kbd>Delete</Kbd> | Le supprimer |
+
+**Tout autre contrôleur** est une courbe :
+
+| Faire ceci | Pour |
+|---|---|
+| Faire glisser sur la voie | Dessiner la courbe sur l’étendue que vous parcourez ; le reste de la courbe reste comme il était |
+| <Kbd>⌥</Kbd>-glisser | Dessiner plutôt une ligne droite |
+| Faire glisser un point | Le déplacer dans le temps et en valeur |
+| Double-cliquer | Ajouter un point · sur un point, le supprimer |
+
+La molette de hauteur s’accroche à son centre quand vous dessinez près de lui. Faites un clic droit sur la voie et
+choisissez **Effacer** (il nomme le contrôleur) pour retirer ses données du clip. Chaque geste est une étape
+d’annulation et se joue tout de suite.
+
+### Plus de voies
+
+Pour voir plusieurs contrôleurs à la fois, cliquez sur **+ lane** sous les entrées de la colonne de gauche : une
+nouvelle voie s’ouvre sous les autres, avec son propre menu de contrôleur dans son coin supérieur gauche (le nom du
+contrôleur et son numéro de CC). Le **×** à côté masque la voie ; les données du contrôleur restent dans le clip.
+Chaque voie de contrôleur a une échelle **127 / 64 / 0** à sa gauche, alignée sur la courbe. Les voies
+supplémentaires partagent le zoom et la position de défilement des notes dans le temps, et défilent verticalement
+quand elles ne tiennent pas toutes.
+
+Faites glisser le séparateur au-dessus de la voie de Vélocité ou au-dessus de n’importe quelle voie de contrôleur pour
+la rendre plus haute ou plus courte. Nota retient chaque hauteur, même après un redémarrage ; ajoutez à nouveau la
+même voie ou le même contrôleur et il revient à cette hauteur.
+
+## Plusieurs clips à la fois
+
+Pour modifier des notes à travers plusieurs clips (une ligne de basse répartie sur plusieurs clips, ou une mélodie
+que vous écrivez contre les accords d’une autre piste), sélectionnez deux clips MIDI ou plus dans l’Arrangement (sur
+une piste ou plusieurs) et double-cliquez sur l’un d’eux. Clic droit → **Éditer ensemble les clips sélectionnés**, ou
+la même commande dans la palette de commandes, le fait aussi.
+
+<Shot id="editing/multi-clip-editor" alt="Deux clips de basse et deux clips d’accords ouverts ensemble, la bande de clips sous la règle montrant le clip de basse actif" />
+
+Les notes de chaque clip ouvert se placent sur les mesures de l’Arrangement, chacune dans la couleur de sa piste. Le
+clip sur lequel vous avez double-cliqué est le clip **actif** : ses notes sont les plus brillantes, l’en-tête et la
+colonne de gauche le montrent, **Enveloppes** le modifie, et les nouvelles notes y vont. Les notes des autres clips
+sont plus discrètes mais tout aussi modifiables.
+
+- Sélectionner, déplacer, transposer, quantifier, supprimer ou lancer un **Outil** sur plusieurs clips : chaque note
+  reste dans son propre clip, et une seule annulation défait toute la modification.
+- Faites glisser une note au-delà de la jointure vers le clip ouvert suivant de sa piste et elle passe dans ce clip.
+  Un vide entre des clips, ou un clip qui n’est pas ouvert, l’arrête au bord.
+- La **bande de clips** sous la règle montre les clips ouverts. Cliquez sur l’un pour le rendre actif (un clic sur
+  une note d’un autre clip fait de même) ; cliquez sur son verrou pour le garder comme **référence** estompée que vous
+  pouvez voir et entendre mais pas modifier. Le clip actif ne peut pas être verrouillé.
+- Tant que l’onglet **Clip** est ouvert, il suit l’Arrangement : sélectionnez plus de clips et ils apparaissent
+  ensemble, sélectionnez-en un et il s’affiche seul.
+- <Kbd>⌘ D</Kbd> : les copies qui dépassent la fin d’un clip continuent dans le clip ouvert suivant ; les copies
+  sans clip où atterrir sont laissées de côté.
+
+## Mode piste
+
+Pour travailler sur toute une partie au lieu de choisir des clips, passez l’éditeur en mode **Piste**. L’interrupteur
+**Clip | Piste** est en haut de la section **Clip** de la colonne de gauche (clips d’Arrangement seulement : un
+emplacement de Session n’a pas d’interrupteur), et la palette de commandes a **Activer / désactiver le mode piste de
+l’éditeur de clips**.
+
+En mode **Piste**, l’éditeur ouvre tous les clips MIDI de la piste du clip, posés sur les mesures propres de
+l’Arrangement à partir de la mesure 1 : une ligne de basse répartie sur une douzaine de clips défile donc comme une
+seule pièce. La bande de clips sous la règle marque où chaque clip commence et finit. La modification est la même
+qu’avec [plusieurs clips à la fois](#plusieurs-clips-à-la-fois) : les notes passent d’un clip à l’autre, un
+rectangle de sélection peut couvrir plusieurs clips, les clips de **référence** verrouillés restent en lecture
+seule, et une seule annulation défait toute la modification. Même une piste avec un seul clip utilise ici les mesures
+de l’Arrangement.
+
+- Double-cliquez sur un clip MIDI, ou sélectionnez-en un, et sa piste s’ouvre avec ce clip **actif** et amené en vue.
+  Si la piste est déjà ouverte, l’éditeur n’est pas reconstruit : le clip devient simplement actif. Sélectionnez un
+  clip sur une autre piste et cette piste s’ouvre à la place.
+- Les clips que vous dessinez, collez ou enregistrez sur la piste rejoignent l’éditeur. Découpez un clip
+  (<Kbd>⌘ E</Kbd>, **Découper ici**, ou une découpe sur une plage de temps) et les deux moitiés restent ouvertes : vous
+  gardez votre zoom, votre défilement et votre sélection de notes, et le clip actif est celui qui commence toujours à
+  la même mesure. Les clips de **référence** verrouillés restent verrouillés là où le clip n’a pas bougé.
+- Un vide entre des clips ne fait partie d’aucun clip : dessiner là ne fait donc rien, comme avec plusieurs clips.
+- **Éditer ensemble les clips sélectionnés** quitte le mode **Piste** et n’ouvre que les clips que vous avez
+  sélectionnés.
+
+Changer de mode rouvre l’éditeur sur le clip actif : **Clip** montre ce clip seul. La barre d’état dit dans quel mode
+vous êtes, et Nota le retient d’une session à l’autre : **Clip** est le mode par défaut.
+
+## Zoom
+
+| Faire ceci | Pour |
+|---|---|
+| <Kbd>⌘</Kbd> + molette | Zoomer dans le temps, vers le pointeur |
+| <Kbd>⇧</Kbd> + molette | Faire défiler dans le temps ; au-dessus d’une note, elle change plutôt la [vélocité](#vélocité) |
+| <Kbd>⌘ ⌥</Kbd> + molette | Rendre les lignes plus hautes ou plus courtes |
+| Faire glisser vers le haut ou le bas sur les touches | Lignes plus hautes (vers le bas) ou plus courtes (vers le haut) |
+| <Kbd>⌥</Kbd> + pincement sur un trackpad | Lignes plus hautes ou plus courtes |
+| <Kbd>⇧ F</Kbd> ou **Ajuster** dans l’en-tête | Ajuster aux notes |
+
+Les lignes font de 6 à 36 pixels de haut. Zoomez pour viser une note précisément, ou dézoomez pour voir tout le
+clavier : au plus petit, les 88 touches tiennent à l’écran. La hauteur sous le pointeur reste où elle est pendant que
+vous zoomez. **Ajuster aux notes**, aussi dans la palette de commandes, dimensionne et fait défiler les lignes pour que
+chaque note du clip soit en vue. Sous Windows et Linux, utilisez <Kbd>Ctrl</Kbd> pour <Kbd>⌘</Kbd> et <Kbd>Alt</Kbd>
+pour <Kbd>⌥</Kbd>.
+
+Chaque clip retient son propre zoom et son défilement ; un clip que vous n’avez pas encore ouvert démarre à la hauteur
+de ligne standard, centré sur ses notes.
+
+## La colonne de gauche
+
+- **Clip** : l’interrupteur **Clip | Piste** (voir [Mode piste](#mode-piste)), **Début** et **Longueur**, et **Boucle**
+  avec la longueur de la boucle.
+- **Quantifier** : son propre pas (1/32 à 1/2, triolets aussi ; 1/16 par défaut), qui ne change pas avec le zoom.
+  **Quantifier** ramène les notes dessus, dans la mesure que dit **Intensité** : 100 % est rigide, moins garde un peu
+  de ressenti. Les outils du clip utilisent le même pas.
+
+Les notes s’accrochent à la [grille d’accrochage](../../basics/transport/#la-grille-daccrochage) du piano roll : la
+pastille dans l’en-tête de l’éditeur de clip montre le pas (**Auto · 1/16**) et ouvre le menu de la grille. En
+**Auto**, elle suit le zoom, comme celle de l’Arrangement, mais les deux ont des réglages séparés (l’éditeur de clip
+audio partage celui du piano roll).
+
+Les flèches déplacent la sélection de ce pas.
+
+- **Transposer** : déplace la sélection de demi-tons ou d’octaves.
+
+## Gamme
+
+Activez **Gamme** dans la barre d’outils et choisissez une tonique et une gamme : les lignes en dehors sont estompées,
+si bien que les notes qui conviennent ressortent. **Supprimer hors gamme** supprime chaque note qui ne convient pas.
+Le réglage reste quand vous passez d’un clip à l’autre. L’effet MIDI [Nota Scale](../../devices/midi-effects/scale/)
+utilise les mêmes gammes pour corriger des notes en direct.
+
+## Replier
+
+**Replier**, à côté de **Gamme** dans la barre d’outils (<Kbd keys="⌥ ⇧ F" />), masque les lignes dont vous n’avez pas
+besoin :
+
+- **Avec Gamme activée**, seules les notes de la gamme gardent une ligne : sept par octave dans une gamme majeure ou
+  mineure. Chaque note du clip garde aussi sa ligne : replier ne cache donc jamais une note ; une note hors de la
+  gamme reste où elle est, estompée.
+- **Sur une piste de Drum Rack**, les lignes sont les pads du rack, chacune nommée d’après son pad (**Kick**,
+  **Snare**…). Deux pads sur la même note partagent une ligne (**Kick / Kick 2**). Une note sans pad garde une ligne
+  sans nom, estompée.
+- **Avec Gamme désactivée** sur toute autre piste, seules les hauteurs que le clip utilise gardent une ligne.
+
+Une fois replié, les déplacements se font par lignes : <Kbd keys="↑ ↓" /> et faire glisser une note passent à la ligne
+visible suivante, si bien qu’un accord monté d’une ligne garde sa forme dans la gamme (A–C–E devient B–D–F).
+<Kbd keys="⇧ ↑" /> et <Kbd keys="⇧ ↓" /> déplacent toujours d’une octave. Le repli est enregistré avec chaque piste :
+une piste de batterie peut rester repliée pendant qu’une piste de claviers montre tout le clavier. C’est une vue, pas
+une modification : il n’ajoute aucune étape d’annulation.
+
+## Enveloppes
+
+**Enveloppes** (à côté de **Notes**) dessine des courbes sur le clip : **Vélocité** met à l’échelle la vélocité des
+notes, **Volume** la sortie de l’instrument pendant que le clip joue. Cliquez pour ajouter un point, faites-le
+glisser, clic droit dessus pour le supprimer.
+
+## Outils
+
+**Outils** ouvre des générateurs et des transformations qui écrivent des notes à votre place. Choisissez un outil,
+réglez ses paramètres, et **Appliquer** : **Ajouter** place le résultat par-dessus les notes du clip, **Remplacer**
+les remplace ; **Retirer au sort** essaie une autre **Graine**, **Rétablir** revient en arrière.
+
+**Générateurs** : pour un clip vide :
+
+| Outil | Ce qu’il fait |
+|---|---|
+| **Rythme** | Pose un motif qui s’appuie sur les temps forts, aussi dense que vous le demandez |
+| **Graine** | Apprend les intervalles et le rythme du clip, puis écrit une nouvelle version dans la même voix |
+| **Piles** | Fait grandir chaque note en accord, voicé comme vous le joueriez |
+| **Euclidien** | Répartit un nombre de coups aussi régulièrement que le permet un nombre de pas |
+| **Pas mélodiques** | Un séquenceur pas à pas en degrés de gamme : choisissez un contour et une étendue, obtenez une ligne |
+| **Forme** | Trace une courbe sur le clip et dépose une note partout où elle passe sur un pas |
+
+**Transformations** : pour des notes que vous avez déjà :
+
+| Outil | Ce qu’il fait |
+|---|---|
+| **Arpéger** | Casse les accords en une séquence qui court |
+| **Relier** | Comble les vides entre les notes avec des passages qui marchent vers la hauteur suivante |
+| **Ornement** | Décore les notes avec des appoggiatures, des trilles et des roulements |
+| **Quantifier** | Ramène les notes sur la grille, avec du swing et une intensité inférieure à la rigidité |
+| **Recombiner** | Sépare la hauteur et le rythme et les remet ensemble autrement |
+| **Étendue** | Réécrit les longueurs de notes : du staccato au legato en passant par le chevauchement |
+| **Strum** | Étale dans le temps les notes d’un accord au lieu de les frapper ensemble |
+| **Déformation temporelle** | Courbe l’axe du temps pour qu’une phrase accélère, traîne ou respire |
+| **Façonneur de vélocité** | Dessine une courbe à travers les vélocités au lieu de les modifier une par une |
+
+<Aside type="tip">
+Un clip sur une piste de Drum Rack a aussi un onglet **Motif** : une grille de pas avec une ligne par pad.
+</Aside>

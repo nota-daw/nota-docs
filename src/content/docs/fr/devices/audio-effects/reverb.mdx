@@ -1,0 +1,64 @@
+---
+title: "Nota Reverb"
+description: "Réverbération algorithmique : Hall, Room, Plate et Chamber, avec pré-délai, taille, diffusion, premières réflexions, tonalité, modulation de la queue, couleur Vintage et Freeze."
+sidebar:
+  order: 5
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/Reverb.h
+  - src/managed/Nota.App/DeviceCards/Bodies/ReverbDeviceBody.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Reverb place un son dans un espace, d’une pièce serrée à une cathédrale, d’une plaque brillante à une nappe figée
+sans fin. C’est la reverb à prendre en premier ; pour la convolution et les espaces hybrides, voir
+[Nota Chamber](../chamber/).
+
+<Shot id="devices/audio-effects/reverb/card" alt="Nota Reverb, onglet Space avec la fenêtre de la queue de decay" />
+
+**Disposition :** la colonne **Tail** à gauche (**Decay**, **HF Damp**), un panneau central à deux onglets au-dessus
+d’une fenêtre en direct de la queue de decay, un panneau de droite (**Levels** / **Output**) et une ligne d’état. La
+fenêtre de la queue est une commande : faites glisser le repère de pré-délai, faites glisser la queue pour régler le
+decay.
+
+## Space
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Mode** | **Hall**, **Room**, **Plate** ou **Chamber** |
+| **Pre** | Pré-délai : l’écart avant que la reverb ne démarre |
+| **Size** | La taille de l’espace |
+| **Diffuse** | À quel point les réflexions deviennent denses |
+| **Early reflections** | Les premiers échos distincts de la pièce |
+| **Decay** | Le temps de reverb, en vrai RT60 |
+| **HF Damp** | À quelle vitesse les aigus s’éteignent |
+
+## Tone · Mod
+
+<Shot id="devices/audio-effects/reverb/tone-mod" alt="Nota Reverb, onglet Tone · Mod" />
+
+**Low cut** et **High cut** façonnent la tonalité de la reverb, **Width** son étalement stéréo. **Mod rate** et
+**Mod depth** ajoutent un miroitement de type chorus : sur toute la reverb, ou seulement sur la queue (**Mod on tail**).
+**Vintage** lui donne la couleur granuleuse et à bande limitée des premières reverbs numériques.
+
+## Levels et Output
+
+**Dry**, **Mix** (dry / wet), **Width**, **Mono f** (basses en mono sous une fréquence), **Wet only** (pour une piste de
+retour), **Out**, et **Latency comp.** : démarre la queue exactement là où le dit le pré-délai. **Freeze** garde la
+queue pour toujours (l’entrée est coupée) ; **Kill tail** efface ce qui résonne.
+
+## Préréglages
+
+30 préréglages d’usine : pièces (**Small Room**, **Tight Room**, **Drum Room**, **Vocal Booth**, **Live Room**), halls
+(**Wide Hall**, **Long Hall**, **Concert Hall**, **Cathedral**, **Dark Hall**), plaques (**Bright Plate**,
+**Vocal Plate**, **Snare Plate**, **Gold Plate**, **Vintage Plate**), chambres (**Echo Chamber**, **Studio Chamber**,
+**Stone Chamber**), ambiances et figés (**Shimmer Freeze**, **Stone Hold**, **Infinite Pad**, **Ambient Wash**,
+**Still Water**, **Lo-Fi Cloud**, **Seasick**), courts (**Short Burst**, **Slap Space**) et pour les retours
+(**Send · Hall**, **Send · Plate**, **Send · Room**).
+
+## Astuces
+
+- **Sur un retour :** mettez Reverb sur une piste de retour avec **Wet only** activé, et envoyez chaque piste vers elle.
+- **Garder le grave propre :** montez **Low cut** pour que la reverb n’encrasse pas la basse.

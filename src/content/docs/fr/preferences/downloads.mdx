@@ -1,0 +1,30 @@
+---
+title: "Téléchargements"
+description: "Réglages ▸ Téléchargements : plug-ins gratuits, packs d’échantillons et modèles d’IA, installés en un clic."
+sidebar:
+  order: 6
+updated: "0.50.1"
+status: done
+sources:
+  - src/managed/Nota.App/PreferencesWindow.Downloads.cs
+  - src/managed/Nota.App/PreferencesWindow.Store.cs
+  - src/managed/Nota.App/PreferencesWindow.Samples.cs
+  - src/managed/Nota.App/PreferencesWindow.Models.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Une seule page pour trois sortes de téléchargements, choisies avec le commutateur à côté de son titre :
+
+| Côté | Ce qu’il y a |
+|---|---|
+| **Plug-ins** | Des plug-ins VST3 open source du registre de plug-ins de Nota : voir [Télécharger des plug-ins](../../plugins/get-plugins/) |
+| **Packs d’échantillons** | Des packs d’échantillons gratuits, sous licence pour toute musique : voir [Packs d’échantillons](../../library/sample-packs/) |
+| **Modèles d’IA** | htdemucs et basic-pitch : voir [Modèles d’IA](../../ai/models/) |
+
+<Shot id="preferences/downloads" alt="Réglages ▸ Téléchargements ▸ Plug-ins" />
+
+Tout se télécharge depuis la publication de ses propres auteurs, est vérifié avec une somme de contrôle fixée, et
+seulement ensuite décompressé : les installeurs ne sont jamais exécutés. Les filtres et la recherche restent en haut
+pendant que la liste défile. Un téléchargement continue après la fermeture des Réglages : sa progression passe dans la
+ligne d’état de la fenêtre principale, avec un × pour l’annuler.

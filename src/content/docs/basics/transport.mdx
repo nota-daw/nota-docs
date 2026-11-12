@@ -51,7 +51,9 @@ readout does.
   It is also in the command palette as **Tap tempo**, and on a narrow window it is the first of
   these cells to step aside.
 - **Time signature** — drag each number; the lower one moves in powers of two
-  (2, 4, 8, 16).
+  (2, 4, 8, 16). The upper number is the beats in a bar: the metronome, the count-in and every
+  view that counts bars follow it — the Arrangement's bar lines and numbers, the clip editors'
+  grids and rulers, the position readout, and the bar.beat fields of the clip panel and Export.
 - **Key** — the project key, saved with the project. Click it to pick a key: choose
   **Major** or **Minor**, then click the key's note on the keyboard (switching between Major
   and Minor keeps the note); the picker names the key and its relative. **No key** clears it.
@@ -143,7 +145,8 @@ Grid**.
 - **Remote** — shows the QR code that connects a phone ([Nota Remote](../../control/nota-remote/)).
 - **DSP** — how much of each audio buffer the engine needs. Near 100% you'll hear dropouts; raise
   the buffer size or [freeze](../tracks/) a heavy track. Hover it to see the CPU used by the
-  whole Nota process, in the same scale as your system monitor.
+  whole Nota process, in the same scale as your system monitor. When the window is narrow, the
+  meter folds to just its number and is the last thing on the row to hide.
 - **Master** — master volume, with the master meter underneath.
 
 <Aside type="tip">

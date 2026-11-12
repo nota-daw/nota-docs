@@ -4,7 +4,7 @@ description: "A channel vocoder: the track it sits on is the voice, shaping an i
 sidebar:
   order: 26
 since: "0.56.1"
-updated: "0.56.1"
+updated: "0.57.1"
 status: done
 sources:
   - src/native/nota.engine/src/Vocoder.h
@@ -20,6 +20,13 @@ it on a vocal and you hear a robot voice straight away; pick a pad as the carrie
 says the words. Robot voices, vocoded choirs, talk-box leads, whispers.
 
 <Shot id="devices/audio-effects/vocoder/card" alt="Nota Vocoder: the modulator and carrier, the envelope graph over the band knobs, and the output" />
+
+**Layout:** the envelope graph fills the **Bands** view (drag its Low and High edges), with **Q**,
+**Attack** and **Release** beside it and **Bands**, **Formant** and **Hold** under it. The right panel
+is the **Carrier** (Saw / Noise / Track in its title bar, the carrier track and its Pre / Post tap,
+**Tilt**, **Pitch**) over the modulator's **Mod gain** and the **Key** and **Out** meters. Under it sit
+**Unvoiced**, **Dry/Wet** (Mix) and **Gain**. The **S / L** switch in the header folds the card to
+**S**: the graph over the carrier choice and **Bands**, **Formant**, **Dry/Wet** and **Gain**.
 
 ## Modulator
 
@@ -40,6 +47,9 @@ The modulator is always **this track** — usually a vocal.
 
 With **Saw** and **Noise** the result follows the voice's level. With **Track** it sits at that
 track's level whatever the voice's; the voice's pauses still close the bands.
+
+In an Instrument or Audio Effect Rack chain the Vocoder has no sidechain: use **Saw** or **Noise**
+there (with **Track** it passes the chain's sound through unchanged).
 
 | Control | What it does |
 |---|---|
@@ -73,7 +83,7 @@ one to move **Low** or **High**, double-click it to reset.
 | **Gain** | Output level, ±12 dB |
 | **Hold** | Freezes every band where it is; the carrier keeps sounding through it |
 
-The meter at the foot of the column is the output level.
+The **Out** meter in the Carrier panel is the output level.
 
 ## Presets
 

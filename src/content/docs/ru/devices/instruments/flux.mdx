@@ -3,9 +3,10 @@ title: "Nota Flux"
 description: "Векторный синтезатор, который слушает: морфинг между четырьмя тембровыми мирами на XY-пэде, а звук другого трека двигает фильтр, высоту, пространство или сам вектор."
 sidebar:
   order: 10
-updated: "0.50.1"
+updated: "0.57.1"
 status: done
 sources:
+  - src/managed/Nota.App/DeviceCards/SidechainSourcePicker.cs
   - src/native/nota.engine/src/FluxSynth.h
   - src/managed/Nota.App/DeviceCards/Instruments/FluxInstrumentCard.cs
 ---
@@ -36,7 +37,7 @@ React превращает звук другого трека в модуляц�
 
 | Регулятор | Что делает |
 |---|---|
-| Источник | Трек, который слушает Flux (**No source** — React выключен) |
+| Источник | Трек, который слушает Flux, — или один его пэд, цепочка или голос, они перечислены под треком (**No source** — React выключен). React слышит его после эффектов |
 | **Listen** | Насколько сильно он реагирует |
 | **Target** | Что двигает: **Filter**, **Pitch**, **Space** или **Vector** (точка танцует в ритм) |
 

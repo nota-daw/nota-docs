@@ -1,0 +1,25 @@
+---
+title: "Journal des modifications"
+description: "Où lire ce qui a changé dans chaque version de Nota."
+sidebar:
+  order: 5
+updated: "0.50.1"
+status: done
+sources:
+  - CHANGELOG.md
+  - release-notes/
+---
+
+import { LinkCard } from '@astrojs/starlight/components';
+
+Nota publie une nouvelle version à peu près chaque semaine. Chacune liste ses changements de trois façons :
+
+- **Dans l’application** : après une mise à jour, **Nouveautés** montre les notes de version de chaque version depuis
+  la vôtre (le même texte que sur GitHub) ; ouvrez-le à tout moment depuis **Aide ▸ Nouveautés**.
+- **Sur GitHub** : chaque version, avec ses notes et ses téléchargements.
+- **Dans le code source** : tout l’historique dans `CHANGELOG.md`.
+
+<LinkCard title="Versions" description="Chaque version avec ses notes et ses téléchargements" href="https://github.com/nota-daw/nota/releases" />
+<LinkCard title="CHANGELOG.md" description="Tout l’historique, du plus récent au plus ancien" href="https://github.com/nota-daw/nota/blob/main/CHANGELOG.md" />
+
+Ce manuel décrit Nota **0.50.1**. Chaque page indique la version par rapport à laquelle elle a été vérifiée en dernier.

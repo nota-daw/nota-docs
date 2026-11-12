@@ -4,7 +4,7 @@ description: Every save keeps a version of the project. Go back to any of them, 
 sidebar:
   order: 2
 since: "0.43.1"
-updated: "0.56.1"
+updated: "0.59.1"
 status: done
 sources:
   - src/managed/Nota.App/HistoryView.cs
@@ -59,6 +59,12 @@ the tab then lists the starred versions only, newest first; click it again to se
 You can't delete the version the project is at; switch to another one first.
 
 ## Cleaning up
+
+To delete several versions at once, select them: <Kbd>⌘</Kbd>-click (<Kbd>Ctrl</Kbd>-click on
+Windows and Linux) adds a version to the selection, <Kbd>⇧</Kbd>-click selects a run. The footer
+then shows how many are selected and when they were saved; **Delete N versions…** there, or
+in the right-click menu, deletes them after one confirmation. The version the project is at
+is never deleted: it stays, and the footer says so.
 
 The menu at the top of the tab deletes all **unnamed** versions at once, keeping the ones you
 named. To stop recording versions altogether, turn off **Keep a version history of each

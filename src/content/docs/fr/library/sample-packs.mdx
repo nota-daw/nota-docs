@@ -1,0 +1,39 @@
+---
+title: "Packs d’échantillons"
+description: "Installer des packs d’échantillons gratuits (kits de batterie, une TR-808, basses, guitares, pianos, cuivres et plus) depuis le registre d’échantillons de Nota, sous licence pour toute musique."
+sidebar:
+  order: 4
+updated: "0.50.1"
+status: done
+sources:
+  - src/managed/Nota.App/PreferencesWindow.Samples.cs
+  - src/managed/Nota.App/PreferencesWindow.Downloads.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+**Réglages ▸ Téléchargements ▸ Packs d’échantillons** installe des packs d’échantillons gratuits : kits de batterie, une
+TR-808, basses, guitares, pianos et cuivres échantillonnés, et plus. Chaque pack est sous licence pour toute musique,
+sorties commerciales comprises.
+
+<Shot id="preferences/downloads-samples" alt="Réglages ▸ Téléchargements ▸ Packs d’échantillons" />
+
+## Installer
+
+Filtrez par **Tous**, **One-shots**, **Instruments** ou **Installé**, et cherchez par nom. Chaque ligne dit ce qu’est le
+pack (one-shots, boucles, instrument, mixte), qui l’a réalisé (**Credit**) et sa taille.
+
+- **Installer** : télécharge le pack depuis la page de son auteur, le vérifie avec la somme de contrôle du registre et
+  ne décompresse que les échantillons et leur documentation. Nota vérifie d’abord qu’il y a la place.
+- **Update to …** : quand une version plus récente est disponible.
+- **Afficher** : ouvre le dossier du pack ; **Source** : la page du pack.
+- **Supprimer** : supprime le dossier du pack.
+
+Les packs vont dans un dossier **Downloaded** à l’intérieur de votre dossier Échantillons : ils apparaissent donc dans
+l’onglet **Fichiers** du navigateur, et sont analysés en premier par les
+[Échantillons intelligents](../smart-samples/).
+
+## Nota Kits
+
+Les one-shots des 25 kits de batterie d’usine sont synthétisés au premier lancement (ils ne sont pas livrés en audio)
+et apparaissent dans l’onglet Fichiers sous **Nota Kits**, prêts à être glissés partout où va un échantillon.

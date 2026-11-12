@@ -1,0 +1,84 @@
+---
+title: "Nota Sampler"
+description: "Joue un échantillon sur le clavier : début et fin, boucles avec fondu enchaîné, inversion, une enveloppe d’ampli, un filtre avec suivi de touche et enveloppe, et des voix Poly, Mono ou Choke."
+sidebar:
+  order: 2
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/Sampler.h
+  - src/managed/Nota.App/DeviceCards/Instruments/SamplerInstrumentCard.cs
+  - src/managed/Nota.App/DeviceCards/Sampler/SamplerViews.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Sampler joue un échantillon, transposé par la note que vous jouez par rapport à une touche **Root**. Utilisez-le
+pour des one-shots, des boucles découpées, ou n’importe quel enregistrement que vous voulez jouer comme un instrument.
+
+<Shot id="devices/instruments/sampler/card" alt="Nota Sampler, onglet Sample avec un échantillon chargé" />
+
+**Faire entrer un échantillon :** déposez un fichier audio sur la carte (ou sur la piste), faites-en glisser un depuis le
+navigateur, ou faites glisser un clip audio de l’Arrangement sur la piste. Double-cliquer sur **Nota Sampler** dans le
+navigateur ajoute une piste et ouvre la carte, prête pour un dépôt.
+
+**Chemin du signal :** échantillon (début / fin / boucle) → hauteur → enveloppe d’ampli → filtre → sortie.
+
+## Sample
+
+La forme d’onde montre la partie qui joue, la boucle et son fondu enchaîné, et la tête de lecture. Faites glisser
+**Start** et **End** (les lignes brillantes) pour régler la fenêtre.
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Loop** | Off (one-shot), avant, ou aller-retour ; une boucle avant peut aussi tourner à l’envers |
+| **Loop start** · **Loop end** · **Crossfade** | La fenêtre de boucle et un fondu enchaîné qui cache la jointure |
+| **Reverse** | Joue l’échantillon à l’envers |
+| **Gain** | Niveau de l’échantillon avant l’enveloppe (±24 dB) |
+| **Snap to zero** · **Trim silence** | Amène les bords aux passages par zéro · saute le silence au début et à la fin |
+
+## Pitch
+
+<Shot id="devices/instruments/sampler/pitch" alt="Nota Sampler, onglet Pitch avec le clavier et la touche Root" />
+
+Un clavier de C2 à C6 : la touche **Root** est orange, la note qui sonne à l’instant bleu sarcelle. Cliquez sur une
+touche pour en faire la Root, ou utilisez les flèches à côté de **Root** ; **Detect from file name** lit un nom de note
+comme « C3 » ou « F#2 » dans le nom du fichier.
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Transpose** · **Detune** | Décale tout l’instrument de demi-tons · de cents |
+| **Keytrack** | De combien la touche déplace la hauteur : 100 % chromatique, 0 % chaque touche joue la Root |
+| **Glide** | Glisse depuis la dernière note ; en Mono, un glissando legato |
+
+## Env
+
+<Shot id="devices/instruments/sampler/env" alt="Nota Sampler, onglet Env" />
+
+L’enveloppe d’ampli (**Attack**, **Decay**, **Sustain**, **Release**) dessinée comme un graphique modifiable à la
+souris ; la voix la plus forte la suit sous forme de point bleu sarcelle. **Vel → Vol** règle de combien la vélocité
+change le niveau.
+
+## Filter
+
+<Shot id="devices/instruments/sampler/filter" alt="Nota Sampler, onglet Filter" />
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Type** · **Cutoff** · **Reso** | Le filtre et sa réponse : faites glisser la courbe pour la coupure (↔) et la résonance (↕) |
+| **Keytrack** | De combien la coupure suit la note |
+| **Env → Cutoff** | Activé / désactivé et une profondeur ± : l’enveloppe d’ampli balaie la coupure |
+
+## Voix et sortie
+
+**Voices** : **Poly**, **Mono** ou **Choke** (une nouvelle note coupe celle qui sonne : charlestons, coups de
+one-shot). **Volume**, **Pan** et **Output** règlent le niveau et la position ; Output est le niveau après tout le
+reste.
+
+## Préréglages
+
+30 préréglages d’usine qui façonnent l’échantillon que vous chargez : **One-Shot**, **Gated Hold**,
+**Soft Velocity**, **Octave Up**, **Half Speed**, nappes (**Warm Pad**, **Glass Pad**, **Tape Sustain**), basses
+(**Mono Bass**, **Slide Bass**, **Sub Drop**), claviers et sons pincés (**Soft Keys**, **Harp Pluck**, **Lo-Fi Keys**,
+**Music Box**), batteries (**Drum Hit**, **Choke Hat**, **Tuned Perc**, **Chop**) et effets (**Reverse Swell**,
+**Telephone**, **Dark Room**, **Envelope Sweep**).

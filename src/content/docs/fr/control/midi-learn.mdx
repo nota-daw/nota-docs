@@ -1,0 +1,56 @@
+---
+title: "MIDI Learn"
+description: "Associez n’importe quel bouton, fader, pad ou touche, sur un contrôleur MIDI, une manette ou votre téléphone, à presque n’importe quelle commande de Nota, et modifiez les associations dans la carte MIDI."
+sidebar:
+  order: 2
+updated: "0.50.1"
+status: done
+sources:
+  - src/managed/Nota.App/MidiLearn.cs
+  - src/managed/Nota.App/MidiLearnOverlay.cs
+  - src/managed/Nota.App/MidiLearnService.cs
+  - src/managed/Nota.App/MidiMapView.cs
+---
+
+import Shot from '@components/Shot.astro';
+import { Steps } from '@astrojs/starlight/components';
+
+MIDI Learn relie une commande physique à une commande à l’écran : tournez un bouton de votre contrôleur et un filtre
+bouge dans Nota.
+
+## Associer une commande
+
+<Steps>
+
+1. Cliquez sur **MIDI** dans la barre de transport. Tout ce que vous pouvez associer s’allume.
+
+2. Cliquez sur la commande de Nota que vous voulez faire bouger : un bouton, un fader, un interrupteur, une macro…
+
+3. Bougez un bouton ou un fader de votre contrôleur (ou appuyez sur un pad, un bouton de manette, ou bougez une
+   commande du téléphone). L’association est faite ; les commandes associées restent entourées de bleu sarcelle.
+
+4. Associez-en d’autres, puis cliquez à nouveau sur **MIDI** pour terminer.
+
+</Steps>
+
+## Ce que vous pouvez associer
+
+Chaque paramètre des instruments, effets et effets MIDI intégrés (interrupteurs, enveloppes et filtres compris), les
+paramètres de plug-ins, le volume, le panoramique, le muet et le solo des pistes, le master, le transport, les macros
+de rack, et le muet et le solo des chaînes de rack et des pads de Drum Rack.
+
+Les sources peuvent être un **CC**, une **note MIDI**, un bouton, un stick ou une gâchette de **manette** (macOS), ou
+une commande sur un téléphone qui exécute [Nota Remote](../nota-remote/), le tout dans une seule table.
+
+- Un **bouton ou une note** est momentané : il bascule un interrupteur une fois quand on appuie, et maintient une
+  commande continue en haut de sa plage jusqu’au relâchement.
+- Un **bouton rotatif, fader, stick ou gâchette** pilote une commande continue sur toute sa course, et bascule un
+  interrupteur quand il passe la moitié.
+
+## La carte MIDI
+
+<Shot id="control/midi-map-tab" alt="L’onglet Carte MIDI du navigateur" width={300} />
+
+L’onglet **Carte MIDI** du navigateur liste chaque association : la commande, sa source (`CC 74 · ch1`, `Note 36 ·
+ch10`, `Pad · Left stick ↑↓`, `Phone · XY X`), une **plage** de sortie modifiable, **Inverser**, et la suppression. Les
+associations sont enregistrées avec le projet.

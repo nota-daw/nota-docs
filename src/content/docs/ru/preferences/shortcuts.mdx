@@ -3,13 +3,14 @@ title: "Shortcuts"
 description: "Settings ▸ Shortcuts — все сочетания клавиш и жесты мыши по группам, с фильтром."
 sidebar:
   order: 9
-updated: "0.50.1"
+updated: "0.58.1"
 status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
 ---
 
 import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
 
 <Shot id="preferences/shortcuts" alt="Settings ▸ Shortcuts" />
 
@@ -18,3 +19,16 @@ Tracks, Session, Piano roll, Play notes, Browser · preview, Gamepad и Mouse. �
 shortcuts**, чтобы найти нужное.
 
 Тот же список целиком — в разделе [Горячие клавиши](../../reference/shortcuts/).
+
+## Velocity wheel
+
+Вверху страницы раздел **Velocity wheel** задаёт, как <Kbd>⇧</Kbd> + колесо меняет velocity ноты в
+[piano roll](../../editing/piano-roll/#velocity):
+
+| Настройка | Что делает |
+|---|---|
+| **Direction** | **Wheel up lowers the velocity** — по умолчанию выключено, то есть колесо вверх velocity повышает |
+| **Step** | Насколько сдвигает velocity один щелчок: **Off** или от 0.25× до 2× с шагом 0.25×. **1×** (по умолчанию) — один шаг MIDI на щелчок |
+
+При **Off** <Kbd>⇧</Kbd> + колесо только прокручивает — в том числе над нотами. Настройка действует
+во всех piano roll и запоминается.

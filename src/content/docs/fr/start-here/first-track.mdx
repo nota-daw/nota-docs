@@ -1,0 +1,141 @@
+---
+title: "Votre première piste"
+description: "D’un nouveau projet à un WAV exporté en dix minutes : un instrument, quelques notes, un effet, une boucle."
+sidebar:
+  order: 4
+updated: "0.51.2"
+status: done
+sources:
+  - src/managed/Nota.Infrastructure/Persistence/ProjectTemplate.cs
+  - src/managed/Nota.App/MainWindow.Browser.cs
+  - src/managed/Nota.App/PianoRollView.cs
+  - src/managed/Nota.App/ExportWindow.cs
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
+
+Ce pas à pas vous mène d’un nouveau projet à une courte boucle exportée en fichier WAV.
+Il n’utilise que ce qui est fourni avec Nota : pas de plug-ins, pas d’échantillons.
+
+## 1. Démarrer un projet
+
+Dans la fenêtre de démarrage, cliquez sur **Nouveau projet** (ou appuyez sur <Kbd>⌘ N</Kbd> dans la fenêtre
+principale). Vous obtenez un Arrangement à 120 BPM en 4/4 avec une piste d’instrument (Nota Volt), une piste audio
+et deux pistes de retour, **Reverb** et **Delay**. Ce pas à pas ajoute sa propre piste d’instrument ; supprimez la piste
+Volt (<Kbd>Delete</Kbd>) si vous n’en avez pas besoin.
+
+## 2. Ajouter un instrument
+
+<Steps>
+
+1. Dans le navigateur, ouvrez l’onglet **Instruments** (l’icône de clavier en haut du rail).
+
+2. Double-cliquez sur **Nota Volt**. Nota ajoute une piste d’instrument avec Volt dessus et un clip MIDI vide
+   d’une mesure au début du morceau.
+
+</Steps>
+
+<Shot id="start-here/browser-instruments" alt="L’onglet Instruments du navigateur" width={300} />
+
+Vous voulez d’abord écouter un instrument ? Sélectionnez-le et appuyez sur le bouton de lecture de la bande
+d’aperçu, en bas du navigateur.
+
+## 3. Écrire quelques notes
+
+<Steps>
+
+1. Double-cliquez sur le clip dans la timeline. Il s’ouvre dans l’onglet **Clip** du panneau du bas.
+
+2. Double-cliquez sur un endroit vide de la grille pour y ajouter une note ; double-cliquez sur une note pour la
+   supprimer. Faites glisser une note pour la déplacer, faites glisser son bord pour l’allonger ou la raccourcir.
+
+3. La voie sous les notes est la vélocité : faites glisser une tige vers le haut ou vers le bas pour jouer cette
+   note plus fort ou plus doucement.
+
+</Steps>
+
+<Shot id="start-here/clip-editor" alt="Un clip MIDI ouvert dans l’éditeur de clip, avec les notes et leurs tiges de vélocité" />
+
+Les notes s’accrochent à la grille que vous voyez : le repère dans l’en-tête de l’éditeur indique son pas ;
+**Quantifier**, à gauche, ramène les notes sur son propre pas. Quand des notes sont sélectionnées, les flèches les
+déplacent d’un pas de grille (<Kbd>←</Kbd> <Kbd>→</Kbd>) ou d’un demi-ton (<Kbd>↑</Kbd> <Kbd>↓</Kbd>), et
+<Kbd>⇧ ↑</Kbd> / <Kbd>⇧ ↓</Kbd> les déplacent d’une octave.
+
+<Aside type="tip">
+Pas de clavier MIDI ? Jouez les notes sur le clavier de votre ordinateur : <Kbd>A</Kbd> à <Kbd>K</Kbd> sont les
+touches blanches à partir de C4, <Kbd>W</Kbd> <Kbd>E</Kbd> <Kbd>T</Kbd> <Kbd>Y</Kbd> <Kbd>U</Kbd> les touches
+noires, <Kbd>Z</Kbd> / <Kbd>X</Kbd> changent d’octave.
+</Aside>
+
+## 4. Écouter en boucle
+
+<Steps>
+
+1. Cliquez sur le clip dans la timeline pour le sélectionner et appuyez sur <Kbd>⌘ L</Kbd> : la boucle se cale sur le
+   clip et s’active.
+
+2. Appuyez sur <Kbd>Space</Kbd> pour lancer la lecture, et encore pour l’arrêter. Continuez à modifier les notes
+   pendant la lecture : vous entendez chaque changement tout de suite.
+
+</Steps>
+
+Pour allonger la partie, sélectionnez le clip et appuyez sur <Kbd>⌘ D</Kbd> pour en placer une copie juste après,
+ou faites glisser le bord droit du clip.
+
+## 5. Ajouter un effet
+
+<Steps>
+
+1. Gardez la piste Volt sélectionnée et ouvrez l’onglet **Effets audio** du navigateur.
+
+2. Double-cliquez sur **Nota Delay**. Il apparaît dans la chaîne d’appareils de la piste, après Volt.
+
+3. Tournez ses boutons pendant que la boucle joue. Faites glisser un bouton vers le haut ou vers le bas ; maintenez
+   <Kbd>⇧</Kbd> pour des pas plus fins ; double-cliquez dessus pour revenir à la valeur par défaut.
+
+</Steps>
+
+<Shot id="start-here/browser-effects" alt="L’onglet Effets audio du navigateur" width={300} />
+
+<Aside type="tip">
+Pour plus d’écho ou d’espace sans modifier la piste elle-même, utilisez plutôt les retours : ouvrez le
+[Mixeur](../../views/mixer/) et montez l’envoi de la piste Volt vers **Delay** ou **Reverb**.
+</Aside>
+
+Chaque appareil a des préréglages d’usine : cliquez sur le nom du préréglage dans l’en-tête de l’appareil pour les
+parcourir.
+
+## 6. Enregistrer
+
+Appuyez sur <Kbd>⌘ S</Kbd>, donnez un nom au projet et choisissez où le placer. Les projets enregistrés dans
+**Documents ▸ Nota Projects** apparaissent aussi dans l’onglet **Projets** du navigateur. Un projet est un
+unique dossier `.nota` qui contient tout ce qu’il utilise, échantillons compris : vous pouvez le déplacer ou
+le sauvegarder comme un seul élément. Chaque enregistrement garde aussi une [version](../../basics/version-history/)
+à laquelle vous pouvez revenir.
+
+## 7. Exporter un WAV
+
+<Steps>
+
+1. Choisissez **Fichier ▸ Exporter de l’audio…** (<Kbd>⌘ ⇧ E</Kbd>).
+
+2. Sous **Plage**, gardez **Boucle** pour exporter seulement la boucle, ou choisissez **Morceau entier**.
+
+3. Laissez **WAV**, **48 000** et **24-bit**, ou changez-les, puis cliquez sur **Exporter en WAV**.
+
+</Steps>
+
+<Shot id="export/export-window" alt="La fenêtre Exporter de l’audio" width={280} />
+
+**Ajouter une queue de relâchement d'1 mesure** laisse le delay sonner jusqu’au bout après la dernière note.
+**Exporter les stems** écrit un fichier par piste au lieu du mixage. Plus de détails dans
+[Exporter de l’audio](../../export/export-audio/).
+
+## Pour aller plus loin
+
+- [La fenêtre principale](../main-window/) : ce que fait chaque élément à l’écran.
+- [Arrangement](../../views/arrangement/) et [Session](../../views/session/) : les deux façons de construire un
+  morceau.
+- [Appareils](../../devices/) : tous les instruments et effets de Nota.

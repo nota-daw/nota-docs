@@ -1,0 +1,71 @@
+---
+title: "Nota Auto Shift"
+description: "Correction de hauteur en temps réel : cale une voix sur la gamme d’une tonalité, sur un ensemble de notes personnalisé ou sur les notes jouées par une autre piste. De la retouche transparente au hard tune, avec contrôle des formants."
+sidebar:
+  order: 12
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/AutoShift.h
+  - src/managed/Nota.App/DeviceCards/Bodies/AutoShiftDeviceBody.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Auto Shift corrige la hauteur pendant la lecture : doucement, pour qu’une voix soit simplement juste, ou fort, pour
+le son robotique du hard tune. Il peut aussi suivre une **tonalité qu’il apprend** du chant, ou les **notes d’une autre
+piste**.
+
+<Shot id="devices/audio-effects/auto-shift/card" alt="Nota Auto Shift, onglet Trace avec la hauteur détectée et corrigée" />
+
+**Comment ça marche :** il **détecte** la hauteur de la voix, choisit une note **cible** et **décale** la voix vers elle en
+gardant les formants (le caractère de la voix) là où ils étaient. Le signal sec est retardé de la même durée, et ce
+retard est compensé, si bien que **Mix** n’étale jamais le son.
+
+**Disposition :** la colonne **Pitch** à gauche (où est la voix, la correction en cours), un panneau central à trois
+onglets, un panneau de droite (**Shift** / **Detect**) et une ligne d’état.
+
+## Trace
+
+La hauteur détectée et la hauteur corrigée sur les lignes de notes de la gamme, dans le temps.
+
+## Scale
+
+<Shot id="devices/audio-effects/auto-shift/scale" alt="Nota Auto Shift, onglet Scale avec l’histogramme des notes chantées" />
+
+**Key** et **Scale** (**Chromatic**, **Major**, **Minor**, **Penta Maj**, **Penta Min**) ou un ensemble **Custom** :
+cliquez sur les notes pour les activer ou les désactiver. Un histogramme des notes réellement chantées se trouve
+dessous. **Learn** écoute environ 16 mesures et choisit la tonalité ; **Key Source** **Auto** suit la tonalité apprise.
+**Follow Scale device** copie la tonalité et la gamme d’un [Nota Scale](../../midi-effects/scale/) sur la piste.
+
+## MIDI
+
+La cible vient des notes qu’une autre piste joue (choisissez-la comme source de sidechain de l’appareil) : le mode
+**Note** cale sur la note exacte, le mode **Scale** utilise les notes comme gamme ; **Latch**, **Oct Lock** et une plage
+de **Bend** le façonnent.
+
+## Shift
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Amount** | De combien la hauteur est tirée vers la cible |
+| **Speed** | À quelle vitesse elle y arrive : lent est naturel, instantané est du hard tune |
+| **Human** | Garde le vibrato autour de la note corrigée |
+| **Range** | Ne corrige que les notes dans cette distance |
+| **Shift** · **Fine** | Transposent le résultat |
+| **Formant** · **Formant shift** | Gardent le caractère de la voix, ou le déplacent à part (voix plus grande, plus petite) |
+| **Mix** | Dry / wet |
+
+## Detect
+
+**Det Low** / **Det High** (la plage de notes à chercher) et **Det Sens** ; **Skip sibilants** laisse tranquilles les sons
+« s » et « t ».
+
+## Préréglages
+
+34 préréglages d’usine : correction (**Hard Tune**, **Robot Voice**, **Natural Vocal**, **Transparent Touch**,
+**Pop Lead**, **R&B Runs**, **Ballad**, **Rap Hook**, **Choir Tighten**), tonalités (**Auto Key**, **Chromatic Fix**,
+**Minor Key**, **Pentatonic Pop**, **Blues in A**, **Dorian Groove**), voix (**Soprano**, **Alto**, **Tenor**,
+**Bass Voice**, **Lead Instrument**), effets (**Octave Up**, **Octave Down**, **Chipmunk**, **Monster**, **Gender Up**,
+**Gender Down**, **Formant Up**, **Detune Double**, **Fifth Harmony**, **Harmony Lock**) et MIDI (**MIDI Hard Tune**,
+**MIDI Scale Follow**, **MIDI Melody Replace**).

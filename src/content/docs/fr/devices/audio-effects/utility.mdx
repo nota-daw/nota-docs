@@ -1,0 +1,67 @@
+---
+title: "Nota Utility"
+description: "Outils de champ stéréo et de niveau : routage des canaux, largeur avec deux lois, basses en mono, balance, inversion de phase, gain et recalage du niveau sur des LUFS, un pic ou un RMS, et limiteur de sécurité en vrai pic."
+sidebar:
+  order: 7
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/Utility.h
+  - src/managed/Nota.App/DeviceCards/Bodies/UtilityDeviceBody.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Utility fait les tâches simples mais essentielles : l’élargir ou le rétrécir, passer les graves en mono, inverser la
+polarité, ajuster le niveau, ou le tenir sur une cible de sonie.
+
+<Shot id="devices/audio-effects/utility/card" alt="Nota Utility, onglet Field avec le champ stéréo par fréquence" />
+
+**Disposition :** la colonne **Level** à gauche (vumètres d’entrée et de sortie), un panneau central à trois onglets, un
+panneau de droite (**Routing** / **Output**) et une ligne d’état.
+
+## Field
+
+Le champ stéréo par fréquence : où se tient chaque bande, quelle largeur, quelle corrélation.
+
+## Mono
+
+<Shot id="devices/audio-effects/utility/mono" alt="Nota Utility, onglet Mono" />
+
+La largeur selon la fréquence, avec la zone mono repérée. **Mono below** une fréquence (**Mono f**), à 6, 12 ou
+24 dB/oct, garde le grave au centre.
+
+## Levels
+
+<Shot id="devices/audio-effects/utility/levels" alt="Nota Utility, onglet Levels" />
+
+L’entrée et la sortie sur les 8 dernières secondes face à la cible, dans l’unité de **Meter** choisie : **LUFS-S**, pic
+d’échantillon ou RMS.
+
+## Routing et Output
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Channel** | **Stereo**, **Left**, **Right** ou **Swap** |
+| **Width** | Largeur stéréo ; deux lois : **L/R** (le side est mis à l’échelle ; plus large devient plus fort) ou **M/S** (mid et side sont échangés ; 200 % = side seul) |
+| **Balance** | Balance gauche / droite |
+| **Invert L** · **Invert R** | Inversent la polarité d’un canal |
+| **Mute** | Coupe la sortie |
+| **Gain** | Gain de sortie |
+| **Gain match** | Un recalage ponctuel : règle Gain pour que la sortie égale l’entrée (ou la cible) |
+| **Level match** | Recalage automatique continu, sur le niveau de l’entrée ou sur une **Target** |
+| **Ceiling** | Un limiteur de sécurité en vrai pic à la fin, avec son plafond |
+
+## Préréglages
+
+31 préréglages d’usine : largeur (**Stereo Widener**, **Wide**, **Wide Master**, **Wide Pad**, **Narrow**, **Mono**,
+**Side Only**), grave (**Bass Mono**, **Mono Maker**, **Club Low End**, **Sub Mono 60**, **Vinyl Safe**), routage et
+polarité (**Swap L/R**, **Left Only**, **Right Only**, **Polarity Flip**, **Fix Left Polarity**, **Mute**), gain
+(**Trim −6 dB**, **Boost +6 dB**, **Gain Match −9**) et sonie (**Level Held**, **Level Match**, **RMS Match**,
+**Streaming −14 LUFS**, **Podcast −16 LUFS**, **Broadcast −23 LUFS**, **Peak Target −3 dB**, **True-Peak Safety**).
+
+## Astuces
+
+- **Un A/B équitable :** placez Utility après une chaîne et utilisez **Gain match** pour entendre l’effet, pas le
+  changement de sonie.
+- **Pour le streaming :** pour un outil de sonie final avec un gain qui suit, voir [Nota Level](../level/).

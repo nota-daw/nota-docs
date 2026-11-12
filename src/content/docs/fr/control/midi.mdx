@@ -1,0 +1,86 @@
+---
+title: "Contrôleurs MIDI"
+description: "Jouer Nota depuis un clavier MIDI ou le clavier de l’ordinateur, choisir quelles entrées MIDI Nota écoute et enregistrer ce que vous jouez."
+sidebar:
+  order: 1
+updated: "0.56.1"
+status: done
+sources:
+  - src/native/nota.engine/src/MidiClip.h
+  - src/native/nota.engine/src/MidiInput.h
+  - src/managed/Nota.App/MainWindow.Input.cs
+  - src/managed/Nota.App/PreferencesWindow.cs
+  - src/native/nota.engine/src/MpeInput.h
+  - src/native/nota.engine/src/NoteExpression.h
+---
+
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
+
+Branchez un clavier ou un contrôleur MIDI et jouez : Nota écoute par défaut toutes les entrées MIDI connectées. Les
+notes vont vers la piste d’instrument sélectionnée ; armez la piste et appuyez sur Enregistrement pour les
+[enregistrer](../../editing/recording/).
+
+## Choisir les entrées
+
+**Réglages ▸ MIDI** liste les entrées MIDI connectées. Désactivez-en une pour que Nota cesse de l’écouter ; les
+nouveaux appareils sont activés par défaut. Branchez un contrôleur pendant que les Réglages sont ouverts et rouvrez-les
+pour le voir.
+
+<Shot id="preferences/midi" alt="Réglages ▸ MIDI avec la liste des entrées MIDI" />
+
+Le bouton **MIDI** de la barre de transport a un point qui clignote quand un contrôleur envoie quelque chose : pratique
+pour vérifier un contrôleur connecté mais silencieux.
+
+## Molette de hauteur, aftertouch et MPE
+
+La **molette de hauteur**, l'**aftertouch** et le **CC74** d’un clavier parviennent aux synthés et plug-ins de Nota :
+la molette courbe tout l’instrument de la plage de bend propre au synthé (2 demi-tons, ou le **Bend Range** du
+préréglage quand il en a un).
+
+Un **contrôleur MPE** (Seaboard, LinnStrument, Osmose, Sensel et autres) donne à chaque note son propre canal : chaque
+doigt courbe, presse et glisse donc sa note indépendamment. Nota le comprend d’emblée : les canaux 2 à 16 portent une
+note chacun, le canal 1 reste un clavier ordinaire. Ces synthés jouent l’expression par note :
+
+| Synthé | Bend | Pression | Slide (CC74) |
+|---|---|---|---|
+| [Nota Synth](../../devices/instruments/synth/), [Volt](../../devices/instruments/volt/) | La hauteur de la note | Plus fort, le filtre s’ouvre | Coupure du filtre |
+| [Aurora](../../devices/instruments/aurora/) | La hauteur de la note | Plus fort, le filtre s’ouvre | Position dans la table d’ondes |
+| [Operator](../../devices/instruments/operator/) | La hauteur de la note | Plus fort, plus de FM | Profondeur de FM |
+| [Pentad](../../devices/instruments/pentad/) | La hauteur de la note | Aftertouch polyphonique : plus fort, le filtre s’ouvre de **Aftertouch Cutoff** | Coupure du filtre |
+| [Physical](../../devices/instruments/physical/) | Réaccorde le corps qui résonne | Le frotte : une note tenue se prolonge | Combien de temps il résonne |
+| [Keys](../../devices/instruments/keys/) | Réaccorde la tine | Pousse la tine plus fort dans le micro : plus de mordant | Décale la symétrie du micro |
+
+Un Instrument Rack transmet l’expression à ses chaînes. Un plug-in reçoit chaque contrôleur (la molette, la pression
+de canal, l’aftertouch polyphonique, la pédale de maintien et tout autre CC, si bien qu’un plug-in de piano peut faire
+de la demi-pédale), mais pas le bend par note. Désactivez le MPE, ou changez la plage de bend par note, dans
+[Réglages ▸ MIDI](../../preferences/midi/) ; un contrôleur qui annonce sa propre plage la remplace.
+
+Quand vous [enregistrez](../../editing/recording/), chaque note garde son bend, sa pression et son slide : la prise se
+rejoue comme vous l’avez jouée, l’expression voyage avec la note quand vous la déplacez, la copiez ou la quantifiez, et
+le [piano roll](../../editing/piano-roll/#mpe-enregistré) la dessine. La molette de hauteur, la pression de canal, la
+pédale de maintien et les autres contrôleurs sont enregistrés dans le clip avec les notes.
+
+La **pédale de maintien** (CC64) d’un clavier fonctionne sur tous les instruments intégrés mélodiques : tant qu’elle est
+enfoncée, les touches que vous lâchez continuent de sonner, et elles sont relâchées quand la pédale remonte. Frapper à
+nouveau une touche tenue la redémarre. [Nota Keys](../../devices/instruments/keys/) et
+[Nota Mosaic](../../devices/instruments/mosaic/) modélisent eux-mêmes la pédale, les plug-ins la reçoivent, et les
+batteries ([Drum Rack](../../devices/racks/drum-rack/), [Rhythm](../../devices/instruments/rhythm/)) l’ignorent. Une
+pédale enregistrée ou dessinée dans un clip fait la même chose à la lecture.
+
+## Pas de clavier MIDI ? Utilisez le clavier de l’ordinateur
+
+| Touches | Jouent |
+|---|---|
+| <Kbd>A</Kbd> <Kbd>S</Kbd> <Kbd>D</Kbd> <Kbd>F</Kbd> <Kbd>G</Kbd> <Kbd>H</Kbd> <Kbd>J</Kbd> <Kbd>K</Kbd> | Les touches blanches, à partir de C4 |
+| <Kbd>W</Kbd> <Kbd>E</Kbd> · <Kbd>T</Kbd> <Kbd>Y</Kbd> <Kbd>U</Kbd> | Les touches noires |
+| <Kbd>Z</Kbd> / <Kbd>X</Kbd> | Octave vers le bas / le haut |
+| <Kbd>C</Kbd> / <Kbd>V</Kbd> | Vélocité vers le bas / le haut |
+
+Cela marche même pendant que la fenêtre d’un plug-in a le focus. La touche pressée s’allume sur le piano roll.
+
+## Boutons et faders
+
+Pour que les boutons, faders et pads d’un contrôleur fassent bouger les commandes de Nota, utilisez
+[MIDI Learn](../midi-learn/). Une manette et votre téléphone peuvent aussi jouer et piloter Nota : voir
+[Manettes](../gamepads/) et [Nota Remote](../nota-remote/).

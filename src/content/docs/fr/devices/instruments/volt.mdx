@@ -1,0 +1,126 @@
+---
+title: "Nota Volt"
+description: "Synthé analogique virtuel à deux chemins : deux oscillateurs et du bruit routés vers deux filtres, enveloppes de filtre et d’ampli, deux LFO et un vibrato, une matrice de modulation 7 × 6 et huit macros."
+sidebar:
+  order: 5
+updated: "0.55.1"
+status: done
+sources:
+  - src/native/nota.engine/src/VoltSynth.h
+  - src/managed/Nota.App/DeviceCards/Instruments/VoltInstrumentCard.cs
+---
+
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
+
+Nota Volt est un synthé analogique virtuel modelé sur les analogiques classiques à deux oscillateurs, avec une
+particularité : deux **chemins de signal** complets. Chaque source peut aller vers le Filter 1, le Filter 2 ou les deux,
+et chaque filtre a son propre ampli avec panoramique : un seul patch peut donc être deux sons superposés.
+
+<Shot id="devices/instruments/volt/card" alt="Nota Volt, onglet Osc" />
+
+**Chemin du signal :**
+
+```
+Osc 1 ┐                          ┌─ Filter 1 → Amp 1 (pan, level) ─┐
+Osc 2 ┼─ route each to F1 / F2 ──┤                                 ├─→ out
+Noise ┘                          └─ Filter 2 → Amp 2 (pan, level) ─┘
+               (Filter 1 can also feed Filter 2: "To F2")
+```
+
+Les **molettes** à gauche (pitch bend, molette de modulation) restent sur chaque onglet. Le rail à droite montre les
+commandes **Global** ou **Voice**.
+
+## Osc
+
+Osc 1, Osc 2 et Noise sous forme de tableau : **wave**, **Oct**, **Semi**, **Fine**, **Shape**, **PW**, **Phase** de
+départ, **Level** et **Route** (vers quel filtre il va). Noise a une **Color**.
+
+- **Shape** fait évoluer l’onde choisie vers la suivante dans l’ordre sinus → triangle → dent de scie → carré. À 0
+  (désactivé), vous entendez l’onde telle que choisie ; à mi-chemin depuis la dent de scie, vous entendez moitié dent de
+  scie, moitié carré. Sur le carré, il ne fait rien, puisqu’il n’y a pas d’onde après lui.
+- **PW** (largeur d’impulsion) rétrécit ou élargit le carré de 5 % à 95 %. À 50 %, c’est un carré pur ; une impulsion
+  étroite sonne plus mince et plus nasale.
+
+## Filter
+
+<Shot id="devices/instruments/volt/filter" alt="Nota Volt, onglet Filter" />
+
+Deux filtres à variables d’état (**LP**, **HP**, **BP** ou **Notch**, 12 ou 24 dB), chacun avec coupure, résonance et
+quantités **Env**, **Key** et **LFO**. Faites glisser le pad de réponse pour la coupure et la résonance. Sur le Filter 1,
+**To F2** en envoie une partie dans le Filter 2 pour un filtrage en série.
+
+Deux boutons agissent sur les deux filtres, et restent donc en place quand vous passez de 1 à 2 :
+
+- **Drive** sature le signal à son entrée dans les filtres, du propre jusqu’à 12 fois le gain. Il ajoute du grain et
+  fait grogner la résonance, comme sur une basse acid.
+- **Wheel** (Wheel → LFO) laisse la molette de modulation ouvrir le LFO de chaque filtre sur sa coupure, jusqu’à ±2
+  octaves en plus de la quantité de LFO propre du filtre. Montez la molette pour faire entrer un wobble.
+
+## Env
+
+<Shot id="devices/instruments/volt/env" alt="Nota Volt, onglet Env avec les enveloppes d’ampli et de filtre" />
+
+Les enveloppes d'**amp** et de **filter** côte à côte (A · D · S · R), dessinées et modifiables à la souris.
+
+## LFO
+
+**LFO 1**, **LFO 2** et **Vibrato** sous forme de tableau : forme (sinus, triangle, carré, S&H), vitesse, profondeur,
+synchronisation au tempo et **Fade** (un fondu d’entrée par note), chacun montrant où il aboutit. Le vibrato peut être
+confié à la molette de modulation (**By wheel**).
+
+## Mod
+
+<Shot id="devices/instruments/volt/mod" alt="Nota Volt, onglet Mod avec la matrice de modulation" />
+
+Une **matrice 7 × 6** : Amp Env, Flt Env, LFO 1, LFO 2, Velocity, Key et Mod Wheel contre Pitch, Osc 2 Pitch, Cutoff,
+Reso, Level et Pan. Faites glisser une cellule vers le haut pour +, vers le bas pour − ; <Kbd>⌥</Kbd>-clic pour saisir
+la quantité (−100 … +100 %), double-clic pour l’effacer.
+
+## Macro
+
+Huit macros, chacune une valeur, une quantité et l’une de douze cibles : les six destinations de la matrice, les trois
+niveaux de source, la coupure du Filter 2 et la vitesse de l’un ou l’autre LFO.
+
+## Rail
+
+**Global :** mode de voix, plage de bend (1 à 12 demi-tons), coupure, résonance, glide, **Gain**, **Drive** et **Pan**.
+
+- **Poly** joue jusqu’à 16 notes. **Mono** en joue une : chaque nouvelle note relance ses enveloppes, et quand vous
+  lâchez la touche la plus haute, la note retombe sur une touche que vous tenez encore. **Legato** est Mono où une note
+  jouée par-dessus une note tenue glisse sans nouvelle attaque.
+- **Drive** sature la sortie, du propre jusqu’à 8 fois le gain, et garde le niveau sous contrôle pendant qu’il pousse.
+
+**Voice :** les deux amplis de sortie (niveau et panoramique), la section unison, et **Vel Amp** / **Vel Fil** (de
+combien la vélocité change le niveau et la coupure).
+
+- **Unison** choisit les voix par oscillateur. **1** ajoute un partenaire désaccordé à chaque oscillateur, et
+  **Detune** règle de combien (jusqu’à 25 cents). **2**, **4** et **7** empilent autant de copies de chaque oscillateur,
+  réparties sur ±50 cents par **Detune**, et **Spread** les panote à travers le champ stéréo : le son supersaw. Avec 2
+  à 7 voix et un peu de Spread, chaque côté du champ stéréo reçoit son propre filtre.
+
+<Shot id="devices/instruments/volt/voice" alt="Nota Volt, rail Voice avec le préréglage Super Saw 7 : Unison 7, Detune et Spread" />
+
+## Préréglages
+
+74 préréglages d’usine. Les 25 propres à Volt : nappes (**Warm Pad**, **String Machine**, **Choir Pad**, **Glass Pad**),
+basses (**Fat Bass**, **Sub Sine**, **Wobble Bass**, **Acid Bass**, **Reese Bass**, **Growl Bass**), leads
+(**Bright Lead**, **Super Saw**, **Solo Lead**, **Hard Lead**), claviers (**Soft Pluck**, **Drifting Keys**,
+**Electric Keys**, **Bell Tone**, **Clav Stab**) et patchs à deux chemins ou en mouvement (**Split Filter**,
+**Dark Drone**, **Sample & Hold**, **Noise Sweep**, **Siren**, **Serial Filters**).
+
+Les 49 autres sont les anciennes bibliothèques de [Nota Synth](../synth/) et de [Nota Bass](../bass/), reconstruites sur
+Volt pour qu’elles sonnent pareil. Celles de Synth sont rangées avec celles de Volt (Pads, Bass, Leads, Keys & Plucks,
+Bells & Mallets, Textures & FX). Celles de Bass gardent leurs propres dossiers : **Sub Bass**, **Analog Bass**, **Acid**,
+**Growl & Wobble** et **Electric Bass**. Là où Volt avait déjà un préréglage du même nom, celui qui a été porté a été
+renommé : par exemple le Super Saw de Synth devient **Super Saw 7** et le Reese Bass de Bass devient **Deep Reese**.
+
+## Astuces
+
+- **Deux sons en un :** envoyez Osc 1 vers F1 (passe-bas, panoté à gauche) et Osc 2 vers F2 (passe-bande, panoté à
+  droite).
+- **Bips S&H classiques :** LFO 1 en S&H, routé vers la coupure, synchronisé sur 1/16.
+- **Supersaw :** dent de scie sur les deux oscillateurs, **Unison 7**, Detune vers 30 %, Spread monté.
+- **Un sub sous une basse :** Osc 2 en sinus, Oct −1, routé vers le même filtre.
+- **Ligne 303 :** dent de scie ou carré dans un passe-bas de 24 dB, forte résonance, enveloppe de filtre montée, un peu
+  de Drive, **Legato** avec un peu de glide.

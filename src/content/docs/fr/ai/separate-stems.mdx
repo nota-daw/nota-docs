@@ -1,0 +1,35 @@
+---
+title: "Séparer les stems"
+description: "Séparez n’importe quel clip audio en batterie, basse, voix et tout le reste : quatre pistes dans un groupe, alignées sur l’original, sur votre ordinateur."
+sidebar:
+  order: 2
+updated: "0.50.1"
+status: done
+sources:
+  - src/managed/Nota.App/MainWindow.Stems.cs
+---
+
+import { Steps, Aside } from '@astrojs/starlight/components';
+
+Séparer les stems écarte un mixage en **Drums**, **Bass**, **Other** et **Vocals**. Remixez un morceau, entraînez-vous
+dessus sans la basse, échantillonnez un break de batterie, ou transformez une voix en MIDI.
+
+<Steps>
+
+1. Clic droit sur un clip audio dans l’Arrangement ▸ **Séparer les stems…**. La première fois, Nota propose de
+   télécharger le [modèle](../models/) **htdemucs**.
+
+2. Attendez la fenêtre de progression : un morceau de trois minutes prend bien moins d’une minute. **Annuler**
+   l’arrête.
+
+3. Un groupe de quatre pistes apparaît juste sous la piste du clip (Drums, Bass, Other, Vocals), chaque clip aligné
+   sur l’original, avec le warp, l’inversion, les fondus et l’ADSR.
+
+</Steps>
+
+Le clip d’origine est désactivé, pas supprimé, et toute l’opération s’annule en une étape.
+
+<Aside type="tip">
+Ensuite, [convertissez un stem en MIDI](../../editing/midi-tools/) : un stem de voix ou de basse propre se convertit
+bien mieux que le mixage complet.
+</Aside>

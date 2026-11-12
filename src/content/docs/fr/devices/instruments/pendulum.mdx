@@ -1,0 +1,70 @@
+---
+title: "Nota Pendulum"
+description: "Claviers génératifs : tenez un accord et des balles qui se balancent le jouent comme un arpège toujours changeant, sur une voix chaleureuse de claviers électriques."
+sidebar:
+  order: 7
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/PendulumSynth.h
+  - src/managed/Nota.App/DeviceCards/Instruments/PendulumInstrumentCard.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Pendulum transforme un accord tenu en mouvement. Des balles oscillent d’avant en arrière à travers l’accord comme
+des pendules ; chaque fois qu’une balle passe d’une note de l’accord à la suivante, cette note joue. Plusieurs balles à
+des vitesses différentes tissent un arpège qui ne cesse de changer, à partir d’un seul accord tenu.
+
+<Shot id="devices/instruments/pendulum/card" alt="Nota Pendulum, onglet Balls avec une voie par balle" />
+
+**Chemin du signal :** accord tenu → balles (position → degré de l’accord → une note à chaque passage) → voix chaleureuse
+de claviers → sortie.
+
+## Balls
+
+Le centre dessine une voie par balle : l’horizontale est la hauteur, et vous voyez le mur d’où elle vient, le mur vers
+lequel elle va et le temps restant. Sous les voies, une bande de mesures montre les notes qui tombent.
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Sync** / **Free** | Oscille en mesures (avec une division) ou en secondes (**Time**) |
+| **Rate** | La vitesse, bipolaire : négatif fait osciller à l’envers |
+| **Motion** | La courbe d’oscillation : Linear, Pendulum, Ease ou Bounce |
+| **Balls** | Combien de balles oscillent |
+| **Sort** | **Up** ou **Down** : l’ordre de l’accord à travers le champ |
+| **Quant** | Accroche les notes à une grille |
+| **Hold** | Verrouille l’accord après que vous avez relâché |
+| **First note** | Redémarre le motif à chaque nouvel accord |
+| **Reset** | Remet les balles au départ |
+
+Le rail liste chaque balle avec sa division, sa vitesse, sa phase et la note qu’elle joue.
+
+## Voice
+
+<Shot id="devices/instruments/pendulum/voice" alt="Nota Pendulum, onglet Voice" />
+
+Avec quoi jouent les balles : une voix douce additive de « claviers électriques » avec un partenaire de chorus désaccordé.
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| Wave · **Tone** · **Bright** · **FM** | Le caractère de la voix de claviers |
+| **Length** | Longueur des notes |
+| **Attack** · **Decay** · **Release** | L’enveloppe de la voix |
+| **Spread** : rate · detune · pan · humanize | Laisser les balles s’écarter en vitesse, accord, position stéréo et timing |
+| **Scale** | Accroche les notes générées à une gamme |
+| **Volume** | Niveau de sortie |
+
+## Préréglages
+
+28 préréglages d’usine : lents et rêveurs (**Slow Bloom**, **Reverse Drift**, **Hold Pad**, **Slow Swing**,
+**Lullaby**), cascades (**Warm Cascade**, **Down Runs**, **Minor Cascade**, **Linear Ladder**), couleurs modales
+(**Dorian Drift**, **Mixolydian Sun**, **Pentatonic Rain**), étincelles (**Fast Sparkle**, **Glass Bounce**,
+**Music Box**, **Bell Garden**, **FM Glints**, **Free Chimes**, **Wide Shimmer**) et machines (**Saw Arp**,
+**Square Steps**, **Two Clocks**, **Six Pendulums**, **Rubber Bounce**, **Eighth Machine**).
+
+## Astuces
+
+- **Tenez** un accord, puis changez **Balls** et **Spread** pendant qu’il joue : le motif grandit sans que vous
+  touchiez les touches.
+- Pendulum a besoin du transport pour **Sync** et **Quant** : appuyez sur Lecture.

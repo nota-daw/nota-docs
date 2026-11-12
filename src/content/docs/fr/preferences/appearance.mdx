@@ -1,0 +1,134 @@
+---
+title: "Apparence"
+description: "Réglages ▸ Apparence : le thème de couleurs (Sombre, Clair ou Suivre le système, avec les thèmes Studio et Ember), le dessin des formes d’onde, le côté des en-têtes de piste, l’échelle de l’interface, la langue de l’interface et le pilotage par IA via MCP."
+sidebar:
+  order: 8
+updated: "0.59.1"
+status: done
+sources:
+  - src/managed/Nota.App/PreferencesWindow.cs
+  - src/managed/Nota.Application/Appearance.cs
+  - src/managed/Nota.Application/InterfaceScale.cs
+  - src/managed/Nota.App/Theme/NotaUiScale.cs
+  - src/managed/Nota.App/PreferencesWindow.Language.cs
+  - src/managed/Nota.Application/Localization/UiLanguage.cs
+  - src/managed/Nota.App/LanguageDownloads.cs
+  - src/managed/Nota.Infrastructure/Languages/LanguageCatalog.cs
+  - src/managed/Nota.Infrastructure/Languages/InstalledLanguages.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+<Shot id="preferences/appearance" alt="Réglages ▸ Apparence" />
+
+| Réglage | Ce qu’il fait |
+|---|---|
+| **Thème de couleurs** | **Sombre**, **Clair** ou **Suivre le système**, puis un thème parmi les cartes en dessous : voir [Thèmes de couleurs](#thèmes-de-couleurs) |
+| **Forme d’onde** | Comment les clips audio se dessinent dans l’Arrangement : **Lisse** (par défaut), **Plein** ou **Barres**. Voir [Forme d’onde](#forme-donde) |
+| **En-têtes de piste** | **Gauche** ou **Droite** : de quel côté de l’Arrangement se trouve la liste des pistes. **Droite** fait commencer la timeline au bord gauche, à côté du navigateur. Le même interrupteur est **Affichage ▸ En-têtes de piste à droite** |
+| **Fondu sur les clips audio à la découpe** | Activé par défaut. Découper un clip audio écrit un fondu de 4 ms à la coupure. Faites glisser les poignées de coin du clip pour l’allonger ou le raccourcir. Les clips MIDI ne sont pas concernés |
+| **Nommer chaque note dans le piano roll** | Désactivé par défaut : la colonne des touches du [piano roll](../../editing/piano-roll/) ne nomme que les C. Activé : elle nomme chaque note (C, C#, D …), une aide pendant que vous les apprenez. Les lignes très courtes ne gardent que le C, pour que les noms restent lisibles |
+| **Échelle de l’interface** | **75 %**, **100 %**, **125 %**, **150 %** ou **200 %** : la taille de toute l’interface. Voir [Échelle de l’interface](#échelle-de-linterface) |
+| **Langue** | La langue des menus, panneaux et messages de Nota : **English** (par défaut) ou une langue téléchargée depuis nota-translations. Elle s’applique après un redémarrage. Voir [Langue](#langue) |
+| **Ouvrir le panneau de détail à la sélection d’une piste ou d’un clip** | Désactivé (par défaut) : un clic ne fait que sélectionner et un double-clic ouvre le [panneau de détail](../../views/detail-panel/) ; un panneau ouvert suit la sélection. Activé : chaque sélection l’ouvre |
+| **Contrôle par IA (MCP)** | Laisser un assistant IA travailler dans Nota : l’interrupteur, le port, l’état et **Copier la config**. Voir [Pilotage par IA via MCP](../../ai/mcp/) |
+
+## Forme d’onde
+
+Comment les clips audio se dessinent sur les voies de l’Arrangement :
+
+| Style | À quoi ça ressemble |
+|---|---|
+| **Lisse** | Le choix par défaut. Un fin contour des crêtes, dans une teinte plus claire, autour d’un corps plus dense qui suit le volume sonore (RMS) de l’audio. Dézoomé, aucune crête ne passe entre les pixels ; zoomé, l’onde s’incline d’un point à l’autre, jusqu’à une ligne fine au niveau de l’échantillon |
+| **Plein** | Chaque pixel dessiné |
+| **Barres** | Les crêtes espacées, pour que le rythme se lise |
+
+Le choix s’applique tout de suite à chaque clip et est enregistré. Si vous aviez choisi **Barres** dans une version
+précédente, Nota affiche **Lisse** une fois après la mise à jour ; choisissez à nouveau **Barres** pour le retrouver.
+
+L'[éditeur de clip audio](../../editing/audio-clips/) dessine toujours **Lisse**, quel que soit votre choix ici. Le
+[lecteur d’aperçu](../../library/preview-player/) du navigateur ne suit que **Plein** : avec **Plein** il dessine chaque
+pixel, et avec **Lisse** ou **Barres** il dessine des barres espacées.
+
+## Thèmes de couleurs
+
+Choisissez d’abord un mode, puis un thème. Chaque carte est une petite fenêtre de Nota dessinée dans les couleurs de
+ce thème ; celle qui est choisie est encadrée de la couleur d’accent.
+
+| Mode | Ce que porte Nota |
+|---|---|
+| **Sombre** | La carte que vous choisissez dans la rangée **Sombre** : **Studio Dark** (par défaut) ou **Ember Graphite** |
+| **Clair** | La carte que vous choisissez dans la rangée **Clair** : **Studio Light** ou **Ember Paper** |
+| **Suivre le système** | Votre thème **En mode sombre** tant que l’ordinateur est en mode sombre et votre thème **En mode clair** tant qu’il est clair, en changeant dès que l’ordinateur le fait |
+
+Sous **Suivre le système**, les deux rangées s’appellent **En mode sombre** et **En mode clair**, et chacune garde son
+propre choix. Nota retient un choix par rangée : passer de **Sombre** à **Clair** et revenir ramène au même thème.
+Cliquer sur une carte de l’autre rangée pendant que vous êtes sur **Sombre** ou **Clair** change aussi le mode.
+
+Chaque choix s’applique tout de suite à toutes les fenêtres ouvertes, et à [Nota Remote](../../control/nota-remote/)
+tant qu’il suit Nota, et est enregistré. Les thèmes ne changent que les couleurs : la disposition et les tailles
+restent les mêmes.
+
+## Échelle de l’interface
+
+Rend tout dans Nota plus grand ou plus petit : texte, boutons, boutons rotatifs, en-têtes de piste, cartes
+d’appareils, menus, infobulles et boîtes de dialogue. Choisissez **125 %** ou plus quand le texte est difficile à lire
+(sur un écran d’ordinateur portable, par exemple), ou **75 %** pour faire tenir plus de pistes et d’appareils sur un
+petit écran. **100 %** est la valeur par défaut.
+
+L’échelle s’applique tout de suite à toutes les fenêtres ouvertes et est enregistrée pour le prochain lancement. Les
+fenêtres ouvertes gardent leur taille à l’écran, si bien que leur contenu a plus ou moins de place (les boîtes de
+dialogue que vous ne pouvez pas redimensionner grandissent et rétrécissent avec l’échelle) ; les fenêtres que vous
+ouvrez ensuite démarrent à une taille correspondante. À grande échelle sur un petit écran, certains panneaux sont plus
+serrés que d’habitude.
+
+L’échelle s’ajoute à la mise à l’échelle de l’affichage du système d’exploitation, et la timeline, le piano roll et
+l’éditeur audio zooment toujours leur contenu comme avant. Les fenêtres de plug-ins sont dessinées par le plug-in et
+gardent leur propre taille.
+
+## Langue
+
+Règle la langue des menus, panneaux, boîtes de dialogue, infobulles, messages d’état et d’erreur de Nota et de la
+palette de commandes. Nota existe en **English** ; toute autre langue est téléchargée depuis
+[nota-translations](https://github.com/nota-daw/nota-translations), où les traducteurs les maintiennent. La liste montre
+l’anglais, les langues que vous avez et, quand Nota est en ligne, celles que vous pouvez télécharger, chacune sous son
+propre nom avec la part de cette version qu’elle couvre (**99 %** : quelques textes récents s’affichent encore en
+anglais).
+
+Choisissez une langue que vous n’avez pas et Nota la télécharge sur place (une petite barre montre la progression), la
+vérifie avec sa somme de contrôle publiée et la garde : elle fonctionne donc hors ligne ensuite. Si le téléchargement
+échoue, la ligne dit pourquoi et rien ne change. Quand une meilleure traduction de votre langue est publiée, un bouton
+**Mettre à jour** apparaît à côté de la liste ; **Supprimer** supprime la langue choisie (Nota revient à l’anglais dès
+le prochain démarrage).
+
+Le choix est enregistré et s’applique au prochain démarrage de Nota. Juste après en avoir choisi un, la ligne indique
+**S’applique au redémarrage**, avec un petit bouton **Redémarrer** à côté : il ferme Nota de la façon habituelle (en
+demandant d’abord pour les modifications non enregistrées ; annulez cela et Nota reste ouvert) et le rouvre dans la
+nouvelle langue. Choisissez à nouveau la langue qui tourne et la note disparaît. Une copie de Nota qui ne peut pas se
+relancer elle-même (une version de développement) indique à la place **S’applique au prochain démarrage de Nota**.
+
+Si vous utilisiez le français avant que Nota ne télécharge les langues, il récupère le français en arrière-plan à son
+premier démarrage, encore en anglais, et la barre d’état indique **Français est prêt : redémarrer pour l’utiliser** ;
+cliquez dessus pour redémarrer. Avec **Rechercher les mises à jour automatiquement** désactivé (Réglages ▸
+[Mises à jour](../updates/)), Nota ne se connecte jamais tout seul : la ligne propose **Afficher les langues
+disponibles**, et vous téléchargez une langue en la choisissant.
+
+**Charger un fichier…** s’adresse aux traducteurs : choisissez un fichier de langue sur votre disque et Nota tourne
+avec après un redémarrage, en le relisant à cet endroit chaque fois, pour que vous puissiez le modifier et redémarrer
+pour voir vos changements. Les entrées qu’il ne peut pas utiliser sont listées sous la ligne (et elles s’affichent en
+anglais). La façon d’écrire et de publier une traduction est dans le README de nota-translations.
+
+Ce que la langue ne touche pas :
+
+- **Les noms d’appareils et de paramètres** (« Cutoff », « Attack », « Reverb », « Nota Volt ») restent en anglais dans
+  toutes les langues, comme dans le vocabulaire de studio et les tutoriels. Les infobulles et les descriptions autour
+  d’eux sont traduites.
+- **Vos propres noms** de projets, pistes, clips, scènes et sections ne sont jamais traduits, et la langue ne change
+  jamais ce qui est enregistré dans un projet.
+- [Nota Remote](../../control/nota-remote/), les descriptions d’outils du [pilotage par IA](../../ai/mcp/) et les
+  fichiers journaux ne sont pas traduits.
+
+Sur un Mac, le texte propre au système (**Masquer** et **Quitter** du menu de l’application, les panneaux d’ouverture
+et d’enregistrement) suit aussi la langue, dès le prochain démarrage. L’anglais est la langue par défaut quelle que
+soit la langue de votre système d’exploitation : rien ne change tant que vous ne choisissez pas. Un texte qui n’a pas
+encore de traduction s’affiche en anglais.

@@ -1,0 +1,63 @@
+---
+title: "Nota Strata"
+description: "Looper multicouche : enregistrez une boucle, superposez de nouvelles couches, chacune avec sa forme d’onde, son niveau et son mute ; quantifié sur la mesure, avec feedback, vitesse, inversion et annulation."
+sidebar:
+  order: 16
+updated: "0.50.1"
+status: done
+sources:
+  - src/native/nota.engine/src/Strata.h
+  - src/managed/Nota.App/DeviceCards/Bodies/StrataDeviceBody.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+Nota Strata est un looper sur une piste : enregistrez une phrase, puis continuez à empiler des couches par-dessus. À la
+différence d’un looper à un seul tampon, chaque passage est sa propre **couche**, avec sa forme d’onde, son niveau et son
+mute, si bien que vous pouvez en retirer une plus tard.
+
+<Shot id="devices/audio-effects/strata/card" alt="Nota Strata avec la bande en direct et la liste des couches" />
+
+## La bande en direct
+
+Un grand compteur mesure.temps, une bande qui se remplit pendant que la boucle tourne, et quatre actions, chacune
+légendée par ce qu’elle fera ensuite :
+
+| Action | Ce qu’elle fait |
+|---|---|
+| **Record** | Le premier passage fixe la longueur de la boucle |
+| **Overdub** | Chaque passage suivant enregistre une nouvelle couche par-dessus |
+| **Play** | Joue la boucle |
+| **Stop** | L’arrête |
+
+Les actions ont lieu sur la grille de mesures de la boucle elle-même (**Quantize**), si bien qu’un appui tardif tombe
+quand même en rythme.
+
+## Layers
+
+Chaque passage, listé : son numéro, son nom, sa forme d’onde, son état (**Play**, **Muted**, **Rec**), son niveau et son
+mute.
+
+## Loop
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Feedback** | De combien les couches déjà posées s’estompent à chaque passage |
+| **Input gain** | Niveau de ce qui est enregistré |
+| **Speed** · **Reverse** | Joue la boucle plus vite ou plus lentement, ou à l’envers |
+| **Quantize** | La grille sur laquelle les actions se calent |
+| **Count-in 1 bar** | Une mesure de décompte avant le premier Record |
+| **Set tempo from loop** | Fait correspondre le tempo du projet à la première boucle |
+| **Undo** · **Export** · **Clear** | Retire la dernière couche · exporte la boucle en audio · recommence à zéro |
+
+Les couches enregistrées sont sauvegardées avec le projet.
+
+## Préréglages
+
+**Live Set**, **Count-In Jam**, **Ambient Decay**, **Octave Down**, **Reverse Tape** et **Free Overdub**.
+
+## Astuces
+
+- **Boucler une entrée en direct :** placez Strata sur une piste audio avec le monitoring activé, et enregistrez depuis
+  votre interface.
+- **Associez les actions** à un pédalier ou à des pads avec le MIDI Learn.

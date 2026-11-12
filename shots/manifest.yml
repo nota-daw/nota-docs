@@ -5,10 +5,12 @@
 #   scene: device   args: instrument | effect | midi (engine kind id), preset ("group/Name"),
 #                         tab (text of a tab/segment to click, e.g. "Filter", "L"), card (index), kit
 #   scene: main     args: view (arrangement | session | modular), select (demo track: Rhythm, Drums,
-#                         Bass, Keys, Lead, Texture, Reverb), element (x:Name to crop to), width, height
+#                         Bass, Keys, Lead, Texture, Reverb), element (x:Name to crop to), width, height,
+#                         rows (every track row at this height, px)
 #   scene: palette  args: select (demo track), card (audio effect index to select), origin: "devices",
 #                         query, down (rows), mods (alt | cmd | shift), crop (true: just the palette)
-#   scene: mixer · prefs (args: page = Settings sidebar index, 0 Audio … 8 Shortcuts)
+#   scene: mixer (args: group "Name:Track,Track", fold, compact, select, width, height)
+#   scene: prefs (args: page = Settings sidebar index, 0 Audio … 8 Shortcuts)
 #   scene: start · about · whatsnew · export · unsaved
 # source: remote — the Nota Remote phone page on the app repo's stand-in Nota (src/web/remote/mock),
 #   390 × 844 at 2×, Studio Dark / Studio Light. args: track (name), screen (tab: Pads, Keys, XY,
@@ -18,6 +20,10 @@
 #   file + label ([data-screen-label]) or selector (CSS); inner: true keeps only the content of a
 #   board cell (drops its label and caption).
 # themes: [dark] / [light] to restrict; default is both for app, dark for design.
+#
+# Translated shots: `npm run shots -- --lang fr` retakes the app shots with that interface language into
+# src/assets/shots-fr/. In `args`, name controls by their English text (tab, window …): the harness
+# looks for their translation on screen. Design and remote shots are not translated.
 #
 # Prefer app shots: they match the code and come in both themes. Use design only for what the
 # app can't render or for card states a scene can't reach yet.
@@ -44,9 +50,12 @@ shots:
   - { id: views/session, source: app, scene: main, args: {view: "session"} }
   - { id: views/modular, source: app, scene: main, args: {view: "modular", select: "Keys"} }
   - { id: views/mixer, source: app, scene: mixer }
+  - { id: views/mixer-groups, source: app, scene: mixer, args: {group: "Beat:Rhythm,Drums,Bass", select: "Drums", width: 1600} }
+  - { id: views/mixer-group-folded, source: app, scene: mixer, args: {group: "Beat:Rhythm,Drums,Bass", fold: true, select: "Drums", width: 1200} }
+  - { id: views/mixer-compact, source: app, scene: mixer, args: {group: "Beat:Rhythm,Drums,Bass", compact: true, width: 1200} }
   - { id: views/detail-panel, source: app, scene: main, args: {view: "arrangement", select: "Keys", element: "DetailPanel"} }
   - { id: devices/folded, source: app, scene: main, args: {view: "arrangement", select: "Keys", fold: "0", element: "DetailPanel"} }
-  - { id: views/device-window/nota-bass-l, source: app, scene: device, args: {instrument: 3, chainInstrument: 7, trackName: "Bass", window: "GUI"} }
+  - { id: views/device-window/nota-bass-l, source: app, scene: device, args: {instrument: 3, chainInstrument: 7, trackName: "Bass", window: "Open"} }
   - { id: views/device-window/nota-level-s, source: design, file: "Nota Device Window.html", label: "Nota Level S" }
   - { id: views/device-window/dexed-l, source: design, file: "Nota Device Window.html", label: "Dexed L" }
 
@@ -56,11 +65,13 @@ shots:
   - { id: editing/multi-clip-editor, source: app, scene: main, args: {view: "arrangement", clip: "Bass", clipIndex: 1, with: "Bass:0,Keys:2,Keys:3", element: "DetailPanel", width: 1200, detailHeight: 460} }
   - { id: editing/audio-clip-editor, source: app, scene: main, args: {view: "arrangement", clip: "Texture", audio: true, element: "DetailPanel", width: 1200, detailHeight: 420} }
   - { id: editing/automation-lanes, source: app, scene: main, args: {view: "arrangement", automation: true, fit: true, element: "Timeline", height: 760} }
+  - { id: views/arrangement-track-sends, source: app, scene: main, args: {view: "arrangement", rows: 128, element: "Timeline", width: 1100, height: 780} }
   - { id: views/arrangement-timeline, source: app, scene: main, args: {view: "arrangement", fit: true, element: "Timeline", height: 760} }
 
   # ── Library
   - { id: library/browser, source: app, scene: main, args: {view: "arrangement", element: "Browser"} }
   - { id: library/files-tab, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 3, height: 640} }
+  - { id: library/track-inspector-tab, source: app, scene: main, args: {view: "arrangement", select: "Texture", element: "Browser", tab: 8, height: 900} }
   - { id: control/midi-map-tab, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 6, height: 640} }
   - { id: preferences/downloads-samples, source: app, scene: prefs, args: {page: 5, tab: "Sample packs"} }
   - { id: preferences/downloads-models, source: app, scene: prefs, args: {page: 5, tab: "AI models"} }
@@ -93,6 +104,7 @@ shots:
   - { id: preferences/downloads, source: app, scene: prefs, args: {page: 5} }
   - { id: preferences/library, source: app, scene: prefs, args: {page: 6} }
   - { id: preferences/appearance, source: app, scene: prefs, args: {page: 7} }
+  - { id: preferences/appearance-themes, source: app, scene: prefs, args: {page: 7, themes: true, scrollTo: "Ember Graphite"} }
   - { id: preferences/shortcuts, source: app, scene: prefs, args: {page: 8} }
   - { id: preferences/updates, source: app, scene: prefs, args: {page: 9, check: true} }
 
@@ -151,9 +163,18 @@ shots:
   - { id: devices/midi-effects/random/card, source: app, scene: device, args: {midi: 5, instrument: 0} }
 
   # ── Racks
-  - { id: devices/racks/instrument-rack/card, source: app, scene: device, args: {instrument: 3} }
+  - { id: devices/racks/instrument-rack/card, source: app, scene: device, args: {instrument: 3, rack: "demo"} }
+  - { id: devices/racks/instrument-rack/zones, source: app, scene: device, args: {instrument: 3, rack: "demo", tab: "Zones"} }
+  - { id: devices/racks/instrument-rack/macros, source: app, scene: device, args: {instrument: 3, rack: "demo", tab: "Macros"} }
+  - { id: devices/racks/instrument-rack/mapping, source: app, scene: device, args: {instrument: 3, rack: "demo", tab: "Map"} }
+  - { id: devices/racks/instrument-rack/rack-out, source: app, scene: device, args: {instrument: 3, rack: "demo", tab: "Rack out"} }
   - { id: devices/racks/drum-rack/card, source: app, scene: device, args: {instrument: 4} }
-  - { id: devices/racks/audio-effect-rack/card, source: app, scene: device, args: {effect: 5} }
+  - { id: devices/racks/audio-effect-rack/card, source: app, scene: device, args: {effect: 5, rack: "demo", clip: "chords"} }
+  - { id: devices/racks/audio-effect-rack/select, source: app, scene: device, args: {effect: 5, rack: "demo", clip: "chords", tab: "Select"} }
+  - { id: devices/racks/audio-effect-rack/rack-out, source: app, scene: device, args: {effect: 5, rack: "demo", clip: "chords", tab: "Rack out"} }
+  - { id: devices/racks/midi-effect-rack/card, source: app, scene: device, args: {midi: 6, rack: "demo"} }
+  - { id: devices/racks/midi-effect-rack/zones, source: app, scene: device, args: {midi: 6, rack: "demo", tab: "Zones"} }
+  - { id: devices/racks/midi-effect-rack/output, source: app, scene: device, args: {midi: 6, rack: "demo", tab: "Output"} }
 
   # ── Device tabs (app) — one entry per tab a device page shows; edit by hand
   - { id: devices/instruments/synth/env, source: app, scene: device, args: {instrument: 0, tab: "L>Env"} }
@@ -163,6 +184,7 @@ shots:
   - { id: devices/instruments/sampler/filter, source: app, scene: device, args: {instrument: 1, tab: "Filter"} }
   - { id: devices/instruments/physical/resonator, source: app, scene: device, args: {instrument: 2, tab: "Resonator"} }
   - { id: devices/instruments/aurora/filter, source: app, scene: device, args: {instrument: 5, tab: "Filter"} }
+  - { id: devices/instruments/aurora/env, source: app, scene: device, args: {instrument: 5, tab: "Env"} }
   - { id: devices/instruments/aurora/mod, source: app, scene: device, args: {instrument: 5, tab: "Mod"} }
   - { id: devices/instruments/aurora/fx, source: app, scene: device, args: {instrument: 5, tab: "FX"} }
   - { id: devices/instruments/volt/filter, source: app, scene: device, args: {instrument: 6, tab: "Filter"} }

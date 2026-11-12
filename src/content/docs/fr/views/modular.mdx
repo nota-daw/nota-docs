@@ -1,0 +1,121 @@
+---
+title: "Modular"
+description: "Les appareils d’une piste sous forme de graphe de signal, et la modulation CV : câblez des LFO, des enveloppes, du MIDI et des macros sur n’importe quel paramètre."
+sidebar:
+  order: 3
+updated: "0.58.1"
+status: done
+sources:
+  - src/managed/Nota.App/ModularView.cs
+  - src/managed/Nota.App/ModularView.Scope.cs
+  - src/native/nota.engine/src/engine/Modulation.h
+  - src/native/nota.engine/src/engine/Engine_Modulation.cpp
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+import Kbd from '@components/Kbd.astro';
+
+La vue Modular dessine les appareils d’une piste sous forme de graphe (**effets MIDI → instrument → effets → sortie
+de la piste**) et vous laisse câbler une **modulation CV** entre eux avec des câbles. Passez-y avec **Modular** dans
+la barre de transport.
+
+<Shot id="views/modular" alt="La vue Modular montrant la piste Keys : Nota Pentad, EQ-8 et Chamber comme nœuds" />
+
+## Piste et Global
+
+- **Piste** montre la chaîne de la piste sélectionnée. Choisissez une autre piste dans la liste à gauche.
+- **Global** montre chaque piste comme un îlot, avec les connexions entre pistes.
+
+Déplacez-vous sur le canevas avec <Kbd>Space</Kbd> + glisser, zoomez avec <Kbd>⌘</Kbd> + défilement, et appuyez sur
+<Kbd>F</Kbd> (ou **Ajuster**) pour tout faire tenir à l’écran. La position des nœuds est enregistrée avec le projet.
+
+## Nœuds
+
+Chaque appareil est un nœud. Sur le canevas, vous pouvez le déplier, le **contourner** (<Kbd>B</Kbd>), le dupliquer
+avec tous ses réglages (<Kbd>⌘ D</Kbd>), le supprimer (la corbeille, ou <Kbd>Delete</Kbd>) et le réordonner : c’est la
+même chaîne que celle que vous voyez dans le panneau de détail. Un nœud ne montre que les boutons qui ont un câble CV
+attaché ; le chevron (ou un double-clic) les montre tous. **Afficher moins** sous un nœud ouvert, le chevron à nouveau
+ou <Kbd>Esc</Kbd> le referme. Les boutons d’un nœud sont les vraies commandes : les tourner change le son.
+
+Les nœuds propres à la piste (son entrée, ou l’instrument, et sa sortie) portent un cadenas : ce sont l’endroit où la
+chaîne commence et finit, ils ne peuvent donc pas être supprimés. Pour changer d’instrument, déposez-en un autre sur
+la piste.
+
+Les câbles sont colorés selon ce qu’ils transportent : l’audio, le MIDI et le CV ont chacun leur couleur.
+
+## Modulateurs
+
+**+ Ajouter** place un modulateur sur le canevas. Son port **CV out** est ce que vous câblez :
+
+| Modulateur | Produit |
+|---|---|
+| **LFO** | Une onde répétée (sinus, triangle, dent de scie, carré ou aléatoire), libre ou synchronisée sur le tempo, avec une phase |
+| **Envelope Follower** | Le volume sonore de l’audio de la piste : un contrôleur de crête |
+| **MIDI → CV** | La hauteur, la vélocité ou le gate des notes que joue la piste |
+| **ADSR** | Une enveloppe attaque, déclin, maintien, relâchement, ouverte par chaque note |
+| **Macro** | Un bouton que vous tournez à la main (ou associez à un contrôleur) |
+| **Math** | Deux entrées CV combinées (**Ajouter**, **Subtract**, **Multiply**, **Min**, **Max**) ou une seule **Inversée** ou mise à l'**Échelle** |
+
+N’importe quel paramètre peut aussi servir de source CV : clic droit sur un bouton ▸ **Exposer comme sortie CV**, ou
+**Moduler depuis un paramètre**. Le motif de pas de Nota Shutter peut aussi être envoyé en CV.
+
+## Câblage
+
+Faites glisser le **CV out** d’un modulateur sur un bouton de n’importe quel appareil, instrument ou effet MIDI. Un
+câble les relie. Cliquez sur le câble pour régler sa **profondeur** (**Depth**) et son **mode** : **Ajouter** (par-dessus
+la position du bouton), **Multiply** (multiplié par elle) ou **Forcer** (qui la remplace) ; sélectionnez-le et
+supprimez-le pour le retirer. Plusieurs modulations sur un même bouton ont chacune leur entrée et leur câble.
+
+Pour moduler quelque chose sur **une autre piste**, faites glisser la sortie CV sur cette piste dans la liste à
+gauche et choisissez un paramètre, ou clic droit sur un bouton ▸ **Moduler depuis une autre piste**.
+
+## Bouger un bouton avec le volume d’une autre piste
+
+L'**Envelope Follower** est le contrôleur de crête de Nota : il transforme le volume sonore d’une piste en CV qui peut
+piloter n’importe quel bouton, sur cette piste ou sur une autre. L’usage classique est le ducking : la basse baisse
+chaque fois que la grosse caisse frappe :
+
+1. Sélectionnez la piste de grosse caisse et ouvrez **Modular**. **+ Ajouter ▸ Envelope Follower**.
+2. Réglez son **Attack** court (quelques ms) pour qu’il attrape le coup, et son **Release** sur la durée voulue du
+   creux (100 à 300 ms est un bon départ). **Depth** met à l’échelle tout le signal.
+3. Sur la piste de basse, faites un clic droit sur le bouton à bouger (le Gain de
+   [Nota Utility](../../devices/audio-effects/utility/), par exemple, ou la coupure d’un filtre) ▸
+   **Moduler depuis une autre piste** ▸ le suiveur de la grosse caisse (il est listé **Env 1 · Kick**, par exemple).
+   (Ou faites glisser le **CV out** du suiveur sur la piste de basse dans la liste à gauche.)
+4. Cliquez sur le câble et faites glisser la **profondeur** sous zéro : le bouton baisse maintenant quand la grosse
+   caisse joue. Une profondeur positive le pousse vers le haut à la place.
+
+**Global** montre le câble qui court entre les deux pistes. Le suiveur lit le niveau de la piste après son fader : une
+piste en muet, ou dont le fader est tout en bas, ne lui donne rien à suivre.
+
+## Oscilloscope CV (Scope)
+
+Ajoutez un **Scope** pour regarder le signal de n’importe quel modulateur comme une ligne mouvante, pratique pour
+vérifier la vitesse d’un LFO ou la réaction d’un suiveur d’enveloppe. Faites glisser le **CV out** du modulateur sur le
+nœud Scope pour le brancher. Le Scope montre du CV, pas de l’audio : pour observer le son d’un appareil, placez
+[Nota Lens](../../devices/audio-effects/lens/) après lui dans la chaîne.
+
+**Taille.** Faites glisser la barre sous la trace pour la rendre plus haute ou plus courte (76 à 320 px), ou cliquez sur
+le bouton fenêtre dans l’en-tête du Scope pour l’ouvrir dans sa propre fenêtre, que vous pouvez redimensionner. Le
+nœud et la fenêtre montrent la même trace et partagent leurs réglages.
+
+**Commandes** sous la trace :
+
+- **Fenêtre** : la durée que couvre la trace, de 50 ms à 8 s. Cliquez sur l’étiquette **ms** au-dessus du bouton pour
+  passer en **Sync** : la fenêtre est alors en temps (1/16 à 8 mesures) au tempo actuel, donc un LFO synchronisé sur 1/4
+  montre quatre cycles dans une fenêtre d'1 mesure.
+- **Zoom** : l’échelle verticale, de 1× à 8×, pour les signaux peu profonds. Ce qui sort de l’échelle est coupé au
+  bord.
+- **Libre / Montée** : **Libre** défile, la valeur la plus récente à droite. **Montée** démarre la trace là où
+  l’entrée monte en traversant la ligne centrale, si bien qu’une forme répétée reste immobile ; une petite marque au
+  bord gauche montre qu’un front a été attrapé. S’il n’y a rien à attraper, elle défile comme en Libre.
+- **Geler** : fige la trace pour que vous puissiez la regarder ; le signal continue de tourner. Il est toujours
+  désactivé à l’ouverture d’un projet.
+
+La fenêtre, la Sync, le zoom, le déclenchement et la hauteur sont enregistrés avec le projet.
+
+<Aside>
+Les ports CV n’apparaissent que là où la modulation fonctionne vraiment : tout ce que vous pouvez câbler, vous pouvez
+l’entendre.
+</Aside>

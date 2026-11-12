@@ -1,0 +1,85 @@
+---
+title: "Nota Synth"
+description: "Le synthé soustractif de base : un oscillateur avec unison, une enveloppe d’ampli et un filtre multimode. Rapide à régler, léger pour le processeur."
+sidebar:
+  order: 1
+updated: "0.55.1"
+status: done
+sources:
+  - src/native/nota.engine/src/Synth.h
+  - src/managed/Nota.App/DeviceCards/Instruments/SynthInstrumentCard.cs
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import Shot from '@components/Shot.astro';
+
+<Aside title="Nota Volt a pris le relais">
+Nota Synth n’est plus proposé dans le navigateur ni pour les nouvelles pistes : [Nota Volt](../volt/) fait tout ce
+qu’il faisait (largeur d’impulsion, unison de 1 / 2 / 4 / 7 voix avec étalement, Poly / Mono / Legato) et reprend tous ses
+préréglages. Un projet qui utilise déjà Nota Synth s’ouvre, joue et montre toujours cette carte.
+</Aside>
+
+Nota Synth était l’instrument le plus simple de Nota : un oscillateur, une enveloppe et un filtre, et l’instrument
+qu’une nouvelle piste recevait par défaut.
+
+<Shot id="devices/instruments/synth/card" alt="Nota Synth dans sa grande vue, onglet Osc" />
+
+**Chemin du signal :** oscillateur (avec unison) → enveloppe d’ampli → filtre → panoramique et gain. Jusqu’à 16 voix.
+
+## Deux tailles
+
+Le commutateur **S / L** de l’en-tête bascule la carte. **S** ne montre que la courbe du filtre et quatre boutons
+(Cutoff, Reso, Attack, Release) pour des retouches rapides ; **L** a trois onglets (**Osc**, **Env**, **Filter**) et un
+rail avec les commandes de voix et de sortie. Les deux tailles modifient le même son ; un nouveau Synth s’ouvre en
+petit.
+
+## Osc
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Wave** | Saw, Square, Triangle ou Sine |
+| **Pulse W** | Largeur d’impulsion de l’onde carrée |
+| **Detune** | Étalement des voix d’unison les unes par rapport aux autres |
+| **Octave** | de −2 à +2 octaves |
+| **Unison** | 1, 2, 4 ou 7 voix empilées par note, désaccordées pour la largeur |
+
+## Env
+
+<Shot id="devices/instruments/synth/env" alt="Nota Synth, onglet Env" />
+
+L’enveloppe d’ampli : **Attack**, **Decay**, **Sustain**, **Release** : faites glisser les points d’inflexion sur le
+graphique ou tournez les boutons. **Vel → Vol** règle de combien jouer plus fort rend la note plus forte.
+
+## Filter
+
+<Shot id="devices/instruments/synth/filter" alt="Nota Synth, onglet Filter" />
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Type** | Off, LP (passe-bas), HP (passe-haut) ou BP (passe-bande) |
+| **Cutoff** · **Reso** | Où le filtre coupe et combien il résonne là : ou faites glisser la courbe |
+| **Env → Cutoff** | De combien l’enveloppe ouvre le filtre à chaque note |
+
+## Le rail
+
+| Commande | Ce qu’elle fait |
+|---|---|
+| **Voices** | **Poly 16**, **Mono**, ou **Legato** (mono, et une note jouée par-dessus une note tenue glisse sans redéclencher) |
+| **Glide** | Durée du glissement d’une note à la suivante |
+| **Spread** | Largeur stéréo des voix d’unison |
+| **Volume** · **Pan** | Niveau de sortie et position |
+
+La bande en bas relit le patch en mots : « Saw · unison 4 · detune 12 c ».
+
+## Préréglages
+
+25 préréglages d’usine, de **Init Saw** aux nappes (**Warm Pad**, **Glass Pad**, **String Ensemble**, **Choir Pad**),
+basses (**Rubber Bass**, **Sub Bass**, **Acid Bass**, **Growl Bass**), leads (**Super Saw**, **Solo Lead**,
+**Slide Lead**), claviers (**Electric Piano**, **Organ Tone**, **Music Box**) et mouvement (**Drone**, **Air Sweep**,
+**Filter Sweep**).
+
+## Astuces
+
+- **Une sub-basse rapide :** Sine, Mono, un Attack et un Release courts, Octave −1.
+- **Une large nappe à partir d’un seul oscillateur :** Saw, Unison 7, Detune monté, Spread monté, un Attack et un
+  Release lents, filtre LP vers le milieu.
