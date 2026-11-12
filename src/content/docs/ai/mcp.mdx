@@ -99,3 +99,9 @@ An assistant can't overwrite a built-in theme, and replaces one of your own only
 so. It can also list your themes (`list_themes`) with the files that failed to load and why,
 so it can help fix a theme you wrote by hand. The file format is on
 [Theme files](../../reference/theme-files/).
+
+An assistant can also switch the [look](../../preferences/appearance/#classic-look) (`set_look`:
+`new` or `classic`), exactly as the switch in Appearance does. It can render previews in either
+look (`preview_theme` with `look`) and read a built-in theme in its classic colours (`get_theme`
+with `look: classic`) as the start for a classic theme of your own. `list_themes` tells it which
+look you wear.

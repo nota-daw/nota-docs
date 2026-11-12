@@ -1,6 +1,6 @@
 ---
 title: "Appearance"
-description: "Settings ▸ Appearance — the colour theme (Dark, Light or Follow system, with Studio and Ember themes and your own), the accent colour, how waveforms draw, which side the track headers sit on, the interface scale and the text size."
+description: "Settings ▸ Appearance — the look (New or Classic) and how clips draw, the colour theme (Dark, Light or Follow system, with Studio and Ember themes and your own), the accent colour, how waveforms draw, which side the track headers sit on, the interface scale and the text size."
 sidebar:
   order: 10
 updated: "0.59.2"
@@ -11,6 +11,7 @@ sources:
   - src/managed/Nota.Application/Accent.cs
   - src/managed/Nota.App/PreferencesWindow.Accent.cs
   - src/managed/Nota.App/PreferencesWindow.Skins.cs
+  - src/managed/Nota.Application/Looks.cs
   - src/managed/Nota.App/Theme/NotaColourTheme.cs
   - src/managed/Nota.App/Controls/ColourPicker.cs
   - src/managed/Nota.Application/InterfaceScale.cs
@@ -28,12 +29,42 @@ used to sit here are on [Editing](../editing/), and AI control on [AI control (M
 
 | Setting | What it does |
 |---|---|
+| **Look** | **New** (the default) or **Classic**: the colours, tighter corners and monospaced values of Nota 0.59, over any theme. See [Classic look](#classic-look) |
+| **Clips** | **Solid** or **Tinted** — how clips draw in the Arrangement. Until you pick, it follows the look: **Solid** under Classic, **Tinted** under New. See [Classic look](#classic-look) |
 | **Colour theme** | **Dark**, **Light** or **Follow system**, then a theme from the cards below — a built-in one or [your own](#your-own-themes). See [Colour themes](#colour-themes) |
 | **Accent** | The colour of what is live or chosen: a preset swatch, or **Custom** for your own colour — see [Accent colour](#accent-colour) |
 | **Waveform** | How audio clips draw in the Arrangement: **Smooth** (the default), **Solid** or **Bars**. See [Waveform](#waveform) |
 | **Track headers** | **Left** or **Right** — which side of the Arrangement the track list sits on. **Right** starts the timeline at the left edge, next to the browser. The same switch is **View ▸ Track headers on the right** |
 | **Text size** | **Smaller**, **Default**, **Larger** or **Largest** — every text a step smaller or larger without changing the layout. Long labels may shorten with an ellipsis at the larger sizes |
 | **Interface scale** | **75 %**, **100 %**, **125 %**, **150 %** or **200 %** — the size of the whole interface. See [Interface scale](#interface-scale) |
+
+## Classic look
+
+**Look** switches between Nota's current design (**New**) and the look of Nota 0.59
+(**Classic**). Classic changes three things and leaves the layout alone. Panels, device cards,
+the toolbar and every control stay where they are.
+
+- **Colours.** The built-in themes wear their 0.59 colours.
+- **Corners.** Controls, cards and clips are rounded to 3 px rather than 6–9 px.
+- **Type.** Values and readouts — tempo, position, dB, Hz, milliseconds, counters — are set in
+  Geist Mono, so digits line up in columns. Names and labels stay in Geist. Values that Nota
+  gained after 0.59 stay in Geist.
+
+The switch works with every colour theme and every mode. It applies at once to every open
+window, without a restart, and is saved. A [theme of your own](#your-own-themes) keeps its
+colours under Classic, and its typeface and corners if it sets them. Classic fills in only
+what the theme leaves out. [Nota Remote](../../control/nota-remote/) keeps the new look.
+
+**Clips** chooses how clips draw on the Arrangement lanes:
+
+| Style | Looks like |
+|---|---|
+| **Solid** | As in Nota 0.59: a block of the track colour with a darker band along the top carrying the name. Notes and waveform are drawn in a deeper shade of the same colour |
+| **Tinted** | A light tint of the track colour with a thin edge in it. Notes, waveform and name are drawn in the full track colour |
+
+Until you pick a style it follows the look: **Solid** under Classic, **Tinted** under New.
+Once you pick, your choice stays whatever the look. Session slots look the same in both
+styles.
 
 ## Waveform
 
@@ -91,7 +122,8 @@ The quickest start is a copy of a theme you like:
 
 2. Right-click the copy ▸ **Reveal in Finder** (**Show in Explorer** on Windows) and open the
    file in a text editor. Change the colours, the `name`, and add a `font` or `radius` if you
-   want them — see [Theme files](../../reference/theme-files/).
+   want them. Under [Classic](#classic-look), **Duplicate** copies a built-in theme's 0.59
+   colours, so a classic copy is a quick start too. See [Theme files](../../reference/theme-files/).
 
 3. Back in Appearance, click **Reload** under the cards. Nota reads the folder again and wears
    the changed theme at once.

@@ -268,7 +268,7 @@ sections:
     - {page: preferences/mcp,        sources: [src/managed/Nota.App/PreferencesWindow.Mcp.cs], covers: [MCP server switch, port, status, Copy config], status: done}
     - {page: preferences/plugins,    sources: [src/managed/Nota.App/PreferencesWindow.cs], status: done}
     - {page: preferences/downloads,  sources: [src/managed/Nota.App/PreferencesWindow.Downloads.cs, src/managed/Nota.App/PreferencesWindow.Store.cs, src/managed/Nota.App/PreferencesWindow.Samples.cs, src/managed/Nota.App/PreferencesWindow.Models.cs], status: done}
-    - {page: preferences/appearance, sources: [src/managed/Nota.App/PreferencesWindow.cs, src/managed/Nota.Application/Appearance.cs, src/managed/Nota.Application/InterfaceScale.cs, src/managed/Nota.App/Theme/NotaUiScale.cs, src/managed/Nota.App/PreferencesWindow.Skins.cs, src/managed/Nota.App/PreferencesWindow.Accent.cs], covers: [colour theme Dark/Light/Follow system with Studio and Ember themes and user themes, accent, waveforms, track headers, interface scale 75–200 %, text size], status: done}
+    - {page: preferences/appearance, sources: [src/managed/Nota.App/PreferencesWindow.cs, src/managed/Nota.Application/Appearance.cs, src/managed/Nota.Application/InterfaceScale.cs, src/managed/Nota.App/Theme/NotaUiScale.cs, src/managed/Nota.App/PreferencesWindow.Skins.cs, src/managed/Nota.App/PreferencesWindow.Accent.cs, src/managed/Nota.Application/Looks.cs], covers: [look New/Classic, clips Solid/Tinted, colour theme Dark/Light/Follow system with Studio and Ember themes and user themes, accent, waveforms, track headers, interface scale 75–200 %, text size], status: done}
     - {page: preferences/language,   sources: [src/managed/Nota.App/PreferencesWindow.Language.cs, src/managed/Nota.Application/Localization/UiLanguage.cs, src/managed/Nota.App/LanguageDownloads.cs, src/managed/Nota.Infrastructure/Languages/LanguageCatalog.cs, src/managed/Nota.Infrastructure/Languages/InstalledLanguages.cs], covers: [interface language English plus languages downloaded from nota-translations (coverage, Update, Remove, Load file…, start-up download) with restart], status: done}
     - {page: preferences/editing,    sources: [src/managed/Nota.App/PreferencesWindow.Editing.cs], covers: [label every note in the piano roll, fade audio clips when splitting, open the detail panel on select], status: done}
     - {page: preferences/library,    sources: [src/managed/Nota.App/PreferencesWindow.cs], status: done}
@@ -300,6 +300,9 @@ findings:
 
 # New user-facing changes that arrived before their page was written (nota-docs skill appends here).
 pending:
+  - page: preferences/appearance
+    change: "retake preferences/appearance (+ -themes): the Look and Clips rows (nota-daw/nota#572); the prefs scene needs the page-by-id harness from nota-docs#90 first"
+    version: "0.59.2"
   - page: reference/shortcuts
     change: "regenerate (npm run shortcuts) once nota-daw/nota#240 parts 2–3 merge — new rows: ⌥-click a graph handle / envelope node / mod-matrix cell, double-click a mod-matrix cell; clip ADSR row"
     version: "0.57.1"
