@@ -3,9 +3,10 @@ title: Tracks
 description: Instrument, audio, return and group tracks — adding, selecting, colouring, grouping, routing and freezing them.
 sidebar:
   order: 4
-updated: "0.58.1"
+updated: "0.59.2"
 status: done
 sources:
+  - src/managed/Nota.App/CueKey.cs
   - src/managed/Nota.Infrastructure/Persistence/ProjectTemplate.cs
   - src/managed/Nota.App/ArrangementView.cs
   - src/managed/Nota.App/ArrangementView.Tracks.cs
@@ -67,6 +68,9 @@ Double-click a fader to reset it to 0 dB.
 Each header carries the track's name and type, and:
 
 - **M** mute and **S** solo,
+- the **Cue** key (headphones), next to **S**, while you use a Cue output — it puts the track in
+  your private [Cue mix](../../views/mixer/#cue-your-own-mix). On an audio track the
+  headphones key after the arm is the input **monitor**, not Cue,
 - **●** arm — the track records when you press Record, and an armed instrument track plays
   the notes from your keyboard. A click arms that track alone, and so does selecting an instrument track;
   <Kbd>⌘</Kbd>-click arms more than one,
@@ -107,7 +111,7 @@ Commands that show a current choice — **Record input**, **MIDI from** — prin
 right, so you can read it without opening the submenu. **Delete** is always last, in red.
 
 The browser's [Track inspector](../../library/browser/#track-inspector) tab shows the same
-settings — name, colour, height, input and freeze, plus mute, solo and arm — for the selected
+settings — name, colour, height, input and freeze, plus mute, solo, Cue and arm — for the selected
 track, without opening a menu.
 
 ## Groups

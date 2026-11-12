@@ -6,6 +6,7 @@ sidebar:
 updated: "0.59.2"
 status: done
 sources:
+  - src/managed/Nota.App/PreferencesWindow.Editing.cs
   - src/managed/Nota.App/AudioClipEditorView.cs
   - src/managed/Nota.App/SnapChip.cs
   - src/managed/Nota.App/ClipAdsrKit.cs
@@ -105,7 +106,7 @@ reset that stage.
 
 Splitting an audio clip also writes a 4 ms fade at the cut — **Release** on the left piece,
 **Attack** on the right — so the cut does not click. Drag those handles to make it longer or
-shorter. Settings → Appearance → **Fade audio clips when splitting** turns that off. **Fade at
+shorter. [Settings ▸ Editing](../../preferences/editing/) ▸ **Fade audio clips when splitting** turns that off. **Fade at
 splits**, in the command palette or on the clip's menu, writes the same fade where two audio
 clips already touch.
 

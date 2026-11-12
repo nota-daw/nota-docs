@@ -76,8 +76,8 @@ sections:
       sources: [src/managed/Nota.App/ModularView.cs, src/native/nota.engine/src/Modulation.h]
       status: done
     - page: views/mixer
-      covers: [Mixer ⇧⌘M docked or in its own window, sends & returns, group bars and folding (shared with the Arrangement, saved with the project), selection outline, compact strips, master, meters, record source]
-      sources: [src/managed/Nota.App/MixerView.cs, src/managed/Nota.App/MixerView.Compact.cs, src/managed/Nota.App/MixerWindow.cs, src/managed/Nota.App/MainWindow.Mixer.cs, src/managed/Nota.App/GroupFold.cs, src/managed/Nota.App/Controls/GroupBandsLayer.cs, src/managed/Nota.App/Controls/MeterFader.cs]
+      covers: [Mixer ⇧⌘M docked or in its own window, sends & returns, group bars and folding (shared with the Arrangement, saved with the project), selection outline, compact strips, master, meters, record source, Cue key and Cue strip (private Cue mix)]
+      sources: [src/managed/Nota.App/MixerView.cs, src/managed/Nota.App/MixerView.Compact.cs, src/managed/Nota.App/MixerView.Cue.cs, src/managed/Nota.App/CueKey.cs, src/managed/Nota.App/MixerWindow.cs, src/managed/Nota.App/MainWindow.Mixer.cs, src/managed/Nota.App/GroupFold.cs, src/managed/Nota.App/Controls/GroupBandsLayer.cs, src/managed/Nota.App/Controls/MeterFader.cs]
       status: done
     - page: views/detail-panel
       covers: [bottom panel Devices/Clip, detach to own window (⧉), Device window]
@@ -259,14 +259,19 @@ sections:
 
   preferences:
     # One page per Settings page (src/managed/Nota.App/PreferencesWindow.cs → Nav)
-    - {page: preferences/audio,      sources: [src/managed/Nota.App/PreferencesWindow.cs], covers: [device, sample rate, buffer, WASAPI exclusive, ASIO], status: done}
+    - {page: preferences/audio,      sources: [src/managed/Nota.App/PreferencesWindow.cs], covers: [sample rate, buffer, latency, WASAPI exclusive, ASIO driver, CPU check], status: done}
+    - {page: preferences/outputs,    sources: [src/managed/Nota.App/PreferencesWindow.AudioIo.cs, src/managed/Nota.App/PreferencesWindow.Outputs.cs], covers: [output device, Output pairs (Main, Cue, click, click level), ASIO, test tone], status: done}
+    - {page: preferences/inputs,     sources: [src/managed/Nota.App/PreferencesWindow.AudioIo.cs], covers: [input device, ASIO input pair, inputs setup — switches, names, stereo pairs], status: done}
     - {page: preferences/midi,       sources: [src/managed/Nota.App/PreferencesWindow.cs], status: done}
     - {page: preferences/gamepads,   sources: [src/managed/Nota.App/PreferencesWindow.cs], status: done}
     - {page: preferences/remote,     sources: [src/managed/Nota.App/PreferencesWindow.Remote.cs], status: done}
+    - {page: preferences/mcp,        sources: [src/managed/Nota.App/PreferencesWindow.Mcp.cs], covers: [MCP server switch, port, status, Copy config], status: done}
     - {page: preferences/plugins,    sources: [src/managed/Nota.App/PreferencesWindow.cs], status: done}
     - {page: preferences/downloads,  sources: [src/managed/Nota.App/PreferencesWindow.Downloads.cs, src/managed/Nota.App/PreferencesWindow.Store.cs, src/managed/Nota.App/PreferencesWindow.Samples.cs, src/managed/Nota.App/PreferencesWindow.Models.cs], status: done}
+    - {page: preferences/appearance, sources: [src/managed/Nota.App/PreferencesWindow.cs, src/managed/Nota.Application/Appearance.cs, src/managed/Nota.Application/InterfaceScale.cs, src/managed/Nota.App/Theme/NotaUiScale.cs, src/managed/Nota.App/PreferencesWindow.Skins.cs, src/managed/Nota.App/PreferencesWindow.Accent.cs, src/managed/Nota.Application/Looks.cs], covers: [look New/Classic, clips Solid/Tinted, colour theme Dark/Light/Follow system with Studio and Ember themes and user themes, accent, waveforms, track headers, interface scale 75–200 %, text size], status: done}
+    - {page: preferences/language,   sources: [src/managed/Nota.App/PreferencesWindow.Language.cs, src/managed/Nota.Application/Localization/UiLanguage.cs, src/managed/Nota.App/LanguageDownloads.cs, src/managed/Nota.Infrastructure/Languages/LanguageCatalog.cs, src/managed/Nota.Infrastructure/Languages/InstalledLanguages.cs], covers: [interface language English plus languages downloaded from nota-translations (coverage, Update, Remove, Load file…, start-up download) with restart], status: done}
+    - {page: preferences/editing,    sources: [src/managed/Nota.App/PreferencesWindow.Editing.cs], covers: [label every note in the piano roll, fade audio clips when splitting, open the detail panel on select], status: done}
     - {page: preferences/library,    sources: [src/managed/Nota.App/PreferencesWindow.cs], status: done}
-    - {page: preferences/appearance, sources: [src/managed/Nota.App/PreferencesWindow.cs, src/managed/Nota.Application/Appearance.cs, src/managed/Nota.App/PreferencesWindow.Skins.cs, src/managed/Nota.App/Theme/NotaColourTheme.cs, src/managed/Nota.Application/Accent.cs, src/managed/Nota.App/PreferencesWindow.Accent.cs, src/managed/Nota.App/Controls/ColourPicker.cs, src/managed/Nota.Application/InterfaceScale.cs, src/managed/Nota.App/Theme/NotaUiScale.cs, src/managed/Nota.App/PreferencesWindow.Language.cs, src/managed/Nota.Application/Localization/UiLanguage.cs, src/managed/Nota.App/LanguageDownloads.cs, src/managed/Nota.Infrastructure/Languages/LanguageCatalog.cs, src/managed/Nota.Infrastructure/Languages/InstalledLanguages.cs], covers: [colour theme Dark/Light/Follow system with Studio and Ember themes, user themes (themes folder, Duplicate, Reveal, Open/Reload, problems, warnings, fallback), accent colour (presets, Custom picker, per-theme tuning, refusals), waveforms, fade when splitting, interface scale 75–200 %, interface language English plus languages downloaded from nota-translations (coverage, Update, Remove, Load file…, start-up download) with restart, AI control], status: done}
     - {page: preferences/shortcuts,  sources: [src/managed/Nota.App/PreferencesWindow.cs], status: done}
     - {page: preferences/updates,    sources: [src/managed/Nota.App/PreferencesWindow.Updates.cs, src/managed/Nota.App/AppUpdates.cs, src/managed/Nota.App/MainWindow.Updates.cs], covers: [automatic update checks, Check now, Check for updates menu, status bar notice], status: done}
     # mockup for all: Nota Settings.html
@@ -295,6 +300,9 @@ findings:
 
 # New user-facing changes that arrived before their page was written (nota-docs skill appends here).
 pending:
+  - page: preferences/appearance
+    change: "retake preferences/appearance (+ -themes): the Look and Clips rows (nota-daw/nota#572); the prefs scene needs the page-by-id harness from nota-docs#90 first"
+    version: "0.59.2"
   - page: reference/shortcuts
     change: "regenerate (npm run shortcuts) once nota-daw/nota#240 parts 2–3 merge — new rows: ⌥-click a graph handle / envelope node / mod-matrix cell, double-click a mod-matrix cell; clip ADSR row"
     version: "0.57.1"
