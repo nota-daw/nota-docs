@@ -3,9 +3,10 @@ title: Аудиоклипы и warp
 description: Редактирование аудиоклипов — обрезка, усиление, высота, реверс, подгонка к темпу с маркерами, огибающие громкости и панорамы, ADSR клипа.
 sidebar:
   order: 2
-updated: "0.58.1"
+updated: "0.59.2"
 status: done
 sources:
+  - src/managed/Nota.App/PreferencesWindow.Editing.cs
   - src/managed/Nota.App/AudioClipEditorView.cs
   - src/managed/Nota.App/SnapChip.cs
   - src/managed/Nota.App/ClipAdsrKit.cs
@@ -106,7 +107,7 @@ transients** ставит маркер на каждый удар — и бар�
 
 Разрез аудиоклипа также пишет фейд 4 ms на разрезе — **Release** на левом куске, **Attack** на
 правом, — чтобы разрез не щёлкал. Потяните эти ручки, чтобы сделать его длиннее или короче.
-Settings → Appearance → **Fade audio clips when splitting** выключает это. **Fade at splits**
+[Settings ▸ Editing](../../preferences/editing/) ▸ **Fade audio clips when splitting** выключает это. **Fade at splits**
 в палитре команд или в меню клипа пишет такой же фейд там, где два аудиоклипа уже соприкасаются.
 
 ## На шкале
