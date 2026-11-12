@@ -9,8 +9,10 @@
 #                         rows (every track row at this height, px)
 #   scene: palette  args: select (demo track), card (audio effect index to select), origin: "devices",
 #                         query, down (rows), mods (alt | cmd | shift), crop (true: just the palette)
-#   scene: mixer (args: group "Name:Track,Track", fold, compact, select, width, height)
-#   scene: prefs (args: page = Settings sidebar index, 0 Audio … 8 Shortcuts)
+#   scene: mixer (args: group "Name:Track,Track", fold, compact, select, width, height,
+#                 cue "Track,Track" = a pretend 4-output device with Cue on 3/4 and these tracks in Cue,
+#                 mute (a demo track), cueMissing (the Cue pair gone: the device shrinks to 2 outputs))
+#   scene: prefs (args: id = Settings page id — Audio, Outputs, Inputs, MIDI, Gamepads, Remote, MCP, Plug-ins, Downloads, Appearance, Language, Editing, Library, Shortcuts, Updates, height, cue as mixer)
 #   scene: start · about · whatsnew · export · unsaved
 # source: remote — the Nota Remote phone page on the app repo's stand-in Nota (src/web/remote/mock),
 #   390 × 844 at 2×, Studio Dark / Studio Light. args: track (name), screen (tab: Pads, Keys, XY,
@@ -53,6 +55,9 @@ shots:
   - { id: views/mixer-groups, source: app, scene: mixer, args: {group: "Beat:Rhythm,Drums,Bass", select: "Drums", width: 1600} }
   - { id: views/mixer-group-folded, source: app, scene: mixer, args: {group: "Beat:Rhythm,Drums,Bass", fold: true, select: "Drums", width: 1200} }
   - { id: views/mixer-compact, source: app, scene: mixer, args: {group: "Beat:Rhythm,Drums,Bass", compact: true, width: 1200} }
+  - { id: views/mixer-cue, source: app, scene: mixer, args: {cue: "Lead,Keys", mute: "Keys", width: 1500} }
+  - { id: views/mixer-cue-compact, source: app, scene: mixer, args: {cue: "Lead,Keys", mute: "Keys", compact: true, width: 760} }
+  - { id: views/mixer-cue-missing, source: app, scene: mixer, args: {cue: "Lead,Keys", cueMissing: true, width: 1500} }
   - { id: views/detail-panel, source: app, scene: main, args: {view: "arrangement", select: "Keys", element: "DetailPanel"} }
   - { id: devices/folded, source: app, scene: main, args: {view: "arrangement", select: "Keys", fold: "0", element: "DetailPanel"} }
   - { id: views/device-window/nota-bass-l, source: app, scene: device, args: {instrument: 3, chainInstrument: 7, trackName: "Bass", window: "Open"} }
@@ -71,10 +76,14 @@ shots:
   # ── Library
   - { id: library/browser, source: app, scene: main, args: {view: "arrangement", element: "Browser"} }
   - { id: library/files-tab, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 3, height: 640} }
+  - { id: library/files-folders, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 3, places: true, height: 640} }
+  - { id: library/files-browse, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 3, browse: "Loops", pick: "Pad Am 124 bpm.wav", height: 640} }
+  - { id: library/files-located, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 3, expand: "Drums", pick: "Hat closed.wav", locate: "Drums/Kick 808.wav", height: 640} }
+  - { id: library/projects-tab, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 5, projects: true, height: 480} }
   - { id: library/track-inspector-tab, source: app, scene: main, args: {view: "arrangement", select: "Texture", element: "Browser", tab: 8, height: 900} }
   - { id: control/midi-map-tab, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 6, height: 640} }
-  - { id: preferences/downloads-samples, source: app, scene: prefs, args: {page: 5, tab: "Sample packs"} }
-  - { id: preferences/downloads-models, source: app, scene: prefs, args: {page: 5, tab: "AI models"} }
+  - { id: preferences/downloads-samples, source: app, scene: prefs, args: {id: "Downloads", tab: "Sample packs"} }
+  - { id: preferences/downloads-models, source: app, scene: prefs, args: {id: "Downloads", tab: "AI models"} }
   - { id: library/preview-player, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 3, expand: "Drums", pick: "Kick 808.wav", height: 640} }
 
   # ── Controllers & Remote — the phone page on the stand-in Nota (source: remote, 390 × 844)
@@ -96,17 +105,22 @@ shots:
   - { id: export/export-window, source: app, scene: export }
 
   # ── Settings
-  - { id: preferences/audio, source: app, scene: prefs, args: {page: 0} }
-  - { id: preferences/midi, source: app, scene: prefs, args: {page: 1} }
-  - { id: preferences/gamepads, source: app, scene: prefs, args: {page: 2} }
-  - { id: preferences/remote, source: app, scene: prefs, args: {page: 3} }
-  - { id: preferences/plugins, source: app, scene: prefs, args: {page: 4} }
-  - { id: preferences/downloads, source: app, scene: prefs, args: {page: 5} }
-  - { id: preferences/library, source: app, scene: prefs, args: {page: 6} }
-  - { id: preferences/appearance, source: app, scene: prefs, args: {page: 7} }
-  - { id: preferences/appearance-themes, source: app, scene: prefs, args: {page: 7, themes: true, scrollTo: "Ember Graphite"} }
-  - { id: preferences/shortcuts, source: app, scene: prefs, args: {page: 8} }
-  - { id: preferences/updates, source: app, scene: prefs, args: {page: 9, check: true} }
+  - { id: preferences/audio, source: app, scene: prefs, args: {id: "Audio"} }
+  - { id: preferences/outputs, source: app, scene: prefs, args: {id: "Outputs", cue: ""} }
+  - { id: preferences/inputs, source: app, scene: prefs, args: {id: "Inputs"} }
+  - { id: preferences/midi, source: app, scene: prefs, args: {id: "MIDI"} }
+  - { id: preferences/gamepads, source: app, scene: prefs, args: {id: "Gamepads"} }
+  - { id: preferences/remote, source: app, scene: prefs, args: {id: "Remote"} }
+  - { id: preferences/mcp, source: app, scene: prefs, args: {id: "MCP"} }
+  - { id: preferences/plugins, source: app, scene: prefs, args: {id: "Plug-ins"} }
+  - { id: preferences/downloads, source: app, scene: prefs, args: {id: "Downloads"} }
+  - { id: preferences/appearance, source: app, scene: prefs, args: {id: "Appearance"} }
+  - { id: preferences/appearance-themes, source: app, scene: prefs, args: {id: "Appearance", themes: true, scrollTo: "Ember Graphite"} }
+  - { id: preferences/language, source: app, scene: prefs, args: {id: "Language"} }
+  - { id: preferences/editing, source: app, scene: prefs, args: {id: "Editing"} }
+  - { id: preferences/library, source: app, scene: prefs, args: {id: "Library"} }
+  - { id: preferences/shortcuts, source: app, scene: prefs, args: {id: "Shortcuts"} }
+  - { id: preferences/updates, source: app, scene: prefs, args: {id: "Updates", check: true} }
 
   # ── Instruments — app card (both themes) + every mockup screen
   - { id: devices/instruments/synth/card, source: app, scene: device, args: {instrument: 0, tab: "L"} }

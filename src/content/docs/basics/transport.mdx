@@ -3,9 +3,10 @@ title: Transport
 description: Play, stop and record; tempo, time signature and project key; loop, metronome, count-in, grid and follow.
 sidebar:
   order: 3
-updated: "0.56.1"
+updated: "0.59.2"
 status: done
 sources:
+  - src/managed/Nota.App/PreferencesWindow.Outputs.cs
   - src/managed/Nota.App/MainWindow.axaml
   - src/managed/Nota.App/MainWindow.axaml.cs
   - src/managed/Nota.App/MainWindow.Input.cs
@@ -88,6 +89,12 @@ The metronome button (<Kbd>⌘ M</Kbd>) clicks on every beat while you play or r
 Record from stop, and before a Session slot records from stop. The count-in sounds even with the metronome off, the position readout counts
 the bars before the start (−2.1, −1.4 …), and the clicks are never recorded. Stop cancels a
 count-in. Nota remembers the setting.
+
+With a second output pair you can keep the click out of the audience's ears: **Click** in
+[Settings ▸ Outputs](../../preferences/outputs/#output-pairs) sends the metronome and the
+count-in to **Main**, **Cue** or **Both**, and **Click level** sets its level (**Off**, or
+−18 to +6 dB). A click sent to Cue skips the master's devices and is never recorded or
+exported.
 
 ## Grid, snap and follow
 

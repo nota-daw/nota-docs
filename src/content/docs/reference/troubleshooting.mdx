@@ -3,7 +3,7 @@ title: "Troubleshooting"
 description: "Fixes for the common problems — Nota won't open, no sound, crackles, a controller or plug-in not showing up, a phone that can't connect."
 sidebar:
   order: 3
-updated: "0.56.1"
+updated: "0.59.2"
 status: done
 sources:
   - README.md
@@ -20,7 +20,7 @@ import { Aside } from '@astrojs/starlight/components';
 - **Windows SmartScreen** — **More info ▸ Run anyway**.
 - **Linux** — make the AppImage executable (`chmod +x`). If it still doesn't appear, run it from a
   terminal to see why, and look in `~/.config/nota/logs/`. Since 0.58 Nota opens even when no audio
-  output works; the status line then says it runs without sound — pick a device in **Settings ▸ Audio**.
+  output works; the status line then says it runs without sound — pick a device in **Settings ▸ Outputs**.
 
 ## Linux: Open / Save does nothing, or files won't drop in
 
@@ -35,7 +35,7 @@ import { Aside } from '@astrojs/starlight/components';
 
 ## No sound
 
-1. **Settings ▸ Audio ▸ Play test tone.** No tone? Check **Output** — the right device, and your
+1. **[Settings ▸ Outputs](../../preferences/outputs/) ▸ Play test tone.** No tone? Check **Output** — the right device, and your
    system volume.
 2. Tone but no music? Check the track isn't muted, another track isn't soloed, and the master volume
    (**Master**) is up.

@@ -1,0 +1,24 @@
+---
+title: "AI control (MCP)"
+description: "Settings ▸ AI control (MCP) — the switch for Nota's MCP server, its port and status, and a ready config for Claude Desktop or Claude Code."
+sidebar:
+  order: 7
+updated: "0.59.2"
+since: "0.59.2"
+status: done
+sources:
+  - src/managed/Nota.App/PreferencesWindow.Mcp.cs
+---
+
+import Shot from '@components/Shot.astro';
+
+<Shot id="preferences/mcp" alt="Settings ▸ AI control (MCP)" />
+
+| Setting | What it does |
+|---|---|
+| **Enable MCP server (let an AI drive Nota)** | Off by default. On: an AI assistant on this computer can work in the open project |
+| **Port** | The port the server listens on, **3900** by default. Change it if another program uses that port |
+| **Status** | **Listening on http://127.0.0.1:3900/ (loopback)** while it runs, **Off** otherwise. Only programs on this computer can reach it |
+| **Copy config** | Copies a ready config with the current port; add it (or the URL) as an MCP server in Claude Desktop or Claude Code |
+
+What an assistant can do there, and how to set one up: [AI control over MCP](../../ai/mcp/).
