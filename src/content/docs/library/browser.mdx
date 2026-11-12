@@ -7,6 +7,7 @@ updated: "0.59.2"
 status: done
 sources:
   - src/managed/Nota.App/BrowserView.cs
+  - src/managed/Nota.Presentation/BrowserTabMemory.cs
   - src/managed/Nota.App/TrackInspectorView.cs
   - src/managed/Nota.App/MainWindow.Browser.cs
   - src/managed/Nota.App/MainWindow.Files.cs
@@ -38,12 +39,17 @@ browser**).
 | **Instruments** | Nota's instruments (**Built-in**) and your plug-in instruments (**Plug-ins**). Each device opens into folders of its factory presets — Pads, Bass, Leads, Keys & Plucks… — with **Init** on top |
 | **Audio effects** | Built-in and plug-in effects, with their presets — Vocals, Drums, Mix & Bus, Mastering… |
 | **MIDI effects** | Arpeggiator, chord, scale, length, velocity, random, with their presets |
+| **Modular** | Only while the [Modular view](../../views/modular/) is open: its nodes — LFO, Envelope Follower, MIDI → CV, ADSR, Macro, Math, Scope — each with its kind and what it does. Drag one onto the canvas, or double-click it to put it in the middle |
 | **Files** | Your sample folders as a folder tree, or any folder on the computer with **Browse** — see [Files](#files) below and [Smart samples](../smart-samples/) |
 | **Presets** | The presets you saved yourself (right-click a device header ▸ **Save preset**). Right-click one to reveal it or **Delete…** it (to the Trash); right-click a folder row to open the presets folder |
 | **Projects** | The projects in your projects folder, newest first — see [Projects](#projects) below |
 | **MIDI map** | Every control mapped to a controller, gamepad or phone — see [MIDI Learn](../../control/midi-learn/) |
 | **History** | The open project's [versions](../../basics/version-history/) |
 | **Track inspector** | The selected track's settings in one place — see below |
+
+In Modular the browser remembers its own last tab: the first time you open Modular it shows the
+**Modular** tab, after that the tab you last picked there; back in the arrangement or Session it
+returns to the tab you had there.
 
 ## Files
 

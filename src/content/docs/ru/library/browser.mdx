@@ -7,6 +7,7 @@ updated: "0.59.2"
 status: done
 sources:
   - src/managed/Nota.App/BrowserView.cs
+  - src/managed/Nota.Presentation/BrowserTabMemory.cs
   - src/managed/Nota.App/TrackInspectorView.cs
   - src/managed/Nota.App/MainWindow.Browser.cs
   - src/managed/Nota.App/MainWindow.Files.cs
@@ -37,12 +38,17 @@ import Kbd from '@components/Kbd.astro';
 | **Instruments** | Инструменты Nota (**Built-in**) и ваши плагины-инструменты (**Plug-ins**). Каждое устройство раскрывается в папки заводских пресетов — Pads, Bass, Leads, Keys & Plucks… — с **Init** сверху |
 | **Audio effects** | Встроенные эффекты и плагины, с пресетами — Vocals, Drums, Mix & Bus, Mastering… |
 | **MIDI effects** | Арпеджиатор, аккорды, лад, длина, velocity, случайность — с пресетами |
+| **Modular** | Только когда открыт [вид Modular](../../views/modular/): его узлы — LFO, Envelope Follower, MIDI → CV, ADSR, Macro, Math, Scope — с типом и описанием. Перетащите узел на холст или дважды щёлкните его, чтобы он встал в середину |
 | **Files** | Ваши папки сэмплов деревом папок или, в режиме **Browse**, любая папка компьютера — см. [Files](#files) ниже и [Умные сэмплы](../smart-samples/) |
 | **Presets** | Пресеты, которые вы сохранили сами (правый щелчок по заголовку устройства ▸ **Save preset**). Правый щелчок по пресету — показать его в файловом менеджере или **Delete…** (в Корзину); по строке папки — открыть папку пресетов |
 | **Projects** | Проекты из папки проектов, свежие сверху — см. [Projects](#projects) ниже |
 | **MIDI map** | Все регуляторы, назначенные на контроллер, геймпад или телефон, — см. [MIDI Learn](../../control/midi-learn/) |
 | **History** | [Версии](../../basics/version-history/) открытого проекта |
 | **Track inspector** | Настройки выбранного трека в одном месте — см. ниже |
+
+В Modular браузер помнит свою последнюю вкладку: при первом открытии Modular он показывает
+вкладку **Modular**, дальше — ту, что вы выбрали там последней; в аранжировке и Session
+возвращается вкладка, открытая там.
 
 ## Files
 
