@@ -23,8 +23,8 @@ sections:
       mockup: Nota Start.html
       status: done
     - page: start-here/main-window
-      covers: [transport bar, view switcher (Arrangement · Session · Modular), browser, detail panel, overview, sections, status bar / downloads, menus, ⌘ vs Ctrl]
-      sources: [src/managed/Nota.App/MainWindow.axaml, src/managed/Nota.App/MainWindow.Menu.cs, src/managed/Nota.App/MainWindow.TransportFit.cs]
+      covers: [transport bar, view switcher (Arrangement · Session · Modular), browser, detail panel, overview, sections, status bar / downloads, menus, Menu key and Show menu bar (Windows / Linux), ⌘ vs Ctrl]
+      sources: [src/managed/Nota.App/MainWindow.axaml, src/managed/Nota.App/MainWindow.Menu.cs, src/managed/Nota.App/MainWindow.TransportFit.cs, src/managed/Nota.App/MainWindow.MenuButton.cs]
       mockup: Nota Main Window.html
       status: done
     - page: start-here/first-track
