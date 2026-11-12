@@ -3,13 +3,16 @@ title: Tracks
 description: Instrument, audio, return and group tracks — adding, selecting, colouring, grouping, routing and freezing them.
 sidebar:
   order: 4
-updated: "0.58.1"
+updated: "0.59.2"
 status: done
 sources:
+  - src/managed/Nota.App/CueKey.cs
   - src/managed/Nota.Infrastructure/Persistence/ProjectTemplate.cs
   - src/managed/Nota.App/ArrangementView.cs
   - src/managed/Nota.App/ArrangementView.Tracks.cs
   - src/managed/Nota.App/ArrangementView.Groups.cs
+  - src/managed/Nota.App/Controls/GroupTrayLayer.cs
+  - src/managed/Nota.Presentation/GroupTrayLayout.cs
   - src/managed/Nota.App/ArrangementView.Link.cs
   - src/managed/Nota.Presentation/TrackArm.cs
   - src/managed/Nota.App/TrackNames.cs
@@ -68,6 +71,9 @@ Each header has two rows, with the track's meter down its right edge. The first 
 the track's name and type, and:
 
 - **M** mute and **S** solo,
+- the **Cue** key (headphones), next to **S**, while you use a Cue output — it puts the track in
+  your private [Cue mix](../../views/mixer/#cue-your-own-mix). On an audio track the
+  headphones key after the arm is the input **monitor**, not Cue,
 - **●** arm — the track records when you press Record, and an armed instrument track plays
   the notes from your keyboard. A click arms that track alone, and so does selecting an instrument track;
   <Kbd>⌘</Kbd>-click arms more than one.
@@ -122,7 +128,7 @@ Commands that show a current choice — **Record input**, **MIDI from** — prin
 right, so you can read it without opening the submenu. **Delete** is always last, in red.
 
 The browser's [Track inspector](../../library/browser/#track-inspector) tab shows the same
-settings — name, colour, height, input and freeze, plus mute, solo and arm — for the selected
+settings — name, colour, height, input and freeze, plus mute, solo, Cue and arm — for the selected
 track, without opening a menu.
 
 ## Groups
@@ -139,10 +145,22 @@ Click a group's lane in the Arrangement to select the group; double-click it to 
 devices in the panel at the bottom.
 
 A group is a submix: its fader, effects, mute and solo act on all its tracks together, and
-groups can sit inside groups. Its row stays slim — a titled bar with its arrow, mute, solo and
-level — and opens to the full controls when you select it. Click the arrow to fold the group's
-tracks away; the [Mixer](../../views/mixer/#groups) folds with it, and folded groups are saved
-with the project.
+groups can sit inside groups.
+
+In the track headers a group is a **tray** of its colour: the group's row at the top, its
+tracks inside, and the tray closes under its last track, so the track after it is plainly
+outside. A track in a group keeps only its own colour bar. A group inside a group is a tray
+inside the tray, a few pixels further in, and the buttons stay in the same columns however
+deep a track sits.
+
+The group's row stays slim — its arrow, name, **M**, **S**, **Link** and a level meter at the
+right, in line with the tracks' meters — and opens to the full controls when you select it.
+Click the arrow to fold the group's tracks away; a folded group shows how many tracks it holds,
+those in groups inside it included (**Instruments · 4**). The [Mixer](../../views/mixer/#groups)
+folds with it, and folded groups are saved with the project.
+
+In the classic look (**Settings → Appearance → Look**) the headers draw groups as 0.59 did:
+each row's own colour stripe, stepped in a little per level, with no tray and no tint.
 
 ### Linked groups
 

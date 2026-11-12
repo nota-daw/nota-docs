@@ -58,7 +58,7 @@ Les raccourcis sont écrits à la manière de macOS : sous Windows et Linux, l
 | <Kbd keys="⇧ Space" /> | Lecture / pause · la tête de lecture reste en place et la lecture reprend à partir de là |
 | <Kbd keys="Return" /> | Arrêt (de nouveau → retour au début) · dans la grille Session, lance la sélection |
 | <Kbd keys="⌘ R" /> | Enregistrement |
-| <Kbd keys="⌘ ." /> | Abandonner la prise en cours et l’enregistrer à nouveau · Arrangement : depuis son début, avec un nouveau décompte · Session : à la prochaine quantification de lancement |
+| <Kbd keys="⌘ ." /> | Discard the take being recorded and record it again · Arrangement: from where it started, counting in again · Session: from the next launch quantum |
 | <Kbd keys="⌘ M" /> | Métronome |
 | <Kbd keys="⌘ L" /> | Boucle activée / désactivée · mettre en boucle les clips ou la plage de temps sélectionnés |
 | Double-clic sur l’accolade de boucle | Boucle activée / désactivée dans la règle · la région reste, grisée tant qu’elle est désactivée |
@@ -102,8 +102,8 @@ Les raccourcis sont écrits à la manière de macOS : sous Windows et Linux, l
 | <Kbd keys="⌘ 3" /> | Grille en triolets activée / désactivée |
 | <Kbd keys="⌘ 4" /> | Magnétisme sur la grille activé / désactivé |
 | <Kbd keys="⌘ 5" /> | Basculer entre la grille adaptative (Auto) et une grille fixe |
-| ⌥ pendant le glissement | Déplacer librement, sans tenir compte de la grille |
-| Éditeur de clips audio sur ADSR ou sur un clip non warpé | ⌘1–⌘5 agissent sur l’Arrangement · cette vue ne suit aucune grille |
+| ⌥ while dragging | Déplacer librement, sans tenir compte de la grille |
+| Éditeur de clips audio sur ADSR ou sur un clip non warpé | ⌘1–⌘5 act on the Arrangement · that view follows no grid |
 
 ## Pistes (après un clic dans les en-têtes de piste)
 
@@ -121,6 +121,7 @@ Les raccourcis sont écrits à la manière de macOS : sous Windows et Linux, l
 |---|---|
 | ⇧-click · ⌘-click | Sélectionner une série d’appareils (effets MIDI, instrument, effets audio) / en ajouter ou en retirer un |
 | <Kbd keys="Esc" /> | Effacer la sélection d’appareils · un clic dans l’espace vide de la chaîne fait de même |
+| <Kbd keys="Esc" /> | In the XL panel (EQ-8, Dynamic EQ-8): return the device to L, as Shrink in its header |
 | <Kbd keys="⌘ C" /> · <Kbd keys="⌘ X" /> · <Kbd keys="⌘ V" /> | Copier / couper / coller les appareils sélectionnés avec tous leurs réglages · chacun se place dans sa section après l’appareil sélectionné · un instrument copié remplace l’instrument sur lequel il est collé |
 | <Kbd keys="⌘ D" /> | Dupliquer les appareils sélectionnés · chaque série juste après elle-même |
 | <Kbd keys="⌘ G" /> | Grouper les appareils sélectionnés dans un rack · effets audio : Audio Effect Rack · effets MIDI : MIDI Effect Rack · avec l’instrument : Instrument Rack |
@@ -129,6 +130,15 @@ Les raccourcis sont écrits à la manière de macOS : sous Windows et Linux, l
 | Glisser l’en-tête d’un appareil sélectionné | Déplacer ensemble les appareils sélectionnés de cette section |
 | Glisser un appareil sur une piste | L’y déplacer (hors du panneau, sur une rangée de piste ou une colonne Session) · l’instrument remplace celui de cette piste et sa propre piste disparaît |
 | ⌥-glisser un appareil sur une piste | L’y copier |
+
+## Browser · files (after a click in its list)
+
+| Touches | Action |
+|---|---|
+| <Kbd keys="⌘ [" /> · <Kbd keys="⌘ ]" /> | Back · forward through the folders you opened (Browse) |
+| <Kbd keys="⌘ ↑" /> | Up to the folder above, then to the drives (Browse) |
+| <Kbd keys="⌘ L" /> | Type or paste a path to open (switches to Browse) |
+| <Kbd keys="Return" /> | Open the selected folder (Browse) |
 
 ## Racks
 
@@ -196,14 +206,14 @@ Les raccourcis sont écrits à la manière de macOS : sous Windows et Linux, l
 | Glisser dans le couloir Bend / Pres / Slide | Dessiner la courbe MPE de la note sélectionnée · ⌥ trace une ligne droite · glisser un point pour le déplacer |
 | Double-clic dans un couloir MPE | Ajouter un point · sur un point, le supprimer · clic droit pour effacer la courbe |
 | Clic sur l’amplitude du couloir Bend | Choisir l’amplitude du couloir Bend : ±2, 12, 24, 48 ou 96 demi-tons · un bend déjà présent sur les notes peut l’élargir davantage |
-| Clic sur l’onglet de contrôleur | Afficher le couloir du contrôleur MIDI principal |
-| Cliquer sur le menu déroulant du contrôleur d’un couloir | Choisir un CC, la molette de hauteur ou la pression de canal pour ce couloir |
-| Boutons du couloir de contrôleur | Ajouter un couloir depuis la barre latérale · le masquer avec le bouton de fermeture voisin sans supprimer les données MIDI |
+| Clic sur l’onglet de contrôleur | Show the primary MIDI controller lane |
+| Click a lane's controller dropdown | Choose a CC, the pitch wheel or channel pressure for that lane |
+| Controller lane buttons | Add a lane from the sidebar · hide it with the adjacent close button without deleting MIDI data |
 | Glisser dans le couloir Sustain | Dessiner un bloc de pédale sur la grille · ⌘ hors de la grille · glisser un bord pour redimensionner, le corps pour déplacer · double-clic ou Delete le supprime |
 | Glisser dans un couloir de contrôleur | Dessiner la courbe du contrôleur · ⌥ trace une ligne droite · glisser un point pour le déplacer · double-clic ajoute ou supprime un point |
-| Glisser un séparateur de couloir | Redimensionner ce couloir de vélocité ou de contrôleur · la hauteur est mémorisée |
+| Drag a lane divider | Resize that velocity or controller lane · height is remembered |
 | Clic sur un clip du bandeau de clips | En faire le clip actif (plusieurs clips ouverts) · son verrou le garde comme référence en lecture seule |
-| ⌘⌥ + molette | Zoom des rangées (zoom vertical) |
+| ⌘⌥ + wheel | Zoom des rangées (zoom vertical) |
 | Clic sur une touche | La jouer sur l’instrument de la piste · ⇧-glisser parcourt les touches · ⌘-clic sélectionne toutes les notes de cette hauteur |
 | Glisser sur les touches | Zoom des rangées · vers le bas plus hautes, vers le haut plus basses |
 | ⌥ + pinch | Zoom des rangées (trackpad) |
@@ -239,7 +249,7 @@ Les raccourcis sont écrits à la manière de macOS : sous Windows et Linux, l
 | Clic sur la forme d’onde | Lire à partir de ce point |
 | Clic sur WAVE / SPEC | Basculer la zone entre la forme d’onde et un spectre en direct |
 | Défiler sur le bouton de piste | Parcourir les pistes de démonstration à travers lesquelles un préréglage d’effet s’écoute |
-| ⌥-clic sur le volume | Saisir le volume d’aperçu · double-clic le remet à 0 dB |
+| ⌥-click volume | Saisir le volume d’aperçu · double-clic le remet à 0 dB |
 
 ## Manette (macOS)
 
@@ -259,7 +269,7 @@ Les raccourcis sont écrits à la manière de macOS : sous Windows et Linux, l
 | Double-clic sur un clip | Ouvrir dans l’éditeur de clips, en ouvrant le panneau de détail · sur l’un de plusieurs clips MIDI sélectionnés, les ouvrir tous ensemble |
 | Double-clic sur un en-tête de piste | Ouvrir ses appareils dans le panneau de détail · la fenêtre d’un plug-in s’ouvre avec Open editor sur sa carte |
 | Double-clic sur un instrument du navigateur | L’échanger sur la piste d’instrument sélectionnée · les clips et les effets restent · sans piste sélectionnée, en crée une |
-| ⌥ + double-clic sur un instrument du navigateur | Toujours créer une nouvelle piste avec lui |
+| ⌥ + double-click a browser instrument | Toujours créer une nouvelle piste avec lui |
 | Clic droit sur le métronome | Décompte avant Lecture / Enregistrement : désactivé · 1 · 2 · 4 mesures |
 | Glisser la poignée ADSR d’un clip audio | Façonner l’attaque · le déclin + le maintien · le relâchement (coins du haut et point au survol) · ⌥-clic permet de saisir l’étape · double-clic la réinitialise |
 | ⇧-clic sur un en-tête de piste | Ajouter la piste à la sélection · de nouveau pour la retirer |

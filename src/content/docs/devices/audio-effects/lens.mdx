@@ -3,7 +3,7 @@ title: "Nota Lens"
 description: "Analyzer — a spectrum, a triggered oscilloscope and a waterfall in one card, with peak hold, cursors, mid / side and loudness. The audio passes through untouched."
 sidebar:
   order: 22
-updated: "0.58.1"
+updated: "0.59.2"
 status: done
 sources:
   - src/native/nota.engine/src/Lens.h
@@ -25,8 +25,9 @@ panel that follows the view: the spectrum's peak hold, window, averaging, floor 
 peak / crest / LUFS read-out and the cursor; the scope's **Cursors** switch and layout, holdoff, key,
 afterglow settings and the capture read-out (the cursors' measurements while Cursors is on); the
 waterfall's window, FFT, overlap, averaging and frame rate. An analyzer has no output stage, so there
-are no output knobs. The **S / L** switch in the header folds the card to **S**: the spectrum over
-the source and **Smooth**, **Decay**, **Tilt** and **Floor**.
+are no output knobs. The **S / L / XL** switch in the header folds the card to **S**: the spectrum over
+the source and **Smooth**, **Decay**, **Tilt** and **Floor**. **XL** opens the editor in a large panel
+above the chain.
 
 ## Spectrum
 
@@ -79,11 +80,12 @@ hides the key's trace.
 A typical use: put Lens on the bass, key it from the kick, set Sync to 1 bar, and see whether the
 bass ducks where the kick hits.
 
-### Bigger window
+### Bigger views
 
-The button at the right of the view tabs opens Lens in its own window, which you can resize or move
-to another display. It shows the same views and controls as the card, and both follow each other.
-The window closes when you delete the device or open another project.
+Pick **XL** to stretch the views across a panel above the chain, or press the **pop-out** button next
+to the size switch to open Lens in its own window — resize it or move it to another display. While
+the window is open the card in the chain makes room for it. Both are described under
+[Devices](/devices/).
 
 ## Waterfall
 

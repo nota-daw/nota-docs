@@ -10,6 +10,7 @@ sources:
   - src/managed/Nota.Application/Themes/ThemeFile.cs
   - src/managed/Nota.Application/Themes/SkinGeometry.cs
   - src/managed/Nota.Application/Themes/ThemeFolder.cs
+  - src/managed/Nota.Application/Looks.cs
   - src/managed/Nota.App/Theme/token-roles.json
 ---
 
@@ -40,13 +41,13 @@ want and change the copy — it already has every colour in it.
 
 | Key | What it holds |
 |---|---|
-| `formatVersion` | `1` (colours only) or `2` (colours, and also `font` and `radius`) |
+| `formatVersion` | `1` (colours only), `2` (colours, and also `font` and `radius`) or `3` (also `font.values`) |
 | `id` | What Nota remembers your pick by: lower-case letters, digits and single hyphens, such as `night-shift`. Not the id of a built-in theme (`studio-dark`, `studio-light`, `ember-graphite`, `ember-paper`), not `system`, and not the id of another file in the folder |
 | `name` | The name on the card, 1–40 characters |
 | `kind` | `dark` or `light` — which row the card sits in, and which slot it can fill under **Follow system** |
 | `colors` | One `#RRGGBB` colour for every token below. A few tokens may be translucent and take `#AARRGGBB` |
-| `font` | Format 2 only, optional. `{ "family": "<font name>" }` |
-| `radius` | Format 2 only, optional. `{ "scale": …, "steps": { … } }` |
+| `font` | Format 2 or 3, optional. `{ "family": "<font name>" }`; format 3 may add `"values": "<font name>"`, and then `family` may be left out |
+| `radius` | Format 2 or 3, optional. `{ "scale": …, "steps": { … } }` |
 
 The file name is up to you; Nota goes by the `id` inside. Files Nota writes itself
 (**Duplicate**, or an AI saving a theme) are named `<id>.json`. Nota reads only `.json` files of
@@ -87,6 +88,15 @@ installed font, such as `Helvetica Neue` or `Segoe UI`. Icons, plug-in windows a
 A font that isn't installed on this computer is not an error: Nota uses Geist and the card says
 so. Without `font` the theme uses Geist.
 
+`font.values` (format 3) is the typeface for values and readouts: tempo, position, dB, Hz,
+counters. Without it, values are in Geist under the new look and in Geist Mono under the
+[classic look](../../preferences/appearance/#classic-look). A values font that isn't installed
+is a warning too, and the look's own typeface is used.
+
+```json
+"font": { "family": "IBM Plex Sans", "values": "IBM Plex Mono" }
+```
+
 ## Corners
 
 `radius.scale` multiplies every rounded corner in Nota: `1` is the design (the default), `0`
@@ -107,6 +117,10 @@ over `scale` for that step:
 
 A step without its own value is the design value times `scale`, rounded to whole pixels. Docked
 panels stay square in every theme.
+
+A theme with a `radius` key keeps its corners under the
+[classic look](../../preferences/appearance/#classic-look). Without one it takes the classic
+corners there: 3 px for `card`, `group` and `field`, 2 px for the rest.
 
 ## Checks
 

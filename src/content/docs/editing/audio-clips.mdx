@@ -3,9 +3,10 @@ title: Audio clips and warp
 description: Editing audio clips — trimming, gain, pitch, reverse, warping to the tempo with markers, volume and pan envelopes, and the clip ADSR.
 sidebar:
   order: 2
-updated: "0.58.1"
+updated: "0.59.2"
 status: done
 sources:
+  - src/managed/Nota.App/PreferencesWindow.Editing.cs
   - src/managed/Nota.App/AudioClipEditorView.cs
   - src/managed/Nota.App/SnapChip.cs
   - src/managed/Nota.App/ClipAdsrKit.cs
@@ -13,6 +14,7 @@ sources:
   - src/managed/Nota.App/MainWindow.AudioImport.cs
   - src/native/nota.engine/src/Warp.h
   - src/native/nota.engine/src/TempoDetect.h
+  - src/managed/Nota.App/LocateMenu.cs
 ---
 
 import { Aside } from '@astrojs/starlight/components';
@@ -110,7 +112,7 @@ reset that stage.
 
 Splitting an audio clip also writes a 4 ms fade at the cut — **Release** on the left piece,
 **Attack** on the right — so the cut does not click. Drag those handles to make it longer or
-shorter. Settings → Appearance → **Fade audio clips when splitting** turns that off. **Fade at
+shorter. [Settings ▸ Editing](../../preferences/editing/) ▸ **Fade audio clips when splitting** turns that off. **Fade at
 splits**, in the command palette or on the clip's menu, writes the same fade where two audio
 clips already touch.
 
@@ -118,7 +120,8 @@ clips already touch.
 
 Right-click an audio clip for **Fade at splits**, **Reverse**, **Separate stems…** (split it into drums, bass,
 vocals and the rest — see [Separate Stems](../../ai/separate-stems/)) and **Convert** (turn its
-melody, harmony or drums into MIDI — see [Convert audio to MIDI](../midi-tools/)).
+melody, harmony or drums into MIDI — see [Convert audio to MIDI](../midi-tools/)). **Locate ▸ In browser / In Finder**
+finds the file the clip was made from — see [The browser](../../library/browser/#finding-a-clips-file).
 
 Drag an audio clip onto a track with a Sampler, Nota Grain, Drum Rack or Instrument Rack and its
 audio loads there; drag it out of the Arrangement and it becomes a sample you can drop anywhere —
