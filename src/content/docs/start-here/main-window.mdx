@@ -4,7 +4,7 @@ description: A tour of the Nota main window — transport, browser, views, the d
 sidebar:
   order: 3
 since: "0.1.0"
-updated: "0.58.1"
+updated: "0.59.2"
 status: done
 sources:
   - src/managed/Nota.App/MainWindow.axaml
@@ -12,6 +12,7 @@ sources:
   - src/managed/Nota.App/MainWindow.Menu.cs
   - src/managed/Nota.App/BrowserView.cs
   - src/managed/Nota.App/MainWindow.Detail.cs
+  - src/managed/Nota.App/MainWindow.MenuButton.cs
 ---
 
 import { Aside } from '@astrojs/starlight/components';
@@ -23,7 +24,7 @@ top, the **browser** on the left, the **view** in the middle, and the **detail p
 underneath, which opens when you double-click a track or a clip.
 
 Along the very top runs the slim **title bar** with the project's name — it is also the
-drag handle. **Full screen** hides it: the macOS green button, or **View ▸ Toggle Full
+drag handle (on Windows it reads "Nota — *your project*", as the taskbar does). **Full screen** hides it: the macOS green button, or **View ▸ Toggle Full
 Screen** (<Kbd>F11</Kbd>) on Windows and Linux, fills the screen edge to edge, and leaving
 full screen brings the bar back. A maximized window keeps the title bar.
 
@@ -35,6 +36,8 @@ full screen brings the bar back. A maximized window keeps the title bar.
 
 From left to right:
 
+- **☰ Menu** (Windows and Linux) — the whole menu, see [Menus](#menus-and-the-status-line)
+  below.
 - **Arrangement, Session and Modular** — three icon keys that switch the view in the middle;
   hover one for its name.
 - **Stop, Play, Record** and the **position** — click the position to switch between bars
@@ -88,6 +91,13 @@ right, **Freeze** and **Live freeze** render a track to audio to save CPU, the �
 the panel into a [window of its own](../../views/detail-panel/), and × closes it.
 
 ## Menus and the status line
+
+On macOS the menus are in the system menu bar at the top of the screen. On Windows and Linux
+they are under the **☰** key at the start of the transport bar: click it, or press
+<Kbd>F10</Kbd> or <Kbd>Alt</Kbd> on its own, and File, Edit, View, Transport and Help open
+as submenus. If you prefer a classic row of menus under the title bar, turn on
+**View ▸ Show menu bar** (or Settings ▸ Appearance ▸ **Menu bar** ▸ **Shown**); the ☰ key
+then steps aside. The shortcuts work either way.
 
 - **File** — new, open, save, versions, import and export.
 - **Edit** — undo, clipboard, splitting, consolidating, duplicating time, and **Grid** (the

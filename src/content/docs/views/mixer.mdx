@@ -1,13 +1,15 @@
 ---
 title: Mixer
-description: The Mixer window — a channel strip per track with inputs, sends, pan, volume, mute, solo and arm, returns and the master.
+description: The Mixer window — a channel strip per track with inputs, sends, pan, volume, mute, solo, Cue and arm, returns, the master and the Cue strip.
 sidebar:
   order: 4
-updated: "0.58.1"
+updated: "0.59.2"
 status: done
 sources:
   - src/managed/Nota.App/MixerView.cs
   - src/managed/Nota.App/MixerView.Compact.cs
+  - src/managed/Nota.App/MixerView.Cue.cs
+  - src/managed/Nota.App/CueKey.cs
   - src/managed/Nota.App/MixerWindow.cs
   - src/managed/Nota.App/MainWindow.Mixer.cs
   - src/managed/Nota.App/GroupFold.cs
@@ -36,10 +38,12 @@ Top to bottom, each track gets:
 - **Sends** — one bar per return track, with the amount written inside it;
 - **Pan** and the **volume** fader with its meter. Drag the gain readout or double-click it to
   type a value; double-click the fader to reset it;
-- **Mute**, **Solo** and **arm** buttons.
+- **Mute**, **Solo** and **arm** buttons, and the **Cue** key (headphones) while you use
+  [Cue](#cue-your-own-mix).
 
 Strips come in the Arrangement's order — a group's strip, then its tracks. Return tracks come
-after the tracks, and the **Master** strip closes the row. Its fader is the
+after the tracks, then the **Master** strip, and the [Cue strip](#cue-your-own-mix) when you use
+Cue. Its fader is the
 same master volume as the **Master** control in the transport bar and the Master row of the
 Arrangement — move one and the others follow; it is saved with the project. **Show** at the
 bottom switches the **Sends** and **I/O** sections on or off; a section that is shown has its
@@ -82,9 +86,64 @@ A compact strip has everything a regular one has, in a narrower shape:
   volume on the meter's own scale, so a triangle at 0 sits at the meter's 0 dB. Drag anywhere on
   the meter to change it (hold ⇧ for fine steps); a click without dragging clears the peak hold;
 - the gain value — drag it or double-click to type;
-- **Mute**, **Solo** and arm as buttons across the whole strip.
+- **Mute**, **Solo**, **Cue** and arm as buttons across the whole strip.
 
 MIDI Learn and automation recording work as on a regular strip.
+
+## Cue: your own mix
+
+Cue is a second, private mix on its own outputs — for your headphones on stage or in the
+studio, while the audience or the room hears Main. Choose its output pair in
+[Settings ▸ Outputs](../../preferences/outputs/#output-pairs); that needs an interface with
+more than two outputs.
+
+<Shot id="views/mixer-cue" alt="Keys and Lead in Cue, Keys muted; the Cue strip after Master plays on Out 3/4 and lists Keys, Lead + click" />
+
+Press a track's **Cue** key (the headphones) to put it in Cue; press it again to take it out.
+Any number of tracks can be in Cue at once. The key is on every track's strip here and in the
+[Session mixer](../session/#the-mixer-under-the-grid), in the
+[track headers](../../basics/tracks/) and in the track inspector.
+
+- A track is heard in Cue **after its devices and before its fader, pan, mute and solo**. So a
+  track muted in Main still plays in Cue — mute a guide or a click track for the audience and
+  keep it in your ears. Your fader moves don't change what you hear in Cue.
+- Sends, returns, groups and the master's devices don't shape Cue — you hear the track's own
+  instrument and effects. With input monitoring on, an audio track's input is heard in Cue
+  too, which is how you hear your vocal while you record it.
+- A group or a return can be in Cue as well: its own submix and devices, before its fader. A
+  muted group that is in Cue is heard in Cue only. A group and one of its tracks both in Cue
+  are both heard, so that track comes in twice.
+- Cue never reaches Main, a recording or an export: what you put in Cue changes nothing for
+  the audience.
+
+### The Cue strip
+
+The **Cue** strip sits after Master. Top to bottom:
+
+- its **output pair** (**Out 3/4 · Phones**) and the tracks in it — by name, or **3 tracks**
+  when there are more than two, with **+ click** when the
+  [click goes to Cue](../../basics/transport/#metronome-and-count-in). On a compact strip the
+  tracks are in the tooltip;
+- the **Cue level** fader with its meter — your listening level, from silent to +3.5 dB (0 dB
+  by default). Drag the value below it or double-click it to type. It isn't an undo step and
+  has no automation lane.
+
+The strip and the Cue keys show only while a Cue output is set for this device or a track is
+in Cue, so a laptop's plain stereo setup stays as it was. With tracks in Cue but no Cue output
+the strip says **No cue output**.
+
+<Shot id="views/mixer-cue-compact" alt="The same Cue mix with compact strips: the headphones key under M and S, the Cue strip last" />
+
+If the device doesn't have the Cue pair — another device is chosen, or the interface is
+unplugged — the strip says **Out 3/4 — not on this device** in orange, and Cue is silent:
+nothing moves into Main. Choose another pair in Settings, or plug the interface back in. The
+fader stays usable meanwhile.
+
+<Shot id="views/mixer-cue-missing" alt="The Cue strip warns: Out 3/4 — not on this device" />
+
+When Main isn't on outputs 1/2, the Master strip's I/O line shows its pair (**→ Out 3/4 ·
+…**). If Main's own pair is missing, Main plays on 1/2 and the line reads **→ Out 1/2
+(fallback)**.
 
 ## Sends and returns
 
