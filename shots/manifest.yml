@@ -50,7 +50,7 @@ shots:
   # ── Views
   - { id: views/arrangement, source: app, scene: main, args: {view: "arrangement"} }
   - { id: views/session, source: app, scene: main, args: {view: "session"} }
-  - { id: views/modular, source: app, scene: main, args: {view: "modular", select: "Keys"} }
+  - { id: views/modular, source: app, scene: main, args: {view: "modular", select: "Keys", tab: 9} }
   - { id: views/mixer, source: app, scene: mixer }
   - { id: views/mixer-groups, source: app, scene: mixer, args: {group: "Beat:Rhythm,Drums,Bass", select: "Drums", width: 1600} }
   - { id: views/mixer-group-folded, source: app, scene: mixer, args: {group: "Beat:Rhythm,Drums,Bass", fold: true, select: "Drums", width: 1200} }
