@@ -120,6 +120,8 @@ shots:
   - { id: preferences/editing, source: app, scene: prefs, args: {id: "Editing"} }
   - { id: preferences/library, source: app, scene: prefs, args: {id: "Library"} }
   - { id: preferences/shortcuts, source: app, scene: prefs, args: {id: "Shortcuts"} }
+  - { id: preferences/shortcuts-conflict, source: app, scene: prefs, args: {id: "Shortcuts", keyFilter: "transpose", keyCapture: "roll.transposeUp", keyPress: "⌘D"} }
+  - { id: preferences/shortcuts-edited, source: app, scene: prefs, args: {id: "Shortcuts", keyEdits: true, keyEditedOnly: true} }
   - { id: preferences/updates, source: app, scene: prefs, args: {id: "Updates", check: true} }
 
   # ── Instruments — app card (both themes) + every mockup screen

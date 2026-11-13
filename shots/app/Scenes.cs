@@ -11,6 +11,7 @@ using Avalonia.Threading;
 using Avalonia.VisualTree;
 using Nota.App;
 using Nota.Application;
+using Nota.Application.Input;
 using Nota.Application.Localization;
 using Nota.Infrastructure;
 using Nota.Presentation;
@@ -702,15 +703,59 @@ public sealed class Scenes
             for (int i = 0; i < 40; i++) Pump(5);
         }
         else for (int i = 0; i < 20; i++) Pump(5);
+        KeyEditor(win, shot);
         if (shot.Str("scrollTo") is string target)
         {
             ScrollTo(win, target);
             for (int i = 0; i < 10; i++) Pump(5);
         }
         Save(win, shot.Id);
+        if (shot.Str("keyCapture") is not null) Invoke(win, "EndEdit", (string?)null);
         win.Close();
+        if (shot.Bool("keyEdits")) KeyBindings()?.GetType().GetMethod("ResetAll")!.Invoke(KeyBindings(), null);
         if (themes is not null) Directory.Delete(themes, true);
         cue?.Invoke();
+    }
+
+    // ---- Settings ▸ Shortcuts editor (nota#61, specs/096), by reflection so the harness builds
+    // against app versions that predate it -----------------------------------------------------
+
+    private static object? KeyBindings() =>
+        typeof(App).Assembly.GetType("Nota.App.Input.Keys")?.GetProperty("Bindings")?.GetValue(null);
+
+    // keyEdits: a few custom keys (Split ⌘T, Metronome cleared, the C note on Q, a second key for
+    // Transpose up); keyFilter: text in the page's filter; keyEditedOnly; keyCapture (an action
+    // id) + keyPress (glyphs): that row mid-capture with the key proposed.
+    private void KeyEditor(Window win, Shot shot)
+    {
+        if (KeyBindings() is not { } kb) return;
+        var slotType = kb.GetType().Assembly.GetType("Nota.Application.Input.KeySlot")!;
+        var set = kb.GetType().GetMethod("Set")!;
+        object Slot(string name) => Enum.Parse(slotType, name);
+        if (shot.Bool("keyEdits"))
+        {
+            set.Invoke(kb, new object?[] { "edit.split", Slot("Primary"), Shortcut.Parse("⌘T"), null });
+            set.Invoke(kb, new object?[] { "transport.metronome", Slot("Primary"), null, null });
+            set.Invoke(kb, new object?[] { "notes.c", Slot("Primary"), Shortcut.Parse("Q"), null });
+            set.Invoke(kb, new object?[] { "roll.transposeUp", Slot("Alternative"), Shortcut.Parse("⌥K"), null });
+            Pump(10);
+        }
+        if (shot.Bool("keyEditedOnly"))
+        {
+            ClickText(win, Loc.T("keys.ui.edited_only"));   // its label toggles the switch, as a click does
+            Pump(10);
+        }
+        if (shot.Str("keyFilter") is string f)
+        {
+            win.GetVisualDescendants().OfType<TextBox>().First(t => t.Classes.Contains("search")).Text = f;
+            Pump(10);
+        }
+        if (shot.Str("keyCapture") is string id)
+        {
+            Invoke(win, "StartCapture", id, Slot("Primary"));
+            if (shot.Str("keyPress") is string g) Invoke(win, "Propose", Shortcut.Parse(g));
+            for (int i = 0; i < 10; i++) Pump(5);
+        }
     }
 
     // Scroll the page holding <text> so that text sits a little below the page's top edge.
