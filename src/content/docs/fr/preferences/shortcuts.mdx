@@ -1,12 +1,15 @@
 ---
 title: "Raccourcis"
-description: "Réglages ▸ Raccourcis : chaque raccourci clavier et geste de souris, groupés, avec un filtre."
+description: "Réglages ▸ Raccourcis : changez n’importe quel raccourci clavier, voyez les conflits avant d’enregistrer, réinitialisez ; gestes de souris pour référence."
 sidebar:
   order: 14
-updated: "0.58.1"
+updated: "0.59.2"
 status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
+  - src/managed/Nota.App/PreferencesWindow.Shortcuts.cs
+  - src/managed/Nota.Application/Input/KeyActionCatalog.cs
+  - src/managed/Nota.Application/Input/KeyBindings.cs
 ---
 
 import Shot from '@components/Shot.astro';
@@ -14,11 +17,66 @@ import Kbd from '@components/Kbd.astro';
 
 <Shot id="preferences/shortcuts" alt="Réglages ▸ Raccourcis" />
 
-La page Raccourcis liste chaque touche et chaque geste par groupes : Fichier, Transport, Arrangement et édition,
-Pistes, Session, Piano roll, Jouer des notes, Navigateur · aperçu, Manette et Souris. Tapez dans **Filtrer les
-raccourcis** pour en trouver un.
+La page Raccourcis liste chaque touche de Nota, par groupes comme dans les menus — Fichier, Édition,
+Affichage, Transport, Piste, Arrangement, Grille, Session, Piano roll, Appareils, Modular, Fichiers du
+navigateur, Jouer des notes, Réglages, Aide — et **chaque raccourci clavier peut être changé**. Les
+gestes de souris et de trackpad, la manette et les touches des listes et des champs de saisie (les
+flèches dans la palette de commandes, Retour / Échap / Tab pendant la saisie d’une valeur) sont listés
+dessous pour référence ; ils ne changent pas.
 
-La même liste, en entier, est dans [Raccourcis clavier](../../reference/shortcuts/).
+Les touches livrées avec Nota sont dans [Raccourcis clavier](../../reference/shortcuts/).
+
+## Changer une touche
+
+1. Cliquez sur la touche de l’action — ses touches, ou **—** quand elle n’en a pas. La ligne attend :
+   **Press a shortcut…**
+2. Appuyez sur la nouvelle combinaison. Rien dans Nota n’y réagit tant que la ligne attend ; la touche
+   s’affiche dans la ligne.
+3. Cliquez sur **Confirm** (ou appuyez sur <Kbd>Return</Kbd>). La touche fonctionne aussitôt — dans les
+   menus, les menus contextuels, les info-bulles et la palette de commandes aussi.
+
+**Cancel** (ou <Kbd>Esc</Kbd>) laisse la touche telle quelle. **Clear** la retire : l’action reste dans
+les menus et la [palette de commandes](../../basics/command-palette/), simplement sans touche. Pour donner
+à une action la touche <Kbd>Esc</Kbd> elle-même, cliquez sur **Assign Esc**.
+
+Chaque action peut avoir une **seconde touche** : cliquez sur le discret **+** après la première. Supprimer,
+par exemple, répond à <Kbd>⌫</Kbd> et à <Kbd>⌦</Kbd>.
+
+Une touche fonctionne là où son action fonctionne : une touche du piano roll quand le piano roll a le
+clavier, une touche de Session dans la grille Session, Copier et Coller dans ce que vous avez cliqué en
+dernier — clips, notes, pistes ou appareils.
+
+## Quand une touche est prise
+
+<Shot id="preferences/shortcuts-conflict" alt="Une touche déjà utilisée : Replace ou Cancel" />
+
+Avant tout enregistrement, la ligne dit quelle action répond déjà à cette touche là où celle-ci
+fonctionne — « ⌘D is used by Duplicate (everywhere) ». **Replace** donne la touche à cette action et la
+retire à l’autre (vous pourrez lui en donner une autre ensuite) ; **Cancel** laisse les deux comme avant.
+Rien n’est jamais retiré sans vous le demander.
+
+Une touche utilisée seulement dans une autre vue est permise : la ligne indique où elle sert aussi et
+laquelle l’emporte — la vue qui a le clavier (le piano roll, la grille Session, la chaîne d’appareils, le
+navigateur de fichiers, Modular) passe toujours en premier. Les touches que le système garde pour lui —
+<Kbd>⌘ Q</Kbd>, <Kbd>⌘ H</Kbd>, <Kbd>⌘ Space</Kbd> sur macOS, <Kbd>Alt F4</Kbd>, <Kbd>Alt Tab</Kbd> et la
+touche Windows ailleurs — sont refusées, avec la raison. Les raccourcis globaux des autres applications
+ne peuvent pas être détectés.
+
+## Voir et annuler vos changements
+
+<Shot id="preferences/shortcuts-edited" alt="Edited only : les touches changées, leur valeur par défaut et le bouton de réinitialisation" />
+
+Une touche changée a un point orange devant son action, sa valeur par défaut à côté et un bouton qui la
+rétablit (en demandant d’abord si une autre action a cette touche maintenant). **Edited only** ne montre
+que les touches changées ; **Reset all to defaults…** rétablit toutes les touches après confirmation.
+
+**Filtrer les raccourcis** trouve une action par son nom, son groupe ou sa touche — tapez <Kbd>⌘ T</Kbd>,
+`cmd t` ou `ctrl+shift+t` pour voir ce que fait cette touche.
+
+Vos touches sont gardées dans les réglages de Nota, seulement celles que vous avez changées : quand une
+mise à jour change une touche par défaut que vous n’avez pas touchée, vous recevez la nouvelle. Si une
+mise à jour donne à une nouvelle action une touche que vous utilisez déjà, la vôtre reste et la nouvelle
+attend sous **Needs a decision** en haut de la page.
 
 ## Molette de vélocité
 
