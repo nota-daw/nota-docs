@@ -12,6 +12,7 @@ sources:
   - src/managed/Nota.App/MainWindow.Input.cs
   - src/managed/Nota.App/ArrangementView.Controls.cs
   - src/managed/Nota.App/SnapChip.cs
+  - src/managed/Nota.App/MainWindow.TransportOverflow.cs
   - src/managed/Nota.Application/Editing/SnapGrid.cs
   - src/managed/Nota.Presentation/ViewModels/TransportViewModel.cs
 ---
@@ -50,7 +51,7 @@ readout does.
   and settles as you go on (it averages the last eight); the four dots count the beats. Change
   pace and it picks up the new tempo right away; pause for three seconds to start a new series.
   It is also in the command palette as **Tap tempo**, and on a narrow window it is the first of
-  these cells to step aside.
+  these cells to move into the [⋯ menu](#when-the-bar-is-too-narrow).
 - **Time signature** — drag each number; the lower one moves in powers of two
   (2, 4, 8, 16). The upper number is the beats in a bar: the metronome, the count-in and every
   view that counts bars follow it — the Arrangement's bar lines and numbers, the clip editors'
@@ -153,13 +154,34 @@ Grid**.
 - **DSP** — how much of each audio buffer the engine needs. Near 100% you'll hear dropouts; raise
   the buffer size or [freeze](../tracks/) a heavy track. Hover it to see the CPU used by the
   whole Nota process, in the same scale as your system monitor. When the window is narrow, the
-  meter folds to just its number and is the last thing on the row to hide.
+  meter folds to just its number and is the last thing on the row to move into the
+  [⋯ menu](#when-the-bar-is-too-narrow).
 - **Master** — master volume, with the master meter underneath.
 
 <Aside type="tip">
 The transport keys work in every Nota window, including a detached device window and the
 Mixer.
 </Aside>
+
+## When the bar is too narrow
+
+When the window is too narrow for the whole bar — or the interface scale too large — the bar
+hides the controls you need least, one after another: first the DSP meter's bar and the word
+**Remote**, then **Tap**, **Key**, **Remote**, **Follow**, **Automation**, **Mixer**, the time signature,
+**MIDI**, **Grid**, **Snap**, loop-record mode, **Loop**, **Master**, and last the **DSP**
+meter. Play, stop, record, the position, the tempo, the metronome and the view keys always
+stay.
+
+Nothing hidden is out of reach: the **⋯** key at the end of the bar lists every hidden
+control, left to right as they sit in the bar, and each works from there as it does on the
+bar. Switches (Loop, Follow, Snap, Automation, Mixer, MIDI learn) are check items with their
+shortcuts, **Grid** and **Time signature** open submenus, **Project key…** opens the key
+picker, **Tap tempo** keeps the menu open so you can tap on, and the **Master** fader drags
+right in the menu. An orange dot on **⋯** tells you something is in it. Widen the window and
+the controls go back to the bar.
+
+At any width the menu ends with **Interface scale** — the same setting as in
+[Settings ▸ Appearance](../../preferences/appearance/#interface-scale), one click away.
 
 ## Launch quantize
 
