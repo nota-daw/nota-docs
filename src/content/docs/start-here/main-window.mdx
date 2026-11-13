@@ -13,6 +13,7 @@ sources:
   - src/managed/Nota.App/BrowserView.cs
   - src/managed/Nota.App/MainWindow.Detail.cs
   - src/managed/Nota.App/MainWindow.MenuButton.cs
+  - src/managed/Nota.App/MainWindow.TransportOverflow.cs
 ---
 
 import { Aside } from '@astrojs/starlight/components';
@@ -48,6 +49,11 @@ From left to right:
 - **MIDI** — map a hardware controller to any control ([MIDI Learn](../../control/midi-learn/)).
 - **Remote** — play and control Nota from your phone ([Nota Remote](../../control/nota-remote/)).
 - **Master** — the master volume and meter.
+- **⋯** — whatever the bar has no room for, and the interface scale.
+
+On a narrow window, or at a large interface scale, the bar hides its least-needed controls
+and lists them in the **⋯** menu instead — see
+[When the bar is too narrow](../../basics/transport/#when-the-bar-is-too-narrow).
 
 Every control is explained in [Transport](../../basics/transport/).
 
