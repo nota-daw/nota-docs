@@ -1,0 +1,142 @@
+---
+title: "Theme files"
+description: "The JSON file behind a colour theme of your own: its keys, the colour tokens, the typeface, the corner roundness, and the checks Nota runs on it."
+sidebar:
+  order: 4
+since: "0.59.2"
+updated: "0.59.2"
+status: done
+sources:
+  - src/managed/Nota.Application/Themes/ThemeFile.cs
+  - src/managed/Nota.Application/Themes/SkinGeometry.cs
+  - src/managed/Nota.Application/Themes/ThemeFolder.cs
+  - src/managed/Nota.Application/Looks.cs
+  - src/managed/Nota.App/Theme/token-roles.json
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+A theme of your own is one JSON file in the themes folder (where it is and how the cards
+show it: [Appearance ▸ Your own themes](../../preferences/appearance/#your-own-themes)). This
+page is what goes inside. Don't write one from nothing: **Duplicate** a theme close to what you
+want and change the copy — it already has every colour in it.
+
+```json
+{
+  "formatVersion": 2,
+  "id": "night-shift",
+  "name": "Night Shift",
+  "kind": "dark",
+  "font": { "family": "IBM Plex Sans" },
+  "radius": { "scale": 0.5, "steps": { "card": 4 } },
+  "colors": {
+    "SurfaceAbyss": "#08080A",
+    "BgApp": "#0F0F12",
+    "…": "one entry for every token"
+  }
+}
+```
+
+## Keys
+
+| Key | What it holds |
+|---|---|
+| `formatVersion` | `1` (colours only), `2` (colours, and also `font` and `radius`) or `3` (also `font.values`) |
+| `id` | What Nota remembers your pick by: lower-case letters, digits and single hyphens, such as `night-shift`. Not the id of a built-in theme (`studio-dark`, `studio-light`, `ember-graphite`, `ember-paper`), not `system`, and not the id of another file in the folder |
+| `name` | The name on the card, 1–40 characters |
+| `kind` | `dark` or `light` — which row the card sits in, and which slot it can fill under **Follow system** |
+| `colors` | One `#RRGGBB` colour for every token below. A few tokens may be translucent and take `#AARRGGBB` |
+| `font` | Format 2 or 3, optional. `{ "family": "<font name>" }`; format 3 may add `"values": "<font name>"`, and then `family` may be left out |
+| `radius` | Format 2 or 3, optional. `{ "scale": …, "steps": { … } }` |
+
+The file name is up to you; Nota goes by the `id` inside. Files Nota writes itself
+(**Duplicate**, or an AI saving a theme) are named `<id>.json`. Nota reads only `.json` files of
+at most 256 KB, and an unknown key is a problem, so a typo doesn't pass silently.
+
+## Colours
+
+Every theme defines the same 122 tokens, one per role — a theme can't leave one out. They come
+in groups:
+
+| Group | What it colours |
+|---|---|
+| Surfaces | The window, panels, lanes, raised and sunken areas |
+| Grid + graph lines | Beat, bar and row lines; graph borders |
+| Text | From headings down to disabled text and axis labels |
+| Borders | Default and strong borders, seams, rules |
+| Accent | The accent family — replaced by your [accent colour](../../preferences/appearance/#accent-colour) unless it is **Orange** |
+| Status | Record, success, warning, mute, solo, and the ink drawn on them |
+| Data + modulation | Graph curves, modulation, thresholds, markers |
+| Tinted chrome | Selected and frozen track headers, the mute tint, the veil behind dialogs, tooltips |
+| Wells and depth | Knob tracks, grooves, device sections and headers, bevels |
+| Piano keys | White and black keys, full size and mini |
+| Track palette | The nine track colours, the master and the two returns |
+| Track-shade mix targets | What a track colour is mixed toward for lighter and darker shades |
+| Fluent accent ramp | The accent as the standard controls take it |
+| Shadows | Bevel, popover and modal shadows — translucent |
+
+The file lists them in this order. An AI assistant connected to Nota can give the full list with
+what each one is for (`get_theme_catalogue`, see [AI control over MCP](../../ai/mcp/#design-a-theme)).
+
+## Typeface
+
+`font.family` replaces Geist, Nota's own typeface, for all of Nota's text — menus, panels, device
+cards, the piano roll — at the same sizes and weights. Use the name your system shows for an
+installed font, such as `Helvetica Neue` or `Segoe UI`. Icons, plug-in windows and
+[Nota Remote](../../control/nota-remote/) keep their own look.
+
+A font that isn't installed on this computer is not an error: Nota uses Geist and the card says
+so. Without `font` the theme uses Geist.
+
+`font.values` (format 3) is the typeface for values and readouts: tempo, position, dB, Hz,
+counters. Without it, values are in Geist under the new look and in Geist Mono under the
+[classic look](../../preferences/appearance/#classic-look). A values font that isn't installed
+is a warning too, and the look's own typeface is used.
+
+```json
+"font": { "family": "IBM Plex Sans", "values": "IBM Plex Mono" }
+```
+
+## Corners
+
+`radius.scale` multiplies every rounded corner in Nota: `1` is the design (the default), `0`
+makes everything square, `2` twice as round. Any value from 0 to 2.
+
+`radius.steps` sets single steps of the corner scale exactly, in pixels from 0 to 24, and wins
+over `scale` for that step:
+
+| Step | Design px | Where |
+|---|---|---|
+| `card` | 9 | Device cards, toolbar groups, dialogs |
+| `group` | 7 | Icon buttons, chips, segment groups, device sections, search, menus |
+| `field` | 6 | Fields, dropdowns, clips, toggles, row highlights |
+| `cell` | 5 | Segment cells, track buttons, tooltips, Session slots |
+| `valueBar` | 4 | Value bars, sliders, fader caps |
+| `switch` | 3 | Switch tracks |
+| `fine` | 2 | Switch knobs, notes, bars inside a plot, meter channels |
+
+A step without its own value is the design value times `scale`, rounded to whole pixels. Docked
+panels stay square in every theme.
+
+A theme with a `radius` key keeps its corners under the
+[classic look](../../preferences/appearance/#classic-look). Without one it takes the classic
+corners there: 3 px for `card`, `group` and `field`, 2 px for the rest.
+
+## Checks
+
+Nota checks a theme file when it reads the folder. Two kinds of findings:
+
+- **Problems** — the file can't be worn: it isn't JSON, a key is missing or unknown, a colour
+  isn't a hex value, a token is missing, the id is taken, `font` or `radius` appear in format 1,
+  a number is out of range. Each is listed under the cards with the token or key it is about,
+  all of them at once.
+- **Warnings** — the theme loads, but something is hard to read. Nota measures the same pairs it
+  holds its own themes to: body text against the main surfaces (contrast 4.5 or more), fainter
+  text (3.0 and 2.5), the bright accent on the background, text on the accent, mute, solo,
+  record and track colours, and whether the track colours — and accent, mute, solo and record
+  — are far enough apart to tell from one another. A missing font is a warning too.
+
+<Aside>
+Warnings are advice, not rules: a theme with a warning or two may look exactly as you
+intended. Hover the count on the card to see what was measured.
+</Aside>

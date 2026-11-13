@@ -1,42 +1,72 @@
 ---
 title: "Appearance"
-description: "Settings ▸ Appearance — the colour theme (Dark, Light or Follow system, with Studio and Ember themes), the accent colour, how waveforms draw, which side the track headers sit on, the interface scale, the interface language, and AI control over MCP."
+description: "Settings ▸ Appearance — the look (New or Classic) and how clips draw, the colour theme (Dark, Light or Follow system, with Studio and Ember themes and your own), the accent colour, how waveforms draw, which side the track headers sit on, the interface scale and the text size."
 sidebar:
-  order: 8
-updated: "0.59.1"
+  order: 10
+updated: "0.59.2"
 status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
+  - src/managed/Nota.App/MainWindow.TransportOverflow.cs
   - src/managed/Nota.Application/Appearance.cs
   - src/managed/Nota.Application/Accent.cs
   - src/managed/Nota.App/PreferencesWindow.Accent.cs
+  - src/managed/Nota.App/PreferencesWindow.Skins.cs
+  - src/managed/Nota.Application/Looks.cs
+  - src/managed/Nota.App/Theme/NotaColourTheme.cs
   - src/managed/Nota.App/Controls/ColourPicker.cs
   - src/managed/Nota.Application/InterfaceScale.cs
   - src/managed/Nota.App/Theme/NotaUiScale.cs
-  - src/managed/Nota.App/PreferencesWindow.Language.cs
-  - src/managed/Nota.Application/Localization/UiLanguage.cs
-  - src/managed/Nota.App/LanguageDownloads.cs
-  - src/managed/Nota.Infrastructure/Languages/LanguageCatalog.cs
-  - src/managed/Nota.Infrastructure/Languages/InstalledLanguages.cs
 ---
 
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import { Steps } from '@astrojs/starlight/components';
 
 <Shot id="preferences/appearance" alt="Settings ▸ Appearance" />
 
+The interface language is on its own page, [Language](../language/); the editing switches that
+used to sit here are on [Editing](../editing/), and AI control on [AI control (MCP)](../mcp/).
+
 | Setting | What it does |
 |---|---|
-| **Colour theme** | **Dark**, **Light** or **Follow system**, then a theme from the cards below — see [Colour themes](#colour-themes) |
+| **Look** | **New** (the default) or **Classic**: the colours, tighter corners and monospaced values of Nota 0.59, over any theme. See [Classic look](#classic-look) |
+| **Clips** | **Solid** or **Tinted** — how clips draw in the Arrangement. Until you pick, it follows the look: **Solid** under Classic, **Tinted** under New. See [Classic look](#classic-look) |
+| **Colour theme** | **Dark**, **Light** or **Follow system**, then a theme from the cards below — a built-in one or [your own](#your-own-themes). See [Colour themes](#colour-themes) |
 | **Accent** | The colour of what is live or chosen: a preset swatch, or **Custom** for your own colour — see [Accent colour](#accent-colour) |
 | **Waveform** | How audio clips draw in the Arrangement: **Smooth** (the default), **Solid** or **Bars**. See [Waveform](#waveform) |
 | **Track headers** | **Left** or **Right** — which side of the Arrangement the track list sits on. **Right** starts the timeline at the left edge, next to the browser. The same switch is **View ▸ Track headers on the right** |
-| **Fade audio clips when splitting** | On by default. Splitting an audio clip writes a 4 ms fade at the cut. Drag the clip's corner handles to make it longer or shorter. MIDI clips are left alone |
-| **Label every note in the piano roll** | Off by default: the [piano roll](../../editing/piano-roll/)'s keys column names only the Cs. On: it names every note (C, C#, D …), a help while you learn them. Very short rows keep C only, so the names stay readable |
+| **Text size** | **Smaller**, **Default**, **Larger** or **Largest** — every text a step smaller or larger without changing the layout. Long labels may shorten with an ellipsis at the larger sizes |
+| **Menu bar** | Windows and Linux. **Hidden** (the default) — the whole menu is under the **☰** key at the start of the transport bar, and <Kbd>Alt</Kbd> or <Kbd>F10</Kbd> opens it. **Shown** — the classic row of File, Edit, View… under the title bar, and the ☰ key steps aside. The same switch is **View ▸ Show menu bar**. Not on macOS, where the menus are in the system menu bar |
 | **Interface scale** | **75 %**, **100 %**, **125 %**, **150 %** or **200 %** — the size of the whole interface. See [Interface scale](#interface-scale) |
-| **Language** | The language of Nota's menus, panels and messages: **English** (the default) or a language downloaded from nota-translations. It applies after a restart. See [Language](#language) |
-| **Open the detail panel when you select a track or clip** | Off (default): a click only selects and a double-click opens the [detail panel](../../views/detail-panel/); an open panel follows the selection. On: every selection opens it |
-| **AI control (MCP)** | Let an AI assistant work in Nota — the switch, the port, the status and **Copy config**. See [AI control over MCP](../../ai/mcp/) |
+
+## Classic look
+
+**Look** switches between Nota's current design (**New**) and the look of Nota 0.59
+(**Classic**). Classic changes three things and leaves the layout alone. Panels, device cards,
+the toolbar and every control stay where they are.
+
+- **Colours.** The built-in themes wear their 0.59 colours.
+- **Corners.** Controls, cards and clips are rounded to 3 px rather than 6–9 px.
+- **Type.** Values and readouts — tempo, position, dB, Hz, milliseconds, counters — are set in
+  Geist Mono, so digits line up in columns. Names and labels stay in Geist. Values that Nota
+  gained after 0.59 stay in Geist.
+
+The switch works with every colour theme and every mode. It applies at once to every open
+window, without a restart, and is saved. A [theme of your own](#your-own-themes) keeps its
+colours under Classic, and its typeface and corners if it sets them. Classic fills in only
+what the theme leaves out. [Nota Remote](../../control/nota-remote/) keeps the new look.
+
+**Clips** chooses how clips draw on the Arrangement lanes:
+
+| Style | Looks like |
+|---|---|
+| **Solid** | As in Nota 0.59: a block of the track colour with a darker band along the top carrying the name. Notes and waveform are drawn in a deeper shade of the same colour |
+| **Tinted** | A light tint of the track colour with a thin edge in it. Notes, waveform and name are drawn in the full track colour |
+
+Until you pick a style it follows the look: **Solid** under Classic, **Tinted** under New.
+Once you pick, your choice stays whatever the look. Session slots look the same in both
+styles.
 
 ## Waveform
 
@@ -62,8 +92,8 @@ colours; the chosen one is framed in the accent colour.
 
 | Mode | What Nota wears |
 |---|---|
-| **Dark** | The card you pick in the **Dark** row: **Studio Dark** (the default) or **Ember Graphite** |
-| **Light** | The card you pick in the **Light** row: **Studio Light** or **Ember Paper** |
+| **Dark** | The card you pick in the **Dark** row: **Studio Dark** (the default), **Ember Graphite** or one of your dark themes |
+| **Light** | The card you pick in the **Light** row: **Studio Light**, **Ember Paper** or one of your light themes |
 | **Follow system** | Your **In dark mode** theme while the computer is in dark mode and your **In light mode** theme while it is light, switching as soon as the computer does |
 
 Under **Follow system** the two rows are labelled **In dark mode** and **In light mode**, and
@@ -72,8 +102,63 @@ back returns to the same theme. Clicking a card in the other row while in **Dark
 switches the mode with it.
 
 Every pick applies at once to every open window — and to
-[Nota Remote](../../control/nota-remote/) while it follows Nota — and is saved. Themes change colours only — layout
-and sizes stay the same.
+[Nota Remote](../../control/nota-remote/) while it follows Nota — and is saved. The built-in
+themes change colours only. A theme of your own can also change the typeface and how round the
+corners are; layout and sizes stay the same in every theme.
+
+## Your own themes
+
+A theme is a small JSON file: a name, dark or light, and one colour for each part of Nota, plus
+— if you like — a typeface and corner roundness. Put one in the **themes folder** and it shows
+up as a card in its row, next to the built-ins, with **User theme** under its name. Its name is
+drawn in its own typeface.
+
+<Shot id="preferences/appearance-themes" alt="Settings ▸ Appearance with two user themes, the themes folder buttons and a file that could not be loaded" />
+
+The quickest start is a copy of a theme you like:
+
+<Steps>
+
+1. Right-click any card — a built-in too — and choose **Duplicate**. Nota writes a copy into the
+   themes folder, named after the theme with "copy" added, and wears it.
+
+2. Right-click the copy ▸ **Reveal in Finder** (**Show in Explorer** on Windows) and open the
+   file in a text editor. Change the colours, the `name`, and add a `font` or `radius` if you
+   want them. Under [Classic](#classic-look), **Duplicate** copies a built-in theme's 0.59
+   colours, so a classic copy is a quick start too. See [Theme files](../../reference/theme-files/).
+
+3. Back in Appearance, click **Reload** under the cards. Nota reads the folder again and wears
+   the changed theme at once.
+
+</Steps>
+
+**Open themes folder** opens the folder itself (Nota creates it if it isn't there yet):
+
+| System | Themes folder |
+|---|---|
+| macOS | `~/Library/Application Support/Nota/Themes` |
+| Windows | `%APPDATA%\Nota\Themes` |
+| Linux | `~/.config/nota/Themes` |
+
+Nota reads the folder when it starts, when you open Appearance and when you click **Reload**.
+Files you delete or break are handled quietly:
+
+- **A file Nota can't load** is listed under the cards, under **Some theme files could not be
+  loaded**, with every reason — a missing colour, a bad hex value, an id a built-in already uses.
+  It never opens a dialog, and the other themes still load.
+- **A theme that is hard to read** still loads. Its card says **2 warnings** (or how many);
+  hover it to see which text is too faint on which surface, or which track colours are too alike.
+- **A typeface you don't have** is replaced by Nota's own Geist, with a warning on the card.
+- **The theme you wear disappears** (deleted, renamed, broken): Nota wears Studio Dark — Studio
+  Light while **Follow system** is in light mode — and says so above the cards. Your choice is
+  kept: put the file back, click **Reload**, and Nota wears your theme again.
+
+Your [accent colour](#accent-colour) is worn in your themes too. With the accent on **Orange**
+(the default), a theme keeps its own accent colours; any other pick replaces them, as in the
+built-ins.
+
+To design a theme together with an AI assistant — it can render previews of every part of Nota
+in your colours before you save — see [AI control over MCP](../../ai/mcp/#design-a-theme).
 
 ## Accent colour
 
@@ -114,54 +199,9 @@ can't resize grow and shrink with the scale); windows you
 open afterwards start at a matching size. At a large scale on a small screen some panels
 are tighter than usual.
 
+The scale is also one click away in the **⋯** menu at the end of the transport bar
+(**Interface scale**), handy if you switch between two sizes often.
+
 The scale is on top of the operating system's own display scaling, and the timeline, piano
 roll and audio editor still zoom their content as before. Plug-in windows are drawn by the
 plug-in and keep their own size.
-
-## Language
-
-Sets the language of Nota's menus, panels, dialogs, tooltips, status and error messages and the
-command palette. Nota comes in **English**; every other language is downloaded from
-[nota-translations](https://github.com/nota-daw/nota-translations), where translators keep them.
-The list shows English, the languages you have, and — when Nota is online — the ones you can
-download, each in its own name with how much of this version it covers (**99 %**: a few new texts
-still show in English).
-
-Pick a language you don't have and Nota downloads it right there (a small bar shows the
-progress), checks it against its published checksum and keeps it, so it works offline from then
-on. If the download fails the row says why and nothing changes. When a better translation of your
-language is published, an **Update** button appears beside the list; **Remove** deletes the
-chosen language (Nota goes back to English from the next start).
-
-The choice is saved and applies the next time Nota starts. Right after you pick one the row says
-**Applies after restart**, with a small **Restart** button beside it: it closes Nota the usual way
-(asking first about unsaved changes — cancel that and Nota stays open) and opens it again in the
-new language. Pick the language that is running again and the note goes away. A copy of Nota that
-can't start itself again (a development build) says **Applies the next time Nota starts**
-instead.
-
-If you used French before Nota started downloading languages, it fetches French in the
-background on its first start, still in English, and the status bar says **Français is ready —
-restart to use it**; click it to restart. With **Check for updates automatically** off (Settings ▸
-[Updates](../updates/)) Nota never goes online by itself: the row offers **Show available
-languages**, and you download a language by choosing it.
-
-**Load file…** is for translators: pick a language file from your disk and Nota runs in it after
-a restart, reading it from that place each time, so you can edit and restart to see your changes.
-The entries it can't use are listed under the row (and those show in English). How to write and
-publish a translation is in the nota-translations README.
-
-What the language doesn't touch:
-
-- **Device and parameter names** — "Cutoff", "Attack", "Reverb", "Nota Volt" — stay in English
-  in every language, as in studio vocabulary and tutorials. The tooltips and descriptions
-  around them are translated.
-- **Your own names** for projects, tracks, clips, scenes and sections are never translated, and
-  the language never changes what is saved in a project.
-- [Nota Remote](../../control/nota-remote/), the [AI control](../../ai/mcp/) tool descriptions and
-  the log files are not translated.
-
-On a Mac, the system's own text — the application menu's **Hide** and **Quit**, the open and
-save panels — follows the language too, from the next start. English is the default whatever
-your operating system's language is: nothing changes until you choose. A text that has no
-translation yet shows in English.

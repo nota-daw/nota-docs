@@ -3,13 +3,15 @@ title: Modular
 description: A track's devices as a signal graph, and CV modulation — patch LFOs, envelopes, MIDI and macros into any parameter.
 sidebar:
   order: 3
-updated: "0.58.1"
+updated: "0.59.2"
 status: done
 sources:
   - src/managed/Nota.App/ModularView.cs
   - src/managed/Nota.App/ModularView.Scope.cs
   - src/native/nota.engine/src/engine/Modulation.h
   - src/native/nota.engine/src/engine/Engine_Modulation.cpp
+  - src/managed/Nota.App/ArrangementView.HeadersOnly.cs
+  - src/managed/Nota.Presentation/ModularBrowserItems.cs
 ---
 
 import { Aside } from '@astrojs/starlight/components';
@@ -20,12 +22,20 @@ The Modular view draws a track's devices as a graph — **MIDI effects → instr
 track output** — and lets you patch **CV modulation** between them with cables. Switch to it
 with **Modular** in the transport bar.
 
-<Shot id="views/modular" alt="The Modular view showing the Keys track: Nota Pentad, EQ-8 and Chamber as nodes" />
+<Shot id="views/modular" alt="The Modular view: the Modular tab in the browser, the track headers, and the Keys track with Nota Pentad, EQ-8 and Chamber as nodes" />
 
 ## Track and Global
 
-- **Track** shows the selected track's chain. Pick another track in the list on the left.
-- **Global** shows every track as an island, with the connections between tracks.
+- **Track** shows the selected track's chain. Beside the canvas are the same track headers as in
+  the arrangement — groups, mute, solo, arm, volume, pan, meters, the track menu, dragging to
+  reorder — on the side **View ▸ Track headers on the right** picks. Click a header to see that
+  track's graph. A group's header shows the group's own effects: **Tracks in** → its effects →
+  output; patch them like any track's.
+- **Global** shows every track as an island, with the connections between tracks; the headers
+  step aside.
+
+To open a track here from the arrangement or the Session view, right-click its header ▸ **Show
+in Modular**.
 
 Move around the canvas with <Kbd>Space</Kbd> + drag, zoom with <Kbd>⌘</Kbd> + scroll, and press
 <Kbd>F</Kbd> (or **Fit**) to fit everything on screen. Node positions are saved with the project.
@@ -47,7 +57,11 @@ Cables are coloured by what they carry: audio, MIDI and CV each have their own c
 
 ## Modulators
 
-**+ Add** puts a modulator on the canvas. Its **CV out** port is what you patch:
+Modulators come from the browser's **Modular** tab, which is on the rail while Modular is the
+view: drag one to a spot on the canvas, or double-click it to drop it in the middle. Each row says
+what kind of node it is and what it does, and the search finds a node by its name, its kind or a
+word for what it does ("wobble" finds the LFO). The [command palette](../../basics/command-palette/)
+lists them too. A new node arrives unconnected; its **CV out** port is what you patch:
 
 | Modulator | Puts out |
 |---|---|
@@ -68,8 +82,8 @@ links them. Click the cable to set its **depth** and **mode** — **Add** (on to
 position), **Multiply** (scaled by it) or **Override** (replacing it); select it and delete it
 to remove it. Several modulations on one knob each get their own input and cable.
 
-To modulate something on **another track**, drag the CV output onto that track in the list on
-the left and pick a parameter — or right-click a knob ▸ **Modulate from another track**.
+To modulate something on **another track**, drag the CV output onto that track's header beside
+the canvas and pick a parameter — or right-click a knob ▸ **Modulate from another track**.
 
 ## Move a knob with another track's loudness
 
@@ -77,13 +91,14 @@ The **Envelope Follower** is Nota's peak controller: it turns how loud a track i
 drive any knob, on that track or another. The classic use is ducking — the bass dips each time the
 kick hits:
 
-1. Select the kick track and open **Modular**. **+ Add ▸ Envelope Follower**.
+1. Select the kick track and open **Modular**. Drag **Envelope Follower** from the browser's
+   **Modular** tab onto the canvas.
 2. Set its **Attack** short (a few ms) so it catches the hit, and its **Release** to how long the
    dip should last (100–300 ms is a good start). **Depth** scales the whole signal.
 3. On the bass track, right-click the knob to move — the Gain of
    [Nota Utility](../../devices/audio-effects/utility/), say, or a filter's cutoff ▸
    **Modulate from another track** ▸ the kick's follower (it's listed as **Env 1 · Kick**, say). (Or drag the follower's
-   **CV out** onto the bass track in the list on the left.)
+   **CV out** onto the bass track's header.)
 4. Click the cable and drag **depth** below zero: the knob now drops when the kick plays. A
    positive depth pushes it up instead.
 

@@ -1,9 +1,9 @@
 ---
 title: "Audio"
-description: "Settings ▸ Audio — output and input devices, sample rate, buffer size and latency, WASAPI exclusive mode, ASIO on Windows, a test tone and a CPU check."
+description: "Settings ▸ Audio — sample rate, buffer size and latency, WASAPI exclusive mode, ASIO on Windows, and a CPU check. The devices are on Outputs and Inputs."
 sidebar:
   order: 1
-updated: "0.58.1"
+updated: "0.59.2"
 status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
@@ -18,11 +18,13 @@ Open Settings with **File ▸ Settings…**, or **Settings** on the start window
 
 <Shot id="preferences/audio" alt="Settings ▸ Audio" />
 
+Which device Nota plays through and records from is on [Outputs](../outputs/) and
+[Inputs](../inputs/); this page sets how it runs.
+
 ## Audio device
 
 | Setting | What it does |
 |---|---|
-| **Output** · **Input** | The audio device Nota plays through and records from |
 | **Sample rate** | Device default, 44 100, 48 000, 88 200 or 96 000 Hz |
 | **Buffer size** | Device default, 64, 128, 256, 512, 1024 or 2048 samples |
 | **Exclusive mode** (Windows) | WASAPI exclusive — the lowest latency, but other apps go silent while Nota plays |
@@ -44,13 +46,13 @@ driver that came with your audio interface, for the lowest, steadiest latency. W
 driver installed, the ASIO option is greyed out; install your interface's driver, or a generic
 one such as FlexASIO.
 
-With ASIO chosen, the rows change:
+With ASIO chosen, the rows change. The driver is both output and input; its output and input
+channel pairs are picked on [Outputs](../outputs/#asio-windows) and [Inputs](../inputs/#asio-windows).
 
 | Setting | What it does |
 |---|---|
 | **Driver** | The ASIO driver to use. Nota opens one driver at a time and lets go of it when you switch away, so other programs can use it |
 | **Driver settings…** | Opens the driver's own panel. Change the buffer size there — Nota picks the change up within a couple of seconds and keeps playing |
-| **Output** · **Input** | The channel pair Nota plays through and records from, named as the driver names them (**Out 1 + 2**, **Analog 3 + 4**). Every other output stays silent. A driver without inputs says **No inputs on this driver** |
 | **Sample rate** | A request: if the driver can't run at that rate, the row goes back and says so |
 | **Buffer size** | Read-only — set in the driver's settings |
 
@@ -64,12 +66,11 @@ settings…** was) goes back to the driver once it's free.
 
 ## Test
 
-- **Output check** — **Play test tone**: a quiet 440 Hz sine through the master, to check you hear
-  Nota at all.
 - **Performance** — **CPU check** measures the audio thread's load for 5 seconds. Play your project
   meanwhile for a real-world figure: it reports the average, the peak and any dropouts.
 
 <Aside>
-No sound with Bluetooth headphones on macOS? Pick them as the Output here; see also
+No sound at all? **Play test tone** on [Outputs](../outputs/). With Bluetooth headphones on macOS,
+pick them as the **Output** there; see also
 [Troubleshooting](../../reference/troubleshooting/).
 </Aside>

@@ -11,6 +11,7 @@ using Avalonia.Threading;
 using Avalonia.VisualTree;
 using Nota.App;
 using Nota.Application;
+using Nota.Application.Input;
 using Nota.Application.Localization;
 using Nota.Infrastructure;
 using Nota.Presentation;
@@ -22,11 +23,13 @@ namespace NotaDocsShots;
 /// Every scene the manifest can ask for. A scene builds a window, renders it at 2× and saves
 /// the whole frame or a cropped control. Args come from the manifest entry's `args`.
 ///
-///   device    instrument | effect | midi (kind id), preset, tab, card (index in the chain),
+///   device    instrument | effect | midi (kind id), preset, tab, card (index in the chain), wt1 / wt2 (a demo sample as Aurora's wavetable),
+///             live (blocks played with the card open), set ("param=value,…" before the audio runs), blocks,
 ///             clip (a demo sample on an effect's track), sidechain + sidechainName (a demo sample on
 ///             a second track routed as the effect's key),
 ///             chainInstrument (an Instrument Rack's chain 1 instrument), trackName, window (click this text — a
-///             chain device's "Open" — and shoot the device window it opens)
+///             chain device's "Open" — and shoot the device window it opens), strata (a scripted take on a Strata
+///             looper; strataMute mutes its layer 1)
 ///   main      view (arrangement | session | modular), select (track name), clip (track name,
 ///             + clipIndex, audio: true for an audio clip) to open in the clip editor, with ("Track:clipIndex,…" —
 ///             more MIDI clips selected with it, so they open together), automation, tab (browser tab index),
@@ -36,10 +39,17 @@ namespace NotaDocsShots;
 ///   palette   the command palette (⌘⇧P) over the main window: view, select (track), card (index of
 ///             an audio effect to select in Devices), query, down (rows to move), mods (alt | cmd | shift),
 ///             origin (devices: the Devices panel had the focus), crop (true: just the palette card)
-///   mixer     width, height
+///   mixer     width, height, group, fold, compact, select
+///             cue ("Track,Track": a pretend 4-output device with Cue on 3/4 and the click to Cue, these
+///             demo tracks in Cue), mute (a demo track to mute), cueMissing (the device shrinks to 2
+///             outputs after, so the Cue pair is missing)
 ///             update (available | downloading | ready: a newer release in the status bar, element: StatusBar)
-///   prefs     page (index in Settings' sidebar, 0 = Audio), tab (a switch on the page),
-///             check (Updates: run a check against the local feed first), update (as main)
+///   prefs     id (the page id: Audio, Outputs, Inputs, MCP, Appearance, Language, Editing …; or
+///             page, its index in the sidebar, for older apps), tab (a switch on the page),
+///             height, cue (as mixer: Output pairs on a pretend 4-output device),
+///             check (Updates: run a check against the local feed first), update (as main),
+///             themes (Appearance: user themes from shots/app/themes in the themes folder, one broken),
+///             scrollTo (a text on the page: scroll its page so that text sits near the top)
 ///   connect   the Connect phone popup, with Nota Remote switched on
 ///   start · about · whatsnew · export · unsaved
 /// </summary>
@@ -188,11 +198,60 @@ public sealed class Scenes
                 }
             }
         }
+        // `wt1` / `wt2`: a demo sample imported as Aurora Osc 1 / Osc 2's wavetable (nota
+        // specs/053). Called by reflection so the harness still builds against an app without it.
+        foreach (var (key, osc) in new[] { ("wt1", 0), ("wt2", 1) })
+            if (shot.Str(key) is string wt)
+            {
+                var et = _engine.GetType();
+                var build = et.GetMethod("AuroraTableBuild") ?? throw new InvalidOperationException("this Nota has no wavetable import");
+                var a = new object?[] { _demo.Sample(wt), null };
+                if ((int)build.Invoke(_engine, a)! != 0) throw new InvalidOperationException($"wavetable '{wt}' did not build");
+                et.GetMethod("AuroraSetTable")!.Invoke(_engine, new object[] { track, osc, a[1]!, false });
+                et.GetMethod("AuroraTableFree")!.Invoke(_engine, new[] { a[1]! });
+            }
         // A little audio through the device so meters, spectra and envelopes have something to draw.
         _engine.Play();
         var buf = new float[1024 * 2];
-        for (int k = 0; k < 40; k++) _engine.RenderOffline(buf, 1024);
+        // `set`: "param=value,…" normalised device params before the audio runs.
+        if (shot.Str("set") is string sets)
+            foreach (var kv in sets.Split(','))
+            {
+                var pv = kv.Split('=');
+                _engine.DeviceSetParam(track, deviceIndex, int.Parse(pv[0]), float.Parse(pv[1], System.Globalization.CultureInfo.InvariantCulture));
+            }
+        for (int k = 0, nb = shot.Int("blocks") ?? 40; k < nb; k++) _engine.RenderOffline(buf, 1024);
         _engine.StopTransport();
+        // `strata`: a take on a looper (Quantize Off while it records) — two bars on the first
+        // pass, a full overdub, then halfway through a third pass, so one layer is still recording.
+        // `strataMute` mutes layer 1; layer 2 sits at −3.5 dB.
+        if (shot.Str("strata") is not null)
+        {
+            void Blocks(int n) { for (int k = 0; k < n; k++) _engine.RenderOffline(buf, 1024); }
+            // Strata applies a command at its next step (the first pass waits for the song's bar),
+            // so render until the looper's scope shows no command pending (S_Pending in the card).
+            var sc = new float[64];
+            void Settle()
+            {
+                for (int k = 0; k < 400; k++)
+                {
+                    int n = _engine.DeviceScope(track, deviceIndex, sc, sc.Length);
+                    if (n > 33 && sc[33] < 0) return;
+                    _engine.RenderOffline(buf, 1024);
+                }
+                throw new InvalidOperationException("Strata never applied the command");
+            }
+            _engine.DeviceSetParam(track, deviceIndex, 3, 0f);
+            _engine.Seek(0); _engine.Play();
+            _engine.DeviceAction(track, deviceIndex, 0, 0, 0); Settle(); Blocks(160);   // Record: the first pass, just short of two bars
+            _engine.DeviceAction(track, deviceIndex, 2, 0, 0); Settle(); Blocks(2);   // Play: close the loop (at the song's next bar)
+            _engine.Seek(0); _engine.DeviceAction(track, deviceIndex, 1, 0, 0); Settle(); Blocks(174);   // Overdub: layer 2
+            _engine.Seek(0); _engine.DeviceAction(track, deviceIndex, 1, 0, 0); Settle(); Blocks(80);    // Overdub: layer 3, half way
+            if (shot.Str("strataMute") is not null) _engine.DeviceAction(track, deviceIndex, 6, 0, 1f);
+            _engine.DeviceAction(track, deviceIndex, 7, 1, -3.5f);
+            _engine.DeviceSetParam(track, deviceIndex, 3, 1f);
+            Blocks(4);
+        }
 
         var view = new DeviceChainView(_engine, _presets, null, Kits);
         // An instrument preset names itself in the card's picker, as when the app applies it.
@@ -208,7 +267,8 @@ public sealed class Scenes
         Pump();
         view.RefreshSynthLive();
         Pump();
-        // `tab` clicks one control by its text, or a chain of them: "L>Filter".
+        // `tab` clicks one control by its text, or a chain of them: "L>Filter". When the text shows
+        // more than once, "Mod#2" picks the second (in the window's visual order).
         if (shot.Str("tab") is string tab)
             foreach (var part in tab.Split('>', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries))
             {
@@ -218,6 +278,14 @@ public sealed class Scenes
             }
         view.RefreshSynthLive();
         Pump();
+        // `live`: keep the song playing with the card open, so views that read audio while they
+        // are shown (Lens) have something to draw; the transport stops after the shot.
+        bool live = shot.Int("live") is int lv && lv > 0;
+        if (live)
+        {
+            _engine.Play();
+            for (int k = 0; k < shot.Int("live"); k++) { _engine.RenderOffline(buf, 1024); view.RefreshSynthLive(); Pump(1); }
+        }
         if (shot.Str("window") is string open)
         {
             // Pop a device out (a rack chain's GUI button) and shoot its device window.
@@ -234,6 +302,7 @@ public sealed class Scenes
         var chain = view.GetVisualDescendants().OfType<StackPanel>().First(p => p.Orientation == Orientation.Horizontal && p.Children.Count > 0 && p.Bounds.Height > 200);
         var card = chain.Children[shot.Int("card") ?? 0];
         Save(win, shot.Id, card);
+        if (live) _engine.StopTransport();
         win.Close();
     }
 
@@ -380,13 +449,16 @@ public sealed class Scenes
         // The browser tab sticks between shots, so always set it (Instruments by default).
         var browser = mw.FindControl<BrowserView>("Browser")!;
         typeof(BrowserView).GetMethod("SelectTab", Private)!.Invoke(browser, new object[] { shot.Int("tab") ?? 0 });
+        var bvm = (BrowserViewModel)typeof(BrowserView).GetField("_vm", Private)!.GetValue(browser)!;
+        var files = FilesScene(shot, browser, bvm);
         if (shot.Str("pick") is string pick)
         {
             // Open a folder (`expand`) and select a row in it, as a click would: the preview
             // player below the list takes the row.
             var list = ((ListBox[])typeof(BrowserView).GetField("_pages", Private)!.GetValue(browser)!)[shot.Int("tab") ?? 0];
             BrowserItem? Row(string name) => (list.ItemsSource as System.Collections.IEnumerable)?.OfType<BrowserItem>().FirstOrDefault(r => r.Name == name);
-            if (shot.Str("expand") is string folder)
+            // Folders stay open between shots: open it only when the row isn't showing yet.
+            if (shot.Str("expand") is string folder && Row(pick) is null)
             {
                 var vm = (BrowserViewModel)typeof(BrowserView).GetField("_vm", Private)!.GetValue(browser)!;
                 vm.ToggleExpand(Row(folder) ?? throw new ArgumentException($"no folder '{folder}'"));
@@ -407,9 +479,110 @@ public sealed class Scenes
         else HideUpdate();
         var element = shot.Str("element") is string el ? mw.FindControl<Control>(el) ?? throw new ArgumentException($"no control '{el}'") : null;
         Save(mw, shot.Id, element);
+        files?.Invoke();   // the Files tab back to one folder, the tree, nothing marked
         // The demo song is shared by every shot: back to standard rows, open the folded cards again.
         if (shot.Int("rows") is not null) Invoke(tl, "SetAllTrackHeights", 64.0);
         if (shot.Str("select") is string sel && shot.Str("fold") is string unfold) Fold(mw, _demo.Track(sel), unfold, false);
+    }
+
+    // The Files and Projects tabs (spec 092): `places: true` adds a second sample folder
+    // ("Splice Packs"), `browse: "<folder under Nota Samples>"` switches Files to the browse
+    // view there, `locate: "<file under Nota Samples>"` marks that file as the selected clip's,
+    // `projects: true` fills the projects folder with three saved projects. Returns what puts
+    // the shared state back after the shot.
+    private Action? FilesScene(Shot shot, BrowserView browser, BrowserViewModel vm)
+    {
+        var settings = (ISettingsService)App.Services!.GetService(typeof(ISettingsService))!;
+        var samples = settings.ResolvedSamplesFolder();
+        var undo = new List<Action>();
+        void Mode(bool on) => typeof(BrowserView).GetMethod("SetBrowseMode", Private)!.Invoke(browser, new object[] { on });
+        // The tree is walked in the background: wait for the whole of it.
+        void Rebuild()
+        {
+            // Let the rebuilds a folder change posts start first; ours, the last, wins.
+            for (int i = 0; i < 10; i++) Pump(5);
+            var t = vm.RebuildSamplesAsync();
+            while (!t.IsCompleted) Pump(2);
+            Pump(10);
+        }
+        if (shot.Bool("places"))
+        {
+            var data = Environment.GetEnvironmentVariable("NOTA_DATA_DIR")!;
+            var splice = Path.Combine(data, "Splice Packs");
+            Directory.CreateDirectory(Path.Combine(splice, "Vocals"));
+            foreach (var (sub, file, src) in new[] { ("Vocals", "Vox chop 90 bpm.wav", "pad"), ("", "Riser.wav", "chords") })
+            {
+                var dst = Path.Combine(splice, sub, file);
+                if (!File.Exists(dst)) File.Copy(_demo.Sample(src), dst);
+            }
+            settings.AddSampleFolder(splice);
+            settings.RenameSampleFolder(settings.ResolvedSampleFolders().Count - 1, "Splice");
+            Rebuild();
+            foreach (var root in vm.Samples.Where(r => r.PlaceIndex >= 0).ToList()) vm.ToggleExpand(root);
+            for (int i = 0; i < 20; i++) Pump(5);
+            // Headless, the list only lays out when asked: walk it to its last row and back so
+            // every row is realised before the capture.
+            var list = ((ListBox[])typeof(BrowserView).GetField("_pages", Private)!.GetValue(browser)!)[3];
+            if (vm.Samples.Count > 0)
+            {
+                list.ScrollIntoView(vm.Samples[^1]); browser.UpdateLayout(); Pump(5);
+                list.ScrollIntoView(vm.Samples[0]); browser.UpdateLayout(); Pump(5);
+            }
+            undo.Add(() =>
+            {
+                var all = settings.ResolvedSampleFolders();
+                for (int i = all.Count - 1; i > 0; i--) settings.RemoveSampleFolder(i);
+                Rebuild();
+            });
+        }
+        if (shot.Str("browse") is string rel)
+        {
+            var dir = Path.Combine(samples, rel);
+            // A folder with every kind of file: the ones Nota can't add show faded.
+            File.WriteAllText(Path.Combine(dir, "Read me.txt"), "Pack notes.\n");
+            File.WriteAllBytes(Path.Combine(dir, "Cover.png"), new byte[] { 0x89, 0x50, 0x4E, 0x47 }.Concat(new byte[96_000]).ToArray());
+            File.WriteAllBytes(Path.Combine(dir, "Groove.mid"), new byte[] { 0x4D, 0x54, 0x68, 0x64, 0, 0, 0, 6, 0, 0, 0, 1, 0, 0x60, 0x4D, 0x54, 0x72, 0x6B, 0, 0, 0, 4, 0, 0xFF, 0x2F, 0 });
+            Mode(true);
+            vm.BrowseTo(dir);
+            for (int i = 0; i < 20; i++) Pump(5);
+            undo.Add(() =>
+            {
+                Mode(false);
+                foreach (var f in new[] { "Read me.txt", "Cover.png", "Groove.mid" }) File.Delete(Path.Combine(dir, f));
+                Rebuild();
+            });
+        }
+        if (shot.Str("locate") is string loc)
+        {
+            vm.SetLocatedPath(Path.Combine(samples, loc));
+            Pump(10);
+            undo.Add(() => vm.SetLocatedPath(null));
+        }
+        if (shot.Bool("projects"))
+        {
+            var root = settings.ResolvedProjectsFolder();
+            var now = DateTime.Now;
+            foreach (var (name, bpm, key, tracks, beats, ago) in new[]
+            {
+                ("Night Drive", 120.0, "Am", 7, 128.0, 0.2), ("Sketch 14", 90.0, (string?)null, 4, 64.0, 26.0), ("Remix final", 128.0, "F#m", 23, 388.0, 75.0),
+            })
+            {
+                var b = Path.Combine(root, name + ".nota");
+                Directory.CreateDirectory(b);
+                var tr = string.Join(",", Enumerable.Range(0, tracks).Select(i => i == 0
+                    ? $"{{\"type\":1,\"midiClips\":[{{\"startBeat\":0,\"lengthBeats\":{beats}}}]}}" : "{\"type\":1}"));
+                var keyJson = key is null ? "" : $",\"key\":\"{key}\"";
+                var manifest = Path.Combine(b, "project.json");
+                File.WriteAllText(manifest, $"{{\"transport\":{{\"bpm\":{bpm}{keyJson}}},\"tracks\":[{tr}]}}");
+                File.SetLastWriteTime(manifest, now.AddHours(-ago));
+            }
+            vm.OpenProjectPath = Path.Combine(root, "Night Drive.nota");
+            vm.RebuildProjects();
+            vm.ProjectSummariesTask.Wait(TimeSpan.FromSeconds(10));
+            for (int i = 0; i < 20; i++) Pump(5);
+            undo.Add(() => vm.OpenProjectPath = null);
+        }
+        return undo.Count == 0 ? null : () => { foreach (var u in undo) u(); Pump(10); };
     }
 
     // Fold (or unfold) devices on a track and redraw its chain. Through reflection, so the
@@ -480,6 +653,7 @@ public sealed class Scenes
             groupId = _engine.CreateGroup(members.Split(',').Select(_demo.Track).ToArray());
             if (groupId > 0) _engine.SetTrackName(groupId, gname);
         }
+        var cue = shot.Str("cue") is string cueTracks ? CueOn(cueTracks, shot.Str("mute"), shot.Bool("cueMissing")) : null;
         var view = new MixerView(_engine);
         var foldType = typeof(App).Assembly.GetType("Nota.App.GroupFold");
         var foldProp = typeof(MixerView).GetProperty("Fold", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -500,19 +674,26 @@ public sealed class Scenes
         Save(win, shot.Id);
         win.Close();
         if (groupId > 0) _engine.Ungroup(groupId);   // the demo song is shared by every shot
+        cue?.Invoke();
     }
 
     private void Prefs(Shot shot)
     {
         var settings = (ISettingsService)App.Services!.GetService(typeof(ISettingsService))!;
         var vm = App.Services!.GetService(typeof(MainWindowViewModel)) as MainWindowViewModel;
+        var themes = shot.Bool("themes") ? SeedThemes() : null;
+        var cue = shot.Str("cue") is string cueTracks ? CueOn(cueTracks, null, false) : null;
         var win = new PreferencesWindow(new SettingsViewModel(settings), vm);
         Scale2(win);
         win.Show();
         Pump(10);
+        if (shot.Int("height") is int h) { win.Height = h * 2; Pump(10); }   // after Show: the window restores its size
         if (shot.Bool("check")) CheckUpdates(settings);
         else if (shot.Str("update") is string stage) FakeUpdate(stage);
-        Invoke(win, "Select", shot.Int("page") ?? 0);
+        // Pages are chosen by id (spec 088: "Audio", "Outputs", "MCP" …); page (an index) is kept
+        // for app versions that predate it.
+        if (shot.Str("id") is string id) win.ShowPage(id);
+        else Invoke(win, "Select", shot.Int("page") ?? 0);
         Pump(30);
         // A page's own switch (Downloads: "Sample Packs", "AI Models"); registries load from the
         // network, so give the list a moment.
@@ -522,8 +703,127 @@ public sealed class Scenes
             for (int i = 0; i < 40; i++) Pump(5);
         }
         else for (int i = 0; i < 20; i++) Pump(5);
+        KeyEditor(win, shot);
+        if (shot.Str("scrollTo") is string target)
+        {
+            ScrollTo(win, target);
+            for (int i = 0; i < 10; i++) Pump(5);
+        }
         Save(win, shot.Id);
+        if (shot.Str("keyCapture") is not null) Invoke(win, "EndEdit", (string?)null);
         win.Close();
+        if (shot.Bool("keyEdits")) KeyBindings()?.GetType().GetMethod("ResetAll")!.Invoke(KeyBindings(), null);
+        if (themes is not null) Directory.Delete(themes, true);
+        cue?.Invoke();
+    }
+
+    // ---- Settings ▸ Shortcuts editor (nota#61, specs/096), by reflection so the harness builds
+    // against app versions that predate it -----------------------------------------------------
+
+    private static object? KeyBindings() =>
+        typeof(App).Assembly.GetType("Nota.App.Input.Keys")?.GetProperty("Bindings")?.GetValue(null);
+
+    // keyEdits: a few custom keys (Split ⌘T, Metronome cleared, the C note on Q, a second key for
+    // Transpose up); keyFilter: text in the page's filter; keyEditedOnly; keyCapture (an action
+    // id) + keyPress (glyphs): that row mid-capture with the key proposed.
+    private void KeyEditor(Window win, Shot shot)
+    {
+        if (KeyBindings() is not { } kb) return;
+        var slotType = kb.GetType().Assembly.GetType("Nota.Application.Input.KeySlot")!;
+        var set = kb.GetType().GetMethod("Set")!;
+        object Slot(string name) => Enum.Parse(slotType, name);
+        if (shot.Bool("keyEdits"))
+        {
+            set.Invoke(kb, new object?[] { "edit.split", Slot("Primary"), Shortcut.Parse("⌘T"), null });
+            set.Invoke(kb, new object?[] { "transport.metronome", Slot("Primary"), null, null });
+            set.Invoke(kb, new object?[] { "notes.c", Slot("Primary"), Shortcut.Parse("Q"), null });
+            set.Invoke(kb, new object?[] { "roll.transposeUp", Slot("Alternative"), Shortcut.Parse("⌥K"), null });
+            Pump(10);
+        }
+        if (shot.Bool("keyEditedOnly"))
+        {
+            ClickText(win, Loc.T("keys.ui.edited_only"));   // its label toggles the switch, as a click does
+            Pump(10);
+        }
+        if (shot.Str("keyFilter") is string f)
+        {
+            win.GetVisualDescendants().OfType<TextBox>().First(t => t.Classes.Contains("search")).Text = f;
+            Pump(10);
+        }
+        if (shot.Str("keyCapture") is string id)
+        {
+            Invoke(win, "StartCapture", id, Slot("Primary"));
+            if (shot.Str("keyPress") is string g) Invoke(win, "Propose", Shortcut.Parse(g));
+            for (int i = 0; i < 10; i++) Pump(5);
+        }
+    }
+
+    // Scroll the page holding <text> so that text sits a little below the page's top edge.
+    private static void ScrollTo(Window win, string text)
+    {
+        var candidates = Translations(text).Append(text).ToList();
+        var texts = win.GetVisualDescendants().OfType<TextBlock>().ToList();
+        var tb = candidates.Select(c => texts.FirstOrDefault(x => x.Text == c)).FirstOrDefault(x => x != null)
+                 ?? throw new ArgumentException($"no '{text}' on screen");
+        // The page's own scroller: the nearest one that has more content than it shows.
+        var sv = tb.GetVisualAncestors().OfType<ScrollViewer>().FirstOrDefault(v => v.Extent.Height > v.Viewport.Height + 1)
+                 ?? throw new ArgumentException($"'{text}' does not scroll");
+        if (sv.Content is not Visual content || tb.TranslatePoint(new Point(0, 0), content) is not { } at) return;
+        sv.Offset = new Vector(sv.Offset.X, Math.Max(0, at.Y - 40));
+        if (Environment.GetEnvironmentVariable("NOTA_SHOTS_DEBUG") != null)
+            Console.WriteLine($"scroll {text}: y {at.Y}, extent {sv.Extent.Height}, viewport {sv.Viewport.Height}, offset {sv.Offset.Y}");
+    }
+
+    // The themes folder (spec 087) with the sample themes, so Appearance shows user theme cards
+    // and the list of files that could not be loaded. Removed again after the shot.
+    private static string SeedThemes()
+    {
+        var folder = Path.Combine(Environment.GetEnvironmentVariable("NOTA_DATA_DIR")!, "Themes");
+        Directory.CreateDirectory(folder);
+        foreach (var f in Directory.GetFiles(Path.Combine(AppContext.BaseDirectory, "themes"), "*.json"))
+            File.Copy(f, Path.Combine(folder, Path.GetFileName(f)), true);
+        return folder;
+    }
+
+    // ---- Cue output (specs/089, app 0.60+), through reflection so the harness builds against older apps
+
+    // A pretend 4-output device: Main on 1/2, Cue on 3/4, the click to Cue at −6 dB; the named demo
+    // tracks in Cue. Returns the undo, since the engine and settings are shared by every shot.
+    private Action CueOn(string tracks, string? mute, bool missing)
+    {
+        var app = typeof(App).Assembly;
+        var appl = typeof(Settings).Assembly;
+        var et = _engine.GetType();
+        var setDevice = et.GetMethod("SetTestOutputDevice") ?? throw new MissingMethodException("NotaEngine", "SetTestOutputDevice (needs app 0.60+)");
+        var settings = (ISettingsService)App.Services!.GetService(typeof(ISettingsService))!;
+        var push = app.GetType("Nota.App.OutputSetupAccess")!.GetMethod("Push")!;
+        setDevice.Invoke(_engine, new object[] { 4 });
+        object? Prop(string name) => typeof(IAudioEngine).GetProperty(name)?.GetValue(_engine) ?? et.GetProperty(name)?.GetValue(_engine);
+        string uid = (string)(typeof(IAudioEngine).GetMethod("EffectiveOutputUid") ?? et.GetMethod("EffectiveOutputUid"))!.Invoke(_engine, null)!;
+        string key = (string)appl.GetType("Nota.Application.OutputSetups")!.GetMethod("KeyOf")!.Invoke(null, new[] { Prop("AudioSystem"), uid, Prop("AsioDriver") })!;
+        var setupType = appl.GetType("Nota.Application.OutputSetup")!;
+        var setup = Activator.CreateInstance(setupType)!;
+        setupType.GetProperty("CueFirst")!.SetValue(setup, 3);
+        setupType.GetProperty("Click")!.SetValue(setup, Enum.Parse(appl.GetType("Nota.Application.ClickDestination")!, "Cue"));
+        setupType.GetProperty("ClickDb")!.SetValue(setup, -6);
+        var setups = (System.Collections.IDictionary)typeof(Settings).GetProperty("OutputSetups")!.GetValue(settings.Current)!;
+        setups[key] = setup;
+        push.Invoke(null, new object[] { _engine });
+        var setCue = typeof(IAudioEngine).GetMethod("SetTrackCue")!;
+        var ids = tracks.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(_demo.Track).ToArray();
+        foreach (var id in ids) setCue.Invoke(_engine, new object[] { id, true });
+        if (mute is not null) _engine.SetTrackMute(_demo.Track(mute), true);
+        if (missing) setDevice.Invoke(_engine, new object[] { 2 });
+        Pump(5);
+        return () =>
+        {
+            foreach (var id in ids) setCue.Invoke(_engine, new object[] { id, false });
+            if (mute is not null) _engine.SetTrackMute(_demo.Track(mute), false);
+            setups.Remove(key);
+            setDevice.Invoke(_engine, new object[] { 0 });
+            push.Invoke(null, new object[] { _engine });
+            Pump(5);
+        };
     }
 
     // ---- self-update (#58), through reflection so the harness builds against older apps ------
@@ -713,15 +1013,18 @@ public sealed class Scenes
 
     private static readonly Avalonia.Input.Pointer Mouse = new(1, PointerType.Mouse, true);
 
-    /// <summary>Click the control that shows <paramref name="text"/> — a tab, segment or button.</summary>
+    /// <summary>Click the control that shows <paramref name="text"/> — a tab, segment or button.
+    /// "text#n" clicks the n-th control showing that text, for a label that also shows elsewhere.</summary>
     private static void ClickText(Window win, string text)
     {
+        int nth = 1, hash = text.LastIndexOf('#');
+        if (hash > 0 && int.TryParse(text[(hash + 1)..], out int n) && n >= 1) { nth = n; text = text[..hash]; }
         // The manifest names controls by their English text; in another language look for a translation
         // of it that is on screen (one English text can have several keys).
         var texts = win.GetVisualDescendants().OfType<TextBlock>().ToList();
         var candidates = Translations(text).Append(text).ToList();
-        var tb = candidates.Select(c => texts.FirstOrDefault(x => x.Text == c)).FirstOrDefault(x => x != null)
-                 ?? throw new ArgumentException($"no '{text}' on screen");
+        var tb = candidates.Select(c => texts.Where(x => x.Text == c).Skip(nth - 1).FirstOrDefault()).FirstOrDefault(x => x != null)
+                 ?? throw new ArgumentException($"no '{text}' #{nth} on screen");
         // A button (tab segments, Downloads' switch) takes a Click; anything else a pointer press.
         if (tb.GetVisualAncestors().OfType<Button>().FirstOrDefault() is { } button)
         {

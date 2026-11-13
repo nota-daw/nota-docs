@@ -3,10 +3,11 @@ title: "The browser"
 description: "The browser's tabs — instruments, effects, files, presets, projects, MIDI map, history and the track inspector — searching, favourites and tags, and dragging things into the project."
 sidebar:
   order: 1
-updated: "0.58.1"
+updated: "0.59.2"
 status: done
 sources:
   - src/managed/Nota.App/BrowserView.cs
+  - src/managed/Nota.Presentation/BrowserTabMemory.cs
   - src/managed/Nota.App/TrackInspectorView.cs
   - src/managed/Nota.App/MainWindow.Browser.cs
   - src/managed/Nota.App/MainWindow.Files.cs
@@ -15,6 +16,11 @@ sources:
   - src/managed/Nota.Application/Palette/DeviceCategories.cs
   - src/managed/Nota.App/MenuKit.cs
   - src/managed/Nota.Presentation/ViewModels/BrowserViewModel.cs
+  - src/managed/Nota.App/BrowserView.Files.cs
+  - src/managed/Nota.App/BrowserView.Projects.cs
+  - src/managed/Nota.App/LocateMenu.cs
+  - src/managed/Nota.Application/Browser/FileBrowseState.cs
+  - src/managed/Nota.Infrastructure/Persistence/ProjectSummaryReader.cs
 ---
 
 import Shot from '@components/Shot.astro';
@@ -33,12 +39,93 @@ browser**).
 | **Instruments** | Nota's instruments (**Built-in**) and your plug-in instruments (**Plug-ins**). Each device opens into folders of its factory presets — Pads, Bass, Leads, Keys & Plucks… — with **Init** on top |
 | **Audio effects** | Built-in and plug-in effects, with their presets — Vocals, Drums, Mix & Bus, Mastering… |
 | **MIDI effects** | Arpeggiator, chord, scale, length, velocity, random, with their presets |
-| **Files** | Your sample library as a folder tree — see [Smart samples](../smart-samples/) |
+| **Modular** | Only while the [Modular view](../../views/modular/) is open: its nodes — LFO, Envelope Follower, MIDI → CV, ADSR, Macro, Math, Scope — each with its kind and what it does. Drag one onto the canvas, or double-click it to put it in the middle |
+| **Files** | Your sample folders as a folder tree, or any folder on the computer with **Browse** — see [Files](#files) below and [Smart samples](../smart-samples/) |
 | **Presets** | The presets you saved yourself (right-click a device header ▸ **Save preset**). Right-click one to reveal it or **Delete…** it (to the Trash); right-click a folder row to open the presets folder |
-| **Projects** | The projects in your projects folder — open, reveal (**Reveal in Finder** on macOS, **Show in Explorer** on Windows, **Show in file manager** on Linux) or delete |
+| **Projects** | The projects in your projects folder, newest first — see [Projects](#projects) below |
 | **MIDI map** | Every control mapped to a controller, gamepad or phone — see [MIDI Learn](../../control/midi-learn/) |
 | **History** | The open project's [versions](../../basics/version-history/) |
 | **Track inspector** | The selected track's settings in one place — see below |
+
+In Modular the browser remembers its own last tab: the first time you open Modular it shows the
+**Modular** tab, after that the tab you last picked there; back in the arrangement or Session it
+returns to the tab you had there.
+
+## Files
+
+### Sample folders
+
+The **Files** tab shows every folder in your list of sample folders. With one folder the tab looks
+as it always did; add a second and each folder becomes a top-level row of its own.
+
+<Shot id="library/files-folders" alt="The Files tab with two sample folders, Nota Samples and Splice" width={300} />
+
+- **Add** a folder with the **+** button beside **Tree | Browse**, by dropping a folder from Finder /
+  Explorer onto the list, or in [Settings ▸ Library](../../preferences/library/).
+- **Right-click** a folder's top row for **Rename** (only the name Nota shows — the folder on disk
+  keeps its name), **Set as default**, **Reveal in Finder** and **Remove from browser** (the files
+  stay on disk).
+- The **default** folder is where [sample packs](../sample-packs/) install. Removing it makes the
+  next folder the default, after a question.
+- A folder on a drive that isn't plugged in stays in the list, dimmed, and comes back with the drive.
+- A folder that is already in the list, or sits inside one (or around one), isn't added — a note in
+  the status bar says which folder it clashes with, so no file is listed twice.
+
+Every folder is searched and analysed by [Smart samples](../smart-samples/). Right-click any file or
+folder for **Copy path**.
+
+### Browsing the whole computer
+
+**Tree | Browse** switches the tab to a view of one folder at a time, anywhere on the computer. It
+opens at your default sample folder.
+
+<Shot id="library/files-browse" alt="The Files tab in Browse view: a folder with audio, MIDI and other files" width={300} />
+
+| Control | What it does |
+|---|---|
+| **‹** **›** | Back and forward through the folders you opened (<Kbd>⌘</Kbd><Kbd>[</Kbd> · <Kbd>⌘</Kbd><Kbd>]</Kbd>) |
+| **↑** | The folder above (<Kbd>⌘</Kbd><Kbd>↑</Kbd>); above a drive, **Computer** lists the drives |
+| **⌂** | Home — back to the default sample folder |
+| The path | Click a part of it to jump there. Click its empty part, or press <Kbd>⌘</Kbd><Kbd>L</Kbd>, to type or paste a path; a file's path opens its folder with the file selected |
+| **Copy path** | The folder's full path, to paste elsewhere |
+
+Each row has an icon for what it is — a folder, a drive, an audio file, a MIDI file or another file —
+and files show their **extension** and **size** in their own columns. Double-click a folder (or
+select it and press <Kbd>Return</Kbd>) to open it. Audio and MIDI files work as in the tree: click to
+hear one in the [preview player](../preview-player/), drag it into the project, double-click it.
+Files Nota can't use — images, documents — are listed in a faded ink and can't be dragged or opened.
+The search box filters the folder you are in. Right-click a folder for **Add to the browser** to keep
+it as a sample folder.
+
+On Windows and Linux the shortcuts use <Kbd>Ctrl</Kbd>; <Kbd>Alt</Kbd><Kbd>←</Kbd> <Kbd>→</Kbd>
+<Kbd>↑</Kbd> work too.
+
+### Finding a clip's file
+
+Right-click an audio clip in the Arrangement or a Session slot for **Locate**:
+
+- **In browser** opens the Files tab at the file the clip was made from — in the tree when it is in
+  one of your sample folders, otherwise in the browse view — and selects it without playing it.
+- **In Finder** (**In Explorer**, **In file manager**) shows that file in the system's file manager.
+  For a recording, a clip from a project saved before Nota remembered its files, or a file that is
+  gone, it shows the project's own copy of the audio instead, and **In browser** is greyed out.
+
+While an audio clip is selected, its file is marked in orange in the Files tab whenever the folder
+it's in is open.
+
+<Shot id="library/files-located" alt="The Files tab: the selected clip's file, Kick 808, marked in orange" width={300} />
+
+## Projects
+
+The **Projects** tab lists the projects in your projects folder (set in
+[Settings ▸ Library](../../preferences/library/)), the most recently saved first. **Date | Name**
+above the list switches to alphabetical order; the choice is kept. Under each name: when it was last
+saved, its tempo, key, length and number of tracks. A dot marks the project that is open.
+
+<Shot id="library/projects-tab" alt="The Projects tab, newest first, with dates, tempo, key, length and tracks" width={300} />
+
+Double-click a project to open it. Right-click for **Open**, **Reveal in Finder** (**Show in
+Explorer** on Windows, **Show in file manager** on Linux) or **Delete** (to the Trash).
 
 ## Track inspector
 
@@ -52,7 +139,7 @@ menu; the menu keeps all its entries.
 | Section | What it does |
 |---|---|
 | **Name** | Type to rename; <Kbd>Enter</Kbd> or clicking away keeps it, <Kbd>Esc</Kbd> puts the old name back. An empty name returns the track to its automatic one |
-| **Mute**, **Solo**, **Arm** | The header's buttons. A return has only **Mute**; a group has **Mute** and **Solo** |
+| **Mute**, **Solo**, **Arm**, **Cue** | The header's buttons. A return has only **Mute**; a group has **Mute** and **Solo**. The **Cue** key (headphones) comes last, on every kind of track, while you use [Cue](../../views/mixer/#cue-your-own-mix) |
 | **Input** | On an audio track, **Record input** (a hardware input, the master, another track or a return) and **Monitor input** (**On** / **Off**; not available while the master is the input). On an instrument track, **MIDI from** |
 | **Color** | The track palette — nine families in a base, a light and a dark shade — and **Auto** |
 | **Height** | **Compact**, **Standard** or **Large**. Not shown for a return |

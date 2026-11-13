@@ -3,7 +3,7 @@ title: "Nota Lens"
 description: "Analyzer — a spectrum, a triggered oscilloscope and a waterfall in one card, with peak hold, cursors, mid / side and loudness. The audio passes through untouched."
 sidebar:
   order: 22
-updated: "0.58.1"
+updated: "0.59.2"
 status: done
 sources:
   - src/native/nota.engine/src/Lens.h
@@ -17,8 +17,17 @@ master, to look at the spectrum, the waveform or how the sound evolves over time
 
 <Shot id="devices/audio-effects/lens/card" alt="Nota Lens, Spectrum view" />
 
-**Layout:** the **Scale** rail on the left, one large graph in the middle with three views, an
-**Analyze** / **Display** panel on the right and a status line.
+**Layout:** one large graph with three views — **Spectrum** (Smooth, Decay and Tilt beside it, the
+FFT size and Mid / Side under it), **Scope** (Time/Div, Volt/Div and the trigger level beside it, Sync,
+the trigger or span and Afterglow under it) and **Waterfall** (Gain, Floor and Contrast beside it, the
+speed under it) — with the source (**L+R** / **L** / **R**) and **Freeze** in the tab bar, and a right
+panel that follows the view: the spectrum's peak hold, window, averaging, floor and scale with the
+peak / crest / LUFS read-out and the cursor; the scope's **Cursors** switch and layout, holdoff, key,
+afterglow settings and the capture read-out (the cursors' measurements while Cursors is on); the
+waterfall's window, FFT, overlap, averaging and frame rate. An analyzer has no output stage, so there
+are no output knobs. The **S / L / XL** switch in the header folds the card to **S**: the spectrum over
+the source and **Smooth**, **Decay**, **Tilt** and **Floor**. **XL** opens the editor in a large panel
+above the chain.
 
 ## Spectrum
 
@@ -58,7 +67,7 @@ on the beat or just after it, bar after bar.
 
 ### Key overlay
 
-Lens takes a sidechain key, like the Compressor. In **Key** on the Analyze panel, pick another
+Lens takes a sidechain key, like the Compressor. In **Key** on the Scope panel, pick another
 track: its audio (after its effects) is drawn in teal over this track's trace, in the synced scope
 and in the triggered one, where it follows the same trigger and time base. The switch next to it
 hides the key's trace.
@@ -71,11 +80,12 @@ hides the key's trace.
 A typical use: put Lens on the bass, key it from the kick, set Sync to 1 bar, and see whether the
 bass ducks where the kick hits.
 
-### Bigger window
+### Bigger views
 
-The button at the right of the view tabs opens Lens in its own window, which you can resize or move
-to another display. It shows the same views and controls as the card, and both follow each other.
-The window closes when you delete the device or open another project.
+Pick **XL** to stretch the views across a panel above the chain, or press the **pop-out** button next
+to the size switch to open Lens in its own window — resize it or move it to another display. While
+the window is open the card in the chain makes room for it. Both are described under
+[Devices](/devices/).
 
 ## Waterfall
 

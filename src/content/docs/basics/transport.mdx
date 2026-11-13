@@ -3,14 +3,16 @@ title: Transport
 description: Play, stop and record; tempo, time signature and project key; loop, metronome, count-in, grid and follow.
 sidebar:
   order: 3
-updated: "0.56.1"
+updated: "0.59.2"
 status: done
 sources:
+  - src/managed/Nota.App/PreferencesWindow.Outputs.cs
   - src/managed/Nota.App/MainWindow.axaml
   - src/managed/Nota.App/MainWindow.axaml.cs
   - src/managed/Nota.App/MainWindow.Input.cs
   - src/managed/Nota.App/ArrangementView.Controls.cs
   - src/managed/Nota.App/SnapChip.cs
+  - src/managed/Nota.App/MainWindow.TransportOverflow.cs
   - src/managed/Nota.Application/Editing/SnapGrid.cs
   - src/managed/Nota.Presentation/ViewModels/TransportViewModel.cs
 ---
@@ -49,19 +51,22 @@ readout does.
   and settles as you go on (it averages the last eight); the four dots count the beats. Change
   pace and it picks up the new tempo right away; pause for three seconds to start a new series.
   It is also in the command palette as **Tap tempo**, and on a narrow window it is the first of
-  these cells to step aside.
+  these cells to move into the [⋯ menu](#when-the-bar-is-too-narrow).
 - **Time signature** — drag each number; the lower one moves in powers of two
   (2, 4, 8, 16). The upper number is the beats in a bar: the metronome, the count-in and every
   view that counts bars follow it — the Arrangement's bar lines and numbers, the clip editors'
   grids and rulers, the position readout, and the bar.beat fields of the clip panel and Export.
-- **Key** — the project key, saved with the project. Click it to pick a key, or **No key**.
+- **Key** — the project key, saved with the project. Click it to pick a key: choose
+  **Major** or **Minor**, then click the key's note on the keyboard (switching between Major
+  and Minor keeps the note); the picker names the key and its relative. **No key** clears it.
   With **Transpose to project key** on in the Files tab's menu, loops you drop on the
   Arrangement are transposed to it; loops are always warped to the project tempo. The phone
   keyboard of [Nota Remote](../../control/nota-remote/) uses it too.
 
 ## Loop
 
-**Loop** shows the loop range set on the ruler. <Kbd>⌘ L</Kbd> turns looping on or off — and
+The **Loop** button (two arrows chasing each other) turns looping on or off for the range set
+on the ruler; <Kbd>⌘ L</Kbd> does the same — and
 if clips or a time range are selected, it first sets the loop to them. Drag along the ruler to
 draw a loop range by hand. Double-click the loop range on the ruler to turn looping off without
 losing the range: it stays on the ruler in grey, and another double-click turns it back on.
@@ -77,7 +82,8 @@ automation are not touched.
 
 Notes you hold across the loop end keep sounding, and release tails ring on into the next pass.
 
-The **Overdub** / **Replace** cell next to it (<Kbd>⌘ ⇧ R</Kbd>) sets how MIDI recorded in the
+The loop-record button next to it (<Kbd>⌘ ⇧ R</Kbd>) switches between **Overdub** (two stacked
+layers) and **Replace** (one layer with a turn arrow, tinted). It sets how MIDI recorded in the
 loop combines from pass to pass — see [Recording over a loop](../../editing/recording/#recording-over-a-loop).
 
 ## Metronome and count-in
@@ -88,6 +94,12 @@ The metronome button (<Kbd>⌘ M</Kbd>) clicks on every beat while you play or r
 Record from stop, and before a Session slot records from stop. The count-in sounds even with the metronome off, the position readout counts
 the bars before the start (−2.1, −1.4 …), and the clicks are never recorded. Stop cancels a
 count-in. Nota remembers the setting.
+
+With a second output pair you can keep the click out of the audience's ears: **Click** in
+[Settings ▸ Outputs](../../preferences/outputs/#output-pairs) sends the metronome and the
+count-in to **Main**, **Cue** or **Both**, and **Click level** sets its level (**Off**, or
+−18 to +6 dB). A click sent to Cue skips the master's devices and is never recorded or
+exported.
 
 ## Grid, snap and follow
 
@@ -142,13 +154,34 @@ Grid**.
 - **DSP** — how much of each audio buffer the engine needs. Near 100% you'll hear dropouts; raise
   the buffer size or [freeze](../tracks/) a heavy track. Hover it to see the CPU used by the
   whole Nota process, in the same scale as your system monitor. When the window is narrow, the
-  meter folds to just its number and is the last thing on the row to hide.
+  meter folds to just its number and is the last thing on the row to move into the
+  [⋯ menu](#when-the-bar-is-too-narrow).
 - **Master** — master volume, with the master meter underneath.
 
 <Aside type="tip">
 The transport keys work in every Nota window, including a detached device window and the
 Mixer.
 </Aside>
+
+## When the bar is too narrow
+
+When the window is too narrow for the whole bar — or the interface scale too large — the bar
+hides the controls you need least, one after another: first the DSP meter's bar and the word
+**Remote**, then **Tap**, **Key**, **Remote**, **Follow**, **Automation**, **Mixer**, the time signature,
+**MIDI**, **Grid**, **Snap**, loop-record mode, **Loop**, **Master**, and last the **DSP**
+meter. Play, stop, record, the position, the tempo, the metronome and the view keys always
+stay.
+
+Nothing hidden is out of reach: the **⋯** key at the end of the bar lists every hidden
+control, left to right as they sit in the bar, and each works from there as it does on the
+bar. Switches (Loop, Follow, Snap, Automation, Mixer, MIDI learn) are check items with their
+shortcuts, **Grid** and **Time signature** open submenus, **Project key…** opens the key
+picker, **Tap tempo** keeps the menu open so you can tap on, and the **Master** fader drags
+right in the menu. An orange dot on **⋯** tells you something is in it. Widen the window and
+the controls go back to the bar.
+
+At any width the menu ends with **Interface scale** — the same setting as in
+[Settings ▸ Appearance](../../preferences/appearance/#interface-scale), one click away.
 
 ## Launch quantize
 

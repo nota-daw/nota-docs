@@ -1,0 +1,12 @@
+{
+  "formatVersion": 1,
+  "id": "sunset",
+  "name": "Sunset",
+  "kind": "dusk",
+  "font": {
+    "family": "Futura"
+  },
+  "colors": {
+    "BgApp": "#2A1A1F"
+  }
+}

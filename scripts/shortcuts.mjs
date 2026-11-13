@@ -1,59 +1,44 @@
 #!/usr/bin/env node
-// Generates reference/shortcuts (EN + RU, and FR when the translations repo is next to this one) from
-// the app's own shortcut list:
-// PreferencesWindow.ShortcutGroups in ../nota (or $NOTA_REPO). Run `npm run shortcuts` after the
-// nota-shortcuts skill has brought that list up to date. Never edit the generated pages by hand.
+// Generates reference/shortcuts (EN + RU, and FR when nota-translations is checked out) from the
+// app's own Settings ▸ Shortcuts page: the key-action catalog and its layout (specs/096), dumped
+// by the app's smoke test (`--shortcuts-dump`). The keys are the shipped defaults; everyone can
+// change them. Run `npm run shortcuts` after the nota-shortcuts skill has brought the app up to
+// date. Never edit the generated pages by hand.
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
+import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const appRepo = path.resolve(process.env.NOTA_REPO ?? path.join(root, '../nota'));
-const srcPath = 'src/managed/Nota.App/PreferencesWindow.cs';
-const src = fs.readFileSync(path.join(appRepo, srcPath), 'utf8');
+const srcPath = 'src/managed/Nota.Application/Input/ShortcutLayout.cs';
 const version = fs.readFileSync(path.join(appRepo, 'VERSION'), 'utf8').trim();
 
-const start = src.indexOf('ShortcutGroups =');
-const end = src.indexOf('};', start);
-if (start < 0 || end < 0) throw new Error('ShortcutGroups not found in ' + srcPath);
-// The list is localized by key (Loc.T("preferences.save_a_version_with_a"), specs/077); the
-// page wants the English text, which lives in the app's English reference.
-const enPath = 'src/managed/Nota.Application/Localization/en.json';
-const english = JSON.parse(fs.readFileSync(path.join(appRepo, enPath), 'utf8')).strings;
-const rawBlock = src.slice(start, end);
-// `texts` is a language file's strings; a key it lacks (or a plural) falls back to English, as in the app.
-const localize = (texts) =>
-  rawBlock.replace(/Loc\.T\(\s*"([a-z0-9_.]+)"\s*\)/g, (_, key) => {
-    const text = typeof texts[key] === 'string' ? texts[key] : english[key];
-    if (typeof text !== 'string') throw new Error(`ShortcutGroups uses ${key}, which is not a plain text in ${enPath}`);
-    return JSON.stringify(text);
-  });
-
-const unescape = (s) => s.replace(/\\u([0-9a-fA-F]{4})/g, (_, h) => String.fromCharCode(parseInt(h, 16))).replace(/\\"/g, '"');
-// A string in the list is a C# literal, bare or wrapped in Loc.T(…) since the app was localised
-// (specs/068): `"text"` or `Loc.T("text")`. The English text is what the docs show.
-const str = String.raw`(?:Loc\.T\(\s*"((?:[^"\\]|\\.)*)"\s*\)|"((?:[^"\\]|\\.)*)")`;
-const groupRe = new RegExp(String.raw`\(\s*${str},\s*new\[\]\s*\{([\s\S]*?)\}\)`, 'g');
-const rowRe = new RegExp(String.raw`\(\s*${str},\s*${str}\s*\)`, 'g');
-const parseGroups = (block) => {
-  const found = [];
-  for (const g of block.matchAll(groupRe)) {
-    const rows = [...g[3].matchAll(rowRe)].map((m) => [unescape(m[1] ?? m[2]), unescape(m[3] ?? m[4])]);
-    found.push({ title: unescape(g[1] ?? g[2]), rows });
-  }
-  if (!found.length) throw new Error('no shortcut groups parsed');
-  return found;
+// The smoke test writes the page as JSON; built once (Release), then run per language.
+const dll = path.join(appRepo, 'tests/Nota.SmokeTest/bin/Release/net10.0/Nota.SmokeTest.dll');
+execFileSync('dotnet', ['build', path.join(appRepo, 'tests/Nota.SmokeTest'), '-c', 'Release', '--nologo', '-v', 'q'], { stdio: 'inherit' });
+const dump = (languageFile) => {
+  const out = path.join(os.tmpdir(), `nota-shortcuts-${process.pid}-${languageFile ? path.basename(languageFile) : 'en'}`);
+  execFileSync('dotnet', [dll, '--shortcuts-dump', out, ...(languageFile ? [languageFile] : [])], { stdio: 'ignore' });
+  const groups = JSON.parse(fs.readFileSync(out, 'utf8')).groups;
+  fs.rmSync(out, { force: true });
+  // Commands with no key by default are left out: the page lists keys, and any command can get
+  // one in Settings ▸ Shortcuts.
+  return groups
+    .map((g) => ({ title: g.title, rows: g.rows.filter((r) => r.keys).map((r) => [r.keys, r.text]) }))
+    .filter((g) => g.rows.length);
 };
-const groups = parseGroups(localize(english));
+const groups = dump(null);
+if (!groups.length) throw new Error('no shortcut groups in the dump');
 
 // French comes from nota-translations (a sibling checkout, or $NOTA_TRANSLATIONS = a languages/fr.json).
 const frPath = process.env.NOTA_TRANSLATIONS ?? path.join(root, '../nota-translations/languages/fr.json');
-const frTexts = fs.existsSync(frPath) ? JSON.parse(fs.readFileSync(frPath, 'utf8')).strings : null;
-const groupsFr = frTexts ? parseGroups(localize(frTexts)) : null;
-if (!frTexts) console.warn(`no ${frPath}: reference/shortcuts is generated in English and Russian only`);
+const groupsFr = fs.existsSync(frPath) ? dump(frPath) : null;
+if (!groupsFr) console.warn(`no ${frPath}: reference/shortcuts is generated in English and Russian only`);
 
-// Same rule as PreferencesWindow.IsKeyToken: a key has no lower-case letters, or is a named key.
-const named = new Set(['Space', 'Return', 'Delete', 'Tab', 'Esc']);
+// A key has no lower-case letters, or is a named key; anything else ("Drag note edge") is a gesture.
+const named = new Set(['Space', 'Return', 'Delete', 'Tab', 'Esc', 'PgUp', 'PgDn', 'Home', 'End']);
 const seps = new Set(['/', '·', '+']);
 const isKey = (t) => named.has(t.replace(/^[⌘⇧⌥⌃]+/, '')) || seps.has(t) || !/[a-z]/.test(t);
 const splitMods = (t) => {
@@ -76,13 +61,11 @@ const renderKey = (key) =>
 
 const sentence = (t) => t.charAt(0) + t.slice(1).toLowerCase().replace(/\bmidi\b/g, 'MIDI').replace(/\bmacos\b/g, 'macOS');
 const ru = {
-  FILE: 'Файл', WINDOW: 'Окно', TRANSPORT: 'Транспорт', 'ARRANGEMENT & EDITING': 'Arrangement и редактирование',
-  'GRID (ARRANGEMENT OR CLIP EDITOR — WHICHEVER YOU USED LAST)': 'Сетка (Arrangement или редактор клипа — тот, где вы работали последним)',
-  'TRACKS (AFTER A CLICK IN THE TRACK HEADERS)': 'Треки (после щелчка по заголовкам треков)',
-  'DEVICES (AFTER A CLICK ON A DEVICE)': 'Устройства (после щелчка по устройству)',
-  'MODULAR (AFTER A CLICK ON THE CANVAS)': 'Modular (после щелчка по холсту)',
-  'SESSION (AFTER A CLICK IN THE GRID)': 'Session (после щелчка по сетке)', 'PIANO ROLL': 'Piano roll',
-  'PLAY NOTES (COMPUTER KEYBOARD)': 'Игра нотами (клавиатура компьютера)', 'BROWSER · PREVIEW': 'Браузер · предпрослушивание',
+  FILE: 'Файл', EDIT: 'Правка', VIEW: 'Вид', TRANSPORT: 'Транспорт', TRACK: 'Трек', ARRANGEMENT: 'Arrangement',
+  GRID: 'Сетка', SESSION: 'Session', 'PIANO ROLL': 'Piano roll', DEVICES: 'Устройства', MODULAR: 'Modular',
+  'BROWSER FILES': 'Браузер · файлы', 'PLAY NOTES (COMPUTER KEYBOARD)': 'Игра нотами (клавиатура компьютера)',
+  SETTINGS: 'Настройки', HELP: 'Справка', 'COMMAND PALETTE': 'Палитра команд', RACKS: 'Рэки',
+  'AUDIO CLIP EDITOR': 'Редактор аудиоклипа', 'BROWSER · PREVIEW': 'Браузер · предпрослушивание',
   'GAMEPAD (MACOS)': 'Геймпад (macOS)', MOUSE: 'Мышь',
 };
 
@@ -101,10 +84,10 @@ const page = (lang) => {
     '---',
   ].join('\n');
   const intro = fr
-    ? `Cette page est générée à partir de la liste de **Réglages ▸ Raccourcis**, les deux concordent donc toujours.\nLes raccourcis sont écrits à la manière de macOS : sous Windows et Linux, lisez <Kbd keys="⌘" /> comme **Ctrl** et\n<Kbd keys="⌥" /> comme **Alt**.`
+    ? `Cette page est générée à partir de **Réglages ▸ Raccourcis**, les deux concordent donc toujours. Elle donne\nles touches **par défaut** : vous pouvez changer chacune d'elles, et en donner une à toute commande qui n'en a pas,\ndans [Réglages ▸ Raccourcis](../../preferences/shortcuts/). Les raccourcis sont écrits à la manière de macOS :\nsous Windows et Linux, lisez <Kbd keys="⌘" /> comme **Ctrl** et <Kbd keys="⌥" /> comme **Alt**.`
     : en
-    ? `This page is generated from the list on **Settings ▸ Shortcuts**, so the two always match.\nShortcuts are written the macOS way: on Windows and Linux read <Kbd keys="⌘" /> as **Ctrl** and\n<Kbd keys="⌥" /> as **Alt**.`
-    : `Страница собрана из списка на **Settings ▸ Shortcuts**, поэтому они всегда совпадают. Описания\nдействий — на английском, как в приложении. Сочетания записаны как в macOS: в Windows и Linux\n<Kbd keys="⌘" /> — это **Ctrl**, а <Kbd keys="⌥" /> — **Alt**.`;
+    ? `This page is generated from **Settings ▸ Shortcuts**, so the two always match. It lists the\n**default** keys: you can change any of them, and give a key to any command that has none, in\n[Settings ▸ Shortcuts](../../preferences/shortcuts/). Shortcuts are written the macOS way: on\nWindows and Linux read <Kbd keys="⌘" /> as **Ctrl** and <Kbd keys="⌥" /> as **Alt**.`
+    : `Страница собрана из **Settings ▸ Shortcuts**, поэтому они всегда совпадают. Здесь клавиши\n**по умолчанию**: любую можно сменить, а команде без клавиши — назначить её, в\n[Settings ▸ Shortcuts](../../preferences/shortcuts/). Описания действий — на английском, как в\nприложении. Сочетания записаны как в macOS: в Windows и Linux <Kbd keys="⌘" /> — это **Ctrl**,\nа <Kbd keys="⌥" /> — **Alt**.`;
   const body = list
     .map((g) => {
       const head = en || fr ? sentence(g.title) : ru[g.title.toUpperCase()] ?? sentence(g.title);

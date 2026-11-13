@@ -3,12 +3,14 @@ title: "Управление через MCP"
 description: "Позвольте ИИ-ассистенту, например Claude, работать в открытом проекте через встроенный MCP-сервер Nota — треки, ноты, устройства, Session, сведение, экспорт и многое другое."
 sidebar:
   order: 3
-updated: "0.58.1"
+updated: "0.59.2"
 status: done
 sources:
+  - src/managed/Nota.App/PreferencesWindow.Mcp.cs
   - src/managed/Nota.App/PreferencesWindow.cs
   - src/managed/Nota.Mcp/Tools/ProjectTools.cs
   - src/managed/Nota.Mcp/Tools/ExportTools.cs
+  - src/managed/Nota.Mcp/Tools/ThemeTools.cs
 ---
 
 import Shot from '@components/Shot.astro';
@@ -23,7 +25,7 @@ import { Steps, Aside } from '@astrojs/starlight/components';
 
 <Steps>
 
-1. **Settings ▸ Appearance ▸ AI control (MCP)** ▸ **Enable MCP server (let an AI drive Nota)**. По
+1. [**Settings ▸ AI control (MCP)**](../../preferences/mcp/) ▸ **Enable MCP server (let an AI drive Nota)**. По
    умолчанию выключено.
 
 2. **Copy config** копирует готовую запись сервера; добавьте её (или URL) как MCP-сервер в Claude
@@ -33,7 +35,7 @@ import { Steps, Aside } from '@astrojs/starlight/components';
 
 </Steps>
 
-<Shot id="preferences/appearance" alt="Settings ▸ Appearance с разделом AI control (MCP)" />
+<Shot id="preferences/mcp" alt="Settings ▸ AI control (MCP)" />
 
 Сервер слушает только ваш компьютер (`127.0.0.1`, по умолчанию порт 3900) — из сети к нему не
 достучаться.
@@ -58,7 +60,49 @@ import { Steps, Aside } from '@astrojs/starlight/components';
 - **Экспорт** — мастер или стемы в WAV, FLAC или MP3 (`format`, `bitrateKbps` для MP3,
   `startBeat` — старт рендера с поздней позиции песни).
 - **MIDI** — список входов и работа с назначениями MIDI Learn.
+- **Темы** — чтение, проверка, превью, сохранение и примерка цветовых тем, чтобы ассистент мог
+  придумать тему вместе с вами. См. [Создать тему](#создать-тему).
 
 <Aside>
 Кое-что остаётся за вами: ИИ не может удалять версии и устанавливать модели.
 </Aside>
+
+## Создать тему
+
+Дайте ассистенту палитру — несколько цветов, настроение фотографии, «как старый микшерный пульт», —
+и он превратит её в полноценную [собственную тему](../../preferences/appearance/#свои-темы),
+проверит, что всё читается, и покажет результат, ничего не меняя у вас на экране.
+
+<Steps>
+
+1. Он берёт встроенную тему за образец (`get_theme`), узнаёт, за что отвечает каждый цвет
+   (`get_theme_catalogue`), и смотрит, какие шрифты установлены у вас (`list_system_fonts`).
+
+2. Пишет свой вариант и проверяет его (`validate_theme`): каждая ошибка — с ключом, к которому она
+   относится, каждое предупреждение о читаемости — с измеренным контрастом.
+
+3. Рисует превью (`preview_theme`): по картинке на каждую часть Nota — всё окно, верхняя панель,
+   аранжировка, микшер, цепочка устройств, piano roll, браузер, Settings, меню и диалог — по
+   фиксированному демо-проекту, вне экрана. Ваше окно не меняется. По умолчанию картинки в вашем
+   [акцентном цвете](../../preferences/appearance/#акцентный-цвет), как тема и будет выглядеть;
+   можно попросить собственный акцент темы.
+
+4. Чтобы посмотреть вживую, он примеряет тему (`try_on_theme`): Nota носит её без сохранения, пока
+   ассистент её не снимет (`revert_try_on`), вы не выберете тему в Settings или Nota не
+   перезапустится.
+
+5. Сохраняет тему в вашу папку тем (`save_theme`) — карточка сразу появляется в Appearance — и
+   надевает её (`apply_theme`), точно так же, как если бы вы щёлкнули по карточке.
+
+</Steps>
+
+Перезаписать встроенную тему ассистент не может, а вашу заменяет, только если явно об этом
+попросит. Ещё он может получить список ваших тем (`list_themes`) вместе с файлами, которые не
+загрузились, и причинами — и помочь починить тему, написанную вручную. Формат файла описан на
+странице [Файлы тем](../../reference/theme-files/).
+
+Ассистент может переключить и [вид](../../preferences/appearance/#классический-вид) (`set_look`:
+`new` или `classic`) — так же, как переключатель в Appearance. Он умеет рендерить превью в
+любом виде (`preview_theme` с `look`) и прочитать встроенную тему в классических цветах
+(`get_theme` с `look: classic`), чтобы начать с неё свою классическую тему. Какой вид
+сейчас на вас, он узнаёт из `list_themes`.

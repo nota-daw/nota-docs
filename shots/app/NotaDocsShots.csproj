@@ -12,5 +12,7 @@
     <ProjectReference Include="$(NotaRepo)/src/managed/Nota.App/Nota.App.csproj" />
     <PackageReference Include="Avalonia.Headless" Version="12.1.4" />
     <PackageReference Include="Avalonia.Skia" Version="12.1.4" />
+    <!-- Sample user themes for the Appearance shot (prefs, themes: true). -->
+    <None Include="themes/*.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

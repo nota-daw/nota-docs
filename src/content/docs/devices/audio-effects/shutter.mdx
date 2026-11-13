@@ -18,6 +18,17 @@ tempo-synced gate you draw.
 
 <Shot id="devices/audio-effects/shutter/card" alt="Nota Shutter, Signal tab with the input and the gated output" />
 
+**Layout:** four graphs in the centre — **Signal** (the input and the gated output; drag for
+**Threshold** and **Return**, the look-ahead, Peak hold and Live under it), **Envelope** (one opening,
+**Attack**, **Hold** and **Release** beside it, the shape and Retrig under it), **Sidechain** (the
+detector's band-pass, **SC HP** and **SC LP** beside it, SC EQ and Listen under it) and **Pattern** —
+and a right panel that follows the tab: **Detector** (the state and the measurements, Reset),
+**Opening** (the times and the openings per bar), the key (**External sidechain**, the source, its
+level and band) and **Rhythm** (Sync / Free, **Rate**, **Depth**, Copy / Paste / Clear, the MIDI and
+gate options). Under it on every tab sit the **Gate / Duck** switch and **Floor**, **Threshold** and
+**Return**. The **S / L** switch in the header folds the card to **S**: the Signal graph over Gate /
+Duck and **Threshold**, **Attack**, **Release** and **Floor**.
+
 ## The gate
 
 The shutter **opens** when the level crosses the **Threshold** and **closes** when it falls back past
@@ -42,7 +53,7 @@ One opening drawn from attack, hold, release, shape and floor.
 ## Sidechain
 
 The detector listens to this track or an **External sidechain** (another track), through its own
-band-pass **Detector filter**, with **Listen** to hear it and **Peak hold**. Key a gate from the kick
+band-pass (**SC EQ**), with **Listen** to hear it and **Peak hold**. Key a gate from the kick
 to chop a pad; duck a bass under the kick.
 
 ## Pattern

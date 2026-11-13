@@ -3,7 +3,7 @@ title: Recording
 description: Recording audio and MIDI — arming tracks, inputs, monitoring, count-in, recording over a loop, and recording into Session slots.
 sidebar:
   order: 3
-updated: "0.58.1"
+updated: "0.59.2"
 status: done
 sources:
   - src/native/nota.engine/src/engine/Engine_Recording.cpp
@@ -35,19 +35,13 @@ import Kbd from '@components/Kbd.astro';
 
 </Steps>
 
-A click on **●** arms that track and disarms the others, so it's quick to pick the instrument you
-play. <Kbd>⌘</Kbd>-click (<Kbd>Ctrl</Kbd>-click on Windows and Linux) arms a track and keeps the
-others armed — while recording, a click never disarms another track. Selecting an instrument
-track, or adding one, arms it the same way, so the keyboard plays the track you're on; that
-leaves the arms alone when several tracks or an audio track are armed. Arm an instrument track
-and an audio track together and one take records both — the MIDI and
-the audio. Nota records the first armed track of each kind.
-
-Disarming a track while it records ends its take.
-
 A click on **●** arms that track alone and disarms the others, so picking the instrument the
 keyboard plays is one click. <Kbd>⌘</Kbd>-click (<Kbd>Ctrl</Kbd>-click on Windows and Linux)
-arms several tracks. While recording, a click never disarms another track.
+arms several tracks. While recording, a click never disarms another track. Arm an instrument
+track and an audio track together and one take records both — the MIDI and the audio. Nota
+records the first armed track of each kind.
+
+Disarming a track while it records ends its take.
 
 To have the selection pick the track, turn on **Transport ▸ Auto-arm selected track**: then
 selecting an instrument track arms it, unless several tracks or an audio track are armed. It
@@ -131,7 +125,7 @@ one undo step. Takes are saved with the project.
 
 One pass, the loop off, MIDI and Session slots still make a single clip and no takes.
 
-For **MIDI**, the cell next to **Loop** in the transport chooses what a new pass does
+For **MIDI**, the loop-record button next to **Loop** in the transport chooses what a new pass does
 (<Kbd>⌘ ⇧ R</Kbd> or **Transport → Loop record: overdub / replace** switch it too):
 
 - **Overdub** — every pass adds to the take. Build a beat in layers: kick on the first pass,

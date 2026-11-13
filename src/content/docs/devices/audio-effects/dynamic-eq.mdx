@@ -3,7 +3,7 @@ title: "Nota Dynamic EQ-8"
 description: "Eight-band EQ where each band can react to level — duck when it gets loud or lift when it gets quiet — keyed by itself or by another track."
 sidebar:
   order: 3
-updated: "0.50.1"
+updated: "0.59.2"
 status: done
 sources:
   - src/native/nota.engine/src/DynamicEq.h
@@ -17,6 +17,19 @@ or expander for just its frequencies. Tame sibilance only when it happens, dip t
 the kick hits, lift air only when a vocal goes quiet.
 
 <Shot id="devices/audio-effects/dynamic-eq/card" alt="Nota Dynamic EQ-8 with the response graph and the band panel" />
+
+**Layout:** the response graph fills the card with the eight band chips over it and the Dynamic
+switch and the output under it; the right panel edits the selected band. The **S / L** switch in
+the header folds the card to **S**: the band chips over the graph and the selected band's
+**Freq**, **Gain** and **Q** and the **Output**.
+
+**XL:** pick **XL** in the same switch to open the whole editor in a large panel above the device
+chain, as wide as the chain, with the graph stretched to fill it. The card stays in the chain as a
+small one that says **Open in XL above**. A track has one device in XL: picking XL on another moves
+the panel to it. The panel follows the selected track and comes back with the project. **Shrink**
+in the panel's header (or **Esc**) returns the device to **L**. Drag the Devices panel's top edge to
+make the XL panel taller. The **pop-out** button next to the switch opens the editor in a window of
+its own instead — see [Devices](/devices/).
 
 ## A band
 
@@ -32,7 +45,9 @@ The static half is the same as [EQ-8](../eq-8/): type, **Freq**, **Gain**, **Q**
 | **Solo** | Hear only this band |
 
 Only shelves and bells take dynamic gain. Full action is reached 6 dB past the threshold. The band
-chips above the graph light up with each band's activity.
+chips above the graph light up with each band's activity. On the graph the live response is the
+orange curve and the static one a dashed grey line; the selected band's frequency, gain — for a
+dynamic band also the gain it has now — and Q are lit on the frequency strip under it.
 
 ## Global
 

@@ -1,12 +1,15 @@
 ---
 title: "Shortcuts"
-description: "Settings ▸ Shortcuts — every keyboard shortcut and mouse gesture, grouped, with a filter."
+description: "Settings ▸ Shortcuts — change any keyboard shortcut, see conflicts before saving, reset; mouse gestures for reference."
 sidebar:
-  order: 9
-updated: "0.58.1"
+  order: 14
+updated: "0.59.2"
 status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.cs
+  - src/managed/Nota.App/PreferencesWindow.Shortcuts.cs
+  - src/managed/Nota.Application/Input/KeyActionCatalog.cs
+  - src/managed/Nota.Application/Input/KeyBindings.cs
 ---
 
 import Shot from '@components/Shot.astro';
@@ -14,11 +17,64 @@ import Kbd from '@components/Kbd.astro';
 
 <Shot id="preferences/shortcuts" alt="Settings ▸ Shortcuts" />
 
-The Shortcuts page lists every key and gesture in groups — File, Transport, Arrangement & editing,
-Tracks, Session, Piano roll, Play notes, Browser · preview, Gamepad and Mouse. Type in **Filter
-shortcuts** to find one.
+The Shortcuts page lists every key in Nota, grouped as in the menus — File, Edit, View, Transport,
+Track, Arrangement, Grid, Session, Piano roll, Devices, Modular, Browser files, Play notes
+(computer keyboard), Settings, Help — and **every keyboard shortcut can be changed**. Mouse and
+trackpad gestures, the gamepad, and the keys of lists and text fields (the arrows in the command
+palette, Return / Esc / Tab while you type a value) are listed below them for reference; they
+stay as they are.
 
-The same list, in full, is in [Keyboard shortcuts](../../reference/shortcuts/).
+The keys Nota ships with are in [Keyboard shortcuts](../../reference/shortcuts/).
+
+## Change a key
+
+1. Click the key of the action — its key caps, or **—** when it has none. The row waits: **Press a
+   shortcut…**
+2. Press the new combination. Nothing in Nota reacts to it while the row waits; the key shows in
+   the row.
+3. Click **Confirm** (or press <Kbd>Return</Kbd>). The key works at once — in the menus, the
+   right-click menus, the tooltips and the command palette too.
+
+**Cancel** (or <Kbd>Esc</Kbd>) leaves the key as it was. **Clear** removes it: the action stays in
+the menus and the [command palette](../../basics/command-palette/), just without a key. To give an
+action <Kbd>Esc</Kbd> itself, click **Assign Esc**.
+
+Every action can have a **second key**: click the quiet **+** after the first one. Delete, for
+example, answers <Kbd>⌫</Kbd> and <Kbd>⌦</Kbd>.
+
+Keys work where their action works: a piano-roll key while the piano roll has the keyboard, a
+Session key in the Session grid, Copy and Paste in whatever you clicked last — clips, notes,
+tracks or devices.
+
+## When a key is taken
+
+<Shot id="preferences/shortcuts-conflict" alt="A key that is already used: Replace or Cancel" />
+
+Before anything is saved, the row says which action already answers that key where this one
+works — "⌘D is used by Duplicate (everywhere)". **Replace** gives the key to this action and
+leaves the other one without it (you can give it another key afterwards); **Cancel** keeps both
+as they were. Nothing is ever taken away without asking.
+
+A key used only in a different view is allowed: the row notes where else it is used and which one
+wins — the view that has the keyboard (the piano roll, the Session grid, the device chain, the
+Files browser, Modular) always comes first. Keys the system keeps for itself — <Kbd>⌘ Q</Kbd>,
+<Kbd>⌘ H</Kbd>, <Kbd>⌘ Space</Kbd> on macOS, <Kbd>Alt F4</Kbd>, <Kbd>Alt Tab</Kbd> and the Windows key
+elsewhere — are refused with the reason. Global shortcuts of other apps can't be detected.
+
+## See and undo your changes
+
+<Shot id="preferences/shortcuts-edited" alt="Edited only: the changed keys, their defaults and reset buttons" />
+
+A changed key has an orange dot before its action, its default beside it, and a reset button that
+puts the default back (asking first if another action has that key now). **Edited only** shows just
+the keys you changed; **Reset all to defaults…** puts every key back after a confirmation.
+
+**Filter shortcuts** finds an action by its name, its group or its key — type <Kbd>⌘ T</Kbd>,
+`cmd t` or `ctrl+shift+t` to see what that key does.
+
+Your keys are kept in Nota's settings, only the ones you changed: when an update changes a default
+you never touched, you get the new one. If an update gives a new action a key you already use,
+yours stays and the new one waits under **Needs a decision** at the top of the page.
 
 ## Velocity wheel
 

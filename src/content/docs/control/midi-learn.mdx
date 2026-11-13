@@ -3,7 +3,7 @@ title: "MIDI Learn"
 description: "Map any knob, fader, pad or button — on a MIDI controller, a gamepad or your phone — to almost any control in Nota, and edit the mappings in the MIDI map."
 sidebar:
   order: 2
-updated: "0.50.1"
+updated: "0.59.2"
 status: done
 sources:
   - src/managed/Nota.App/MidiLearn.cs
@@ -27,7 +27,7 @@ filter moves in Nota.
 2. Click the control in Nota you want to move — a knob, fader, switch, macro…
 
 3. Move a knob or fader on your controller (or press a pad, a gamepad button, or move a phone
-   control). The mapping is made; mapped controls stay outlined in teal.
+   control). The mapping is made; mapped controls stay outlined in green.
 
 4. Map more, then click **MIDI** again to finish.
 
@@ -36,7 +36,8 @@ filter moves in Nota.
 ## What you can map
 
 Every parameter of the built-in instruments, effects and MIDI effects (switches, envelopes and
-filters included), plug-in parameters, track volume, pan, mute and solo, the master, the transport,
+filters included), plug-in parameters, track volume, pan, mute, solo and [Cue](../../views/mixer/#cue-your-own-mix), the
+master and the Cue level, the transport,
 rack macros, and the mute and solo of rack chains and Drum Rack pads.
 
 Sources can be a **CC**, a **MIDI note**, a **gamepad** button, stick or trigger (macOS), or a control on
@@ -54,3 +55,5 @@ a phone running [Nota Remote](../nota-remote/) — all in one table.
 The browser's **MIDI map** tab lists every mapping: the control, its source (`CC 74 · ch1`, `Note 36 ·
 ch10`, `Pad · Left stick ↑↓`, `Phone · XY X`), an editable output **range**, **Invert**, and delete.
 Mappings are saved with the project.
+A track's Cue key is listed as **Cue**, like a track's **Mute**, and the Cue strip's fader as
+**Cue level**.
