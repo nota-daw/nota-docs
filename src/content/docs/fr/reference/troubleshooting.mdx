@@ -11,6 +11,7 @@ sources:
 ---
 
 import { Aside } from '@astrojs/starlight/components';
+import At from '@components/At.astro';
 
 ## Nota ne s’ouvre pas
 
@@ -36,7 +37,7 @@ import { Aside } from '@astrojs/starlight/components';
 
 ## Pas de son
 
-1. **Réglages ▸ Audio ▸ Jouer une tonalité de test.** Pas de tonalité ? Vérifiez **Sortie** : le bon appareil, et le
+1. <At id="cmd:prefs.outputs" /> **Réglages ▸ Audio ▸ Jouer une tonalité de test.** Pas de tonalité ? Vérifiez **Sortie** : le bon appareil, et le
    volume de votre système.
 2. De la tonalité mais pas de musique ? Vérifiez que la piste n’est pas en muet, qu’une autre piste n’est pas en solo,
    et que le volume général (**Master**) est monté.
@@ -86,7 +87,7 @@ longtemps, `plugin-scan.log` nomme les plug-ins en cours de chargement : voir
 
 ## La manette ne fait rien
 
-L’entrée de manette n’existe que sous macOS pour l’instant. Activez-la dans **Réglages ▸ Manettes**.
+<At id="cmd:prefs.gamepads" /> L’entrée de manette n’existe que sous macOS pour l’instant. Activez-la dans **Réglages ▸ Manettes**.
 
 ## La mise à jour ne s’est pas installée
 

@@ -16,6 +16,7 @@ sources:
 
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 Nota Audio Effect Rack holds several **chains** of effects inside one device. Process a sound
 several ways at once and blend them, build a reusable effect "patch" with a few macros on top, or
@@ -29,7 +30,7 @@ move, copy and paste as they do there — and between the rack and the track's d
 
 ## Chains
 
-**+ Chain** adds one (or drop an effect on the chain list); the dashed target at the end of a chain
+<At id="ui:device.racks.audio-effect-rack" /> **+ Chain** adds one (or drop an effect on the chain list); the dashed target at the end of a chain
 adds an effect — the menu lists the built-in effects and a **Plug-ins** submenu. Each chain has a
 name, its own **Volume**, **Pan**, level, **mute** and **solo**. Right-click a chain to duplicate or
 delete it.
@@ -51,7 +52,7 @@ compensation** (lines up chains with different latency).
 
 <Shot id="devices/racks/audio-effect-rack/select" alt="The Select tab: the selector and each chain's select range" />
 
-Each chain has a **select range** from 0 to 127; drag its edges. Drag the **Selector** to choose
+<At id="ui:device.racks.audio-effect-rack" /> Each chain has a **select range** from 0 to 127; drag its edges. Drag the **Selector** to choose
 which chains play, map it to a macro (right-click the selector, or **Map to the selector** in a
 macro's menu) and automate the macro, or switch on **Follow input level** so the input's loudness
 moves it. The ranges only count in Select mode.

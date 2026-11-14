@@ -11,6 +11,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 Nota Chamber is two reverbs in one: a **convolution** engine that plays back real-sounding spaces,
 and an **algorithmic** engine for lush, modulated, shimmering tails. Blend them, or feed one into the
@@ -31,7 +32,7 @@ switch in the header folds the card to **S**: the IR over its picker and **Prede
 
 ## Convolution
 
-Sixteen built-in impulse responses — halls (**Concert Hall · Wide**, **Stone Vault**, **Cathedral**,
+<At id="ui:device.audio-effects.chamber" /> Sixteen built-in impulse responses — halls (**Concert Hall · Wide**, **Stone Vault**, **Cathedral**,
 **Scoring Stage**), rooms (**Wood Chamber**, **Live Room**, **Drum Room**, **Tiled Bathroom**), plates
 (**Vocal Plate**, **Bright Plate**), **Spring Tank**, spaces (**Car Park**, **Stairwell**, **Forest
 Clearing**) and FX (**Gated Room**, **Metal Tank**) — or **your own**: drop a WAV, FLAC or MP3 on the
@@ -64,7 +65,7 @@ and the modulation settings.
 
 ## Mix
 
-The **Mix** tab draws the signal flow: the input splits into the dry path and the two engines — side
+<At id="ui:device.audio-effects.chamber" /> The **Mix** tab draws the signal flow: the input splits into the dry path and the two engines — side
 by side (**Parallel**) or the convolution feeding the algorithm (**Serial**) — whose **Blend** runs
 through the EQ (wherever it sits), the stereo stage (**Width**, bass mono below **Mono f**) and
 **Ducking** (the input pushes the reverb down while it plays), meets the dry at the mix and leaves at

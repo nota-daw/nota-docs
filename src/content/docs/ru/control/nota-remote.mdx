@@ -19,6 +19,7 @@ sources:
 import Shot from '@components/Shot.astro';
 import ShotRow from '@components/ShotRow.astro';
 import { Aside, Steps } from '@astrojs/starlight/components';
+import At from '@components/At.astro';
 
 Nota Remote превращает телефон или планшет в контроллер. Ничего ставить не нужно: Nota сама отдаёт
 страницу по локальному Wi-Fi или USB-кабелю.
@@ -27,7 +28,7 @@ Nota Remote превращает телефон или планшет в кон�
 
 <Steps>
 
-1. Нажмите **Remote** в полосе транспорта (или **View ▸ Connect phone…**). В первый раз разрешите
+1. <At id="ui:transport.remote" /> Нажмите **Remote** в полосе транспорта (или **View ▸ Connect phone…**). В первый раз разрешите
    управление с телефона — а на macOS ещё и поиск устройств в локальной сети.
 
 2. Отсканируйте QR-код камерой телефона. Или откройте показанный адрес и введите четырёхзначный код
@@ -78,7 +79,7 @@ Keyboard и Scale появляется переключатель **Expressive**
 
 ## Цвета
 
-Телефон носит ту же цветовую тему, что и Nota, и меняет её вместе с ней. Выберите другую тему в
+<At id="cmd:prefs.appearance" /> Телефон носит ту же цветовую тему, что и Nota, и меняет её вместе с ней. Выберите другую тему в
 [Settings ▸ Appearance](../../preferences/appearance/) или дайте **Follow system** переключить Nota
 между тёмной и светлой — телефон подхватит смену через мгновение, без перезагрузки, и удерживаемая нота
 продолжит звучать.

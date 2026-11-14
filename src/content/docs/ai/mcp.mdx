@@ -15,6 +15,7 @@ sources:
 
 import Shot from '@components/Shot.astro';
 import { Steps, Aside } from '@astrojs/starlight/components';
+import At from '@components/At.astro';
 
 Nota has a built-in **MCP server** (Model Context Protocol). With it on, an AI assistant — Claude
 Desktop or Claude Code — can read and edit the project open in Nota: add tracks, write notes, set up
@@ -25,7 +26,7 @@ and goes through undo, like your own.
 
 <Steps>
 
-1. [**Settings ▸ AI control (MCP)**](../../preferences/mcp/) ▸ **Enable MCP server (let an AI drive Nota)**. It's off
+1. <At id="cmd:prefs.mcp" /> [**Settings ▸ AI control (MCP)**](../../preferences/mcp/) ▸ **Enable MCP server (let an AI drive Nota)**. It's off
    by default.
 
 2. **Copy config** copies a ready-made server entry; add it (or the URL) as an MCP server in Claude
@@ -68,7 +69,7 @@ Some things stay yours: an AI can't delete versions or install models.
 
 ## Design a theme
 
-Give an assistant a palette — a few colours, a photo's mood, "like an old mixing desk" — and it
+<At id="cmd:prefs.mcp" /> Give an assistant a palette — a few colours, a photo's mood, "like an old mixing desk" — and it
 can turn it into a full [theme of your own](../../preferences/appearance/#your-own-themes), check
 that it stays readable and show you how it looks before anything changes on your screen.
 

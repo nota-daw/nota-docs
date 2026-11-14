@@ -24,6 +24,7 @@ sources:
 import { Aside } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 ## Les types de piste
 
@@ -35,19 +36,19 @@ import Kbd from '@components/Kbd.astro';
 | **Groupe** | D’autres pistes, repliées en dessous | Ses effets, comme un sous-mixage de ses pistes |
 | **Master** | La somme de tout | La sortie vers vos enceintes |
 
-Les pistes de retour et le master se trouvent en bas de l’Arrangement, sous les pistes qui défilent. Chacune de
+<At id="none" /> Les pistes de retour et le master se trouvent en bas de l’Arrangement, sous les pistes qui défilent. Chacune de
 ces lignes a un indicateur de niveau et un fader de volume avec sa valeur en dB : montez un envoi et regardez bouger
 l’indicateur du retour, ou baissez un retour sans ouvrir le Mixeur. Double-cliquez sur un fader pour le remettre
 à 0 dB.
 
 ## Ajouter des pistes
 
-- **Double-cliquez sur un instrument** dans le navigateur : une nouvelle piste d’instrument avec cet instrument et un
+- <At id="ui:browser.tab.instruments" /> **Double-cliquez sur un instrument** dans le navigateur : une nouvelle piste d’instrument avec cet instrument et un
   clip vide d’une mesure. Si une piste d’instrument est sélectionnée, l’instrument **remplace** celui de cette piste
   (ses clips et ses effets restent, et Annuler ramène l’ancien), pour que vous puissiez essayer plusieurs
   instruments à la suite sur une même partie. Maintenez **⌥** (Alt sous Windows et Linux) en double-cliquant pour
   obtenir toujours une nouvelle piste. Les racks ne sont jamais remplacés ainsi.
-- **Faites glisser** un instrument, un échantillon ou une boucle depuis le navigateur vers l’espace vide sous les
+- <At id="ui:arrangement" /> **Faites glisser** un instrument, un échantillon ou une boucle depuis le navigateur vers l’espace vide sous les
   pistes. Déposé sur une piste d’instrument existante, un instrument **remplace** celui de cette piste ; un
   échantillon déposé sur une piste audio s’y place.
 - **Clic droit** sur l’espace vide sous les pistes : **Ajouter une piste d’instrument**, **Ajouter une piste audio**,
@@ -62,7 +63,7 @@ l’indicateur du retour, ou baissez un retour sans ouvrir le Mixeur. Double-cli
 
 <Shot id="start-here/main-window" alt="L’Arrangement avec le groupe Rhythm et les pistes Drums, Bass, Keys, Lead et Texture" />
 
-Chaque en-tête porte le nom et le type de la piste, et :
+<At id="ui:arrangement" /> Chaque en-tête porte le nom et le type de la piste, et :
 
 - **M** muet et **S** solo,
 - **●** armement : la piste enregistre quand vous appuyez sur Enregistrement, et une piste d’instrument armée joue
@@ -82,7 +83,7 @@ l’entrée, au fader et au panoramique. Faites glisser le bord inférieur d’u
 
 ## Sélectionner plusieurs pistes
 
-Cliquez sur un en-tête, puis <Kbd>⇧</Kbd>-clic sur un autre pour sélectionner toutes les pistes entre les deux (dans
+<At id="ui:arrangement" /> Cliquez sur un en-tête, puis <Kbd>⇧</Kbd>-clic sur un autre pour sélectionner toutes les pistes entre les deux (dans
 les deux sens) ; <Kbd>⌘</Kbd>-clic ajoute ou retire une seule piste (ou cliquez sur un en-tête et appuyez sur
 <Kbd>⌘ A</Kbd> pour toutes les sélectionner). Ensuite <Kbd>⌘ C</Kbd> <Kbd>⌘ X</Kbd> <Kbd>⌘ V</Kbd> les copient,
 coupent et collent, <Kbd>⌘ D</Kbd> les duplique et <Kbd>Delete</Kbd> les supprime, chacun en une seule étape
@@ -91,7 +92,7 @@ toutes à la fois.
 
 ## Le menu de piste : nom, couleur, hauteur
 
-Faites un clic droit sur un en-tête pour ouvrir le menu de la piste. Sa première ligne nomme la piste et indique son
+<At id="ui:arrangement" /> Faites un clic droit sur un en-tête pour ouvrir le menu de la piste. Sa première ligne nomme la piste et indique son
 type et sa position (**Audio · 3**) ; sur une sélection, elle indique **3 pistes**.
 
 - **Couleur** : cliquez sur une pastille directement dans le menu : neuf familles de couleurs, chacune en teinte de
@@ -110,7 +111,7 @@ L’onglet [Inspecteur de piste](../../library/browser/#inspecteur-de-piste) du 
 
 ## Groupes
 
-Sélectionnez des pistes et appuyez sur <Kbd>⌘ G</Kbd> pour les mettre dans un groupe. Sur un groupe sélectionné,
+<At id="ui:arrangement" /> Sélectionnez des pistes et appuyez sur <Kbd>⌘ G</Kbd> pour les mettre dans un groupe. Sur un groupe sélectionné,
 <Kbd>⌘ ⇧ G</Kbd> (**Dégrouper** dans son menu) le dissout : ses pistes remontent d’un niveau et la piste de groupe
 disparaît avec ses effets ; <Kbd>⌘ Z</Kbd> la ramène. Sur une piste à l’intérieur d’un groupe, <Kbd>⌘ ⇧ G</Kbd>
 (**Retirer du groupe** dans son menu) sort seulement cette piste ; elle se place juste après le groupe, et le groupe
@@ -164,10 +165,10 @@ de chaîne avant leur nom ; les pistes des groupes imbriqués dans un groupe l
 
 Une chaîne d’instrument ou d’effets lourde peut être rendue en audio pour libérer le processeur :
 
-- **Geler** (dans l’en-tête du panneau de détail) rend la piste et met ses appareils en veille ; elle joue
+- <At id="ui:detail.freeze" /> **Geler** (dans l’en-tête du panneau de détail) rend la piste et met ses appareils en veille ; elle joue
   exactement pareil. Faites un clic droit sur **Geler** pour **Aplatir**, qui transforme définitivement la piste en
   piste audio ordinaire.
-- **Gel en direct** rend l’audio sur une piste audio liée en dessous et met la source en veille. **Modifier la
+- <At id="ui:detail.live-freeze" /> **Gel en direct** rend l’audio sur une piste audio liée en dessous et met la source en veille. **Modifier la
   source** réveille la source ; **Terminé** la gèle à nouveau. Dans le menu de la piste, **Gel en direct** est un
   interrupteur : il est activé tant que la piste est gelée en direct, et le désactiver dégèle (réveille la source).
 

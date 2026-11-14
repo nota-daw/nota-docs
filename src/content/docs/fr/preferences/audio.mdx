@@ -13,8 +13,9 @@ sources:
 
 import Shot from '@components/Shot.astro';
 import { Aside } from '@astrojs/starlight/components';
+import At from '@components/At.astro';
 
-Ouvrez les Réglages avec **Fichier ▸ Réglages…**, ou **Réglages** dans la fenêtre de démarrage.
+<At id="cmd:prefs.audio" /> Ouvrez les Réglages avec **Fichier ▸ Réglages…**, ou **Réglages** dans la fenêtre de démarrage.
 
 <Shot id="preferences/audio" alt="Réglages ▸ Audio" />
 
@@ -22,7 +23,7 @@ Ouvrez les Réglages avec **Fichier ▸ Réglages…**, ou **Réglages** dans la
 
 | Réglage | Ce qu’il fait |
 |---|---|
-| **Sortie** · **Entrée** | L’appareil audio par lequel Nota joue et sur lequel il enregistre |
+| <At id="cmd:prefs.audio" /> **Sortie** · **Entrée** | L’appareil audio par lequel Nota joue et sur lequel il enregistre |
 | **Fréquence d’échantillonnage** | Valeur par défaut de l’appareil, 44 100, 48 000, 88 200 ou 96 000 Hz |
 | **Taille de la mémoire tampon** | Valeur par défaut de l’appareil, 64, 128, 256, 512, 1024 ou 2048 échantillons |
 | **Mode exclusif** (Windows) | WASAPI exclusif : la latence la plus basse, mais les autres applications deviennent silencieuses pendant que Nota joue |

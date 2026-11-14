@@ -14,6 +14,7 @@ sources:
 import { Aside } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 Automation makes a value move over time — a filter opening up, a fade, a delay swelling into a
 drop. Track volume and pan can be automated, and so can every parameter of a built-in device,
@@ -23,7 +24,7 @@ plug-in parameters and MIDI effects. Sends can't: they have no automation lane.
 
 ## Showing the lanes
 
-Click the **automation** button in the transport bar (<Kbd>⌘ ⇧ A</Kbd>). Each track's lane shows
+<At id="ui:transport.automation" /> Click the **automation** button in the transport bar (<Kbd>⌘ ⇧ A</Kbd>). Each track's lane shows
 one parameter, picked with the pill at the start of the lane — click it and choose from the
 list. Parameters that already carry automation are marked with a dot and listed first.
 
@@ -38,7 +39,7 @@ row below them carries the master volume.
 
 | Do this | To |
 |---|---|
-| Double-click the lane | Add a point (also between two points) |
+| <At id="ui:arrangement" /> Double-click the lane | Add a point (also between two points) |
 | Drag a point | Move it |
 | Double-click a point | Delete it |
 | <Kbd>⌥</Kbd>-drag a segment | Bend it into a curve |
@@ -50,7 +51,7 @@ for **Copy**, **Cut**, **Paste** and **Delete automation**.
 
 ## Recording automation
 
-There are no modes to set. Press **Record** and move a control: its lane records what you do.
+<At id="ui:transport.record" /> There are no modes to set. Press **Record** and move a control: its lane records what you do.
 A control you move with the mouse stops writing when you let go; a hardware knob, fader, stick
 or trigger keeps writing its last value until the transport stops. Sends record the same way —
 move a send knob in a track header, the Mixer or the **Sends** card.

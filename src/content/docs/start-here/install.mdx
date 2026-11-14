@@ -14,6 +14,7 @@ sources:
 
 import { Aside, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 Nota is free and open source. Every release is built from the code on GitHub and published
 on the [releases page](https://github.com/nota-daw/nota/releases/latest).
@@ -29,12 +30,12 @@ on the [releases page](https://github.com/nota-daw/nota/releases/latest).
 | **Linux**, most PCs | `Nota-<version>-x86_64.AppImage` |
 | **Linux** on ARM | `Nota-<version>-aarch64.AppImage` |
 
-Not sure which Mac you have? Open the Apple menu ▸ **About This Mac**: "Apple M…" means Apple
+<At id="none" /> Not sure which Mac you have? Open the Apple menu ▸ **About This Mac**: "Apple M…" means Apple
 Silicon, "Intel" means Intel.
 
 ## Install and open
 
-Nota isn't signed with a paid Apple or Microsoft certificate yet, so the first time you open
+<At id="none" /> Nota isn't signed with a paid Apple or Microsoft certificate yet, so the first time you open
 it your system asks you to confirm. This happens once.
 
 <Tabs syncKey="os">
@@ -112,7 +113,7 @@ Nota plays through PulseAudio / ALSA and reads MIDI through ALSA.
 
 ## Updates
 
-Nota checks for new versions itself, on every launch and once a day while it runs. When one
+<At id="ui:status.version" /> Nota checks for new versions itself, on every launch and once a day while it runs. When one
 is out, the [start window](../first-launch/) shows a banner and the status bar shows
 **Nota X is available** beside the version number. Click **Update** (in the status bar, click
 the notice first), and Nota downloads it, checks it against the release's checksum, and

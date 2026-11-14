@@ -15,6 +15,7 @@ sources:
 
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 Nota MIDI Effect Rack se place avec les autres effets MIDI, avant l’instrument de la piste. Ses **chaînes** prennent
 chacune une partie de ce que vous jouez et la font passer dans leurs propres effets MIDI (un arpège au-dessus de C3,
@@ -29,7 +30,7 @@ Rack, entre chaînes, racks et les effets MIDI propres de la piste.
 
 ## Chaînes
 
-Une chaîne est une rangée d’effets MIDI intégrés (Arp, Chord, Scale, Length, Velocity, Random) qui s’exécutent de
+<At id="ui:device.racks.midi-effect-rack" /> Une chaîne est une rangée d’effets MIDI intégrés (Arp, Chord, Scale, Length, Velocity, Random) qui s’exécutent de
 gauche à droite. Déposez-les depuis le Navigateur sur la chaîne ou sur la cible en pointillés ; un effet MIDI déposé
 sur la liste des chaînes démarre une nouvelle chaîne. Un rack contient jusqu’à 16 chaînes.
 

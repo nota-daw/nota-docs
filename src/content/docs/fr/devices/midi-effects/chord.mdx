@@ -11,6 +11,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 Nota Chord joue un accord à partir de chaque note que vous jouez : un doigt, toute l’harmonie.
 
@@ -18,7 +19,7 @@ Nota Chord joue un accord à partir de chaque note que vous jouez : un doigt, 
 
 ## Type et décalages
 
-**Type** choisit une forme (**Maj7**, **Min7**, **Sus4**, **5th**) ou **Custom**. Les **Shifts** sont six voix
+<At id="ui:device.midi-effects.chord" /> **Type** choisit une forme (**Maj7**, **Min7**, **Sus4**, **5th**) ou **Custom**. Les **Shifts** sont six voix
 ajoutées : chacune a un point marche / arrêt, un intervalle de −12 … +12 demi-tons (nommé : M3, P5, M7…) et un
 décalage de vélocité que vous faites glisser. Modifier un décalage passe le type sur Custom. **Keep root** joue aussi la
 note que vous avez pressée.

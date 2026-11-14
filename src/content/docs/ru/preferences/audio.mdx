@@ -13,8 +13,9 @@ sources:
 
 import Shot from '@components/Shot.astro';
 import { Aside } from '@astrojs/starlight/components';
+import At from '@components/At.astro';
 
-Settings открываются через **File ▸ Settings…** или кнопку **Settings** в стартовом окне.
+<At id="cmd:prefs.audio" /> Settings открываются через **File ▸ Settings…** или кнопку **Settings** в стартовом окне.
 
 <Shot id="preferences/audio" alt="Settings ▸ Audio" />
 
@@ -25,7 +26,7 @@ Settings открываются через **File ▸ Settings…** или кн�
 
 | Настройка | Что делает |
 |---|---|
-| **Sample rate** | По умолчанию устройства, 44 100, 48 000, 88 200 или 96 000 Гц |
+| <At id="cmd:prefs.audio" /> **Sample rate** | По умолчанию устройства, 44 100, 48 000, 88 200 или 96 000 Гц |
 | **Buffer size** | По умолчанию устройства, 64, 128, 256, 512, 1024 или 2048 сэмплов |
 | **Exclusive mode** (Windows) | Монопольный режим WASAPI — минимальная задержка, но другие приложения замолкают, пока играет Nota |
 

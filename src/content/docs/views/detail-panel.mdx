@@ -19,8 +19,9 @@ sources:
 import { Aside } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
-The panel under the Arrangement or Session shows what you're working on in detail.
+<At id="ui:detail" /> The panel under the Arrangement or Session shows what you're working on in detail.
 Double-click a track's header and it opens on the track's devices; double-click a clip (or a
 filled Session slot) and it opens the clip.
 
@@ -34,7 +35,7 @@ click open it, turn on **Open the detail panel when you select a track or clip**
 
 ## Devices, Pattern, Clip
 
-The tabs in its top-left corner switch what it shows — <Kbd>Tab</Kbd> cycles them:
+<At id="ui:detail.devices" /> The tabs in its top-left corner switch what it shows — <Kbd>Tab</Kbd> cycles them:
 
 - **Devices** — the track's [device chain](../../devices/): MIDI effects, the instrument and
   the effects, left to right. Scroll sideways when they don't fit.

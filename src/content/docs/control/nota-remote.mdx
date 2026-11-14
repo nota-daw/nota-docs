@@ -19,6 +19,7 @@ sources:
 import Shot from '@components/Shot.astro';
 import ShotRow from '@components/ShotRow.astro';
 import { Aside, Steps } from '@astrojs/starlight/components';
+import At from '@components/At.astro';
 
 Nota Remote turns a phone or tablet into a controller. Nothing to install: Nota serves the page itself,
 over your local Wi-Fi or a USB cable.
@@ -27,7 +28,7 @@ over your local Wi-Fi or a USB cable.
 
 <Steps>
 
-1. Click **Remote** in the transport bar (or **View ▸ Connect phone…**). The first time, allow
+1. <At id="ui:transport.remote" /> Click **Remote** in the transport bar (or **View ▸ Connect phone…**). The first time, allow
    control from a phone — on macOS, also allow Nota to find devices on the local network.
 
 2. Scan the QR code with the phone's camera. Or open the address shown and type the four-digit code
@@ -79,7 +80,7 @@ that senses touch force also sends pressure.
 
 ## Colours
 
-The phone wears Nota's colour theme and changes with it. Pick another theme in
+<At id="cmd:prefs.appearance" /> The phone wears Nota's colour theme and changes with it. Pick another theme in
 [Settings ▸ Appearance](../../preferences/appearance/), or let **Follow system** switch Nota between
 dark and light, and the phone follows within a moment — no reload, and a held note keeps sounding.
 

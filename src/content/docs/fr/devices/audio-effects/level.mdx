@@ -11,6 +11,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 Nota Level mesure le volume comme le font le streaming et la radiodiffusion (ITU-R BS.1770) et pilote un gain pour que la
 sortie se tienne sur une **cible** en LUFS. Utilisez-le pour niveler une voix, préparer un podcast, régler le gain avant
@@ -33,7 +34,7 @@ de relâchement ne sont pas remontées : tant que l’entrée est trop faible 
 
 ## Le graphique
 
-**Scale** : **Mom** (instantané, 0,4 s), **Short** (3 s) ou **Integ** (intégré, avec gate) : sur 8 secondes d’entrée, de
+<At id="ui:device.audio-effects.level" /> **Scale** : **Mom** (instantané, 0,4 s), **Short** (3 s) ou **Integ** (intégré, avec gate) : sur 8 secondes d’entrée, de
 sortie et de la cible avec sa bande de ±1 LU. Faites glisser la ligne de la cible.
 
 ## Réponse et sécurité
@@ -44,7 +45,7 @@ compensé.
 
 ## Caler sur une référence
 
-Choisissez une piste de référence comme cible (elle devient la source de sidechain de l’appareil) : Level cale alors le
+<At id="ui:device.audio-effects.level" /> Choisissez une piste de référence comme cible (elle devient la source de sidechain de l’appareil) : Level cale alors le
 volume de cette piste sur celui-là, sur la même échelle.
 
 ## Préréglages

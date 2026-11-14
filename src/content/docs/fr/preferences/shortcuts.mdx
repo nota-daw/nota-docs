@@ -14,6 +14,7 @@ sources:
 
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 <Shot id="preferences/shortcuts" alt="Réglages ▸ Raccourcis" />
 
@@ -28,7 +29,7 @@ Les touches livrées avec Nota sont dans [Raccourcis clavier](../../reference/sh
 
 ## Changer une touche
 
-1. Cliquez sur la touche de l’action — ses touches, ou **—** quand elle n’en a pas. La ligne attend :
+1. <At id="cmd:prefs.shortcuts" /> Cliquez sur la touche de l’action — ses touches, ou **—** quand elle n’en a pas. La ligne attend :
    **Press a shortcut…**
 2. Appuyez sur la nouvelle combinaison. Rien dans Nota n’y réagit tant que la ligne attend ; la touche
    s’affiche dans la ligne.

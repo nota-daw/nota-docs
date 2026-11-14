@@ -11,6 +11,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 Nota Lens shows what a sound is made of. It changes nothing — put it anywhere in a chain, or on the
 master, to look at the spectrum, the waveform or how the sound evolves over time.
@@ -39,7 +40,7 @@ side instead of left / right.
 
 <Shot id="devices/audio-effects/lens/scope" alt="Nota Lens, Scope view" />
 
-A triggered oscilloscope that behaves like a bench instrument: the trace is pinned to the trigger
+<At id="ui:device.audio-effects.lens" /> A triggered oscilloscope that behaves like a bench instrument: the trace is pinned to the trigger
 point and stands still, older passes fade (**Afterglow**). **Free** runs untriggered; a **Single**
 capture holds one sweep. **Cursors** A and B measure time and level between two points. **Export
 WAV** saves the captured window.

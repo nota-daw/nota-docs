@@ -14,6 +14,7 @@ sources:
 
 import Kbd from '@components/Kbd.astro';
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 Chaque rack ([Instrument Rack](../instrument-rack/), [Drum Rack](../drum-rack/),
 [Audio Effect Rack](../audio-effect-rack/) et [MIDI Effect Rack](../midi-effect-rack/)) et
@@ -23,7 +24,7 @@ fois, ou faire évoluer un patch superposé entier.
 
 ## Sur les racks Instrument, Audio Effect et MIDI Effect
 
-Chaque macro est un petit bouton avec son nom, sa valeur (— quand elle ne pilote rien) et, en bleu sarcelle, son nombre
+<At id="ui:device.racks.instrument-rack" /> Chaque macro est un petit bouton avec son nom, sa valeur (— quand elle ne pilote rien) et, en bleu sarcelle, son nombre
 de cibles. Faites-la glisser vers le haut ou le bas ; un double-clic la remet à 0.
 
 <Shot id="devices/racks/instrument-rack/mapping" alt="Association de la Macro 1 sur place : chaque paramètre de la chaîne est entouré de bleu sarcelle" />
@@ -47,7 +48,7 @@ dans l’onglet Select / Zones, ou choisissez **Map to the selector** dans le me
 
 ## Sur le Drum Rack et Nota Rhythm
 
-Chaque macro montre sa valeur, son nom et, en bleu sarcelle, où elle va (« → Reverb · Snare, Clap »). Une macro non
+<At id="ui:device.racks.drum-rack" /> Chaque macro montre sa valeur, son nom et, en bleu sarcelle, où elle va (« → Reverb · Snare, Clap »). Une macro non
 assignée est une cellule vide en pointillés.
 
 ### Associer

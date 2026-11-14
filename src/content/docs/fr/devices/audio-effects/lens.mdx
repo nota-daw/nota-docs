@@ -11,6 +11,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 Nota Lens montre de quoi un son est fait. Il ne change rien : placez-le n’importe où dans une chaîne, ou sur le master,
 pour regarder le spectre, la forme d’onde ou la façon dont le son évolue dans le temps.
@@ -30,7 +31,7 @@ mid ou le side au lieu de gauche / droite.
 
 <Shot id="devices/audio-effects/lens/scope" alt="Nota Lens, vue Scope" />
 
-Un oscilloscope déclenché qui se comporte comme un instrument de laboratoire : la trace est épinglée au point de
+<At id="ui:device.audio-effects.lens" /> Un oscilloscope déclenché qui se comporte comme un instrument de laboratoire : la trace est épinglée au point de
 déclenchement et reste immobile, les passages plus anciens s’estompent (**Afterglow**). **Free** tourne sans
 déclenchement ; une capture **Single** retient un seul balayage. Les **Cursors** A et B mesurent le temps et le niveau
 entre deux points. **Export WAV** enregistre la fenêtre capturée.

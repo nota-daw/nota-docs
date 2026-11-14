@@ -14,6 +14,7 @@ sources:
 
 import Shot from '@components/Shot.astro';
 import { Steps } from '@astrojs/starlight/components';
+import At from '@components/At.astro';
 
 MIDI Learn связывает физический регулятор с регулятором на экране: крутите ручку на контроллере — и
 двигается фильтр в Nota.
@@ -22,7 +23,7 @@ MIDI Learn связывает физический регулятор с рег�
 
 <Steps>
 
-1. Нажмите **MIDI** в полосе транспорта. Подсветится всё, что можно назначить.
+1. <At id="ui:transport.midi-learn" /> Нажмите **MIDI** в полосе транспорта. Подсветится всё, что можно назначить.
 
 2. Щёлкните регулятор в Nota, которым хотите управлять, — ручку, фейдер, переключатель, макрос…
 

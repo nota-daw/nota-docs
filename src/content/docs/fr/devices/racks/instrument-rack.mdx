@@ -19,6 +19,7 @@ sources:
 
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 Nota Instrument Rack contient plusieurs **chaînes** sur une piste, chacune avec ses propres effets MIDI, instrument et
 effets. Superposez une nappe sous un son pincé, coupez le clavier en basse et lead, changez de sons selon la force avec
@@ -32,7 +33,7 @@ la même carte.
 
 ## Chaînes
 
-La liste montre chaque chaîne : sa couleur, son nom, **M** (muet) et **S** (solo), sa zone de touches et de vélocité,
+<At id="ui:device.racks.instrument-rack" /> La liste montre chaque chaîne : sa couleur, son nom, **M** (muet) et **S** (solo), sa zone de touches et de vélocité,
 et son niveau. Cliquez sur une chaîne pour la choisir ; double-cliquez sur son nom pour la renommer. Clic droit dessus
 pour la **Dupliquer** ou la **Supprimer**.
 
@@ -80,7 +81,7 @@ piste de Drum Rack.
 
 <Shot id="devices/racks/instrument-rack/zones" alt="L’onglet Zones : zones de touches et de vélocité par chaîne, avec la sonde sur E4" />
 
-Chaque chaîne ne joue que les notes à l’intérieur de sa zone de **touches** et de sa zone de **vélocité**. Faites
+<At id="ui:device.racks.instrument-rack" /> Chaque chaîne ne joue que les notes à l’intérieur de sa zone de **touches** et de sa zone de **vélocité**. Faites
 glisser les bords d’une zone pour les régler ; des zones qui se chevauchent se superposent, des zones séparées se
 partagent le clavier. Survolez les zones pour tester une note : une ligne marque la touche, les chaînes qui la
 joueraient s’allument, et le pied les nomme.

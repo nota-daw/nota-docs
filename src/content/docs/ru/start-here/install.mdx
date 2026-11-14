@@ -13,6 +13,7 @@ sources:
 
 import { Aside, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 Nota бесплатна и с открытым кодом. Каждый релиз собирается из кода на GitHub и выкладывается
 на [странице релизов](https://github.com/nota-daw/nota/releases/latest).
@@ -28,12 +29,12 @@ Nota бесплатна и с открытым кодом. Каждый рели
 | **Linux**, большинство ПК | `Nota-<version>-x86_64.AppImage` |
 | **Linux** на ARM | `Nota-<version>-aarch64.AppImage` |
 
-Не знаете, какой у вас Mac? Меню Apple ▸ **Об этом Mac**: «Apple M…» — это Apple Silicon,
+<At id="none" /> Не знаете, какой у вас Mac? Меню Apple ▸ **Об этом Mac**: «Apple M…» — это Apple Silicon,
 «Intel» — Intel.
 
 ## Установка и первый запуск
 
-У Nota пока нет платного сертификата Apple или Microsoft, поэтому при первом запуске система
+<At id="none" /> У Nota пока нет платного сертификата Apple или Microsoft, поэтому при первом запуске система
 попросит подтверждение. Это нужно сделать один раз.
 
 <Tabs syncKey="os">
@@ -115,7 +116,7 @@ Debian 10+, Ubuntu 18.10+ и всё моложе.
 
 ## Обновления
 
-Nota сама проверяет новые версии — при каждом запуске и раз в сутки, пока открыта. Когда выходит
+<At id="ui:status.version" /> Nota сама проверяет новые версии — при каждом запуске и раз в сутки, пока открыта. Когда выходит
 новая, в [стартовом окне](../first-launch/) появляется баннер, а в строке состояния рядом с
 номером версии — **Nota X is available**. Нажмите **Update** (в строке состояния — сначала на
 само сообщение), и Nota скачает обновление, сверит его с контрольной суммой релиза и установит,

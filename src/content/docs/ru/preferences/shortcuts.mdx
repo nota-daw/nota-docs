@@ -14,6 +14,7 @@ sources:
 
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 <Shot id="preferences/shortcuts" alt="Settings ▸ Shortcuts" />
 
@@ -27,7 +28,7 @@ Transport, Track, Arrangement, Grid, Session, Piano roll, Devices, Modular, Brow
 
 ## Поменять клавишу
 
-1. Щёлкните по клавише действия — по её значкам или по **—**, если клавиши нет. Строка ждёт: **Press a
+1. <At id="cmd:prefs.shortcuts" /> Щёлкните по клавише действия — по её значкам или по **—**, если клавиши нет. Строка ждёт: **Press a
    shortcut…**
 2. Нажмите новое сочетание. Пока строка ждёт, Nota на него не реагирует; клавиша появляется в строке.
 3. Нажмите **Confirm** (или <Kbd>Return</Kbd>). Клавиша работает сразу — и в меню, и в контекстных

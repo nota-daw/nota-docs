@@ -11,6 +11,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 Nota Chamber — два ревербератора в одном: **свёрточный** воспроизводит пространства, звучащие как
 настоящие, а **алгоритмический** даёт пышные, модулированные, мерцающие хвосты. Смешивайте их или
@@ -31,7 +32,7 @@ Predelay, Hold in, Vintage, Sync), **Mod** (скорость, глубина, ш
 
 ## Convolution
 
-Шестнадцать встроенных импульсных откликов — залы (**Concert Hall · Wide**, **Stone Vault**,
+<At id="ui:device.audio-effects.chamber" /> Шестнадцать встроенных импульсных откликов — залы (**Concert Hall · Wide**, **Stone Vault**,
 **Cathedral**, **Scoring Stage**), комнаты (**Wood Chamber**, **Live Room**, **Drum Room**, **Tiled
 Bathroom**), пластины (**Vocal Plate**, **Bright Plate**), **Spring Tank**, пространства (**Car Park**,
 **Stairwell**, **Forest Clearing**) и эффекты (**Gated Room**, **Metal Tank**) — или **свой**: бросьте
@@ -64,7 +65,7 @@ WAV, FLAC или MP3 на окно отклика или нажмите **Load�
 
 ## Mix
 
-Вкладка **Mix** рисует путь сигнала: вход делится на сухой путь и два движка — рядом (**Parallel**) или
+<At id="ui:device.audio-effects.chamber" /> Вкладка **Mix** рисует путь сигнала: вход делится на сухой путь и два движка — рядом (**Parallel**) или
 свёртка в алгоритм (**Serial**); их смесь (**Blend**) идёт через эквалайзер (где бы он ни стоял),
 стерео-каскад (**Width**, моно в басу ниже **Mono f**) и **Ducking** (вход приглушает реверберацию,
 пока звучит), встречается с сухим сигналом и уходит на выход. Щелчок по движку включает или

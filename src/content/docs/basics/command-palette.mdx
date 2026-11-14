@@ -19,8 +19,9 @@ sources:
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
 import { Aside, Steps } from '@astrojs/starlight/components';
+import At from '@components/At.astro';
 
-The command palette finds anything in Nota by typing: a menu command, a track, a built-in
+<At id="cmd:view.palette" /> The command palette finds anything in Nota by typing: a menu command, a track, a built-in
 device, a plug-in, a preset or a kit. Press <Kbd>⌘ ⇧ P</Kbd> (<Kbd>Ctrl Shift P</Kbd> on
 Windows and Linux) in any window — even while a text field has the focus — and press it again
 to close.
@@ -29,7 +30,7 @@ to close.
 
 ## Put a device where you are
 
-What you pick goes to **the place you opened the palette from**, and the pill at the right of
+<At id="cmd:view.palette" /> What you pick goes to **the place you opened the palette from**, and the pill at the right of
 the field says where before you press <Kbd>Return</Kbd> — for example
 **→ Bass · after Nota Compressor** or **→ new MIDI track**.
 
@@ -73,7 +74,7 @@ happened and has an **Undo** button (or press <Kbd>⌘ Z</Kbd>).
 
 ## Filter by type
 
-Type a prefix, or press <Kbd>Tab</Kbd> / <Kbd>⇧ Tab</Kbd> to step through the chips above the list:
+<At id="cmd:view.palette" /> Type a prefix, or press <Kbd>Tab</Kbd> / <Kbd>⇧ Tab</Kbd> to step through the chips above the list:
 
 | Prefix | Finds |
 |---|---|

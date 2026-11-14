@@ -12,6 +12,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 Nota Compressor evens out a signal: it turns down what goes over the threshold, then makes the
 result louder again. Glue a drum bus, level a vocal, pump a pad from the kick.
@@ -29,7 +30,7 @@ switch in the header folds the card to **S**: the curve over the character and *
 
 ## Curve
 
-The transfer curve and the history of gain reduction. **Drag the curve** to set threshold and ratio.
+<At id="ui:device.audio-effects.compressor" /> The transfer curve and the history of gain reduction. **Drag the curve** to set threshold and ratio.
 
 ## Motion
 
@@ -73,6 +74,6 @@ Pluck**, **Acoustic Guitar**, **Guitar Sustain**, **Piano Smooth**, **Pad Breath
 
 ## Tips
 
-- **Sidechain pump:** External key from the kick, fast attack, release to taste — or start from
+- <At id="ui:device.audio-effects.compressor" /> **Sidechain pump:** External key from the kick, fast attack, release to taste — or start from
   **EDM Pump**. Kick inside a Drum Rack? Pick its pad (**Drums ▸ Kick**) rather than the whole kit.
 - **Parallel drums:** a heavy ratio with **Mix** around 40 %.
