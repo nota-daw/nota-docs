@@ -1,14 +1,16 @@
 ---
 title: Automation
-description: Drawing and recording automation lanes for volume, pan and any device parameter; overriding and re-enabling; editing points and ranges.
+description: Drawing and recording automation lanes for volume, pan, tempo and any device parameter; overriding and re-enabling; editing points and ranges.
 sidebar:
   order: 4
-updated: "0.58.1"
+updated: "0.60.1"
 status: done
 sources:
   - src/managed/Nota.App/ArrangementView.Automation.cs
   - src/managed/Nota.App/ArrangementView.AutoEditor.cs
   - src/native/nota.engine/src/engine/Automation.h
+  - src/managed/Nota.App/ArrangementView.Controls.cs
+  - src/native/nota.engine/src/engine/TempoMap.h
 ---
 
 import { Aside } from '@astrojs/starlight/components';
@@ -17,7 +19,8 @@ import Kbd from '@components/Kbd.astro';
 
 Automation makes a value move over time — a filter opening up, a fade, a delay swelling into a
 drop. Track volume and pan can be automated, and so can every parameter of a built-in device,
-plug-in parameters and MIDI effects. Sends can't: they have no automation lane.
+plug-in parameters and MIDI effects. On the master you automate its volume, pan, the devices
+on the master chain — and the song's **tempo**. Sends can't be automated: they have no lane.
 
 <Shot id="editing/automation-lanes" alt="Automation mode in the Arrangement: the Lead track's volume lane with a curve across the song" />
 
@@ -31,8 +34,9 @@ While automation mode is on, touching any knob or fader of a track — on a devi
 the mixer — switches that track's lane to it.
 
 Return tracks have lanes too, in their rows pinned under the tracks: volume, pan and the
-parameters of the devices on the return. They edit exactly like a track's lane. The master
-row below them carries the master volume.
+parameters of the devices on the return. They edit exactly like a track's lane. The **Master**
+row below them has the same pill: **Volume**, **Tempo**, **Pan**, then a submenu for each device
+on the master chain. Touching a master device's knob in automation mode shows its lane there.
 
 ## Drawing
 
@@ -62,6 +66,28 @@ hand wins: that lane is overridden and stops pulling the knob back. The button n
 automation button lights up while anything is overridden — click it to hand every lane back to
 playback.
 
+## Tempo
+
+Tempo changes are automation on the master: pick **Tempo** in the Master row's pill and draw
+the tempo like any other lane. The lane reads in BPM:
+
+<Shot id="editing/automation-tempo" alt="The Master row's Tempo lane: a steady tempo easing down into a ritardando, then an instant jump to a faster tempo; the bars above widen through the slow-down" />
+
+- a **curve** between two points is a smooth accelerando or ritardando — bend it with
+  <Kbd>⌥</Kbd>-drag;
+- **two points on one beat** are an instant tempo change;
+- the numbers at the lane's right edge are the highest and lowest tempo it shows — click one
+  to change it. Tempo itself stays within 20–300 BPM.
+
+Playback, the grid, the metronome, MIDI, warped audio, freezing, bouncing and export all follow
+the drawn tempo, and you hear an edit while the song plays. Audio that isn't warped keeps its
+place in time. While the Tempo lane has points the transport's **BPM** shows the tempo under
+the playhead and can't be typed into — delete the points to set one fixed tempo again.
+
+Moving or deleting a section of the song, or inserting time, leaves the tempo where it is.
+Projects made with the earlier tempo track open with the same timing, their tempo moved onto
+this lane.
+
 ## Automation moves with the clips
 
 When you move clips, the automation under them moves along. Moved to **another track**, a clip
@@ -71,7 +97,8 @@ clips without dragging it along.
 
 ## Other kinds of envelope
 
-- The **master volume** has its own lane on the Master row — click it to add points.
+- The **master volume** is the Master row's **Volume** target; its pan and tempo are
+  targets there too (see above).
 - A **MIDI clip** has Velocity and Volume envelopes inside the clip — see
   [Piano roll](../piano-roll/#envelopes).
 - An **audio clip** has Volume and Pan envelopes and an ADSR — see

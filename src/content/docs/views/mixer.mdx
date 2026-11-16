@@ -3,7 +3,7 @@ title: Mixer
 description: The Mixer window — a channel strip per track with inputs, sends, pan, volume, mute, solo, Cue and arm, returns, the master and the Cue strip.
 sidebar:
   order: 4
-updated: "0.59.2"
+updated: "0.60.1"
 status: done
 sources:
   - src/managed/Nota.App/MixerView.cs
@@ -43,7 +43,9 @@ Top to bottom, each track gets:
 
 Strips come in the Arrangement's order — a group's strip, then its tracks. Return tracks come
 after the tracks, then the **Master** strip, and the [Cue strip](#cue-your-own-mix) when you use
-Cue. Its fader is the
+Cue. The Master strip's **Pan** comes after the master devices and before its fader, in the
+project's pan law with the centre at full level; it can be
+[automated](../../editing/automation/) from the Arrangement's Master row. Its fader is the
 same master volume as the **Master** control in the transport bar and the Master row of the
 Arrangement — move one and the others follow; it is saved with the project. **Show** at the
 bottom switches the **Sends** and **I/O** sections on or off; a section that is shown has its

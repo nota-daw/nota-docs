@@ -7,6 +7,7 @@
 #   scene: main     args: view (arrangement | session | modular), select (demo track: Rhythm, Drums,
 #                         Bass, Keys, Lead, Texture, Reverb), element (x:Name to crop to), width, height,
 #                         rows (every track row at this height, px)
+#                         automation (lanes on), masterLane: "tempo" (a ritardando + jump on the master Tempo lane)
 #   scene: palette  args: select (demo track), card (audio effect index to select), origin: "devices",
 #                         query, down (rows), mods (alt | cmd | shift), crop (true: just the palette)
 #   scene: mixer (args: group "Name:Track,Track", fold, compact, select, width, height,
@@ -70,6 +71,7 @@ shots:
   - { id: editing/multi-clip-editor, source: app, scene: main, args: {view: "arrangement", clip: "Bass", clipIndex: 1, with: "Bass:0,Keys:2,Keys:3", element: "DetailPanel", width: 1200, detailHeight: 460} }
   - { id: editing/audio-clip-editor, source: app, scene: main, args: {view: "arrangement", clip: "Texture", audio: true, element: "DetailPanel", width: 1200, detailHeight: 420} }
   - { id: editing/automation-lanes, source: app, scene: main, args: {view: "arrangement", automation: true, fit: true, element: "Timeline", height: 760} }
+  - { id: editing/automation-tempo, source: app, scene: main, args: {view: "arrangement", automation: true, masterLane: "tempo", fit: true, element: "Timeline", height: 760} }
   - { id: views/arrangement-track-sends, source: app, scene: main, args: {view: "arrangement", rows: 128, element: "Timeline", width: 1100, height: 780} }
   - { id: views/arrangement-timeline, source: app, scene: main, args: {view: "arrangement", fit: true, element: "Timeline", height: 760} }
 
