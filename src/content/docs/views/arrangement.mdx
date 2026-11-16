@@ -3,7 +3,7 @@ title: Arrangement
 description: The song on a timeline — moving and trimming clips, selecting, zooming, the overview strip, sections, clip names and which side the track headers sit on.
 sidebar:
   order: 1
-updated: "0.59.2"
+updated: "0.60.2"
 status: done
 sources:
   - src/managed/Nota.App/ArrangementView.cs
@@ -107,7 +107,10 @@ readable at a glance.
 - Drag a section's edge to resize it, in whole bars. <Kbd>⌥</Kbd>-drag the section itself to
   move just its marker, also in whole bars — the music under it stays.
 - Right-click it for **Loop section**, **Select section** (as a time range across every track),
-  **Duplicate**, **Rename…**, **Reset to default name** and **Delete**. These act on the marker only.
+  **Duplicate**, **Rename…**, **Reset to default name** and **Delete**. These act on the marker,
+  not the music under it. **Duplicate** puts an empty copy of the section, with its name, right
+  after it and makes room for it: the sections, clips and automation after it move later by its
+  length. A section that overlaps another only gets the copy's marker.
 
 Each of these edits is one undo step. Sections are saved with the project. **View ▸ Toggle
 sections** hides the lane.
