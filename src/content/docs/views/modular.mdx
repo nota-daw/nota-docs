@@ -3,7 +3,7 @@ title: Modular
 description: A track's devices as a signal graph, and CV modulation — patch LFOs, envelopes, MIDI and macros into any parameter.
 sidebar:
   order: 3
-updated: "0.59.2"
+updated: "0.60.1"
 status: done
 sources:
   - src/managed/Nota.App/ModularView.cs
@@ -12,6 +12,9 @@ sources:
   - src/native/nota.engine/src/engine/Engine_Modulation.cpp
   - src/managed/Nota.App/ArrangementView.HeadersOnly.cs
   - src/managed/Nota.Presentation/ModularBrowserItems.cs
+  - src/managed/Nota.App/ModularView.Cards.cs
+  - src/managed/Nota.App/ModularView.Picker.cs
+  - src/managed/Nota.App/Controls/ParamPickerPanel.cs
 ---
 
 import { Aside } from '@astrojs/starlight/components';
@@ -38,16 +41,29 @@ To open a track here from the arrangement or the Session view, right-click its h
 in Modular**.
 
 Move around the canvas with <Kbd>Space</Kbd> + drag, zoom with <Kbd>⌘</Kbd> + scroll, and press
-<Kbd>F</Kbd> (or **Fit**) to fit everything on screen. Node positions are saved with the project.
+<Kbd>F</Kbd> (or **Fit**) to fit everything on screen. Node positions and sizes are saved with the
+project.
 
 ## Nodes
 
-Each device is a node. On the canvas you can expand it, **bypass** it (<Kbd>B</Kbd>),
-duplicate it with all its settings (<Kbd>⌘ D</Kbd>), delete it (the bin, or <Kbd>Delete</Kbd>)
-and reorder it — the same chain you see in the detail panel. A node shows only the knobs that
-have a CV patch attached; the chevron (or a double-click) shows them all. **Show fewer** under an
-opened node, the chevron again or <Kbd>Esc</Kbd> closes it. Knobs on a node are the real
-controls — turning them changes the sound.
+Each device is a node. On the canvas you can **bypass** it (<Kbd>B</Kbd>), duplicate it with
+all its settings (<Kbd>⌘ D</Kbd>), delete it (the bin, or <Kbd>Delete</Kbd>) and reorder it —
+the same chain you see in the detail panel.
+
+A device node shows the device's own card — the same one as in the detail panel, with its
+graphs, tabs and knobs — so you can play it where you patch it. The **XS · S · L** switch in the
+node's header sets its size:
+
+- **S** and **L** are the card's small and full sizes. A device whose card comes in S opens at
+  S; one with a single size (a rack, say) opens at L.
+- **XS** is the compact node: a short list of parameters. It shows only the ones with a CV patch
+  attached; the chevron (or a double-click) shows them all, and **Show fewer**, the chevron again
+  or <Kbd>Esc</Kbd> closes it.
+
+The size belongs to the node: changing it here doesn't resize the card in the detail panel. A
+node keeps its top-left corner when it grows; nodes you placed yourself stay put, and the rest
+of the chain moves aside. Knobs on a node, at any size, are the real controls — turning them
+changes the sound.
 
 The track's own nodes — its input (or instrument) and its output — carry a lock: they are where
 the chain starts and ends, so they can't be deleted. To change an instrument, drop another one on
@@ -77,13 +93,19 @@ Any parameter can also act as a CV source: right-click a knob ▸ **Expose as CV
 
 ## Patching
 
-Drag a modulator's **CV out** onto a knob of any device, instrument or MIDI effect. A cable
-links them. Click the cable to set its **depth** and **mode** — **Add** (on top of the knob's
+Drag a modulator's **CV out** onto a knob of any device, instrument or MIDI effect — the knob
+under the cable is outlined — and let go: a cable links them. Drop it anywhere else on a node
+and a panel lists that device's parameters: start typing to filter, move with <Kbd>↑</Kbd>
+<Kbd>↓</Kbd>, press <Kbd>Return</Kbd> (or click) to link, <Kbd>Esc</Kbd> to close. It stays
+small and quick even for a plug-in with thousands of parameters. Click the cable to set its **depth** and **mode** — **Add** (on top of the knob's
 position), **Multiply** (scaled by it) or **Override** (replacing it); select it and delete it
 to remove it. Several modulations on one knob each get their own input and cable.
 
 To modulate something on **another track**, drag the CV output onto that track's header beside
-the canvas and pick a parameter — or right-click a knob ▸ **Modulate from another track**.
+the canvas: the same panel lists that track's parameters under each device's name, and the
+search covers them all. Or right-click a knob ▸ **Modulate from another track…**, which lists
+the other tracks' modulators by track. **Modulate from a parameter…** works the same way for
+the parameters you exposed as CV outputs.
 
 ## Move a knob with another track's loudness
 
@@ -97,8 +119,9 @@ kick hits:
    dip should last (100–300 ms is a good start). **Depth** scales the whole signal.
 3. On the bass track, right-click the knob to move — the Gain of
    [Nota Utility](../../devices/audio-effects/utility/), say, or a filter's cutoff ▸
-   **Modulate from another track** ▸ the kick's follower (it's listed as **Env 1 · Kick**, say). (Or drag the follower's
-   **CV out** onto the bass track's header.)
+   **Modulate from another track…** ▸ the kick's follower (**Env 1** under **Kick**, say —
+   type the track's name to find it). (Or drag the follower's **CV out** onto the bass track's
+   header.)
 4. Click the cable and drag **depth** below zero: the knob now drops when the kick plays. A
    positive depth pushes it up instead.
 
