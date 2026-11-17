@@ -167,6 +167,8 @@ if (remote.length) {
         colorScheme: a.phone ?? theme,
       });
       const page = await ctx.newPage();
+      // args.prefs: the phone's own settings (⋯ menu, folds) before the page loads.
+      if (a.prefs) await page.addInitScript((p) => localStorage.setItem('nota-remote:prefs', JSON.stringify(p)), a.prefs);
       try {
         const worn = a.theme?.[theme] ?? `studio-${theme}`;
         const q = new URLSearchParams({ theme: worn, ...(a.pick ? { pick: a.pick } : {}) });
@@ -180,6 +182,8 @@ if (remote.length) {
         if (a.menu) await page.getByRole('button', { name: 'Menu', exact: true }).click();
         if (a.transport) await page.getByRole('button', { name: 'Big transport' }).click();
         await page.waitForTimeout(800);
+        // args.scroll: 'end' scrolls the screen's grid to its far corner.
+        if (a.scroll === 'end') { await page.evaluate(() => document.querySelector('main .scroll')?.scrollTo(1e5, 1e5)); await page.waitForTimeout(300); }
         const png = path.join(cache, 'remote', theme, s.id + '.png');
         fs.mkdirSync(path.dirname(png), { recursive: true });
         await page.screenshot({ path: png });
