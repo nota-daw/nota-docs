@@ -12,6 +12,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 Nota Flux a une petite surface et beaucoup à l’intérieur. Un **pad XY** mélange quatre mondes de timbre ; une poignée de
 macros à un bouton les façonnent ; et **React** laisse le synthé *écouter* une autre piste : une boucle de batterie peut
@@ -25,7 +26,7 @@ largeur).
 
 ## Vector
 
-Les quatre coins du pad sont les **mondes** : **Warm** (dent de scie douce), **Glass** (carré brillant), **Moog** (gras
+<At id="ui:device.instruments.flux" /> Les quatre coins du pad sont les **mondes** : **Warm** (dent de scie douce), **Glass** (carré brillant), **Moog** (gras
 et résonant) et **Grain** (rugueux, bruité). Faites glisser le point pour les mélanger. Chaque monde apporte sa propre
 résonance, son unison et son drive : déplacer le point change donc tout à la fois, sans que vous les réglions jamais
 directement. Un anneau bleu sarcelle en pointillés montre où Motion et React tirent le point.

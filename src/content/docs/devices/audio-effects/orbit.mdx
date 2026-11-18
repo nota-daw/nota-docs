@@ -11,6 +11,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 Nota Orbit moves a sound in volume and in space with one LFO. The **Phase** between the left and
 right channels decides what you hear: at **0°** both dip together — tremolo; at **180°** one is loud
@@ -38,7 +39,7 @@ Synced, the LFO locks to the song position and restarts on the bar.
 
 ## The window
 
-Both channels' gain over two cycles, with a running head and the depth's floor. Drag up and down
+<At id="ui:device.audio-effects.orbit" /> Both channels' gain over two cycles, with a running head and the depth's floor. Drag up and down
 for **Amount**, left and right for **Phase**. Underneath, the stereo position on an L–R line.
 
 ## Motion

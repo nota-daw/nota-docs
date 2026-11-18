@@ -12,6 +12,7 @@ sources:
 
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 Nota Rhythm is a self-contained groovebox: eight drum voices and a 16-step sequencer that plays
 in time with the transport. It starts on a factory kit; MIDI notes also trigger the voices live,
@@ -21,7 +22,7 @@ so you can finger-drum over the pattern.
 
 ## The card, left to right
 
-**Kit** — the eight voices: colour, name, an **fx** mark when it has effects, and **syn** or **smp**
+<At id="ui:device.instruments.rhythm" /> **Kit** — the eight voices: colour, name, an **fx** mark when it has effects, and **syn** or **smp**
 (synth or sample). Click a voice to select it and hear it; drop an audio file on it to load a
 sample; right-click for more. The header's preset picker chooses the **kit** — the same 25
 factory kits as the [Drum Rack](../../racks/drum-rack/).
@@ -80,7 +81,7 @@ playback and in an export alike.
 
 <Shot id="devices/instruments/rhythm/macro" alt="Nota Rhythm, the kit's eight macros" />
 
-**Macro** in the header swaps the panel for the kit's **eight macros**. Each drives one or more
+<At id="ui:device.instruments.rhythm" /> **Macro** in the header swaps the panel for the kit's **eight macros**. Each drives one or more
 targets — a voice's Decay, the Glue, or a parameter of a voice's effect — across a range, so one
 knob can open every snare and clap reverb at once. Select a macro and **Map** a control to it;
 right-click a macro for its targets and ranges, to rename it or clear it. A factory kit loads

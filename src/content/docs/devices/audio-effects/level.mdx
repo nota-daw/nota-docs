@@ -11,6 +11,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 Nota Level measures loudness the way streaming and broadcast do (ITU-R BS.1770) and rides a gain
 so the output sits on a **target** in LUFS. Use it to level a voice, prepare a podcast, stage gain
@@ -41,7 +42,7 @@ Pauses and release tails don't get pumped up: while the input is too quiet to le
 
 ## The graph
 
-**Scale** — **Mom** (momentary, 0.4 s), **Short** (3 s) or **Integ** (integrated, gated) — over 8
+<At id="ui:device.audio-effects.level" /> **Scale** — **Mom** (momentary, 0.4 s), **Short** (3 s) or **Integ** (integrated, gated) — over 8
 seconds of input, output and the target with its ±1 LU band. Drag the target line.
 
 ## Response and safety
@@ -52,7 +53,7 @@ in dBTP; its delay is compensated.
 
 ## Matching a reference
 
-Pick a reference track as the target (it becomes the device's sidechain source): Level then
+<At id="ui:device.audio-effects.level" /> Pick a reference track as the target (it becomes the device's sidechain source): Level then
 matches this track's loudness to that one, on the same scale.
 
 ## Presets

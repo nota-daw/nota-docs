@@ -18,8 +18,9 @@ sources:
 import { Aside } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
-Le panneau sous l’Arrangement ou la Session montre en détail ce sur quoi vous travaillez. Double-cliquez sur
+<At id="ui:detail" /> Le panneau sous l’Arrangement ou la Session montre en détail ce sur quoi vous travaillez. Double-cliquez sur
 l’en-tête d’une piste et il s’ouvre sur les appareils de la piste ; double-cliquez sur un clip (ou un emplacement de
 Session rempli) et il ouvre le clip.
 
@@ -33,7 +34,7 @@ cliquez sur un autre clip pendant que l’onglet **Clip** est au premier plan et
 
 ## Appareils, Motif, Clip
 
-Les onglets en haut à gauche changent ce qu’il montre ; <Kbd>Tab</Kbd> les parcourt :
+<At id="ui:detail.devices" /> Les onglets en haut à gauche changent ce qu’il montre ; <Kbd>Tab</Kbd> les parcourt :
 
 - **Appareils** : la [chaîne d’appareils](../../devices/) de la piste : effets MIDI, instrument et effets, de gauche
   à droite. Faites défiler latéralement quand ils ne tiennent pas.

@@ -11,6 +11,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 Nota Chamber est deux reverbs en une : un moteur de **convolution** qui rejoue des espaces à la sonorité réaliste, et un
 moteur **algorithmique** pour des queues luxuriantes, modulées et miroitantes. Mélangez-les, ou faites passer l’un dans
@@ -23,7 +24,7 @@ onglets, un panneau de droite (**Levels** / **Output**) et une ligne d’état.
 
 ## Convolution
 
-Seize réponses impulsionnelles intégrées : halls (**Concert Hall · Wide**, **Stone Vault**, **Cathedral**,
+<At id="ui:device.audio-effects.chamber" /> Seize réponses impulsionnelles intégrées : halls (**Concert Hall · Wide**, **Stone Vault**, **Cathedral**,
 **Scoring Stage**), pièces (**Wood Chamber**, **Live Room**, **Drum Room**, **Tiled Bathroom**), plaques
 (**Vocal Plate**, **Bright Plate**), **Spring Tank**, espaces (**Car Park**, **Stairwell**, **Forest Clearing**) et
 effets (**Gated Room**, **Metal Tank**), ou **les vôtres** : déposez un WAV, FLAC ou MP3 sur la vue IR, ou utilisez
@@ -51,7 +52,7 @@ poignées), et les réglages de modulation.
 
 ## Levels et Output
 
-**Routing** : parallèle, ou **Serial** (la convolution dans l’algorithme). **Dry**, **Dry/Wet**, **Width**, basses en
+<At id="ui:device.audio-effects.chamber" /> **Routing** : parallèle, ou **Serial** (la convolution dans l’algorithme). **Dry**, **Dry/Wet**, **Width**, basses en
 mono, **Ducking** (l’entrée repousse la reverb vers le bas tant qu’elle joue), **Wet only** (pour un retour) et gain de
 sortie.
 
