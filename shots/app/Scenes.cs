@@ -94,6 +94,43 @@ public sealed class Scenes
     // Wear the theme for this pass. Before the Studio colour themes NotaThemeService.Set took
     // an AppTheme; since then it takes an AppearanceChoice — one single theme, here Studio Dark
     // or Studio Light. Reflection keeps the harness building against either.
+    // The Master row's lane (specs/099): `masterLane: tempo` draws a ritardando into a jump on
+    // the master Tempo lane and shows it in a taller Master row. Any other shot clears it again,
+    // so the demo plays at its own tempo.
+    private double? _masterRowDefault;
+    private void MasterLaneScene(Shot shot, ArrangementView tl)
+    {
+        int master = _engine.MasterTrackId;
+        for (int i = _engine.AutomationLaneCount(master) - 1; i >= 0; i--) _engine.RemoveAutomationLane(master, i);
+        _masterRowDefault ??= (double)typeof(ArrangementView).GetField("_masterHeight", Private)!.GetValue(tl)!;
+        void MasterRow(double h)
+        {
+            Invoke(tl, "SetFooterHeightsRaw", Array.Empty<int>().AsEnumerable(), true, h);
+            Invoke(tl, "RelayoutFooter");
+        }
+        var masterVm = typeof(ArrangementView).GetField("_masterVm", Private)!.GetValue(tl)!;
+        if (shot.Str("masterLane") != "tempo")
+        {
+            MasterRow(_masterRowDefault.Value);
+            Invoke(tl, "ReloadTempo");
+            Invoke(tl, "BuildTempoWarpCaches");
+            typeof(ArrangementView).GetMethod("SetAutoTarget", Private)!.Invoke(tl, new object[] { masterVm, AutomationTarget.Volume, -1, -1 });
+            return;
+        }
+        double bpm = _engine.Bpm;
+        int lane = _engine.AddAutomationLane(master, AutomationTarget.Tempo, -1, -1);
+        _engine.SetAutomationPoints(master, lane, new[]
+        {
+            new AutomationPoint(0, (float)bpm, 0), new AutomationPoint(16, (float)bpm, -0.6f),
+            new AutomationPoint(32, (float)(bpm - 24), 0), new AutomationPoint(32, (float)(bpm + 10), 0),
+        });
+        typeof(ArrangementView).GetMethod("SetAutoTarget", Private)!.Invoke(tl, new object[] { masterVm, AutomationTarget.Tempo, -1, -1 });
+        Invoke(tl, "ReloadTempo");            // the time axis follows the drawn tempo
+        Invoke(tl, "BuildTempoWarpCaches");
+        MasterRow(150);
+        Pump(10);
+    }
+
     private static void SetTheme(AppTheme theme)
     {
         var set = typeof(App).Assembly.GetType("Nota.App.NotaThemeService")!.GetMethod("Set")!;
@@ -445,6 +482,7 @@ public sealed class Scenes
             autoBtn.IsChecked = shot.Bool("automation");
             mw.FindControl<ArrangementView>("Timeline")!.AutomationMode = shot.Bool("automation");
         }
+        MasterLaneScene(shot, mw.FindControl<ArrangementView>("Timeline")!);
         if (shot.Int("detailHeight") is int dh && mw.FindControl<Grid>("BodyGrid") is { } body)
             body.RowDefinitions[2].Height = new GridLength(dh);
         // The browser tab sticks between shots, so always set it (Instruments by default).

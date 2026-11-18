@@ -3,7 +3,7 @@ title: Transport
 description: Play, stop and record; tempo, time signature and project key; loop, metronome, count-in, grid and follow.
 sidebar:
   order: 3
-updated: "0.59.2"
+updated: "0.60.1"
 status: done
 sources:
   - src/managed/Nota.App/PreferencesWindow.Outputs.cs
@@ -47,7 +47,9 @@ readout does.
 ## Tempo, time signature and key
 
 - <At id="ui:transport.tempo" /> **BPM** — drag up or down to change the tempo in whole steps, or double-click it and type a
-  value with up to two decimals. The range is 20–300 BPM.
+  value with up to two decimals. The range is 20–300 BPM. When the tempo changes during the
+  song — it is drawn on the master's [Tempo lane](../../editing/automation/#tempo) — BPM shows
+  the tempo under the playhead and can't be edited.
 - <At id="ui:transport.tap" /> **Tap** — tap the beat on it to set the tempo by ear. The tempo follows from the second tap
   and settles as you go on (it averages the last eight); the four dots count the beats. Change
   pace and it picks up the new tempo right away; pause for three seconds to start a new series.
