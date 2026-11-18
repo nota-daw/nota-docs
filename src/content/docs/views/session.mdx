@@ -4,7 +4,7 @@ description: The clip grid for playing live and sketching — launching clips an
 sidebar:
   order: 2
 since: "0.50.1"
-updated: "0.59.2"
+updated: "0.60.2"
 status: done
 sources:
   - src/managed/Nota.App/SessionView.cs
@@ -94,6 +94,15 @@ after a number of bars.
 it off so launching this scene keeps that track playing instead of stopping it.
 
 The **Follow** switch in the toolbar turns all follow actions on or off at once.
+
+To hold just one clip — say, to stretch a solo — use the switch at the right of its **Follow
+action** head in the inspector, or **Bypass follow actions** in the clip's right-click menu. The
+clip keeps looping and can still be launched by hand; every other clip keeps following. Its
+actions, chances, Jump target and time stay as they are (greyed under **Bypassed**, still
+editable), and the slot shows a bypass ring next to its length. Turn it back on (or **Restore
+follow actions**) and the action fires where it would have without the bypass: at the next
+multiple of its time since the clip launched — a 2-bar time switched back on in bar 7 fires at
+the start of bar 9, never at once to catch up. The bypass is saved with the project.
 
 ## Recording into a slot
 
