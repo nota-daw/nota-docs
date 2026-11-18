@@ -16,6 +16,7 @@ sources:
 import { Aside } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 Tout se passe dans une seule fenêtre dans Nota. Elle a quatre zones : la **barre de transport** tout en haut,
 le **navigateur** à gauche, la **vue** au milieu et le **panneau de détail** en dessous, qui s’ouvre quand vous
@@ -49,7 +50,7 @@ Chaque commande est expliquée dans [Transport](../../basics/transport/).
 
 ## Navigateur
 
-Le navigateur contient tout ce que vous pouvez apporter dans un projet. Les icônes le long de son bord gauche
+<At id="ui:browser" /> Le navigateur contient tout ce que vous pouvez apporter dans un projet. Les icônes le long de son bord gauche
 sont ses onglets :
 
 | Onglet | Ce qu’il contient |
@@ -80,7 +81,7 @@ Le **Mixeur** s’ouvre dans sa propre fenêtre : **Affichage ▸ Mixeur** (<K
 
 ## Panneau de détail
 
-Double-cliquez sur l’en-tête d’une piste et ses appareils apparaissent dans le panneau du bas ; double-cliquez sur
+<At id="ui:detail.devices" /> Double-cliquez sur l’en-tête d’une piste et ses appareils apparaissent dans le panneau du bas ; double-cliquez sur
 un clip et il s’y ouvre pour être modifié. Un simple clic ne fait que sélectionner : un panneau ouvert le suit.
 Les onglets en haut à gauche du panneau alternent entre **Appareils**, **Motif** (le motif pas à pas d’un clip, sur une
 piste de Drum Rack seulement) et **Clip** ; <Kbd>Tab</Kbd> les parcourt. À droite, **Geler** et **Gel en direct** rendent
@@ -97,7 +98,7 @@ une piste en audio pour économiser du processeur, le bouton ⧉ déplace le pan
 - **Transport** : lecture, enregistrement, boucle et métronome.
 - **Aide** : Documentation (ce manuel), Nouveautés et À propos.
 
-La ligne tout en bas de la fenêtre indique ce qui vient de se passer (« Night Drive enregistré », « Nota Volt ajouté »)
+<At id="ui:transport.menu" /> La ligne tout en bas de la fenêtre indique ce qui vient de se passer (« Night Drive enregistré », « Nota Volt ajouté »)
 et affiche la fréquence d’échantillonnage et la taille de tampon en cours (« 48 kHz · 256 »). Cliquez sur cet
 indicateur pour choisir une autre taille de tampon, la lecture continue, ou pour ouvrir Réglages ▸ Audio.
 

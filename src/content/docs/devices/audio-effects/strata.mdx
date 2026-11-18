@@ -11,6 +11,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 Nota Strata is a looper on a track: record a phrase, then keep layering over it. Unlike a
 one-buffer looper, every pass is its own **layer** — with its waveform, level and mute — so you can
@@ -40,7 +41,7 @@ beat. On the first pass the step is the song's grid, so the loop comes out a who
 
 ## Layers
 
-Every pass, listed: its number, name, waveform, state (**Play**, **Muted**, **Rec**), level and
+<At id="ui:device.audio-effects.strata" /> Every pass, listed: its number, name, waveform, state (**Play**, **Muted**, **Rec**), level and
 mute. Each layer draws in its own shade of grey, the newest brightest; the layer being recorded
 draws in red and fills as it is recorded; older layers draw dimmer, as Feedback sinks them. Above
 the list, **n of 8 · one cycle shown** counts the layers. Drag a level bar to set it, double-click it for 0 dB, or double-click the

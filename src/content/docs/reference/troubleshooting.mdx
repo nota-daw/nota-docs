@@ -11,6 +11,7 @@ sources:
 ---
 
 import { Aside } from '@astrojs/starlight/components';
+import At from '@components/At.astro';
 
 ## Nota won't open
 
@@ -35,7 +36,7 @@ import { Aside } from '@astrojs/starlight/components';
 
 ## No sound
 
-1. **[Settings ▸ Outputs](../../preferences/outputs/) ▸ Play test tone.** No tone? Check **Output** — the right device, and your
+1. <At id="cmd:prefs.outputs" /> **[Settings ▸ Outputs](../../preferences/outputs/) ▸ Play test tone.** No tone? Check **Output** — the right device, and your
    system volume.
 2. Tone but no music? Check the track isn't muted, another track isn't soloed, and the master volume
    (**Master**) is up.
@@ -83,7 +84,7 @@ even if you quit halfway. Later scans only load new plug-ins. If the count stops
 
 ## The gamepad does nothing
 
-Gamepad input is macOS-only for now. Turn it on in **Settings ▸ Gamepads**.
+<At id="cmd:prefs.gamepads" /> Gamepad input is macOS-only for now. Turn it on in **Settings ▸ Gamepads**.
 
 ## The update didn't install
 

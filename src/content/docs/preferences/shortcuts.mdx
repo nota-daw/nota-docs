@@ -14,6 +14,7 @@ sources:
 
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 <Shot id="preferences/shortcuts" alt="Settings ▸ Shortcuts" />
 
@@ -28,7 +29,7 @@ The keys Nota ships with are in [Keyboard shortcuts](../../reference/shortcuts/)
 
 ## Change a key
 
-1. Click the key of the action — its key caps, or **—** when it has none. The row waits: **Press a
+1. <At id="cmd:prefs.shortcuts" /> Click the key of the action — its key caps, or **—** when it has none. The row waits: **Press a
    shortcut…**
 2. Press the new combination. Nothing in Nota reacts to it while the row waits; the key shows in
    the row.

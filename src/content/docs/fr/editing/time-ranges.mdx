@@ -13,6 +13,7 @@ sources:
 
 import { Aside } from '@astrojs/starlight/components';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 Une **plage de temps** est une étendue du morceau sur une ou plusieurs pistes : pas des clips entiers, mais « les
 mesures 9 à 17 ». C’est ainsi que vous retravaillez la structure d’un morceau.
@@ -27,7 +28,7 @@ mesures 9 à 17 ». C’est ainsi que vous retravaillez la structure d’un mo
 
 | Commande | Touche | Ce qu’elle fait |
 |---|---|---|
-| **Dupliquer le temps** | <Kbd>⌘ ⇧ D</Kbd> | Insère une copie de la plage juste après elle. Tout ce qui suit, sur chaque piste, automation comprise, se décale vers la droite ; les clips qui franchissent ce point sont coupés. Appuyez à nouveau pour répéter la copie. |
+| <At id="ui:arrangement" /> **Dupliquer le temps** | <Kbd>⌘ ⇧ D</Kbd> | Insère une copie de la plage juste après elle. Tout ce qui suit, sur chaque piste, automation comprise, se décale vers la droite ; les clips qui franchissent ce point sont coupés. Appuyez à nouveau pour répéter la copie. |
 | **Insérer du silence** | <Kbd>⌘ ⇧ I</Kbd> | Ouvre un vide aussi long que la plage à son début, en repoussant tout ce qui suit vers la droite. |
 | **Dupliquer** | <Kbd>⌘ D</Kbd> | Copie le matériel de la plage sur les pistes sélectionnées juste après elle. Rien ne bouge pour faire de la place. |
 | **Découper** | <Kbd>⌘ E</Kbd> | Coupe les clips aux bords de la plage (sans plage : à la tête de lecture). Un clip audio reçoit aussi un fondu de 4 ms à la coupure, que vous pouvez allonger ou raccourcir en le faisant glisser ; Réglages → Apparence peut le désactiver. |

@@ -11,6 +11,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 Nota Chord plays a chord from every note you play: one finger, full harmony.
 
@@ -18,7 +19,7 @@ Nota Chord plays a chord from every note you play: one finger, full harmony.
 
 ## Type and shifts
 
-**Type** picks a shape — **Maj7**, **Min7**, **Sus4**, **5th** — or **Custom**. The **Shifts** are six
+<At id="ui:device.midi-effects.chord" /> **Type** picks a shape — **Maj7**, **Min7**, **Sus4**, **5th** — or **Custom**. The **Shifts** are six
 added voices: each has an on / off dot, an interval of −12 … +12 semitones (named — M3, P5, M7…) and
 a velocity offset you drag. Editing a shift turns the type to Custom. **Keep root** plays the note
 you pressed too.

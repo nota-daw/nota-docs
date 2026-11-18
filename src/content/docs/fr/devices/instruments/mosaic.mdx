@@ -14,6 +14,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 Nota Mosaic joue de nombreux échantillons sur le clavier : un vrai piano enregistré note par note, doux et fort, avec le
 choc de l’étouffoir au relâchement. Chaque échantillon est une **zone** : un rectangle de touches × vélocités avec sa
@@ -61,7 +62,7 @@ enregistre un préréglage par instrument coché sous **Packs**, dans un dossier
 
 ## Zones
 
-La carte a les touches en travers, la vélocité vers le haut, avec le clavier en dessous ; un repère marque la note de
+<At id="ui:device.instruments.mosaic" /> La carte a les touches en travers, la vélocité vers le haut, avec le clavier en dessous ; un repère marque la note de
 base de chaque zone. Cliquez sur une zone pour la sélectionner, faites-la glisser pour la déplacer, faites glisser un
 bord pour la redimensionner ; jouez au clavier pour l’entendre. **Attack / Release** bascule entre les zones entendues à
 l’appui et les zones de relâchement. La ligne en dessous modifie la zone sélectionnée : note de base, couche et
@@ -81,7 +82,7 @@ round-robin, touches, vélocité, **Fine**, **Gain**, **Pan**. Chaque modificati
 
 ## Voices
 
-Le rail à droite : **Poly** avec 16, 32, 64 ou 128 voix, **Mono** (legato, avec glide) ou **Choke** ; **Volume**,
+<At id="ui:device.instruments.mosaic" /> Le rail à droite : **Poly** avec 16, 32, 64 ou 128 voix, **Mono** (legato, avec glide) ou **Choke** ; **Volume**,
 **Pan**, **Glide**, la **Pedal**, **Output**, **Vel → Vol** et l’indicateur de niveau. Cliquez sur **Poly** pour sa
 fenêtre contextuelle : ce que font les voix, l’ordre de vol (voix relâchées d’abord, puis la plus faible, puis la plus
 ancienne), **Per key** (combien de frappes d’une même touche peuvent sonner) et **Old voice fade**.

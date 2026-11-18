@@ -20,6 +20,7 @@ sources:
 import { Aside } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 Show the Mixer with **View ▸ Mixer** or <Kbd>⌘ ⇧ M</Kbd>. It docks as a panel at the bottom of
 the main window, under the Arrangement, Session or Modular view; its pop-out button moves it
@@ -29,7 +30,7 @@ into its own window, for a second screen, and the window's dock button brings it
 
 ## A channel strip
 
-Top to bottom, each track gets:
+<At id="ui:mixer" /> Top to bottom, each track gets:
 
 - its **name** and colour;
 - **I/O** — where the track listens: the audio input (**In 1** …) and **Monitor** (**Auto** or
@@ -51,7 +52,7 @@ chip lit.
 
 ## Groups
 
-Each group puts a bar with its name, in its colour, over its own strip and its tracks' strips,
+<At id="ui:mixer" /> Each group puts a bar with its name, in its colour, over its own strip and its tracks' strips,
 with a faint tint of the colour behind them. A group inside a group gets a second bar under the
 first, so you can read which family every strip belongs to.
 
@@ -72,7 +73,7 @@ folded.
 
 ## Compact strips
 
-**Compact** in the Mixer's footer narrows every strip to 72 px, so about twice as many tracks
+<At id="ui:mixer" /> **Compact** in the Mixer's footer narrows every strip to 72 px, so about twice as many tracks
 fit on screen; click it again for the regular strips. Nota remembers the choice.
 
 <Shot id="views/mixer-compact" alt="Compact strips: a wide meter with a triangle for the volume, send and pan bars, full-width M, S and arm buttons" />
@@ -92,7 +93,7 @@ MIDI Learn and automation recording work as on a regular strip.
 
 ## Cue: your own mix
 
-Cue is a second, private mix on its own outputs — for your headphones on stage or in the
+<At id="ui:mixer" /> Cue is a second, private mix on its own outputs — for your headphones on stage or in the
 studio, while the audience or the room hears Main. Choose its output pair in
 [Settings ▸ Outputs](../../preferences/outputs/#output-pairs); that needs an interface with
 more than two outputs.

@@ -11,6 +11,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 Nota Orbit déplace un son en volume et dans l’espace avec un seul LFO. La **Phase** entre les canaux gauche et droit
 décide de ce que vous entendez : à **0°**, les deux baissent ensemble, c’est un trémolo ; à **180°**, l’un est fort
@@ -31,7 +32,7 @@ Synchronisé, le LFO se cale sur la position dans le morceau et repart sur la me
 
 ## La fenêtre
 
-Le gain des deux canaux sur deux cycles, avec une tête qui avance et le plancher de la profondeur. Faites glisser vers le
+<At id="ui:device.audio-effects.orbit" /> Le gain des deux canaux sur deux cycles, avec une tête qui avance et le plancher de la profondeur. Faites glisser vers le
 haut et le bas pour **Amount**, vers la gauche et la droite pour **Phase**. En dessous, la position stéréo sur une ligne
 G–D.
 

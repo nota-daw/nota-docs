@@ -111,6 +111,7 @@ public sealed class Scenes
             case "device": Device(shot); break;
             case "main": Main(shot); break;
             case "palette": Palette(shot); break;
+            case "assistant": Assistant(shot); break;
             case "mixer": Mixer(shot); break;
             case "prefs": Prefs(shot); break;
             case "start": Start(shot); break;
@@ -639,6 +640,44 @@ public sealed class Scenes
         if (shot.Bool("crop")) crop = palette.GetVisualDescendants().OfType<Border>().First(b => b.Width == 640);
         Save(mw, shot.Id, crop);
         Invoke(mw, "TogglePalette", new object?[] { null });
+        Pump(5);
+    }
+
+    // The Assistant panel (nota#606, specs/098): args query (asked in the panel), select (a demo
+    // track), showme (start a Show me of the reply; its first step is shown), section (part of the
+    // id of the section whose Show me to start), crop
+    // (true: just the panel). The panel is closed and cleared again afterwards.
+    private void Assistant(Shot shot)
+    {
+        var mw = MainWindow(shot);
+        Invoke(mw, "OnShowArrangement", null, new RoutedEventArgs());
+        if (shot.Str("select") is string name)
+        {
+            int id = _demo.Track(name);
+            Invoke(mw, "OnTrackSelected", id);
+        }
+        else Invoke(mw, "OnCloseDetail", null, new RoutedEventArgs());
+        Invoke(mw, "ShowAssistant", true);
+        Pump(10);
+        var view = typeof(MainWindow).GetField("_assistant", Private)!.GetValue(mw)!;
+        var conv = (Nota.Application.Assistant.Conversation)view.GetType().GetProperty("Conversation")!.GetValue(view)!;
+        if (shot.Str("query") is string q)
+        {
+            view.GetType().GetMethod("Ask")!.Invoke(view, new object[] { q });
+            for (int i = 0; i < 400 && conv.Messages.Count % 2 == 1; i++) Pump(2);
+        }
+        var showMe = typeof(MainWindow).GetField("_showMe", Private)!.GetValue(mw)!;
+        if (shot.Bool("showme") && conv.Messages.LastOrDefault() is { Walkthroughs.Count: > 0 } reply)
+        {
+            // section: part of the section id whose walkthrough to start (else the first).
+            var walk = reply.Walkthroughs.FirstOrDefault(w => shot.Str("section") is string sec && w.Section.Id.Contains(sec)) ?? reply.Walkthroughs[0];
+            showMe.GetType().GetMethod("Start")!.Invoke(showMe, new object[] { walk });
+        }
+        Pump(20);
+        Save(mw, shot.Id, shot.Bool("crop") ? mw.FindControl<Control>("AssistantPanel") : null);
+        showMe.GetType().GetMethod("Stop")!.Invoke(showMe, null);
+        view.GetType().GetMethod("Clear")!.Invoke(view, null);
+        Invoke(mw, "HideAssistant");
         Pump(5);
     }
 

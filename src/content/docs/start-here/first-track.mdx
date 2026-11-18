@@ -15,6 +15,7 @@ sources:
 import { Aside, Steps } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 This walk-through takes you from a new project to a short loop exported as a WAV file.
 It uses only what comes with Nota — no plug-ins, no samples.
@@ -30,7 +31,7 @@ track; delete the Volt track (<Kbd>Delete</Kbd>) if you don't need it.
 
 <Steps>
 
-1. In the browser, open the **Instruments** tab (the keyboard icon at the top of the rail).
+1. <At id="ui:browser.tab.instruments" /> In the browser, open the **Instruments** tab (the keyboard icon at the top of the rail).
 
 2. Double-click **Nota Volt**. Nota adds an instrument track with Volt on it and an empty
    one-bar MIDI clip at the start of the song.
@@ -46,13 +47,13 @@ preview strip at the bottom of the browser.
 
 <Steps>
 
-1. Double-click the clip on the timeline. It opens in the **Clip** tab of the panel at the
+1. <At id="ui:arrangement" /> Double-click the clip on the timeline. It opens in the **Clip** tab of the panel at the
    bottom.
 
-2. Double-click an empty spot of the grid to add a note there; double-click a note to delete
+2. <At id="ui:clip-editor" /> Double-click an empty spot of the grid to add a note there; double-click a note to delete
    it. Drag a note to move it, drag its edge to make it longer or shorter.
 
-3. The lane under the notes is velocity — drag a stem up or down to play that note louder
+3. <At id="ui:clip-editor" /> The lane under the notes is velocity — drag a stem up or down to play that note louder
    or softer.
 
 </Steps>
@@ -73,10 +74,10 @@ ones, <Kbd>Z</Kbd> / <Kbd>X</Kbd> shift the octave.
 
 <Steps>
 
-1. Click the clip on the timeline to select it and press <Kbd>⌘ L</Kbd> — the loop is set to
+1. <At id="cmd:transport.loop" /> Click the clip on the timeline to select it and press <Kbd>⌘ L</Kbd> — the loop is set to
    the clip and switched on.
 
-2. Press <Kbd>Space</Kbd> to play, and again to stop. Keep editing notes while it plays —
+2. <At id="ui:transport.play" /> Press <Kbd>Space</Kbd> to play, and again to stop. Keep editing notes while it plays —
    you hear each change straight away.
 
 </Steps>
@@ -88,7 +89,7 @@ it, or drag the clip's right edge.
 
 <Steps>
 
-1. Keep the Volt track selected and open the **Audio effects** tab of the browser.
+1. <At id="ui:browser.tab.audio-effects" /> Keep the Volt track selected and open the **Audio effects** tab of the browser.
 
 2. Double-click **Nota Delay**. It appears in the track's device chain, after Volt.
 
@@ -109,7 +110,7 @@ them.
 
 ## 6. Save
 
-Press <Kbd>⌘ S</Kbd>, give the project a name and choose where to put it. Projects saved in
+<At id="cmd:file.save" /> Press <Kbd>⌘ S</Kbd>, give the project a name and choose where to put it. Projects saved in
 **Documents ▸ Nota Projects** also show up in the browser's **Projects** tab. A project is a
 single `.nota` folder that holds everything it uses, samples included, so you can move or
 back it up as one item. Each save also keeps a [version](../../basics/version-history/) you
@@ -119,7 +120,7 @@ can go back to.
 
 <Steps>
 
-1. Choose **File ▸ Export audio…** (<Kbd>⌘ ⇧ E</Kbd>).
+1. <At id="cmd:file.export" /> Choose **File ▸ Export audio…** (<Kbd>⌘ ⇧ E</Kbd>).
 
 2. Under **Range**, keep **Loop** to export just the loop, or pick **Full song**.
 

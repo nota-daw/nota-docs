@@ -14,6 +14,7 @@ sources:
 
 import { Aside } from '@astrojs/starlight/components';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 <Kbd>⌘ C</Kbd>, <Kbd>⌘ X</Kbd>, <Kbd>⌘ V</Kbd> и <Kbd>⌘ D</Kbd> (дублировать) работают с тем,
 по чему вы щёлкнули последним:
@@ -46,7 +47,7 @@ import Kbd from '@components/Kbd.astro';
 
 ## Аудиоклипы в инструменты
 
-Перетащите аудиоклип из Arrangement на строку трека с **Sampler**, **Nota Grain**, **Drum Rack**
+<At id="ui:arrangement" /> Перетащите аудиоклип из Arrangement на строку трека с **Sampler**, **Nota Grain**, **Drum Rack**
 или **Instrument Rack** — и его звук загрузится туда; Drum Rack положит его на следующий свободный
 пэд. Если задержать клип над треком инструмента, откроются его устройства — и до нужного пэда
 останется одно движение.
@@ -57,7 +58,7 @@ import Kbd from '@components/Kbd.astro';
 
 ## Перетаскивание из браузера
 
-Всё из браузера можно перетащить в проект: инструменты и эффекты — на треки и в цепочки
+<At id="ui:browser" /> Всё из браузера можно перетащить в проект: инструменты и эффекты — на треки и в цепочки
 устройств, сэмплы и лупы — на треки и в слоты, MIDI-файлы — на треки инструментов, пресеты — на
 устройства. См. [Браузер](../../library/browser/).
 

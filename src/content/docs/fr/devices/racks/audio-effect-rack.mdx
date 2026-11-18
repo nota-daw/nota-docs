@@ -16,6 +16,7 @@ sources:
 
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 Nota Audio Effect Rack contient plusieurs **chaînes** d’effets dans un seul appareil. Traitez un son de plusieurs
 façons à la fois et mélangez-les, construisez un « patch » d’effets réutilisable avec quelques macros par-dessus, ou
@@ -29,7 +30,7 @@ copient et se collent comme là-bas, et aussi entre le rack et la chaîne d’ap
 
 ## Chaînes
 
-**+ Chain** en ajoute une (ou déposez un effet sur la liste des chaînes) ; la cible en pointillés à la fin d’une
+<At id="ui:device.racks.audio-effect-rack" /> **+ Chain** en ajoute une (ou déposez un effet sur la liste des chaînes) ; la cible en pointillés à la fin d’une
 chaîne ajoute un effet : le menu liste les effets intégrés et un sous-menu **Plug-ins**. Chaque chaîne a un nom, son
 propre **Volume**, **Pan**, niveau, **muet** et **solo**. Clic droit sur une chaîne pour la dupliquer ou la supprimer.
 
@@ -50,7 +51,7 @@ chaînes de latences différentes).
 
 <Shot id="devices/racks/audio-effect-rack/select" alt="L’onglet Select : le sélecteur et la plage de sélection de chaque chaîne" />
 
-Chaque chaîne a une **plage de sélection** de 0 à 127 ; faites glisser ses bords. Faites glisser le **Selector** pour
+<At id="ui:device.racks.audio-effect-rack" /> Chaque chaîne a une **plage de sélection** de 0 à 127 ; faites glisser ses bords. Faites glisser le **Selector** pour
 choisir quelles chaînes jouent, associez-le à une macro (clic droit sur le sélecteur, ou **Map to the selector** dans
 le menu d’une macro) et automatisez la macro, ou activez **Follow input level** pour que le volume de l’entrée le
 déplace. Les plages ne comptent qu’en mode Select.
