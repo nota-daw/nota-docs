@@ -14,6 +14,7 @@ sources:
 
 import { Aside } from '@astrojs/starlight/components';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 <Kbd>⌘ C</Kbd>, <Kbd>⌘ X</Kbd>, <Kbd>⌘ V</Kbd> and <Kbd>⌘ D</Kbd> (duplicate) work on whatever
 you clicked last:
@@ -46,7 +47,7 @@ Notes, clip envelopes, names, warp, pitch and gain come along.
 
 ## Audio clips into instruments
 
-Drag an audio clip from the Arrangement onto the row of a track with a **Sampler**, **Nota
+<At id="ui:arrangement" /> Drag an audio clip from the Arrangement onto the row of a track with a **Sampler**, **Nota
 Grain**, **Drum Rack** or **Instrument Rack** and its audio loads there — a Drum Rack takes it
 on the next free pad. Rest over an instrument track while dragging and its devices open, so a
 particular pad is one more move away.
@@ -57,7 +58,7 @@ it was; the sample is the part of the clip you hear.
 
 ## Dragging from the browser
 
-Anything in the browser can be dragged into the project: instruments and effects onto tracks or
+<At id="ui:browser" /> Anything in the browser can be dragged into the project: instruments and effects onto tracks or
 device chains, samples and loops onto tracks or slots, MIDI files onto instrument tracks,
 presets onto devices. See [The browser](../../library/browser/).
 

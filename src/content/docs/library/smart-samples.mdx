@@ -12,6 +12,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 The **Files** tab shows your sample folders (set in [Settings ▸ Library](../../preferences/library/))
 as a folder tree, and Nota knows what's in all of them.
@@ -40,12 +41,12 @@ The chips under the search box narrow the list:
 
 ## Similar sounds
 
-Right-click a sample ▸ **Show similar sounds** lists the closest samples of the same kind, closest
+<At id="ui:browser.tab.files" /> Right-click a sample ▸ **Show similar sounds** lists the closest samples of the same kind, closest
 first. Click the chip to go back to all samples.
 
 ## Loops that fit
 
-Drop a loop on the Arrangement and it's **warped to the project tempo** from the tempo Nota already
+<At id="ui:browser.tab.files" /> Drop a loop on the Arrangement and it's **warped to the project tempo** from the tempo Nota already
 knows (⋮ ▸ **Warp loops to project tempo**, on by default) — the status line says so: "loop warped 124
 → 120 BPM". With ⋮ ▸ **Transpose to project key** on, it also moves to the
 [project key](../../basics/transport/) the shorter way. One-shots are never warped.

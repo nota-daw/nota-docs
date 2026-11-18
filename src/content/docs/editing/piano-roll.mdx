@@ -30,8 +30,9 @@ sources:
 import { Aside } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
-Double-click a MIDI clip — in the Arrangement or a Session slot — and it opens in the **Clip**
+<At id="ui:arrangement" /> Double-click a MIDI clip — in the Arrangement or a Session slot — and it opens in the **Clip**
 tab of the panel at the bottom.
 
 <Shot id="start-here/clip-editor" alt="A MIDI clip in the clip editor: the clip settings in a strip along the top, the notes and velocity stems under it" />
@@ -40,7 +41,7 @@ tab of the panel at the bottom.
 
 | Do this | To |
 |---|---|
-| Double-click empty grid | Add a note, with the length and velocity of the note you last clicked, moved, resized or changed the velocity of |
+| <At id="ui:clip-editor" /> Double-click empty grid | Add a note, with the length and velocity of the note you last clicked, moved, resized or changed the velocity of |
 | Double-click empty grid, keep the button down and drag | Move the new note, in time and pitch |
 | … and hold <Kbd>⇧</Kbd> | Set its length — the end follows the pointer |
 | … and hold <Kbd>⌘</Kbd> | Set its velocity — drag up for louder, down for quieter |
@@ -77,7 +78,7 @@ the playhead.
 
 ## Hearing notes
 
-With the **speaker** switch in the clip editor's header on (it is by default), a note plays on
+<At id="ui:clip-editor" /> With the **speaker** switch in the clip editor's header on (it is by default), a note plays on
 the track's instrument while you place it, click it or drag it, and plays again at each new
 pitch as you drag — so you can find a pitch by ear without starting playback. Turn the switch
 off to edit in silence; Nota remembers it. Nothing plays this way while a take is recording.
@@ -119,7 +120,7 @@ that take [MPE](../../control/midi/#pitch-wheel-aftertouch-and-mpe).
 
 ## Velocity
 
-The lane under the notes shows each note's velocity as a stem. Drag a stem to set it; with
+<At id="ui:clip-editor" /> The lane under the notes shows each note's velocity as a stem. Drag a stem to set it; with
 several notes selected, they move together. <Kbd>⇧</Kbd> adds a note to the selection.
 
 To put a note back to the default velocity (0.8, the one a first note gets), double-click its
@@ -137,7 +138,7 @@ size of a step are in [Settings ▸ Shortcuts](../../preferences/shortcuts/#velo
 
 ## Controllers
 
-The fifth tab in the lane's labels edits one MIDI controller over the whole clip — the sustain
+<At id="ui:clip-editor" /> The fifth tab in the lane's labels edits one MIDI controller over the whole clip — the sustain
 pedal, the mod wheel, any CC. The tab shows the controller's short name and a small arrow. Click it to
 show the lane; click it again to pick another controller:
 
@@ -189,7 +190,7 @@ again and it comes back at that height.
 
 ## Several clips at once
 
-To edit notes across clips — a bass line split over several clips, or a melody you write
+<At id="ui:arrangement" /> To edit notes across clips — a bass line split over several clips, or a melody you write
 against the chords of another track — select two or more MIDI clips in the Arrangement (on
 one track or several) and double-click one of them. Right-click → **Edit selected clips
 together**, or the same command in the command palette, does it too.
@@ -215,7 +216,7 @@ are quieter but just as editable.
 
 ## Track mode
 
-To work on a whole part instead of picking clips, switch the editor to **Track** mode. The
+<At id="ui:clip-editor" /> To work on a whole part instead of picking clips, switch the editor to **Track** mode. The
 **Clip | Track** switch is at the top of the **Clip** section in the left column (arrangement
 clips only — a Session slot has no switch), and the command palette has **Toggle clip editor
 track mode**.
@@ -263,7 +264,7 @@ standard row height, centred on its notes.
 
 ## The settings strip
 
-The clip's settings sit in one strip above the notes, so the notes get the full width. From
+<At id="ui:clip-editor" /> The clip's settings sit in one strip above the notes, so the notes get the full width. From
 left to right:
 
 - **Clip** — the **Clip | Track** switch (see [Track mode](#track-mode)), **Start** and
@@ -285,7 +286,7 @@ The arrows move the selection by that step.
 
 ## Scale
 
-Turn **Scale** on in the toolbar and pick a root and a scale: the rows outside it are dimmed,
+<At id="ui:clip-editor" /> Turn **Scale** on in the toolbar and pick a root and a scale: the rows outside it are dimmed,
 so the notes that fit stand out. **Remove out of scale** deletes every note that doesn't fit.
 The setting stays as you move between clips. The [Nota Scale](../../devices/midi-effects/scale/)
 MIDI effect uses the same scales to correct notes live.
@@ -310,13 +311,13 @@ no step to undo.
 
 ## Envelopes
 
-**Envelopes** (next to **Notes**) draws curves across the clip: **Velocity** scales the notes'
+<At id="ui:clip-editor" /> **Envelopes** (next to **Notes**) draws curves across the clip: **Velocity** scales the notes'
 velocity, **Volume** the instrument's output while the clip plays. Click to add a point, drag
 it, right-click it to delete it.
 
 ## Tools
 
-**Tools** opens generators and transforms that write notes for you. Pick a tool, set its
+<At id="ui:clip-editor" /> **Tools** opens generators and transforms that write notes for you. Pick a tool, set its
 parameters, and **Apply** — **Add** puts the result on top of the clip's notes, **Replace**
 swaps them; **Reroll** tries another **Seed**, **Revert** goes back.
 

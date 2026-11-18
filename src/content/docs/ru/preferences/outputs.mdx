@@ -15,6 +15,7 @@ sources:
 
 import Shot from '@components/Shot.astro';
 import { Aside } from '@astrojs/starlight/components';
+import At from '@components/At.astro';
 
 <Shot id="preferences/outputs" alt="Settings ▸ Outputs" />
 
@@ -57,7 +58,7 @@ import { Aside } from '@astrojs/starlight/components';
 
 ## ASIO (Windows)
 
-Если на странице [Audio](../audio/#asio-windows) выбрана аудиосистема **ASIO**, драйвер служит
+<At id="cmd:prefs.outputs" /> Если на странице [Audio](../audio/#asio-windows) выбрана аудиосистема **ASIO**, драйвер служит
 Nota и выходом, и входом, поэтому выбирается он там. Здесь написано его имя и есть кнопка
 **Change on the Audio page**. Пока драйвер работает, пара каналов, через которую играет Nota, —
 это **Main** в разделе [Output pairs](#output-pairs), а рядом при желании **Cue**; пары названы

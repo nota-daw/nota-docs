@@ -13,8 +13,9 @@ sources:
 
 import Shot from '@components/Shot.astro';
 import { Aside } from '@astrojs/starlight/components';
+import At from '@components/At.astro';
 
-Open Settings with **File ▸ Settings…**, or **Settings** on the start window.
+<At id="cmd:prefs.audio" /> Open Settings with **File ▸ Settings…**, or **Settings** on the start window.
 
 <Shot id="preferences/audio" alt="Settings ▸ Audio" />
 
@@ -25,7 +26,7 @@ Which device Nota plays through and records from is on [Outputs](../outputs/) an
 
 | Setting | What it does |
 |---|---|
-| **Sample rate** | Device default, 44 100, 48 000, 88 200 or 96 000 Hz |
+| <At id="cmd:prefs.audio" /> **Sample rate** | Device default, 44 100, 48 000, 88 200 or 96 000 Hz |
 | **Buffer size** | Device default, 64, 128, 256, 512, 1024 or 2048 samples |
 | **Exclusive mode** (Windows) | WASAPI exclusive — the lowest latency, but other apps go silent while Nota plays |
 

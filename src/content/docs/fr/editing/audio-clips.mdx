@@ -18,8 +18,9 @@ sources:
 import { Aside } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
-L’audio entre dans un projet en faisant glisser des fichiers depuis le navigateur ou votre gestionnaire de fichiers,
+<At id="ui:arrangement" /> L’audio entre dans un projet en faisant glisser des fichiers depuis le navigateur ou votre gestionnaire de fichiers,
 avec **Fichier ▸ Importer de l’audio…**, ou en [enregistrant](../recording/). Double-cliquez sur un clip audio, dans
 l’Arrangement ou un emplacement de Session, pour l’ouvrir dans l’éditeur de clip.
 
@@ -40,7 +41,7 @@ version précédente jusqu’à ce que la nouvelle soit prête.
 
 ## Échantillon
 
-La pastille de l’en-tête est la [grille d’accrochage](../../basics/transport/#la-grille-daccrochage) des éditeurs de
+<At id="ui:audio-editor" /> La pastille de l’en-tête est la [grille d’accrochage](../../basics/transport/#la-grille-daccrochage) des éditeurs de
 clip, partagée avec le piano roll : elle montre le pas (**Auto · 1/16**) et ouvre le menu de la grille. Les crochets
 de rognage, les repères de warp et les points d’enveloppe tombent sur les lignes de la forme d’onde : en **Auto**,
 elles s’affinent à mesure que vous zoomez. Maintenez <Kbd>⌥</Kbd> en faisant glisser pour en placer un librement. Un
@@ -62,7 +63,7 @@ s’affiche aussi à l’arrêt.
 
 ## Warp
 
-**Warp** étire l’audio sur le tempo du projet sans changer sa hauteur, et le garde en mesure quand vous changez le
+<At id="ui:audio-editor" /> **Warp** étire l’audio sur le tempo du projet sans changer sa hauteur, et le garde en mesure quand vous changez le
 tempo plus tard. Choisissez comment il s’étire :
 
 | Mode | Idéal pour |
@@ -90,13 +91,13 @@ l’annulation, un projet enregistré et un clip que vous découpez ou rognez pe
 
 ## Enveloppe
 
-**Enveloppe** dessine des courbes de **Volume** et de **Pan** sur le clip. Cliquez pour ajouter un point, faites-le
+<At id="ui:audio-editor" /> **Enveloppe** dessine des courbes de **Volume** et de **Pan** sur le clip. Cliquez pour ajouter un point, faites-le
 glisser pour le déplacer, clic droit pour le supprimer. Les points s’accrochent dans le temps à la grille, qui suit
 ici le clip pendant la lecture : depuis son début, de gauche à droite même quand le clip est inversé.
 
 ## ADSR
 
-**ADSR** façonne le début et la fin du clip : **Attaque** le fait entrer en fondu, **Déclin** et **Maintien** règlent
+<At id="ui:audio-editor" /> **ADSR** façonne le début et la fin du clip : **Attaque** le fait entrer en fondu, **Déclin** et **Maintien** règlent
 comment il se stabilise, **Relâchement** le fait sortir en fondu. Vous pouvez aussi le façonner directement sur la
 timeline : survolez un clip audio et faites glisser les poignées de ses coins supérieurs (ou le point qui apparaît).
 <Kbd>⌥</Kbd>-clic sur une poignée pour saisir sa durée (le point : le déclin, puis le maintien après <Kbd>Tab</Kbd>) ;
@@ -109,7 +110,7 @@ palette de commandes ou le menu du clip, écrit le même fondu là où deux clip
 
 ## Sur la timeline
 
-Faites un clic droit sur un clip audio pour **Fondu aux découpes**, **Inverser**, **Séparer les stems…** (le séparer en
+<At id="ui:arrangement" /> Faites un clic droit sur un clip audio pour **Fondu aux découpes**, **Inverser**, **Séparer les stems…** (le séparer en
 batterie, basse, voix et le reste, voir [Séparer les stems](../../ai/separate-stems/)) et **Convertir** (transformer
 sa mélodie, son harmonie ou sa batterie en MIDI, voir [Convertir de l’audio en MIDI](../midi-tools/)).
 

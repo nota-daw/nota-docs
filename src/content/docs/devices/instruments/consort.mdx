@@ -12,6 +12,7 @@ sources:
 
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 Nota Consort is a semi-modular synth in the spirit of a four-oscillator paraphonic Moog. It plays
 as a big mono synth, as two or four voices sharing one filter, or as a true polysynth — and a
@@ -60,7 +61,7 @@ the step types still shape the rhythm. It locks to the grid while the transport 
 
 <Shot id="devices/instruments/consort/patch" alt="Nota Consort, Patch tab with the cable matrix" />
 
-Twelve **cables**, each a source, a destination and a ± depth. Sources include the oscillators,
+<At id="ui:device.instruments.consort" /> Twelve **cables**, each a source, a destination and a ± depth. Sources include the oscillators,
 the filter, noise, the LFO, both envelopes, keyboard pitch, gate and velocity, aftertouch, the
 mod wheel, the sequencer's pitch, gate and clock, two attenuators and a summing node.
 Destinations include pitch, PWM, cutoff, resonance, the VCA, the delay and the LFO rate — plus

@@ -1,0 +1,28 @@
+---
+// <At id="ui:transport.mixer" /> — a Show me anchor (nota-daw/nota#606, specs/098). Put one at the
+// start of each step that tells the reader to do something in Nota; the app's Assistant panel
+// walks the steps and outlines the control the id names. The ids live in the app's
+// AnchorRegistry ("ui:…") or its command catalog ("cmd:…"); the app's build fails on an id it
+// doesn't know. <At id="none" /> once in a section marks it as explaining, not instructing.
+// Translations keep the same <At> tags in the same order. On the site: a small marker only.
+interface Props {
+  id: string;
+}
+const { id } = Astro.props;
+const none = id === 'none';
+---
+
+{!none && <span class="nota-at" title="Nota's Assistant can show this step in the app" aria-hidden="true"></span>}
+
+<style>
+  .nota-at {
+    display: inline-block;
+    width: 0.45em;
+    height: 0.45em;
+    margin-right: 0.35em;
+    vertical-align: 0.15em;
+    border-radius: 50%;
+    background: var(--sl-color-accent);
+    opacity: 0.8;
+  }
+</style>

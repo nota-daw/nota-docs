@@ -20,8 +20,9 @@ sources:
 import { CardGrid, LinkCard, Aside } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
-Chaque piste a une **chaîne d’appareils** : les appareils qui fabriquent et façonnent son son, de gauche à droite.
+<At id="ui:detail.devices" /> Chaque piste a une **chaîne d’appareils** : les appareils qui fabriquent et façonnent son son, de gauche à droite.
 Sélectionnez une piste pour voir sa chaîne dans le panneau du bas.
 
 <Shot id="views/detail-panel" alt="La chaîne d’appareils de la piste Keys : Nota Pentad, puis Nota EQ-8" />
@@ -32,7 +33,7 @@ Une piste audio n’a pas d’instrument : seulement des effets audio.
 
 ## Ajouter des appareils
 
-- **Double-cliquez** sur un instrument ou un effet dans le navigateur : un effet va sur la piste sélectionnée. Sans
+- <At id="ui:browser" /> **Double-cliquez** sur un instrument ou un effet dans le navigateur : un effet va sur la piste sélectionnée. Sans
   piste pour l’accueillir, un effet audio crée sa propre piste audio.
 - **Faites-le glisser** du navigateur sur une piste, ou dans la chaîne à l’endroit voulu.
 - Cliquez sur le **+** à la fin de la chaîne : le navigateur s’ouvre sur **Effets audio** avec le curseur dans sa
@@ -41,7 +42,7 @@ Une piste audio n’a pas d’instrument : seulement des effets audio.
 
 ## La carte
 
-Chaque appareil est une carte avec un en-tête (nom, sélecteur de préréglage (**‹ Init ⌄ ›**), commutateur de taille
+<At id="ui:detail.devices" /> Chaque appareil est une carte avec un en-tête (nom, sélecteur de préréglage (**‹ Init ⌄ ›**), commutateur de taille
 **S / L** quand l’appareil en a un, et interrupteur marche / arrêt (contournement)) au-dessus de ses commandes. Les
 boutons, curseurs et graphiques fonctionnent partout de la même façon : glisser, <Kbd>⇧</Kbd> pour des pas fins,
 double-clic pour réinitialiser ; les graphiques sont aussi des commandes (faites glisser les nœuds, les courbes et les

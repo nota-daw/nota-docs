@@ -14,6 +14,7 @@ sources:
 
 import Kbd from '@components/Kbd.astro';
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 У каждого рэка — [Instrument Rack](../instrument-rack/), [Drum Rack](../drum-rack/),
 [Audio Effect Rack](../audio-effect-rack/) и [MIDI Effect Rack](../midi-effect-rack/) — и у [Nota Rhythm](../../instruments/rhythm/) есть **восемь
@@ -22,7 +23,7 @@ import Shot from '@components/Shot.astro';
 
 ## В Instrument, Audio Effect и MIDI Effect Rack
 
-Каждый макрос — маленькая ручка с именем, значением (— если он ничего не ведёт) и бирюзовым
+<At id="ui:device.racks.instrument-rack" /> Каждый макрос — маленькая ручка с именем, значением (— если он ничего не ведёт) и бирюзовым
 счётчиком целей. Тяните её вверх или вниз; двойной щелчок сбрасывает в 0.
 
 <Shot id="devices/racks/instrument-rack/mapping" alt="Назначение Macro 1 на месте: все параметры цепочки обведены бирюзой" />
@@ -46,7 +47,7 @@ Select / Zones или **Map to the selector** в меню макроса.
 
 ## В Drum Rack и Nota Rhythm
 
-Каждый макрос показывает значение, имя и — бирюзой — куда он ведёт («→ Reverb · Snare, Clap»).
+<At id="ui:device.racks.drum-rack" /> Каждый макрос показывает значение, имя и — бирюзой — куда он ведёт («→ Reverb · Snare, Clap»).
 Неназначенный макрос — пустая пунктирная ячейка.
 
 ### Назначение

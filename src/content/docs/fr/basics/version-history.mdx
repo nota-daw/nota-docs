@@ -13,6 +13,7 @@ sources:
 import { Aside } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 Chaque fois que vous enregistrez, Nota garde une version du projet à l’intérieur de celui-ci. Rien n’est écrasé :
 vous pouvez revenir à l’état du morceau d’il y a une heure ou une semaine, ou tenter quelque chose d’audacieux en
@@ -20,7 +21,7 @@ sachant que l’ancienne version est à un clic.
 
 ## L’onglet Historique
 
-Ouvrez l’onglet **Historique** du navigateur (l’icône d’horloge en bas du rail). Les versions sont listées de la
+<At id="ui:browser.tab.history" /> Ouvrez l’onglet **Historique** du navigateur (l’icône d’horloge en bas du rail). Les versions sont listées de la
 plus récente à la plus ancienne, reliées par une ligne ; le point orange marque la version où se trouve le projet.
 
 <Shot id="basics/history-tab" alt="L’onglet Historique avec quatre versions : Hook and texture, Tempo 120 → 124, Added Keys, First beat" width={300} />
@@ -40,7 +41,7 @@ l’historique dans le nouveau projet.
 
 ## Revenir en arrière
 
-Cliquez sur une version pour voir ses détails, puis :
+<At id="ui:browser.tab.history" /> Cliquez sur une version pour voir ses détails, puis :
 
 - **Basculer** : le projet revient à cette version. Si vous avez des modifications non enregistrées, Nota propose
   d’abord de les enregistrer comme nouvelle version, pour que rien ne soit perdu.
@@ -51,7 +52,7 @@ restent, et l’arbre montre où les chemins se séparent.
 
 ## Noms, notes et étoiles
 
-Faites un clic droit sur une version pour **Nommer…**, **Ajouter une note…**, **Étoiler** et
+<At id="ui:browser.tab.history" /> Faites un clic droit sur une version pour **Nommer…**, **Ajouter une note…**, **Étoiler** et
 **Supprimer la version…**. Étoilez les versions qui comptent : un mixage que vous avez envoyé, la prise que tout le
 monde a aimée. Le bouton ☆ en haut de l’onglet ne liste alors que les versions étoilées, de la plus récente à la plus
 ancienne ; cliquez à nouveau dessus pour revoir tout l’arbre.

@@ -18,8 +18,9 @@ sources:
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
 import { Aside, Steps } from '@astrojs/starlight/components';
+import At from '@components/At.astro';
 
-La palette de commandes trouve tout dans Nota en tapant : une commande de menu, une piste, un appareil intégré, un
+<At id="cmd:view.palette" /> La palette de commandes trouve tout dans Nota en tapant : une commande de menu, une piste, un appareil intégré, un
 plug-in, un préréglage ou un kit. Appuyez sur <Kbd>⌘ ⇧ P</Kbd> (<Kbd>Ctrl Shift P</Kbd> sous Windows et Linux) dans
 n’importe quelle fenêtre, même quand un champ de texte a le focus, et appuyez à nouveau pour la fermer.
 
@@ -27,7 +28,7 @@ n’importe quelle fenêtre, même quand un champ de texte a le focus, et appuye
 
 ## Placer un appareil là où vous êtes
 
-Ce que vous choisissez va **à l’endroit d’où vous avez ouvert la palette**, et la pastille à droite du champ dit où,
+<At id="cmd:view.palette" /> Ce que vous choisissez va **à l’endroit d’où vous avez ouvert la palette**, et la pastille à droite du champ dit où,
 avant que vous n’appuyiez sur <Kbd>Return</Kbd>, par exemple **→ Bass · après Nota Compressor** ou
 **→ nouvelle piste MIDI**.
 
@@ -71,7 +72,7 @@ passé et a un bouton **Annuler** (ou appuyez sur <Kbd>⌘ Z</Kbd>).
 
 ## Filtrer par type
 
-Tapez un préfixe, ou appuyez sur <Kbd>Tab</Kbd> / <Kbd>⇧ Tab</Kbd> pour parcourir les pastilles au-dessus de la liste :
+<At id="cmd:view.palette" /> Tapez un préfixe, ou appuyez sur <Kbd>Tab</Kbd> / <Kbd>⇧ Tab</Kbd> pour parcourir les pastilles au-dessus de la liste :
 
 | Préfixe | Trouve |
 |---|---|

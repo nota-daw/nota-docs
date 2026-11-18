@@ -15,11 +15,12 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 <Shot id="preferences/language" alt="Settings ▸ Language" />
 
 
-Sets the language of Nota's menus, panels, dialogs, tooltips, status and error messages and the
+<At id="cmd:prefs.language" /> Sets the language of Nota's menus, panels, dialogs, tooltips, status and error messages and the
 command palette. Nota comes in **English**; every other language is downloaded from
 [nota-translations](https://github.com/nota-daw/nota-translations), where translators keep them.
 The list shows English, the languages you have, and — when Nota is online — the ones you can

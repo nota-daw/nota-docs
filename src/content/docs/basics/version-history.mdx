@@ -14,6 +14,7 @@ sources:
 import { Aside } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 Every time you save, Nota keeps a version of the project inside it. Nothing is overwritten:
 you can go back to how the song was an hour or a week ago, or try something bold knowing the
@@ -21,7 +22,7 @@ old version is one click away.
 
 ## The History tab
 
-Open the **History** tab in the browser (the clock icon at the bottom of the rail). Versions
+<At id="ui:browser.tab.history" /> Open the **History** tab in the browser (the clock icon at the bottom of the rail). Versions
 are listed newest first, joined by a line; the orange dot marks the version the project is at.
 
 <Shot id="basics/history-tab" alt="The History tab with four versions: Hook and texture, Tempo 120 → 124, Added Keys, First beat" width={300} />
@@ -41,7 +42,7 @@ history to the new project.
 
 ## Going back
 
-Click a version to see its details, then:
+<At id="ui:browser.tab.history" /> Click a version to see its details, then:
 
 - **Switch** — the project goes back to that version. If you have unsaved changes, Nota
   offers to save them as a new version first, so nothing is lost.
@@ -52,7 +53,7 @@ the tree shows where the paths split.
 
 ## Naming, notes and stars
 
-Right-click a version for **Name…**, **Add note…**, **Star** and **Delete version…**. Star
+<At id="ui:browser.tab.history" /> Right-click a version for **Name…**, **Add note…**, **Star** and **Delete version…**. Star
 the versions that matter — a mix you sent, the take everyone liked. The ☆ button at the top of
 the tab then lists the starred versions only, newest first; click it again to see the whole tree.
 
