@@ -20,6 +20,7 @@ sources:
 import { Aside } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 The transport bar runs along the top of the main window. It holds what plays the song and
 the settings that apply to the whole project.
@@ -35,7 +36,7 @@ the settings that apply to the whole project.
 | **Stop** | <Kbd>Return</Kbd> | Stop, Session clips included. Press it again to jump back to the start of the song. |
 | **Record** | <Kbd>⌘ R</Kbd> | Record onto the armed tracks — see [Recording](../../editing/recording/). |
 
-When you stop, the playhead returns to where playback started, so you can listen to the same
+<At id="ui:transport.play" /> When you stop, the playhead returns to where playback started, so you can listen to the same
 passage again and again. To stop where you are instead, pause with <Kbd>⇧ Space</Kbd> (also
 **Transport ▸ Play / pause**). Click in the ruler to move the playhead somewhere else.
 
@@ -45,20 +46,20 @@ readout does.
 
 ## Tempo, time signature and key
 
-- **BPM** — drag up or down to change the tempo in whole steps, or double-click it and type a
+- <At id="ui:transport.tempo" /> **BPM** — drag up or down to change the tempo in whole steps, or double-click it and type a
   value with up to two decimals. The range is 20–300 BPM. When the tempo changes during the
   song — it is drawn on the master's [Tempo lane](../../editing/automation/#tempo) — BPM shows
   the tempo under the playhead and can't be edited.
-- **Tap** — tap the beat on it to set the tempo by ear. The tempo follows from the second tap
+- <At id="ui:transport.tap" /> **Tap** — tap the beat on it to set the tempo by ear. The tempo follows from the second tap
   and settles as you go on (it averages the last eight); the four dots count the beats. Change
   pace and it picks up the new tempo right away; pause for three seconds to start a new series.
   It is also in the command palette as **Tap tempo**, and on a narrow window it is the first of
   these cells to move into the [⋯ menu](#when-the-bar-is-too-narrow).
-- **Time signature** — drag each number; the lower one moves in powers of two
+- <At id="ui:transport.time-signature" /> **Time signature** — drag each number; the lower one moves in powers of two
   (2, 4, 8, 16). The upper number is the beats in a bar: the metronome, the count-in and every
   view that counts bars follow it — the Arrangement's bar lines and numbers, the clip editors'
   grids and rulers, the position readout, and the bar.beat fields of the clip panel and Export.
-- **Key** — the project key, saved with the project. Click it to pick a key: choose
+- <At id="ui:transport.key" /> **Key** — the project key, saved with the project. Click it to pick a key: choose
   **Major** or **Minor**, then click the key's note on the keyboard (switching between Major
   and Minor keeps the note); the picker names the key and its relative. **No key** clears it.
   With **Transpose to project key** on in the Files tab's menu, loops you drop on the
@@ -67,7 +68,7 @@ readout does.
 
 ## Loop
 
-The **Loop** button (two arrows chasing each other) turns looping on or off for the range set
+<At id="ui:transport.loop" /> The **Loop** button (two arrows chasing each other) turns looping on or off for the range set
 on the ruler; <Kbd>⌘ L</Kbd> does the same — and
 if clips or a time range are selected, it first sets the loop to them. Drag along the ruler to
 draw a loop range by hand. Double-click the loop range on the ruler to turn looping off without
@@ -90,7 +91,7 @@ loop combines from pass to pass — see [Recording over a loop](../../editing/re
 
 ## Metronome and count-in
 
-The metronome button (<Kbd>⌘ M</Kbd>) clicks on every beat while you play or record.
+<At id="ui:transport.metronome" /> The metronome button (<Kbd>⌘ M</Kbd>) clicks on every beat while you play or record.
 
 **Right-click** it to choose a **count-in**: off, 1, 2 or 4 bars of clicks before Play and
 Record from stop, and before a Session slot records from stop. The count-in sounds even with the metronome off, the position readout counts
@@ -105,12 +106,12 @@ exported.
 
 ## Grid, snap and follow
 
-- **Grid** — the Arrangement's snap grid: it shows the step clips snap to right now (**Auto
+- <At id="ui:transport.grid" /> **Grid** — the Arrangement's snap grid: it shows the step clips snap to right now (**Auto
   grid** under it while it follows the zoom). Click it for the grid menu — see
   [The snap grid](#the-snap-grid).
-- **Snap** (the magnet) — clips snap to the grid while you drag them (<Kbd>⌘ 4</Kbd>). Hold
+- <At id="ui:transport.snap" /> **Snap** (the magnet) — clips snap to the grid while you drag them (<Kbd>⌘ 4</Kbd>). Hold
   <Kbd>⌥</Kbd> while dragging to place a clip freely just this once.
-- **Follow** — the Arrangement scrolls to keep the playhead in view. Also in **View ▸ Follow
+- <At id="ui:transport.follow" /> **Follow** — the Arrangement scrolls to keep the playhead in view. Also in **View ▸ Follow
   playhead**. Scroll away while it plays and Follow pauses so you can look around: the button
   turns into an outline, and <Kbd>P</Kbd>, a click on the button or the next Play picks it up
   again. It never scrolls under a clip you are dragging.

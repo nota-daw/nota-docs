@@ -15,6 +15,7 @@ sources:
 import { Aside, Steps } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 Ce pas à pas vous mène d’un nouveau projet à une courte boucle exportée en fichier WAV.
 Il n’utilise que ce qui est fourni avec Nota : pas de plug-ins, pas d’échantillons.
@@ -30,7 +31,7 @@ Volt (<Kbd>Delete</Kbd>) si vous n’en avez pas besoin.
 
 <Steps>
 
-1. Dans le navigateur, ouvrez l’onglet **Instruments** (l’icône de clavier en haut du rail).
+1. <At id="ui:browser.tab.instruments" /> Dans le navigateur, ouvrez l’onglet **Instruments** (l’icône de clavier en haut du rail).
 
 2. Double-cliquez sur **Nota Volt**. Nota ajoute une piste d’instrument avec Volt dessus et un clip MIDI vide
    d’une mesure au début du morceau.
@@ -46,12 +47,12 @@ d’aperçu, en bas du navigateur.
 
 <Steps>
 
-1. Double-cliquez sur le clip dans la timeline. Il s’ouvre dans l’onglet **Clip** du panneau du bas.
+1. <At id="ui:arrangement" /> Double-cliquez sur le clip dans la timeline. Il s’ouvre dans l’onglet **Clip** du panneau du bas.
 
-2. Double-cliquez sur un endroit vide de la grille pour y ajouter une note ; double-cliquez sur une note pour la
+2. <At id="ui:clip-editor" /> Double-cliquez sur un endroit vide de la grille pour y ajouter une note ; double-cliquez sur une note pour la
    supprimer. Faites glisser une note pour la déplacer, faites glisser son bord pour l’allonger ou la raccourcir.
 
-3. La voie sous les notes est la vélocité : faites glisser une tige vers le haut ou vers le bas pour jouer cette
+3. <At id="ui:clip-editor" /> La voie sous les notes est la vélocité : faites glisser une tige vers le haut ou vers le bas pour jouer cette
    note plus fort ou plus doucement.
 
 </Steps>
@@ -73,10 +74,10 @@ noires, <Kbd>Z</Kbd> / <Kbd>X</Kbd> changent d’octave.
 
 <Steps>
 
-1. Cliquez sur le clip dans la timeline pour le sélectionner et appuyez sur <Kbd>⌘ L</Kbd> : la boucle se cale sur le
+1. <At id="cmd:transport.loop" /> Cliquez sur le clip dans la timeline pour le sélectionner et appuyez sur <Kbd>⌘ L</Kbd> : la boucle se cale sur le
    clip et s’active.
 
-2. Appuyez sur <Kbd>Space</Kbd> pour lancer la lecture, et encore pour l’arrêter. Continuez à modifier les notes
+2. <At id="ui:transport.play" /> Appuyez sur <Kbd>Space</Kbd> pour lancer la lecture, et encore pour l’arrêter. Continuez à modifier les notes
    pendant la lecture : vous entendez chaque changement tout de suite.
 
 </Steps>
@@ -88,7 +89,7 @@ ou faites glisser le bord droit du clip.
 
 <Steps>
 
-1. Gardez la piste Volt sélectionnée et ouvrez l’onglet **Effets audio** du navigateur.
+1. <At id="ui:browser.tab.audio-effects" /> Gardez la piste Volt sélectionnée et ouvrez l’onglet **Effets audio** du navigateur.
 
 2. Double-cliquez sur **Nota Delay**. Il apparaît dans la chaîne d’appareils de la piste, après Volt.
 
@@ -109,7 +110,7 @@ parcourir.
 
 ## 6. Enregistrer
 
-Appuyez sur <Kbd>⌘ S</Kbd>, donnez un nom au projet et choisissez où le placer. Les projets enregistrés dans
+<At id="cmd:file.save" /> Appuyez sur <Kbd>⌘ S</Kbd>, donnez un nom au projet et choisissez où le placer. Les projets enregistrés dans
 **Documents ▸ Nota Projects** apparaissent aussi dans l’onglet **Projets** du navigateur. Un projet est un
 unique dossier `.nota` qui contient tout ce qu’il utilise, échantillons compris : vous pouvez le déplacer ou
 le sauvegarder comme un seul élément. Chaque enregistrement garde aussi une [version](../../basics/version-history/)
@@ -119,7 +120,7 @@ le sauvegarder comme un seul élément. Chaque enregistrement garde aussi une [v
 
 <Steps>
 
-1. Choisissez **Fichier ▸ Exporter de l’audio…** (<Kbd>⌘ ⇧ E</Kbd>).
+1. <At id="cmd:file.export" /> Choisissez **Fichier ▸ Exporter de l’audio…** (<Kbd>⌘ ⇧ E</Kbd>).
 
 2. Sous **Plage**, gardez **Boucle** pour exporter seulement la boucle, ou choisissez **Morceau entier**.
 

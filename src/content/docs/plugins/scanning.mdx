@@ -13,6 +13,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 Nota builds a catalogue of your installed plug-ins by loading each new one in a separate process, so a
 misbehaving plug-in can't crash Nota. Plug-ins already in the catalogue aren't loaded again, so only the
@@ -30,7 +31,7 @@ first scan of a big collection takes a while.
 
 <Shot id="preferences/plugins" alt="Settings ▸ Plug-ins: scan folders and Rescan" />
 
-1. Open **Settings ▸ Plug-ins**.
+1. <At id="cmd:prefs.plugins" /> Open **Settings ▸ Plug-ins**.
 2. **Add folder…** adds a folder to search for VST3 plug-ins; **Remove** takes one away.
 3. **Rescan plugins** looks through every folder and loads the plug-ins it hasn't seen yet. While it
    runs, the status line counts them, e.g. **Scanning plugins · 312 of 1,000 · …**. When it's done,

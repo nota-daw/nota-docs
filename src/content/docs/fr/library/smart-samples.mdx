@@ -11,6 +11,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 L’onglet **Fichiers** montre votre dossier Échantillons (défini dans [Réglages ▸ Bibliothèque](../../preferences/library/))
 sous forme d’arborescence, et Nota sait ce qu’il contient.
@@ -39,12 +40,12 @@ Les pastilles sous le champ de recherche réduisent la liste :
 
 ## Sons similaires
 
-Clic droit sur un échantillon ▸ **Afficher les sons similaires** liste les échantillons les plus proches du même type,
+<At id="ui:browser.tab.files" /> Clic droit sur un échantillon ▸ **Afficher les sons similaires** liste les échantillons les plus proches du même type,
 du plus proche au plus éloigné. Cliquez sur la pastille pour revenir à tous les échantillons.
 
 ## Des boucles qui s’adaptent
 
-Déposez une boucle sur l’Arrangement et elle est **warpée sur le tempo du projet** à partir du tempo que Nota connaît
+<At id="ui:browser.tab.files" /> Déposez une boucle sur l’Arrangement et elle est **warpée sur le tempo du projet** à partir du tempo que Nota connaît
 déjà (⋮ ▸ **Warper les boucles au tempo du projet**, activé par défaut) ; la ligne d’état le dit : « boucle warpée
 124 → 120 BPM ». Avec ⋮ ▸ **Transposer à la tonalité du projet** activé, elle est aussi amenée à la
 [tonalité du projet](../../basics/transport/) par le plus court chemin. Les one-shots ne sont jamais warpés.

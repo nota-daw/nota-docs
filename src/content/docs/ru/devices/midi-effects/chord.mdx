@@ -11,6 +11,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 Nota Chord играет аккорд из каждой нажатой ноты: один палец — полная гармония.
 
@@ -18,7 +19,7 @@ Nota Chord играет аккорд из каждой нажатой ноты: 
 
 ## Type и Shifts
 
-**Type** выбирает форму — **Maj7**, **Min7**, **Sus4**, **5th** — или **Custom**. **Shifts** — шесть
+<At id="ui:device.midi-effects.chord" /> **Type** выбирает форму — **Maj7**, **Min7**, **Sus4**, **5th** — или **Custom**. **Shifts** — шесть
 добавленных голосов: у каждого точка вкл / выкл, интервал −12 … +12 полутонов (с названием — M3, P5,
 M7…) и сдвиг velocity, который можно тянуть. Правка любого сдвига переключает тип на Custom. **Keep
 root** играет и саму нажатую ноту.

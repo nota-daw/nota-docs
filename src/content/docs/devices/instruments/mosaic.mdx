@@ -15,6 +15,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 Nota Mosaic plays many samples across the keyboard — a real piano recorded note by note, soft
 and hard, with the damper's thump on release. Each sample is a **zone**: a rectangle of keys ×
@@ -62,7 +63,7 @@ verdict. **Create N presets** saves one preset per checked instrument under **Pa
 
 ## Zones
 
-The map is keys across, velocity up, with the keyboard under it; a tick marks each zone's
+<At id="ui:device.instruments.mosaic" /> The map is keys across, velocity up, with the keyboard under it; a tick marks each zone's
 root. Click a zone to select it, drag it to move it, drag an edge to resize it; play the keyboard
 to hear it. **Attack / Release** switches between the zones heard on key-down and the release
 zones. The row below edits the selected zone: root, layer and round-robin, keys, velocity,
@@ -82,7 +83,7 @@ zones. The row below edits the selected zone: root, layer and round-robin, keys,
 
 ## Voices
 
-The rail on the right: **Poly** with 16, 32, 64 or 128 voices, **Mono** (legato, with glide)
+<At id="ui:device.instruments.mosaic" /> The rail on the right: **Poly** with 16, 32, 64 or 128 voices, **Mono** (legato, with glide)
 or **Choke**; **Volume**, **Pan**, **Glide**, the **Pedal**, **Output**, **Vel → Vol** and the meter. Click **Poly** for
 its popover: what the voices are doing, the stealing order (released voices first, then the
 quietest, then the oldest), **Per key** — how many strikes of one key may ring — and **Old voice

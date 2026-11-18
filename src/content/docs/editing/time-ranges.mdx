@@ -14,6 +14,7 @@ sources:
 
 import { Aside } from '@astrojs/starlight/components';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 A **time range** is a stretch of the song across one or more tracks — not whole clips, but
 "bars 9 to 17". It's how you rework the structure of a song.
@@ -28,7 +29,7 @@ A **time range** is a stretch of the song across one or more tracks — not whol
 
 | Command | Key | What it does |
 |---|---|---|
-| **Duplicate time** | <Kbd>⌘ ⇧ D</Kbd> | Inserts a copy of the range right after it. Everything later — on every track, automation included — moves right; clips that cross the point are cut. Press again to repeat the copy. |
+| <At id="ui:arrangement" /> **Duplicate time** | <Kbd>⌘ ⇧ D</Kbd> | Inserts a copy of the range right after it. Everything later — on every track, automation included — moves right; clips that cross the point are cut. Press again to repeat the copy. |
 | **Insert silence** | <Kbd>⌘ ⇧ I</Kbd> | Opens an empty gap as long as the range at its start, pushing everything from there right. |
 | **Duplicate** | <Kbd>⌘ D</Kbd> | Copies the range's material on the selected tracks right after it. Nothing moves to make room. |
 | **Split** | <Kbd>⌘ E</Kbd> | Cuts the clips at the range edges (without a range: at the playhead). An audio clip also gets a 4 ms fade at the cut, which you can drag longer or shorter; Settings → Appearance can turn that off. |

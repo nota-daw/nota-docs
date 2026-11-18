@@ -13,6 +13,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 Nota составляет каталог установленных плагинов: каждый новый плагин загружается в отдельном процессе,
 чтобы капризный плагин не уронил Nota. Плагины, которые уже есть в каталоге, повторно не загружаются,
@@ -30,7 +31,7 @@ Nota составляет каталог установленных плагин
 
 <Shot id="preferences/plugins" alt="Settings ▸ Plug-ins: папки сканирования и Rescan" />
 
-1. Откройте **Settings ▸ Plug-ins**.
+1. <At id="cmd:prefs.plugins" /> Откройте **Settings ▸ Plug-ins**.
 2. **Add folder…** добавляет папку для поиска VST3; **Remove** убирает.
 3. **Rescan plugins** просматривает все папки и загружает плагины, которых ещё нет в каталоге. Пока
    скан идёт, строка статуса считает их, например **Scanning plugins · 312 of 1,000 · …**. В конце

@@ -30,8 +30,9 @@ sources:
 import { Aside } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
-Double-cliquez sur un clip MIDI, dans l’Arrangement ou un emplacement de Session, et il s’ouvre dans l’onglet
+<At id="ui:arrangement" /> Double-cliquez sur un clip MIDI, dans l’Arrangement ou un emplacement de Session, et il s’ouvre dans l’onglet
 **Clip** du panneau du bas.
 
 <Shot id="start-here/clip-editor" alt="Un clip MIDI dans l’éditeur de clip : réglages du clip à gauche, notes et tiges de vélocité à droite" />
@@ -40,7 +41,7 @@ Double-cliquez sur un clip MIDI, dans l’Arrangement ou un emplacement de Sessi
 
 | Faire ceci | Pour |
 |---|---|
-| Double-cliquer sur la grille vide | Ajouter une note, avec la longueur et la vélocité de la dernière note sur laquelle vous avez cliqué, que vous avez déplacée, redimensionnée ou dont vous avez changé la vélocité |
+| <At id="ui:clip-editor" /> Double-cliquer sur la grille vide | Ajouter une note, avec la longueur et la vélocité de la dernière note sur laquelle vous avez cliqué, que vous avez déplacée, redimensionnée ou dont vous avez changé la vélocité |
 | Double-cliquer sur la grille vide, garder le bouton enfoncé et faire glisser | Déplacer la nouvelle note, dans le temps et en hauteur |
 | … et maintenir <Kbd>⇧</Kbd> | Régler sa longueur : la fin suit le pointeur |
 | … et maintenir <Kbd>⌘</Kbd> | Régler sa vélocité : vers le haut pour plus fort, vers le bas pour plus doux |
@@ -76,7 +77,7 @@ horloge de boucle : sa règle compte donc depuis le début de l’emplacement 
 
 ## Entendre les notes
 
-Avec l’interrupteur **haut-parleur** de l’en-tête de l’éditeur de clip activé (il l’est par défaut), une note joue sur
+<At id="ui:clip-editor" /> Avec l’interrupteur **haut-parleur** de l’en-tête de l’éditeur de clip activé (il l’est par défaut), une note joue sur
 l’instrument de la piste pendant que vous la placez, cliquez dessus ou la faites glisser, et rejoue à chaque nouvelle
 hauteur pendant le glissement : vous pouvez ainsi trouver une hauteur à l’oreille sans lancer la lecture. Désactivez
 l’interrupteur pour modifier en silence ; Nota le retient. Rien ne joue ainsi pendant l’enregistrement d’une prise.
@@ -119,7 +120,7 @@ qui prennent en charge le [MPE](../../control/midi/#molette-de-hauteur-aftertouc
 
 ## Vélocité
 
-La voie sous les notes montre la vélocité de chaque note sous forme de tige. Faites glisser une tige pour la régler ;
+<At id="ui:clip-editor" /> La voie sous les notes montre la vélocité de chaque note sous forme de tige. Faites glisser une tige pour la régler ;
 avec plusieurs notes sélectionnées, elles bougent ensemble. <Kbd>⇧</Kbd> ajoute une note à la sélection.
 
 Pour remettre une note à la vélocité par défaut (0,8, celle que reçoit une première note), double-cliquez sur sa tige,
@@ -137,7 +138,7 @@ pas se règlent dans [Réglages ▸ Raccourcis](../../preferences/shortcuts/#mol
 
 ## Contrôleurs
 
-Le cinquième onglet des étiquettes de la voie modifie un contrôleur MIDI sur tout le clip : la pédale de maintien, la
+<At id="ui:clip-editor" /> Le cinquième onglet des étiquettes de la voie modifie un contrôleur MIDI sur tout le clip : la pédale de maintien, la
 molette de modulation, n’importe quel CC. L’onglet montre le nom court du contrôleur et une petite flèche. Cliquez
 dessus pour afficher la voie ; cliquez à nouveau pour choisir un autre contrôleur :
 
@@ -188,7 +189,7 @@ même voie ou le même contrôleur et il revient à cette hauteur.
 
 ## Plusieurs clips à la fois
 
-Pour modifier des notes à travers plusieurs clips (une ligne de basse répartie sur plusieurs clips, ou une mélodie
+<At id="ui:arrangement" /> Pour modifier des notes à travers plusieurs clips (une ligne de basse répartie sur plusieurs clips, ou une mélodie
 que vous écrivez contre les accords d’une autre piste), sélectionnez deux clips MIDI ou plus dans l’Arrangement (sur
 une piste ou plusieurs) et double-cliquez sur l’un d’eux. Clic droit → **Éditer ensemble les clips sélectionnés**, ou
 la même commande dans la palette de commandes, le fait aussi.
@@ -214,7 +215,7 @@ sont plus discrètes mais tout aussi modifiables.
 
 ## Mode piste
 
-Pour travailler sur toute une partie au lieu de choisir des clips, passez l’éditeur en mode **Piste**. L’interrupteur
+<At id="ui:clip-editor" /> Pour travailler sur toute une partie au lieu de choisir des clips, passez l’éditeur en mode **Piste**. L’interrupteur
 **Clip | Piste** est en haut de la section **Clip** de la colonne de gauche (clips d’Arrangement seulement : un
 emplacement de Session n’a pas d’interrupteur), et la palette de commandes a **Activer / désactiver le mode piste de
 l’éditeur de clips**.
@@ -269,7 +270,7 @@ de ligne standard, centré sur ses notes.
   **Quantifier** ramène les notes dessus, dans la mesure que dit **Intensité** : 100 % est rigide, moins garde un peu
   de ressenti. Les outils du clip utilisent le même pas.
 
-Les notes s’accrochent à la [grille d’accrochage](../../basics/transport/#la-grille-daccrochage) du piano roll : la
+<At id="ui:clip-editor" /> Les notes s’accrochent à la [grille d’accrochage](../../basics/transport/#la-grille-daccrochage) du piano roll : la
 pastille dans l’en-tête de l’éditeur de clip montre le pas (**Auto · 1/16**) et ouvre le menu de la grille. En
 **Auto**, elle suit le zoom, comme celle de l’Arrangement, mais les deux ont des réglages séparés (l’éditeur de clip
 audio partage celui du piano roll).
@@ -280,7 +281,7 @@ Les flèches déplacent la sélection de ce pas.
 
 ## Gamme
 
-Activez **Gamme** dans la barre d’outils et choisissez une tonique et une gamme : les lignes en dehors sont estompées,
+<At id="ui:clip-editor" /> Activez **Gamme** dans la barre d’outils et choisissez une tonique et une gamme : les lignes en dehors sont estompées,
 si bien que les notes qui conviennent ressortent. **Supprimer hors gamme** supprime chaque note qui ne convient pas.
 Le réglage reste quand vous passez d’un clip à l’autre. L’effet MIDI [Nota Scale](../../devices/midi-effects/scale/)
 utilise les mêmes gammes pour corriger des notes en direct.
@@ -306,13 +307,13 @@ une modification : il n’ajoute aucune étape d’annulation.
 
 ## Enveloppes
 
-**Enveloppes** (à côté de **Notes**) dessine des courbes sur le clip : **Vélocité** met à l’échelle la vélocité des
+<At id="ui:clip-editor" /> **Enveloppes** (à côté de **Notes**) dessine des courbes sur le clip : **Vélocité** met à l’échelle la vélocité des
 notes, **Volume** la sortie de l’instrument pendant que le clip joue. Cliquez pour ajouter un point, faites-le
 glisser, clic droit dessus pour le supprimer.
 
 ## Outils
 
-**Outils** ouvre des générateurs et des transformations qui écrivent des notes à votre place. Choisissez un outil,
+<At id="ui:clip-editor" /> **Outils** ouvre des générateurs et des transformations qui écrivent des notes à votre place. Choisissez un outil,
 réglez ses paramètres, et **Appliquer** : **Ajouter** place le résultat par-dessus les notes du clip, **Remplacer**
 les remplace ; **Retirer au sort** essaie une autre **Graine**, **Rétablir** revient en arrière.
 

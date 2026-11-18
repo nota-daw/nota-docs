@@ -12,6 +12,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 <Shot id="preferences/library" alt="Settings ▸ Library" />
 
@@ -34,7 +35,7 @@ list can be changed from the [Files tab](../../library/browser/#sample-folders).
 
 ## Content folders
 
-- **Projects** — the folder the browser's **Projects** tab lists. By default `~/Documents/Nota Projects`.
+- <At id="cmd:prefs.library" /> **Projects** — the folder the browser's **Projects** tab lists. By default `~/Documents/Nota Projects`.
   **Choose…** picks another folder.
 
 ## Version history
