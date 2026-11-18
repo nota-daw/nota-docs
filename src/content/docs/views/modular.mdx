@@ -20,6 +20,7 @@ sources:
 import { Aside } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 The Modular view draws a track's devices as a graph — **MIDI effects → instrument → effects →
 track output** — and lets you patch **CV modulation** between them with cables. Switch to it
@@ -29,7 +30,7 @@ with **Modular** in the transport bar.
 
 ## Track and Global
 
-- **Track** shows the selected track's chain. Beside the canvas are the same track headers as in
+- <At id="ui:modular" /> **Track** shows the selected track's chain. Beside the canvas are the same track headers as in
   the arrangement — groups, mute, solo, arm, volume, pan, meters, the track menu, dragging to
   reorder — on the side **View ▸ Track headers on the right** picks. Click a header to see that
   track's graph. A group's header shows the group's own effects: **Tracks in** → its effects →
@@ -93,7 +94,7 @@ Any parameter can also act as a CV source: right-click a knob ▸ **Expose as CV
 
 ## Patching
 
-Drag a modulator's **CV out** onto a knob of any device, instrument or MIDI effect — the knob
+<At id="ui:modular" /> Drag a modulator's **CV out** onto a knob of any device, instrument or MIDI effect — the knob
 under the cable is outlined — and let go: a cable links them. Drop it anywhere else on a node
 and a panel lists that device's parameters: start typing to filter, move with <Kbd>↑</Kbd>
 <Kbd>↓</Kbd>, press <Kbd>Return</Kbd> (or click) to link, <Kbd>Esc</Kbd> to close. It stays
@@ -109,7 +110,7 @@ the parameters you exposed as CV outputs.
 
 ## Move a knob with another track's loudness
 
-The **Envelope Follower** is Nota's peak controller: it turns how loud a track is into CV that can
+<At id="ui:modular" /> The **Envelope Follower** is Nota's peak controller: it turns how loud a track is into CV that can
 drive any knob, on that track or another. The classic use is ducking — the bass dips each time the
 kick hits:
 
@@ -131,7 +132,7 @@ follow.
 
 ## CV Scope
 
-Add a **Scope** to watch any modulator's signal as a moving line — handy for checking an LFO's
+<At id="ui:modular" /> Add a **Scope** to watch any modulator's signal as a moving line — handy for checking an LFO's
 rate or how an envelope follower reacts. Drag the modulator's **CV out** onto the Scope node to
 patch it in. The Scope shows CV, not audio: to watch a device's sound, put
 [Nota Lens](../../devices/audio-effects/lens/) after it in the chain.

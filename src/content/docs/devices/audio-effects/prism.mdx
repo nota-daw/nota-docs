@@ -11,6 +11,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 Nota Prism splits the sound into **Low**, **Mid** and **High** and treats each band's dynamics on its
 own: tame the low end without touching the vocal, lift the quiet details of the highs, glue a bus,
@@ -31,7 +32,7 @@ Bands are colour-coded: **Low** olive, **Mid** neutral ink, **High** teal.
 
 ## Bands
 
-The spectrum with the two **crossovers** — drag them. Choose 3 bands, 2 (Low + Mid) or 1 (full band).
+<At id="ui:device.audio-effects.prism" /> The spectrum with the two **crossovers** — drag them. Choose 3 bands, 2 (Low + Mid) or 1 (full band).
 The crossovers are phase-aligned, so the bands add back up flat.
 
 ## Band detail

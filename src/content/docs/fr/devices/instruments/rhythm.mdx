@@ -12,6 +12,7 @@ sources:
 
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 Nota Rhythm est une groovebox autonome : huit voix de batterie et un séquenceur de 16 pas qui joue en mesure avec le
 transport. Il démarre sur un kit d’usine ; les notes MIDI déclenchent aussi les voix en direct, si bien que vous pouvez
@@ -21,7 +22,7 @@ jouer au doigt par-dessus le motif.
 
 ## La carte, de gauche à droite
 
-**Kit** : les huit voix : couleur, nom, une marque **fx** quand elle a des effets, et **syn** ou **smp** (synthèse ou
+<At id="ui:device.instruments.rhythm" /> **Kit** : les huit voix : couleur, nom, une marque **fx** quand elle a des effets, et **syn** ou **smp** (synthèse ou
 échantillon). Cliquez sur une voix pour la sélectionner et l’entendre ; déposez un fichier audio dessus pour charger un
 échantillon ; clic droit pour plus. Le sélecteur de préréglage de l’en-tête choisit le **kit** : les mêmes 25 kits
 d’usine que le [Drum Rack](../../racks/drum-rack/).
@@ -60,7 +61,7 @@ plus bruit), un clap, un rim, des charlestons fermé et ouvert (le fermé coupe 
 
 <Shot id="devices/instruments/rhythm/macro" alt="Nota Rhythm, les huit macros du kit" />
 
-**Macro** dans l’en-tête remplace le panneau par les **huit macros** du kit. Chacune pilote une ou plusieurs cibles (le
+<At id="ui:device.instruments.rhythm" /> **Macro** dans l’en-tête remplace le panneau par les **huit macros** du kit. Chacune pilote une ou plusieurs cibles (le
 Decay d’une voix, le Glue, ou un paramètre de l’effet d’une voix) sur une plage : un seul bouton peut ainsi ouvrir
 toutes les reverbs de caisse claire et de clap à la fois. Sélectionnez une macro et **Map** une commande dessus ; clic
 droit sur une macro pour ses cibles et ses plages, la renommer ou l’effacer. Un kit d’usine se charge avec ses propres

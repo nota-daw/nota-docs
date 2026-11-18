@@ -12,6 +12,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 Nota Sampler joue un échantillon, transposé par la note que vous jouez par rapport à une touche **Root**. Utilisez-le
 pour des one-shots, des boucles découpées, ou n’importe quel enregistrement que vous voulez jouer comme un instrument.
@@ -26,7 +27,7 @@ navigateur ajoute une piste et ouvre la carte, prête pour un dépôt.
 
 ## Sample
 
-La forme d’onde montre la partie qui joue, la boucle et son fondu enchaîné, et la tête de lecture. Faites glisser
+<At id="ui:device.instruments.sampler" /> La forme d’onde montre la partie qui joue, la boucle et son fondu enchaîné, et la tête de lecture. Faites glisser
 **Start** et **End** (les lignes brillantes) pour régler la fenêtre.
 
 | Commande | Ce qu’elle fait |
@@ -41,7 +42,7 @@ La forme d’onde montre la partie qui joue, la boucle et son fondu enchaîné, 
 
 <Shot id="devices/instruments/sampler/pitch" alt="Nota Sampler, onglet Pitch avec le clavier et la touche Root" />
 
-Un clavier de C2 à C6 : la touche **Root** est orange, la note qui sonne à l’instant bleu sarcelle. Cliquez sur une
+<At id="ui:device.instruments.sampler" /> Un clavier de C2 à C6 : la touche **Root** est orange, la note qui sonne à l’instant bleu sarcelle. Cliquez sur une
 touche pour en faire la Root, ou utilisez les flèches à côté de **Root** ; **Detect from file name** lit un nom de note
 comme « C3 » ou « F#2 » dans le nom du fichier.
 

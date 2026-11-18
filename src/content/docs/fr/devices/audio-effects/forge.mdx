@@ -11,6 +11,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 Nota Forge, ce sont trois saturateurs en un (bande, lampe, diode, fuzz, repliement) que vous pouvez empiler, mélanger,
 séparer en mid et side, ou à qui donner chacun une bande de fréquences.
@@ -28,14 +29,14 @@ séparer en mid et side, ou à qui donner chacun une bande de fréquences.
 
 ## Un étage
 
-À gauche, chaque étage a son point d’activation, son type, son rôle dans le routage, un trim de sortie (faites glisser les
+<At id="ui:device.audio-effects.forge" /> À gauche, chaque étage a son point d’activation, son type, son rôle dans le routage, un trim de sortie (faites glisser les
 dB), **Drive** et un **Feedback** turquoise. Cliquez sur un étage pour modifier sa **forme** à droite : **Bias**
 (asymétrie : harmoniques paires), **Tone** (une inclinaison de ±12 dB après lui) et **Width** (son image stéréo,
 de 0 à 200 %).
 
 ## Le centre
 
-**Amount** (drive dans la chaîne), **Wet** et **Out** sur la courbe de transfert (tout l’appareil, chaque étage en
+<At id="ui:device.audio-effects.forge" /> **Amount** (drive dans la chaîne), **Wet** et **Out** sur la courbe de transfert (tout l’appareil, chaque étage en
 filigrane, la courbe modulée par le LFO en pointillés) et les harmoniques d’un sinus à −6 dB avec son THD. Faites glisser
 le nœud sur la courbe pour Amount.
 

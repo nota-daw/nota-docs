@@ -19,6 +19,7 @@ sources:
 import { Aside } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 L’Arrangement étale le morceau de gauche à droite : une ligne par piste, le temps courant le long de la règle. C’est
 là que le morceau prend sa forme finale.
@@ -30,7 +31,7 @@ en bas, les pistes de retour et le master.
 
 ## Clips
 
-Les clips audio montrent leur forme d’onde dans le style que vous choisissez sous
+<At id="ui:arrangement" /> Les clips audio montrent leur forme d’onde dans le style que vous choisissez sous
 [Réglages ▸ Apparence ▸ Forme d’onde](../../preferences/appearance/#forme-donde) : **Lisse** par défaut.
 
 | Faire ceci | Pour |
@@ -82,7 +83,7 @@ met en boucle.
 
 | Faire ceci | Pour |
 |---|---|
-| <Kbd>⌘</Kbd> + défilement | Zoomer et dézoomer autour du pointeur de la souris |
+| <At id="ui:arrangement" /> <Kbd>⌘</Kbd> + défilement | Zoomer et dézoomer autour du pointeur de la souris |
 | <Kbd>⇧</Kbd> + défilement, ou un balayage latéral | Faire défiler le long du morceau |
 | Défilement | Faire défiler les pistes |
 | **Zoom −** / **+** | Dézoomer / zoomer |
@@ -101,7 +102,7 @@ mesures vous regardez (« mesure 1–8 / 36 »). **Affichage ▸ Afficher/ma
 
 La voie **Sections** nomme les parties du morceau (Intro, Couplet, Drop) pour que la structure se lise d’un coup d'œil.
 
-- Faites glisser le long de la voie vide pour marquer une section sur ces mesures. Elle reçoit un nom automatique.
+- <At id="ui:arrangement" /> Faites glisser le long de la voie vide pour marquer une section sur ces mesures. Elle reçoit un nom automatique.
 - Cliquez sur une section pour envoyer la tête de lecture à son début ; double-cliquez dessus pour la renommer.
 - Faites glisser le bord d’une section pour la redimensionner, par mesures entières. <Kbd>⌥</Kbd>-glisser la section
   elle-même ne déplace que son repère, aussi par mesures entières : la musique en dessous reste.
@@ -171,7 +172,7 @@ ne se chevauchent plus.
 
 ## Tailles de piste
 
-Rendez les pistes courtes pour voir un grand morceau d’un coup, ou hautes pour travailler sur une partie.
+<At id="ui:arrangement" /> Rendez les pistes courtes pour voir un grand morceau d’un coup, ou hautes pour travailler sur une partie.
 
 | Faire ceci | Pour |
 |---|---|

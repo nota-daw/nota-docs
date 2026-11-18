@@ -15,6 +15,7 @@ sources:
 
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 Nota MIDI Effect Rack стоит вместе с другими MIDI-эффектами, перед инструментом трека. Каждая его
 **цепочка** берёт часть того, что вы играете, и пропускает через свои MIDI-эффекты — арпеджио выше
@@ -30,7 +31,7 @@ Racks**. MIDI-эффекты цепочки перемещаются, копир
 
 ## Цепочки
 
-Цепочка — ряд встроенных MIDI-эффектов (Arp, Chord, Scale, Length, Velocity, Random), которые
+<At id="ui:device.racks.midi-effect-rack" /> Цепочка — ряд встроенных MIDI-эффектов (Arp, Chord, Scale, Length, Velocity, Random), которые
 работают слева направо. Бросайте их из Browser на цепочку или на пунктирное место; MIDI-эффект,
 брошенный на список цепочек, начинает новую цепочку. В рэке до 16 цепочек.
 

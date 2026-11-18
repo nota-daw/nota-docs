@@ -25,6 +25,7 @@ sources:
 
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 The browser on the left of the main window holds everything you can bring into a project. Its
 tabs are the icons down its left edge; the button at the bottom collapses it (also **View ▸ Toggle
@@ -36,7 +37,7 @@ browser**).
 
 | Tab | What's in it |
 |---|---|
-| **Instruments** | Nota's instruments (**Built-in**) and your plug-in instruments (**Plug-ins**). Each device opens into folders of its factory presets — Pads, Bass, Leads, Keys & Plucks… — with **Init** on top |
+| <At id="ui:browser" /> **Instruments** | Nota's instruments (**Built-in**) and your plug-in instruments (**Plug-ins**). Each device opens into folders of its factory presets — Pads, Bass, Leads, Keys & Plucks… — with **Init** on top |
 | **Audio effects** | Built-in and plug-in effects, with their presets — Vocals, Drums, Mix & Bus, Mastering… |
 | **MIDI effects** | Arpeggiator, chord, scale, length, velocity, random, with their presets |
 | **Modular** | Only while the [Modular view](../../views/modular/) is open: its nodes — LFO, Envelope Follower, MIDI → CV, ADSR, Macro, Math, Scope — each with its kind and what it does. Drag one onto the canvas, or double-click it to put it in the middle |
@@ -55,7 +56,7 @@ returns to the tab you had there.
 
 ### Sample folders
 
-The **Files** tab shows every folder in your list of sample folders. With one folder the tab looks
+<At id="ui:browser.tab.files" /> The **Files** tab shows every folder in your list of sample folders. With one folder the tab looks
 as it always did; add a second and each folder becomes a top-level row of its own.
 
 <Shot id="library/files-folders" alt="The Files tab with two sample folders, Nota Samples and Splice" width={300} />
@@ -117,7 +118,7 @@ it's in is open.
 
 ## Projects
 
-The **Projects** tab lists the projects in your projects folder (set in
+<At id="ui:browser.tab.projects" /> The **Projects** tab lists the projects in your projects folder (set in
 [Settings ▸ Library](../../preferences/library/)), the most recently saved first. **Date | Name**
 above the list switches to alphabetical order; the choice is kept. Under each name: when it was last
 saved, its tempo, key, length and number of tracks. A dot marks the project that is open.
@@ -153,7 +154,7 @@ master shows only its name. Volume, pan, sends and output stay in the track head
 
 ## Searching
 
-The search box filters the tab and counts the matches. It is one box for every tab: switch tabs
+<At id="ui:browser.search" /> The search box filters the tab and counts the matches. It is one box for every tab: switch tabs
 and the new tab is filtered by what the box says. Search opens the preset folders around the
 hits, and a folder name ("Mastering") lists that folder across every device. The status line at the
 bottom counts what's shown — `16 built-in · 0 plug-ins`.

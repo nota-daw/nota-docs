@@ -14,6 +14,7 @@ sources:
 
 import Shot from '@components/Shot.astro';
 import { Steps } from '@astrojs/starlight/components';
+import At from '@components/At.astro';
 
 MIDI Learn connects a physical control to a control on screen: turn a knob on your controller and a
 filter moves in Nota.
@@ -22,7 +23,7 @@ filter moves in Nota.
 
 <Steps>
 
-1. Click **MIDI** in the transport bar. Everything you can map lights up.
+1. <At id="ui:transport.midi-learn" /> Click **MIDI** in the transport bar. Everything you can map lights up.
 
 2. Click the control in Nota you want to move — a knob, fader, switch, macro…
 

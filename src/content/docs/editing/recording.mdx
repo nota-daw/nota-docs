@@ -18,12 +18,13 @@ sources:
 
 import { Aside, Steps } from '@astrojs/starlight/components';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 ## Record into the Arrangement
 
 <Steps>
 
-1. **Arm** the track: click the **●** button in its header. An audio track records audio, an
+1. <At id="ui:arrangement" /> **Arm** the track: click the **●** button in its header. An audio track records audio, an
    instrument track records MIDI.
 
 2. Choose what it records. For an **audio track**, right-click the header ▸ **Record input**:
@@ -54,7 +55,7 @@ Session slot being recorded.
 
 ## Count-in
 
-Right-click the metronome for a **count-in** of 1, 2 or 4 bars. Record from stop then counts in
+<At id="ui:transport.metronome" /> Right-click the metronome for a **count-in** of 1, 2 or 4 bars. Record from stop then counts in
 first; the clicks are never part of the take. See [Transport](../../basics/transport/#metronome-and-count-in).
 
 Notes you play during the count-in are recorded — a pickup into the first bar lands exactly
@@ -65,7 +66,7 @@ clip right and drag its left edge out to hear it.
 
 ## Discard and retry a take
 
-Fluffed it? Press <Kbd>⌘ .</Kbd> (<Kbd>Ctrl .</Kbd> on Windows and Linux) — or
+<At id="cmd:transport.retryTake" /> Fluffed it? Press <Kbd>⌘ .</Kbd> (<Kbd>Ctrl .</Kbd> on Windows and Linux) — or
 **Transport → Discard and retry take** — while recording. The take is thrown away and recording
 starts again at once:
 
@@ -101,7 +102,7 @@ monitored — it would feed back.
 
 ## Recording over a loop
 
-With the loop on, **audio** recording keeps every pass as a take instead of replacing the
+<At id="ui:transport.loop" /> With the loop on, **audio** recording keeps every pass as a take instead of replacing the
 last one. Stop after the loop has come round at least once and the track holds one take per
 pass — **Take 1**, **Take 2**, and so on — numbered in the order you played them. A later
 recording on the same track continues the numbers. A pass that started or stopped in the
@@ -147,7 +148,7 @@ printing a performance through its effects, or a submix, to audio. Nota keeps it
 
 ## Recording into Session
 
-In the [Session view](../../views/session/#recording-into-a-slot), arm a track, select a scene
+<At id="ui:session" /> In the [Session view](../../views/session/#recording-into-a-slot), arm a track, select a scene
 and click **Session rec** — the take goes into that track's slot. Click again to keep it (cut
 to whole bars), or set **Fixed** to 1–8 bars and it stops by itself. An empty slot's
 **Record here** does the same for that slot. A track plays one slot at a time, so a take
@@ -161,7 +162,7 @@ quantum (at once with quantize off).
 
 ## Recording automation
 
-**Record** also records automation: while it's on, move any knob or fader and that parameter's
+<At id="ui:transport.record" /> **Record** also records automation: while it's on, move any knob or fader and that parameter's
 lane writes what you do. See [Automation](../automation/#recording-automation).
 
 <Aside type="tip">

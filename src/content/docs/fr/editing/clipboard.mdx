@@ -14,6 +14,7 @@ sources:
 
 import { Aside } from '@astrojs/starlight/components';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 <Kbd>⌘ C</Kbd>, <Kbd>⌘ X</Kbd>, <Kbd>⌘ V</Kbd> et <Kbd>⌘ D</Kbd> (dupliquer) agissent sur ce sur quoi vous avez
 cliqué en dernier :
@@ -46,7 +47,7 @@ Les notes, enveloppes de clip, noms, warp, hauteur et gain suivent.
 
 ## Des clips audio dans des instruments
 
-Faites glisser un clip audio de l’Arrangement sur la ligne d’une piste avec un **Sampler**, **Nota Grain**, un **Drum
+<At id="ui:arrangement" /> Faites glisser un clip audio de l’Arrangement sur la ligne d’une piste avec un **Sampler**, **Nota Grain**, un **Drum
 Rack** ou un **Instrument Rack** et son audio s’y charge : un Drum Rack le prend sur le prochain pad libre. Restez
 au-dessus d’une piste d’instrument pendant le glissement et ses appareils s’ouvrent : un pad précis n’est donc qu’un
 mouvement de plus.
@@ -57,7 +58,7 @@ l’échantillon est la partie du clip que vous entendez.
 
 ## Glisser depuis le navigateur
 
-Tout ce qui est dans le navigateur peut être glissé dans le projet : instruments et effets sur des pistes ou des
+<At id="ui:browser" /> Tout ce qui est dans le navigateur peut être glissé dans le projet : instruments et effets sur des pistes ou des
 chaînes d’appareils, échantillons et boucles sur des pistes ou des emplacements, fichiers MIDI sur des pistes
 d’instrument, préréglages sur des appareils. Voir [Le navigateur](../../library/browser/).
 

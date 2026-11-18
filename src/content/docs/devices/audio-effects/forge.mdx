@@ -11,6 +11,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 Nota Forge is three saturators in one — tape, tube, diode, fuzz, folding — that you can stack,
 blend, split into mid and side, or give each a frequency band.
@@ -31,14 +32,14 @@ harmonics over **Amount**, **Dry/Wet** and **Out**.
 
 ## A stage
 
-On the left, each stage has its on dot, its type, its role in the routing, an output trim (drag
+<At id="ui:device.audio-effects.forge" /> On the left, each stage has its on dot, its type, its role in the routing, an output trim (drag
 the dB), **Drive** and a teal **Feedback**. Click a stage to edit its **shape** on the right:
 **Bias** (asymmetry — even harmonics), **Tone** (a ±12 dB tilt after it) and **Width** (its stereo
 image, 0–200 %).
 
 ## The centre
 
-**Amount** (drive into the chain), **Wet** and **Out** over the transfer curve — the whole device,
+<At id="ui:device.audio-effects.forge" /> **Amount** (drive into the chain), **Wet** and **Out** over the transfer curve — the whole device,
 each stage faintly, the LFO-modulated curve dashed — and the harmonics of a −6 dB sine with its THD.
 Drag the node on the curve for Amount.
 

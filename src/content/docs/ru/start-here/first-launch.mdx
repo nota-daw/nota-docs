@@ -17,6 +17,7 @@ sources:
 import { Aside } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 ## Стартовое окно
 
@@ -25,9 +26,9 @@ import Kbd from '@components/Kbd.astro';
 
 <Shot id="start-here/start-window" alt="Стартовое окно Nota: New project, Open project и список недавних проектов" />
 
-- **New project** — [новый проект](../../basics/projects/#новый-проект) в главном окне: трек
+- <At id="cmd:file.new" /> **New project** — [новый проект](../../basics/projects/#новый-проект) в главном окне: трек
   инструмента, аудиотрек и возвраты **Reverb** / **Delay** уже на месте.
-- **Open project…** — открыть проект `.nota` из любого места на диске.
+- <At id="cmd:file.open" /> **Open project…** — открыть проект `.nota` из любого места на диске.
 - **Recent projects** — проекты, которые вы недавно открывали или сохраняли, новые сверху, с
   датой. Щелчок выделяет проект, двойной щелчок (или <Kbd>Return</Kbd> на выделенном)
   открывает. По списку можно ходить стрелками. Тот же список есть в главном окне в меню

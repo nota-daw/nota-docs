@@ -12,6 +12,7 @@ sources:
 
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 Nota Volt — виртуально-аналоговый синтезатор по образцу классических двухосцилляторных
 аналогов, но с особенностью: в нём два полных **пути сигнала**. Каждый источник можно отправить
@@ -47,7 +48,7 @@ Osc 1, Osc 2 и Noise таблицей: **форма волны**, **Oct**, **Se
 
 <Shot id="devices/instruments/volt/filter" alt="Nota Volt, вкладка Filter" />
 
-Два фильтра — **LP**, **HP**, **BP** или **Notch**, 12 или 24 дБ — у каждого частота среза,
+<At id="ui:device.instruments.volt" /> Два фильтра — **LP**, **HP**, **BP** или **Notch**, 12 или 24 дБ — у каждого частота среза,
 резонанс и глубины **Env**, **Key** и **LFO**. Тяните кривую, чтобы менять частоту и резонанс. У
 Filter 1 есть **To F2** — часть его сигнала идёт в Filter 2 для последовательной фильтрации.
 
@@ -75,7 +76,7 @@ Filter 1 есть **To F2** — часть его сигнала идёт в Fil
 
 <Shot id="devices/instruments/volt/mod" alt="Nota Volt, вкладка Mod с матрицей модуляции" />
 
-**Матрица 7 × 6**: Amp Env, Flt Env, LFO 1, LFO 2, Velocity, Key и Mod Wheel против Pitch, Osc 2
+<At id="ui:device.instruments.volt" /> **Матрица 7 × 6**: Amp Env, Flt Env, LFO 1, LFO 2, Velocity, Key и Mod Wheel против Pitch, Osc 2
 Pitch, Cutoff, Reso, Level и Pan. Потяните ячейку вверх — плюс, вниз — минус; щелчок с <Kbd>⌥</Kbd>
 открывает ввод глубины (−100…+100 %), двойной щелчок очищает ячейку.
 

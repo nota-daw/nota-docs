@@ -13,6 +13,7 @@ sources:
 ---
 
 import { Aside } from '@astrojs/starlight/components';
+import At from '@components/At.astro';
 
 Nota hosts **VST3** plug-ins on macOS, Windows and Linux, and **AU** (Audio Units) on macOS —
 instruments and effects alike. They sit in a track's chain or inside a rack like Nota's own
@@ -20,7 +21,7 @@ devices.
 
 ## Adding a plug-in
 
-Scanned plug-ins appear in the browser's **Instruments** and **Audio effects** tabs, under
+<At id="ui:browser.tab.instruments" /> Scanned plug-ins appear in the browser's **Instruments** and **Audio effects** tabs, under
 **Plug-ins**, after Nota's built-in devices. The tag at the right edge names the format and vendor,
 which tells the AU and VST3 builds of one plug-in apart. Double-click or drag one in, exactly as with
 a built-in device. The plug-in's window opens as soon as it lands; turn that off in
@@ -32,7 +33,7 @@ Not there? Check [Scanning plug-ins](scanning/), or install free open-source plu
 
 ## The plug-in card
 
-The card comes in two sizes:
+<At id="ui:detail.devices" /> The card comes in two sizes:
 
 - **Small** — vendor, format, parameter count and latency, with **Open editor** and **Save preset**.
 - **Full** — every parameter as a knob, with a filter and pages, showing the plug-in's own value text

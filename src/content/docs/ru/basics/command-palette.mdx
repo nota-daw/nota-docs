@@ -19,8 +19,9 @@ sources:
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
 import { Aside, Steps } from '@astrojs/starlight/components';
+import At from '@components/At.astro';
 
-Командная палитра находит в Nota что угодно по набранному тексту: команду меню, трек,
+<At id="cmd:view.palette" /> Командная палитра находит в Nota что угодно по набранному тексту: команду меню, трек,
 встроенное устройство, плагин, пресет или кит. Нажмите <Kbd>⌘ ⇧ P</Kbd> (<Kbd>Ctrl Shift P</Kbd>
 в Windows и Linux) в любом окне — даже когда фокус в текстовом поле. Повторное нажатие закрывает палитру.
 
@@ -28,7 +29,7 @@ import { Aside, Steps } from '@astrojs/starlight/components';
 
 ## Устройство туда, где вы сейчас
 
-Выбранное попадает **туда, откуда вы открыли палитру**. Плашка справа в поле заранее
+<At id="cmd:view.palette" /> Выбранное попадает **туда, откуда вы открыли палитру**. Плашка справа в поле заранее
 показывает, куда именно, — например **→ Bass · after Nota Compressor** или **→ new MIDI track**.
 
 | Откуда открыли | Куда пойдёт устройство или пресет |
@@ -71,7 +72,7 @@ import { Aside, Steps } from '@astrojs/starlight/components';
 
 ## Фильтр по типу
 
-Наберите префикс или переключайте чипы над списком клавишами <Kbd>Tab</Kbd> / <Kbd>⇧ Tab</Kbd>:
+<At id="cmd:view.palette" /> Наберите префикс или переключайте чипы над списком клавишами <Kbd>Tab</Kbd> / <Kbd>⇧ Tab</Kbd>:
 
 | Префикс | Что ищет |
 |---|---|

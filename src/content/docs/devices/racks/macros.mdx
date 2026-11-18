@@ -14,6 +14,7 @@ sources:
 
 import Kbd from '@components/Kbd.astro';
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 Every rack — [Instrument Rack](../instrument-rack/), [Drum Rack](../drum-rack/),
 [Audio Effect Rack](../audio-effect-rack/) and [MIDI Effect Rack](../midi-effect-rack/) — and [Nota Rhythm](../../instruments/rhythm/) has **eight
@@ -22,7 +23,7 @@ reverb at once, or morph a whole layered patch.
 
 ## On the Instrument, Audio Effect and MIDI Effect racks
 
-Each macro is a small knob with its name, its value (— when it drives nothing) and, in teal, how many
+<At id="ui:device.racks.instrument-rack" /> Each macro is a small knob with its name, its value (— when it drives nothing) and, in teal, how many
 targets it has. Drag it up or down; double-click resets it to 0.
 
 <Shot id="devices/racks/instrument-rack/mapping" alt="Mapping Macro 1 in place: every parameter on the chain is outlined in teal" />
@@ -45,7 +46,7 @@ selector on the Select / Zones tab, or choose **Map to the selector** in a macro
 
 ## On the Drum Rack and Nota Rhythm
 
-Each macro shows its value, its name, and — in teal — where it goes ("→ Reverb · Snare,
+<At id="ui:device.racks.drum-rack" /> Each macro shows its value, its name, and — in teal — where it goes ("→ Reverb · Snare,
 Clap"). An unassigned macro is an empty, dashed cell.
 
 ### Mapping

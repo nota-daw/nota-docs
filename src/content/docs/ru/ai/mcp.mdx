@@ -15,6 +15,7 @@ sources:
 
 import Shot from '@components/Shot.astro';
 import { Steps, Aside } from '@astrojs/starlight/components';
+import At from '@components/At.astro';
 
 В Nota встроен **MCP-сервер** (Model Context Protocol). Если он включён, ИИ-ассистент — Claude Desktop
 или Claude Code — может читать и править проект, открытый в Nota: добавлять треки, писать ноты,
@@ -25,7 +26,7 @@ import { Steps, Aside } from '@astrojs/starlight/components';
 
 <Steps>
 
-1. [**Settings ▸ AI control (MCP)**](../../preferences/mcp/) ▸ **Enable MCP server (let an AI drive Nota)**. По
+1. <At id="cmd:prefs.mcp" /> [**Settings ▸ AI control (MCP)**](../../preferences/mcp/) ▸ **Enable MCP server (let an AI drive Nota)**. По
    умолчанию выключено.
 
 2. **Copy config** копирует готовую запись сервера; добавьте её (или URL) как MCP-сервер в Claude
@@ -69,7 +70,7 @@ import { Steps, Aside } from '@astrojs/starlight/components';
 
 ## Создать тему
 
-Дайте ассистенту палитру — несколько цветов, настроение фотографии, «как старый микшерный пульт», —
+<At id="cmd:prefs.mcp" /> Дайте ассистенту палитру — несколько цветов, настроение фотографии, «как старый микшерный пульт», —
 и он превратит её в полноценную [собственную тему](../../preferences/appearance/#свои-темы),
 проверит, что всё читается, и покажет результат, ничего не меняя у вас на экране.
 

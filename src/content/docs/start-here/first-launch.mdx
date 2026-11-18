@@ -18,6 +18,7 @@ sources:
 import { Aside } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 ## The start window
 
@@ -26,9 +27,9 @@ were working on.
 
 <Shot id="start-here/start-window" alt="The Nota start window with New project, Open project and a list of recent projects" />
 
-- **New project** — a [new project](../../basics/projects/#a-new-project) in the main window,
+- <At id="cmd:file.new" /> **New project** — a [new project](../../basics/projects/#a-new-project) in the main window,
   with an instrument track, an audio track and **Reverb** / **Delay** returns ready.
-- **Open project…** — pick a `.nota` project anywhere on disk.
+- <At id="cmd:file.open" /> **Open project…** — pick a `.nota` project anywhere on disk.
 - **Recent projects** — the projects you opened or saved lately, newest first, with when you
   last touched them. Click one to select it, double-click it (or select it and press
   <Kbd>Return</Kbd>) to open it. The arrow keys move through the list. The same list is in

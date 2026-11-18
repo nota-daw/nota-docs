@@ -3,15 +3,16 @@ title: "Nota Rhythm"
 description: "Eight-voice drum machine with a 16-step sequencer — synth or sample voices, per-voice effects, swing and humanize, four pattern banks and eight kit macros."
 sidebar:
   order: 11
-updated: "0.50.1"
+updated: "0.61.0"
 status: done
 sources:
-  - src/native/nota.engine/src/RhythmMachine.h
+  - src/native/nota.engine/src/devices/instruments/RhythmMachine.h
   - src/managed/Nota.App/DeviceCards/Instruments/RhythmInstrumentCard.cs
 ---
 
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 Nota Rhythm is a self-contained groovebox: eight drum voices and a 16-step sequencer that plays
 in time with the transport. It starts on a factory kit; MIDI notes also trigger the voices live,
@@ -21,7 +22,7 @@ so you can finger-drum over the pattern.
 
 ## The card, left to right
 
-**Kit** — the eight voices: colour, name, an **fx** mark when it has effects, and **syn** or **smp**
+<At id="ui:device.instruments.rhythm" /> **Kit** — the eight voices: colour, name, an **fx** mark when it has effects, and **syn** or **smp**
 (synth or sample). Click a voice to select it and hear it; drop an audio file on it to load a
 sample; right-click for more. The header's preset picker chooses the **kit** — the same 25
 factory kits as the [Drum Rack](../../racks/drum-rack/).
@@ -39,6 +40,8 @@ factory kits as the [Drum Rack](../../racks/drum-rack/).
 gentle bus compressor on the whole kit), and the meter.
 
 **Step** — the selected voice's 16 steps in bank **A**–**D**, with a velocity lane underneath.
+The filled bank is the one playing; click another to play and edit it. Right-click a bank to copy
+or clear it, or to choose when a new bank takes over.
 
 ## Programming steps
 
@@ -56,11 +59,29 @@ left or right. Steps are 16ths: 16 steps = one bar.
 The synth voices are a kick (sine with a pitch drop and click), snare (tone plus noise), clap,
 rim, closed and open hats (the closed one chokes the open one, 808-style), tom and perc.
 
+## Switching banks in a song
+
+The bank is a parameter, **Perform › Bank** in the track's automation menu, so a lane in the
+arrangement can play the groove in bank A, a fill from bank B on every eighth bar and a breakdown
+from C. The lane shows the four banks as levels named A–D, and its points snap to them. MIDI learn
+and rack macros can drive it the same way. While a lane plays, the bank buttons
+follow it; clicking one is an edit like turning a knob — it records when automation write is armed.
+
+**Bank Switch** (in the bank menu, or **Perform › Bank Switch**) sets when a new bank takes over:
+
+| Bank Switch | A new bank plays |
+|---|---|
+| At the next step (default) | from the next step — a lane can switch in the middle of a bar |
+| At the pattern start | from the first step of the next bar; until then it shows tinted |
+
+A lane is read at each step, so a switch drawn on a bar line plays on that bar's downbeat, in
+playback and in an export alike.
+
 ## Macros
 
 <Shot id="devices/instruments/rhythm/macro" alt="Nota Rhythm, the kit's eight macros" />
 
-**Macro** in the header swaps the panel for the kit's **eight macros**. Each drives one or more
+<At id="ui:device.instruments.rhythm" /> **Macro** in the header swaps the panel for the kit's **eight macros**. Each drives one or more
 targets — a voice's Decay, the Glue, or a parameter of a voice's effect — across a range, so one
 knob can open every snare and clap reverb at once. Select a macro and **Map** a control to it;
 right-click a macro for its targets and ranges, to rename it or clear it. A factory kit loads

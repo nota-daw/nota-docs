@@ -15,6 +15,7 @@ sources:
 
 import Shot from '@components/Shot.astro';
 import { Aside } from '@astrojs/starlight/components';
+import At from '@components/At.astro';
 
 <Shot id="preferences/outputs" alt="Settings ▸ Outputs" />
 
@@ -57,7 +58,7 @@ is unplugged — the pair is listed as **Out 3/4 — not on this device**:
 
 ## ASIO (Windows)
 
-With **ASIO** chosen as the audio system on [Audio](../audio/#asio-windows), the driver is both
+<At id="cmd:prefs.outputs" /> With **ASIO** chosen as the audio system on [Audio](../audio/#asio-windows), the driver is both
 Nota's output and its input, so it is picked there, not here. This page names it, with
 **Change on the Audio page** to go there. While the driver runs, **Main** under
 [Output pairs](#output-pairs) is the channel pair Nota plays through, with **Cue** beside it if

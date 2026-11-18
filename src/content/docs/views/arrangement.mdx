@@ -3,7 +3,7 @@ title: Arrangement
 description: The song on a timeline — moving and trimming clips, selecting, zooming, the overview strip, sections, clip names and which side the track headers sit on.
 sidebar:
   order: 1
-updated: "0.59.2"
+updated: "0.60.2"
 status: done
 sources:
   - src/managed/Nota.App/ArrangementView.cs
@@ -20,6 +20,7 @@ sources:
 import { Aside } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 The Arrangement lays the song out left to right: one row per track, time running along the
 ruler. It is where a song gets its final shape.
@@ -31,7 +32,7 @@ From top to bottom: the **Overview** strip, the **Sections** lane, the ruler wit
 
 ## Clips
 
-Audio clips show their waveform in the style you pick under
+<At id="ui:arrangement" /> Audio clips show their waveform in the style you pick under
 [Settings ▸ Appearance ▸ Waveform](../../preferences/appearance/#waveform) — **Smooth** by
 default.
 
@@ -82,7 +83,7 @@ Split and Consolidate](../../editing/time-ranges/) work on, and <Kbd>⌘ L</Kbd>
 
 | Do this | To |
 |---|---|
-| <Kbd>⌘</Kbd> + scroll | Zoom in and out around the mouse pointer |
+| <At id="ui:arrangement" /> <Kbd>⌘</Kbd> + scroll | Zoom in and out around the mouse pointer |
 | <Kbd>⇧</Kbd> + scroll, or a sideways swipe | Scroll along the song |
 | Scroll | Scroll through the tracks |
 | **Zoom −** / **+** | Zoom out / in |
@@ -102,12 +103,15 @@ it reads which bars you're looking at ("bar 1–8 / 36"). **View ▸ Toggle over
 The **Sections** lane names the parts of the song — Intro, Verse, Drop — so the structure is
 readable at a glance.
 
-- Drag along the empty lane to mark a section over those bars. It gets an automatic name.
+- <At id="ui:arrangement" /> Drag along the empty lane to mark a section over those bars. It gets an automatic name.
 - Click a section to jump the playhead to its start; double-click it to rename it.
 - Drag a section's edge to resize it, in whole bars. <Kbd>⌥</Kbd>-drag the section itself to
   move just its marker, also in whole bars — the music under it stays.
 - Right-click it for **Loop section**, **Select section** (as a time range across every track),
-  **Duplicate**, **Rename…**, **Reset to default name** and **Delete**. These act on the marker only.
+  **Duplicate**, **Rename…**, **Reset to default name** and **Delete**. These act on the marker,
+  not the music under it. **Duplicate** puts an empty copy of the section, with its name, right
+  after it and makes room for it: the sections, clips and automation after it move later by its
+  length. A section that overlaps another only gets the copy's marker.
 
 Each of these edits is one undo step. Sections are saved with the project. **View ▸ Toggle
 sections** hides the lane.
@@ -172,7 +176,7 @@ overlap.
 
 ## Track sizes
 
-Make tracks short to see a big song at once, or tall to work on one part.
+<At id="ui:arrangement" /> Make tracks short to see a big song at once, or tall to work on one part.
 
 | Do this | To |
 |---|---|
