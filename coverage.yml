@@ -71,7 +71,7 @@ sections:
       mockup: Nota Arrangement.html
       status: done
     - page: views/session
-      covers: [clip grid, named coloured clips with previews, inspector, launch modes, follow actions, scenes (own tempo), insert scene ⌘I, Session recording, session mixer, toolbar]
+      covers: [clip grid, named coloured clips with previews, inspector, launch modes, follow actions, scenes (own tempo), insert scene ⌘I, Session recording, per-slot take length, session mixer, toolbar]
       sources: [src/managed/Nota.App/SessionView.cs, src/managed/Nota.App/SessionView.Grid.cs, src/managed/Nota.App/SessionView.Inspector.cs, src/managed/Nota.App/SessionView.Mixer.cs, src/managed/Nota.App/SessionView.Toolbar.cs, src/native/nota.engine/src/SessionPlayer.h, docs/session-view-requirements.md]
       mockup: Nota Session View.html
       status: done
