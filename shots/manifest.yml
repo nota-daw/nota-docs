@@ -16,6 +16,10 @@
 #   scene: prefs (args: id = Settings page id — Audio, Outputs, Inputs, MIDI, Gamepads, Remote, MCP, Plug-ins, Downloads, Appearance, Language, Editing, Library, Shortcuts, Updates, height, cue as mixer)
 #   scene: assistant (args: query, select (demo track), showme (start a Show me of the reply), section
 #                     (part of the section id whose Show me to start), crop)
+#   scene: controllersetup (args: port (a name no profile knows), learn (knob 1 and its chip learned),
+#                           step (text of a group tab to go to, e.g. "Session"), hearing (a message arrives))
+#   controllers (main, prefs): "X-TOUCH MINI,KL Essential 61 mk3 MCU/HUI" — virtual ports with those
+#                 names, recognised by their profiles as if plugged in (the knob markers, Settings ▸ MIDI)
 #   scene: start · about · whatsnew · export · unsaved
 # source: remote — the Nota Remote phone page on the app repo's stand-in Nota (src/web/remote/mock),
 #   390 × 844 at 2×, Studio Dark / Studio Light. args: track (name), screen (tab: Pads, Keys, XY,
@@ -87,6 +91,10 @@ shots:
   - { id: library/files-located, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 3, expand: "Drums", pick: "Hat closed.wav", locate: "Drums/Kick 808.wav", height: 640} }
   - { id: library/projects-tab, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 5, projects: true, height: 480} }
   - { id: library/track-inspector-tab, source: app, scene: main, args: {view: "arrangement", select: "Texture", element: "Browser", tab: 8, height: 900} }
+  - { id: control/controllers-settings, source: app, scene: prefs, args: {id: "MIDI", controllers: "X-TOUCH MINI,KL Essential 61 mk3 MCU/HUI", scrollTo: "Controllers Nota listens to"} }
+  - { id: control/controllers-knob-markers, source: app, scene: main, args: {view: "arrangement", select: "Bass", controllers: "X-TOUCH MINI", element: "DetailPanel", width: 760} }
+  - { id: control/controllers-setup, source: app, scene: controllersetup, args: {port: "My Keys 49", learn: true, hearing: true} }
+  - { id: control/controllers-setup-pair, source: app, scene: controllersetup, args: {port: "My Keys 49", step: "Session"} }
   - { id: control/midi-map-tab, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 6, height: 640} }
   - { id: preferences/downloads-samples, source: app, scene: prefs, args: {id: "Downloads", tab: "Sample packs"} }
   - { id: preferences/downloads-models, source: app, scene: prefs, args: {id: "Downloads", tab: "AI models"} }
