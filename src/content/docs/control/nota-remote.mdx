@@ -4,7 +4,7 @@ description: "Your phone or tablet as a controller — scan a QR code and play p
 sidebar:
   order: 4
 since: "0.50.1"
-updated: "0.53.1"
+updated: "0.61.0"
 status: done
 sources:
   - src/web/remote/src/screens/Keys.svelte
@@ -65,6 +65,14 @@ sections).
 
 The screens read like Nota's own: orange marks what is playing, held or switched on; **M** lights
 amber, **S** blue and **Arm** red, as in the Mixer.
+
+### With a hardware controller
+
+While a [MIDI controller](../controllers/) is connected to Nota, the header also shows what its knobs
+are on — the track, the device and the page (on a phone, as the track picker's second line). The
+**Scenes** grid outlines the slot or scene selected in Nota, whether you moved it with the mouse or
+the controller, so you can see where its launch button will land. If the phone follows Nota's
+selection, **Macros** turns to the device the controller is on.
 
 <ShotRow>
   <Shot id="control/nota-remote/pads" alt="Nota Remote on a phone: the Pads screen of a Drum Rack" width={240} />
