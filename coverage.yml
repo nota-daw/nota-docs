@@ -228,8 +228,8 @@ sections:
       sources: [src/native/nota.engine/src/MidiInput.h, src/managed/Nota.App/MainWindow.Input.cs]
       status: done
     - page: control/midi-learn
-      covers: [MIDI Learn overlay, MIDI map, remove mappings]
-      sources: [src/managed/Nota.App/MidiLearn.cs, src/managed/Nota.App/MidiLearnOverlay.cs, src/managed/Nota.App/MidiLearnService.cs, src/managed/Nota.App/MidiMapView.cs]
+      covers: [MIDI Learn overlay, MIDI map, remove mappings, Session clip and scene launch buttons]
+      sources: [src/managed/Nota.App/MidiLearn.cs, src/managed/Nota.App/MidiLearnOverlay.cs, src/managed/Nota.App/MidiLearnService.cs, src/managed/Nota.App/MidiMapView.cs, src/managed/Nota.App/SessionView.Grid.cs, src/managed/Nota.Application/Controllers/SessionLaunch.cs]
       status: done
     - page: control/gamepads
       covers: [gamepad notes and mapped controls (macOS)]
