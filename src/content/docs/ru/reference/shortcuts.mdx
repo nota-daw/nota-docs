@@ -3,7 +3,7 @@ title: "Горячие клавиши"
 description: "Все сочетания клавиш и жесты мыши в Nota, по группам, как на странице Settings ▸ Shortcuts."
 sidebar:
   order: 1
-updated: "0.59.2"
+updated: "0.60.4"
 status: done
 sources:
   - src/managed/Nota.Application/Input/ShortcutLayout.cs
@@ -57,6 +57,7 @@ import Kbd from '@components/Kbd.astro';
 | Клавиши | Действие |
 |---|---|
 | <Kbd keys="⌘ ⇧ M" /> | Show Mixer |
+| <Kbd keys="⌘ ⇧ H" /> | Show Assistant |
 | <Kbd keys="⌘ ⇧ F" /> | Clip editor fills the window |
 | <Kbd keys="P" /> | Show playhead |
 | <Kbd keys="⌘ ⇧ A" /> | Toggle automation mode |
@@ -125,6 +126,7 @@ import Kbd from '@components/Kbd.astro';
 | <Kbd keys="← → ↑ ↓" /> | Move the selection between slots and scenes |
 | Drag clip | Move it to another slot · ⌥ copies |
 | Drag scene | Reorder scenes |
+| ⌥-click a queued launch button | Cancel the launch before it starts — the playing clip plays on |
 | Double-click slot | Edit the clip · an empty MIDI slot gets a new clip |
 | Double-click header | Rename the track |
 | Right-click header or grid | Add an instrument, audio or return track · rename or delete one |
