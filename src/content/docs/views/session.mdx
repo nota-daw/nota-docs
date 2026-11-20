@@ -4,7 +4,7 @@ description: The clip grid for playing live and sketching — launching clips an
 sidebar:
   order: 2
 since: "0.50.1"
-updated: "0.59.2"
+updated: "0.61.0"
 status: done
 sources:
   - src/managed/Nota.App/SessionView.cs
@@ -12,6 +12,7 @@ sources:
   - src/managed/Nota.App/SessionView.Inspector.cs
   - src/managed/Nota.App/SessionView.Toolbar.cs
   - src/managed/Nota.App/SessionView.Mixer.cs
+  - src/managed/Nota.App/SessionView.Axis.cs
   - src/native/nota.engine/src/SessionPlayer.h
 ---
 
@@ -49,10 +50,10 @@ its tracks away. Returns and the master close the row.
 
 | Do this | To |
 |---|---|
-| Arrow keys | Move the selection between slots and scenes |
+| Arrow keys | Move the selection between slots and scenes, as you see them on screen |
 | Double-click a slot | Edit the clip; an empty MIDI slot gets a new clip |
 | Drag a clip to another slot | Move it — with <Kbd>⌥</Kbd>, copy it |
-| Drag a scene up or down | Reorder scenes |
+| Drag a scene up or down (sideways when the grid is turned) | Reorder scenes |
 | <Kbd>⌘ C</Kbd> <Kbd>⌘ X</Kbd> <Kbd>⌘ V</Kbd> | Copy, cut, paste a clip (a cut clip moves when pasted) |
 | <Kbd>⌘ D</Kbd> | Duplicate a clip into the slot below, or a scene below itself |
 | <Kbd>⌘ I</Kbd> | Insert a scene below the selection |
@@ -67,6 +68,33 @@ copies the clips playing right now into a new scene.
 
 Audio slots are full audio clips: double-click one for the same
 [audio clip editor](../../editing/audio-clips/) as in the Arrangement.
+
+## Turn the grid
+
+<At id="cmd:prefs.editing" /> The grid runs either way. Pick it in [Settings ▸ Editing](../../preferences/editing/) under
+**Session grid**, or click the turn key (a row turning into a column) in the toolbar, next to the
+inspector key:
+
+| Choice | Layout |
+|---|---|
+| **Scenes down** | A scene per row, a track per column (the default) |
+| **Scenes across** | A scene per column, a track per row — like sections along a timeline |
+
+With **Scenes across**, the scene names and their **▶** run across the top, with **+ Scene** at the
+end. Track names sit at the left and stay there while you scroll sideways. Each track's **■** and its
+[mixer sections](#the-mixer-under-the-grid) sit at the right end of its row, with **All** (stop every
+clip) above them. Everything else works the same, turned: clips, groups, returns and the master,
+dragging clips and scenes (scenes drag sideways), drops from the Browser and the inspector.
+
+The arrow keys follow what you see: ← and → move between scenes, ↑ and ↓ between tracks. The
+**Select the previous / next scene** and **Select the previous / next track** commands keep their
+meaning either way round, so a controller's buttons or a shortcut bound to them still step by
+scene and by track.
+
+The choice belongs to this computer, not to the project. [Nota Remote](../../control/nota-remote/#scenes)
+turns its grid with it, unless you pick a layout on the phone itself.
+
+<Shot id="views/session-across" alt="The Session view turned: a scene per column with launch buttons across the top, a track per row with its name at the left and its Stop and mixer at the right" />
 
 ## The inspector
 
@@ -109,7 +137,7 @@ already running there is no count-in: the take starts on the launch quantization
 
 ## The mixer under the grid
 
-Under the grid sits a mixer for every column. Show or hide its sections with **I/O**,
+Under the grid sits a mixer for every column (with the grid turned, at the right end of every row). Show or hide its sections with **I/O**,
 **Sends** and **Mixer** in the toolbar: inputs and outputs, the send to each return, pan,
 volume, mute, solo, [Cue](../mixer/#cue-your-own-mix) and arm. The send amounts and the volume are written inside their bars. A clip you launch on a track
 that is in Cue is heard in Cue.
