@@ -157,6 +157,7 @@ public sealed class Scenes
             case "export": Simple(shot, new ExportWindow(128, 32, 124)); break;
             case "connect": Connect(shot); break;
             case "controllersetup": ControllerSetup(shot); break;
+            case "controllermapping": ControllerMapping(shot); break;
             case "unsaved":
                 // The texts the app shows when quitting with unsaved edits (MainWindow.Recovery.cs).
                 Simple(shot, new SaveChangesWindow(Loc.T("main.recovery.unsaved_changes"),
@@ -1064,6 +1065,60 @@ public sealed class Scenes
             Polls(2);
         }
         Save(win, shot.Id);
+        win.Close();
+        Pump(5);
+    }
+
+    /// <summary>The controller mapping editor (nota#973) on a port a shipped profile knows (args port,
+    /// e.g. "Launchkey MK3 49 LKMK3 DAW"): idle, or with conflict: true — Stop picked and the Play
+    /// button pressed, so the row asks whether to move it. learn: "Metronome" learns that row on CC 104
+    /// first (a changed row).</summary>
+    private void ControllerMapping(Shot shot)
+    {
+        string port = shot.Str("port") ?? "Launchkey MK3 49 LKMK3 DAW";
+        ConnectControllers(new Shot(shot.Id, shot.Scene, new() { ["controllers"] = System.Text.Json.JsonSerializer.SerializeToElement(port) }));
+        if (Controllers() is not { } svc || ControllerServiceType is null) return;
+        var list = (System.Collections.IEnumerable)svc.GetType().GetProperty("Controllers")!.GetValue(svc)!;
+        object? c = list.Cast<object>().FirstOrDefault(x => (string?)x.GetType().GetProperty("Name")!.GetValue(x) == port);
+        var winType = typeof(App).Assembly.GetType("Nota.App.Controllers.ControllerMappingWindow");
+        if (c is null || winType is null) return;
+        const BindingFlags np = BindingFlags.NonPublic | BindingFlags.Instance;
+        var win = (Window)Activator.CreateInstance(winType, np | BindingFlags.Public, null, new[] { svc, c }, null)!;
+        Scale2(win);
+        win.Show();
+        Pump(10);
+        TickControllers();
+        Pump(3);
+        var poll = winType.GetMethod("Poll", np)!;
+        void Polls(int n) { for (int i = 0; i < n; i++) { Pump(1); TickControllers(); poll.Invoke(win, null); Thread.Sleep(40); } }
+        var engine = App.Services!.GetService(typeof(IAudioEngine))!;
+        var injectInfo = engine.GetType().GetMethod("MidiTestInject")!;
+        var src = System.Linq.Expressions.Expression.Parameter(typeof(int));
+        var bytes = System.Linq.Expressions.Expression.Parameter(typeof(byte[]));
+        var spanType = injectInfo.GetParameters()[1].ParameterType;
+        var injectCall = System.Linq.Expressions.Expression.Lambda<Action<int, byte[]>>(
+            System.Linq.Expressions.Expression.Call(System.Linq.Expressions.Expression.Constant(engine), injectInfo, src,
+                System.Linq.Expressions.Expression.Convert(bytes, spanType, spanType.GetMethod("op_Implicit", new[] { typeof(byte[]) }))),
+            src, bytes).Compile();
+        object Row(string name)
+        {
+            foreach (var r in (System.Collections.IList)winType.GetField("_rows", np)!.GetValue(win)!)
+                if (r.GetType().GetProperty("F")!.GetValue(r) is { } f && (string?)f.GetType().GetProperty("Name")!.GetValue(f) == name) return r;
+            throw new InvalidOperationException("no row " + name);
+        }
+        void Listen(string name)
+        {
+            winType.GetMethod("Listen", np)!.Invoke(win, new object?[] { Row(name), null });
+            winType.GetMethod("Render", np)!.Invoke(win, null);
+            Pump(3);
+        }
+        void Button(int cc) { injectCall(_testPorts[port], new byte[] { 0xBF, (byte)cc, 127, 0xBF, (byte)cc, 0 }); Polls(14); }
+        if (shot.Str("learn") is string learn) { Listen(learn); Button(104); }
+        if (shot.Bool("conflict")) { Listen("Stop"); Button(115); }
+        if (shot.Str("scroll") is string to && Row(to).GetType().GetProperty("View")!.GetValue(Row(to)) is Control v) { v.BringIntoView(); Pump(5); }
+        Save(win, shot.Id);
+        // Leave without the unsaved-changes question.
+        winType.GetField("_closing", np)!.SetValue(win, true);
         win.Close();
         Pump(5);
     }
