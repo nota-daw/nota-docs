@@ -110,8 +110,10 @@ The panel on the right edits whatever is selected.
 (**Launch without a tempo change** skips them), and **Next after** — move on to the next scene
 after a number of bars.
 
-**An empty slot:** **Insert MIDI clip**, **Paste**, **Record here**, and **Stop button** — turn
-it off so launching this scene keeps that track playing instead of stopping it.
+**An empty slot:** **Insert MIDI clip**, **Paste**, **Record here**, **Stop button** — turn
+it off so launching this scene keeps that track playing instead of stopping it — and
+**Take length**, the length of the next take recorded into it (see
+[A take length per slot](#a-take-length-per-slot)).
 
 The **Follow** switch in the toolbar turns all follow actions on or off at once.
 
@@ -134,7 +136,33 @@ With the transport stopped and a [count-in](../../basics/transport/#metronome-an
 set, the slot shows **Rec in…** while the clicks play and the take starts when they end. A
 note you start during the count-in and still hold then is recorded from the take's start.
 Stop during the count-in cancels the take and leaves the slot empty. With the transport
-already running there is no count-in: the take starts on the launch quantization.
+already running there is no count-in: the take starts on the launch quantization — and
+stopping a MIDI take before then cancels it the same way.
+
+### A take length per slot
+
+**Fixed** is one length for every take. To have slots ready for different lengths — say
+3 bars in one slot and 8 in another — select an empty slot and set its **Take length** in the
+inspector (or right-click the slot and pick it under **Take length**):
+
+- **Global** — follow **Fixed** in the toolbar; the inspector shows what that is now, e.g.
+  **Global (4 bars)**. Every slot starts here.
+- **Open** — record until you stop, even with **Fixed** on.
+- **1, 2, 3, 4, 8** or **16 bars**, then fine-tune it in **Bars · beats** (drag or
+  double-click to type). A slot takes 1 beat to 64 bars, counted in the time signature in
+  effect when the take starts.
+
+The grid shows the length on the empty slot. The next take recorded into that slot starts on
+the launch quantization as usual and stops by itself after its length, then loops — the
+tempo, **Fixed**, other slots and existing clips stay as they are. Slots recording together
+each stop on their own length. Stop such a take before its length and it is cut to whole bars
+of what it recorded.
+
+The length belongs to the slot, not to a clip: cancelling a take during its count-in or
+retrying it (<Kbd>⌘ .</Kbd>) leaves it as it was, it stays with the slot under the clip a take
+leaves, and it shows again when you delete that clip or undo the take. Changing it is one
+undo step, and it is saved with the project. Recording over a clip (overdub) keeps the clip's
+length.
 
 ## The mixer under the grid
 
