@@ -97,6 +97,8 @@ shots:
   - { id: control/controllers-knob-markers, source: app, scene: main, args: {view: "arrangement", select: "Bass", controllers: "X-TOUCH MINI", element: "DetailPanel", width: 760} }
   - { id: control/controllers-setup, source: app, scene: controllersetup, args: {port: "My Keys 49", learn: true, hearing: true} }
   - { id: control/controllers-setup-pair, source: app, scene: controllersetup, args: {port: "My Keys 49", step: "Session"} }
+  - { id: control/controllers-edit, source: app, scene: controllermapping, args: {port: "Launchkey MK3 49 LKMK3 DAW", learn: "Metronome", scroll: "Jog wheel"} }
+  - { id: control/controllers-edit-conflict, source: app, scene: controllermapping, args: {port: "Launchkey MK3 49 LKMK3 DAW", conflict: true, scroll: "Stop"} }
   - { id: control/midi-map-tab, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 6, height: 640} }
   - { id: preferences/downloads-samples, source: app, scene: prefs, args: {id: "Downloads", tab: "Sample packs"} }
   - { id: preferences/downloads-models, source: app, scene: prefs, args: {id: "Downloads", tab: "AI models"} }

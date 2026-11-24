@@ -14,6 +14,7 @@ sources:
   - src/managed/Nota.App/Controllers/ControllerContextMenu.cs
   - src/managed/Nota.App/Controllers/DevicePageEditor.cs
   - src/managed/Nota.App/Controllers/ControllerSetupWindow.cs
+  - src/managed/Nota.App/Controllers/ControllerMappingWindow.cs
   - src/managed/Nota.App/Controllers/Profiles/arturia.keylab-essential-61-mk3.json
   - src/managed/Nota.App/Controllers/Profiles/arturia.keylab-essential-61-mk3-daw.json
   - src/managed/Nota.App/PreferencesWindow.Controllers.cs
@@ -163,6 +164,57 @@ A port that has no matching MIDI output can't get feedback. Settings says so bel
 **Reload profiles** re-reads the profile files, and **Open profiles folder** opens the folder for
 your own. Problems in a profile file (a bad control, a newer format) are listed below the buttons.
 
+## Change one control
+
+A controller that has a profile — one Nota ships or one you made — has **Edit mapping…** next to
+it in **Settings ▸ MIDI ▸ Controllers**. The window lists every function by group (knobs, faders,
+transport, tracks and banks, Session, extras), each with the control it is on, or — when none.
+
+<Shot id="control/controllers-edit" alt="The controller mapping window for a Launchkey MK3: the shipped-profile line under the name, the group chips with counts, the Session and Extras rows and Metronome marked changed on CC 104" width={640} />
+
+<Steps>
+
+1. Click a function (or pick it with <Kbd>↑</Kbd> <Kbd>↓</Kbd> and press <Kbd>Enter</Kbd>). Its row
+   turns orange and listens.
+
+2. Press or move the control you want for it. Nota reads it the way the setup wizard does (note,
+   CC, 14-bit CC, NRPN, an encoder's encoding) and shows it in the row with an orange dot: changed.
+   For a pair — previous / next track, undo / redo… — turn an encoder to set both halves, or press
+   one button and then the other. Click one half's chip to change only that half (an encoder that
+   did both halves then leaves both: it can't turn one way only). Leave before the second button and
+   nothing changes.
+
+3. Click **Finish** (<Kbd>Cmd/Ctrl</Kbd>+<Kbd>Enter</Kbd>). Only the functions you changed change;
+   everything else in the profile stays as it was.
+
+</Steps>
+
+If the control already does something else, the row says so — for example *CC 115 already does
+Play* — and nothing changes until you click **Move here** (that function loses the control) or
+**Cancel**.
+
+<Shot id="control/controllers-edit-conflict" alt="The Stop row listening, with the line: CC 115 already does Play. Move it here? and the Move here and Cancel buttons" width={640} />
+
+- **×** on a row clears it: no control does that function. **↺** puts back the control it had
+  when you opened the window. <Kbd>Delete</Kbd> clears the picked row, <Kbd>Esc</Kbd> stops
+  listening.
+- **Command…** at the end of **Extras** puts any command from the command palette on a spare
+  button: type to find it, press <Kbd>Enter</Kbd>, then press the button.
+- Not sure what a control does? Move it while nothing listens: its row lights up and comes into
+  view, or the line at the bottom says it isn't mapped.
+- **Unassigned only** shows just the functions without a control; after each one you set, the
+  next one listens by itself.
+- Controls in the profile that the window doesn't set up (pads, more knobs) are listed under
+  **Other controls** and kept as they are.
+
+Changing a profile Nota ships saves **your own copy** of it in your profiles folder, which then
+replaces the built-in one for that controller; its init messages and LED feedback are kept. The
+window then offers **Back to shipped profile**, which removes your copy.
+
+**Learn everything again** walks through every function step by step, like setting up a new
+controller, but each step starts on the control it has now: press **Keep** (or <Kbd>Enter</Kbd>) to
+keep it, or move another control to replace it.
+
 ## Set up a controller Nota doesn't know
 
 <Shot id="control/controllers-setup" alt="The Set up window on step 2: the group strip at the top with Knobs current, a knob picture, the prompt to turn knob 2, the last message received, and knob 1 learned as CC 16" width={600} />
@@ -170,8 +222,8 @@ your own. Problems in a profile file (a bad control, a newer format) are listed 
 <Steps>
 
 1. In **Settings ▸ MIDI ▸ Controllers**, click **Set up…** next to the controller. After that the
-   button reads **Set up again…**, to go through the controls once more. On a controller Nota
-   already knows, **Set up…** makes your own profile, which replaces the built-in one.
+   button reads **Edit mapping…** ([change one control](#change-one-control)), and **Learn
+   everything again** there goes through the controls once more.
 
 2. Do what each step asks. A picture shows the kind of control: a knob, a fader, a button with
    its icon, the jog wheel. Turn knob 1 right, then left, and the next step comes by itself; press
@@ -247,7 +299,7 @@ with the same pages on another computer. While a project is open, its pages win.
 ## Your own profiles
 
 A profile is a JSON file in the `controllers` folder of Nota's data directory. The setup wizard
-writes one; you can also write or edit one by hand, for example to add the messages that switch a
+and **Edit mapping…** write one; you can also write or edit one by hand, for example to add the messages that switch a
 keyboard into its DAW mode, or LED feedback.
 
 ```jsonc
