@@ -13,6 +13,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 Nota construit un catalogue de vos plug-ins installés en chargeant chaque nouveau plug-in dans un processus séparé :
 un plug-in qui se comporte mal ne peut donc pas faire planter Nota. Les plug-ins déjà dans le catalogue ne sont pas
@@ -30,7 +31,7 @@ rechargés : seule la première analyse d’une grosse collection prend du tem
 
 <Shot id="preferences/plugins" alt="Réglages ▸ Plug-ins : dossiers d’analyse et Relancer l’analyse" />
 
-1. Ouvrez **Réglages ▸ Plug-ins**.
+1. <At id="cmd:prefs.plugins" /> Ouvrez **Réglages ▸ Plug-ins**.
 2. **Ajouter un dossier…** ajoute un dossier où chercher des plug-ins VST3 ; **Supprimer** en retire un.
 3. **Relancer l’analyse des plug-ins** parcourt chaque dossier et charge les plug-ins qu’il n’a pas encore vus. Pendant
    qu’elle tourne, la ligne d’état les compte, p. ex. **Analyse des plug-ins · 312 sur 1 000 · …**. Quand elle est

@@ -1,9 +1,9 @@
 ---
 title: Recording
-description: Recording audio and MIDI — arming tracks, inputs, monitoring, count-in, recording over a loop, and recording into Session slots.
+description: Recording audio and MIDI — arming tracks, inputs, monitoring, count-in, recording over a loop, recording into Session slots, and recording a Session performance into the Arrangement.
 sidebar:
   order: 3
-updated: "0.59.2"
+updated: "0.61.1"
 status: done
 sources:
   - src/native/nota.engine/src/engine/Engine_Recording.cpp
@@ -14,16 +14,18 @@ sources:
   - src/native/nota.engine/src/engine/Engine_Render.cpp
   - src/managed/Nota.App/RecordPreview.cs
   - src/native/nota.engine/src/engine/Engine_TakeRetry.cpp
+  - src/native/nota.engine/src/engine/Engine_SessionPass.cpp
 ---
 
 import { Aside, Steps } from '@astrojs/starlight/components';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 ## Record into the Arrangement
 
 <Steps>
 
-1. **Arm** the track: click the **●** button in its header. An audio track records audio, an
+1. <At id="ui:arrangement" /> **Arm** the track: click the **●** button in its header. An audio track records audio, an
    instrument track records MIDI.
 
 2. Choose what it records. For an **audio track**, right-click the header ▸ **Record input**:
@@ -54,7 +56,7 @@ Session slot being recorded.
 
 ## Count-in
 
-Right-click the metronome for a **count-in** of 1, 2 or 4 bars. Record from stop then counts in
+<At id="ui:transport.metronome" /> Right-click the metronome for a **count-in** of 1, 2 or 4 bars. Record from stop then counts in
 first; the clicks are never part of the take. See [Transport](../../basics/transport/#metronome-and-count-in).
 
 Notes you play during the count-in are recorded — a pickup into the first bar lands exactly
@@ -65,7 +67,7 @@ clip right and drag its left edge out to hear it.
 
 ## Discard and retry a take
 
-Fluffed it? Press <Kbd>⌘ .</Kbd> (<Kbd>Ctrl .</Kbd> on Windows and Linux) — or
+<At id="cmd:transport.retryTake" /> Fluffed it? Press <Kbd>⌘ .</Kbd> (<Kbd>Ctrl .</Kbd> on Windows and Linux) — or
 **Transport → Discard and retry take** — while recording. The take is thrown away and recording
 starts again at once:
 
@@ -101,7 +103,7 @@ monitored — it would feed back.
 
 ## Recording over a loop
 
-With the loop on, **audio** recording keeps every pass as a take instead of replacing the
+<At id="ui:transport.loop" /> With the loop on, **audio** recording keeps every pass as a take instead of replacing the
 last one. Stop after the loop has come round at least once and the track holds one take per
 pass — **Take 1**, **Take 2**, and so on — numbered in the order you played them. A later
 recording on the same track continues the numbers. A pass that started or stopped in the
@@ -147,7 +149,7 @@ printing a performance through its effects, or a submix, to audio. Nota keeps it
 
 ## Recording into Session
 
-In the [Session view](../../views/session/#recording-into-a-slot), arm a track, select a scene
+<At id="ui:session" /> In the [Session view](../../views/session/#recording-into-a-slot), arm a track, select a scene
 and click **Session rec** — the take goes into that track's slot. Click again to keep it (cut
 to whole bars), or set **Fixed** to 1–8 bars and it stops by itself. An empty slot's
 **Record here** does the same for that slot. A track plays one slot at a time, so a take
@@ -159,9 +161,39 @@ starts with it. Stop during the count-in leaves the slot empty.
 transport keep going, the slot shows **Rec in…** again and records from the next launch
 quantum (at once with quantize off).
 
+## Recording a Session performance into the Arrangement
+
+<At id="ui:transport.record" /> Every Arrangement take also records what you play in the
+[Session](../../views/session/). Press **Record**, launch and stop clips and scenes as you
+like, then stop: each Session clip that played is now on its track in the Arrangement, exactly
+where it played — from the beat it started on the launch quantization to the beat it stopped.
+Clips launched by a scene, a follow action, your phone or a controller count too. While you
+play, the Arrangement already shows them on their tracks, growing with the playhead.
+
+- A looping clip is repeated for as long as it played. An instrument clip becomes one clip
+  holding every repetition; an audio clip becomes one clip per repetition, back to back.
+- A clip that was already playing when you pressed **Record**, or one launched with
+  **Legato**, starts where it was in its loop.
+- Only what played is replaced. A track keeps its own clips before the launch and after the
+  stop, and a track on which you launched nothing keeps its Arrangement untouched.
+- Play on an armed instrument track over its playing clip and your notes land inside the clip
+  it writes. An armed audio track records its input as usual.
+- A scene with its own tempo writes the tempo change to the master
+  [Tempo lane](../../basics/transport/) when the project has no tempo automation yet. Once
+  that lane exists, it leads the tempo, and scene tempos no longer change it.
+- With the loop on, each pass replaces the previous one where it played.
+
+**Stop** stops the Session clips too, so after the take every track plays its Arrangement
+again: press **Play** to hear what you recorded. The whole take — Session clips, input takes and
+automation — is one undo step, and <Kbd>⌘ .</Kbd> throws all of it away.
+
+With **nothing armed**, **Record** while a Session clip plays (or waits to start) records the
+performance alone — the status bar says **Recording the Session performance…**. With the
+Session silent, **Record** arms the selected track as before.
+
 ## Recording automation
 
-**Record** also records automation: while it's on, move any knob or fader and that parameter's
+<At id="ui:transport.record" /> **Record** also records automation: while it's on, move any knob or fader and that parameter's
 lane writes what you do. See [Automation](../automation/#recording-automation).
 
 <Aside type="tip">

@@ -13,6 +13,7 @@ sources:
 
 import { Aside, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 Nota бесплатна и с открытым кодом. Каждый релиз собирается из кода на GitHub и выкладывается
 на [странице релизов](https://github.com/nota-daw/nota/releases/latest).
@@ -21,19 +22,20 @@ Nota бесплатна и с открытым кодом. Каждый рели
 
 | Система | Файл |
 |---|---|
-| **macOS 13 и новее**, Apple Silicon (M1 и новее) | `Nota-<version>-arm64.dmg` |
-| **macOS 13 и новее**, Intel | `Nota-<version>-x86_64.dmg` |
+| **macOS 12 и новее**, Apple Silicon (M1 и новее) | `Nota-<version>-arm64.dmg` |
+| **macOS 12 и новее**, Intel | `Nota-<version>-x86_64.dmg` |
 | **Windows 10 / 11**, большинство ПК | `Nota-Setup-<version>-x64.exe` |
 | **Windows 11** на ARM | `Nota-Setup-<version>-arm64.exe` |
 | **Linux**, большинство ПК | `Nota-<version>-x86_64.AppImage` |
 | **Linux** на ARM | `Nota-<version>-aarch64.AppImage` |
+| **NixOS** (или Nix на любом Linux) | без файла: `nix run github:nota-daw/nota` |
 
-Не знаете, какой у вас Mac? Меню Apple ▸ **Об этом Mac**: «Apple M…» — это Apple Silicon,
+<At id="none" /> Не знаете, какой у вас Mac? Меню Apple ▸ **Об этом Mac**: «Apple M…» — это Apple Silicon,
 «Intel» — Intel.
 
 ## Установка и первый запуск
 
-У Nota пока нет платного сертификата Apple или Microsoft, поэтому при первом запуске система
+<At id="none" /> У Nota пока нет платного сертификата Apple или Microsoft, поэтому при первом запуске система
 попросит подтверждение. Это нужно сделать один раз.
 
 <Tabs syncKey="os">
@@ -64,7 +66,7 @@ Nota бесплатна и с открытым кодом. Каждый рели
 xattr -dr com.apple.quarantine /Applications/Nota.app
 ```
 
-Команда снимает отметку «скачано из интернета» только с Nota. В macOS 13–14 можно также
+Команда снимает отметку «скачано из интернета» только с Nota. В macOS 12–14 можно также
 щёлкнуть Nota в Программах правой кнопкой ▸ **Открыть** ▸ **Открыть**.
 </Aside>
 
@@ -106,6 +108,16 @@ xattr -dr com.apple.quarantine /Applications/Nota.app
 AppImage работает на любом дистрибутиве с glibc 2.28 и новее — RHEL, Alma и Rocky 8 и 9,
 Debian 10+, Ubuntu 18.10+ и всё моложе.
 
+На **NixOS** AppImage сам по себе не запускается. Запускайте Nota из её flake — первый запуск
+собирает её (это небыстро), следующие стартуют сразу:
+
+```bash
+nix run github:nota-daw/nota
+```
+
+Чтобы Nota осталась установленной, добавьте пакет из flake в профиль
+(`nix profile install github:nota-daw/nota`) или в конфигурацию системы.
+
 Настройки Nota хранит в `~/.config/nota` (или `$XDG_CONFIG_HOME/nota`).
 
 Звук идёт через PulseAudio / ALSA, MIDI — через ALSA.
@@ -115,7 +127,7 @@ Debian 10+, Ubuntu 18.10+ и всё моложе.
 
 ## Обновления
 
-Nota сама проверяет новые версии — при каждом запуске и раз в сутки, пока открыта. Когда выходит
+<At id="ui:status.version" /> Nota сама проверяет новые версии — при каждом запуске и раз в сутки, пока открыта. Когда выходит
 новая, в [стартовом окне](../first-launch/) появляется баннер, а в строке состояния рядом с
 номером версии — **Nota X is available**. Нажмите **Update** (в строке состояния — сначала на
 само сообщение), и Nota скачает обновление, сверит его с контрольной суммой релиза и установит,

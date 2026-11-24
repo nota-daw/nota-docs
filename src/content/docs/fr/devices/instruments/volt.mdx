@@ -12,6 +12,7 @@ sources:
 
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 Nota Volt est un synthé analogique virtuel modelé sur les analogiques classiques à deux oscillateurs, avec une
 particularité : deux **chemins de signal** complets. Chaque source peut aller vers le Filter 1, le Filter 2 ou les deux,
@@ -46,7 +47,7 @@ départ, **Level** et **Route** (vers quel filtre il va). Noise a une **Color**.
 
 <Shot id="devices/instruments/volt/filter" alt="Nota Volt, onglet Filter" />
 
-Deux filtres à variables d’état (**LP**, **HP**, **BP** ou **Notch**, 12 ou 24 dB), chacun avec coupure, résonance et
+<At id="ui:device.instruments.volt" /> Deux filtres à variables d’état (**LP**, **HP**, **BP** ou **Notch**, 12 ou 24 dB), chacun avec coupure, résonance et
 quantités **Env**, **Key** et **LFO**. Faites glisser le pad de réponse pour la coupure et la résonance. Sur le Filter 1,
 **To F2** en envoie une partie dans le Filter 2 pour un filtrage en série.
 
@@ -73,7 +74,7 @@ confié à la molette de modulation (**By wheel**).
 
 <Shot id="devices/instruments/volt/mod" alt="Nota Volt, onglet Mod avec la matrice de modulation" />
 
-Une **matrice 7 × 6** : Amp Env, Flt Env, LFO 1, LFO 2, Velocity, Key et Mod Wheel contre Pitch, Osc 2 Pitch, Cutoff,
+<At id="ui:device.instruments.volt" /> Une **matrice 7 × 6** : Amp Env, Flt Env, LFO 1, LFO 2, Velocity, Key et Mod Wheel contre Pitch, Osc 2 Pitch, Cutoff,
 Reso, Level et Pan. Faites glisser une cellule vers le haut pour +, vers le bas pour − ; <Kbd>⌥</Kbd>-clic pour saisir
 la quantité (−100 … +100 %), double-clic pour l’effacer.
 

@@ -17,6 +17,7 @@ sources:
 import { Aside } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 ## La fenêtre de démarrage
 
@@ -25,9 +26,9 @@ sur quoi vous travailliez.
 
 <Shot id="start-here/start-window" alt="La fenêtre de démarrage de Nota avec Nouveau projet, Ouvrir un projet et une liste de projets récents" />
 
-- **Nouveau projet** : un [nouveau projet](../../basics/projects/#un-nouveau-projet) dans la fenêtre principale,
+- <At id="cmd:file.new" /> **Nouveau projet** : un [nouveau projet](../../basics/projects/#un-nouveau-projet) dans la fenêtre principale,
   avec une piste d’instrument, une piste audio et les retours **Reverb** / **Delay** prêts.
-- **Ouvrir un projet…** : choisissez un projet `.nota` n’importe où sur le disque.
+- <At id="cmd:file.open" /> **Ouvrir un projet…** : choisissez un projet `.nota` n’importe où sur le disque.
 - **Projets récents** : les projets que vous avez ouverts ou enregistrés récemment, du plus récent au plus
   ancien, avec la date de votre dernière modification. Cliquez sur l’un d’eux pour le sélectionner,
   double-cliquez dessus (ou sélectionnez-le et appuyez sur <Kbd>Return</Kbd>) pour l’ouvrir. Les flèches

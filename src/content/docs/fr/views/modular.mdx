@@ -15,6 +15,7 @@ sources:
 import { Aside } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 La vue Modular dessine les appareils d’une piste sous forme de graphe (**effets MIDI → instrument → effets → sortie
 de la piste**) et vous laisse câbler une **modulation CV** entre eux avec des câbles. Passez-y avec **Modular** dans
@@ -24,7 +25,7 @@ la barre de transport.
 
 ## Piste et Global
 
-- **Piste** montre la chaîne de la piste sélectionnée. Choisissez une autre piste dans la liste à gauche.
+- <At id="ui:modular" /> **Piste** montre la chaîne de la piste sélectionnée. Choisissez une autre piste dans la liste à gauche.
 - **Global** montre chaque piste comme un îlot, avec les connexions entre pistes.
 
 Déplacez-vous sur le canevas avec <Kbd>Space</Kbd> + glisser, zoomez avec <Kbd>⌘</Kbd> + défilement, et appuyez sur
@@ -62,7 +63,7 @@ N’importe quel paramètre peut aussi servir de source CV : clic droit sur un
 
 ## Câblage
 
-Faites glisser le **CV out** d’un modulateur sur un bouton de n’importe quel appareil, instrument ou effet MIDI. Un
+<At id="ui:modular" /> Faites glisser le **CV out** d’un modulateur sur un bouton de n’importe quel appareil, instrument ou effet MIDI. Un
 câble les relie. Cliquez sur le câble pour régler sa **profondeur** (**Depth**) et son **mode** : **Ajouter** (par-dessus
 la position du bouton), **Multiply** (multiplié par elle) ou **Forcer** (qui la remplace) ; sélectionnez-le et
 supprimez-le pour le retirer. Plusieurs modulations sur un même bouton ont chacune leur entrée et leur câble.
@@ -72,7 +73,7 @@ gauche et choisissez un paramètre, ou clic droit sur un bouton ▸ **Moduler de
 
 ## Bouger un bouton avec le volume d’une autre piste
 
-L'**Envelope Follower** est le contrôleur de crête de Nota : il transforme le volume sonore d’une piste en CV qui peut
+<At id="ui:modular" /> L'**Envelope Follower** est le contrôleur de crête de Nota : il transforme le volume sonore d’une piste en CV qui peut
 piloter n’importe quel bouton, sur cette piste ou sur une autre. L’usage classique est le ducking : la basse baisse
 chaque fois que la grosse caisse frappe :
 
@@ -91,7 +92,7 @@ piste en muet, ou dont le fader est tout en bas, ne lui donne rien à suivre.
 
 ## Oscilloscope CV (Scope)
 
-Ajoutez un **Scope** pour regarder le signal de n’importe quel modulateur comme une ligne mouvante, pratique pour
+<At id="ui:modular" /> Ajoutez un **Scope** pour regarder le signal de n’importe quel modulateur comme une ligne mouvante, pratique pour
 vérifier la vitesse d’un LFO ou la réaction d’un suiveur d’enveloppe. Faites glisser le **CV out** du modulateur sur le
 nœud Scope pour le brancher. Le Scope montre du CV, pas de l’audio : pour observer le son d’un appareil, placez
 [Nota Lens](../../devices/audio-effects/lens/) après lui dans la chaîne.

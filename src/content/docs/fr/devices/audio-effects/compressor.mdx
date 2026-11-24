@@ -12,6 +12,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 Nota Compressor égalise un signal : il baisse ce qui dépasse le seuil, puis remonte le niveau du résultat. Collez un bus
 de batterie, nivelez une voix, faites pomper une nappe sur la grosse caisse.
@@ -23,7 +24,7 @@ central à trois onglets, un panneau de droite (**Dynamics** / **Output**) et un
 
 ## Curve
 
-La courbe de transfert et l’historique de la réduction de gain. **Faites glisser la courbe** pour régler le seuil et le
+<At id="ui:device.audio-effects.compressor" /> La courbe de transfert et l’historique de la réduction de gain. **Faites glisser la courbe** pour régler le seuil et le
 ratio.
 
 ## Motion
@@ -68,6 +69,6 @@ filtres : faites glisser les poignées **HP** et **LP** ; **Q** façonne les
 
 ## Astuces
 
-- **Pompage en sidechain :** clé External depuis la grosse caisse, attaque rapide, relâchement à votre goût, ou partez
+- <At id="ui:device.audio-effects.compressor" /> **Pompage en sidechain :** clé External depuis la grosse caisse, attaque rapide, relâchement à votre goût, ou partez
   de **EDM Pump**. La grosse caisse est dans un Drum Rack ? Choisissez son pad (**Drums ▸ Kick**) plutôt que tout le kit.
 - **Batterie parallèle :** un ratio élevé avec **Mix** vers 40 %.

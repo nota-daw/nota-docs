@@ -14,6 +14,7 @@ sources:
 
 import Shot from '@components/Shot.astro';
 import { Steps } from '@astrojs/starlight/components';
+import At from '@components/At.astro';
 
 MIDI Learn relie une commande physique à une commande à l’écran : tournez un bouton de votre contrôleur et un filtre
 bouge dans Nota.
@@ -22,7 +23,7 @@ bouge dans Nota.
 
 <Steps>
 
-1. Cliquez sur **MIDI** dans la barre de transport. Tout ce que vous pouvez associer s’allume.
+1. <At id="ui:transport.midi-learn" /> Cliquez sur **MIDI** dans la barre de transport. Tout ce que vous pouvez associer s’allume.
 
 2. Cliquez sur la commande de Nota que vous voulez faire bouger : un bouton, un fader, un interrupteur, une macro…
 

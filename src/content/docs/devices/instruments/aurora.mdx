@@ -11,6 +11,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 Nota Aurora is a wavetable synth: each oscillator reads through a **table** of waveforms, and
 moving its **position** morphs the sound from one shape to the next. It's built for pads that
@@ -26,7 +27,7 @@ The **wheels** on the left (pitch bend, mod wheel) are on every tab. The rail on
 
 ## Osc
 
-Osc 1 and Osc 2 sit side by side, each with its own on switch (it reads **on** or **off**), table
+<At id="ui:device.instruments.aurora" /> Osc 1 and Osc 2 sit side by side, each with its own on switch (it reads **on** or **off**), table
 and warp drop-downs, a window showing its table, and its knobs. The window draws the table's frames with the one being
 played lit, and follows the position each note is at as LFOs and envelopes move it; its caption
 names the table, the frame and what modulates the position — or **no modulation**. An oscillator that is off greys
@@ -79,7 +80,7 @@ and **Env**, **LFO** and **Key** amounts — drag the response for cutoff and re
 
 <Shot id="devices/instruments/aurora/env" alt="Nota Aurora, Env tab with both envelopes and their A, D, S and R boxes" />
 
-**Env 1** shapes the amplitude, **Env 2** is free for the mod matrix; both are drawn and
+<At id="ui:device.instruments.aurora" /> **Env 1** shapes the amplitude, **Env 2** is free for the mod matrix; both are drawn and
 draggable. Under each graph, the **A**, **D**, **S** and **R** boxes each carry a small knob:
 turn the knob, or drag anywhere on the box up or down (hold **Shift** for fine steps), and
 double-click the box to type an exact value. Double-click the knob to reset it. Two **LFOs** — shape (including S&H), rate, depth, optional tempo sync — each show
@@ -89,7 +90,7 @@ where they're routed, over a window that draws the selected LFO.
 
 <Shot id="devices/instruments/aurora/mod" alt="Nota Aurora, Mod tab with the modulation matrix" />
 
-An **8 × 7 matrix**: sources (Env 1, Env 2, LFO 1, LFO 2, Velocity, Key, Mod Wheel, Random) down
+<At id="ui:device.instruments.aurora" /> An **8 × 7 matrix**: sources (Env 1, Env 2, LFO 1, LFO 2, Velocity, Key, Mod Wheel, Random) down
 the side, destinations (Pitch, Osc 2 Pitch, Position, Cutoff, Reso, Level, Pan) across. Drag a
 cell up for a positive amount, down for a negative one. **Clear all** resets it.
 

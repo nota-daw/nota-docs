@@ -19,6 +19,7 @@ sources:
 
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 Nota Instrument Rack holds several **chains** on one track — each its own MIDI effects, instrument
 and effects. Layer a pad under a pluck, split the keyboard into bass and lead, switch sounds by how
@@ -32,7 +33,7 @@ Audio Effect and MIDI Effect racks use the same card.
 
 ## Chains
 
-The list shows every chain: its colour, name, **M** (mute) and **S** (solo), its key and velocity
+<At id="ui:device.racks.instrument-rack" /> The list shows every chain: its colour, name, **M** (mute) and **S** (solo), its key and velocity
 zone, and its level. Click a chain to choose it; double-click its name to rename it. Right-click it
 to **Duplicate** or **Delete** it.
 
@@ -78,7 +79,7 @@ inside another rack, and an Instrument Rack never goes in a chain. A Drum Rack i
 
 <Shot id="devices/racks/instrument-rack/zones" alt="The Zones tab: key and velocity zones per chain, with the probe on E4" />
 
-Each chain plays only the notes inside its **key** zone and its **velocity** zone. Drag a zone's edges
+<At id="ui:device.racks.instrument-rack" /> Each chain plays only the notes inside its **key** zone and its **velocity** zone. Drag a zone's edges
 to set them; overlapping zones layer, separate zones split. Hover the zones to test a note: a line
 marks the key, the chains that would play it light up, and the footer names them.
 

@@ -11,6 +11,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 Nota Strata est un looper sur une piste : enregistrez une phrase, puis continuez à empiler des couches par-dessus. À la
 différence d’un looper à un seul tampon, chaque passage est sa propre **couche**, avec sa forme d’onde, son niveau et son
@@ -35,8 +36,27 @@ quand même en rythme.
 
 ## Layers
 
-Chaque passage, listé : son numéro, son nom, sa forme d’onde, son état (**Play**, **Muted**, **Rec**), son niveau et son
+<At id="ui:device.audio-effects.strata" /> Chaque passage, listé : son numéro, son nom, sa forme d’onde, son état (**Play**, **Muted**, **Rec**), son niveau et son
 mute.
+
+### Exporter une seule couche
+
+Pour sortir un seul passage de la boucle — la prise de voix sans le violoncelle dessous, par
+exemple — faites un clic droit sur sa ligne et choisissez **Export layer N as WAV…**. Le fichier ne
+contient que cette couche, telle qu’elle a été enregistrée :
+
+- l’entrée après **Input gain**, avant tout ce que Strata fait à la lecture : **Speed**,
+  **Reverse**, **Feedback**, le niveau de la couche et son mute ne sont pas appliqués ;
+- il commence au début de la boucle et dure exactement un cycle, il reste donc calé sur la boucle
+  et sur les autres couches. Un passage commencé en cours de boucle ou arrêté plus tôt garde sa
+  place, avec du silence autour ;
+- un WAV stéréo 32 bits flottant, à la fréquence d’échantillonnage de l’enregistrement.
+
+La boucle n’est pas modifiée : inutile de couper ou de mettre quoi que ce soit en solo, et une
+couche coupée s’exporte de la même façon. Cela marche aussi après avoir enregistré puis rouvert le
+projet. Tant qu’une couche s’enregistre encore, ou avant que la première boucle ne soit fermée,
+l’entrée est grisée et dit pourquoi. Pour la boucle telle qu’on l’entend, utilisez **Export** dans
+la section Loop.
 
 ## Loop
 

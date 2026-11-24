@@ -20,8 +20,9 @@ sources:
 import { Aside } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
-Audio gets into a project by dragging files from the browser or your file manager, with
+<At id="ui:arrangement" /> Audio gets into a project by dragging files from the browser or your file manager, with
 **File ▸ Import audio…**, or by [recording](../recording/). Double-click an audio clip — in the
 Arrangement or a Session slot — to open it in the clip editor.
 
@@ -42,7 +43,7 @@ previous version until the new one is ready.
 
 ## Sample
 
-The chip in the header is the clip editors' [snap grid](../../basics/transport/#the-snap-grid),
+<At id="ui:audio-editor" /> The chip in the header is the clip editors' [snap grid](../../basics/transport/#the-snap-grid),
 shared with the piano roll: it shows the step (**Auto · 1/16**) and opens the grid menu. The
 trim brackets, the warp markers and the envelope points land on the lines in the waveform —
 in **Auto** they get finer as you zoom in. Hold <Kbd>⌥</Kbd> while dragging to place one
@@ -69,7 +70,7 @@ The settings column beside the waveform fits without scrolling:
 
 ## Warp
 
-**Warp** stretches the audio to the project tempo without changing its pitch, and keeps it in
+<At id="ui:audio-editor" /> **Warp** stretches the audio to the project tempo without changing its pitch, and keeps it in
 time when you change the tempo later. Turn it on with the switch beside the **Warp** title,
 and choose how it stretches in the menu at the right of that row:
 
@@ -98,13 +99,13 @@ same goes for undo, a saved project and a clip you split or trim while warp is o
 
 ## Envelope
 
-**Envelope** draws **Volume** and **Pan** curves across the clip. Click to add a point, drag
+<At id="ui:audio-editor" /> **Envelope** draws **Volume** and **Pan** curves across the clip. Click to add a point, drag
 to move it, right-click to delete it. Points snap in time to the grid, which here follows the
 clip as it plays — from its start, left to right even when the clip is reversed.
 
 ## ADSR
 
-**ADSR** shapes the clip's start and end: **Attack** fades it in, **Decay** and **Sustain** set
+<At id="ui:audio-editor" /> **ADSR** shapes the clip's start and end: **Attack** fades it in, **Decay** and **Sustain** set
 how it settles, **Release** fades it out. You can also shape it right on the timeline: hover an
 audio clip and drag the handles in its top corners (or the dot that appears). <Kbd>⌥</Kbd>-click
 a handle to type its time (the dot: decay, then sustain after <Kbd>Tab</Kbd>); double-click it to
@@ -118,7 +119,7 @@ clips already touch.
 
 ## On the timeline
 
-Right-click an audio clip for **Fade at splits**, **Reverse**, **Separate stems…** (split it into drums, bass,
+<At id="ui:arrangement" /> Right-click an audio clip for **Fade at splits**, **Reverse**, **Separate stems…** (split it into drums, bass,
 vocals and the rest — see [Separate Stems](../../ai/separate-stems/)) and **Convert** (turn its
 melody, harmony or drums into MIDI — see [Convert audio to MIDI](../midi-tools/)). **Locate ▸ In browser / In Finder**
 finds the file the clip was made from — see [The browser](../../library/browser/#finding-a-clips-file).

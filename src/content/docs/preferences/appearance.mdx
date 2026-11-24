@@ -22,6 +22,7 @@ sources:
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
 import { Steps } from '@astrojs/starlight/components';
+import At from '@components/At.astro';
 
 <Shot id="preferences/appearance" alt="Settings ▸ Appearance" />
 
@@ -87,7 +88,7 @@ with **Solid** it draws every pixel, and with **Smooth** or **Bars** it draws sp
 
 ## Colour themes
 
-Pick a mode first, then a theme. Each card is a small Nota window drawn in that theme's
+<At id="cmd:prefs.appearance" /> Pick a mode first, then a theme. Each card is a small Nota window drawn in that theme's
 colours; the chosen one is framed in the accent colour.
 
 | Mode | What Nota wears |
@@ -108,7 +109,7 @@ corners are; layout and sizes stay the same in every theme.
 
 ## Your own themes
 
-A theme is a small JSON file: a name, dark or light, and one colour for each part of Nota, plus
+<At id="cmd:prefs.appearance" /> A theme is a small JSON file: a name, dark or light, and one colour for each part of Nota, plus
 — if you like — a typeface and corner roundness. Put one in the **themes folder** and it shows
 up as a card in its row, next to the built-ins, with **User theme** under its name. Its name is
 drawn in its own typeface.
@@ -162,7 +163,7 @@ in your colours before you save — see [AI control over MCP](../../ai/mcp/#desi
 
 ## Accent colour
 
-The accent marks what is live or chosen: the playing Play key, the playhead, the loop,
+<At id="cmd:prefs.appearance" /> The accent marks what is live or chosen: the playing Play key, the playhead, the loop,
 selected clips and notes, toggles that are on, the chosen segment, menu hover, a device's
 power switch and a knob while you drag it. It is orange by default; **Accent** under the
 colour theme changes it.
@@ -188,7 +189,7 @@ and is saved. The theme cards above show each theme with your accent.
 
 ## Interface scale
 
-Makes everything in Nota larger or smaller: text, buttons, knobs, track headers, device
+<At id="cmd:prefs.appearance" /> Makes everything in Nota larger or smaller: text, buttons, knobs, track headers, device
 cards, menus, tooltips and dialogs. Pick **125 %** or more when the text is hard to read —
 on a laptop screen, say — or **75 %** to fit more tracks and devices on a small screen.
 **100 %** is the default.

@@ -51,6 +51,10 @@ sections:
       covers: [audio / instrument / return tracks, groups, linked groups (Link), names & colours, volume/pan/mute/solo/arm, track context menu, freeze & flatten]
       sources: [src/managed/Nota.App/ArrangementView.Tracks.cs, src/managed/Nota.App/ArrangementView.Groups.cs, src/managed/Nota.App/Controls/GroupTrayLayer.cs, src/managed/Nota.Presentation/GroupTrayLayout.cs, src/managed/Nota.App/ArrangementView.Link.cs, src/managed/Nota.App/TrackNames.cs, src/managed/Nota.App/MainWindow.Freeze.cs, src/managed/Nota.App/MainWindow.LiveFreeze.cs]
       status: done
+    - page: basics/assistant
+      covers: [Assistant panel (toolbar key, View ▸ Assistant, ⌘⇧H), answers from the manual EN/RU offline, Markdown replies, copy/clear, Show me walkthroughs, Manual search model]
+      sources: [src/managed/Nota.App/MainWindow.Assistant.cs, src/managed/Nota.App/Assistant/AssistantView.cs, src/managed/Nota.App/Assistant/ShowMeController.cs, src/managed/Nota.Application/Assistant/ManualSearch.cs, src/managed/Nota.Presentation/Assistant/AnchorRegistry.cs]
+      status: done
     - page: basics/undo
       covers: [undo/redo for every edit, slider value typing]
       sources: []
@@ -67,13 +71,13 @@ sections:
       mockup: Nota Arrangement.html
       status: done
     - page: views/session
-      covers: [clip grid, named coloured clips with previews, inspector, launch modes, follow actions, scenes (own tempo), insert scene ⌘I, Session recording, session mixer, toolbar, turn the grid (Scenes down / across)]
+      covers: [clip grid, named coloured clips with previews, inspector, launch modes, follow actions, scenes (own tempo), insert scene ⌘I, Session recording, per-slot take length, session mixer, toolbar, turn the grid (Scenes down / across)]
       sources: [src/managed/Nota.App/SessionView.cs, src/managed/Nota.App/SessionView.Grid.cs, src/managed/Nota.App/SessionView.Inspector.cs, src/managed/Nota.App/SessionView.Mixer.cs, src/managed/Nota.App/SessionView.Toolbar.cs, src/managed/Nota.App/SessionView.Axis.cs, src/native/nota.engine/src/SessionPlayer.h, docs/session-view-requirements.md]
       mockup: Nota Session View.html
       status: done
     - page: views/modular
-      covers: [Modular view, CV sources/targets, modulation routing, Shutter pattern as CV]
-      sources: [src/managed/Nota.App/ModularView.cs, src/native/nota.engine/src/Modulation.h]
+      covers: [Modular view, CV sources/targets, modulation routing, Shutter pattern as CV, device cards in nodes (XS · S · L), drop a cable on a knob, searchable parameter panel]
+      sources: [src/managed/Nota.App/ModularView.cs, src/managed/Nota.App/ModularView.Cards.cs, src/managed/Nota.App/ModularView.Picker.cs, src/managed/Nota.App/Controls/ParamPickerPanel.cs, src/native/nota.engine/src/Modulation.h]
       status: done
     - page: views/mixer
       covers: [Mixer ⇧⌘M docked or in its own window, sends & returns, group bars and folding (shared with the Arrangement, saved with the project), selection outline, compact strips, master, meters, record source, Cue key and Cue strip (private Cue mix)]
@@ -96,12 +100,12 @@ sections:
       sources: [src/managed/Nota.App/AudioClipEditorView.cs, src/managed/Nota.App/ClipPropsView.cs, src/managed/Nota.App/ClipAdsrKit.cs, src/managed/Nota.App/ClipAudioExport.cs, src/managed/Nota.App/WaveformView.cs, src/native/nota.engine/src/Warp.h, src/native/nota.engine/src/TempoDetect.h]
       status: done
     - page: editing/recording
-      covers: [arm & record audio/MIDI, inputs, count-in, discard and retry ⌘., Session recording, latency, take lanes and comping]
-      sources: [src/native/nota.engine/src/engine/Engine_Recording.cpp, src/native/nota.engine/src/engine/Engine_Takes.cpp, src/managed/Nota.App/ArrangementView.Takes.cs, src/managed/Nota.App/RecordPreview.cs]
+      covers: [arm & record audio/MIDI, inputs, count-in, discard and retry ⌘., Session recording, Session performance → Arrangement (#971), latency, take lanes and comping]
+      sources: [src/native/nota.engine/src/engine/Engine_Recording.cpp, src/native/nota.engine/src/engine/Engine_SessionPass.cpp, src/native/nota.engine/src/engine/Engine_Takes.cpp, src/managed/Nota.App/ArrangementView.Takes.cs, src/managed/Nota.App/RecordPreview.cs]
       status: done
     - page: editing/automation
-      covers: [automation lanes, draw/edit points, Lock Envelopes, MIDI-learned automation]
-      sources: [src/managed/Nota.App/ArrangementView.Automation.cs, src/native/nota.engine/src/Automation.h]
+      covers: [automation lanes, draw/edit points, Lock Envelopes, MIDI-learned automation, master targets (volume, tempo, pan, master devices), tempo lane]
+      sources: [src/managed/Nota.App/ArrangementView.Automation.cs, src/managed/Nota.App/ArrangementView.Controls.cs, src/native/nota.engine/src/Automation.h, src/native/nota.engine/src/engine/TempoMap.h]
       status: done
     - page: editing/time-ranges
       covers: [range selection, Duplicate time ⇧⌘D, Insert silence ⇧⌘I, split ⌘E, consolidate ⌘J, loop selection]
@@ -223,9 +227,13 @@ sections:
       covers: [MIDI inputs, playing instruments, computer-keyboard notes]
       sources: [src/native/nota.engine/src/MidiInput.h, src/managed/Nota.App/MainWindow.Input.cs]
       status: done
+    - page: control/controllers
+      covers: [controller profiles, recognition, transport/faders/bank, knobs follow the selected device, device pages, knob modes, controller chip, pickup, Mackie Control, HUI, Settings ▸ MIDI ▸ Controllers, Set up… wizard, pairs as an encoder or two buttons, command buttons, Session from the controller, Controller menu (unbind / bind to), Edit controller pages…, profile file format, controller MCP tools]
+      sources: [src/managed/Nota.App/Controllers/, src/managed/Nota.Application/Controllers/, src/managed/Nota.App/PreferencesWindow.Controllers.cs, src/managed/Nota.App/MainWindow.Controllers.cs]
+      status: done
     - page: control/midi-learn
-      covers: [MIDI Learn overlay, MIDI map, remove mappings]
-      sources: [src/managed/Nota.App/MidiLearn.cs, src/managed/Nota.App/MidiLearnOverlay.cs, src/managed/Nota.App/MidiLearnService.cs, src/managed/Nota.App/MidiMapView.cs]
+      covers: [MIDI Learn overlay, MIDI map, remove mappings, Session clip and scene launch buttons]
+      sources: [src/managed/Nota.App/MidiLearn.cs, src/managed/Nota.App/MidiLearnOverlay.cs, src/managed/Nota.App/MidiLearnService.cs, src/managed/Nota.App/MidiMapView.cs, src/managed/Nota.App/SessionView.Grid.cs, src/managed/Nota.Application/Controllers/SessionLaunch.cs]
       status: done
     - page: control/gamepads
       covers: [gamepad notes and mapped controls (macOS)]

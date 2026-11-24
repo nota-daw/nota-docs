@@ -7,12 +7,19 @@
 #   scene: main     args: view (arrangement | session | modular), select (demo track: Rhythm, Drums,
 #                         Bass, Keys, Lead, Texture, Reverb), element (x:Name to crop to), width, height,
 #                         rows (every track row at this height, px)
+#                         automation (lanes on), masterLane: "tempo" (a ritardando + jump on the master Tempo lane)
 #   scene: palette  args: select (demo track), card (audio effect index to select), origin: "devices",
 #                         query, down (rows), mods (alt | cmd | shift), crop (true: just the palette)
 #   scene: mixer (args: group "Name:Track,Track", fold, compact, select, width, height,
 #                 cue "Track,Track" = a pretend 4-output device with Cue on 3/4 and these tracks in Cue,
 #                 mute (a demo track), cueMissing (the Cue pair gone: the device shrinks to 2 outputs))
 #   scene: prefs (args: id = Settings page id — Audio, Outputs, Inputs, MIDI, Gamepads, Remote, MCP, Plug-ins, Downloads, Appearance, Language, Editing, Library, Shortcuts, Updates, height, cue as mixer)
+#   scene: assistant (args: query, select (demo track), showme (start a Show me of the reply), section
+#                     (part of the section id whose Show me to start), crop)
+#   scene: controllersetup (args: port (a name no profile knows), learn (knob 1 and its chip learned),
+#                           step (text of a group tab to go to, e.g. "Session"), hearing (a message arrives))
+#   controllers (main, prefs): "X-TOUCH MINI,KL Essential 61 mk3 MCU/HUI" — virtual ports with those
+#                 names, recognised by their profiles as if plugged in (the knob markers, Settings ▸ MIDI)
 #   scene: start · about · whatsnew · export · unsaved
 # source: remote — the Nota Remote phone page on the app repo's stand-in Nota (src/web/remote/mock),
 #   390 × 844 at 2×, Studio Dark / Studio Light. args: track (name), screen (tab: Pads, Keys, XY,
@@ -44,6 +51,8 @@ shots:
   - { id: basics/transport-bar, source: app, scene: main, args: {view: "arrangement", element: "TransportBar"} }
   - { id: basics/command-palette, source: app, scene: palette, args: {select: "Bass", card: 0, origin: "devices", query: "тёплый пэд", crop: true} }
   - { id: basics/command-palette-replace, source: app, scene: palette, args: {select: "Bass", card: 0, origin: "devices", query: "reverb for vocals", mods: "alt", crop: true} }
+  - { id: basics/assistant, source: app, scene: assistant, args: {query: "how do I record several takes"} }
+  - { id: basics/assistant-show-me, source: app, scene: assistant, args: {query: "how do I add an effect to my track", select: "Keys", showme: true, section: "first-track"} }
   - { id: basics/history-tab, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 7, height: 640} }
   - { id: start-here/clip-editor, source: app, scene: main, args: {view: "arrangement", clip: "Lead", element: "DetailPanel", width: 1200, detailHeight: 420} }
   - { id: start-here/browser-instruments, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 0, height: 640} }
@@ -73,6 +82,7 @@ shots:
   - { id: editing/multi-clip-editor, source: app, scene: main, args: {view: "arrangement", clip: "Bass", clipIndex: 1, with: "Bass:0,Keys:2,Keys:3", element: "DetailPanel", width: 1200, detailHeight: 460} }
   - { id: editing/audio-clip-editor, source: app, scene: main, args: {view: "arrangement", clip: "Texture", audio: true, element: "DetailPanel", width: 1200, detailHeight: 420} }
   - { id: editing/automation-lanes, source: app, scene: main, args: {view: "arrangement", automation: true, fit: true, element: "Timeline", height: 760} }
+  - { id: editing/automation-tempo, source: app, scene: main, args: {view: "arrangement", automation: true, masterLane: "tempo", fit: true, element: "Timeline", height: 760} }
   - { id: views/arrangement-track-sends, source: app, scene: main, args: {view: "arrangement", rows: 128, element: "Timeline", width: 1100, height: 780} }
   - { id: views/arrangement-timeline, source: app, scene: main, args: {view: "arrangement", fit: true, element: "Timeline", height: 760} }
 
@@ -84,6 +94,12 @@ shots:
   - { id: library/files-located, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 3, expand: "Drums", pick: "Hat closed.wav", locate: "Drums/Kick 808.wav", height: 640} }
   - { id: library/projects-tab, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 5, projects: true, height: 480} }
   - { id: library/track-inspector-tab, source: app, scene: main, args: {view: "arrangement", select: "Texture", element: "Browser", tab: 8, height: 900} }
+  - { id: control/controllers-settings, source: app, scene: prefs, args: {id: "MIDI", controllers: "X-TOUCH MINI,KL Essential 61 mk3 MCU/HUI", scrollTo: "Controllers Nota listens to"} }
+  - { id: control/controllers-knob-markers, source: app, scene: main, args: {view: "arrangement", select: "Bass", controllers: "X-TOUCH MINI", element: "DetailPanel", width: 760} }
+  - { id: control/controllers-setup, source: app, scene: controllersetup, args: {port: "My Keys 49", learn: true, hearing: true} }
+  - { id: control/controllers-setup-pair, source: app, scene: controllersetup, args: {port: "My Keys 49", step: "Session"} }
+  - { id: control/controllers-edit, source: app, scene: controllermapping, args: {port: "Launchkey MK3 49 LKMK3 DAW", learn: "Metronome", scroll: "Jog wheel"} }
+  - { id: control/controllers-edit-conflict, source: app, scene: controllermapping, args: {port: "Launchkey MK3 49 LKMK3 DAW", conflict: true, scroll: "Stop"} }
   - { id: control/midi-map-tab, source: app, scene: main, args: {view: "arrangement", element: "Browser", tab: 6, height: 640} }
   - { id: preferences/downloads-samples, source: app, scene: prefs, args: {id: "Downloads", tab: "Sample packs"} }
   - { id: preferences/downloads-models, source: app, scene: prefs, args: {id: "Downloads", tab: "AI models"} }

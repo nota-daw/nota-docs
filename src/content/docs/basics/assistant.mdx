@@ -1,0 +1,70 @@
+---
+title: Assistant
+description: Ask how to do something in your own words — the answer comes from this manual, inside Nota, and Show me points at the controls.
+sidebar:
+  order: 7
+since: "0.61.0"
+updated: "0.61.0"
+status: done
+sources:
+  - src/managed/Nota.App/MainWindow.Assistant.cs
+  - src/managed/Nota.App/Assistant/AssistantView.cs
+  - src/managed/Nota.App/Assistant/MarkdownView.cs
+  - src/managed/Nota.App/Assistant/ShowMeController.cs
+  - src/managed/Nota.Application/Assistant/ManualSearch.cs
+  - src/managed/Nota.Presentation/Assistant/AnchorRegistry.cs
+---
+
+import Kbd from '@components/Kbd.astro';
+import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
+
+The Assistant answers questions about Nota from this manual, right in the app. It sits on the
+right of the main window, the full height of the work area, and works offline — the manual
+ships inside Nota, so no internet and no AI model are needed.
+
+
+<Shot id="basics/assistant" alt="The Assistant panel on the right of the main window, answering “how do I record several takes” with sections of the manual" />
+
+## Open the Assistant
+
+<At id="ui:transport.assistant" /> Click the speech-bubble key on the transport bar, choose
+**View ▸ Assistant**, or press <Kbd>⌘ ⇧ H</Kbd> (<Kbd>Ctrl Shift H</Kbd> on Windows and Linux).
+The same again closes it. Drag its left edge to make it wider or narrower; Nota remembers the
+width and whether it was open. On a narrow window the key moves into the transport bar's
+[⋯ menu](../transport/#when-the-bar-is-too-narrow).
+
+## Ask a question
+
+Type what you want to do in your own words — *how do I duck the bass when the kick hits*,
+*как записать несколько дублей* — and press <Kbd>Return</Kbd> (<Kbd>⇧ Return</Kbd> starts a new
+line). The reply quotes the two or three sections of the manual that answer it, each with a
+link to its page. A question in Russian gets the Russian manual, one in English the English
+manual. Typos, the wrong keyboard layout and other word forms are forgiven. If nothing in the
+manual fits, the reply says so and links to the manual.
+
+Replies read like the manual: headings, lists, tables, key caps and the note, tip and caution
+boxes. Select text to copy part of it, or use the copy key under a reply for all of it.
+<At id="ui:assistant.clear" /> The bin key at the top clears the conversation; it is never saved
+with the project and is gone when you quit.
+
+## Show me
+
+Under a section that explains how to do something, **Show me** walks you through it. Each step
+opens what is needed — the right view, the Mixer, the Detail panel or a browser tab — and
+outlines the control in orange; the panel says *Step 2 of 4* with **Back**, **Next** and
+**Done**. Do the step on the control itself, then press **Next**. If a step needs something
+first, such as a selected track, the panel says so and points at where to do it. Show me only
+shows: it never changes your project and never starts or stops playback. <Kbd>Esc</Kbd> stops
+it.
+
+
+<Shot id="basics/assistant-show-me" alt="Show me walking through a step: the browser's Audio effects tab is outlined, the panel shows Step 1 of 1" />
+
+## Search by meaning
+
+Words alone find most answers. For questions phrased very differently from the manual, install
+**Manual search** in [Settings ▸ Downloads ▸ AI Models](../../preferences/downloads/) — the
+multilingual-e5-small model, about 135 MB, which also runs offline. The first time the panel
+opens after that, Nota reads the manual once in the background (under a minute); until then,
+and while you record, the Assistant answers by words.

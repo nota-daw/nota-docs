@@ -11,6 +11,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 Nota Scale garde chaque note dans la tonalité. Jouez n’importe quoi : chaque touche du clavier tombe sur une note de la
 gamme. Pratique pour improviser, pour des parties aléatoires et génératives, et pour garder un contrôleur dans la
@@ -25,7 +26,7 @@ tonalité.
 
 ## Carte des notes
 
-Les douze notes sous forme de cellules : les notes de la gamme pleines, la tonique bordée, les autres indiquant où elles
+<At id="ui:device.midi-effects.scale" /> Les douze notes sous forme de cellules : les notes de la gamme pleines, la tonique bordée, les autres indiquant où elles
 se replient. Cliquez sur une cellule pour ajouter ou retirer cette note : le type passe à **Custom**. La note qui sonne
 à l’instant s’allume.
 

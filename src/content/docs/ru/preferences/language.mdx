@@ -15,11 +15,12 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 <Shot id="preferences/language" alt="Settings ▸ Language" />
 
 
-Задаёт язык меню, панелей, диалогов, подсказок, сообщений о состоянии и ошибках и палитры
+<At id="cmd:prefs.language" /> Задаёт язык меню, панелей, диалогов, подсказок, сообщений о состоянии и ошибках и палитры
 команд. Nota поставляется на **English**, а остальные языки скачиваются из репозитория
 [nota-translations](https://github.com/nota-daw/nota-translations), где их ведут переводчики. В
 списке — английский, уже установленные языки и, если Nota в сети, языки, доступные для

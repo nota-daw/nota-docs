@@ -12,6 +12,7 @@ sources:
 ---
 
 import Shot from '@components/Shot.astro';
+import At from '@components/At.astro';
 
 Вкладка **Files** показывает ваши папки сэмплов (задаются в [Settings ▸ Library](../../preferences/library/))
 деревом папок, и Nota знает, что лежит во всех них.
@@ -41,12 +42,12 @@ import Shot from '@components/Shot.astro';
 
 ## Похожие звуки
 
-Правый щелчок по сэмплу ▸ **Show similar sounds** показывает самые похожие сэмплы того же вида, от
+<At id="ui:browser.tab.files" /> Правый щелчок по сэмплу ▸ **Show similar sounds** показывает самые похожие сэмплы того же вида, от
 ближайших. Щелчок по фишке возвращает ко всем сэмплам.
 
 ## Лупы, которые подходят
 
-Луп, брошенный в Arrangement, **подгоняется под темп проекта** по уже известному темпу (⋮ ▸ **Warp
+<At id="ui:browser.tab.files" /> Луп, брошенный в Arrangement, **подгоняется под темп проекта** по уже известному темпу (⋮ ▸ **Warp
 loops to project tempo**, по умолчанию включено) — строка состояния сообщает: «loop warped 124 → 120
 BPM». С ⋮ ▸ **Transpose to project key** он ещё и транспонируется в
 [тональность проекта](../../basics/transport/) кратчайшим путём. Ван-шоты никогда не растягиваются.

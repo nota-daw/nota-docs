@@ -18,6 +18,7 @@ sources:
 import Shot from '@components/Shot.astro';
 import ShotRow from '@components/ShotRow.astro';
 import { Aside, Steps } from '@astrojs/starlight/components';
+import At from '@components/At.astro';
 
 Nota Remote transforme un téléphone ou une tablette en contrôleur. Rien à installer : Nota sert lui-même la page, par
 votre Wi-Fi local ou un câble USB.
@@ -26,7 +27,7 @@ votre Wi-Fi local ou un câble USB.
 
 <Steps>
 
-1. Cliquez sur **Télécommande** dans la barre de transport (ou **Affichage ▸ Connecter un téléphone…**). La première
+1. <At id="ui:transport.remote" /> Cliquez sur **Télécommande** dans la barre de transport (ou **Affichage ▸ Connecter un téléphone…**). La première
    fois, autorisez le contrôle depuis un téléphone ; sous macOS, autorisez aussi Nota à trouver des appareils sur le
    réseau local.
 
@@ -79,7 +80,7 @@ pour changer son timbre. Un téléphone ou une tablette qui perçoit la force du
 
 ## Couleurs
 
-Le téléphone porte le thème de couleurs de Nota et change avec lui. Choisissez un autre thème dans
+<At id="cmd:prefs.appearance" /> Le téléphone porte le thème de couleurs de Nota et change avec lui. Choisissez un autre thème dans
 [Réglages ▸ Apparence](../../preferences/appearance/), ou laissez **Suivre le système** faire passer Nota du sombre au
 clair, et le téléphone suit en un instant : pas de rechargement, et une note tenue continue de sonner.
 

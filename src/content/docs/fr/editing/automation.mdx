@@ -13,6 +13,7 @@ sources:
 import { Aside } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 L’automation fait bouger une valeur dans le temps : un filtre qui s’ouvre, un fondu, un delay qui gonfle jusqu’à un
 drop. Le volume et le panoramique d’une piste peuvent être automatisés, tout comme chaque paramètre d’un appareil
@@ -22,7 +23,7 @@ intégré, les paramètres de plug-ins et les effets MIDI. Les envois non : il
 
 ## Afficher les voies
 
-Cliquez sur le bouton **automation** de la barre de transport (<Kbd>⌘ ⇧ A</Kbd>). La voie de chaque piste montre un
+<At id="ui:transport.automation" /> Cliquez sur le bouton **automation** de la barre de transport (<Kbd>⌘ ⇧ A</Kbd>). La voie de chaque piste montre un
 paramètre, choisi avec la pastille au début de la voie : cliquez dessus et choisissez dans la liste. Les paramètres
 qui portent déjà de l’automation sont marqués d’un point et listés en premier.
 
@@ -33,7 +34,7 @@ ou le mixeur, bascule la voie de cette piste sur lui.
 
 | Faire ceci | Pour |
 |---|---|
-| Double-cliquer sur la voie | Ajouter un point (aussi entre deux points) |
+| <At id="ui:arrangement" /> Double-cliquer sur la voie | Ajouter un point (aussi entre deux points) |
 | Faire glisser un point | Le déplacer |
 | Double-cliquer sur un point | Le supprimer |
 | <Kbd>⌥</Kbd>-glisser un segment | Le courber |
@@ -45,7 +46,7 @@ voie pour **Copier**, **Couper**, **Coller** et **Supprimer l’automation**.
 
 ## Enregistrer l’automation
 
-Il n’y a pas de mode à régler. Appuyez sur **Enregistrement** et bougez une commande : sa voie enregistre ce que vous
+<At id="ui:transport.record" /> Il n’y a pas de mode à régler. Appuyez sur **Enregistrement** et bougez une commande : sa voie enregistre ce que vous
 faites. Une commande que vous bougez à la souris cesse d’écrire quand vous la lâchez ; un bouton, fader, stick ou
 gâchette matériel continue d’écrire sa dernière valeur jusqu’à l’arrêt du transport. Les envois s’enregistrent de la
 même façon : bougez un bouton d’envoi dans un en-tête de piste, le Mixeur ou la carte **Envois**.

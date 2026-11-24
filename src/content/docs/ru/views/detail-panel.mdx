@@ -19,8 +19,9 @@ sources:
 import { Aside } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
-Панель под Arrangement или Session подробно показывает то, с чем вы работаете. Дважды щёлкните
+<At id="ui:detail" /> Панель под Arrangement или Session подробно показывает то, с чем вы работаете. Дважды щёлкните
 заголовок трека — она откроется на его устройствах; дважды щёлкните клип (или заполненный слот
 Session) — откроет клип.
 
@@ -34,7 +35,7 @@ Session) — откроет клип.
 
 ## Devices, Pattern, Clip
 
-Вкладки в левом верхнем углу переключают содержимое — <Kbd>Tab</Kbd> перебирает их по кругу:
+<At id="ui:detail.devices" /> Вкладки в левом верхнем углу переключают содержимое — <Kbd>Tab</Kbd> перебирает их по кругу:
 
 - **Devices** — [цепочка устройств](../../devices/) трека: MIDI-эффекты, инструмент и эффекты
   слева направо. Если не помещаются, прокрутите вбок.

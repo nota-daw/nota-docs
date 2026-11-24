@@ -18,12 +18,13 @@ sources:
 
 import { Aside, Steps } from '@astrojs/starlight/components';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 ## Enregistrer dans l’Arrangement
 
 <Steps>
 
-1. **Armez** la piste : cliquez sur le bouton **●** de son en-tête. Une piste audio enregistre de l’audio, une
+1. <At id="ui:arrangement" /> **Armez** la piste : cliquez sur le bouton **●** de son en-tête. Une piste audio enregistre de l’audio, une
    piste d’instrument enregistre du MIDI.
 
 2. Choisissez ce qu’elle enregistre. Pour une **piste audio**, clic droit sur l’en-tête ▸ **Entrée
@@ -54,7 +55,7 @@ emplacement de Session en cours d’enregistrement.
 
 ## Décompte
 
-Faites un clic droit sur le métronome pour un **décompte** de 1, 2 ou 4 mesures. Enregistrer depuis l’arrêt compte
+<At id="ui:transport.metronome" /> Faites un clic droit sur le métronome pour un **décompte** de 1, 2 ou 4 mesures. Enregistrer depuis l’arrêt compte
 d’abord ; les clics ne font jamais partie de la prise. Voir
 [Transport](../../basics/transport/#métronome-et-décompte).
 
@@ -66,7 +67,7 @@ et faites glisser son bord gauche vers l’extérieur pour l’entendre.
 
 ## Abandonner et refaire une prise
 
-Raté ? Appuyez sur <Kbd>⌘ .</Kbd> (<Kbd>Ctrl .</Kbd> sous Windows et Linux), ou
+<At id="cmd:transport.retryTake" /> Raté ? Appuyez sur <Kbd>⌘ .</Kbd> (<Kbd>Ctrl .</Kbd> sous Windows et Linux), ou
 **Transport → Abandonner et refaire la prise**, pendant l’enregistrement. La prise est jetée et l’enregistrement
 repart aussitôt :
 
@@ -102,7 +103,7 @@ peut pas être écouté : il bouclerait sur lui-même.
 
 ## Enregistrer sur une boucle
 
-Avec la boucle active, l’enregistrement **audio** garde chaque passage comme une prise au lieu de remplacer le
+<At id="ui:transport.loop" /> Avec la boucle active, l’enregistrement **audio** garde chaque passage comme une prise au lieu de remplacer le
 précédent. Arrêtez après que la boucle a fait au moins un tour et la piste contient une prise par passage : **Prise
 1**, **Prise 2**, et ainsi de suite, numérotées dans l’ordre où vous les avez jouées. Un enregistrement ultérieur sur
 la même piste continue les numéros. Un passage qui a commencé ou fini au milieu de la boucle ne garde que ce qu’il a
@@ -150,7 +151,7 @@ l’échantillon près.
 
 ## Enregistrer dans la Session
 
-Dans la [vue Session](../../views/session/#enregistrer-dans-un-emplacement), armez une piste, sélectionnez une scène et
+<At id="ui:session" /> Dans la [vue Session](../../views/session/#enregistrer-dans-un-emplacement), armez une piste, sélectionnez une scène et
 cliquez sur **Rec session** : la prise va dans l’emplacement de cette piste. Cliquez à nouveau pour la garder (coupée
 à des mesures entières), ou réglez **Fixe** sur 1 à 8 mesures et elle s’arrête toute seule. **Enregistrer ici**, sur un
 emplacement vide, fait la même chose pour cet emplacement. Une piste joue un emplacement à la fois : une prise arrête
@@ -164,7 +165,7 @@ quantification de lancement (tout de suite si la quantification est désactivée
 
 ## Enregistrer l’automation
 
-**Enregistrement** enregistre aussi l’automation : tant qu’il est actif, bougez n’importe quel bouton ou fader et la
+<At id="ui:transport.record" /> **Enregistrement** enregistre aussi l’automation : tant qu’il est actif, bougez n’importe quel bouton ou fader et la
 voie de ce paramètre écrit ce que vous faites. Voir [Automation](../automation/#enregistrer-lautomation).
 
 <Aside type="tip">

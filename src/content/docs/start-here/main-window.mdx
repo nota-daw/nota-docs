@@ -19,6 +19,7 @@ sources:
 import { Aside } from '@astrojs/starlight/components';
 import Shot from '@components/Shot.astro';
 import Kbd from '@components/Kbd.astro';
+import At from '@components/At.astro';
 
 Everything in Nota happens in one window. It has four areas: the **transport bar** along the
 top, the **browser** on the left, the **view** in the middle, and the **detail panel**
@@ -59,7 +60,7 @@ Every control is explained in [Transport](../../basics/transport/).
 
 ## Browser
 
-The browser holds everything you can bring into a project. The icons down its left edge are
+<At id="ui:browser" /> The browser holds everything you can bring into a project. The icons down its left edge are
 its tabs:
 
 | Tab | What's in it |
@@ -90,7 +91,7 @@ The **Mixer** opens in a window of its own: **View ▸ Mixer** (<Kbd>⌘ ⇧ M</
 
 ## Detail panel
 
-Double-click a track's header and its devices appear in the panel at the bottom; double-click a
+<At id="ui:detail.devices" /> Double-click a track's header and its devices appear in the panel at the bottom; double-click a
 clip and it opens there for editing. A single click only selects — an open panel follows it. The tabs at its top left switch between **Devices**, **Pattern**
 (the step pattern of a clip, on a Drum Rack track only) and **Clip** — <Kbd>Tab</Kbd> cycles them. On the
 right, **Freeze** and **Live freeze** render a track to audio to save CPU, the ⧉ button moves
@@ -98,7 +99,7 @@ the panel into a [window of its own](../../views/detail-panel/), and × closes i
 
 ## Menus and the status line
 
-On macOS the menus are in the system menu bar at the top of the screen. On Windows and Linux
+<At id="ui:transport.menu" /> On macOS the menus are in the system menu bar at the top of the screen. On Windows and Linux
 they are under the **☰** key at the start of the transport bar: click it, or press
 <Kbd>F10</Kbd> or <Kbd>Alt</Kbd> on its own, and File, Edit, View, Transport and Help open
 as submenus. If you prefer a classic row of menus under the title bar, turn on

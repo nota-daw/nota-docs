@@ -3,17 +3,20 @@ title: "MIDI Learn"
 description: "Map any knob, fader, pad or button — on a MIDI controller, a gamepad or your phone — to almost any control in Nota, and edit the mappings in the MIDI map."
 sidebar:
   order: 2
-updated: "0.59.2"
+updated: "0.61.0"
 status: done
 sources:
   - src/managed/Nota.App/MidiLearn.cs
   - src/managed/Nota.App/MidiLearnOverlay.cs
   - src/managed/Nota.App/MidiLearnService.cs
   - src/managed/Nota.App/MidiMapView.cs
+  - src/managed/Nota.App/SessionView.Grid.cs
+  - src/managed/Nota.Application/Controllers/SessionLaunch.cs
 ---
 
 import Shot from '@components/Shot.astro';
 import { Steps } from '@astrojs/starlight/components';
+import At from '@components/At.astro';
 
 MIDI Learn connects a physical control to a control on screen: turn a knob on your controller and a
 filter moves in Nota.
@@ -22,7 +25,7 @@ filter moves in Nota.
 
 <Steps>
 
-1. Click **MIDI** in the transport bar. Everything you can map lights up.
+1. <At id="ui:transport.midi-learn" /> Click **MIDI** in the transport bar. Everything you can map lights up.
 
 2. Click the control in Nota you want to move — a knob, fader, switch, macro…
 
@@ -38,7 +41,8 @@ filter moves in Nota.
 Every parameter of the built-in instruments, effects and MIDI effects (switches, envelopes and
 filters included), plug-in parameters, track volume, pan, mute, solo and [Cue](../../views/mixer/#cue-your-own-mix), the
 master and the Cue level, the transport,
-rack macros, and the mute and solo of rack chains and Drum Rack pads.
+rack macros, the mute and solo of rack chains and Drum Rack pads, and the
+[Session](../../views/session/)'s clip and scene launch buttons.
 
 Sources can be a **CC**, a **MIDI note**, a **gamepad** button, stick or trigger (macOS), or a control on
 a phone running [Nota Remote](../nota-remote/) — all in one table.
@@ -47,6 +51,24 @@ a phone running [Nota Remote](../nota-remote/) — all in one table.
   control at the top of its range until released.
 - A **knob, fader, stick or trigger** drives a continuous control over its whole travel, and flips a
   switch as it crosses halfway.
+
+## Session clips and scenes
+
+With MIDI Learn on, the [Session](../../views/session/) grid's launch buttons light up: each clip's
+**▶**, an empty slot's stop / record button, and each scene's **▶**. Click one, then hit a pad, a key
+or a button. The pad then does what a click on that button does, whether the Session is showing or
+not:
+
+- a **clip** launches at its quantization, with the pad's velocity (scaled by the clip's velocity
+  amount); letting go of the pad stops a **Gate** or **Repeat** clip;
+- an **empty slot** records on an armed track, otherwise it stops the track (when the slot has its
+  stop button);
+- a slot that is **recording** stops its take;
+- a **scene** launches its whole row.
+
+A mapping belongs to a place in the grid — a track and a row — like a pad on a pad grid: move or
+insert scenes and it launches whatever sits in that row now. The MIDI map lists it as
+**Launch · Bass · Scene 2** (or **Launch · Scene 2** for a scene).
 
 ## The MIDI map
 
