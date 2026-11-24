@@ -143,6 +143,13 @@ public sealed class Scenes
 
     public void Run(Shot shot)
     {
+        // Session grid orientation (Nota specs/108): `sessionGrid: "across"` turns the grid for
+        // one shot; every other shot sees the default, so a turned shot never leaks into the next.
+        if (App.Services!.GetService(typeof(ISettingsService)) is ISettingsService gridSettings)
+        {
+            string grid = shot.Str("sessionGrid") ?? "down";
+            if (gridSettings.Current.SessionGrid != grid) { gridSettings.Current.SessionGrid = grid; gridSettings.Save(); Pump(5); }
+        }
         switch (shot.Scene)
         {
             case "device": Device(shot); break;
@@ -156,6 +163,8 @@ public sealed class Scenes
             case "whatsnew": WhatsNew(shot); break;
             case "export": Simple(shot, new ExportWindow(128, 32, 124)); break;
             case "connect": Connect(shot); break;
+            case "controllersetup": ControllerSetup(shot); break;
+            case "controllermapping": ControllerMapping(shot); break;
             case "unsaved":
                 // The texts the app shows when quitting with unsaved edits (MainWindow.Recovery.cs).
                 Simple(shot, new SaveChangesWindow(Loc.T("main.recovery.unsaved_changes"),
@@ -448,6 +457,7 @@ public sealed class Scenes
     private void Main(Shot shot)
     {
         var mw = MainWindow(shot);
+        ConnectControllers(shot);
         var view = shot.Str("view") ?? "arrangement";
         Invoke(mw, view switch { "session" => "OnShowSession", "modular" => "OnShowModular", _ => "OnShowArrangement" }, null, new RoutedEventArgs());
         if (shot.Str("select") is string name)
@@ -459,6 +469,7 @@ public sealed class Scenes
             if (shot.Str("fold") is string fold) Fold(mw, id, fold, true);
         }
         else Invoke(mw, "OnCloseDetail", null, new RoutedEventArgs());
+        if (shot.Str("controllers") is not null) { TickControllers(); Pump(20); TickControllers(); }   // the knob markers follow the device just shown
         if (shot.Str("clip") is string clipTrack)
         {
             // Open a clip of a demo track in the clip editor, as a double-click on it would.
@@ -760,6 +771,7 @@ public sealed class Scenes
         var vm = App.Services!.GetService(typeof(MainWindowViewModel)) as MainWindowViewModel;
         var themes = shot.Bool("themes") ? SeedThemes() : null;
         var cue = shot.Str("cue") is string cueTracks ? CueOn(cueTracks, null, false) : null;
+        ConnectControllers(shot);
         var win = new PreferencesWindow(new SettingsViewModel(settings), vm);
         Scale2(win);
         win.Show();
@@ -978,6 +990,144 @@ public sealed class Scenes
         var entries = AppInfo.Changelog()
             .Where(e => e.Sections.Count > 0 && SemVer.TryParse(e.Version, out _)).Take(shot.Int("entries") ?? 1).ToList();
         Simple(shot, new WhatsNewWindow(entries));
+    }
+
+    // ---- hardware controllers (nota#100, specs/051), by reflection: app versions before it have none ----
+
+    private static Type? ControllerServiceType => typeof(App).Assembly.GetType("Nota.App.Controllers.ControllerService");
+    private static object? Controllers() => ControllerServiceType is { } t ? App.Services!.GetService(t) : null;
+    private readonly Dictionary<string, int> _testPorts = new();
+
+    private static void TickControllers()
+    {
+        if (Controllers() is not { } svc) return;
+        svc.GetType().GetMethod("Tick")!.Invoke(svc, null);
+    }
+
+    /// <summary>args controllers: "X-TOUCH MINI,KL Essential 61 mk3 MCU/HUI" — virtual MIDI ports with
+    /// those names, recognised by their profiles as if plugged in.</summary>
+    private void ConnectControllers(Shot shot)
+    {
+        if (shot.Str("controllers") is not string ports || Controllers() is not { } svc) return;
+        var engine = App.Services!.GetService(typeof(IAudioEngine))!;
+        var add = engine.GetType().GetMethod("MidiTestPortAdd");
+        if (add is null) return;
+        foreach (var raw in ports.Split(','))
+        {
+            string name = raw.Trim();
+            if (name.Length == 0 || _testPorts.ContainsKey(name)) continue;
+            _testPorts[name] = (int)add.Invoke(engine, new object[] { name })!;
+        }
+        TickControllers();
+        svc.GetType().GetMethod("RescanNow")?.Invoke(svc, null);
+        TickControllers();
+        Thread.Sleep(600);   // no identity reply from a test port: the port name decides
+        TickControllers();
+        Pump(5);
+    }
+
+    /// <summary>The Controller setup window on a port no profile knows (args port), optionally after
+    /// learning knob 1 (learn: true) or on a later step (step: text of its group tab, e.g. "Session").</summary>
+    private void ControllerSetup(Shot shot)
+    {
+        string port = shot.Str("port") ?? "My Keys 49";
+        ConnectControllers(new Shot(shot.Id, shot.Scene, new() { ["controllers"] = System.Text.Json.JsonSerializer.SerializeToElement(port) }));
+        if (Controllers() is not { } svc || ControllerServiceType is null) return;
+        var list = (System.Collections.IEnumerable)svc.GetType().GetProperty("Controllers")!.GetValue(svc)!;
+        object? c = list.Cast<object>().FirstOrDefault(x => (string?)x.GetType().GetProperty("Name")!.GetValue(x) == port);
+        var winType = typeof(App).Assembly.GetType("Nota.App.Controllers.ControllerSetupWindow");
+        if (c is null || winType is null) return;
+        var win = (Window)Activator.CreateInstance(winType, svc, c)!;
+        Scale2(win);
+        win.Show();
+        Pump(10);
+        TickControllers();   // the window's capture claims the port
+        Pump(3);
+        var poll = winType.GetMethod("Poll", BindingFlags.NonPublic | BindingFlags.Instance)!;
+        void Polls(int n) { for (int i = 0; i < n; i++) { Pump(1); TickControllers(); poll.Invoke(win, null); Thread.Sleep(40); } }
+        var engine = App.Services!.GetService(typeof(IAudioEngine))!;
+        var injectInfo = engine.GetType().GetMethod("MidiTestInject")!;
+        // MidiTestInject takes a ReadOnlySpan<byte>, which reflection can't pass: compile a call.
+        var src = System.Linq.Expressions.Expression.Parameter(typeof(int));
+        var bytes = System.Linq.Expressions.Expression.Parameter(typeof(byte[]));
+        var spanType = injectInfo.GetParameters()[1].ParameterType;
+        var injectCall = System.Linq.Expressions.Expression.Lambda<Action<int, byte[]>>(
+            System.Linq.Expressions.Expression.Call(System.Linq.Expressions.Expression.Constant(engine), injectInfo, src,
+                System.Linq.Expressions.Expression.Convert(bytes, spanType, spanType.GetMethod("op_Implicit", new[] { typeof(byte[]) }))),
+            src, bytes).Compile();
+        if (shot.Bool("learn"))
+        {
+            // Knob 1: a sign-bit encoder turned right, then left; then Play as a note.
+            injectCall(_testPorts[port], new byte[] { 0xB0, 16, 1, 0xB0, 16, 1, 0xB0, 16, 0x41, 0xB0, 16, 0x41 });
+            Polls(30);
+        }
+        if (shot.Str("step") is string tab)
+        {
+            ClickText(win, tab);
+            Polls(5);
+        }
+        if (shot.Bool("hearing"))
+        {
+            injectCall(_testPorts[port], new byte[] { 0xB0, 30, 127 });
+            Polls(2);
+        }
+        Save(win, shot.Id);
+        win.Close();
+        Pump(5);
+    }
+
+    /// <summary>The controller mapping editor (nota#973) on a port a shipped profile knows (args port,
+    /// e.g. "Launchkey MK3 49 LKMK3 DAW"): idle, or with conflict: true — Stop picked and the Play
+    /// button pressed, so the row asks whether to move it. learn: "Metronome" learns that row on CC 104
+    /// first (a changed row).</summary>
+    private void ControllerMapping(Shot shot)
+    {
+        string port = shot.Str("port") ?? "Launchkey MK3 49 LKMK3 DAW";
+        ConnectControllers(new Shot(shot.Id, shot.Scene, new() { ["controllers"] = System.Text.Json.JsonSerializer.SerializeToElement(port) }));
+        if (Controllers() is not { } svc || ControllerServiceType is null) return;
+        var list = (System.Collections.IEnumerable)svc.GetType().GetProperty("Controllers")!.GetValue(svc)!;
+        object? c = list.Cast<object>().FirstOrDefault(x => (string?)x.GetType().GetProperty("Name")!.GetValue(x) == port);
+        var winType = typeof(App).Assembly.GetType("Nota.App.Controllers.ControllerMappingWindow");
+        if (c is null || winType is null) return;
+        const BindingFlags np = BindingFlags.NonPublic | BindingFlags.Instance;
+        var win = (Window)Activator.CreateInstance(winType, np | BindingFlags.Public, null, new[] { svc, c }, null)!;
+        Scale2(win);
+        win.Show();
+        Pump(10);
+        TickControllers();
+        Pump(3);
+        var poll = winType.GetMethod("Poll", np)!;
+        void Polls(int n) { for (int i = 0; i < n; i++) { Pump(1); TickControllers(); poll.Invoke(win, null); Thread.Sleep(40); } }
+        var engine = App.Services!.GetService(typeof(IAudioEngine))!;
+        var injectInfo = engine.GetType().GetMethod("MidiTestInject")!;
+        var src = System.Linq.Expressions.Expression.Parameter(typeof(int));
+        var bytes = System.Linq.Expressions.Expression.Parameter(typeof(byte[]));
+        var spanType = injectInfo.GetParameters()[1].ParameterType;
+        var injectCall = System.Linq.Expressions.Expression.Lambda<Action<int, byte[]>>(
+            System.Linq.Expressions.Expression.Call(System.Linq.Expressions.Expression.Constant(engine), injectInfo, src,
+                System.Linq.Expressions.Expression.Convert(bytes, spanType, spanType.GetMethod("op_Implicit", new[] { typeof(byte[]) }))),
+            src, bytes).Compile();
+        object Row(string name)
+        {
+            foreach (var r in (System.Collections.IList)winType.GetField("_rows", np)!.GetValue(win)!)
+                if (r.GetType().GetProperty("F")!.GetValue(r) is { } f && (string?)f.GetType().GetProperty("Name")!.GetValue(f) == name) return r;
+            throw new InvalidOperationException("no row " + name);
+        }
+        void Listen(string name)
+        {
+            winType.GetMethod("Listen", np)!.Invoke(win, new object?[] { Row(name), null });
+            winType.GetMethod("Render", np)!.Invoke(win, null);
+            Pump(3);
+        }
+        void Button(int cc) { injectCall(_testPorts[port], new byte[] { 0xBF, (byte)cc, 127, 0xBF, (byte)cc, 0 }); Polls(14); }
+        if (shot.Str("learn") is string learn) { Listen(learn); Button(104); }
+        if (shot.Bool("conflict")) { Listen("Stop"); Button(115); }
+        if (shot.Str("scroll") is string to && Row(to).GetType().GetProperty("View")!.GetValue(Row(to)) is Control v) { v.BringIntoView(); Pump(5); }
+        Save(win, shot.Id);
+        // Leave without the unsaved-changes question.
+        winType.GetField("_closing", np)!.SetValue(win, true);
+        win.Close();
+        Pump(5);
     }
 
     private void Simple(Shot shot, Window win)

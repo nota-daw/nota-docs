@@ -3,7 +3,7 @@ title: "Nota Strata"
 description: "Multi-layer looper — record a loop, overdub new layers, each with its own waveform, level and mute; quantized to the bar, with feedback, speed, reverse and undo."
 sidebar:
   order: 16
-updated: "0.57.1"
+updated: "0.60.2"
 status: done
 sources:
   - src/native/nota.engine/src/devices/effects/Strata.h
@@ -46,6 +46,24 @@ mute. Each layer draws in its own shade of grey, the newest brightest; the layer
 draws in red and fills as it is recorded; older layers draw dimmer, as Feedback sinks them. Above
 the list, **n of 8 · one cycle shown** counts the layers. Drag a level bar to set it, double-click it for 0 dB, or double-click the
 number to type a value. All eight layers fit in the list.
+
+### Export one layer
+
+To take a single pass out of the loop — the vocal overdub without the cello under it, say —
+right-click its row and choose **Export layer N as WAV…**. The file is that layer alone, as it was
+recorded:
+
+- the input after **Input gain**, before anything Strata does on playback — **Speed**, **Reverse**,
+  **Feedback**, the layer's level and its mute aren't applied;
+- it starts at the loop's top and is exactly one loop long, so it lines up with the loop and with
+  the other layers. A pass you started mid-loop or stopped early keeps its place, with silence
+  around it;
+- a 32-bit float stereo WAV at the sample rate it was recorded at.
+
+The loop isn't touched: you don't need to mute or solo anything, and a muted layer exports just the
+same. It also works after you save and reopen the project. While a layer is still recording, or
+before the first loop has closed, the entry is greyed out and says why. To get the loop as you hear
+it, use **Export** in the Loop section instead.
 
 ## Loop
 
