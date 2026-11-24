@@ -237,7 +237,7 @@ sections:
       status: done
     - page: control/nota-remote
       covers: [Connect Phone… QR, Wi-Fi / USB, pads, keys, XY + tilt, mixer, macros, session grid, Settings → Remote, theme (Follow Nota / Follow phone)]
-      sources: [src/managed/Nota.App/MainWindow.Remote.cs, src/managed/Nota.App/PreferencesWindow.Remote.cs, src/web/remote/src/components/Sheets.svelte, src/web/remote/src/lib/theme.svelte.ts]
+      sources: [src/managed/Nota.App/MainWindow.Remote.cs, src/managed/Nota.App/PreferencesWindow.Remote.cs, src/web/remote/src/components/Sheets.svelte, src/web/remote/src/screens/Scenes.svelte, src/web/remote/src/lib/theme.svelte.ts]
       mockup: Nota Remote.html  # Connect Phone panel only; phone screens are shot from the stand-in Nota
       status: done
 
