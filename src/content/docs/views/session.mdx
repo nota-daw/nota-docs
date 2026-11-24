@@ -4,7 +4,7 @@ description: The clip grid for playing live and sketching — launching clips an
 sidebar:
   order: 2
 since: "0.50.1"
-updated: "0.59.2"
+updated: "0.61.1"
 status: done
 sources:
   - src/managed/Nota.App/SessionView.cs
@@ -34,6 +34,8 @@ jam, and build a song live.
   clips** under the grid) stops everything. The transport's **Stop** (<Kbd>Return</Kbd>) stops
   the clips too, right away.
 - <Kbd>Return</Kbd> launches whatever is selected.
+- Map a pad or a button on a controller to a clip's or a scene's **▶** with
+  [MIDI Learn](../../control/midi-learn/#session-clips-and-scenes).
 
 Clips and scenes start in time with the music: on the next bar, or whatever **Quant** in the
 toolbar says — **None**, 1/16 … 1/2, **1 Bar**, 2, 4 or 8 bars. A clip's progress pie shows
@@ -41,6 +43,25 @@ where it is in its own loop. A muted track (or one silenced by another track's s
 stops on time too, and its clip keeps its place, so it's in time when you unmute. With the
 transport's loop on, the loop start also counts as a launch point, so a short loop with no bar
 line inside it doesn't keep a clip waiting.
+
+### Cancelling a launch that hasn't started
+
+Until its launch point a launched clip or scene only waits — its **▶** blinks. Picked the wrong
+one? **<Kbd>Alt</Kbd>-click** the blinking **▶** (or right-click the slot or scene and choose
+**Cancel launch**) before the launch point. It never starts, and everything playing carries on
+at the same place in its loop; the transport keeps running.
+
+- Cancelling a **scene** takes all of it back: its clips don't start, tracks it would have
+  stopped (an empty slot with a stop button) keep playing, its tempo / time-signature change
+  doesn't apply and its follow action never fires. A scene follow that was running before it
+  carries on; if that follow launched the scene you cancelled, scene follow ends there and the
+  current scene keeps playing.
+- <Kbd>Alt</Kbd>-click a **group's** slot to cancel its tracks' waiting launches in that scene.
+- Clicking a waiting clip or scene **again** leaves it waiting — a hurried double click never
+  cancels anything.
+- The **■** of a column still stops the track: a launch waiting there is dropped and the
+  playing clip stops at the launch point. **Stop all** also drops a waiting scene's tempo change.
+- Once the clip has started, the cancel is gone; stop it with **■** as usual.
 
 ## The grid
 
@@ -91,10 +112,21 @@ The panel on the right edits whatever is selected.
 (**Launch without a tempo change** skips them), and **Next after** — move on to the next scene
 after a number of bars.
 
-**An empty slot:** **Insert MIDI clip**, **Paste**, **Record here**, and **Stop button** — turn
-it off so launching this scene keeps that track playing instead of stopping it.
+**An empty slot:** **Insert MIDI clip**, **Paste**, **Record here**, **Stop button** — turn
+it off so launching this scene keeps that track playing instead of stopping it — and
+**Take length**, the length of the next take recorded into it (see
+[A take length per slot](#a-take-length-per-slot)).
 
 The **Follow** switch in the toolbar turns all follow actions on or off at once.
+
+To hold just one clip — say, to stretch a solo — use the switch at the right of its **Follow
+action** head in the inspector, or **Bypass follow actions** in the clip's right-click menu. The
+clip keeps looping and can still be launched by hand; every other clip keeps following. Its
+actions, chances, Jump target and time stay as they are (greyed under **Bypassed**, still
+editable), and the slot shows a bypass ring next to its length. Turn it back on (or **Restore
+follow actions**) and the action fires where it would have without the bypass: at the next
+multiple of its time since the clip launched — a 2-bar time switched back on in bar 7 fires at
+the start of bar 9, never at once to catch up. The bypass is saved with the project.
 
 ## Recording into a slot
 
@@ -106,7 +138,33 @@ With the transport stopped and a [count-in](../../basics/transport/#metronome-an
 set, the slot shows **Rec in…** while the clicks play and the take starts when they end. A
 note you start during the count-in and still hold then is recorded from the take's start.
 Stop during the count-in cancels the take and leaves the slot empty. With the transport
-already running there is no count-in: the take starts on the launch quantization.
+already running there is no count-in: the take starts on the launch quantization — and
+stopping a MIDI take before then cancels it the same way.
+
+### A take length per slot
+
+**Fixed** is one length for every take. To have slots ready for different lengths — say
+3 bars in one slot and 8 in another — select an empty slot and set its **Take length** in the
+inspector (or right-click the slot and pick it under **Take length**):
+
+- **Global** — follow **Fixed** in the toolbar; the inspector shows what that is now, e.g.
+  **Global (4 bars)**. Every slot starts here.
+- **Open** — record until you stop, even with **Fixed** on.
+- **1, 2, 3, 4, 8** or **16 bars**, then fine-tune it in **Bars · beats** (drag or
+  double-click to type). A slot takes 1 beat to 64 bars, counted in the time signature in
+  effect when the take starts.
+
+The grid shows the length on the empty slot. The next take recorded into that slot starts on
+the launch quantization as usual and stops by itself after its length, then loops — the
+tempo, **Fixed**, other slots and existing clips stay as they are. Slots recording together
+each stop on their own length. Stop such a take before its length and it is cut to whole bars
+of what it recorded.
+
+The length belongs to the slot, not to a clip: cancelling a take during its count-in or
+retrying it (<Kbd>⌘ .</Kbd>) leaves it as it was, it stays with the slot under the clip a take
+leaves, and it shows again when you delete that clip or undo the take. Changing it is one
+undo step, and it is saved with the project. Recording over a clip (overdub) keeps the clip's
+length.
 
 ## The mixer under the grid
 
@@ -120,6 +178,10 @@ that is in Cue is heard in Cue.
 A track plays either its Session clip or its Arrangement clips. Launching a slot takes the
 track over; **Back to Arrangement** hands every track back, and the **Arr** badge on a column
 hands back just that track.
+
+To turn a performance into an arrangement, play it with **Record** on: every clip you launch
+lands on the Arrangement where it played. See
+[Recording a Session performance](../../editing/recording/#recording-a-session-performance-into-the-arrangement).
 
 Clips copy both ways — <Kbd>⌘ ⇧ C</Kbd> sends the selected clip, group slot or scene to the
 Arrangement at the playhead. See [Copy, paste and drag](../../editing/clipboard/).
