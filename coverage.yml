@@ -227,6 +227,10 @@ sections:
       covers: [MIDI inputs, playing instruments, computer-keyboard notes]
       sources: [src/native/nota.engine/src/MidiInput.h, src/managed/Nota.App/MainWindow.Input.cs]
       status: done
+    - page: control/controllers
+      covers: [controller profiles, recognition, transport/faders/bank, knobs follow the selected device, device pages, knob modes, controller chip, pickup, Mackie Control, HUI, Settings ▸ MIDI ▸ Controllers, Set up… wizard, pairs as an encoder or two buttons, command buttons, Session from the controller, Controller menu (unbind / bind to), Edit controller pages…, profile file format, controller MCP tools]
+      sources: [src/managed/Nota.App/Controllers/, src/managed/Nota.Application/Controllers/, src/managed/Nota.App/PreferencesWindow.Controllers.cs, src/managed/Nota.App/MainWindow.Controllers.cs]
+      status: done
     - page: control/midi-learn
       covers: [MIDI Learn overlay, MIDI map, remove mappings]
       sources: [src/managed/Nota.App/MidiLearn.cs, src/managed/Nota.App/MidiLearnOverlay.cs, src/managed/Nota.App/MidiLearnService.cs, src/managed/Nota.App/MidiMapView.cs]
