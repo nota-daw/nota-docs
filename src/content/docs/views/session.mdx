@@ -4,7 +4,7 @@ description: The clip grid for playing live and sketching — launching clips an
 sidebar:
   order: 2
 since: "0.50.1"
-updated: "0.60.2"
+updated: "0.61.1"
 status: done
 sources:
   - src/managed/Nota.App/SessionView.cs
@@ -41,6 +41,25 @@ where it is in its own loop. A muted track (or one silenced by another track's s
 stops on time too, and its clip keeps its place, so it's in time when you unmute. With the
 transport's loop on, the loop start also counts as a launch point, so a short loop with no bar
 line inside it doesn't keep a clip waiting.
+
+### Cancelling a launch that hasn't started
+
+Until its launch point a launched clip or scene only waits — its **▶** blinks. Picked the wrong
+one? **<Kbd>Alt</Kbd>-click** the blinking **▶** (or right-click the slot or scene and choose
+**Cancel launch**) before the launch point. It never starts, and everything playing carries on
+at the same place in its loop; the transport keeps running.
+
+- Cancelling a **scene** takes all of it back: its clips don't start, tracks it would have
+  stopped (an empty slot with a stop button) keep playing, its tempo / time-signature change
+  doesn't apply and its follow action never fires. A scene follow that was running before it
+  carries on; if that follow launched the scene you cancelled, scene follow ends there and the
+  current scene keeps playing.
+- <Kbd>Alt</Kbd>-click a **group's** slot to cancel its tracks' waiting launches in that scene.
+- Clicking a waiting clip or scene **again** leaves it waiting — a hurried double click never
+  cancels anything.
+- The **■** of a column still stops the track: a launch waiting there is dropped and the
+  playing clip stops at the launch point. **Stop all** also drops a waiting scene's tempo change.
+- Once the clip has started, the cancel is gone; stop it with **■** as usual.
 
 ## The grid
 
