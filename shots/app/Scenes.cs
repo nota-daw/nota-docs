@@ -143,6 +143,13 @@ public sealed class Scenes
 
     public void Run(Shot shot)
     {
+        // Session grid orientation (Nota specs/108): `sessionGrid: "across"` turns the grid for
+        // one shot; every other shot sees the default, so a turned shot never leaks into the next.
+        if (App.Services!.GetService(typeof(ISettingsService)) is ISettingsService gridSettings)
+        {
+            string grid = shot.Str("sessionGrid") ?? "down";
+            if (gridSettings.Current.SessionGrid != grid) { gridSettings.Current.SessionGrid = grid; gridSettings.Save(); Pump(5); }
+        }
         switch (shot.Scene)
         {
             case "device": Device(shot); break;

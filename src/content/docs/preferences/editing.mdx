@@ -1,9 +1,9 @@
 ---
 title: "Editing"
-description: "Settings ▸ Editing — note names in the piano roll, fades when you split audio clips, and whether a selection opens the detail panel."
+description: "Settings ▸ Editing — note names in the piano roll, fades when you split audio clips, which way the Session grid runs, and whether a selection opens the detail panel."
 sidebar:
   order: 12
-updated: "0.59.2"
+updated: "0.61.0"
 since: "0.59.2"
 status: done
 sources:
@@ -19,4 +19,5 @@ import At from '@components/At.astro';
 |---|---|
 | <At id="cmd:prefs.editing" /> **Label every note in the piano roll** | Off by default: the [piano roll](../../editing/piano-roll/)'s keys column names only the Cs. On: it names every note (C, C#, D …), a help while you learn them. Very short rows keep C only, so the names stay readable |
 | **Fade audio clips when splitting** | On by default. Splitting an [audio clip](../../editing/audio-clips/) writes a 4 ms fade at the cut, so it doesn't click. Drag the clip's corner handles to make it longer or shorter. MIDI clips are left alone |
+| **Session grid** | **Scenes down** (default): a scene per row, a track per column. **Scenes across**: a scene per column, a track per row. An open [Session view](../../views/session/#turn-the-grid) turns at once; the toolbar's turn key switches the same setting |
 | **Open the detail panel when you select a track or clip** | Off (default): a click only selects and a double-click opens the [detail panel](../../views/detail-panel/); an open panel follows the selection. On: every selection opens it |
