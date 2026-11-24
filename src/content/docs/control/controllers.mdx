@@ -52,9 +52,11 @@ profile".
 - **Transport**: Play, Stop, Record, Loop, Rewind and Forward (a bar back or forward). The
   transport lights follow Nota.
 - **Faders** move the volume of a **bank of eight tracks**. The tracks are taken in Mixer order:
-  tracks with their groups, then the returns. The bank and track buttons shift the bank by eight
-  or by one. The tracks under the faders have an orange mark on their headers and an orange
-  outline in the Mixer.
+  tracks with their groups, then the returns. The bank buttons shift the bank by eight. The tracks
+  under the faders have an orange mark on their headers and an orange outline in the Mixer.
+- **Track buttons** select the previous or next track, in every view, as a click on its header
+  does: the knobs, the Devices panel and the Mixer follow. Members of a folded group and return
+  tracks are skipped. The bank moves along so the selected track stays under the faders.
 - **Master fader** moves the master volume.
 - **Knobs** follow the selected device (see below).
 
@@ -74,7 +76,24 @@ effect has pages. A rack's page is its eight macros. A plug-in gets its paramete
 per page.
 
 On the device's card, the eight controls of the current page show their knob number and an orange
-underline. Knob 1 also shows the page, for example **2 / 3 · Filter**.
+underline. Knob 1 also shows the page, for example **2 / 3 · Filter**. The card itself has an
+orange line along its top and a **Controller** tag.
+
+### See what the knobs are on
+
+The controller chip next to **MIDI** in the transport bar always says what the knobs control:
+the track, the device and the page, for example **KeyLab · Bass · Nota Volt · 2 / 4**. It changes
+the moment you select another track or device or turn a page, in every view. In the Session, where
+the lower panel shows the selected clip, this is how you see which device you are playing. Click
+the chip and choose **Show device** to open it on the Devices panel.
+
+### Step through a track's devices
+
+**Next device** and **Previous device** move the knobs along the track's chain: the MIDI effects,
+then the instrument, then the audio effects. A rack counts as one device. The device is selected
+and scrolled into view, and its first page comes up. At either end the step does nothing. Give the
+two commands controller buttons in **Set up…** (the **Devices** step) or from a button's
+right-click menu, or keys in **Settings ▸ Shortcuts**. They are in the command palette too.
 
 <Shot id="control/controllers-knob-markers" alt="Nota Bass on the Devices panel: Cutoff, Reso, Drive and Env carry the numbers of the controller's knobs, and page 1 / 2 · Main is shown above them" />
 
@@ -87,8 +106,9 @@ The knobs have four modes:
 - **Send A, B, …**: one send level of the bank's tracks. Return tracks are skipped.
 
 Switch modes with the controller's mode buttons, if its profile has them. You can also click the
-controller chip next to **MIDI** in the transport bar: it shows the controller and its mode, for
-example **Arturia KeyLab Essential 61 mk3 · Device**, and opens a menu of modes. Each controller
+controller chip next to **MIDI** in the transport bar and pick a mode from its menu. In
+**Volume**, **Pan** and **Send** the chip shows the mode and the bank, for example
+**KeyLab · Volume · tracks 9–16**. Each controller
 keeps its own bank, page and mode. Opening a project goes back to the first bank, the first page
 and Device mode.
 
@@ -163,10 +183,10 @@ your own. Problems in a profile file (a bad control, a newer format) are listed 
    the rest of a group. **Back** redoes the step before, **Try again** this one. A control you
    already set up is ignored, and the window says which step it belongs to.
 
-   After the knobs, faders and transport come the track, bank and page controls, the **Session**
+   After the knobs, faders and transport come the track, bank, page and device controls, the **Session**
    group and extras: Undo / Redo, Tempo − / +, Metronome, Save, Tap tempo and the jog wheel.
 
-   Every pair of opposite actions — previous / next track, bank and page, rewind / forward, the
+   Every pair of opposite actions — previous / next track, bank, page and device, rewind / forward, the
    Session's up / down and left / right, undo / redo, tempo − / + — is one step, and it can be an
    encoder or two buttons: turn an encoder and both halves are set (right is next, down, forward,
    redo, faster); press a button and it is the first half, then the window asks for the other one.
@@ -186,7 +206,8 @@ While the window is open, Nota listens only to that controller and nothing plays
 ## Play the Session from the controller
 
 While the **Session** view shows, the jog wheel (on the KeyLab, the big encoder) walks the selected
-track's clips, and the track buttons move to the next or previous track. A launch button — the
+track's clips, and the track buttons move the selection to the same scene of the next or
+previous track. A launch button — the
 KeyLab's encoder push, or one you set up — launches the selected clip; pressed again it stops it
 (or withdraws a launch that is still waiting). Set up… also learns buttons for moving up, down,
 left and right, stopping the track, launching the scene and stopping all clips. In the Arrangement
